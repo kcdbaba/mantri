@@ -1,0 +1,24 @@
+{
+  "routing": {
+    "expected_task_id": "task_001",
+    "expected_layer": "2b",
+    "expected_entity_match": "entity_kapoor_steel",
+    "min_confidence": 0.65
+  },
+  "required_updates": [
+    {
+      "node_id": "dispatch_confirmed",
+      "new_status": "completed",
+      "min_confidence": 0.80,
+      "evidence_must_contain": ["dispatch", "Kapoor"]
+    }
+  ],
+  "forbidden_updates": [
+    {"node_id": "delivery_confirmed", "reason": "Truck departed, not delivered yet"}
+  ],
+  "scoring": {
+    "routing_correct": 1,
+    "required_present": 1,
+    "forbidden_absent": 1
+  }
+}

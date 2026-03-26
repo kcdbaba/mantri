@@ -1,0 +1,25 @@
+{
+  "required_updates": [
+    {
+      "node_id": "po_raised",
+      "new_status": "completed",
+      "min_confidence": 0.85,
+      "evidence_must_contain": ["PO", "confirm"]
+    },
+    {
+      "node_id": "predispatch_checklist",
+      "new_status": "active",
+      "min_confidence": 0.70,
+      "note": "CRITICAL: must activate from po_raised completion, not from message content. Message does not mention checklist."
+    }
+  ],
+  "forbidden_updates": [
+    {"node_id": "dispatch_confirmed", "reason": "PO raised does not mean dispatched"},
+    {"node_id": "delivery_confirmed", "reason": "Not delivered"}
+  ],
+  "scoring": {
+    "required_present": 2,
+    "forbidden_absent": 2
+  },
+  "primary_risk_node": "predispatch_checklist"
+}

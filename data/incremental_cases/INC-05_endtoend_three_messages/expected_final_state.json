@@ -1,0 +1,23 @@
+{
+  "after_message_1": {
+    "dispatch_confirmed":    "completed",
+    "delivery_photo_check":  "active",
+    "delivery_confirmed":    "pending"
+  },
+  "after_message_2": {
+    "delivery_confirmed":    "completed",
+    "delivery_photo_check":  "completed"
+  },
+  "after_message_3": {
+    "invoice_received":      "completed"
+  },
+  "final_state_must_have": {
+    "dispatch_confirmed":    "completed",
+    "delivery_confirmed":    "completed",
+    "invoice_received":      "completed",
+    "delivery_photo_check":  "completed",
+    "payment_followup_30d":  "pending",
+    "payment_made":          "pending"
+  },
+  "notes": "payment_followup_30d stays pending — delivery just confirmed, 30 days not elapsed. payment_made stays pending — no payment message."
+}

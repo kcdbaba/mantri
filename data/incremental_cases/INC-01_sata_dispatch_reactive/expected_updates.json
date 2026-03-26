@@ -1,0 +1,23 @@
+{
+  "required_updates": [
+    {
+      "node_id": "dispatch_confirmed",
+      "new_status": "completed",
+      "min_confidence": 0.85,
+      "evidence_must_contain": ["dispatch", "vehicle", "HR 38"]
+    },
+    {
+      "node_id": "delivery_photo_check",
+      "new_status": "active",
+      "min_confidence": 0.70,
+      "note": "Cadence node activates when dispatch_confirmed → completed"
+    }
+  ],
+  "forbidden_updates": [
+    {"node_id": "delivery_confirmed", "reason": "Not yet delivered — message only says en route"}
+  ],
+  "scoring": {
+    "required_present": 2,
+    "forbidden_absent": 1
+  }
+}

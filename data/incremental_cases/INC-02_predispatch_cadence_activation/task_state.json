@@ -1,0 +1,22 @@
+{
+  "task_id": "task_001",
+  "order_type": "standard_procurement",
+  "client_id": "entity_sata",
+  "supplier_ids": ["entity_kapoor_steel"],
+  "stage": "order_placed",
+  "nodes": [
+    {"node_id": "enquiry_received",      "status": "completed"},
+    {"node_id": "quote_requested",       "status": "completed"},
+    {"node_id": "quote_received",        "status": "completed"},
+    {"node_id": "po_raised",             "status": "pending"},
+    {"node_id": "dispatch_confirmed",    "status": "pending"},
+    {"node_id": "delivery_confirmed",    "status": "pending"},
+    {"node_id": "invoice_received",      "status": "pending"},
+    {"node_id": "payment_made",          "status": "pending"},
+    {"node_id": "quote_followup_48h",    "status": "completed"},
+    {"node_id": "predispatch_checklist", "status": "pending"},
+    {"node_id": "delivery_photo_check",  "status": "pending"},
+    {"node_id": "payment_followup_30d",  "status": "pending"}
+  ],
+  "recent_messages": []
+}

@@ -1,0 +1,10 @@
+{
+  "id": "INC-03",
+  "name": "allstaff_layer2b_routing",
+  "description": "Message in All-Staff group references Kapoor Steel supplier by informal alias. Router Layer 2b must resolve 'Kapoor ji' to entity_kapoor_steel and route to task_001. Update agent then processes the dispatch update.",
+  "quality_risk_dimension": "entity_routing",
+  "source": "synthetic",
+  "routing": "layer_2b",
+  "pass_criteria": "message routed to task_001 via entity alias; dispatch_confirmed → completed",
+  "notes": "Tests Layer 2b routing. Message must appear in task_001 message log. Routing is tested by run_incremental_test.py router check, not just update agent."
+}

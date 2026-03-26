@@ -1,0 +1,10 @@
+{
+  "id": "INC-05",
+  "name": "endtoend_three_messages",
+  "description": "Sequence of 3 messages across SATA client group and All-Staff group covering dispatch → delivery → invoice. Tests that multiple incremental calls accumulate state correctly and cadence nodes activate at the right points.",
+  "quality_risk_dimension": "cadence_implicit_task_detection",
+  "source": "synthetic",
+  "routing": "layer_2a + layer_2b",
+  "pass_criteria": "All three reactive nodes updated; delivery_photo_check activated after dispatch; payment_followup_30d remains pending (delivery just confirmed, 30 days not elapsed)",
+  "notes": "Run as 3 sequential update agent calls, each building on the previous node states. Final state is compared against expected_final_state."
+}

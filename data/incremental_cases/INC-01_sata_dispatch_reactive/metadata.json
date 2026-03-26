@@ -1,0 +1,10 @@
+{
+  "id": "INC-01",
+  "name": "sata_dispatch_reactive",
+  "description": "Single message in client group confirming dispatch. Agent should mark dispatch_confirmed as completed and activate delivery_photo_check cadence node.",
+  "quality_risk_dimension": "reactive_node_update",
+  "source": "synthetic",
+  "routing": "layer_2a",
+  "pass_criteria": "dispatch_confirmed → completed; delivery_photo_check → active",
+  "notes": "Baseline reactive update. Should be easy PASS. Evidence must reference vehicle number."
+}

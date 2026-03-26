@@ -1,0 +1,25 @@
+{
+  "required_updates": [
+    {
+      "node_id": "payment_made",
+      "new_status_one_of": ["completed", "provisional"],
+      "min_confidence": 0.65,
+      "note": "Payment claim but unverified — provisional is acceptable"
+    }
+  ],
+  "acceptable_updates": [
+    {
+      "node_id": "payment_followup_30d",
+      "new_status": "completed",
+      "note": "If payment_made → completed, followup can also be resolved"
+    }
+  ],
+  "forbidden_updates": [
+    {"node_id": "enquiry_received", "reason": "Already completed, must not regress"},
+    {"node_id": "dispatch_confirmed", "reason": "Unrelated to this message"}
+  ],
+  "scoring": {
+    "required_present": 1,
+    "forbidden_absent": 2
+  }
+}
