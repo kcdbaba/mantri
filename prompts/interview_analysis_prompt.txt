@@ -91,6 +91,22 @@ List any edge cases or exceptions Ashish raised that don't fit the standard work
 **10. Customer priority signals**
 What did Ashish say he most wants the agent to do well? What would make him confident enough to rely on it during a busy week? What would make him stop using it?
 
+**11. Router design parameters**
+For each parameter below, extract Ashish's stated preference or threshold exactly as he described it. If not discussed, mark as [NOT DISCUSSED].
+
+| Parameter | Q# | What to extract |
+|---|---|---|
+| Wrong-routing tolerance | Q2 | Does he want the agent to flag routing uncertainty visibly, or try silently and let him correct later? |
+| Context boundary gap threshold | Q6 | How fast does conversation shift between orders in the All-Staff group — several per day, or one/two topics at a time? |
+| Supplier silence threshold | — | At what point (hours/days) does he want the agent to flag a supplier as unresponsive? |
+| Clarification vs carry-forward | Q11 | When the agent is unsure which order a message belongs to: ask to confirm, or make best guess and flag uncertainty? |
+| Concurrent same-item order frequency | Q12 | How often are two active orders for the same item type running simultaneously? |
+| Group alias bootstrapping sufficiency | Q13 | Will 6 months of chat history be enough for the agent to pick up team shorthand, or does it need manual seeding? |
+| Cross-group reference convention | Q14 | Does he refer to orders by client-group name or supplier-entity name when discussing in All-Staff/supplier groups? |
+| Staff clarification willingness | Q15 | Will staff resolve routing ambiguity themselves, or escalate to Ashish? Preferred channel? |
+| Silent expiry policy | Q16 | If a message can't be resolved after a few follow-on messages, is quietly dropping it acceptable? Or does he want a clarification prompt? |
+| Officer alias persistence | Q10 | How long do officer contacts typically stay at a posting? How is the transition handled? |
+
 ---
 
 ## OUTPUT FORMAT
@@ -158,6 +174,20 @@ For each risk:
 
 **Customer priority signals:**
 [What he most wants. What would make him rely on it. What would make him stop.]
+
+**Router design parameters:**
+| Parameter | Ashish's answer | Confidence |
+|---|---|---|
+| Wrong-routing tolerance (Q2) | | |
+| Context boundary gap threshold (Q6) | | |
+| Supplier silence threshold | | |
+| Clarification vs carry-forward (Q11) | | |
+| Concurrent same-item order frequency (Q12) | | |
+| Group alias bootstrapping sufficiency (Q13) | | |
+| Cross-group reference convention (Q14) | | |
+| Staff clarification willingness (Q15) | | |
+| Silent expiry policy (Q16) | | |
+| Officer alias persistence (Q10) | | |
 
 ---
 

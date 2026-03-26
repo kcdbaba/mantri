@@ -11,7 +11,7 @@
 # ⚠️  DEPRECATION NOTICE
 # This file is a Sprint 2 interim artefact. It is to be deprecated in favour of the
 # task lifecycle graph design (with attendant prompt engineering) in Sprint 3.
-# See: reports/task_lifecycle_state_machine_design.md, reports/live_monitoring_design.md
+# See: reports/task_lifecycle_state_graph_design.md, reports/live_monitoring_design.md
 #
 # Status of each item:
 #   [CONFIRMED]    - validated against real cases (SATA, Malerkotla)

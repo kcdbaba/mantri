@@ -2,7 +2,7 @@
 
 **Status**: Pre-implementation design
 **Target sprint**: Sprint 3
-**Depends on**: `live_monitoring_design.md` (pipeline context), `task_lifecycle_state_machine_design.md` (task instance schema)
+**Depends on**: `live_monitoring_design.md` (pipeline context), `task_lifecycle_state_graph_design.md` (task instance schema)
 **Author**: Kunal Chowdhury
 **Date**: 2026-03-26
 
@@ -1226,7 +1226,7 @@ Entity dictionary auto-maintenance (alias discovery from update agent) is a post
 | Topic | Where documented |
 |---|---|
 | Full pipeline (ingestion → update agent → alerts) | `live_monitoring_design.md` |
-| Task instance schema, node types, delta model | `task_lifecycle_state_machine_design.md` |
+| Task instance schema, node types, delta model | `task_lifecycle_state_graph_design.md` |
 | Stateful update agent prompt structure | `live_monitoring_design.md §3` |
 | Alert engine and delivery | `live_monitoring_design.md §4` |
 | **Message router (this document)** | `message_router_design.md` |

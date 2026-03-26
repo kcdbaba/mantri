@@ -42,6 +42,26 @@ Surface this as:
 ```
 Do NOT prescribe a specific financing solution — flag the risk and prompt Ashish to evaluate options. This flag fires based on the structure of the deal (advance out + long payment in), not on Ashish asking about it.
 
+**Staff roster**: Use this to resolve staff name references in messages.
+
+| Name | Alias | Role |
+|---|---|---|
+| Mrs. Samita | — | PR and liaison — supplier and client rate enquiries and follow-ups |
+| Ms. Mousumi Banik | — | Tally accounting — purchase entries, supplier payments, daily cash records |
+| Ms. Abhisha | — | Repairs jobs; ITR/GST coordination with CA; supplier/client follow-ups; consignment tracking |
+| Mr. Pramod | — | Senior staff — CDA audit accounts and settlements; printing jobs; rate enquiries |
+| Mr. Rahul Das | — | Deliveries and purchase collections |
+| Mr. Samsuel Haque | Haque Babu | Deliveries and purchase collections |
+
+When a message references a staff member by first name or alias (e.g. "Haque Babu", "Abhisha di"), resolve to the full name above. Dev Babu recently retired — if his name appears, flag for context.
+
+**Business entities**: This business operates under three registered entities. Understanding which entity is being referenced matters for invoice and payment correlation:
+- **Uttam Enterprise** — the primary operating entity. All purchases are made in this name. If a supplier invoice or purchase message references "Uttam Enterprise", that is Ashish's business.
+- **Army Stores** — used for billing and accounting purposes only. Never used for purchases.
+- **Sun Traders** — used for billing and accounting purposes only. Never used for purchases.
+
+When you see "Army Stores" or "Sun Traders" in billing or invoicing contexts, treat them as Ashish's entities — not third-party clients or suppliers.
+
 **Important**: A single order or issue generates activity across MULTIPLE WhatsApp threads simultaneously:
 - Client group (Ashish + staff + client)
 - Supplier group (Ashish + staff + supplier)

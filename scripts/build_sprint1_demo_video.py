@@ -16,12 +16,13 @@ from PIL import Image, ImageDraw, ImageFont
 
 # ── Config ──────────────────────────────────────────────────────────────────
 W, H = 1920, 1080
-SLIDE_DIR = Path("slides")
-AUDIO_DIR = Path("audio")
-OUTPUT_VIDEO = "sprint1_demo.mp4"
+SPRINT1_DIR = Path(__file__).parent.parent / "demo" / "sprint1"
+SLIDE_DIR   = SPRINT1_DIR / "slides"
+AUDIO_DIR   = SPRINT1_DIR / "audio"
+OUTPUT_VIDEO = str(SPRINT1_DIR / "sprint1_demo.mp4")
 
-SLIDE_DIR.mkdir(exist_ok=True)
-AUDIO_DIR.mkdir(exist_ok=True)
+SLIDE_DIR.mkdir(parents=True, exist_ok=True)
+AUDIO_DIR.mkdir(parents=True, exist_ok=True)
 
 # ── Colors ───────────────────────────────────────────────────────────────────
 BG         = (15, 20, 30)       # near-black navy
@@ -817,7 +818,7 @@ def assemble_video():
 
 if __name__ == "__main__":
     import sys
-    os.chdir(Path(__file__).parent)
+    os.chdir(SPRINT1_DIR)
 
     # Optional: --voice <name> to pick a Gemini voice
     voice = "Kore"

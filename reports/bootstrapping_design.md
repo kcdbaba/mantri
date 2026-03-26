@@ -2,7 +2,7 @@
 
 **Status**: Pre-implementation design
 **Target**: Pre-Sprint 3 (must complete before live monitoring goes live)
-**Depends on**: `message_router_design.md` (router tables), `task_lifecycle_state_machine_design.md` (task instance schema)
+**Depends on**: `message_router_design.md` (router tables), `task_lifecycle_state_graph_design.md` (task instance schema)
 **Author**: Kunal Chowdhury
 **Date**: 2026-03-26
 
@@ -21,7 +21,7 @@ The result: the first few weeks of live operation have degraded routing quality 
 
 The historical extraction pass fixes this by running the extraction pipeline over Ashish's existing chat history **before** going live, pre-populating all router tables and creating a set of historical task instances. The router starts warm, not cold.
 
-**Secondary output**: historical completed task instances are the primary input for template bootstrapping (see `task_lifecycle_state_machine_design.md §T1`) — the bootstrapping pass serves both purposes.
+**Secondary output**: historical completed task instances are the primary input for template bootstrapping (see `task_lifecycle_state_graph_design.md §T1`) — the bootstrapping pass serves both purposes.
 
 ---
 
@@ -287,8 +287,8 @@ Orders that are still in-progress at the time of go-live require special handlin
 |---|---|
 | Router tables being populated | `message_router_design.md §Data Structures` |
 | Cold start routing quality | `message_router_design.md §Feedback Loop: Cold start quality` |
-| Template bootstrapping (T1) | `task_lifecycle_state_machine_design.md §T1` |
-| Task instance schema | `task_lifecycle_state_machine_design.md §Core Concepts` |
+| Template bootstrapping (T1) | `task_lifecycle_state_graph_design.md §T1` |
+| Task instance schema | `task_lifecycle_state_graph_design.md §Core Concepts` |
 | Extraction agent prompt | `prompts/testing_prompt.txt` |
 | Task type checklists | `prompts/task_type_checklists.txt` |
 | **Historical bootstrapping (this document)** | `bootstrapping_design.md` |

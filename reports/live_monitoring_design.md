@@ -2,7 +2,7 @@
 
 **Status**: Pre-implementation design
 **Target sprint**: Sprint 3
-**Depends on**: `task_lifecycle_state_machine_design.md` (task graph model, templates, cost architecture)
+**Depends on**: `task_lifecycle_state_graph_design.md` (task graph model, templates, cost architecture)
 **Author**: Kunal Chowdhury
 **Date**: 2026-03-26
 
@@ -10,7 +10,7 @@
 
 ## Scope
 
-The task lifecycle graph design document (`task_lifecycle_state_machine_design.md`) defines the **data model** — templates, instances, node types, edge types, and the incremental cost rationale. This document defines the **operational pipeline** — how the system receives WhatsApp messages in near-real time, routes them to the right task instances, updates state, and delivers alerts to Ashish and staff.
+The task lifecycle graph design document (`task_lifecycle_state_graph_design.md`) defines the **data model** — templates, instances, node types, edge types, and the incremental cost rationale. This document defines the **operational pipeline** — how the system receives WhatsApp messages in near-real time, routes them to the right task instances, updates state, and delivers alerts to Ashish and staff.
 
 The two documents should be read together. This document does not repeat the data model concepts; it assumes them.
 
@@ -406,9 +406,9 @@ The truncation failure on R1-D disappears once the incremental architecture is i
 
 | Topic | Where documented |
 |---|---|
-| Task graph data model (templates, instances, node types, edge types) | `task_lifecycle_state_machine_design.md` |
-| Cost architecture and incremental vs batch comparison | `task_lifecycle_state_machine_design.md` §Operational Cost |
-| Design tensions (T1–T17) including missing entries, staff quality, inventory | `task_lifecycle_state_machine_design.md` |
+| Task graph data model (templates, instances, node types, edge types) | `task_lifecycle_state_graph_design.md` |
+| Cost architecture and incremental vs batch comparison | `task_lifecycle_state_graph_design.md` §Operational Cost |
+| Design tensions (T1–T17) including missing entries, staff quality, inventory | `task_lifecycle_state_graph_design.md` |
 | User research plan and interview guides | `user_research_plan.md` |
 | Evaluation methodology and quality risks | `evaluation_design_report.md` |
 | **Live monitoring pipeline (this document)** | `live_monitoring_design.md` |

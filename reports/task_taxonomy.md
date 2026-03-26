@@ -290,7 +290,7 @@ Implicit tasks are categorised by what triggers them. The agent must handle all 
 
 ## UNVALIDATED PARAMETERS — SUMMARY
 
-All items below require confirmation with Ashish before the implicit task rules are finalised. See `reports/user_research_plan.md` (Ashish session, Part 3b) for the interview questions.
+All items below require confirmation with Ashish before the implicit task rules are finalised. See `interviews/user_research_plan.md` (Ashish session, Part 3b) for the interview questions.
 
 | Parameter | Used in | Current assumption | TBC |
 |---|---|---|---|
@@ -315,5 +315,5 @@ All items below require confirmation with Ashish before the implicit task rules 
 | `prompts/task_type_checklists.txt` | Derived from this document — formatted for LLM prompt injection. Sprint 2 interim artefact, to be deprecated when task lifecycle graph is built |
 | `prompts/testing_prompt.txt` | Inline checklist tables derived from this document. Must be updated when taxonomy changes |
 | `reports/evaluation_design_report.md` | Test cases are organised around this taxonomy — framework R2 maps to implicit task detection across all types |
-| `reports/task_lifecycle_state_machine_design.md` | Sprint 3 target — graph-based representation that replaces the linear checklists in this taxonomy |
-| `reports/user_research_plan.md` | Ashish session Part 3 covers all 10 task types; Part 3b covers unvalidated parameters |
+| `reports/task_lifecycle_state_graph_design.md` | Sprint 3 target — graph-based representation that replaces the linear checklists in this taxonomy |
+| `interviews/user_research_plan.md` | Ashish session Part 3 covers all 10 task types; Part 3b covers unvalidated parameters |
