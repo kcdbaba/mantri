@@ -1,0 +1,26 @@
+# Core pipeline
+fastapi
+uvicorn[standard]
+redis
+anthropic
+pydantic
+
+# Router
+rapidfuzz
+sentence-transformers   # MiniLM for Layer 2c (deferred but install now)
+
+# Media enrichment
+openai-whisper
+ffmpeg-python
+google-generativeai     # Gemini 1.5 Flash 8B for vision
+paddlepaddle            # PaddleOCR backend
+paddleocr
+
+# Dashboard
+datasette
+jinja2
+python-multipart        # form parsing for correction UI
+htmx                    # served as static file, not a Python dep
+
+# Utilities
+httpx
