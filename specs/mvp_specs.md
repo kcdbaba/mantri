@@ -82,6 +82,56 @@ src/
 
 ## Integration Specifications
 
+### Meta WhatsApp Business Cloud API (bot number — production)
+
+**Not built in Sprint 3** — alerts output to log file during Sprint 3. Bot number goes live for final demo (May 1).
+
+**Pre-approval requirement**: All business-initiated messages (alerts, digests, ambiguity prompts) must use Meta-approved message templates. Templates are submitted via Meta Business Manager and approved within ~24 hours. Session messages (bot replies within 24h of Ashish/staff messaging first) require no template — query shell responses fall here.
+
+**Templates to submit** (draft and submit as soon as Meta Business account is created, before full verification completes):
+
+| Template name | Category | Body |
+|---|---|---|
+| `intraday_alert` | Utility | `Mantri Alert: No response from {{1}} — {{2}} — quote sent {{3}}h ago. Follow up.` |
+| `morning_digest` | Utility | `Mantri Morning Digest — {{1}}: {{2}} pending items. Top priority: {{3}}. Reply 'orders' for full list.` |
+| `ambiguity_resolution` | Utility | `Unclear which order this belongs to: "{{1}}". Reply 1 for {{2}}, 2 for {{3}}, 3 for new order.` |
+| `new_task_alert` | Utility | `New order detected: {{1}} — {{2}}. Task created. Reply 'orders' to review.` |
+| `provisional_update` | Utility | `Provisional update: {{1}} marked {{2}} for {{3}}. Open dashboard to confirm or correct.` |
+
+Variables (`{{1}}`, `{{2}}`, etc.) are filled at send time. Meta requires Utility category for operational notifications — not Marketing.
+
+**Send API call** (Python):
+
+```python
+import httpx
+
+def send_whatsapp_alert(to_number: str, template_name: str, variables: list[str]):
+    r = httpx.post(
+        f"https://graph.facebook.com/v18.0/{PHONE_NUMBER_ID}/messages",
+        headers={"Authorization": f"Bearer {WA_ACCESS_TOKEN}"},
+        json={
+            "messaging_product": "whatsapp",
+            "to": to_number,
+            "type": "template",
+            "template": {
+                "name": template_name,
+                "language": {"code": "en"},
+                "components": [{
+                    "type": "body",
+                    "parameters": [{"type": "text", "text": v} for v in variables]
+                }]
+            }
+        }
+    )
+    r.raise_for_status()
+```
+
+Auth: `WA_ACCESS_TOKEN` (system user token from Meta Business Manager), `PHONE_NUMBER_ID` (from Meta app dashboard).
+
+**Critical path**: Templates must be reviewed with Ashish during interview, drafted, and submitted to Meta same day as account creation. Rejection + resubmission adds 24–48h. All templates must be approved before May 1.
+
+---
+
 ### Baileys (monitor number, Node.js)
 
 ```javascript

@@ -280,7 +280,28 @@ These parameters directly affect when and how the agent fires implicit tasks. Th
 - "Meta requires business verification: business name (Uttam Enterprise), address, and a tax document (GST certificate or similar). Can you have those ready? We'll do the registration together."
 - "The bot number would be added to your operational groups as a silent member — it reads messages there but never posts. You and staff would save it as a contact for 1:1 alerts. Does that work?"
 
-*(Critical path: verification must start by April 18 to be ready for May 1. If not feasible, we fall back to a Baileys second number — functional but carries ToS risk.)*
+**Template pre-approval (explain and get input):**
+
+Any message the bot sends first — morning digest, intraday alert, ambiguity resolution prompt — must use a Meta-approved message template. Templates are submitted to Meta in advance and approved within ~24 hours. Once approved they can be used repeatedly with variable fields filled in (e.g. supplier name, order details). Messages sent *in reply* to Ashish or staff within a 24-hour window (query shell responses) don't need templates.
+
+We need to draft the templates now — approval can run in parallel with business verification. Template content must be specific enough that Meta recognises it as a legitimate business notification, not marketing.
+
+Draft templates to review with Ashish:
+
+| Template name | Example content |
+|---|---|
+| `intraday_alert` | "Mantri Alert: No response from {{supplier_name}} — {{order_description}} — quote sent {{hours}}h ago. Follow up." |
+| `morning_digest` | "Mantri Morning Digest — {{date}}: {{pending_count}} pending items. Top priority: {{top_item}}. Reply 'orders' for full list." |
+| `ambiguity_resolution` | "Unclear which order this message belongs to: '{{message_snippet}}'. Reply 1 for {{option_1}}, 2 for {{option_2}}, 3 for new order." |
+| `new_task_alert` | "New order detected: {{client_name}} — {{item_description}}. Task created. Reply 'orders' to review." |
+| `provisional_update` | "Provisional update: {{node_name}} marked {{status}} for {{order_description}}. Open dashboard to confirm or correct." |
+
+- "Do these alert formats make sense? Is there anything in the wording that wouldn't match how your team talks about orders?"
+- "Are there other alert types you'd want that aren't covered here?"
+
+*(Templates must be submitted for approval as soon as the Meta Business account is created — don't wait for full verification to complete before drafting. Rejection requires revision and resubmission, which adds 24–48h.)*
+
+*(Critical path: verification must start by April 18, templates drafted and submitted same day, to be ready for May 1. If not feasible, we fall back to a Baileys second number — functional but carries ToS risk.)*
 
 ### Closing (5 min)
 - "What's the one thing you most want this to do well that we haven't covered today?"
