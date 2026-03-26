@@ -1,0 +1,8 @@
+=== THREAD 1: Client Group ===
+[24 Mar 09:00] Ashish: Brigadier sahab ka order ready hai?
+
+=== THREAD 2: All Staff Group ===
+[24 Mar 10:00] Staff 1: Eastern Command walo ka maal pack ho gaya
+
+=== THREAD 3: Internal Ops Group ===
+[24 Mar 14:00] Staff 2: HQ Eastern Command delivery kal subah schedule karo

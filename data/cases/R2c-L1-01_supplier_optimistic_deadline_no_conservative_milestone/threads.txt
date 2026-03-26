@@ -1,0 +1,8 @@
+=== THREAD 1: Supplier Group (Ashish + Malerkotla Supplier) ===
+[20 Mar 11:00] Ashish: bhai tandoor ka order confirm - 1 nos heavy duty
+[20 Mar 11:30] Malerkotla Supplier: ok sir, 3 din mein pahunch jayega Guwahati
+[20 Mar 11:31] Ashish: theek hai
+
+=== THREAD 2: All Staff Group ===
+[20 Mar 12:00] Ashish: Staff 1 - Malerkotla se tandoor aa raha hai, 23 March tak
+[20 Mar 12:05] Staff 1: ok sir, noted

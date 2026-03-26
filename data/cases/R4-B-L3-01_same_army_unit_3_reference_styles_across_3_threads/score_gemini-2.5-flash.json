@@ -1,0 +1,51 @@
+{
+  "verdict": "PASS",
+  "overall_score": 84,
+  "dimensions": {
+    "task_recall": {
+      "score": null,
+      "notes": "Not an active dimension for this case."
+    },
+    "entity_accuracy": {
+      "score": 85,
+      "notes": "The agent correctly identifies HQ Eastern Command as the primary client entity and links Brigadier Sahab as the contact within that entity. It successfully maps three different reference styles ('Brigadier Sahab', 'Eastern Command walo', 'HQ Eastern Command') to a single parent entity. Minor concern: the entity field lists both 'HQ Eastern Command (Client)' and 'Brigadier Sahab (Client)' as if they are two separate client entities rather than clearly indicating Brigadier Sahab is merely the point of contact for HQ Eastern Command. This could create ambiguity about whether two client records are needed."
+    },
+    "cross_thread_correlation": {
+      "score": 88,
+      "notes": "All three threads (Client Group, All Staff Group, Internal Ops Group) are correctly unified under a single parent task. The agent draws on message evidence from each thread and synthesizes subtasks accordingly. The delivery scheduling task is correctly identified as the current operational priority. The correlation between 'Brigadier Sahab' and 'HQ Eastern Command' references across threads is handled well, with proper sourcing noted."
+    },
+    "implicit_task_detection": {
+      "score": null,
+      "notes": "Not an active dimension for this case."
+    },
+    "next_step_quality": {
+      "score": null,
+      "notes": "Not an active dimension for this case."
+    },
+    "ambiguity_flagging": {
+      "score": 80,
+      "notes": "The agent explicitly flags the tentative link between 'Brigadier Sahab' and 'Eastern Command' references for human review, which is appropriate. It also notes the additional validation requirement regarding HQ Eastern Command naming conventions with Ashish (aligning with the case metadata note). It flags missing order item details and implicit risks around Army delivery prep. However, it ultimately resolves the ambiguity by assumption rather than leaving it firmly open for human decision, and the flag could be more prominently surfaced given it is the core uncertainty in this case."
+    }
+  },
+  "pass_criteria_met": true,
+  "passes": [
+    "All three reference styles ('Brigadier Sahab', 'Eastern Command walo', 'HQ Eastern Command') are resolved to a single parent entity rather than creating duplicate records.",
+    "The agent explicitly flags the cross-thread entity correlation as tentative and routes it for human review, satisfying the ambiguity-flagging requirement.",
+    "The delivery scheduled for tomorrow morning (25 Mar) is correctly identified as the primary active task.",
+    "All three source threads are cited under the single parent task, demonstrating correct cross-thread unification.",
+    "The agent notes the validation requirement with Ashish for naming conventions, matching the additional notes in the case metadata."
+  ],
+  "failures": [
+    "The entity field lists 'HQ Eastern Command (Client)' and 'Brigadier Sahab (Client)' as parallel entries, which could imply two separate client records rather than clearly subordinating Brigadier Sahab as a contact under HQ Eastern Command.",
+    "The ambiguity flag, while present, concludes with a resolution by assumption ('Assuming Brigadier Sahab is the key contact...') rather than leaving the decision firmly to the human reviewer, slightly undermining the flagging quality.",
+    "No explicit mention that the naming convention validation with Ashish is a blocking or pending action item, even though the case metadata flags it as a required step."
+  ],
+  "notes": "The agent passes the core criterion: all three reference styles are unified under a single client entity with no duplicate records created. Entity accuracy is strong but slightly undermined by the parallel listing of 'Brigadier Sahab' and 'HQ Eastern Command' as co-equal client entries. Ambiguity flagging is present and appropriate but stops short of fully deferring to human judgment. Overall a solid output for an L3 cross-thread correlation case.",
+  "case_id": "R4-B-L3-01",
+  "case_name": "same_army_unit_3_reference_styles_across_3_threads",
+  "framework": "R4-B",
+  "level": "L3",
+  "evaluated_at": "2026-03-26T05:04:24",
+  "model_used": "gemini-2.5-flash",
+  "eval_model": "claude-sonnet-4-6"
+}

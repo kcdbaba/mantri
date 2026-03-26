@@ -1,0 +1,18 @@
+{
+  "id": "R5-L1-01",
+  "name": "supplier_ready_ambiguous_which_item",
+  "framework": "R5",
+  "level": "L1",
+  "sprint": "S2",
+  "data_source": "fully-synthetic",
+  "description": "Supplier says 'maal ready hai' — two items outstanding (tandoor + AC), unclear which is ready",
+  "chat_inputs": null,
+  "completeness": {
+    "complete": true,
+    "missing": []
+  },
+  "expected_output": "One parent task: Tandoor + AC order from Supplier A. Subtask: Clarify with supplier which item(s) are ready before arranging transport. Next step must NOT commit to dispatching either item without first confirming which is ready. Ambiguity flag: 'maal ready hai' does not specify whether tandoor, AC, or both are ready.",
+  "pass_criteria": "PASS: Agent's next step is to clarify with supplier which item(s) are ready, OR asks staff to confirm before arranging dispatch. FAIL: Agent suggests arranging delivery/transport for either item (tandoor or AC) without first resolving which item the supplier is referring to. FAIL: Agent assumes both items are ready without flagging the ambiguity.",
+  "challenge": "Supplier's 'maal ready hai' is a plausible order-closure signal. Two items are in flight from the same supplier. Agent must resist the urge to suggest dispatch and instead surface the ambiguity — which item is ready?",
+  "notes": "L1 because the ambiguity is in a single thread and clearly visible. The wrongness of acting is obvious once the ambiguity is noticed. Tests whether agent over-eagerly suggests dispatch on an unresolved 'ready' signal."
+}

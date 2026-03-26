@@ -1,0 +1,49 @@
+{
+  "verdict": "PASS",
+  "overall_score": 88,
+  "dimensions": {
+    "task_recall": {
+      "score": 90,
+      "notes": "Both delivery tasks are identified and represented as separate parent tasks with subtasks. Tezpur delivery correctly marked completed at 10:45; Ranchi delivery correctly marked as delayed with revised ETA of 15:00. An implicit subtask for notifying the Ranchi client of the delay is also surfaced. Minor gap: no explicit mention of any post-delivery confirmation/receipt collection task for Tezpur beyond a vague next-step note."
+    },
+    "entity_accuracy": {
+      "score": 85,
+      "notes": "Item (tandoor) correctly attributed to both tasks. Client identities are honestly represented as location-based inferences rather than confirmed names, which is accurate given the thread content. Staff assignments (Staff 1 for Tezpur, Staff 2 for Ranchi) are correctly attributed. Times are accurate: Tezpur completed 10:45, Ranchi driver ETA revised to 15:00. No cross-attribution errors detected."
+    },
+    "cross_thread_correlation": {
+      "score": 80,
+      "notes": "The agent works from a single consolidated staff group thread, which limits true cross-thread correlation testing. However, within that thread the agent correctly separates two concurrent orders that reference overlapping actors and identical items. The agent explicitly acknowledges what additional threads would resolve and maps the gaps to specific missing thread types. The correlation logic applied is sound even if the multi-thread scenario was not fully realised in the input."
+    },
+    "next_step_quality": null,
+    "implicit_task_detection": null,
+    "ambiguity_flagging": {
+      "score": 92,
+      "notes": "Strong ambiguity flagging throughout. The agent explicitly flags: (1) both client identities as location-inferred rather than confirmed names; (2) uncertainty about whether the two tandoor deliveries are separate orders or a split delivery, with a stated low-confidence assumption and request for human verification; (3) the Ranchi delivery final status as unknown because the thread ends mid-event at 14:10; (4) absence of evidence that the Ranchi client was notified of the delay; (5) missing invoice/payment status for both orders. All flags are operationally relevant and actionable. No silent guessing observed."
+    }
+  },
+  "pass_criteria_met": true,
+  "passes": [
+    "Two separate delivery tasks created — no merging of concurrent orders despite identical item types",
+    "Tezpur delivery correctly attributed and marked completed at 10:45",
+    "Ranchi delivery correctly attributed and marked delayed with revised ETA 15:00",
+    "Independent status tracking maintained for both tasks with no cross-attribution",
+    "Client identities flagged as unconfirmed (location only) rather than silently assumed",
+    "Implicit task detected: Ranchi client may not have been notified of delay",
+    "Thread incompleteness explicitly flagged for Ranchi delivery outcome",
+    "Escalation path defined if Ranchi driver does not arrive by 15:15",
+    "Clear table of what additional threads would resolve current gaps"
+  ],
+  "failures": [
+    "Cross-thread correlation dimension is partially untestable given single consolidated thread input — the scenario's design intent of interleaved references across multiple threads may not have been fully exercised",
+    "No explicit order numbers or invoice references captured, though the agent does note their absence as a gap",
+    "Post-delivery receipt confirmation for Tezpur is mentioned only as a vague next-step note rather than a formal subtask, slightly underweighting its operational importance"
+  ],
+  "notes": "The agent performs well against the core pass criteria: two separate delivery tasks are created, correctly attributed to distinct clients (Tezpur and Ranchi), and tracked with independent statuses (completed vs. delayed). The output is well-structured, operationally useful, and demonstrates disciplined ambiguity flagging throughout. The main scoring deduction comes from the cross-thread correlation dimension being partially constrained by single-thread input, and minor gaps in formalising post-delivery receipt tracking for Tezpur. The analyst note appended to the output is a useful meta-observation but ideally would not appear in a production task list output. Overall this is a strong L3 result.",
+  "case_id": "R3-C-L3-01",
+  "case_name": "two_concurrent_orders_references_interleaved_in_sh",
+  "framework": "R3-C",
+  "level": "L3",
+  "evaluated_at": "2026-03-26T04:41:40",
+  "model_used": "claude-sonnet-4-6",
+  "eval_model": "claude-sonnet-4-6"
+}

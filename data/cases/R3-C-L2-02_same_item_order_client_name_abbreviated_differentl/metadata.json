@@ -1,0 +1,18 @@
+{
+  "id": "R3-C-L2-02",
+  "name": "same_item_order_client_name_abbreviated_differentl",
+  "framework": "R3-C",
+  "level": "L2",
+  "sprint": "S1",
+  "data_source": "fully-synthetic",
+  "description": "Same item order, client name abbreviated differently across threads",
+  "chat_inputs": null,
+  "completeness": {
+    "complete": true,
+    "missing": []
+  },
+  "expected_output": "Single order: Tandoor for 51 Sub Area, placed with Sharma ji. Both references are same order same client.",
+  "pass_criteria": "PASS: Single order record for 51 Sub Area, no duplicate created. FAIL: Two separate order records created.",
+  "challenge": "Same order referenced with abbreviated client name ('51 SA') in one thread and full name ('51 Sub Area') in another. Agent must recognise as same order not duplicate.",
+  "notes": "Tests order deduplication — inverse of conflation test"
+}

@@ -1,0 +1,660 @@
+# UNIFIED TASK LIST — March 1–24, 2026
+**Threads processed:** SATA Artillery Regiment Client Group (Thread 1), Voltas Supplier Group / Uttam Enterprise / JRBK (Thread 2), LG Supplier Group (Thread 3), Internal Tasks Group (Thread 4)
+
+---
+
+## CLUSTER A: SATA BATTERY BN (Sub Arvind Sir) — APPLIANCES & ELECTRONICS ORDER
+
+---
+
+### 📦 PARENT TASK A1: Window AC 1.5 Ton x3 — SATA Bty Bn
+**Entity:** Client: SATA Bty Bn (Sub Arvind Sir) | Supplier: Uttam Enterprise / Punit-JRBK Voltas
+**Item:** Voltas Window AC 1.5 Ton x3
+**Status:** In Progress — ordered confirmed, delivery pending
+**Due:** Delivery requested by client; Ashish confirmed ordering on 23 Mar
+**Priority:** High
+**Source threads:** Thread 1 (client order, original list 3/1, bid confirmed 3/21, ordering confirmed 3/23), Thread 2 (supplier rate confirmed 28,600/-, ordered 3/23)
+
+↳ **SUBTASK A1.1:** Confirm physical delivery of 3x Window AC from Uttam Enterprise/JRBK
+- Assigned to: Abhisha / Mousumi
+- Status: Pending — ordered 23 Mar, no delivery confirmation yet in any thread
+- Due: ASAP (client vehicle requested for 25 Mar per Abhisha's message 3/24)
+- Next step: Follow up with Punit-JRBK to confirm dispatch date and logistics for 3 units; update client group with ETA.
+
+↳ **SUBTASK A1.2:** Arrange vehicle from client side for collection/delivery
+- Assigned to: Abhisha (informed client 3/24: "all items ready, please send vehicle tomorrow")
+- Status: Pending — client acknowledgement not confirmed
+- Due: 25 Mar
+- Next step: Confirm with Sub Arvind Sir that vehicle has been dispatched from unit end.
+
+⚠️ **FLAGS (A1):**
+- Thread 1 original order (3/1) listed Voltas Window AC 1.5T x3 ✅ confirmed match
+- Bid participation confirmed 3/21; ordering confirmed 3/23 — but no supplier dispatch confirmation in Thread 2 as of 3/23
+- Note: On 3/23 Ashish corrected "split AC" to "window AC" — ensure Punit-JRBK is aligned on correct model
+
+---
+
+### 📦 PARENT TASK A2: Mini Refrigerator 45L — SATA Bty Bn
+**Entity:** Client: SATA Bty Bn | Supplier: Uttam Enterprise / Punit-JRBK Voltas (Bluestar 45L @ ₹8,500)
+**Item:** Mini Refrigerator 45L x1 (Bluestar)
+**Status:** In Progress — ordered 23 Mar per Ashish confirmation in Thread 2
+**Due:** Expected "kal" (24 Mar) per Ashish's 3/23 update
+**Priority:** High
+**Source threads:** Thread 1 (client original list 3/1, confirmed needed 3/21), Thread 2 (rate confirmed 8,500/-, ordered 3/23)
+
+↳ **SUBTASK A2.1:** Confirm mini fridge delivery/dispatch from JRBK
+- Assigned to: Mousumi
+- Status: Pending — no delivery confirmation in Thread 2 after 3/23 order
+- Due: 24–25 Mar
+- Next step: Call Punit-JRBK to confirm dispatch of Bluestar 45L; coordinate with vehicle arrangement in A1.2.
+
+⚠️ **FLAGS (A2):**
+- Client originally requested 75/100L mini fridge (Thread 1, 3/1); LG Supplier quoted Bluestar 45L; Punit confirmed max is 45L (no larger option available) — client expectation vs. actual size gap not explicitly acknowledged by Sub Arvind Sir; verify client accepts 45L
+- LG Supplier Group (Thread 3) also quoted Bluestar 45L @ ₹9,800 NLC; Uttam/JRBK quoted ₹8,500 — order placed with JRBK which is correct, but confirm this was Sub Arvind's preference
+
+---
+
+### 📦 PARENT TASK A3: LG Refrigerator 242L (Model S292RPZX) x1 — SATA Bty Bn
+**Entity:** Client: SATA Bty Bn | Supplier: Sanbira (LG Dealer, +91 84738 53600)
+**Item:** LG Refrigerator 242L, 3-star, with handle, Model S292RPZX x1 | NLC ₹27,840
+**Status:** In Progress — order confirmed 23 Mar, supplier acknowledged; pickup location pending
+**Due:** ASAP
+**Priority:** High
+**Source threads:** Thread 1 (original list 3/1, bid confirmed 3/21), Thread 3 (rate shared 3/2, order confirmed 3/23, pickup TBD)
+
+↳ **SUBTASK A3.1:** Confirm pickup/delivery location from LG Supplier (Sanbira)
+- Assigned to: Ashish / Mousumi
+- Status: Blocked — supplier said "godown bandh, staff not picking up, batata hu" (3/23 19:05). Likely location: Laktokiya
+- Due: 24 Mar
+- Next step: Call Sanbira (+91 84738 53600) first thing to get confirmed godown address; arrange own vehicle if single unit (supplier indicated his vehicle chargeable for 1 unit).
+
+↳ **SUBTASK A3.2:** Process payment to Sanbira for LG fridge
+- Assigned to: Ashish / Mousumi
+- Status: Pending — no payment made in Thread 3 for this specific unit post-23 Mar order
+- Due: On or before collection
+- Next step: Confirm outstanding dues with Sanbira (Thread 3 shows prior payments of ₹19,900 on 3/19 and ₹59,400 cleared as old dues on 3/20; verify if new payment needed for this unit separately).
+
+⚠️ **FLAGS (A3):**
+- Supplier statement was "only till 25 Dec 2025" — later payments not yet reconciled in their statement (3/20 message). Full account reconciliation needed with Sanbira.
+- Pickup logistics unresolved as of last message in Thread 3 (3/23 19:05)
+
+---
+
+### 📦 PARENT TASK A4: AC Stabilizer 4 KVA x3 (V-Guard) — SATA Bty Bn
+**Entity:** Client: SATA Bty Bn | Supplier: Market (V-Guard brand specified by client)
+**Item:** V-Guard iMagno 410 AC Stabilizer 4 KVA x3
+**Status:** In Progress — being sourced from market; Ashish quoted ₹3,450 alternative (better voltage range 160–220V); client had specified V-Guard brand
+**Due:** Required with main delivery batch
+**Priority:** High
+**Source threads:** Thread 1 (client specified 3/21, Amazon link shared 3/23, discussion 3/23), Thread 2 (rate quoted by JRBK: ₹3,700/unit for 4KVA stabilizer)
+
+↳ **SUBTASK A4.1:** Confirm final stabilizer brand and source with client
+- Assigned to: Ashish
+- Status: Pending — Ashish offered market alternative at ₹3,450 (better specs); client had insisted on V-Guard; client said "Ok" to Ashish's counter but ambiguous
+- Due: Immediately
+- Next step: Get explicit confirmation from Sub Arvind Sir whether V-Guard Amazon or Ashish's ₹3,450 market alternative is approved; then procure 3 units accordingly.
+
+↳ **SUBTASK A4.2:** Procure and dispatch stabilizers
+- Assigned to: Abhisha / Sammsul
+- Status: Pending — sourcing not confirmed
+- Due: With main delivery
+- Next step: Once brand confirmed, purchase 3 units and include in 25 Mar convoy/delivery.
+
+⚠️ **FLAGS (A4):**
+- JRBK also deals in stabilizers (4 KVA @ ₹3,700) — compare with ₹3,450 market option found by Ashish; client not informed of price difference explicitly
+
+---
+
+### 📦 PARENT TASK A5: GeM Portal Procurement — Spices (SATA Bty Bn)
+**Entity:** Client: SATA Bty Bn | Sellers: Sun Traders Assam, Army Store Assam (via GeM)
+**Item:** Turmeric Powder (15kg), Cloves (6kg), Biryani Masala (35kg), Sambhar Masala (115 units), Red Chilli (115 units), Sabji Masala (115 units), Coriander Powder (115 units)
+**Status:** In Progress — GeM links prepared and shared; some confirmed by client (3/12–3/18)
+**Due:** Pending bid placement / order finalisation
+**Priority:** High
+**Source threads:** Thread 1 (links shared 3/12–3/18, client confirmed 3/18)
+
+↳ **SUBTASK A5.1:** Confirm all 7 spice items are listed and links active on GeM
+- Assigned to: Samita Roy
+- Status: In Progress — Coriander powder link corrected and sent 3/13; Sabji masala link resolved by Ashish 3/12; Biryani masala re-linked 3/18; Cloves re-confirmed 3/18
+- Due: Completed for most items; verify all 7 are active
+- Next step: Do final check that all 7 GeM product links are live and availability thresholds are met; confirm with Sub Arvind Sir that bid has been placed on all items.
+
+↳ **SUBTASK A5.2:** Resolve "sabji masala stock not reflecting" issue on GeM
+- Assigned to: Samita Roy
+- Status: Resolved per 3/12 (Ashish shared corrected link 3/12 19:14)
+- Due: Completed
+- Next step: Verify portal has updated; no further action unless client raises issue.
+
+⚠️ **FLAGS (A5):**
+- Coriander powder had error ("stock not updating") — resolved 3/13 with new link; confirm client accepted
+- Biryani Masala: two different product IDs used (5116877-13786307770 on 3/12, 5116877-2987186776 on 3/18); confirm which is final active link
+- GST on spices: Sub Arvind Sir noted payment was "without GST" (3/9 re: Flexi Sign) — verify if spice GeM amounts include or exclude GST for billing purposes
+
+---
+
+### 📦 PARENT TASK A6: GeM Procurement — Stationery & Registers (SATA Bty Bn)
+**Entity:** Client: SATA Bty Bn | Sellers: Army Store Assam, Uttam Enterprises Assam (via GeM)
+**Item:** Paper Pin T-Pin (100 nos), Register 300pg (50 nos), Register 450pg (50 nos), Stapler Pin (300 nos), Ledger Register (38 nos)
+**Status:** In Progress — links shared 3/16; Register 450pg link has a typo in product ID
+**Due:** Pending GeM bid
+**Priority:** Medium
+**Source threads:** Thread 1 (links sent 3/16 by Ashish, excel file sent)
+
+↳ **SUBTASK A6.1:** Fix typo in Register 450pg product ID
+- Assigned to: Samita Roy / Abhisha
+- Status: Pending — ID shown as "5116877-4512289421" (appears truncated; original likely 5116877-45122894211)
+- Due: Before bid submission
+- Next step: Correct and repost the Register 450pg link in client group with accurate product ID; confirm availability >= minimum threshold.
+
+↳ **SUBTASK A6.2:** Confirm client has placed GeM bids for all stationery items
+- Assigned to: Abhisha
+- Status: Pending
+- Due: ASAP
+- Next step: Follow up with Sub Arvind Sir to confirm all stationery GeM links have been actioned/bids submitted.
+
+⚠️ **FLAGS (A6):**
+- ₹6,400 payment made to Associated Electricals (3/16 11:06) — likely connected to this stationery procurement but not explicitly confirmed; verify what this payment was for
+- GST bill from Associated Electricals not received as of 3/16 15:22 — follow up needed
+
+---
+
+### 📦 PARENT TASK A7: GeM Procurement — Electronics Bid (Backlit Clipboards, Ashoka Stambh, Joystick Pad, Setup Box) — Total ₹51,964
+**Entity:** Client: SATA Bty Bn (Sub Arvind Sir)
+**Item:** 4x Backlit Clipboard (3x2.5ft) + Ashoka Stambh (small/big) + Joystick Pad + Setup Box
+**Status:** In Progress — L1 rate list shared 3/14; bid opening 24 Mar; GeM portal issues reported 3/13–3/14
+**Due:** Bid opening 24 Mar 2026
+**Priority:** High
+**Source threads:** Thread 1 (L1 rates shared 3/14, GeM issues flagged 3/13–3/14, bid details 3/21)
+
+↳ **SUBTASK A7.1:** Resolve GeM portal display/price-not-showing issue
+- Assigned to: Ashish
+- Status: Reported resolved — Ashish said "GEM ka issue chal raha hai, aaj aayega" (3/14 09:09); confirm portal back to normal
+- Due: Before 24 Mar bid opening
+- Next step: Verify all product links for this bid are showing prices correctly on GeM; if any still showing blank, find alternate listing.
+
+↳ **SUBTASK A7.2:** Participate in and win bid — total value ₹51,964
+- Assigned to: Abhisha
+- Status: In Progress — Ashish directed Abhisha to "answer for the bid now" (3/21 14:13)
+- Due: 24 Mar (bid opening)
+- Next step: Confirm bid submission is complete for all line items in this order; ensure L1 pricing is competitive.
+
+---
+
+### 📦 PARENT TASK A8: GeM Procurement — Flex Banners (9 nos) — ₹4,688.10
+**Entity:** Client: SATA Bty Bn | Seller: Uttam Enterprises / Army Store Assam (GeM)
+**Item:** Flex Posters/Banners x9 @ ₹520.90 each
+**Status:** In Progress — two links prepared (Thread 1: 3/23 and 3/24); client reported "link show nahi kar raha" on 3/24
+**Due:** ASAP
+**Priority:** Medium
+**Source threads:** Thread 1 (flex link shared 3/23 and alternate 3/24, Ashish said "new link also made" 3/24)
+
+↳ **SUBTASK A8.1:** Confirm active GeM flex banner link with client
+- Assigned to: Samita Roy / Abhisha
+- Status: Pending — client could not see first link (3/24); new link sent but no confirmation
+- Due: ASAP
+- Next step: Call or message Sub Arvind Sir to confirm new flex link (Army Store, product ID 5116877-33368651760) is visible and working; get bid placed.
+
+---
+
+### 📦 PARENT TASK A9: Physical Items — Blinds, Signage, Acrylic Board
+**Entity:** Client: SATA Bty Bn
+**Items:**
+- Blinds/window blinds — sent in convoy 3/6 ✅
+- Signage payment: Flexi Sign Tangla — ₹2,100 paid 3/9 ✅
+- Acrylic board (4ft x 3ft requested 3/9, then size revised/put on hold 3/9 17:55)
+**Status:** Mixed — blinds delivered; signage paid; acrylic board on hold
+**Priority:** Medium
+**Source threads:** Thread 1 (blinds 3/6, signage 3/9, acrylic 3/9)
+
+↳ **SUBTASK A9.1:** Follow up on Acrylic Board status
+- Assigned to: Abhisha
+- Status: On Hold — Sub Arvind said "Hold" on 3/9 17:55; no further update
+- Due: Awaiting client reactivation
+- Next step: Check with Sub Arvind Sir if acrylic board requirement has been revived or permanently dropped; if required, confirm size (appears non-standard — not 3x4ft).
+
+---
+
+### 📦 PARENT TASK A10: Physical Items — Amazon Orders (Prestige Gas Stove, Mobile Stand x2, Air Fryer)
+**Entity:** Client: SATA Bty Bn
+**Items:** Prestige Marvel Plus 1-Burner Gas Stove (Amazon), BLDM Mobile Stand x2 (Amazon), Air Fryer (large capacity, Amazon)
+**Status:** Pending — client shared links 3/3; no order confirmation in thread
+**Priority:** Medium
+**Source threads:** Thread 1 (client shared Amazon links 3/3 17:10–17:11, 3/3 20:26)
+
+↳ **SUBTASK A10.1:** Confirm and place Amazon orders for Prestige Gas Stove, Mobile Stand x2, Air Fryer
+- Assigned to: Abhisha / Ashish
+- Status: Pending — no acknowledgement or order confirmation visible
+- Due: Overdue (shared 3/3, no update seen through 3/24)
+- Next step: Verify if these items were ordered; if not, order immediately via Amazon and confirm with client.
+
+⚠️ **FLAGS (A10):**
+- These items were shared by client on 3/3 with no visible follow-through in Thread 1 through 3/24 — HIGH RISK of items being overlooked
+- Air fryer: "maximum large capacity" — specification not confirmed by staff; needs size clarification before ordering
+
+---
+
+### 📦 PARENT TASK A11: Payments to Third-Party Vendors (SATA Bty Bn Facilitated Payments)
+**Entity:** Various vendors (Charu Enterprise, Avi International, Kashmiri Saikia, Ram Ram Sahab)
+**Status:** Multiple payments made; some pending reconciliation
+**Priority:** High
+**Source threads:** Thread 1
+
+| Payment | Amount | Date | Status |
+|---|---|---|---|
+| Charu Enterprise (HDFC) — B2B bill | ₹21,000 | Due per 3/5 | ⚠️ Pending confirmation of payment |
+| Avi International (Axis Bank) — Challan nos. 1033,1024,962,939,902,897,866 | ₹15,000 | 06-03-2026 | ✅ Paid (Thread 1 3/6 20:33) |
+| Kashmiri Saikia — (via Paytm) | ₹1,440 | 10-03-2026 | ✅ Paid |
+| Ram Ram Sahab (8806715286) | ₹7,000 | 13-03-2026 | ✅ Paid |
+| Flexi Sign Tangla | ₹2,100 | 09-03-2026 | ✅ Paid |
+| Avi International (Axis Bank) | ₹20,000 | Due per 3/4 17:25 | ⚠️ No payment confirmation visible |
+| Unidentified vendor (3/10) | ₹3,750 + ₹1,440 | 10-03-2026 | ⚠️ ₹1,440 paid; ₹3,750 status unclear |
+
+↳ **SUBTASK A11.1:** Confirm ₹21,000 payment to Charu Enterprise
+- Assigned to: Ashish
+- Status: Pending — client asked 3/5, Ashish said "ok sir doing now"; no payment screenshot visible
+- Due: Overdue
+- Next step: Verify if ₹21,000 was paid to Charu Enterprise HDFC; if not, process immediately.
+
+↳ **SUBTASK A11.2:** Confirm ₹20,000 payment to number 9864923247 (unidentified)
+- Assigned to: Ashish
+- Status: Pending — requested 3/4 17:25; no confirmation visible
+- Due: Overdue
+- Next step: Check if this payment was made; if not, process and get bill as promised by client.
+
+↳ **SUBTASK A11.3:** Collect bills from all vendors where payments made
+- Assigned to: Ashish / Mousumi
+- Status: In Progress — some bills received (Uttam Ent PDF 3/3, B2B bill 3/3); others pending
+- Due: ASAP
+- Next step: List all payments made without corresponding GST bills and follow up with each vendor.
+
+---
+
+### 📦 PARENT TASK A12: Pen Cartridge / Refill + 2x Fountain Pens (SATA Bty Bn)
+**Entity:** Client: SATA Bty Bn
+**Item:** 2x fountain pens (use-and-throw type confirmed), cartridge-type pens investigated
+**Status:** Resolved — confirmed use-and-throw pens; client accepted 2 pens to be sent
+**Due:** Include in next convoy
+**Priority:** Low
+**Source threads:** Thread 1 (3/23)
+
+↳ **SUBTASK A12.1:** Send 2x pens in next convoy
+- Assigned to: Abhisha
+- Status: Pending
+- Next step: Ensure 2 pens are packed and included in 25 Mar delivery/convoy.
+
+---
+
+### 📦 PARENT TASK A13: Surge Protector 1KVA Enquiry — SATA Bty Bn
+**Entity:** Client: SATA Bty Bn
+**Item:** Surge Protector 1KVA x1 (and possibly more)
+**Status:** In Progress — rates shared by Ashish (₹5,535 and ₹3,050 options); client said "Ok sir" but no final selection confirmed
+**Priority:** Medium
+**Source threads:** Thread 1 (3/16–3/17), Thread 4 (Abhisha shared surge protector rate from Biswanath: ₹2,400 and ₹4,600 on 3/14)
+
+↳ **SUBTASK A13.1:** Get client confirmation on surge protector model and quantity
+- Assigned to: Ashish
+- Status: Pending
+- Due: ASAP
+- Next step: Follow up with Sub Arvind Sir to confirm which surge protector option is approved (₹3,050 / ₹5,535 from Ashish, or ₹2,400 / ₹4,600 from Biswanath per Thread 4), then procure.
+
+⚠️ **FLAGS (A13):**
+- Two parallel sourcing efforts detected: Thread 1 (Ashish quoting ₹3,050–5,535) and Thread 4 (Abhisha quoting ₹2,400–4,600 from Biswanath) — client shown only one set of prices; ensure best rate is presented and cross-quote confusion avoided
+
+---
+
+### 📦 PARENT TASK A14: Microsoft Office / Antivirus Enquiry
+**Entity:** Client: SATA Bty Bn
+**Item:** Microsoft Office Professional 2024 Plus (GeM link requested); Antivirus
+**Status:** Unclear — client requested link 3/3 14:39; Ashish deflected to "antivirus" 3/3 14:41; no resolution visible
+**Priority:** Low
+**Source threads:** Thread 1 (3/3)
+
+↳ **SUBTASK A14.1:** Provide GeM link for MS Office 2024 and/or Antivirus
+- Assigned to: Samita Roy / Abhisha
+- Status: Pending — no follow-up visible after 3/3
+- Next step: Search GeM for MS Office 2024 and antivirus listings; share links with Sub Arvind Sir if available.
+
+---
+
+### 📦 PARENT TASK A15: Chaat Masala GeM Link + Balance Amount Link (₹36,373 / ₹43,000)
+**Entity:** Client: SATA Bty Bn
+**Status:** In Progress — client asked for "bal amt 36,373 ka link" on 3/11; Ashish working on GeM to match amounts; client revised to ₹43,000 total with one item excluded (3/13 20:45)
+**Priority:** High
+**Source threads:** Thread 1 (3/11–3/13)
+
+↳ **SUBTASK A15.1:** Finalise GeM bid link for ₹43,000 balance amount
+- Assigned to: Ashish
+- Status: In Progress — Ashish said "ok sir" on 3/13 20:56 to ₹43,000 target; no confirmation of link finalisation visible
+- Due: Overdue (required for March cycle — client said "ye Mar ka hai")
+- Next step: Confirm with Abhisha/Samita Roy if the ₹43,000 GeM link was successfully created and shared with Sub Arvind Sir; if not, complete immediately.
+
+⚠️ **FLAGS (A15):**
+- Chaat masala was queried (Samita Roy 3/11 16:23) — unclear if this is included in the ₹43,000 balance link or separate; clarify with client
+- Client mentioned "cheque already debit ho gaya hai" (3/11) — payment already processed on their end; ensure GeM orders are placed promptly to match
+
+---
+
+## CLUSTER B: VOLTAS/JRBK SUPPLIER ACCOUNT — DUES CLEARANCE
+
+---
+
+### 📦 PARENT TASK B1: Payment Reconciliation — Uttam Enterprise / JRBK (Jiwan Ram)
+**Entity:** Supplier: Uttam Enterprise / JRBK (Jiwan Ram / Punit)
+**Status:** Multiple payments made; dues appear cleared as of 3/23
+**Priority:** Medium
+**Source threads:** Thread 2
+
+| Payment | Amount | Date | Bill/Reference |
+|---|---|---|---|
+| To Jiwan Ram | ₹35,500 | 02-03-2026 | Bill no. 3078 cleared |
+| To Jiwan Ram | ₹50,000 | 05-03-2026 | — |
+| To Jiwan Ram | ₹64,000 | 10-03-2026 | — |
+| To Jiwan Ram | ₹39,200 | 23-03-2026 | "Old dues cleared" |
+
+↳ **SUBTASK B1.1:** Get updated statement from JRBK/Uttam Enterprise post-23 Mar
+- Assigned to: Mousumi
+- Status: Pending
+- Next step: Request fresh account statement from Punit/JRBK confirming zero balance after ₹39,200 payment on 23 Mar; file for accounts.
+
+↳ **SUBTASK B1.2:** Collect GST bills against all 4 payments
+- Assigned to: Mousumi / Samita Roy
+- Status: Pending
+- Next step: Ensure GST invoices are received for all 4 payments totalling ₹1,88,700; match against challan/order references.
+
+---
+
+## CLUSTER C: LG SUPPLIER (SANBIRA) ACCOUNT
+
+---
+
+### 📦 PARENT TASK C1: Account Reconciliation — Sanbira (LG Dealer)
+**Entity:** Supplier: Sanbira (+91 84738 53600)
+**Status:** Partially reconciled — ₹19,900 paid 3/19; old dues (₹59,400) cleared via ₹29,400 (04-02-26) + ₹30,000 (21-02-26); supplier noted statement only till 25 Dec 2025
+**Priority:** Medium
+**Source threads:** Thread 3
+
+↳ **SUBTASK C1.1:** Get updated account statement from Sanbira including all payments post-Dec 2025
+- Assigned to: Ashish / Mousumi
+- Status: Pending — supplier explicitly said "statement forwarded is till 25th Dec 2025; later payments to be adjusted" (3/20)
+- Next step: Request updated statement from Sanbira covering Jan–Mar 2026 to verify all dues are settled before or after LG fridge delivery (Task A3).
+
+---
+
+## CLUSTER D: OTHER CLIENT ORDERS (Internal Tasks Group — Thread 4)
+
+---
+
+### 📦 PARENT TASK D1: Apollo Excel Care Hospital Order
+**Entity:** Client: Apollo Excel Care Hospital (via Samita Roy)
+**Item:** Big bill roll x100, Suma Grill 5L jar x1, Kitchen duster x30, Oven gloves x4 — Invoice B2B/1100 from Uttam Enterprise, Total ₹12,761
+**Status:** Delivered 13 Mar (invoice dated 13 Mar); but Ashish noted "items to be sent when prev all dues are cleared" (3/13 20:41)
+**Due:** Depends on dues clearance
+**Priority:** Medium
+**Source threads:** Thread 4 (3/12–3/13)
+
+↳ **SUBTASK D1.1:** Confirm dues status of Air Chef Pvt Ltd / Apollo hospital and release goods
+- Assigned to: Ashish
+- Status: Pending — Ashish held delivery pending dues clearance (3/13 20:41); no subsequent confirmation of release
+- Next step: Check if Air Chef Pvt Ltd / Apollo hospital has cleared outstanding dues; if yes, confirm goods dispatched; if no, communicate payment terms and hold delivery.
+
+⚠️ **FLAGS (D1):**
+- Invoice addressed to "Air Chef Pvt Ltd" but order sourced from "Apollo Excel Care Hospital" — same entity? Verify client entity name for billing accuracy.
+
+---
+
+### 📦 PARENT TASK D2: 857 Field Workshop — Stationery, Printer Parts, Dustbin
+**Entity:** Client: 857 Fd Wk Sp (TSS)
+**Items:**
+- Sanitary Diary x1, Display File A4/50L x2 (requested 3/12)
+- Pressure Roller x1, Teflon Sleeve x1 (HP1020 model) (requested 3/17)
+- Dustbin (OPR SS 12L) x1 (via Amazon, requested 3/19)
+- GST bill update on Briefcase (pending, 3/12)
+**Status:** Mixed — printer parts and dustbin pending; stationery unclear
+**Priority:** Medium
+**Source threads:** Thread 4 (3/12, 3/17, 3/19)
+
+↳ **SUBTASK D2.1:** Procure and deliver HP1020 Pressure Roller and Teflon Sleeve
+- Assigned to: Samita Roy / field staff
+- Status: Pending — requested 3/17; no procurement confirmation visible
+- Due: ASAP
+- Next step: Source HP1020 printer parts (pressure roller + teflon sleeve) from ulubari printer zone or Saikia Electronics; confirm cost and ETA.
+
+↳ **SUBTASK D2.2:** Order OPR SS Dustbin via Amazon (1 unit)
+- Assigned to: Samita Roy / Abhisha
+- Status: Pending — requested 3/19 with Amazon link; no confirmation visible
+- Next step: Place Amazon order for dustbin and confirm delivery address.
+
+↳ **SUBTASK D2.3:** Deliver Sanitary Diary x1 and Display Files x2
+- Assigned to: Sammsul Haque
+- Status: Pending — format for sanitary diary was to be shared by "sir tomorrow" (3/12); no follow-up visible
+- Next step: Chase up the format/spec for sanitary diary with 857 Fd Wk Sp client; then source and deliver with next batch.
+
+↳ **SUBTASK D2.4:** Update GST entry on Briefcase bill (separate GST line)
+- Assigned to: Accounts / Pramod Babu
+- Status: Pending — flagged 3/12; no resolution visible
+- Next step: Reissue or amend bill for 857 Fd Wk Sp briefcase item with GST shown separately.
+
+---
+
+### 📦 PARENT TASK D3: 107 Brigade — Deliveries
+**Entity:** Client: 107 Brigade
+**Items:** Curtain (Sanmati — HOLD), plus earlier delivered items (42 pcs chir, fans, battery parts confirmed delivered by Sammsul 3/5)
+**Status:** Curtain on hold (Ashish instructed 3/12 "sanmati ka curtain hold, dont go there"); other items delivered 3/5
+**Priority:** Medium
+**Source threads:** Thread 4 (3/2, 3/5, 3/12, 3/18)
+
+↳ **SUBTASK D3.1:** Resolve curtain hold from Sanmati — confirm if order to proceed or cancel
+- Assigned to: Ashish / Sammsul
+- Status: Blocked — Ashish instructed hold on 3/12; no resolution visible; return from Arty Bde noted 3/18 (possibly related)
+- Next step: Confirm with Ashish whether Sanmati curtain situation has been resolved; if green light, re-initiate purchase and delivery to 107 Brigade.
+
+⚠️ **FLAGS (D3):**
+- "Return from Arty Bde" noted in Thread 4 on 3/18 by Sammsul — may indicate a returned item; unclear which item returned and why; needs clarification from Sammsul.
+
+---
+
+### 📦 PARENT TASK D4: PTM Event Supplies — First Step School (16 Mar)
+**Entity:** Client: First Step School (PTM event 16 Mar)
+**Items:** Disposable glass x50, Tea glass x30, UKG kid packets (Juice + Chocopie), Biscuits
+**Status:** Completed — event was 16 Mar; no issues flagged in thread
+**Priority:** Low (completed)
+**Source threads:** Thread 4 (3/13)
+
+---
+
+### 📦 PARENT TASK D5: Water Dispenser + OTG + Bar Fridge — DY GOC Madam Order
+**Entity:** Client: DY GOC Madam (senior officer — high priority implied)
+**Items:** Water Dispenser (floor standing with refrigerator), Large OTG, Transparent bar-type fridge
+**Status:** In Progress — rates obtained (Water dispenser: ₹9,800 x4 nos per Thread 2; bar fridge: Bluestar Visicooler 250L ₹31,500 / 290L ₹34,500 per Thread 3); no order confirmed
+**Priority:** High (DY GOC = senior command)
+**Source threads:** Thread 4 (3/5 20:25), Thread 2 (water dispenser rate 3/5), Thread 3 (bar fridge rate 3/6)
+
+↳ **SUBTASK D5.1:** Present consolidated quote to DY GOC Madam for all 3 items
+- Assigned to: Ashish
+- Status: Pending — Ashish said "do home work" on 3/5; rates obtained but no quote visible in threads
+- Due: Overdue (3/5 to 3/24 = no progress visible)
+- Next step: Prepare and present a clear quote for Water Dispenser (floor standing, 4 nos @ ₹9,800), OTG (large, rate pending — not in any thread), and Bluestar Visicooler bar fridge; present to DY GOC for approval.
+
+⚠️ **FLAGS (D5):**
+- OTG rate NOT obtained in any thread — only water dispenser and bar fridge rates found; OTG is still unquoted
+- This is a DY GOC (Deputy General Officer Commanding) requirement — extremely high priority client; 20-day delay in quoting is a significant risk
+
+---
+
+### 📦 PARENT TASK D6: Canon EOS R10 Camera (18-150 Lens) — Army Procurement
+**Entity:** Client: Army (implied from original SATA order list and internal procurement discussion)
+**Item:** Canon EOS R10 with 18-150 lens | DP: ₹1,01,000 net | MRP: ₹1,19,995
+**Status:** In Progress — rate obtained from Canon dealer (Kartik Ji, Ahuja Manoj) on 3/3; no order confirmation visible
+**Priority:** Medium
+**Source threads:** Thread 1 (original list 3/1), Thread 4 (rate shared 3/3)
+
+↳ **SUBTASK D6.1:** Confirm order for Canon EOS R10 and process with dealer
+- Assigned to: Abhisha / Ashish
+- Status: Pending — rate shared; no order placed or confirmed
+- Due: ASAP
+- Next step: Confirm with Sub Arvind Sir (SATA) if Canon camera is still required; if yes, place order with Kartik Ji / Ahuja Manoj at ₹1,01,000 DP.
+
+---
+
+### 📦 PARENT TASK D7: Colour Printer (Brother A3/A4) — Enquiry
+**Entity:** Client: Army (implied)
+**Item:** Brother Colour Printer A3/A4 (studio-quality); alternate: MFC T4500DW @ ₹45,590 + 18% GST (Arihant)
+**Status:** In Progress — rate from Arihant shared 3/3; no client approval visible
+**Priority:** Low
+**Source threads:** Thread 4 (3/3)
+
+↳ **SUBTASK D7.1:** Present printer quote to relevant client and get approval
+- Assigned to: Mousumi
+- Status: Pending
+- Next step: Share Brother MFC T4500DW quote (₹45,590 + 18% GST from Arihant) with relevant client/unit; confirm if this model matches their requirement.
+
+---
+
+### 📦 PARENT TASK D8: Kokrajhar Table Installation
+**Entity:** Vendor: Modern Living (Dhiren Mandal, Nitu Furniture Jalukbari)
+**Item:** Tables (2 nos purchased 3/10 from Modern Living) — installation at Kokrajhar
+**Status:** In Progress — Modern Living confirmed installation on Thursday (after 3/17 message); contact name/number to be shared
+**Due:** Thursday (week of 17 Mar — likely 19 or 26 Mar)
+**Priority:** Medium
+**Source threads:** Thread 4 (3/10 table purchase confirmed, 3/17 installation update)
+
+↳ **SUBTASK D8.1:** Confirm installation completed at Kokrajhar
+- Assigned to: Samita Roy
+- Status: Pending — Samita said Modern Living would share contact name/number on 3/18; no follow-up visible
+- Next step: Check with Modern Living if installation was done as scheduled; get confirmation from client at Kokrajhar.
+
+---
+
+### 📦 PARENT TASK D9: Steel Fabrication — Baishya Steel (Narmohan Da) — Gates/Grills
+**Entity:** Vendor: Baishya Steel (Narmohan Da, +91 863 849 0032)
+**Item:** Steel gates/grills (fabrication in progress as of 3/13)
+**Status:** In Progress — welding/fabrication photo shared 3/13; size confirmed; no delivery date visible
+**Priority:** Medium
+**Source threads:** Thread 4 (3/13–3/15)
+
+↳ **SUBTASK D9.1:** Follow up with Baishya Steel on fabrication completion and delivery date
+- Assigned to: Pramod Babu
+- Status: Pending — last update was progress photo 3/13; Ashish asked Pramod to track 3/15
+- Next step: Call Narmohan Da at Baishya Steel to get completion date; coordinate delivery/transport.
+
+---
+
+### 📦 PARENT TASK D10: Hair Clippers / Trimmers — Amazon Procurement (2 units each)
+**Entity:** Client: Unidentified (internal request via Samita Roy 3/19)
+**Item:** VGR V-654 Hair Clipper x2 + VGR Rosso Trimmer x2 (Amazon links provided); also GeM link with Ashish's percentage
+**Status:** Pending — Samita requested Amazon ordering + GeM link; no confirmation
+**Priority:** Low
+**Source threads:** Thread 4 (3/19)
+
+↳ **SUBTASK D10.1:** Place Amazon order for hair clippers and trimmers; prepare GeM link
+- Assigned to: Abhisha / Samita Roy
+- Status: Pending
+- Next step: Order 2 units of each (VGR V-654 and VGR Rosso) via Amazon; separately prepare GeM link with Ashish's firm's margin included; share both with requesting client.
+
+❓ **CLIENT UNIDENTIFIED:** Request came through internal tasks group — client/unit identity not stated. Needs human review to identify which unit this is for before processing.
+
+---
+
+### 📦 PARENT TASK D11: 21 Mountain Division / Table Napkins — Hav Wagh Balu
+**Entity:** Client: 21 Mountain Division, Rangiya — 'A' Mess (Hav Wagh Balu, +91 86007 73019)
+**Item:** Table napkins — Size 21" x 22", 25 pieces
+**Status:** In Progress — size and quantity confirmed 3/18; no order or sourcing confirmation
+**Priority:** Medium
+**Source threads:** Thread 4 (3/18)
+
+↳ **SUBTASK D11.1:** Source and deliver 25 table napkins (21x22 inch)
+- Assigned to: Pramod Babu / Rahul
+- Status: Pending
+- Next step: Source 25 table napkins at 21"x22" size; confirm cost; deliver to 21 Mtn Div Rangiya 'A' Mess.
+
+---
+
+### 📦 PARENT TASK D12: 264 Field Workshop — Delivery Completed
+**Entity:** Client: 264 Fd Wk Sp
+**Status:** Delivered 3/16 ✅ (Sammsul confirmed "264 FD wk sp item delivered")
+**Priority:** Completed
+**Source threads:** Thread 4 (3/16)
+
+---
+
+### 📦 PARENT TASK D13: Cooling Equipment — Enquiries (Air Cooler, Grease, Water Dispenser Components)
+**Entity:** Internal sourcing
+**Items:**
+- Coldwave Heavy Duty Copper Air Cooler @ ₹16,500 + GST (transport ₹4,000–4,500 extra) — Thread 4 3/13
+- Alternate cooler: Bajaj United Marketing @ ₹10,600 — Thread 4 3/13
+- Grease (4-ton @ ₹4,800 + GST Classic; 8,500 + GST Unique from Assam Motor) — Thread 4 3/11
+**Status:** Enquiry stage — no orders placed; awaiting client approval
+**Priority:** Low
+**Source threads:** Thread 4 (3/11, 3/13)
+
+↳ **SUBTASK D13.1:** Present air cooler options to relevant client and get approval
+- Assigned to: Samita Roy
+- Status: Pending
+- Next step: Share both cooler quotes (₹16,500 Coldwave vs ₹10,600 Bajaj) with the requesting unit; get client decision.
+
+❓ **CLIENT UNIDENTIFIED:** Which unit/client this cooler is for is not explicitly stated in Thread 4; needs human review.
+
+---
+
+## CLUSTER E: FINANCIAL SUMMARY — OUTSTANDING ITEMS
+
+### 📦 PARENT TASK E1: Accounts Reconciliation — All Pending Payments & Bills
+
+↳ **SUBTASK E1.1:** Payments made without confirmed GST bills — follow up list
+
+| Vendor | Amount Paid | Date | GST Bill Status |
+|---|---|---|---|
+| Associated Electricals | ₹6,400 | 16-03-2026 | ⚠️ Not received as of 3/16 15:22 |
+| Avi International | ₹15,000 | 06-03-2026 | ⚠️ Challan nos given; GST bill status unknown |
+| Avi International | ₹20,000 | Due 3/4 | ⚠️ Payment not confirmed; bill pending |
+| Charu Enterprise | ₹21,000 | Due 3/5 | ⚠️ Payment not confirmed; bill pending |
+| Flexi Sign Tangla | ₹2,100 | 09-03-2026 | ⚠️ Without GST (noted by client) |
+| Ram Ram Sahab | ₹7,000 | 13-03-2026 | ⚠️ Bill status unknown |
+| Kashmiri Saikia | ₹1,440 | 10-03-2026 | ⚠️ Bill status unknown |
+
+↳ **SUBTASK E1.2:** Statement for March 2026 — Ashish shared "state mar 2026.pdf" with Sub Arvind Sir (3/23)
+- Assigned to: Ashish
+- Status: Sent — client said "OK sir"; client asked to flag mistakes or missing challans
+- Next step: Await client feedback on statement; if discrepancies found, correct and resubmit.
+
+---
+
+## ⚠️ GLOBAL FLAGS
+
+1. **High Volume of Media Omitted** — Thread 1 and Thread 4 contain a very large number of `<Media omitted>` entries. Critical information (product images, invoices, delivery challans, payment screenshots) may be contained in these; the task list above is based only on text-deducible information. Human review of actual media is essential before finalising task status.
+
+2. **Two confirmed unprocessed payments** — ₹21,000 to Charu Enterprise and ₹20,000 to unidentified UPI (9864923247) — both requested by Sub Arvind Sir (SATA client) with promise of bills; no payment confirmations visible. If not yet paid, these are overdue and may affect client relationship.
+
+3. **DY GOC Madam order (Task D5)** — OTG rate still missing; 20-day gap since requirement raised (3/5) with no visible quote preparation. This is a very senior client requirement — escalate immediately.
+
+4. **SATA bid opening 24 Mar (Task A7)** — as of the latest message (3/24), bid opening was same-day or imminent. Confirm participation outcome.
+
+5. **Amazon orders (Task A10)** — Client shared 3 Amazon links on 3/3 (Gas stove, Mobile stands, Air fryer) with no staff response or order confirmation visible in 21 days of conversation. Very high risk of these being silently dropped.
+
+6. **GeM portal 24-hour delay** — Ashish flagged GeM was running ~24 hours behind (3/14); verify if this affected bid timings for Task A7 or any other GeM procurement.
+
+7. **Sanmati curtain — hold reason unknown** (Task D3.1) — Ashish said "sanmati ka curtain hold, dont go there" on 3/12 without explanation. If there is a vendor trust or quality issue with Sanmati, this should be documented for future orders.
+
+8. **Thread 4 mentions "Stn Hq Darranga Clk Lal Mohammad Ji" (contact added 3/2)** — context for this contact not clear from thread; may relate to a separate order or delivery coordination not visible in these threads.
+
+9. **Planter collection (Thread 4, 3/13)** — Rahul went to godown to collect planter; Samita Roy asked to coordinate. No delivery confirmation visible; verify planter was delivered to correct client.
+
+10. **Food warmer at Oswal** — Sammsul confirmed "not arrived yet, in transport" on 3/9; no further update. Verify if food warmer has arrived and been delivered.
+
+---
+
+## ❓ AMBIGUOUS CORRELATIONS (Needs Human Review)
+
+1. **"Uska maal" references** — Several generic references to goods in Thread 4 without explicit item/client tags (e.g., 3/2 Sammsul photos of fans, battery, UPS). Cannot determine definitively which client/order these relate to without viewing the media. Human review of those images needed.
+
+2. **₹20,000 payment to 9864923247 (Thread 1, 3/4)** — Recipient identity unknown from text. Sub Arvind Sir said "bill milega" — suggests a vendor, not staff. Cannot determine which item/order this payment is for. Human review needed.
+
+3. **₹3,450 stabilizer (Thread 1, 3/23 18:55)** — Ashish shared photos and quoted ₹3,450 for a stabilizer. Context suggests this is for SATA Bty Bn order (Task A4), but it immediately follows a different conversation strand about the statement PDF. Tentative merge with A4 — flag for confirmation.
+
+4. **"Return from Arty Bde" (Thread 4, 3/18)** — Sammsul shared a photo and wrote "return from Arty bde." It is unclear which item was returned, why, and which client/order this affects. Human review of the media and context needed.
+
+5. **Air Fryer (Thread 1, 3/3 20:26)** — Mentioned by Sub Arvind Sir as "also check karna, maximum large capacity." Not in original order list (3/1). It is unclear if this is an addition to the SATA order or a new separate requirement. Tentatively added to Task A10 as an addition — flag for confirmation.
+
+6. **"Vil rahman — 500/- auto fare" (Thread 4, 3/5)** and other small cash payments — Multiple small transport/miscellaneous payments in Thread 4 (auto fares, rice, pharma items) cannot be reliably attributed to specific client orders without more context. These appear to be operational expenses; human review recommended to assign to correct cost centres.
+
+7. **GeM items in Thread 1 (3/3 — nameplate, battery, PID controller, winch motor)** — These technical/industrial items (e-rickshaw battery, PID controller, winch motor) appear significantly different from the consumer goods in the original SATA order list. It is unclear whether these are part of the SATA order or a different Army unit's procurement being handled simultaneously in the same group. **Keep as separate items within SATA cluster but flag for human confirmation** — if Sub Arvind Sir represents multiple procurement streams, these may be for a different unit/purpose.

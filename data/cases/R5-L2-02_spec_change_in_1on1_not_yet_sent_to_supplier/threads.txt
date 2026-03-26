@@ -1,0 +1,14 @@
+=== THREAD 1: Supplier Group (Ashish + Staff 1 + Supplier A) ===
+[19 Mar 10:00] Ashish: bhai heavy duty tandoor 1 nos chahiye
+[19 Mar 10:30] Supplier A: haan hai - 52000 + GST
+[19 Mar 10:45] Ashish: ok confirm, kal bhejna
+[19 Mar 11:00] Supplier A: theek hai, kal subah dispatch kar denge
+
+=== THREAD 2: Ashish + Staff 1 (1:1 chat) ===
+[19 Mar 14:30] Ashish: Staff 1 - client ne bola standard quality chahiye, heavy duty nahi lena unhe
+[19 Mar 14:31] Ashish: supplier ko update karo aaj hi - abhi dispatch mat karne do
+[19 Mar 14:45] Staff 1: ok sir
+
+=== THREAD 3: All Staff Group ===
+[19 Mar 09:00] Ashish: aaj Supplier A ko tandoor order confirm karo
+[19 Mar 09:30] Staff 1: done

@@ -1,0 +1,18 @@
+{
+  "id": "R3-C-L1-02",
+  "name": "two_different_item_orders_same_client_separate_thr",
+  "framework": "R3-C",
+  "level": "L1",
+  "sprint": "S1",
+  "data_source": "fully-synthetic",
+  "description": "Two different item orders, same client, separate threads — must stay separate",
+  "chat_inputs": null,
+  "completeness": {
+    "complete": true,
+    "missing": []
+  },
+  "expected_output": "Two separate parent tasks for Client A: Tandoor order and Generator order. Different items, same client.",
+  "pass_criteria": "PASS: Two separate parent tasks for different items. FAIL: Both items grouped under single order.",
+  "challenge": "Same client placing two different orders on different days. Must not conflate into one order.",
+  "notes": "Tests item-level order separation for same client"
+}

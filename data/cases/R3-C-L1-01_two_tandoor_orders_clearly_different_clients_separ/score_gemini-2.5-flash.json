@@ -1,0 +1,53 @@
+{
+  "verdict": "PASS",
+  "overall_score": 91,
+  "dimensions": {
+    "task_recall": {
+      "score": 93,
+      "notes": "Both parent tasks are correctly identified and fully elaborated with subtasks. Client A (2 units, urgent, awaiting supplier confirmation) and Client B (1 unit, quotation stage) are both captured. Implicit subtasks such as obtaining quotes and securing order confirmation are also surfaced. No meaningful task omissions detected."
+    },
+    "entity_accuracy": {
+      "score": 92,
+      "notes": "Client A linked to 2 tandoors with urgent/high priority; Client B linked to 1 tandoor at quotation stage with medium priority. Staff member Ashish is correctly attributed to both threads. Source threads are accurately tagged per parent task. No cross-attribution errors observed."
+    },
+    "cross_thread_correlation": {
+      "score": 95,
+      "notes": "The agent explicitly confirms no ambiguous correlations and correctly keeps the two tandoor orders fully separate across their respective threads. The 'AMBIGUOUS CORRELATIONS: None' section directly addresses the risk of merging, and no cross-thread conflation occurred."
+    },
+    "next_step_quality": {
+      "score": null,
+      "notes": null
+    },
+    "implicit_task_detection": {
+      "score": null,
+      "notes": null
+    },
+    "ambiguity_flagging": {
+      "score": 88,
+      "notes": "The agent flags the tight deadline risk for Client A, missing supplier engagement, and delivery commitment risk clearly. For Client B, the supplier sourcing ambiguity (whether Ashish's rate is based on a current full supplier quote) is flagged. The explicit 'AMBIGUOUS CORRELATIONS: None' statement is a good proactive declaration. Minor deduction: the 'Due: Not explicitly mentioned, but implied soon' for Client B could have been flagged more explicitly as an ambiguity requiring human clarification rather than a soft assumption."
+    }
+  },
+  "pass_criteria_met": true,
+  "passes": [
+    "Two separate parent task records created — one for Client A (2 units, urgent) and one for Client B (1 unit, quotation stage)",
+    "Correct client-to-order linkage with no cross-attribution",
+    "Tasks are not merged into a single tandoor order",
+    "Priority differentiation correctly applied (High for Client A, Medium for Client B)",
+    "Status stages accurately reflect thread content: Client A awaiting supplier confirmation, Client B at rate-submission stage",
+    "Source threads correctly tagged per parent task",
+    "Explicit statement that no ambiguous cross-thread correlations exist",
+    "Flags for operational risks (tight deadline, missing supplier engagement) are clearly surfaced"
+  ],
+  "failures": [
+    "Client B due date ambiguity ('implied soon') is treated as a soft assumption rather than explicitly flagged for human review",
+    "Minor: implicit subtasks are useful but their sourcing basis (SOP steps) could be clearer without domain-specific jargon that the client may not recognise"
+  ],
+  "notes": "The agent cleanly passes the core criterion: two fully separate parent task records, each correctly linked to the right client, with no merging or cross-attribution. The output is operationally useful, well-structured, and demonstrates good ambiguity awareness. The small deductions are for the soft handling of the missing due date on Client B and minor verbosity in SOP references, neither of which would cause an operational failure.",
+  "case_id": "R3-C-L1-01",
+  "case_name": "two_tandoor_orders_clearly_different_clients_separ",
+  "framework": "R3-C",
+  "level": "L1",
+  "evaluated_at": "2026-03-26T05:00:48",
+  "model_used": "gemini-2.5-flash",
+  "eval_model": "claude-sonnet-4-6"
+}

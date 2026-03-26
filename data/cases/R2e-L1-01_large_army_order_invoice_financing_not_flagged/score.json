@@ -1,0 +1,44 @@
+{
+  "verdict": "PASS",
+  "overall_score": 97,
+  "dimensions": {
+    "task_recall": {
+      "score": 98,
+      "notes": "All core operational tasks are captured — supplier advance payment, delivery date confirmation, PO issuance, Army delivery coordination, gate pass, inspection, DO/GRN collection, invoicing, and payment follow-up. The critical implicit financial task (cash flow gap) is captured as Subtask 12 and also elevated as Flag 7. Calendar-triggered year-end tasks are a bonus. No meaningful task omissions detected."
+    },
+    "entity_accuracy": null,
+    "cross_thread_correlation": null,
+    "next_step_quality": {
+      "score": 97,
+      "notes": "Next steps are specific, actionable, and correctly assigned. The Subtask 12 next step is particularly strong: it tells Ashish exactly what to assess, frames the decision (absorb from working capital vs. invoice financing/bill discounting/bank OD), and critically sets the timing as 'before transferring the advance tomorrow' — making it an active decision gate rather than a passive note. The summary section reinforces this as Item 2. The advance tax flag with a specific date reference (Q4 deadline was 15 Mar) shows high-quality contextual reasoning. Minor: 'make advance conditional on delivery date' is a strong prescriptive recommendation that may or may not align with Ashish's supplier relationship — slightly overreaches, but not a material failure."
+    },
+    "implicit_task_detection": {
+      "score": 97,
+      "notes": "The agent correctly identifies the core implicit task: Rs 3,15,000 advance out immediately + 60-90 day Army payment cycle = material working capital gap. Subtask 12 explicitly frames this as a cash flow exposure flag and invites Ashish to evaluate financing options rather than prescribing a solution — perfectly matching the pass criteria. Additional implicit tasks detected include: PO issuance (no formal PO for a Rs 6.3L order), gate pass/Army entry documentation, margin verification (Flag 8 — potentially zero margin), balance payment terms to supplier (Flag 5), and spec confirmation risk. These go well beyond the minimum pass criteria. Calendar-triggered implicit tasks (year-end, advance tax) are correctly detected. The agent avoids over-prescribing by framing cash flow as 'Ashish to assess' rather than 'do invoice financing.'"
+    },
+    "ambiguity_flagging": null
+  },
+  "pass_criteria_met": true,
+  "passes": [
+    "Cash flow gap explicitly flagged: Rs 3,15,000 advance payable 19 Mar against 60-90 day Army payment cycle identified as material working capital exposure",
+    "Invoice financing, bill discounting, and bank OD named as options for Ashish to evaluate — not prescribed, correctly framed as Ashish's decision",
+    "Subtask 12 correctly positioned as a gate before the advance transfer, not as a post-hoc note",
+    "Summary section elevates working capital assessment as Item 2 of immediate morning actions, ensuring it is not buried",
+    "Flag 7 additionally surfaces the full exposure including remaining 50% balance, escalating the risk beyond the minimum flag",
+    "Margin verification flag (Flag 8) is a high-value implicit detection: supplier total appears to equal client quote, implying potentially zero gross margin",
+    "Army-specific implicit tasks correctly detected: gate pass, receiving officer, DO/GRN requirement, payment contact protocol",
+    "Year-end and advance tax implicit tasks are contextually relevant and well-reasoned",
+    "Agent correctly avoids prescribing a specific financing solution, consistent with 'TBC with Ashish' framing in pass criteria"
+  ],
+  "failures": [
+    "Minor: recommendation to make advance transfer conditional on delivery date confirmation is slightly prescriptive about Ashish's supplier relationship — could have been framed as a consideration rather than a recommendation, but this does not affect pass/fail on any active dimension"
+  ],
+  "notes": "This is an excellent output. The agent not only meets the pass criteria for the cash flow flag but materially exceeds it — the flag is given its own subtask, elevated in the flags section, and made a first-priority morning action. The framing is careful and appropriate: options are listed (invoice financing, bill discounting, bank OD) without prescribing a solution, and Ashish is prompted to evaluate before committing the advance. The additional implicit tasks detected (margin risk, balance payment terms, supplier spec confirmation, gate pass, DO/GRN) demonstrate strong contextual reasoning about Army procurement dynamics. The overall output is operationally comprehensive and financially aware.",
+  "case_id": "R2e-L1-01",
+  "case_name": "large_army_order_invoice_financing_not_flagged",
+  "framework": "R2",
+  "level": "L1",
+  "evaluated_at": "2026-03-26T06:30:49",
+  "model_used": "claude-sonnet-4-6",
+  "eval_model": "claude-sonnet-4-6"
+}

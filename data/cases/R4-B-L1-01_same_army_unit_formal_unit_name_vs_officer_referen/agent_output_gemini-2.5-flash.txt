@@ -1,0 +1,44 @@
+UNIFIED TASK LIST — 24 Mar
+Threads processed: Client Group
+
+📦 PARENT TASK: Order for 51 Sub Area
+   Entity: 51 Sub Area (customer), Colonel Sahab (client contact), Ashish, Staff 1
+   Item: Unidentified (needs human review)
+   Status: In Progress — Order confirmed, delivery details pending
+   Due: Not specified, implicit urgency as it's an Army order
+   Priority: Medium
+   Source threads: Client Group
+
+   ↳ SUBTASK 1: Confirm delivery date with Colonel Sahab / 51 Sub Area
+      Assigned to: Staff 1
+      Status: Pending
+      Due: Not specified, implied soon
+      Next step: Staff 1 to contact Colonel Sahab to finalize the delivery date for the confirmed order.
+
+   ↳ SUBTASK 2: Get delivery date commitment from supplier — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Army Direct Delivery orders (Type 3, Step 8). Supplier delivery commitment is a prerequisite for confirming with the client. No message evidence found.
+      Next step: Staff 1 to identify the supplier for this order and obtain a firm delivery date commitment.
+
+   ↳ SUBTASK 3: Issue Purchase Order (PO) to supplier — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected after client order confirmation for standard procurement (Type 3, Step 6).
+      Next step: Ashish or Staff 1 to ensure a formal Purchase Order is raised and sent to the identified supplier.
+
+   ↳ SUBTASK 4: Complete Army unit coordination (full address, receiving officer) — implicit task
+      Status: Pending — not fully detected in threads
+      Note: For Army Direct Delivery (Type 3, Step 11), full delivery coordinates and receiving personnel details are critical beyond just the date.
+      Next step: Staff 1 to gather the precise delivery address, receiving officer's name, contact, and specific entry instructions from Colonel Sahab.
+
+   ↳ SUBTASK 5: Arrange Gate pass / entry documentation — implicit task
+      Status: Pending — not detected in threads
+      Note: Critical requirement for Army Direct Deliveries (Type 3, Step 12) to ensure smooth entry and delivery.
+      Next step: Staff 1 to inquire with Colonel Sahab about required gate pass or entry documentation and initiate the process.
+
+⚠️ FLAGS:
+   - Item details missing for "51 Sub Area" order.
+   - No explicit mention of a supplier or a committed delivery date *from* a supplier. This is a potential blocker for confirming with the client.
+   - Several critical pre-delivery steps for Army orders (PO, full coordination, gate pass) are not yet visible in the conversation and need to be initiated.
+
+❓ AMBIGUOUS CORRELATIONS (needs human review):
+   - None in this example.

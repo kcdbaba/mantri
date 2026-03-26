@@ -1,0 +1,56 @@
+{
+  "verdict": "PASS",
+  "overall_score": 92,
+  "dimensions": {
+    "task_recall": {
+      "score": 95,
+      "notes": "All three delivery tasks (SATA, Tezpur, Ranchi) are captured with rich subtask breakdowns. The April pipeline (Malerkotla supplier) is also identified. Year-end cadence tasks are explicitly surfaced in a dedicated global section — accounts reconciliation, GST reconciliation, stock-take/inventory, and additional items like advance tax review and outstanding receivables review. No required task is missing; in fact the agent surfaces more than the minimum expected."
+    },
+    "entity_accuracy": {
+      "score": null,
+      "notes": null
+    },
+    "cross_thread_correlation": {
+      "score": null,
+      "notes": null
+    },
+    "next_step_quality": {
+      "score": 91,
+      "notes": "Next steps are specific, actionable, and well-calibrated. For deliveries: invoice raising, GRN collection, payment follow-up diarising, and year-end GST inclusion are all correctly prescribed with responsible parties (Ashish vs staff). For calendar tasks: accounts compilation, GST filing, stock-take initiation, and CA consultation are actionable and appropriately time-sensitive. The Ranchi year-end invoice urgency (raise same day on 30 Mar) is especially well-reasoned. Minor gap: some next steps assume invoice hasn't been raised but don't provide fallback if it has already been done."
+    },
+    "implicit_task_detection": {
+      "score": 96,
+      "notes": "Exceptional implicit task detection. The agent independently surfaces: (1) month-end accounts reconciliation, (2) GST reconciliation for March / financial year-end, (3) stock-take / inventory check embedded in Calendar Task 3, (4) advance tax review, (5) outstanding receivables review. It correctly identifies 29 Mar as year-end (not just month-end), which is more precise than the test case expected. Invoice and GRN implicit tasks per delivery are also well-identified. The agent goes beyond the pass criteria by surfacing 5+ implicit cadence tasks unprompted."
+    },
+    "ambiguity_flagging": {
+      "score": null,
+      "notes": null
+    }
+  },
+  "pass_criteria_met": true,
+  "passes": [
+    "All three delivery tasks (SATA, Tezpur, Ranchi) correctly identified and structured",
+    "End-of-month accounts reconciliation explicitly surfaced as Calendar Task 1, unprompted",
+    "GST reconciliation for March explicitly surfaced as Calendar Task 2, unprompted",
+    "Stock-take / inventory check surfaced within Calendar Task 3, unprompted",
+    "Agent correctly identifies 29 Mar as financial year-end (not just month-end), adding appropriate urgency",
+    "Ranchi invoice urgency on 30 Mar is correctly flagged as time-critical for FY closure",
+    "April orders pipeline (Malerkotla) captured as a separate parent task",
+    "Implicit invoice and GRN tasks surfaced for each delivery independently",
+    "Advance tax and outstanding receivables review added as additional year-end implicit tasks",
+    "Next steps are specific, include responsible parties, and are appropriately time-ordered"
+  ],
+  "failures": [
+    "Item types for all three deliveries remain unspecified — agent flags this correctly but cannot resolve it; not a failure of the agent per se, but a data gap worth noting",
+    "Some next steps slightly overlap across subtasks within the same parent (e.g. GST reconciliation noted at both subtask level and global level), which adds verbosity without additional actionability",
+    "Advance tax deadline (15 Mar) is cited as already passed without caveat that this may not apply to all business structures — minor accuracy risk if the user acts on it without CA verification"
+  ],
+  "notes": "The agent significantly exceeds the minimum pass criteria. It not only surfaces all three required cadence tasks (accounts reconciliation, GST reconciliation, stock-take) but adds advance tax review and outstanding receivables review as additional year-end implicit tasks — all unprompted. The recognition that 29 Mar is financial year-end (not just calendar month-end) in the Indian context is a meaningful insight. Output is well-structured, hierarchical, and operationally actionable. The main weaknesses are minor: some redundancy between per-delivery GST subtasks and the global calendar section, and a slightly assertive advance tax statement. Overall this is a high-quality response that would provide real operational value.",
+  "case_id": "R2a-L1-02",
+  "case_name": "end_of_month_accounts_stock_cadence_missed",
+  "framework": "R2",
+  "level": "L1",
+  "evaluated_at": "2026-03-26T06:30:53",
+  "model_used": "claude-sonnet-4-6",
+  "eval_model": "claude-sonnet-4-6"
+}

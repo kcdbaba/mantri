@@ -1,0 +1,74 @@
+```
+UNIFIED TASK LIST — 24 Mar
+Threads processed: Client Group (Ashish + Staff 1 + Client A), All Staff Group
+
+📦 PARENT TASK: Tandoor Delivery — Client A
+   Entity: Client A (customer)
+   Item: Tandoor
+   Status: Completed — delivery confirmed by client and staff
+   Due: 24 Mar (same-day delivery per Ashish's morning instruction)
+   Priority: High → Resolved
+   Source threads: Client Group, All Staff Group
+
+   ↳ SUBTASK 1: Deliver tandoor to Client A
+      Assigned to: Staff 1 / Driver (unnamed)
+      Status: Completed
+      Due: 24 Mar — met
+      Next step: No action required. Delivery confirmed independently by Staff 1
+      (11:30 in Client Group), Client A (11:45), and Staff 1 again in All Staff
+      Group (12:00). All three signals are consistent.
+
+   ↳ SUBTASK 2: Raise invoice to Client A — implicit task
+      Assigned to: Ashish / Staff 1
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Standard Equipment Procurement (Type 1,
+      Step 16) and Army Direct Delivery (Type 3, Step 18) orders. Delivery is
+      confirmed but no invoice mention found in any thread.
+      Next step: Raise and send invoice to Client A promptly. Delivery is
+      complete — invoice should follow immediately.
+
+   ↳ SUBTASK 3: Obtain client acceptance / delivery sign-off — implicit task
+      Assigned to: Staff 1
+      Status: Partially met — verbal/chat acknowledgement received ("haan mila,
+      shukriya") but no formal sign-off, DO, or GRN detected
+      Note: Type 1 Step 15 / Type 3 Step 17. If this is an Army client, a
+      signed delivery note or DO reference is required before invoice can be
+      formally raised and payment pursued.
+      Next step: Confirm whether a signed delivery note, DO, or GRN was
+      obtained at the time of delivery. If not, arrange to collect one — this
+      is a prerequisite for formal invoicing with Army clients.
+
+   ↳ SUBTASK 4: Payment follow-up — implicit task (future, flag for calendar)
+      Assigned to: Ashish / Staff 1
+      Status: Pending — invoice not yet raised; payment cycle not started
+      Note: Type 8 (Collections). First follow-up due ~30 days after invoice
+      date. Not yet actionable but should be calendared once invoice is raised.
+      Next step: Once invoice is raised and due date is communicated to Client
+      A, log a follow-up reminder for Day 30.
+
+⚠️ FLAGS:
+   - No invoice or payment mention in any thread — delivery is complete but
+     the billing step has not been initiated or discussed.
+   - Client acceptance is informal only ("haan mila, shukriya" in chat). If
+     Client A is an Army unit, a signed DO or GRN is required — not detected
+     in any thread.
+   - Driver is unnamed across all threads. No transporter or vehicle reference.
+     If a separate 1:1 chat exists between Staff 1 and the driver/transporter,
+     that thread was not provided — any commitments or issues there would not
+     be visible here.
+   - No mention of inspection or pre-dispatch checklist (Type 1 Steps 11–12)
+     in any thread. Cannot confirm whether these were completed before dispatch.
+     Flagged as a process gap — not necessarily an active problem at this stage
+     since delivery is done, but relevant if any quality issue surfaces later.
+
+❓ AMBIGUOUS CORRELATIONS:
+   - None. All three signals (Staff 1 in Client Group at 11:30, Client A at
+     11:45, Staff 1 in All Staff Group at 12:00) are mutually consistent and
+     clearly refer to the same delivery event. No conflation risk.
+
+📋 STAGE SUMMARY:
+   Delivery: ✅ Complete
+   Formal sign-off / DO: ❓ Unconfirmed
+   Invoice: ❌ Not initiated
+   Payment follow-up: ❌ Not yet applicable — pending invoice
+```

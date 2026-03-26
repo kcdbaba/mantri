@@ -1,0 +1,54 @@
+{
+  "verdict": "PASS",
+  "overall_score": 88,
+  "dimensions": {
+    "task_recall": {
+      "score": 92,
+      "notes": "Both core delivery tasks are identified and tracked independently. Tezpur marked completed, Ranchi marked in-progress with delay. Implicit tasks (DO/GRN, invoice, gate pass, army coordination) are also surfaced. Slightly over-generates implicit subtasks that may not be warranted by thread evidence, but this is a minor concern — no actual task is missed."
+    },
+    "entity_accuracy": {
+      "score": 85,
+      "notes": "Tezpur and Ranchi deliveries are correctly attributed to separate clients with correct items (tandoor). Staff roles are assigned appropriately. The Tezpur delivery completion time is stated as '11:00 (initially planned, met)' but the expected output specifies 10:45 — this is a minor inaccuracy in the status timestamp. Driver and Staff 1/2 linkages are reasonable given the thread data."
+    },
+    "cross_thread_correlation": {
+      "score": 90,
+      "notes": "Despite both orders appearing in a shared staff group thread, the agent correctly separates them by destination and tracks statuses independently. No cross-attribution of updates is observed. The agent explicitly notes in the ambiguity section that the two deliveries are clearly distinguished — demonstrating awareness of the correlation risk and correct resolution."
+    },
+    "next_step_quality": {
+      "score": null,
+      "notes": null
+    },
+    "implicit_task_detection": {
+      "score": null,
+      "notes": null
+    },
+    "ambiguity_flagging": {
+      "score": 82,
+      "notes": "The agent flags the driver delay clearly and surfaces missing documentation tasks as implicit with appropriate uncertainty language ('not detected in threads'). The ambiguity section correctly states no cross-attribution confusion exists. Slight over-confidence in labeling all implicit tasks as 'Army Direct Delivery (Type 3)' without evidence from threads — this assumption is not flagged as uncertain. Minor deduction for not flagging the 10:45 vs. 11:00 completion time discrepancy."
+    }
+  },
+  "pass_criteria_met": true,
+  "passes": [
+    "Two separate delivery tasks are created with distinct parent tasks for Tezpur and Ranchi",
+    "Tezpur delivery correctly marked as completed",
+    "Ranchi delivery correctly marked as in-progress with driver delay noted",
+    "Delay magnitude captured: original 14:00 ETA revised to 15:00",
+    "No cross-attribution of status updates between the two orders",
+    "Explicit statement that the two deliveries are clearly distinguished — no conflation",
+    "Flags section clearly highlights the Ranchi delay for operational attention",
+    "Staff and driver entity assignments are separated correctly per order"
+  ],
+  "failures": [
+    "Tezpur completion time stated as 11:00 but expected output specifies 10:45 — minor but traceable inaccuracy",
+    "Implicit subtasks (gate pass, pre-dispatch checklist, army coordination) are generated without thread evidence and labeled as 'Army Direct Delivery (Type 3)' without flagging this classification as an assumption rather than a confirmed order type",
+    "No explicit flag that the 'Type 3' classification is inferred rather than stated in the threads"
+  ],
+  "notes": "This is a strong output for the most complex L3 scenario. The agent correctly separates two concurrent deliveries interleaved in a shared group chat, tracks independent statuses, and avoids the primary failure mode of cross-attribution. The main deduction is a minor timestamp inaccuracy (10:45 vs 11:00 for Tezpur completion) and some over-confident implicit task generation that labels order type without flagging it as an assumption. Operationally, this output would not cause confusion or misrouted actions — both client deliveries are clearly and correctly tracked.",
+  "case_id": "R3-C-L3-01",
+  "case_name": "two_concurrent_orders_references_interleaved_in_sh",
+  "framework": "R3-C",
+  "level": "L3",
+  "evaluated_at": "2026-03-26T05:02:00",
+  "model_used": "gemini-2.5-flash",
+  "eval_model": "claude-sonnet-4-6"
+}

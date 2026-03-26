@@ -1,0 +1,14 @@
+=== THREAD 1: All Staff Group ===
+[29 Mar 09:00] Ashish: aaj 3 deliveries hain - SATA, Tezpur, aur Ranchi
+[29 Mar 09:30] Staff 1: ok sir
+[29 Mar 14:00] Staff 1: SATA delivery ho gayi
+[29 Mar 16:30] Staff 2: Tezpur bhi done
+[29 Mar 17:45] Staff 1: Ranchi driver raat ko jayega, kal subah pahunchega
+
+=== THREAD 2: Supplier Group (Ashish + Malerkotla Supplier) ===
+[29 Mar 10:00] Ashish: bhai April ke liye 2 aur orders aane wale hain
+[29 Mar 10:15] Malerkotla Supplier: theek hai sir, batao
+
+=== THREAD 3: Client Group (Ashish + SATA) ===
+[29 Mar 15:00] SATA: maal mil gaya, thanks
+[29 Mar 15:01] Ashish: shukriya sir

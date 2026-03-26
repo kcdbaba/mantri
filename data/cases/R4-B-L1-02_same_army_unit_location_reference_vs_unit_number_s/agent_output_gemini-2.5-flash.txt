@@ -1,0 +1,45 @@
+UNIFIED TASK LIST — 24 Mar
+Threads processed: Client Group
+
+📦 PARENT TASK: Delivery to 51 Sub Area Tezpur
+   Entity: 51 Sub Area Tezpur (Client), Staff 1 (Staff), Ashish (Management)
+   Item: Order items (unspecified)
+   Status: In Progress — Preparing for delivery
+   Due: 25 Mar (delivery date)
+   Priority: High
+   Source threads: Client Group
+
+   ↳ SUBTASK 1: Confirm order completion status for 51 Sub Area Tezpur
+      Assigned to: Staff 1
+      Status: Pending — Ashish has raised a query
+      Due: 24 Mar (today)
+      Next step: Staff 1 needs to verify internally that all items for the 51 Sub Area Tezpur order are ready for dispatch and confirm this status.
+
+   ↳ SUBTASK 2: Arrange delivery to Tezpur unit
+      Assigned to: Staff 1
+      Status: In Progress — Planning for 25 Mar delivery
+      Due: 25 Mar
+      Next step: Finalize transport logistics and communicate expected delivery time to the client (if appropriate).
+
+   ↳ SUBTASK 3: Army unit coordination — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for TYPE 3: Army Direct Delivery orders. No message evidence found.
+      Next step: Confirm exact receiving address and contact person at 51 Sub Area Tezpur.
+
+   ↳ SUBTASK 4: Gate pass / entry documentation arranged — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for TYPE 3: Army Direct Delivery orders. No message evidence found.
+      Next step: Identify and prepare all necessary documentation for entry into the Army unit (e.g., gate pass, internal approvals).
+
+   ↳ SUBTASK 5: Pre-dispatch checklist completed — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for TYPE 3: Army Direct Delivery orders. No message evidence found.
+      Next step: Perform a final check of all items against the order, ensuring correct quantity, quality, and packaging before dispatch.
+
+⚠️ FLAGS:
+   - Item details for the order are not specified in the conversation.
+   - Ashish's immediate query about order completion after Staff 1's delivery update suggests a potential internal coordination gap or need for verification before delivery.
+   - Critical Army-specific steps (unit coordination, gate pass, pre-dispatch) are not explicitly mentioned in the conversation, though delivery is planned.
+
+❓ AMBIGUOUS CORRELATIONS (needs human review):
+   - None in this example.

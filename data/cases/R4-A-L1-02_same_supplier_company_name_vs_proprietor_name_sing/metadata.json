@@ -1,0 +1,18 @@
+{
+  "id": "R4-A-L1-02",
+  "name": "same_supplier_company_name_vs_proprietor_name_sing",
+  "framework": "R4-A",
+  "level": "L1",
+  "sprint": "S1",
+  "data_source": "fully-synthetic",
+  "description": "Same supplier, company name vs proprietor name, single thread",
+  "chat_inputs": null,
+  "completeness": {
+    "complete": true,
+    "missing": []
+  },
+  "expected_output": "Single supplier entity: Suresh / S.K. Enterprises. One delivery task: Maal expected tomorrow morning.",
+  "pass_criteria": "PASS: Single supplier entity. FAIL: Separate records for 'S.K. Enterprises' and 'Suresh ji'.",
+  "challenge": "Company name (S.K. Enterprises) and proprietor name (Suresh ji) used interchangeably in same thread.",
+  "notes": "Company + proprietor name variant - common in Indian SME context"
+}

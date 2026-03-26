@@ -1,0 +1,18 @@
+{
+  "id": "R3-C-L3-01",
+  "name": "two_concurrent_orders_references_interleaved_in_sh",
+  "framework": "R3-C",
+  "level": "L3",
+  "sprint": "S1",
+  "data_source": "fully-synthetic",
+  "description": "Two concurrent orders, references interleaved in shared staff group",
+  "chat_inputs": null,
+  "completeness": {
+    "complete": true,
+    "missing": []
+  },
+  "expected_output": "Two separate delivery tasks: Tezpur tandoor delivery (completed 10:45) and Ranchi tandoor delivery (delayed, driver now 3pm). Each with correct status.",
+  "pass_criteria": "PASS: Two separate delivery tasks with correct client attribution and independent status tracking. FAIL: Updates cross-attributed or tasks merged.",
+  "challenge": "Two concurrent same-item deliveries discussed in interleaved conversation in single shared thread. Agent must track both separately without conflating updates.",
+  "notes": "Most complex L3 scenario — real-world parallel delivery coordination"
+}

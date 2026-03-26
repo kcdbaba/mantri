@@ -1,0 +1,116 @@
+I'll process this input carefully before producing the task list.
+
+---
+
+## Pre-Processing Notes
+
+**Thread coverage**: Only 1 thread provided (Supplier Group). No client thread, no staff group thread, no transporter thread. This is a very thin slice.
+
+**Entity resolution**:
+- "Sharma ji" (Staff 1, 09:00) and "Sharma bhai" (Ashish, 10:30) — two name variants in the same thread, referring to the supplier. Same topic (tandoor delivery today), same timing, no contradicting signals. **Tentative merge → Supplier = "Sharma" (assumed same person)**. Flagging for human confirmation.
+
+**What is known**:
+- A tandoor delivery is expected today (24 Mar), by afternoon (~dopahar = noon–2pm)
+- Ashish wants an exact time confirmed
+- No client identity visible in this thread
+- No delivery address, no quantity, no order value mentioned
+- No confirmation of exact time yet (Ashish's request at 10:30 has no reply in this thread)
+
+**What is unknown**:
+- Which client this tandoor is for
+- Whether this is a single unit or multiple
+- Whether transport is arranged or Sharma is self-delivering
+- Whether Staff 1 has followed up on Ashish's 10:30 instruction (no reply shown)
+
+---
+
+```
+UNIFIED TASK LIST — 24 Mar
+Threads processed: Supplier Group (Ashish + Staff 1 + Supplier)
+
+📦 PARENT TASK: Tandoor Delivery — Supplier: Sharma (client unknown)
+   Entity: Supplier — Sharma [alias merge: "Sharma ji" + "Sharma bhai" treated 
+           as same person — flagged for confirmation]
+           Client — unidentified, needs human review
+   Item: Tandoor
+   Status: In Progress — delivery confirmed for today, exact time pending
+   Due: 24 Mar, afternoon (supplier said "dopahar tak")
+   Priority: High (same-day delivery, time confirmation outstanding)
+   Source threads: Supplier Group
+
+   ↳ SUBTASK 1: Get exact delivery time from Sharma
+      Assigned to: Staff 1 (implied — Ashish directed this at 10:30)
+      Status: Pending — no reply visible after Ashish's 10:30 instruction
+      Due: Immediately (today's delivery, time window unclear)
+      Next step: Staff 1 to call Sharma directly and get a specific ETA, 
+                 then post confirmed time to the Supplier Group so Ashish 
+                 can see it.
+
+   ↳ SUBTASK 2: Confirm delivery logistics (transport, address, unloading)
+      Assigned to: Staff 1
+      Status: Pending — no logistics detail visible in this thread
+      Due: Before delivery window
+      Next step: Verify with Sharma whether he is self-delivering or using 
+                 a transporter, confirm the delivery address is correct, 
+                 and check if someone will be present at the delivery site 
+                 to receive and inspect the goods.
+
+   ↳ SUBTASK 3: Identify client for this order and notify them of delivery ETA
+      Assigned to: Ashish / Staff 1
+      Status: Pending — client not identifiable from this thread alone
+      Due: As soon as delivery time confirmed
+      Next step: Once exact time is known from Subtask 1, identify the 
+                 client group or contact for this tandoor order and 
+                 communicate the confirmed delivery window to them.
+
+   ↳ SUBTASK 4: Receive, inspect, and acknowledge delivery
+      Assigned to: Staff 1 (or on-site staff — not specified)
+      Status: Pending — delivery not yet arrived
+      Due: 24 Mar afternoon
+      Next step: Ensure a staff member is physically present at the 
+                 delivery location when Sharma arrives; inspect goods on 
+                 arrival and post confirmation to the relevant group.
+
+⚠️ FLAGS:
+   - Exact delivery time not confirmed — Ashish asked at 10:30, 
+     no response visible. Risk of missed coordination if time 
+     slips without notice.
+   - Client identity not visible in this thread — cannot verify 
+     whether client has been notified of today's delivery.
+   - No quantity mentioned — single unit assumed, but unconfirmed.
+   - No order value, PO, or invoice reference visible — 
+     payment/invoice step cannot be tracked from available data.
+   - Delivery address and unloading arrangements not confirmed 
+     in thread — risk of on-ground confusion at arrival.
+   - Only 1 of likely 3–4 relevant threads provided. 
+     Client group thread and all-staff group thread (if they exist) 
+     may contain significant additional context not visible here.
+
+❓ AMBIGUOUS CORRELATIONS (needs human review):
+   - "Sharma ji" (used by Staff 1) and "Sharma bhai" (used by Ashish) 
+     treated as the same supplier based on consistent context 
+     (same thread, same item, same day). If these are two different 
+     people, this merge is incorrect — please confirm.
+   - Client for this tandoor order is completely unidentified 
+     from this thread. If multiple tandoor orders are currently 
+     active, this task cannot be confidently assigned to the 
+     correct parent order without human input. Please confirm 
+     which client this delivery is for.
+   - Insufficient thread coverage to rule out that this is one 
+     of multiple active tandoor orders. If another tandoor order 
+     exists for a different client, this task must remain separate 
+     from it — do not merge.
+```
+
+---
+
+## Meta-Note on This Test
+
+This was a **very thin input** — 3 messages, 1 thread, no client context. The agent has correctly:
+- Extracted what is knowable
+- Built out the implied task chain (time confirmation → logistics → client notification → receipt/inspection)
+- Flagged the entity alias merge explicitly rather than silently resolving it
+- Refused to invent a client identity
+- Noted the missing threads as a structural gap
+
+The output would be significantly richer with the client group thread and all-staff thread provided alongside this one.

@@ -1,0 +1,39 @@
+UNIFIED TASK LIST — 24 Mar
+Threads processed: Supplier Group, All Staff Group
+
+📦 PARENT TASK: Tandoor Order — Client (Unidentified)
+   Entity: Sharma Supplier (supplier - tentative merge: Sharma ji/bhai), Ashish (business owner), Staff 1 (staff)
+   Item: Tandoor
+   Status: In Progress — goods in transit, awaiting delivery
+   Due: 25 Mar (delivery expected tomorrow)
+   Priority: High (delivery due tomorrow, client is unknown)
+   Source threads: Supplier Group, All Staff Group
+
+   ↳ SUBTASK 1: Receive Tandoor delivery from Sharma Supplier
+      Assigned to: Unassigned (Staff)
+      Status: Pending
+      Due: 25 Mar
+      Next step: Ashish or Staff 1 needs to confirm who will be available at the office/warehouse on 25 Mar to receive the tandoor and inform all relevant staff.
+
+   ↳ SUBTASK 2: Identify Client for Tandoor Order — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Standard Equipment Procurement orders. No message evidence found about the client's identity.
+      Next step: Staff 1 to confirm with Ashish which client this tandoor order is for. Trace back initial enquiry/PO.
+
+   ↳ SUBTASK 3: Confirm Client Order & PO Status — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Standard Equipment Procurement orders (Steps 5 & 6). No message evidence found regarding client confirmation or PO issuance.
+      Next step: After identifying the client, verify if the order was formally confirmed by the client and if a Purchase Order (PO) was issued to Sharma Supplier.
+
+   ↳ SUBTASK 4: Confirm Quote Details (Rate, GST, Delivery Charges) — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Standard Equipment Procurement orders (Steps 2 & 3). No message evidence found regarding the specific quote details.
+      Next step: Staff 1 to confirm full quote details (rate, GST, delivery charges) for this specific tandoor order.
+
+⚠️ FLAGS:
+   - **Client Unidentified**: The most critical information gap is the client's identity for this tandoor order. Without knowing the client, subsequent steps like invoicing or client-specific delivery cannot be planned.
+   - **Reception Unassigned**: Staff 1's query "koi ghar pe rehega?" indicates no specific person has been designated or confirmed to receive the delivery tomorrow, leading to potential delays or issues.
+   - **Information Gap**: Key order details (client, quote, PO) are not visible in the threads, suggesting a potential lack of upstream order logging or communication.
+
+❓ AMBIGUOUS CORRELATIONS (needs human review):
+   - **Entity Alias**: "Sharma ji" (Thread 1) and "Sharma bhai" (Thread 2) are tentatively correlated to "Sharma Supplier". This is a common alias, but human confirmation may be required.

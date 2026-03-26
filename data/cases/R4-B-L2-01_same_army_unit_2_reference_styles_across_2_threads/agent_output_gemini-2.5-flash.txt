@@ -1,0 +1,42 @@
+UNIFIED TASK LIST — 24 Mar
+Threads processed: Client Group, All Staff Group
+
+📦 PARENT TASK: Urgent Delivery to 51 Sub Area (Colonel Sahab)
+   Entity: Colonel Sahab / 51 Sub Area (customer), Staff 1 (staff), Ashish (manager)
+   Item: Unknown (Product/Service)
+   Status: In Progress — critical priority delivery
+   Due: 25 Mar (as per Staff 1; client is moving next week)
+   Priority: High
+   Source threads: Client Group, All Staff Group
+
+   ↳ SUBTASK 1: Confirm specific delivery address and receiving officer at 51 Sub Area
+      Assigned to: Staff 1 (implied)
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Army Direct Delivery orders. No message evidence found.
+      Next step: Contact Colonel Sahab or their representative to confirm precise delivery location, timing, and the name/contact of the officer who will receive the goods.
+
+   ↳ SUBTASK 2: Arrange gate pass / entry documentation for 51 Sub Area delivery
+      Assigned to: Staff 1 (implied)
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Army Direct Delivery orders. No message evidence found.
+      Next step: Inquire with 51 Sub Area / Colonel Sahab about required documentation (e.g., gate pass, special permits) for vehicle entry and delivery. Prepare necessary paperwork.
+
+   ↳ SUBTASK 3: Complete pre-dispatch checklist for unknown items
+      Assigned to: Staff 1 (implied)
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Army Direct Delivery orders. No message evidence found.
+      Next step: Before dispatch, perform a quality and quantity check of the items (once identified) and ensure all packing is secure and labelling is correct.
+
+   ↳ SUBTASK 4: Arrange transport and dispatch goods for 51 Sub Area
+      Assigned to: Staff 1 (implied)
+      Status: Pending
+      Due: 25 Mar
+      Next step: Book a suitable delivery vehicle and ensure goods are loaded and dispatched to 51 Sub Area by the morning of 25 Mar.
+
+⚠️ FLAGS:
+   - **Missing Information**: The specific item(s) to be delivered are not mentioned in any thread, making preparation difficult.
+   - **Potential Delay**: Critical Army-specific coordination (address, receiving officer, gate pass) and pre-dispatch checks are not explicitly mentioned as being in progress, which are crucial for timely delivery.
+   - **Ambiguous Client Move Date**: Client mentioned "next week hum move kar rahe hain," which reinforces urgency but an exact date is not provided, making the deadline potentially fluid if "kal tak" is missed.
+
+❓ AMBIGUOUS CORRELATIONS (needs human review):
+   - **Client Identity**: "Colonel sahab" and "51 Sub Area" are assumed to refer to the same client/delivery, as is common in military procurement. If these are separate orders, this needs to be split. (Tentative merge made based on context and urgency signals).

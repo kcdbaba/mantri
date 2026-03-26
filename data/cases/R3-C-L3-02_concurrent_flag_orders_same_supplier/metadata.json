@@ -1,0 +1,31 @@
+{
+  "id": "R3-C-L3-02",
+  "name": "concurrent_flag_orders_same_supplier",
+  "framework": "R3-C",
+  "level": "L3",
+  "sprint": "S2",
+  "data_source": "real-incomplete",
+  "description": "Multiple concurrent flag orders for different Army clients, all placed through the same Malerkotla supplier in the same period. Client identity for each order was communicated via photos (missing from export). Tests whether the agent keeps each client's order as a separate parent task rather than merging all flags into one order.",
+  "chat_inputs": {
+    "start": "3/2/2026, 20:00",
+    "end": "3/18/2026, 23:59",
+    "chats": [
+      {
+        "path": "data/raw_chats/incomplete_malerkotla_example",
+        "label": "Malerkotla Supplier Group"
+      }
+    ]
+  },
+  "completeness": {
+    "complete": false,
+    "missing": [
+      "Client chat group logs (not yet available — add when Ashish provides)",
+      "Car flags delivery resolution",
+      "India flag and elephant flag quality issue resolution",
+      "Supplier response to shortfall complaint"
+    ]
+  },
+  "expected_output": "Separate parent tasks per client for: (1) Lancer flags — 6 nos, (2) T flags — 4 nos, (3) client-specific blazer cloth flags. Plus post-delivery follow-up tasks: missing car flags (5 nos) and quality rejection risk for India flag and elephant flag. Payment of 28,000 recorded but order NOT marked complete.",
+  "pass_criteria": "PASS: 3+ separate flag order tasks created, each flagged as ambiguous (client identity in missing photos). Post-delivery follow-up tasks created. Order not marked complete despite payment. FAIL: Flags merged into one order, or order marked complete after payment, or no post-delivery tasks.",
+  "notes": "Mrs Samita Roy is Ashish's staff member. Verbal instruction gap confirmed: Ashish verbally asked her to update supplier about missing items on WhatsApp — she forgot. Supplier eventually shipped missing items (courier note image shared on chat). Client chat logs needed to make this case complete."
+}

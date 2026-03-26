@@ -1,0 +1,50 @@
+{
+  "verdict": "PASS",
+  "overall_score": 88,
+  "dimensions": {
+    "task_recall": {
+      "score": null,
+      "notes": null
+    },
+    "entity_accuracy": {
+      "score": 90,
+      "notes": "Correctly identifies Sharma as the single supplier entity behind both 'Sharma ji' and 'Sharma bhai' name variants. Labels it 'tentative merge' appropriately. Tandoor delivery task is accurately attributed to this unified entity. Minor concern: 'Client (Unidentified)' is flagged somewhat prominently as a gap, but this reflects real missing data rather than an error in entity attribution."
+    },
+    "cross_thread_correlation": {
+      "score": 88,
+      "notes": "Successfully unifies the tandoor delivery across both threads (Supplier Group and All Staff Group) into a single parent task. Source threads are explicitly cited. The two name variants are recognised as the same supplier and merged. No duplicate or separate unlinked tasks created — fully meets the pass criterion."
+    },
+    "next_step_quality": {
+      "score": null,
+      "notes": null
+    },
+    "implicit_task_detection": {
+      "score": null,
+      "notes": null
+    },
+    "ambiguity_flagging": {
+      "score": 85,
+      "notes": "Explicitly flags the 'Sharma ji' / 'Sharma bhai' alias merge as tentative and requests human confirmation in a dedicated AMBIGUOUS CORRELATIONS section. Also flags the unassigned reception and missing client identity. The flagging is clear and actionable. Slight over-flagging of implicit gaps (client ID, PO, quote details) that go beyond what the case expected, but this is conservative rather than harmful."
+    }
+  },
+  "pass_criteria_met": true,
+  "passes": [
+    "Single unified supplier entity 'Sharma Supplier' created from both 'Sharma ji' and 'Sharma bhai' variants — not split into separate records",
+    "Single unified delivery task (SUBTASK 1) covering both threads, due 25 Mar — not duplicated or left unlinked",
+    "Cross-thread source attribution explicitly listed (Supplier Group + All Staff Group)",
+    "Alias merge flagged as tentative with explicit human review request in AMBIGUOUS CORRELATIONS section",
+    "Reception coverage gap ('koi ghar pe rehega?') correctly surfaced as an operational risk"
+  ],
+  "failures": [
+    "Minor: 'tentative merge' label on a fairly standard honorific alias pair (ji/bhai) may introduce unnecessary uncertainty — in practice these are near-certain references to the same person in this regional context",
+    "Minor over-scope: Subtasks 2–4 (client ID, PO, quote details) introduce implicit gaps not evidenced in threads and not required by the expected output, adding noise beyond the case scope"
+  ],
+  "notes": "The agent meets the core pass criteria: one supplier entity, one unified delivery task spanning both threads. Entity resolution is handled correctly and the ambiguity flag is placed in the right location for human review. The output is somewhat over-engineered with additional implicit subtasks (client identity, PO, quote details) that are speculative and outside the thread evidence, but these do not undermine the core result. The cross-thread correlation is solid and operationally actionable.",
+  "case_id": "R4-A-L2-01",
+  "case_name": "same_supplier_2_name_variants_across_2_threads",
+  "framework": "R4-A",
+  "level": "L2",
+  "evaluated_at": "2026-03-26T05:08:21",
+  "model_used": "gemini-2.5-flash",
+  "eval_model": "claude-sonnet-4-6"
+}

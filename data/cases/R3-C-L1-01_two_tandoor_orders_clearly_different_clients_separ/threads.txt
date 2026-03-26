@@ -1,0 +1,7 @@
+=== THREAD 1: Client A Group ===
+[24 Mar 09:00] Client A: 2 tandoor chahiye, kal tak milega?
+[24 Mar 09:10] Ashish: haan, confirm karte hain
+
+=== THREAD 2: Client B Group ===
+[24 Mar 10:00] Client B: ek tandoor order karna tha
+[24 Mar 10:10] Ashish: rate bhej raha hoon

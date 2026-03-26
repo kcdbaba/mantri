@@ -1,0 +1,8 @@
+=== THREAD 1: All Staff Group ===
+[25 Mar 10:00] Ashish: Staff 1 - 51 Sub Area ka payment 45 din ho gaye, abhi tak nahi aaya
+[25 Mar 10:01] Ashish: invoice 8 Feb ko raise ki thi, 87500 ka
+[25 Mar 10:05] Staff 1: ok sir, follow up karta hoon
+
+=== THREAD 2: Client Group (Ashish + 51 Sub Area) ===
+[12 Feb 09:00] 51 Sub Area: maal mil gaya, thanks
+[12 Feb 09:01] Ashish: shukriya sir, invoice WhatsApp pe bhej raha hoon

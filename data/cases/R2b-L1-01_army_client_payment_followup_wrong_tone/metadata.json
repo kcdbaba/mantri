@@ -1,0 +1,15 @@
+{
+  "id": "R2b-L1-01",
+  "name": "army_client_payment_followup_wrong_tone",
+  "framework": "R2",
+  "level": "L1",
+  "sprint": "S2",
+  "data_source": "fully-synthetic",
+  "description": "Army client (51 Sub Area) invoice 45 days overdue — payment follow-up needed but tone and framing must be appropriate for Army client",
+  "chat_inputs": null,
+  "completeness": {"complete": true, "missing": []},
+  "expected_output": "Parent task: Payment collection from 51 Sub Area — Rs 87,500 — 45 days outstanding. Next step: Gentle reminder to the unit accounts section — not an aggressive chase. Framing should acknowledge that Army payment cycles are typically 60-90 days due to internal financial processes and unit relocations. Suggested approach: Ashish contacts the unit CO or accounts officer directly (not via staff), frames as a courtesy reminder, does not apply pressure. Agent should flag: Army client — sensitive relationship — follow up through appropriate channel with patient tone.",
+  "pass_criteria": "PASS: Agent recommends a relationship-aware follow-up approach for an Army client, noting the sensitivity and suggesting Ashish make personal contact rather than a direct payment demand. FAIL: Agent suggests standard payment chase language ('payment abhi tak nahi aaya, please transfer') without noting the Army client sensitivity. FAIL: Agent suggests staff follow up directly with a payment demand on an Army client.",
+  "challenge": "45 days outstanding is a clear payment-overdue signal that would normally trigger an aggressive chase. The agent must override this with Army-client-specific nuance: long payment cycles are normal, relationship damage is high risk, escalation path is different (CO / accounts section, not frontline contact). Tests R2b.",
+  "notes": "Army clients have fundamentally different payment dynamics to commercial clients. Unit relocations, internal financial approvals, and budget cycles routinely cause 60-90 day payment delays. Aggressive follow-up risks the entire client relationship. UNVALIDATED: exact tone guidance and escalation path to be confirmed with Ashish."
+}

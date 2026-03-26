@@ -1,0 +1,53 @@
+{
+  "verdict": "PASS",
+  "overall_score": 92,
+  "dimensions": {
+    "task_recall": {
+      "score": 95,
+      "notes": "Both orders (Tandoor and Generator) are identified as separate parent tasks with appropriate subtasks. All actionable items are captured: follow-up for tandoor details, acknowledgement and detail collection for generator. No tasks appear to be missed given the limited thread content."
+    },
+    "entity_accuracy": {
+      "score": 93,
+      "notes": "Client A is correctly linked to both orders. Items (Tandoor, Generator) are accurately attributed. Ashish is correctly identified as the staff member handling both. Source threads are correctly differentiated by date. No misattributions detected."
+    },
+    "cross_thread_correlation": {
+      "score": 90,
+      "notes": "The agent correctly kept the two orders as separate parent tasks despite being from the same client. It explicitly reasoned about why they should remain separate (different items, different dates, different sourcing workflows). The note about same-group vs. different-group labelling shows careful handling of thread identity. The agent correctly avoids over-merging."
+    },
+    "ambiguity_flagging": {
+      "score": 90,
+      "notes": "Strong ambiguity flagging throughout. The agent flags: (1) the deliberate decision to keep orders separate with a recommendation for human confirmation, (2) missing context from other threads, (3) thread labelling ambiguity (same group on different days vs. two distinct groups). All flags are actionable and appropriately escalated for human review rather than silently assumed."
+    },
+    "next_step_quality": {
+      "score": null,
+      "notes": null
+    },
+    "implicit_task_detection": {
+      "score": null,
+      "notes": null
+    }
+  },
+  "pass_criteria_met": true,
+  "passes": [
+    "Two separate parent tasks created for Tandoor and Generator — meets the core pass criterion",
+    "Both tasks correctly attributed to Client A without conflation",
+    "Agent explicitly documented the reasoning for keeping items separate rather than merging",
+    "Ambiguity flag raised for human confirmation of the separation decision",
+    "Missing details (specs, quantity, delivery date) flagged for both orders",
+    "Unacknowledged generator enquiry correctly identified as a blocker",
+    "Thread labelling ambiguity (same group vs. different groups) proactively flagged",
+    "Summary dashboard and immediate action list provide clear operational guidance"
+  ],
+  "failures": [
+    "Minor: The agent notes 'only one group thread' is provided but the case indicates two separate threads were processed — slight inconsistency in self-description, though operationally harmless",
+    "Minor: No explicit flag that the tandoor follow-up is 'overdue' in a time-critical sense beyond labelling it 'ASAP'; could have quantified the delay more precisely"
+  ],
+  "notes": "The agent performs excellently on the core test objective: it correctly separates two different item orders from the same client into distinct parent tasks and does not collapse them into a single order. The output is well-structured, reasoning is transparent, and ambiguity handling is proactive. The two minor failures are cosmetic and would not cause operational failures. This is a clean PASS.",
+  "case_id": "R3-C-L1-02",
+  "case_name": "two_different_item_orders_same_client_separate_thr",
+  "framework": "R3-C",
+  "level": "L1",
+  "evaluated_at": "2026-03-26T04:39:59",
+  "model_used": "claude-sonnet-4-6",
+  "eval_model": "claude-sonnet-4-6"
+}

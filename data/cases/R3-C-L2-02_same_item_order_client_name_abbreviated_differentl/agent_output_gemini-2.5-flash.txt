@@ -1,0 +1,39 @@
+UNIFIED TASK LIST — 24 Mar
+Threads processed: Supplier Group, All Staff Group
+
+📦 PARENT TASK: Tandoor Order for 51 Sub Area
+   Entity: 51 Sub Area (customer), Sharma ji (potential supplier)
+   Item: Tandoor
+   Status: In Progress — Supplier identification/order placement
+   Due: Not specified explicitly, but follow-up by Ashish indicates urgency for immediate action.
+   Priority: Medium
+   Source threads: Supplier Group, All Staff Group
+
+   ↳ SUBTASK 1: Confirm if tandoor order for 51 Sub Area has been placed with Sharma ji
+      Assigned to: Staff 1 (implied, as Ashish is following up on Staff 1's initial message in another thread)
+      Status: Pending — Awaiting confirmation from Staff 1
+      Due: 24 Mar (Ashish asked at 11:00)
+      Next step: Staff 1 must provide an immediate update to Ashish confirming whether the order has been placed with Sharma ji, or if not, what the current status is.
+
+   ↳ SUBTASK 2: Request quote (rate, GST, delivery) from Sharma ji — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Type 1 (Standard Equipment Procurement) orders. No message evidence found of a quote being requested or received.
+      Next step: If the order has not yet been placed (Subtask 1), Staff 1 should contact Sharma ji to request a full quote for the tandoor, including price, GST, and delivery charges.
+
+   ↳ SUBTASK 3: Get client confirmation for the tandoor order — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected after quote receipt and before PO issuance for Type 1 (Standard Equipment Procurement) orders.
+      Next step: After receiving a quote from Sharma ji, Staff 1/Ashish should present it to 51 Sub Area for formal approval before proceeding with the order.
+
+   ↳ SUBTASK 4: Issue Purchase Order (PO) to Sharma ji — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected after client confirmation for Type 1 (Standard Equipment Procurement) orders.
+      Next step: Once the client has approved the quote, a formal Purchase Order should be issued to Sharma ji to confirm the order details and terms.
+
+⚠️ FLAGS:
+   - Staff 1 has not responded to Ashish's query about "Sharma ji" in the provided threads, creating an information gap.
+   - Core procurement steps (quote request, client confirmation, PO issuance) are not explicitly mentioned in the conversation snippets, suggesting potential omissions in the process documentation.
+
+❓ AMBIGUOUS CORRELATIONS (needs human review):
+   - Entity: "51 SA" and "51 Sub Area" are assumed to be the same client entity.
+   - Entity: "Sharma ji" is tentatively identified as the potential supplier for the tandoor, based on Ashish's question. This needs confirmation.

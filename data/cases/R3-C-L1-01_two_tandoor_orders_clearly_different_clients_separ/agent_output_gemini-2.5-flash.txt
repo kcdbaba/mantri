@@ -1,0 +1,63 @@
+UNIFIED TASK LIST — 24 Mar
+Threads processed: Client A Group, Client B Group
+
+📦 PARENT TASK: Tandoor Order — Client A
+   Entity: Client A (customer), Ashish (staff)
+   Item: Tandoor (2 units)
+   Status: Pending — Awaiting supplier confirmation
+   Due: 25 Mar (client requested "kal tak")
+   Priority: High
+   Source threads: Client A Group
+
+   ↳ SUBTASK 1: Confirm availability of 2 tandoors and delivery by 25 Mar
+      Assigned to: Ashish (implied)
+      Status: Pending
+      Due: 24 Mar (to meet client's 25 Mar request)
+      Next step: Immediately contact relevant tandoor supplier(s) to check stock for 2 units and confirm if delivery is feasible by 25 Mar to Guwahati.
+
+   ↳ SUBTASK 2: Request full quote (rate + GST + delivery) from supplier for 2 tandoors — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Standard Equipment Procurement orders (TYPE 1, Step 2 & 3). No message evidence found.
+      Next step: Ensure a comprehensive quote, including all charges, is obtained from the supplier.
+
+   ↳ SUBTASK 3: Send confirmed quote to Client A — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Standard Equipment Procurement orders (TYPE 1, Step 4). No message evidence found.
+      Next step: Once supplier quote is confirmed, prepare and send the final quote to Client A for approval.
+
+⚠️ FLAGS:
+   - **Tight Deadline:** Client A requires 2 tandoors by 25 Mar, which is a very short turnaround time.
+   - **Supplier Engagement Missing:** No explicit mention of Ashish or staff contacting a supplier yet for this specific order in these threads.
+   - **Delivery Commitment Risk:** Ashish's "confirm karte hain" needs urgent action to avoid missing the client's deadline.
+
+---
+
+📦 PARENT TASK: Tandoor Order — Client B
+   Entity: Client B (customer), Ashish (staff)
+   Item: Tandoor (1 unit)
+   Status: In Progress — Awaiting rate submission to client
+   Due: Not explicitly mentioned, but implied soon.
+   Priority: Medium
+   Source threads: Client B Group
+
+   ↳ SUBTASK 1: Send rate to Client B
+      Assigned to: Ashish
+      Status: In Progress
+      Due: 24 Mar (as Ashish said "rate bhej raha hoon")
+      Next step: Finalize the rate for 1 tandoor and send it to Client B in the WhatsApp group.
+
+   ↳ SUBTASK 2: Confirm full quote (rate + GST + delivery) from supplier for 1 tandoor — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Standard Equipment Procurement orders (TYPE 1, Step 2 & 3). Ashish is sending a rate, but it's not clear if this is based on a fresh supplier quote including all components.
+      Next step: Ensure the rate being sent to Client B is based on a current, full supplier quote that includes GST and delivery charges.
+
+   ↳ SUBTASK 3: Obtain order confirmation from Client B after sending rate — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected after sending a quote for Standard Equipment Procurement orders (TYPE 1, Step 5).
+      Next step: After sending the rate, follow up with Client B to confirm if they accept the quote and wish to proceed with the order.
+
+⚠️ FLAGS:
+   - **Supplier Sourcing Ambiguity:** Ashish stated "rate bhej raha hoon" without explicit mention of first contacting a supplier in these threads. Ensure rates are current and inclusive of all charges (GST, delivery).
+
+❓ AMBIGUOUS CORRELATIONS:
+   - None. Client A and Client B are distinct customers with separate requests.

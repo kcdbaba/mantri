@@ -1,0 +1,323 @@
+# Task Type Checklists
+# Purpose: Expected subtask sequences per order type, for injection into the testing prompt.
+# These allow the agent to detect cadence/implicit tasks that are never written in WhatsApp.
+#
+# ⚠️  SOURCE OF TRUTH: reports/task_taxonomy.md
+# This file is a DERIVED artefact. The canonical task taxonomy (all 10 types, step
+# definitions, validation status, open parameters) lives in reports/task_taxonomy.md.
+# When the taxonomy changes, update this file and the inline tables in testing_prompt.txt
+# to match.
+#
+# ⚠️  DEPRECATION NOTICE
+# This file is a Sprint 2 interim artefact. It is to be deprecated in favour of the
+# task lifecycle graph design (with attendant prompt engineering) in Sprint 3.
+# See: reports/task_lifecycle_state_machine_design.md, reports/live_monitoring_design.md
+#
+# Status of each item:
+#   [CONFIRMED]    - validated against real cases (SATA, Malerkotla)
+#   [UNVALIDATED]  - inferred from business context; requires Ashish validation
+#   [CADENCE]      - procedural step that happens regardless of what is written in WhatsApp;
+#                    primary target for implicit task detection
+#
+# Last updated: 2026-03-26
+# Validate with Ashish in Sprint 2 session before using in production.
+#
+# ---
+
+## TASK TYPE 1: Standard Equipment Procurement
+# Examples: tandoor, AC, fridge, furniture, general equipment
+# Base case — all other types are variants of this.
+
+Expected subtask sequence:
+1.  Enquiry received / initial client request logged           [CONFIRMED]
+2.  Quote requested from supplier                             [CONFIRMED]
+    - If supplier unresponsive 48h: follow-up task           [CONFIRMED]
+3.  Quote received (rate + GST + delivery charges)            [CONFIRMED]
+4.  Quote prepared and sent to client                         [CONFIRMED]
+    - If client unresponsive 24h: follow-up task             [CONFIRMED]
+5.  Order confirmed by client                                 [CONFIRMED]
+6.  PO issued to supplier                                     [CONFIRMED]
+7.  Advance payment to supplier (if required)                 [UNVALIDATED - depends on supplier]
+8.  Delivery date committed by supplier                       [CONFIRMED]
+    - Set conservative internal tracking milestone            [CADENCE - UNVALIDATED buffer rules]
+      Local supplier: internal milestone = committed date
+      Inter-state supplier (Malerkotla, Delhi): internal milestone = committed date + 1-2 days
+      Adjust further based on supplier's past reliability
+    - Pre-emptive reminder to supplier (1-2 days before deadline) [CADENCE - UNVALIDATED timing]
+      Inter-state / long lead time: reminder 2 days before
+      Local supplier: reminder 1 day before
+    - If delivery date passes without dispatch: escalation   [CONFIRMED]
+9.  Goods dispatched by supplier                              [CONFIRMED]
+10. Goods received at Ashish's end (warehouse / transit hub) [CONFIRMED]
+11. Inspection and sorting                                    [CADENCE - rarely logged in WhatsApp]
+12. Pre-dispatch checklist completed                          [CADENCE - almost never in WhatsApp]
+13. Delivery to client arranged (transport / vehicle)         [CONFIRMED]
+14. Delivery to client completed                              [CONFIRMED]
+15. Client acceptance / sign-off                              [CADENCE - often only verbal]
+16. Invoice raised                                            [CONFIRMED]
+17. Payment follow-up (if not received within 30 days)        [CADENCE - frequently missed]
+18. Payment received                                          [CONFIRMED]
+19. GST reconciliation                                        [CADENCE - monthly, rarely in WhatsApp]
+
+Frequently skipped or delayed (from SATA case evidence):
+- Step 11 (inspection): goods often sorted informally, not logged
+- Step 12 (pre-dispatch checklist): no evidence this appears in any chat
+- Step 15 (client sign-off): verbal acknowledgement, not always written
+- Step 17 (payment follow-up): if payment is delayed, follow-up is often absent
+
+---
+
+## TASK TYPE 2: Custom / Made-to-Order Items
+# Examples: flags, printed signage, embroidered items, custom uniforms, nameplates
+# Key difference from standard: spec confirmation and sample approval are critical gates
+
+Expected subtask sequence:
+1.  Enquiry received with initial specification                [CONFIRMED]
+2.  Spec confirmation with client                             [CADENCE - must happen before quoting]
+    - Size, material, design, quantity, Army unit markings
+    - Written spec document or WhatsApp confirmation required
+3.  Sample / design proof approval (if applicable)            [UNVALIDATED - not seen in test cases]
+4.  Quote from manufacturer (includes production time)        [CONFIRMED]
+5.  Quote sent to client                                      [CONFIRMED]
+6.  Order confirmed + final spec locked                       [CADENCE - spec must be locked at this point]
+7.  Production timeline committed by manufacturer             [CONFIRMED]
+    - If timeline at risk: follow-up task                    [UNVALIDATED]
+8.  Production follow-up at midpoint                          [CADENCE - proactive check, rarely in WhatsApp]
+9.  QC inspection of finished goods before dispatch           [CADENCE - critical for custom items]
+10. Delivery to client                                        [CONFIRMED]
+11. Client acceptance / rejection handling                    [CADENCE - rejection risk higher for custom]
+    - If rejected: rework or replacement flow                [UNVALIDATED]
+12. Invoice raised                                            [CONFIRMED]
+13. Payment follow-up                                         [CADENCE]
+14. Payment received                                          [CONFIRMED]
+
+Frequently skipped or delayed:
+- Step 2 (spec confirmation): clients often give verbal specs; no written record
+- Step 9 (QC before dispatch): goods shipped without formal QC check
+- Step 11 (client acceptance): rejection often surfaces only after delivery
+
+---
+
+## TASK TYPE 3: Army Direct Delivery
+# Examples: delivery direct to Army unit / cantonment, client arranges transport from warehouse
+# Key difference: Army-specific logistics, gate passes, unit coordination
+
+Expected subtask sequence:
+1-8.  Same as Standard Equipment Procurement (steps 1–10)     [CONFIRMED]
+9.    Coordinate delivery logistics with Army unit             [CADENCE]
+      - Confirm delivery address + unit / department
+      - Identify receiving officer or contact
+10.   Gate pass / entry documentation arranged                 [CADENCE - Army-specific; often overlooked]
+11.   Pre-dispatch checklist completed                         [CADENCE]
+12.   Delivery vehicle arranged or Army transport confirmed    [CONFIRMED]
+13.   Dispatch confirmation                                    [CONFIRMED]
+14.   Delivery confirmation from Army unit                     [CONFIRMED]
+      - Written acknowledgement (DO / GRN) often required
+15.   DO / GRN / signed delivery note received                 [CADENCE - required for GeM/formal payment]
+16.   Invoice raised (with DO reference if required)           [CONFIRMED]
+17.   Payment follow-up                                        [CADENCE]
+18.   Payment received                                         [CONFIRMED]
+
+Frequently skipped or delayed:
+- Step 10 (gate pass): arranged verbally, never logged in WhatsApp
+- Step 15 (DO / GRN receipt): follow-up often required; delays invoice cycle
+
+---
+
+## TASK TYPE 4: GeM Portal Orders
+# Examples: orders placed by Army units through Government e-Marketplace
+# Key difference: portal-specific workflow steps; payment via GeM, not direct
+
+Expected subtask sequence:
+1.  GeM order received (portal notification)                  [CONFIRMED]
+2.  Order details verified on portal (item, qty, price)       [CADENCE - must be done before accepting]
+3.  GeM order accepted on portal (within response window)     [CADENCE - portal deadline; missing = auto-rejection]
+4.  Supplier sourcing (same as standard procurement)          [CONFIRMED]
+5.  Delivery timeline committed on portal                     [CADENCE - portal requires this update]
+6.  Goods procured and dispatched (standard flow)             [CONFIRMED]
+7.  Delivery confirmation uploaded to portal                  [CADENCE - frequently missed; blocks payment]
+8.  Invoice raised on portal (e-invoice required)             [CADENCE - portal-specific format]
+9.  GeM payment timeline tracked (30/60/90 day cycle)         [CADENCE - different from direct client payment]
+10. Payment received via GeM portal                           [CONFIRMED]
+11. GST reconciliation (GeM has its own GST flow)             [CADENCE - distinct from standard]
+
+Frequently skipped or delayed:
+- Step 3 (portal acceptance window): if missed, order auto-cancels
+- Step 7 (delivery confirmation on portal): goods delivered but portal not updated; blocks payment
+- Step 8 (e-invoice on portal): physical invoice insufficient for GeM payment
+- Step 9 (payment tracking): GeM payment cycle longer than direct; follow-up process different
+
+---
+
+## TASK TYPE 5: Inter-State Procurement
+# Examples: Malerkotla (Punjab) suppliers, Delhi suppliers, other out-of-state
+# Key difference: transport leg, transit time, additional documentation
+
+Expected subtask sequence:
+1-6.  Same as standard procurement (enquiry → PO)             [CONFIRMED]
+7.    Transporter identified and booked                        [CADENCE]
+8.    Transporter briefed on pickup address + timeline         [CADENCE]
+9.    E-way bill / transport documentation arranged            [CADENCE - required for interstate goods]
+10.   Goods dispatched by supplier to transporter              [CONFIRMED]
+11.   Transit follow-up (particularly for long haul)           [CADENCE - Malerkotla to Guwahati is 3-4 days]
+12.   Expected arrival date tracked                            [CADENCE]
+      - If delayed: escalation task                           [CONFIRMED from Malerkotla case]
+13.   Goods received at Guwahati                               [CONFIRMED]
+14.   Transit damage inspection                                [CADENCE - higher risk for interstate]
+15.   Steps 11–19 of standard procurement                      [CONFIRMED]
+
+Frequently skipped or delayed:
+- Step 9 (e-way bill): arranged informally; documentation gaps are compliance risk
+- Step 11 (transit follow-up): transporter goes silent; no updates until arrival or problem
+- Step 14 (transit damage inspection): informal; goods unpacked before formal check
+
+---
+
+## TASK TYPE 6: Stock-Filled Orders
+# Examples: commonly stocked items fulfilled from Ashish's warehouse without supplier contact
+# Key difference: no supplier sourcing step; stock must be checked and deducted
+
+Expected subtask sequence:
+1.  Enquiry / order received                                  [CONFIRMED]
+2.  Stock check — item and quantity available?                [CADENCE - must happen before committing]
+3.  Stock availability confirmed to client                    [CADENCE]
+4.  Delivery arranged from warehouse                          [CONFIRMED]
+5.  Pre-dispatch checklist completed                          [CADENCE]
+6.  Goods dispatched                                          [CONFIRMED]
+7.  Stock deduction logged                                    [CADENCE - frequently missing; causes inventory blindness]
+8.  Delivery to client confirmed                              [CONFIRMED]
+9.  Invoice raised                                            [CONFIRMED]
+10. Payment follow-up                                         [CADENCE]
+11. Payment received                                          [CONFIRMED]
+12. Inventory replenishment check (if stock low post-order)   [CADENCE - proactive; almost never in WhatsApp]
+
+Frequently skipped or delayed:
+- Step 2 (stock check): assumed rather than confirmed; risk of committing unavailable stock
+- Step 7 (stock deduction): most likely to be missing; critical for inventory accuracy
+- Step 12 (replenishment check): reactive rather than proactive; stock-outs surface only at next order
+
+---
+
+## TASK TYPE 7: Service Orders (Repairs / Maintenance)
+# Examples: equipment repair, maintenance contracts, installation services
+# Key difference: no goods movement; scope confirmation and job sign-off are the key gates
+
+Expected subtask sequence:
+1.  Service request received (description of issue)           [CONFIRMED]
+2.  Site visit / assessment scheduled                         [CADENCE - timing often not logged]
+3.  Site visit completed; diagnosis confirmed                 [CADENCE - outcome often only verbal]
+4.  Scope of work and parts list confirmed with client         [CADENCE]
+5.  Quote for parts + labour                                  [CONFIRMED]
+6.  Client approval of quote                                  [CONFIRMED]
+7.  Parts sourcing (if required) — standard procurement flow  [CONFIRMED]
+8.  Service date scheduled                                    [CADENCE]
+9.  Service / repair executed                                 [CONFIRMED]
+10. Job completion sign-off from client                       [CADENCE - verbal only; no written record common]
+11. Invoice raised (parts + labour)                           [CONFIRMED]
+12. Payment follow-up                                         [CADENCE]
+13. Payment received                                          [CONFIRMED]
+14. Warranty / follow-up period tracked (if applicable)       [CADENCE - UNVALIDATED]
+
+Frequently skipped or delayed:
+- Step 3 (diagnosis confirmed): engineers give verbal diagnosis; client later disputes scope
+- Step 10 (job sign-off): completion assumed without written confirmation
+- Step 14 (warranty tracking): no mechanism to track post-service issues
+
+---
+
+## TASK TYPE 8: Collections and Payment Follow-Up
+# Not a separate order type — a recurring cadence task that runs in parallel with all other types.
+# Listed separately because it is the most commonly missed procedural step.
+
+Expected cadence:
+- Day 0:    Invoice raised; due date communicated to client     [CONFIRMED]
+- Day 30:   First follow-up if payment not received             [CADENCE - most commonly missed]
+- Day 45:   Second follow-up (more direct)                     [CADENCE]
+- Day 60:   Escalation to Ashish for direct intervention        [CADENCE]
+- Day 90:   Formal notice or account hold (if applicable)       [UNVALIDATED]
+- On receipt: Payment received confirmation sent to client      [CONFIRMED]
+- On receipt: Receipt / acknowledgement issued                  [CADENCE - often skipped]
+- Monthly:  GST reconciliation across all receipts              [CADENCE - monthly; almost never in WhatsApp]
+- On invoice (large value, long payment terms): Invoice financing check [CADENCE - TBC with Ashish: value + term thresholds]
+
+Frequently skipped:
+- Day 30 follow-up: the single most common missed procedural step
+- Receipt acknowledgement: payment logged internally but client not notified
+- GST reconciliation: happens offline; no chat signal at all
+
+---
+
+---
+
+## TYPE 9: Proactive Order Sourcing
+*(Ashish proactively reaches out to existing clients to generate new orders — not triggered by any incoming enquiry)*
+
+This is NOT an order-processing type. It is a business development cadence — Ashish's business does not passively wait for enquiries. Regular client outreach is part of normal operations.
+
+| Trigger | Expected action | Notes |
+|---|---|---|
+| Client silent for N weeks | **Check in with client** — "kuch chahiye tha?" | [UNVALIDATED — N weeks TBC with Ashish] |
+| Seasonal / procurement cycle known | **Proactive quote push** — lead with relevant items for the season | [UNVALIDATED — which clients, which seasons] |
+| Recent delivery completed | **Follow-up call** — confirm delivery satisfaction, probe for next requirement | [UNVALIDATED] |
+| New item available from supplier | **Outreach to relevant clients** — inform of new stock/item | [UNVALIDATED] |
+
+Typical signal in WhatsApp: Ashish messages a client group with no prior incoming message — "sir sab theek hai? kuch chahiye ho toh batao". Or no WhatsApp signal at all (phone call only).
+
+Implicit task detection rule: if a client has had no interaction in the client group for > N weeks and all prior orders are completed, surface a proactive outreach task.
+
+---
+
+## TYPE 10: Post-Delivery Feedback Collection
+*(Ashish collects feedback from Army clients and major commercial clients after order completion — part of relationship management, almost never logged in WhatsApp)*
+
+| Step | Description | Notes |
+|---|---|---|
+| 1 | Payment received — order fully closed | Trigger for feedback collection |
+| 2 | **Feedback call / message to client** | [UNVALIDATED — happens by phone, not WhatsApp; timing TBC] |
+| 3 | **Quality issue noted from feedback** | If client reports issue → reopen delivery task, investigate | [CADENCE] |
+| 4 | **Relationship note logged** | Ashish notes client preference, pain point, or relationship status | [UNVALIDATED — likely informal/mental only, not written anywhere] |
+| 5 | **Client added to proactive outreach cycle** | Client now in regular follow-up rotation | [UNVALIDATED] |
+
+Typical signal in WhatsApp: "sir, delivery kaisi lagi?" sent to client group after payment confirmed. Or nothing — feedback collected entirely by phone.
+
+Implicit task detection rule: if payment received on an order and no feedback message detected within N days, surface a feedback follow-up task.
+
+---
+
+---
+
+## TYPE 11: Period-End Administrative Cadence
+*(Calendar-triggered tasks that fall due at the end of each period — not triggered by any order. All steps are UNVALIDATED — confirm the complete list and cadence with Ashish)*
+
+| Period | Task | Notes |
+|---|---|---|
+| Daily | Cash reconciliation | [UNVALIDATED] |
+| Daily | Outstanding order status review | [UNVALIDATED] |
+| Weekly | Open payment follow-ups review | [UNVALIDATED] |
+| Weekly | Open orders / supplier commitments review | [UNVALIDATED] |
+| Monthly | GST reconciliation — all invoices | [CADENCE] [UNVALIDATED] |
+| Monthly | Accounts payable reconciliation | [UNVALIDATED] |
+| Monthly | Accounts receivable reconciliation | [UNVALIDATED] |
+| Quarterly | Advance tax assessment and payment | [UNVALIDATED] |
+| Annually (Mar 31) | Physical stock-take | [CADENCE] [UNVALIDATED] |
+| Annually (Mar 31) | Year-end accounts closure | [UNVALIDATED] |
+| Annually (Mar 31) | Pending invoice clearance before FY end | [CADENCE] [UNVALIDATED] |
+
+Implicit task detection: when thread timestamps are near a period boundary (end of month / quarter / year), surface the relevant tasks from the above as calendar-triggered implicit subtasks.
+
+---
+
+## NOTES FOR ASHISH VALIDATION SESSION
+
+The following items are flagged [UNVALIDATED] and need explicit confirmation:
+1. Advance payment to supplier (Type 1, step 7): when is this required? What triggers it?
+2. Sample/design proof approval (Type 2, step 3): does this happen for all custom items, or only some?
+3. Rejection/rework flow (Type 2, step 11): what is the actual process when a custom item is rejected?
+4. Transit insurance (Type 5): is this arranged, and if so, who arranges it?
+5. Warranty tracking (Type 7, step 14): is there any follow-up period for service orders?
+6. Formal notice at 90 days (Type 8): what does Ashish actually do for very overdue Army payments?
+
+Also confirm for each type:
+- Which steps are genuinely never in WhatsApp (pure cadence)?
+- Which steps sometimes appear in WhatsApp but are often missing?
+- Which staff member is responsible for each step?

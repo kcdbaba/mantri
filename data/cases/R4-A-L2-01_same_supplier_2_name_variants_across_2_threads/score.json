@@ -1,0 +1,51 @@
+{
+  "verdict": "PASS",
+  "overall_score": 91,
+  "dimensions": {
+    "task_recall": {
+      "score": null,
+      "notes": null
+    },
+    "entity_accuracy": {
+      "score": 93,
+      "notes": "Correctly identifies 'Sharma ji' and 'Sharma bhai' as a single supplier entity under 'Sharma Supplier'. Item (tandoor), timeline (25 Mar), and thread sources are all accurately attributed. No spurious entities introduced. Minor: 'Sharma Supplier' as a label is a reasonable normalisation though the canonical name is simply 'Sharma' per expected output — functionally equivalent."
+    },
+    "cross_thread_correlation": {
+      "score": 92,
+      "notes": "Both threads are cleanly unified into a single parent delivery task with explicit source-thread attribution. The agent correctly identifies that Thread 1 (supplier coordination) and Thread 2 (staff availability question) both refer to the same delivery event on 25 Mar. No duplicate tasks created. Cross-thread reasoning is shown transparently."
+    },
+    "next_step_quality": {
+      "score": null,
+      "notes": null
+    },
+    "implicit_task_detection": {
+      "score": null,
+      "notes": null
+    },
+    "ambiguity_flagging": {
+      "score": 90,
+      "notes": "The alias merge is explicitly flagged as tentative with a clear recommendation for human confirmation. Staff availability gap, missing delivery window, unspecified quantity, and absent client identity are all surfaced as distinct flags rather than silently assumed. The agent also flags that only 2 threads were provided and that the task list may be incomplete — useful operational caution. Slight over-flagging on items (client identity, delivery address) that go beyond the scope of the test case, but this does not constitute a failure — it is conservative and appropriate."
+    }
+  },
+  "pass_criteria_met": true,
+  "passes": [
+    "Single unified supplier entity created (Sharma Supplier) linked across both threads — no duplicate supplier records",
+    "One unified delivery task for tandoor on 25 Mar — not split into separate unlinked tasks per thread",
+    "Alias resolution ('Sharma ji' / 'Sharma bhai') handled correctly as tentative merge with explicit human-confirmation flag",
+    "Cross-thread source attribution is explicit (Supplier Group, All Staff Group listed under parent task)",
+    "Staff availability gap (unconfirmed receiver for delivery) correctly detected and flagged as a blocking risk",
+    "Ambiguity flagging section populated with specific, actionable uncertainty items rather than silent assumptions",
+    "Transparent reasoning shown before output — merge logic is auditable"
+  ],
+  "failures": [
+    "Parent task label uses 'Sharma Supplier' rather than simply 'Sharma' — trivially minor, no operational impact",
+    "Subtasks 3 and 4 (delivery address, client identity) extend beyond what the test threads support — slightly inflates the task list, though they are correctly marked as pending/unknown rather than fabricated"
+  ],
+  "notes": "The agent cleanly satisfies the core pass criteria: one supplier entity, one unified delivery task, and the alias merge is flagged rather than silently assumed. Cross-thread correlation is handled correctly and transparently. Ambiguity flagging is thorough — arguably over-thorough for the minimal input, but conservative flagging is preferable to silent guessing in an ops context. The self-evaluation table at the end is a useful transparency feature. Overall a strong L2 performance on this cross-thread entity resolution baseline test.",
+  "case_id": "R4-A-L2-01",
+  "case_name": "same_supplier_2_name_variants_across_2_threads",
+  "framework": "R4-A",
+  "level": "L2",
+  "evaluated_at": "2026-03-25T01:52:03",
+  "model_used": "claude-sonnet-4-6"
+}

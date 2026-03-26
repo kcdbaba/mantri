@@ -1,0 +1,52 @@
+{
+  "verdict": "PASS",
+  "overall_score": 90,
+  "dimensions": {
+    "task_recall": {
+      "score": 92,
+      "notes": "Both tandoor orders are captured with correct quantities (Tezpur: 2 units, Ranchi: 1 unit). Implicit workflow tasks (PO issuance, payment, delivery confirmation, quoting) are well-represented. No tasks appear missed."
+    },
+    "entity_accuracy": {
+      "score": 92,
+      "notes": "Tezpur Unit and Ranchi Unit are correctly attributed as separate clients. Quantities are accurate. Staff assignments are noted. Minor gap: 'Ashish' appears in Tezpur task but not explained in context — could be a real entity or a fabrication, though does not undermine core attribution."
+    },
+    "cross_thread_correlation": {
+      "score": 88,
+      "notes": "Source threads are correctly distinguished — Tezpur order from Client Group, Ranchi order from All Staff Group. The agent did not merge or conflate the two orders across threads, which is the core requirement. Explicit acknowledgment of the separation is noted in the ambiguous correlations section."
+    },
+    "ambiguity_flagging": {
+      "score": 88,
+      "notes": "Agent appropriately flags missing supplier, unspecified model/specs for both orders, and correctly states no ambiguous correlations exist. The flags are relevant and actionable. Could have flagged informality of client references (location-based nicknames) as a potential interpretation risk, but the resolution was correct."
+    },
+    "next_step_quality": {
+      "score": null,
+      "notes": null
+    },
+    "implicit_task_detection": {
+      "score": null,
+      "notes": null
+    }
+  },
+  "pass_criteria_met": true,
+  "passes": [
+    "Two separate tandoor orders correctly identified and kept distinct — not merged.",
+    "Correct client attribution: Tezpur Unit (2 units) and Ranchi Unit (1 unit).",
+    "Correct source thread attribution for each order.",
+    "Meaningful flags raised for missing supplier and unspecified specs on both orders.",
+    "Ambiguity section explicitly confirms no conflation occurred, showing deliberate reasoning.",
+    "Implicit workflow tasks surfaced for both orders at appropriate pipeline stages."
+  ],
+  "failures": [
+    "No explicit acknowledgment that 'Tezpur' and 'Ranchi' are informal/abbreviated location-based client references — the agent treats them as resolved entities without flagging the informal reference style as a potential interpretation point.",
+    "'Ashish' is named in the Tezpur task assignment without clear sourcing — could represent a fabricated or unverified entity attribution.",
+    "No ambiguity flagged around whether the Ranchi enquiry might be from the same client as Tezpur (even if correctly resolved, flagging the risk would be more rigorous)."
+  ],
+  "notes": "The agent clearly passes the core test: two separate tandoor orders are identified, quantities are correct, and clients are not merged. The output is well-structured with useful implicit task scaffolding and relevant operational flags. The main gap is a missed opportunity to surface the informal/abbreviated nature of location-based references as a reasoning note — the agent resolved correctly but silently. Overall a strong L2 performance.",
+  "case_id": "R3-C-L2-01",
+  "case_name": "two_tandoor_orders_informalabbreviated_client_refe",
+  "framework": "R3-C",
+  "level": "L2",
+  "evaluated_at": "2026-03-26T05:01:22",
+  "model_used": "gemini-2.5-flash",
+  "eval_model": "claude-sonnet-4-6"
+}

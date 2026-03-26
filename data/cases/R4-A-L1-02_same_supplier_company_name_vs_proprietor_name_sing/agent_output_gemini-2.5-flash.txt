@@ -1,0 +1,28 @@
+UNIFIED TASK LIST — 24 Mar
+Threads processed: Supplier Group
+
+📦 PARENT TASK: Goods Delivery from S.K. Enterprises
+   Entity: S.K. Enterprises (supplier), Suresh ji (contact person)
+   Item: Goods (unspecified)
+   Status: In Progress — delivery confirmed, awaiting arrival
+   Due: 25 Mar morning
+   Priority: Medium
+   Source threads: Supplier Group
+
+   ↳ SUBTASK 1: Receive goods from S.K. Enterprises
+      Assigned to: Staff (general receiving staff)
+      Status: Pending
+      Due: 25 Mar morning
+      Next step: Ensure logistics are ready to receive the goods on 25 Mar morning. If goods are not received by noon on 25 Mar, initiate follow-up.
+
+   ↳ SUBTASK 2: Goods dispatched by supplier — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Standard Equipment Procurement (Type 1) orders. No message evidence found that dispatch occurred, only that arrival is expected.
+      Next step: Proactively confirm with Suresh ji/S.K. Enterprises that the goods have definitely been dispatched.
+
+⚠️ FLAGS:
+   - Item unspecified ("maal") — full clarity on what goods are being delivered is missing.
+   - Dispatch confirmation missing — only arrival ETA provided.
+
+❓ AMBIGUOUS CORRELATIONS:
+   - None in this example

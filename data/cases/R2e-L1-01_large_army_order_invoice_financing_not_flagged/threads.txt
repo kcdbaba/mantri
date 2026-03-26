@@ -1,0 +1,15 @@
+=== THREAD 1: Client Group (Ashish + Eastern Command) ===
+[18 Mar 09:00] Eastern Command: bhai 15 AC units chahiye, 1.5 ton each - urgent
+[18 Mar 09:30] Ashish: ok sir, rate confirm karte hain aaj
+[18 Mar 14:00] Ashish: sir rate hai 42000 per unit + GST - total 6,30,000 + GST
+[18 Mar 14:30] Eastern Command: theek hai confirm, aage badhao
+[18 Mar 14:31] Ashish: bilkul sir
+
+=== THREAD 2: Supplier Group (Ashish + Supplier A) ===
+[18 Mar 15:00] Ashish: bhai 15 AC units chahiye - Eastern Command ka order hai
+[18 Mar 15:30] Supplier A: hai sir, advance dena hoga 50% - 3,15,000
+[18 Mar 15:45] Ashish: ok, kal transfer karta hoon
+
+=== THREAD 3: All Staff Group ===
+[18 Mar 16:00] Ashish: Eastern Command ka bada order confirm ho gaya - 15 AC units
+[18 Mar 16:01] Ashish: Staff 1 - Supplier A ke saath coordinate karo

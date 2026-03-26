@@ -1,0 +1,18 @@
+{
+  "id": "R4-A-L2-02",
+  "name": "same_supplier_honorific_vs_productbased_reference",
+  "framework": "R4-A",
+  "level": "L2",
+  "sprint": "S1",
+  "data_source": "fully-synthetic",
+  "description": "Same supplier, honorific vs product-based reference across 2 threads",
+  "chat_inputs": null,
+  "completeness": {
+    "complete": true,
+    "missing": []
+  },
+  "expected_output": "Single supplier entity: Kapoor / Delhi wala supplier. Task: Rate confirmed at 47000 — awaiting final decision.",
+  "pass_criteria": "PASS: Single supplier entity. FAIL: 'Delhi wala' and 'Kapoor ji' treated as two different suppliers.",
+  "challenge": "Product/city-based nickname ('Delhi wala') in one thread, name+honorific ('Kapoor ji') in another.",
+  "notes": "Flag for Ashish validation — confirm if 'city wala' references are common"
+}

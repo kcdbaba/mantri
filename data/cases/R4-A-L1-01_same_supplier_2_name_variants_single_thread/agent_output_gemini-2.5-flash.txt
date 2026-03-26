@@ -1,0 +1,38 @@
+UNIFIED TASK LIST — 24 Mar
+Threads processed: Supplier Group
+
+📦 PARENT TASK: Tandoor Delivery to Unidentified Client
+   Entity: Client — unidentified, needs human review (customer), Supplier (Sharma ji/bhai)
+   Item: Tandoor
+   Status: In Progress — delivery confirmed, awaiting exact time
+   Due: 24 Mar (today, by afternoon)
+   Priority: Medium
+   Source threads: Supplier Group
+
+   ↳ SUBTASK 1: Confirm exact delivery time with Supplier (Sharma ji)
+      Assigned to: Staff 1
+      Status: Pending
+      Due: 24 Mar (asap)
+      Next step: Staff 1 to call Supplier (Sharma ji) for precise delivery time and update the Supplier Group.
+
+   ↳ SUBTASK 2: Goods received at Ashish's end — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Type 1 (Standard Equipment Procurement) orders. Delivery is today from supplier, so reception should follow.
+      Next step: Be prepared to receive the tandoor once the exact time is confirmed.
+
+   ↳ SUBTASK 3: Inspection and sorting of tandoor — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Type 1 (Standard Equipment Procurement) orders. No message evidence found after reception.
+      Next step: Once tandoor is received, ensure it undergoes inspection for quality and completeness.
+
+   ↳ SUBTASK 4: Pre-dispatch checklist completed for tandoor — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Type 1 (Standard Equipment Procurement) orders. No message evidence found.
+      Next step: Complete a pre-dispatch checklist for the tandoor before it is moved to the final client.
+
+⚠️ FLAGS:
+   - Final client for tandoor delivery is not specified in the conversation.
+   - Exact delivery time from supplier is pending, only "dopahar tak" (by afternoon) confirmed.
+
+❓ AMBIGUOUS CORRELATIONS (needs human review):
+   - None. "Sharma ji" and "Sharma bhai" are identified as the same entity: Supplier.

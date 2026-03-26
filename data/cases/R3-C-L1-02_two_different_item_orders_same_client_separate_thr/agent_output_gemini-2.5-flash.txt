@@ -1,0 +1,46 @@
+UNIFIED TASK LIST — 25 Mar
+Threads processed: Client A Group (Thread 1), Client A Group (Thread 2)
+
+📦 PARENT TASK: Tandoor Order Enquiry — Client A
+   Entity: Client A (customer)
+   Item: Tandoor
+   Status: Pending — Awaiting client details
+   Due: N/A (awaiting initial details)
+   Priority: Medium
+   Source threads: Client A Group (Thread 1)
+
+   ↳ SUBTASK 1: Collect Tandoor order details from Client A
+      Assigned to: Ashish
+      Status: Pending
+      Next step: Follow up with Client A to gather complete specifications (model, size, quantity, desired delivery date, etc.) for the tandoor.
+
+   ↳ SUBTASK 2: Quote requested from supplier — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Standard Equipment Procurement orders, after client details are received. No message evidence found.
+      Next step: Once client details are received, Ashish/Staff should identify potential suppliers and request a quote.
+
+📦 PARENT TASK: Generator Order Enquiry — Client A
+   Entity: Client A (customer)
+   Item: Generator
+   Status: Pending — Awaiting client details
+   Due: N/A (awaiting initial details)
+   Priority: Medium
+   Source threads: Client A Group (Thread 2)
+
+   ↳ SUBTASK 1: Collect Generator order details from Client A
+      Assigned to: Ashish
+      Status: Pending
+      Next step: Ashish or Staff should acknowledge Client A's request and follow up to gather complete specifications (type, capacity, quantity, desired delivery date, etc.) for the generator.
+
+   ↳ SUBTASK 2: Quote requested from supplier — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Standard Equipment Procurement orders, after client details are received. No message evidence found.
+      Next step: Once client details are received, Ashish/Staff should identify potential suppliers and request a quote.
+
+⚠️ FLAGS:
+   - Two distinct enquiries from Client A for different items (tandoor and generator) are in initial stages.
+   - No detailed specifications or quantities provided by Client A for either item yet.
+   - Ashish has only responded to the Tandoor request; the Generator request from 25 Mar 11:00 has not yet received an explicit acknowledgement or request for details in the provided threads.
+
+❓ AMBIGUOUS CORRELATIONS (needs human review):
+   - None in this example. The two parent tasks are clearly for distinct items.

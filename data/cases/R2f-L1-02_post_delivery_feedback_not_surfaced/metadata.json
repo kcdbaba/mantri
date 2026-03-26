@@ -1,0 +1,15 @@
+{
+  "id": "R2f-L1-02",
+  "name": "post_delivery_feedback_not_surfaced",
+  "framework": "R2",
+  "level": "L1",
+  "sprint": "S2",
+  "data_source": "fully-synthetic",
+  "description": "Army client (2 Corps Supply) — delivery confirmed and payment received within the same week. Order is fully closed. No feedback message from Ashish to client visible anywhere. Agent should surface a post-delivery feedback follow-up task as a cadence implicit task.",
+  "chat_inputs": null,
+  "completeness": {"complete": true, "missing": []},
+  "expected_output": "Parent task: 2 Corps Supply order — Status: Completed (delivery 20 Mar, payment 22 Mar). Implicit task: Post-delivery feedback follow-up with 2 Corps Supply — payment received, order closed, no feedback message sent. Next step: Ashish to follow up with 2 Corps Supply to confirm satisfaction with delivery and quality — standard relationship step after Army client order completion.",
+  "pass_criteria": "PASS: Agent surfaces a post-delivery feedback or satisfaction follow-up task as an implicit/cadence task triggered by order completion (payment received). FAIL: Agent marks the order as complete with no forward-looking relationship task — treating payment received as the absolute final state. FAIL: Agent notes GST reconciliation or other administrative steps but omits client feedback follow-up entirely.",
+  "challenge": "Payment received is a powerful task-closure signal. 'Received, thank you sir' is a natural conversation endpoint. The agent must recognise that order closure triggers a relationship follow-up step (feedback) that is almost never written in WhatsApp and would never appear as an explicit instruction. Tests Type 10 cadence: payment received → feedback follow-up implicit task.",
+  "notes": "R2f — post-delivery feedback implicit task. UNVALIDATED: timing of feedback outreach (same day? 1-2 days after?) and whether this applies to all clients or only Army/major commercial. The testable behaviour is: payment received with no feedback message = feedback follow-up task created."
+}

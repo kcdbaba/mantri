@@ -1,0 +1,15 @@
+{
+  "id": "R2a-L1-02",
+  "name": "end_of_month_accounts_stock_cadence_missed",
+  "framework": "R2",
+  "level": "L1",
+  "sprint": "S2",
+  "data_source": "fully-synthetic",
+  "description": "Multiple deliveries on 29 Mar (end of month) — no accounts reconciliation or stock-take task surfaced",
+  "chat_inputs": null,
+  "completeness": {"complete": true, "missing": []},
+  "expected_output": "Three delivery tasks (SATA, Tezpur, Ranchi). Plus end-of-month cadence implicit tasks: (1) Monthly accounts reconciliation — due 31 Mar. (2) GST reconciliation for March. (3) Stock-take / inventory check for March. These are not mentioned in any thread but should be surfaced automatically based on the date (29 Mar = end of month) and the volume of activity.",
+  "pass_criteria": "PASS: Agent surfaces at least one end-of-month cadence task (accounts reconciliation, GST reconciliation, or stock-take) as an implicit task, unprompted by any thread message. FAIL: Agent only processes the three delivery tasks and produces no periodic cadence tasks despite the 29 Mar date context.",
+  "challenge": "All thread content is operational (deliveries, supplier prep). No message mentions accounts, GST, or stock-take. Agent must infer that 29 Mar = end of month and surface the periodic cadence tasks proactively. Tests R2a (cadence implicit task detection) at the monthly boundary.",
+  "notes": "The date 29 Mar is embedded in the thread timestamps. End-of-month cadence tasks (accounts reconciliation, GST, stock-take) should fire automatically when the agent sees a month-end date. UNVALIDATED: specific reconciliation frequency and scope to be confirmed with Ashish."
+}

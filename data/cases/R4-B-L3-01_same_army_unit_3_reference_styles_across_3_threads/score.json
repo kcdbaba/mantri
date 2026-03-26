@@ -1,0 +1,51 @@
+{
+  "verdict": "PASS",
+  "overall_score": 91,
+  "dimensions": {
+    "task_recall": {
+      "score": null,
+      "notes": null
+    },
+    "entity_accuracy": {
+      "score": 92,
+      "notes": "All three references — 'Brigadier sahab,' 'Eastern Command walo,' 'HQ Eastern Command' — are correctly resolved and consolidated under a single parent entity 'HQ Eastern Command / Brigadier Sahab.' The dual naming in the entity field accurately reflects the alias situation without fabricating a clean canonical name it cannot confirm. Slight deduction for not explicitly noting the additional instruction from case metadata to validate naming conventions with Ashish (though this is captured indirectly in the ambiguity flag)."
+    },
+    "cross_thread_correlation": {
+      "score": 95,
+      "notes": "Exemplary. The pre-analysis table makes the correlation logic fully transparent: three threads are mapped by signal (client reference, action, timing) and the timeline (09:00 → 10:00 → 14:00) is used to validate that they represent a single progressive order lifecycle rather than parallel orders. No duplicate records are created. The 'tentative merge' framing is honest and traceable."
+    },
+    "next_step_quality": {
+      "score": null,
+      "notes": null
+    },
+    "implicit_task_detection": {
+      "score": null,
+      "notes": null
+    },
+    "ambiguity_flagging": {
+      "score": 88,
+      "notes": "Strong flagging throughout. AMBIGUITY 1 correctly isolates the entity resolution uncertainty and requests human confirmation before delivery. AMBIGUITY 2 flags unknown item type and order origin. Flag 2 (Ashish's query going unanswered across threads) and Flag 3 (scheduling instruction vs. confirmed booking) are operationally valuable catches. Minor gap: the case metadata explicitly states 'Validate HQ Eastern Command naming conventions with Ashish' as an additional note, and while the agent flags entity uncertainty generally, it does not surface this specific named-person action item (validate naming conventions with Ashish) as a discrete flag or subtask, which means a human reviewer could miss it."
+    }
+  },
+  "pass_criteria_met": true,
+  "passes": [
+    "All three reference styles ('Brigadier sahab,' 'Eastern Command walo,' 'HQ Eastern Command') are resolved into a single client entity with no duplicate records created.",
+    "Cross-thread correlation is made fully explicit via a pre-analysis table mapping signals, actions, and timestamps across all three threads.",
+    "The tentative-merge approach with a human-review flag prevents silent wrong guessing while still producing an actionable task list.",
+    "Delivery commitment for 25 Mar (tomorrow morning) is correctly identified as the primary task output, matching expected output.",
+    "Ambiguity flags are granular, numbered, and actionable — distinguishing entity uncertainty from operational gaps.",
+    "Information asymmetry between threads (packing confirmed in Thread 2 but not relayed to Thread 1 where Ashish asked) is correctly detected and flagged."
+  ],
+  "failures": [
+    "The case metadata additional note 'Validate HQ Eastern Command naming conventions with Ashish' is not surfaced as a discrete action item or flag — this specific human-review step is buried or absent, and a busy operator scanning the output could miss it.",
+    "Minor: the entity field retains two names ('HQ Eastern Command / Brigadier Sahab') without explicitly proposing a canonical form pending Ashish's confirmation, which slightly reduces clarity for downstream record-keeping even though the ambiguity flag addresses it narratively."
+  ],
+  "notes": "This is a high-quality output that fully satisfies the pass criteria: a single client entity is produced, no duplicate records exist, and the merge logic is transparent and auditable. The cross-thread correlation methodology is particularly strong — using timestamps and action-stage progression as corroborating evidence is exactly the right approach for tentative merges. The main gap is failure to convert the metadata instruction ('validate naming conventions with Ashish') into a concrete flagged action, which could cause that step to be overlooked in operational use. This is a minor but real operational gap, keeping the score just below the top band.",
+  "case_id": "R4-B-L3-01",
+  "case_name": "same_army_unit_3_reference_styles_across_3_threads",
+  "framework": "R4-B",
+  "level": "L3",
+  "evaluated_at": "2026-03-26T04:47:27",
+  "model_used": "claude-sonnet-4-6",
+  "eval_model": "claude-sonnet-4-6"
+}

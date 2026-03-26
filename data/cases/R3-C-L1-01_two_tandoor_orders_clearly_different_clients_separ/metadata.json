@@ -1,0 +1,18 @@
+{
+  "id": "R3-C-L1-01",
+  "name": "two_tandoor_orders_clearly_different_clients_separ",
+  "framework": "R3-C",
+  "level": "L1",
+  "sprint": "S1",
+  "data_source": "fully-synthetic",
+  "description": "Two tandoor orders, clearly different clients, separate threads",
+  "chat_inputs": null,
+  "completeness": {
+    "complete": true,
+    "missing": []
+  },
+  "expected_output": "Two separate parent tasks: Tandoor order for Client A (2 units, urgent) and Tandoor order for Client B (1 unit, quotation stage). Different clients, different quantities, different stages.",
+  "pass_criteria": "PASS: Two separate parent task records, each linked to correct client. FAIL: Tasks merged into one tandoor order or cross-attributed.",
+  "challenge": "Same item (tandoor) ordered by two different clients on same day. Agent must keep as two separate orders.",
+  "notes": "Foundational order separation test"
+}

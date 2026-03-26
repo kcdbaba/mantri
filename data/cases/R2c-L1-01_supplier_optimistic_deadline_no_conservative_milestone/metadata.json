@@ -1,0 +1,15 @@
+{
+  "id": "R2c-L1-01",
+  "name": "supplier_optimistic_deadline_no_conservative_milestone",
+  "framework": "R2",
+  "level": "L1",
+  "sprint": "S2",
+  "data_source": "fully-synthetic",
+  "description": "Inter-state supplier (Malerkotla) commits 3-day delivery to Guwahati — agent should set conservative internal milestone, not track against supplier's optimistic date",
+  "chat_inputs": null,
+  "completeness": {"complete": true, "missing": []},
+  "expected_output": "Parent task: Tandoor order from Malerkotla supplier. Supplier committed delivery: 23 Mar. Internal tracking milestone: 24-25 Mar (conservative — inter-state transit from Malerkotla to Guwahati is subject to delay). Agent should flag that 3 days is an optimistic estimate for inter-state delivery and set the internal follow-up trigger 1-2 days before the committed date. Escalation task: if no dispatch confirmation by 22 Mar, follow up with supplier.",
+  "pass_criteria": "PASS: Agent notes that Malerkotla is an inter-state supplier and sets an internal follow-up milestone earlier than the committed delivery date (23 Mar), OR explicitly flags that the 3-day estimate is optimistic for inter-state transit and recommends monitoring from 22 Mar. FAIL: Agent simply records delivery due 23 Mar with no note about inter-state delivery risk or conservative internal tracking.",
+  "challenge": "Supplier's '3 din mein' is stated confidently; Ashish acknowledges it without pushback. Agent must apply domain knowledge that Malerkotla-to-Guwahati is an inter-state delivery (~2,000km) and 3 days is optimistic — not certain. Tests R2c (conservative internal deadline implicit task).",
+  "notes": "UNVALIDATED: specific buffer amount (1 day vs 2 days) and per-supplier reliability adjustment to be confirmed with Ashish. The principle — set conservative internal milestone for inter-state suppliers — is the testable behaviour."
+}

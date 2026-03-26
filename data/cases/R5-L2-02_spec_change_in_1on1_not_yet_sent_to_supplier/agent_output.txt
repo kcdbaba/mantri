@@ -1,0 +1,153 @@
+```
+UNIFIED TASK LIST — 19 Mar
+Threads processed: Supplier Group, Ashish+Staff 1 (1:1), All Staff Group
+
+📦 PARENT TASK: Tandoor Order — Client Unidentified (needs human review)
+   Entity: Supplier A (supplier); Client — unidentified (see flags)
+   Item: Tandoor (type now disputed — see flags)
+   Status: BLOCKED — critical spec change not yet confirmed with supplier
+   Due: Supplier was told to dispatch 20 Mar morning — STOP needed before then
+   Priority: HIGH (dispatch may happen in hours if not intercepted)
+   Source threads: Supplier Group, Ashish+Staff 1 (1:1), All Staff Group
+
+   ↳ SUBTASK 1: Stop / hold dispatch with Supplier A — URGENT
+      Assigned to: Staff 1 (instructed by Ashish at 14:31)
+      Status: UNCONFIRMED — Staff 1 said "ok sir" at 14:45 but no evidence of
+              actual communication to Supplier A in any thread
+      Due: Before 20 Mar morning (supplier's stated dispatch window)
+      Next step: Verify with Staff 1 whether Supplier A has actually been
+                 contacted and confirmed the hold. If not done, contact
+                 Supplier A immediately. Do not assume "ok sir" = task
+                 completed.
+
+   ↳ SUBTASK 2: Communicate spec change to Supplier A — standard quality
+      instead of heavy duty
+      Assigned to: Staff 1 (instructed by Ashish at 14:31)
+      Status: UNCONFIRMED — no message to Supplier A visible in Supplier
+              Group after 11:00; 1:1 instruction given at 14:31 but not
+              reflected in supplier thread
+      Due: Today (19 Mar) — before supplier prepares dispatch
+      Next step: Once dispatch hold confirmed (Subtask 1), send updated
+                 spec to Supplier A in the Supplier Group. Get Supplier A's
+                 written confirmation of the change and revised rate if
+                 applicable.
+
+   ↳ SUBTASK 3: Get revised rate from Supplier A for standard quality tandoor
+      Assigned to: Staff 1 / Ashish
+      Status: Pending — current confirmed rate is 52,000 + GST (heavy duty);
+              standard quality rate unknown
+      Due: As soon as spec change is communicated
+      Next step: Ask Supplier A for rate on standard quality tandoor and
+                 post to Supplier Group. Do not proceed with order until
+                 revised rate is confirmed in writing.
+
+   ↳ SUBTASK 4: Confirm revised delivery date with Supplier A
+      Assigned to: Staff 1
+      Status: Pending — original date (20 Mar) may no longer apply after
+              spec change
+      Due: Same call/message as Subtask 2 and 3
+      Next step: Confirm whether Supplier A can still deliver on 20 Mar with
+                 standard quality unit, or whether delivery date shifts.
+                 Update client once known.
+
+   ↳ SUBTASK 5: Confirm revised quote / delivery date with client
+      Assigned to: Ashish / Staff 1
+      Status: Pending — blocked by Subtasks 2, 3, 4
+      Due: After revised supplier details confirmed
+      Next step: Once Supplier A confirms standard quality rate and revised
+                 delivery date, communicate updated quote and delivery
+                 timeline to client for re-confirmation.
+
+   --- CADENCE IMPLICIT SUBTASKS ---
+   (Expected steps not detected in any thread at current order stage)
+
+   ↳ SUBTASK 6: Spec confirmation with client — implicit task
+      Status: Pending — not detected in threads
+      Note: TYPE 2 (Custom/Made-to-Order) cadence requires written spec
+            lock before order confirmation. The original order was placed
+            as heavy duty; client's standard quality preference emerged
+            AFTER the order was confirmed with Supplier A — indicating spec
+            was not confirmed with client before order was placed.
+      Next step: Before re-confirming revised order with Supplier A, get
+                 written confirmation from client of exact spec required
+                 (standard quality — confirm grade, size, any other
+                 requirements) to prevent a second spec change.
+
+   ↳ SUBTASK 7: PO / written order to Supplier A — implicit task
+      Status: Pending — not detected in threads
+      Note: Order was confirmed verbally in chat ("ok confirm, kal bhejna")
+            but no formal PO issued. Now that spec is changing, a written
+            PO with correct spec is essential before dispatch.
+      Next step: Issue a written PO to Supplier A with correct spec
+                 (standard quality), confirmed rate, and delivery date once
+                 all details are locked.
+
+   ↳ SUBTASK 8: Client identity logging — implicit task
+      Status: Pending — not detected in threads
+      Note: No client name appears in any thread. Order cannot be tracked,
+            invoiced, or delivered without client identification on record.
+      Next step: Ashish to confirm client name and delivery address for
+                 this order so parent task can be properly labelled and
+                 delivery arranged.
+
+   ↳ SUBTASK 9: Delivery / transport arrangement — implicit task
+      Status: Pending — not detected in threads
+      Note: Supplier dispatch is supplier-to-Ashish or direct to client?
+            Not specified. Transport from Ashish's end not arranged or
+            mentioned.
+      Next step: Clarify with Supplier A whether delivery is to Ashish's
+                 warehouse or direct to client. If to warehouse, arrange
+                 onward transport to client once delivery date confirmed.
+
+⚠️ FLAGS:
+
+   CRITICAL:
+   - Dispatch hold NOT confirmed in threads: Staff 1 responded "ok sir"
+     to Ashish's instruction (14:45) but there is NO subsequent message
+     to Supplier A in the Supplier Group telling them to hold dispatch.
+     Supplier A currently still expects to dispatch 20 Mar morning.
+     This is the highest-priority action right now.
+
+   HIGH:
+   - Spec change communicated only in 1:1 chat (Ashish + Staff 1) — NOT
+     posted to Supplier Group. Supplier A has no knowledge of the change
+     as of the last visible message.
+   - "ok sir" from Staff 1 is an unverified acknowledgement — it confirms
+     Staff 1 read the message, not that the action was taken. Do not
+     treat as task completion.
+   - Rate renegotiation needed: 52,000 + GST was quoted for heavy duty.
+     Standard quality rate is unknown and unconfirmed.
+
+   MEDIUM:
+   - All Staff Group log (09:30, "done") predates the spec change
+     instruction (14:31). This "done" refers only to the initial order
+     confirmation — it does NOT indicate the spec change was handled.
+     Risk of misreading this as all-clear.
+   - Client identity not established in any thread — cannot invoice,
+     arrange delivery, or track order without this.
+   - No written PO issued — order confirmed conversationally only.
+
+   LOW:
+   - GST amount not calculated or confirmed in any thread.
+   - Delivery logistics (transport, address, Army gate pass if applicable)
+     not discussed in any thread.
+
+❓ AMBIGUOUS CORRELATIONS:
+
+   - All Staff Group (09:30 "aaj Supplier A ko tandoor order confirm
+     karo" / "done") and Supplier Group Thread 1 appear to refer to the
+     same order — treated as one parent task. However, the All Staff
+     Group "done" at 09:30 preceded the Supplier Group confirmation
+     exchange (10:00–11:00). Possible interpretations: (a) Staff 1
+     logged "done" prematurely, or (b) there was a prior communication
+     with Supplier A before 10:00 not captured in Thread 1. Either way,
+     the "done" in All Staff Group should NOT be read as order
+     completion — it predates the spec change entirely.
+
+   - Client identity: no client is named in any thread. It is unknown
+     whether this is a direct Army client, a GeM order, or other. Task
+     type classification (TYPE 1 vs TYPE 3 vs TYPE 4) cannot be fully
+     determined. Cadence implicit tasks have been flagged conservatively
+     across TYPE 1 and TYPE 2 patterns. Human review needed to confirm
+     order type and apply correct checklist.
+```

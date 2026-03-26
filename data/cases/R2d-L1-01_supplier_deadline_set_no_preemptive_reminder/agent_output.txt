@@ -1,0 +1,84 @@
+```
+UNIFIED TASK LIST — 20 Mar
+Threads processed: Supplier Group (Ashish + Supplier A), All Staff Group
+
+📦 PARENT TASK: AC Procurement — Client Unknown
+   Entity: Supplier A (supplier); end client not identified in any thread
+   Item: AC 1.5 ton (1 unit)
+   Status: In Progress — supplier committed, delivery pending
+   Due: 21 Mar, afternoon (supplier commitment)
+   Priority: High
+   Source threads: Supplier Group, All Staff Group
+
+   ↳ SUBTASK 1: Receive AC from Supplier A
+      Assigned to: Staff 1 (implied — informed via All Staff Group)
+      Status: Pending — scheduled for 21 Mar afternoon
+      Due: 21 Mar, afternoon
+      Next step: Ensure someone is available at the receiving point on 21 Mar afternoon to accept delivery from Supplier A.
+
+   ↳ SUBTASK 2: Pre-emptive delivery confirmation — Supplier A
+      Assigned to: Ashish / Staff 1
+      Status: Scheduled — to be actioned morning of 21 Mar
+      Due: Morning of 21 Mar (before arranging receiving logistics or staff)
+      Next step: Contact Supplier A on the morning of 21 Mar to confirm delivery is still on track before arranging receiving arrangements.
+
+   ↳ SUBTASK 3: Inspection and sorting — implicit task
+      Assigned to: Staff 1 (or designated staff)
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Standard Equipment Procurement orders. No message evidence found. Step 11 of Type 1 checklist.
+      Next step: After goods are received, conduct physical inspection of the AC unit — check for transit damage, verify model/spec, confirm it matches order. Log outcome in group.
+
+   ↳ SUBTASK 4: Pre-dispatch checklist — implicit task
+      Assigned to: Staff 1
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Standard Equipment Procurement orders. No message evidence found. Step 12 of Type 1 checklist.
+      Next step: Complete pre-dispatch checklist before the unit is forwarded to the end client (once client is identified). Confirm accessories, packaging, and documentation are in order.
+
+   ↳ SUBTASK 5: Identify end client and delivery destination
+      Assigned to: Ashish
+      Status: Pending — critical gap
+      Due: Immediately / before 21 Mar delivery
+      Next step: Confirm who this AC is being procured for. No client is named in either thread. Delivery address, delivery timing, and invoice details all depend on this being resolved before goods arrive.
+
+   ↳ SUBTASK 6: PO issued to Supplier A — implicit task
+      Assigned to: Ashish
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Standard Equipment Procurement orders. Only a verbal commitment from Supplier A observed. No written PO or formal order confirmation evident. Step 6 of Type 1 checklist.
+      Next step: Confirm whether a PO has been issued to Supplier A. If not, issue one — especially since price (42,000 + GST) has been agreed.
+
+   ↳ SUBTASK 7: Quote sent to client and order confirmed by client — implicit task
+      Assigned to: Ashish
+      Status: Pending — not detected in threads
+      Note: No client is identified in any thread, so Steps 4 and 5 of Type 1 checklist (quote to client, client confirmation) cannot be verified. This may mean the order is client-confirmed and Ashish is simply not discussing it in these threads — or the order has been placed with Supplier A before client confirmation is in writing.
+      Next step: Ashish to confirm whether the client has formally confirmed this order, and whether a written quote was sent and accepted. If not yet confirmed, flag risk — goods are being procured without a locked client order.
+
+   ↳ SUBTASK 8: Delivery to client — implicit task
+      Assigned to: TBD (client unknown)
+      Status: Pending — blocked by Subtask 5 (client not identified)
+      Note: Step 13 of Type 1 checklist. Delivery logistics (transport, address, timing) cannot be arranged until client is identified.
+      Next step: Once client is confirmed (Subtask 5), arrange transport or vehicle for last-mile delivery to client.
+
+   ↳ SUBTASK 9: Invoice raised — implicit task
+      Assigned to: Ashish
+      Status: Pending — not yet at this stage
+      Note: Step 16 of Type 1 checklist. No invoice reference in any thread. To be actioned post-delivery.
+      Next step: Raise invoice to client after delivery and client acceptance. Ensure GST component (on 42,000 base) is correctly captured.
+
+   ↳ SUBTASK 10: GST reconciliation — calendar-triggered implicit task
+      Assigned to: Ashish / accounts
+      Status: Pending — not detected in threads
+      Note: Thread date is 20 Mar — end of month AND end of financial year (Mar = year-end). This periodic task is expected at this time and is almost never mentioned in WhatsApp.
+      Next step: Reconcile all GST invoices raised in March. Also initiate year-end accounts closure preparation and stock-take. Advance tax review for Q4 also due. Ashish to schedule this with accounts team — separate from day-to-day operations.
+
+⚠️ FLAGS:
+   - CRITICAL: End client not identified in any thread. Supplier has committed delivery for 21 Mar afternoon but there is no record of who this AC is for, where it needs to go, or whether a client order is confirmed. This must be resolved before goods arrive — delivery address, invoice, and acceptance sign-off all depend on it.
+   - Price agreed verbally (42,000 + GST) but no PO confirmation or written order to Supplier A detected. Risk of dispute if not formalised.
+   - Staff 1's response ("ok sir") in the All Staff Group is an unverified acknowledgement — it is unclear whether Staff 1 has actioned anything or simply acknowledged the message. The acknowledgement does not confirm that receiving arrangements for 21 Mar afternoon have been made.
+   - No delivery charges discussed with Supplier A — final landed cost unclear (42,000 + GST is ex-supplier; transport to Ashish's end or to client is unaddressed).
+   - Year-end (late March) — annual accounts closure, stock-take, and advance tax review are all due. None mentioned in threads.
+   - If this AC is destined for an Army client: gate pass / entry documentation, receiving officer coordination, and DO/GRN requirements (Type 3 checklist, Steps 11–17) will apply and have not been addressed.
+
+❓ AMBIGUOUS CORRELATIONS:
+   - End client identity: No client name or delivery destination appears in either thread. It is unclear whether this is a stock purchase (for warehouse), a confirmed client order, or a speculative procurement. This is the single most significant ambiguity in these threads. Human input from Ashish required before this task can progress past goods receipt.
+   - Staff 1 acknowledgement: "ok sir" in All Staff Group could mean (a) acknowledged and will arrange receiving, or (b) simply read the message. Cannot determine which from text alone. If receiving logistics have not been arranged, there is a risk of no one being available when Supplier A delivers on 21 Mar afternoon. Recommend Ashish confirm with Staff 1 explicitly what has been actioned.
+```

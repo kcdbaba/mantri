@@ -1,0 +1,97 @@
+```
+UNIFIED TASK LIST — 22 Mar
+Threads processed: Client Group (Ashish + 2 Corps Supply), All Staff Group
+
+📦 PARENT TASK: Office Chairs Order — 2 Corps Supply
+   Entity: 2 Corps Supply (Army client)
+   Item: 20 x Office Chairs (standard government spec)
+   Status: ✅ COMPLETED — payment received
+   Due: Delivered 20 Mar, Payment received 22 Mar
+   Priority: Low (resolved)
+   Source threads: Client Group (Ashish + 2 Corps Supply), All Staff Group
+
+   Order summary:
+   — Enquiry: 18 Mar
+   — Quote sent + confirmed: 18 Mar (Rs 4,800/chair + GST = Rs 96,000 + GST)
+   — Supplier ordered: 19 Mar
+   — Delivery to client: 20 Mar (within committed 20–21 Mar window)
+   — Payment received: 22 Mar — Rs 1,13,280 NEFT
+   — GST cross-check: Rs 96,000 base + 18% GST = Rs 1,13,280 ✅ Amount matches
+
+   ↳ SUBTASK 1: Invoice raised and sent to client
+      Assigned to: Ashish
+      Status: Completed — Ashish confirmed "invoice WhatsApp pe bhej deta hoon" [20 Mar 11:15]
+      Note: Invoice was sent via WhatsApp per Ashish's message. No explicit confirmation from 2 Corps that invoice was received — but payment followed on 22 Mar, implying invoice was received and processed.
+      Next step: No action required.
+
+   ↳ SUBTASK 2: Payment received and acknowledged
+      Assigned to: Ashish
+      Status: Completed — Rs 1,13,280 NEFT received [22 Mar 14:00], acknowledged [22 Mar 14:15]
+      Next step: No action required.
+
+   ↳ SUBTASK 3: Payment receipt / acknowledgement issued to client — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected cadence step for all completed orders. Ashish acknowledged receipt to 2 Corps informally ("received, thank you sir") but no formal receipt or acknowledgement document visible in threads.
+      Next step: Issue a formal payment receipt or confirmation note to 2 Corps Supply for their records — especially relevant for Army units who may need documentation for their internal accounts.
+
+   ↳ SUBTASK 4: GST reconciliation — implicit task
+      Status: Pending — not detected in threads
+      Note: Invoice raised and payment received. GST component (Rs 17,280 on Rs 96,000 base at 18%) needs to be logged for monthly GST reconciliation. Thread date is 22 Mar — end-of-month period approaching (day 22 of March). March is also year-end.
+      Next step: Ensure this invoice is captured in March GST workings before month-end close.
+
+   ↳ SUBTASK 5: End-of-month accounts reconciliation — calendar-triggered implicit task
+      Status: Pending — not detected in threads
+      Note: Thread date is 22 Mar — approaching end of month AND financial year-end (31 Mar). This periodic task is expected at this time and is almost never mentioned in WhatsApp.
+      Next step: Ashish to initiate end-of-month accounts reconciliation for March, covering all invoices raised, payments received, and outstanding balances for the month.
+
+   ↳ SUBTASK 6: End-of-quarter / year-end review — calendar-triggered implicit task
+      Status: Pending — not detected in threads
+      Note: Thread date is 22 Mar — 9 days from financial year-end (31 Mar). Year-end tasks are due: annual accounts closure preparation, advance tax review, year-end stock-take.
+      Next step: Ashish to initiate year-end close checklist — annual accounts, advance tax liability check, stock-take of warehouse inventory.
+
+   ↳ SUBTASK 7: Post-delivery feedback follow-up with 2 Corps Supply — implicit task
+      Status: Pending — not detected in threads
+      Note: Order is fully completed and payment received. No post-delivery feedback message to client is visible in threads. Standard cadence task on all completed orders.
+      Next step: Ashish to send a brief follow-up message to 2 Corps Supply confirming delivery satisfaction and keeping the relationship warm for future orders.
+
+⚠️ FLAGS:
+   - ✅ No blocking issues — order is fully resolved.
+   - Invoice delivery method: Invoice was sent via WhatsApp (informal channel). For Army clients, a formal invoice copy (PDF, with GST number, correct billing details) should be on record. Confirm the WhatsApp invoice sent on 20 Mar was the formal GST invoice and not an informal estimate or screenshot.
+   - Supplier identity: No supplier is named in either thread. Staff 1 was asked to coordinate with supplier [19 Mar 10:15] but no supplier name, supplier group, or supplier thread is visible. This means: (a) no visibility on whether a PO was issued to the supplier, (b) no supplier invoice or bill visible for input tax credit purposes, (c) supplier payment status unknown.
+   - Client acceptance: 2 Corps Supply's message "maal aa gaya, sab theek lag raha hai" [20 Mar 11:00] is an informal acceptance. No formal delivery note (DO/GRN) or signed receipt is visible in threads. For Army clients, a signed delivery acknowledgement is typically required as supporting documentation for payment — however payment was received, suggesting this may have been handled offline.
+   - 1:1 information gap: Supplier coordination happened between Staff 1 and the supplier. No supplier thread is present in this input. Any commitments, payment terms, or issues with the supplier are not visible to this analysis.
+
+❓ AMBIGUOUS CORRELATIONS:
+   - None. Both threads clearly refer to the same single order (2 Corps Supply, 20 office chairs, 18–22 Mar). Correlation is unambiguous.
+
+---
+
+ENTITY RESOLUTION NOTES:
+   - "2 Corps Supply" used consistently across both threads — treated as single entity, no alias ambiguity.
+   - Supplier: unnamed throughout. Referenced only as "supplier" by Ashish [19 Mar 10:00] and implicitly by Staff 1. Cannot be resolved from available threads — flagged above.
+
+ORDER LIFECYCLE AUDIT (Type 1: Standard Equipment Procurement + Type 3: Army Direct Delivery):
+
+   Step 1  — Enquiry received ✅ [18 Mar 09:00]
+   Step 2  — Quote requested from supplier ✅ [implied; Ashish confirmed rate by 14:00 same day]
+   Step 3  — Quote received from supplier ✅ [implied; rate confirmed 18 Mar 14:00]
+   Step 4  — Quote sent to client ✅ [18 Mar 14:00]
+   Step 5  — Order confirmed by client ✅ [18 Mar 14:30 — "theek hai, aage badhao"]
+   Step 6  — PO issued to supplier ⚠️ NOT VISIBLE — no thread evidence; flagged above
+   Step 7  — Advance payment to supplier ⚠️ NOT VISIBLE — not mentioned; may not be required but unconfirmed
+   Step 8  — Delivery date committed by supplier ✅ [implied; Ashish committed 20–21 Mar to client on 19 Mar]
+   Step 9  — Goods dispatched by supplier ⚠️ NOT VISIBLE — no dispatch confirmation in threads
+   Step 10 — Goods received ✅ [20 Mar 11:00 — client confirmed]
+   Step 11 — Inspection and sorting ⚠️ NOT VISIBLE — client said "sab theek lag raha hai" (informal); no Ashish-side inspection logged
+   Step 12 — Pre-dispatch checklist ⚠️ NOT VISIBLE — no evidence in threads
+   Step 13 — Army unit coordination (receiving officer, address) ⚠️ NOT VISIBLE — not mentioned
+   Step 14 — Gate pass / entry documentation ⚠️ NOT VISIBLE — Army-specific; no mention
+   Step 15 — Delivery to client confirmed ✅ [20 Mar 11:00 + Staff 1 confirmation 20 Mar 11:30]
+   Step 16 — DO / GRN / signed delivery note ⚠️ NOT VISIBLE — no formal delivery receipt mentioned; flagged above
+   Step 17 — Invoice raised ✅ [20 Mar 11:15 — sent via WhatsApp]
+   Step 18 — Payment follow-up ✅ [N/A — payment came in proactively on Day 2 after delivery]
+   Step 19 — Payment received ✅ [22 Mar 14:00]
+   Step 20 — GST reconciliation ⏳ PENDING — implicit task raised above
+
+   Note: Multiple steps (6, 7, 9, 11, 12, 13, 14, 16) are not visible in threads. Given that payment was received in full and the client expressed satisfaction, the order outcome is positive. However, the absence of these steps from the record — particularly PO to supplier, DO/GRN, and inspection — creates documentation gaps that could matter for: (a) supplier disputes, (b) Army audit requirements, (c) input tax credit on supplier bill.
+```

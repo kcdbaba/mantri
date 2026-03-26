@@ -1,0 +1,49 @@
+UNIFIED TASK LIST — 24 Mar
+Threads processed: Client Group, All Staff Group, Internal Ops Group
+
+📦 PARENT TASK: Order for HQ Eastern Command (Brigadier Sahab)
+   Entity: HQ Eastern Command (Client), Brigadier Sahab (Client), Staff 1, Staff 2
+   Item: Goods (maal) - specific items not mentioned
+   Status: In Progress — Delivery scheduling
+   Due: 25 Mar morning (delivery requested)
+   Priority: High
+   Source threads: Client Group, All Staff Group, Internal Ops Group
+
+   ↳ SUBTASK 1: Confirm readiness of Brigadier Sahab's order
+      Assigned to: Staff 1 (implied, as Ashish asked)
+      Status: In Progress — Packing confirmed, but full readiness (including docs) still implicit
+      Next step: Staff to explicitly confirm to Ashish (and Client Group) that the order is ready for dispatch, including all necessary documentation.
+
+   ↳ SUBTASK 2: Pack goods for Eastern Command
+      Assigned to: Staff 1
+      Status: Completed
+      Next step: No further action needed for this specific step.
+
+   ↳ SUBTASK 3: Schedule delivery to HQ Eastern Command for tomorrow morning
+      Assigned to: Staff 2 (responsible for scheduling)
+      Status: Pending
+      Due: 25 Mar morning
+      Next step: Staff 2 to confirm vehicle availability and driver, communicate timing, and confirm with HQ Eastern Command.
+
+   ↳ SUBTASK 4: Army unit coordination (confirm address, receiving officer, timing) — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for TYPE 3 (Army Direct Delivery) orders. No message evidence found.
+      Next step: Staff 2 (or relevant logistics staff) to contact HQ Eastern Command to re-confirm delivery details for tomorrow morning.
+
+   ↳ SUBTASK 5: Arrange Gate pass / entry documentation — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for TYPE 3 (Army Direct Delivery) orders. No message evidence found.
+      Next step: Ensure all required gate pass and entry documentation for Army cantonment is prepared and available for the delivery driver.
+
+   ↳ SUBTASK 6: Complete Pre-dispatch checklist — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for TYPE 3 (Army Direct Delivery) orders. No message evidence found.
+      Next step: Conduct a final checklist (item count, quality, packaging integrity) before dispatching the goods.
+
+⚠️ FLAGS:
+   - Specific items of the order are not mentioned across any thread.
+   - Ashish's initial query in the Client Group implies a direct communication channel with "Brigadier Sahab" that isn't fully reflected in the internal coordination messages.
+   - Critical preparatory steps for Army Direct Delivery (unit coordination, gate pass, pre-dispatch checklist) are not explicitly mentioned as completed or in progress, raising a risk of last-minute delays.
+
+❓ AMBIGUOUS CORRELATIONS (needs human review):
+   - "Brigadier Sahab" in Client Group is tentatively linked to "Eastern Command walo" / "HQ Eastern Command" in the staff groups. While plausible given Army context and timing, explicit confirmation would be beneficial. Resolution: Assuming "Brigadier Sahab" is the key contact for the "HQ Eastern Command" order.

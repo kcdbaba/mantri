@@ -1,0 +1,18 @@
+{
+  "id": "R6-L1-01",
+  "name": "payment_confirmed_delivery_shortfall_and_quality_r",
+  "framework": "R6-L1",
+  "level": "01",
+  "sprint": "S2",
+  "data_source": "real-incomplete",
+  "description": "Payment confirmed — delivery shortfall and quality rejection raised 2 days later in same thread",
+  "chat_inputs": null,
+  "completeness": {
+    "complete": true,
+    "missing": []
+  },
+  "expected_output": "Two post-delivery follow-up tasks: (1) Locate and deliver missing car flags — 5 nos — from Malerkotla supplier (urgent). (2) Quality review: India flag and elephant flag — white quality defect — client rejection risk. Order status: Blocked/In Progress — NOT complete despite payment. 28000 paid but delivery incomplete and quality disputed.",
+  "pass_criteria": "PASS: Agent creates 2 post-delivery follow-up tasks (missing items + quality issue) and marks order Blocked or In Progress despite payment. FAIL: Order marked Complete after payment; no follow-up tasks for missing car flags or quality rejection.",
+  "challenge": "Payment confirmation (\"paid 28000 all cleared\") on 3/16 is a strong order-closure signal. Quality defect and delivery shortfall raised 2 days later in same thread. Agent must not treat payment as order closure.",
+  "notes": "Real data — Malerkotla supplier thread (incomplete). New risk R6 — not in original framework. Mrs Samita Roy is Ashish's staff member. Actual resolution chain (off-platform): missing items noticed on collection day → Ashish verbally asked Mrs Samita Roy to update supplier on WhatsApp → she did not → 2 days later no update, she had forgotten and claimed she couldn't reach supplier by phone → supplier called urgently, notified verbally → still no WhatsApp group update → supplier eventually shared courier consignment note image on chat confirming dispatch. Verbal instruction gap (R7a variant) is a key contributing failure. Courier note is an image — agent needs image support to extract dispatch confirmation."
+}

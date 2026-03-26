@@ -1,0 +1,15 @@
+{
+  "id": "R2d-L1-01",
+  "name": "supplier_deadline_set_no_preemptive_reminder",
+  "framework": "R2",
+  "level": "L1",
+  "sprint": "S2",
+  "data_source": "fully-synthetic",
+  "description": "Local supplier commits delivery tomorrow afternoon — agent should create a pre-emptive morning reminder task for tomorrow, not just wait for the deadline",
+  "chat_inputs": null,
+  "completeness": {"complete": true, "missing": []},
+  "expected_output": "Parent task: AC order from Supplier A. Delivery committed: 21 Mar afternoon. Implicit subtask: Pre-emptive reminder to Supplier A on morning of 21 Mar — confirm delivery is still on track before midday. This subtask is not in any thread; it must be inferred from the committed deadline and the supplier's proximity to the business.",
+  "pass_criteria": "PASS: Agent creates a pre-emptive follow-up or reminder task scheduled for the morning of the delivery day (21 Mar), or explicitly notes that Supplier A should be confirmed on the morning of the deadline before arranging receiving logistics. FAIL: Agent only notes 'delivery expected 21 Mar afternoon' with no proactive reminder task — treating the commitment as sufficient without a morning check-in.",
+  "challenge": "Supplier A gave a confident commitment ('kal dopahar tak pakka') which reads as a resolved task. Agent must recognise that a committed date without a pre-emptive check creates unnecessary risk — a morning reminder is a standard operational practice that never appears in WhatsApp. Tests R2d (pre-emptive supplier reminder implicit task).",
+  "notes": "UNVALIDATED: reminder timing (morning of delivery day vs day before) and whether this applies to all suppliers or only those with past reliability issues — to be confirmed with Ashish. The testable behaviour is: committed deadline → pre-emptive check task created."
+}

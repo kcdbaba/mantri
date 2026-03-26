@@ -1,0 +1,46 @@
+UNIFIED TASK LIST — 25 Mar 2026
+Threads processed: SATA Artillery Regiment Client Group, Voltas Supplier Group, LG Supplier Group, Internal Tasks Group
+
+---
+
+📦 **PARENT TASK: Sata Bty Bn - Overall Order Coordination**
+   Entity: Client A (Sata Bty Bn Sub Arvind Sir Sep 22)
+   Item: Mixed Equipment, Stationery, Spices, Custom Items, Payments
+   Status: In Progress — Awaiting multiple procurements and deliveries
+   Due: Ongoing
+   Priority: High
+   Source threads: SATA Artillery Regiment Client Group
+
+   ↳ SUBTASK 1: Consolidate and deliver all pending items to Sata Bty Bn
+      Assigned to: Ashish, Abhisha
+      Status: In Progress — Items being gathered, vehicle requested
+      Due: 25 Mar (vehicle requested for tomorrow)
+      Next step: Arrange a vehicle immediately for delivery of ready items (Mini Ref, ACs, LG Ref, Stabilizers, Towels, Starters, Pens) and confirm delivery schedule with Client A.
+
+   ↳ SUBTASK 2: Client A to review March 2026 statement
+      Assigned to: Client A
+      Status: Pending — Statement shared
+      Due: N/A
+      Next step: Follow up with Client A for feedback on the shared statement (state mar 2026.pdf) and any missing challans.
+
+   ↳ SUBTASK 3: Generate GeM link for remaining balance amounts
+      Assigned to: Ashish, Samita
+      Status: Pending
+      Due: N/A
+      Next step: Work with Client A to finalize the total amount and identify the specific items for which GeM links for 36373/- and 14000/- are needed.
+
+   ↳ SUBTASK 4: Resolve GeM item display/price issues for Client A
+      Assigned to: Ashish, Samita
+      Status: In Progress — GeM issues ongoing
+      Due: N/A
+      Next step: Continue to monitor GeM portal for resolution of display issues and re-check links with Client A.
+
+⚠️ FLAGS:
+   - **Multiple Concurrent Orders**: Client A has several distinct procurement efforts ongoing (initial list, GeM items, custom items, payment requests).
+   - **GeM Portal Issues**: Ongoing technical issues on GeM portal affecting link generation and price display (Ashish 3/14, Client A 3/24).
+   - **Ambiguous Stabilizer Selection**: Client A provided V-Guard link (3/23), but Ashish also offered another option (3450/-) (3/23). Needs explicit confirmation of chosen model.
+
+---
+
+📦 **PARENT TASK: Sata Bty Bn - Initial Equipment Order**
+   Entity: Client A (Sata Bty Bn Sub Arvind Sir Sep 22), Voltas Supplier (Punit / JRBK), LG Supplier (+91 84738 

@@ -1,0 +1,15 @@
+{
+  "id": "R2f-L1-01",
+  "name": "proactive_client_outreach_not_surfaced",
+  "framework": "R2",
+  "level": "L1",
+  "sprint": "S2",
+  "data_source": "fully-synthetic",
+  "description": "Commercial client (Sharma Bakery) last active 26 Feb — order completed, payment received. Current date (from All Staff group activity) is 26 Mar. 4 weeks of silence. Agent should surface a proactive outreach task even though no one has mentioned Sharma Bakery since the order closed.",
+  "chat_inputs": null,
+  "completeness": {"complete": true, "missing": []},
+  "expected_output": "Parent task: Sharma Bakery order — Status: Completed (payment received 26 Feb). Implicit task: Proactive check-in with Sharma Bakery — no interaction since order closed on 26 Feb (~4 weeks ago as of 26 Mar). Next step: Ashish or staff to reach out to Sharma Bakery — confirm satisfaction with previous order, probe for any upcoming requirement.",
+  "pass_criteria": "PASS: Agent surfaces an implicit proactive outreach or check-in task for Sharma Bakery, noting the ~4 week gap since the last interaction (order closed 26 Feb, current context 26 Mar). FAIL: Agent marks the Sharma Bakery order as complete and produces no forward-looking task — treating order closure as the final state with no relationship follow-up. FAIL: Agent notes the completed order but frames next steps only as administrative (GST, records) without any client re-engagement task.",
+  "challenge": "Payment received is a strong task-closure signal. The agent must resist treating it as the final state and instead recognise that extended post-closure silence on a repeat-client relationship implies a proactive outreach task. The 4-week gap is only visible by comparing Sharma Bakery's last message timestamp (26 Feb) against the current-date context established by All Staff Group activity (26 Mar). No one mentions the gap explicitly.",
+  "notes": "R2f — proactive sourcing implicit task. Tests Type 9 cadence: client silent for extended period post-completion → proactive outreach. Parameters for 'extended period' are UNVALIDATED — 4 weeks is chosen as an unambiguously long gap for a commercial client. The testable behaviour is: completed order + silence > N weeks = proactive outreach task created."
+}

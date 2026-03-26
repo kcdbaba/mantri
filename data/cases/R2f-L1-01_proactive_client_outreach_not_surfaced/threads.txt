@@ -1,0 +1,17 @@
+=== THREAD 1: Client Group (Ashish + Sharma Bakery) ===
+[24 Feb 10:00] Sharma Bakery: bhai 1 tandoor chahiye tha, wahi standard wala
+[24 Feb 10:15] Ashish: haan sir, 45000 + GST hoga, 2 din mein deliver kar denge
+[24 Feb 10:30] Sharma Bakery: theek hai, confirm hai
+[25 Feb 14:00] Staff 1: sir delivery ho gayi, driver wapas aa gaya
+[25 Feb 14:10] Sharma Bakery: haan mila, shukriya
+[26 Feb 09:30] Ashish: sir invoice bheja hai WhatsApp pe
+[26 Feb 15:00] Sharma Bakery: payment kar diya - 47,200 transfer ho gaya
+[26 Feb 15:10] Ashish: received, thank you sir. aage kuch chahiye ho toh zaroor batana
+
+=== THREAD 2: All Staff Group ===
+[24 Feb 10:45] Ashish: Sharma Bakery ka tandoor order confirm - Staff 1 delivery arrange karo kal
+[25 Feb 14:30] Staff 1: Sharma Bakery delivery ho gayi
+[26 Feb 15:30] Ashish: Sharma Bakery payment aa gaya, order close
+[26 Mar 09:00] Ashish: aaj sabka status do - Eastern Command ka AC order, SATA ka pending item, Tezpur ka challan
+[26 Mar 09:10] Staff 1: Eastern Command - supplier ne kal dispatch kiya, aaj tak aa jayega
+[26 Mar 09:15] Staff 2: SATA - Malerkotla se maal cal aya tha, sorting ho rahi hai

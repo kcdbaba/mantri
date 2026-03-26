@@ -1,0 +1,53 @@
+UNIFIED TASK LIST — 18 Mar 2026
+Threads processed: Supplier Group
+
+📦 PARENT TASK: Flags Order Procurement & Delivery — Malerkotla Supplier
+   Entity: Ashish (customer), Supplier A (Malerkotla Supplier)
+   Item: Car flags (5 pcs), India flag, Hathi Wala flag
+   Status: In Progress — Blocked by missing items and quality issues
+   Due: ASAP (issues raised 18 Mar)
+   Priority: High
+   Source threads: Supplier Group
+
+   ↳ SUBTASK 1: Payment of INR 28,000 to Supplier A
+      Assigned to: Ashish
+      Status: Completed — paid 16 Mar 2026
+      Next step: No further action required for this subtask.
+
+   ↳ SUBTASK 2: Investigate location of 5 missing Car Flags
+      Assigned to: Ashish
+      Status: Pending
+      Due: ASAP
+      Next step: Contact Supplier A directly to inquire about the whereabouts of the 5 missing car flags.
+
+   ↳ SUBTASK 3: Address quality issue for India Flag & Hathi Wala Flag
+      Assigned to: Ashish
+      Status: Pending
+      Due: ASAP
+      Next step: Document the quality issue (dirty white parts) with photos if possible, and communicate with Supplier A to understand the cause and propose a resolution (replacement/refund/cleaning).
+
+   ↳ SUBTASK 4: Client acceptance / rejection handling (Flags Order)
+      Assigned to: Ashish
+      Status: Pending — currently in rejection risk stage
+      Due: ASAP
+      Next step: Based on Subtasks 2 and 3, make a decision on whether to accept the partial delivery/defective items, or initiate a full/partial rejection process with Supplier A.
+
+   ↳ SUBTASK 5: QC inspection of finished goods before dispatch — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Custom / Made-to-Order items. No message evidence found of pre-dispatch QC by supplier.
+      Next step: When communicating with Supplier A, inquire about their internal quality control process for custom items, especially regarding cleanliness and completeness. This is a learning point for future orders.
+
+   ↳ SUBTASK 6: Transit damage inspection — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Inter-State Procurement. The "bahut ganda hai" issue could be transit-related.
+      Next step: When communicating with Supplier A, clarify if the dirt is a manufacturing defect or occurred during transit. If transit-related, investigate packaging and transporter handling.
+
+⚠️ FLAGS:
+   - Missing 5 Car Flags: This is a significant delivery shortfall.
+   - Quality Issue with India Flag & Hathi Wala Flag: Dirt on white parts could lead to client rejection. Ashish explicitly stated "reject ho sakta hai."
+   - Potential Delay: Two days have passed since payment, and new issues are arising, indicating potential delays in final order fulfillment.
+   - Information Gap: The payment on 16 Mar was for a larger order, only 2 days later issues are raised, implying the goods were delivered between 16-18 Mar, but no explicit delivery confirmation message is present.
+
+❓ AMBIGUOUS CORRELATIONS (needs human review):
+   - Mrs Samita Roy Staff Enquiry: The role of "Mrs Samita Roy Staff Enquiry" is unclear in this interaction beyond an initial "ok sir thank u". Assuming "Staff 1" for anonymization, but her specific involvement in the payment or issue resolution isn't explicit here.
+   - The specific items for which INR 28,000 was paid are not explicitly listed in the payment messages, but the subsequent complaint about flags implies this payment was for these flags. Tentatively correlated.

@@ -1,0 +1,18 @@
+{
+  "id": "R4-A-L3-01",
+  "name": "same_supplier_34_variants_across_3_threads",
+  "framework": "R4-A",
+  "level": "L3",
+  "sprint": "S1",
+  "data_source": "fully-synthetic",
+  "description": "Same supplier, 3-4 variants across 3 threads",
+  "chat_inputs": null,
+  "completeness": {
+    "complete": true,
+    "missing": []
+  },
+  "expected_output": "Single supplier entity: Sharma / S. Sharma & Co. Tasks: Delivery confirmed for tomorrow — packaging to be prepared.",
+  "pass_criteria": "PASS: All three references resolved to single supplier entity. FAIL: Any variant creates a duplicate record.",
+  "challenge": "Three different references across three threads: product-type reference, name+honorific, formal company name.",
+  "notes": "Most realistic L3 scenario — three reference styles in one day"
+}

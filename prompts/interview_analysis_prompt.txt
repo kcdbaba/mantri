@@ -1,0 +1,180 @@
+# Interview Analysis Prompt
+# Usage: paste this prompt into Claude or ChatGPT, followed by the interview transcript.
+# Use separate runs for staff interviews and Ashish interviews.
+# ---
+
+## RESEARCH CONTEXT
+
+I am building an AI agent for a small Army supply business in Guwahati, India. The agent reads WhatsApp conversations (in Hinglish — Hindi written in Roman script mixed with English) from multiple chat groups and extracts a unified task list with suggested next steps. The business owner (Ashish) manages operations remotely; staff coordinate with suppliers and clients on the ground.
+
+My primary quality risk is: **the agent misses procedural/cadence implicit tasks** — subtasks that should happen at a certain stage of every order regardless of what anyone writes in WhatsApp (e.g. pre-dispatch checklist, post-delivery payment confirmation, monthly reconciliation). The agent correctly infers reactive implicit tasks (supplier silence → follow-up) but fails on procedural ones because they leave no message-based signal.
+
+My secondary concern is **trust and adoption** — whether staff will act on the agent's alerts and whether Ashish will rely on it for operational decisions.
+
+---
+
+## INTERVIEW TYPE
+
+Before analysing, identify which type of interview this transcript is from:
+- **STAFF**: a frontline staff member who coordinates tasks on WhatsApp
+- **ASHISH**: the business owner — both a user and a customer/co-designer
+
+Apply the relevant analysis instructions below.
+
+---
+
+## ANALYSIS INSTRUCTIONS
+
+### For ALL transcripts:
+
+**1. Current workflow signals**
+Extract concrete descriptions of how they currently track tasks, follow up with suppliers/clients, and handle coordination. Note any workarounds, manual tracking methods, or informal systems mentioned.
+
+**2. Pain point evidence**
+Extract specific frustrations, time sinks, error-prone areas, and failure modes. Include direct quotes. Note emotional language (frustration, stress, overwhelm).
+
+**3. Quality risk validation**
+For each of the 6 risks below, identify whether the transcript contains evidence that validates, contradicts, or is neutral on the risk. Include the direct quote that supports your assessment.
+
+| Risk | Look for |
+|---|---|
+| **Cadence implicit tasks** | Mentions of steps that "always happen" but are never in WhatsApp; procedures done from memory or habit |
+| **Staff quality variance** | Tasks certain staff "always need reminding about"; roles where things fall through most often |
+| **Missing WhatsApp entries** | "We sorted it on the phone", "I told her in person", verbal instructions that bypass chat |
+| **Warehouse inventory blindness** | "That one we have in stock", orders filled without supplier contact |
+| **Trust threshold** | How much verification they want before acting on an agent suggestion; tolerance for false alarms |
+| **Off-platform instruction gap** | Ashish or staff giving instructions verbally that never appear in any group chat |
+
+**4. Next best alternative**
+What do they currently use or do instead of an agent? (WhatsApp pins, personal notes, memory, Excel, nothing.) What bar does the agent need to clear?
+
+**5. Trust and adoption signals**
+What would make them trust the agent? What would make them ignore or switch it off? What level of control do they need?
+
+**6. Surprises**
+Any finding that was not anticipated — something they said that challenges an existing assumption or reveals a need not previously identified.
+
+---
+
+### Additional instructions for STAFF transcripts only:
+
+**7. Privacy and comfort signals**
+Did they express any discomfort about which chats the agent reads? Any chats or topics they'd want excluded?
+
+**8. Override and control needs**
+Did they describe situations where they'd want to correct the agent or tell it to back off? How would they want to do that?
+
+**9. Noise tolerance**
+How many alerts per day would feel helpful vs overwhelming? Did they give any signal about the right volume or cadence of reminders?
+
+---
+
+### Additional instructions for ASHISH transcripts only:
+
+**7. Task taxonomy inputs**
+For each order type discussed, extract:
+- The sequence of steps Ashish described (in order)
+- Steps he identified as frequently skipped or delayed
+- Steps that happen off-platform (phone/in-person only)
+- Who handles each step (Ashish vs which staff member)
+
+**8. Design decisions**
+Extract any statements that inform architecture or design choices:
+- Automation threshold (when does he want to approve vs let the agent act?)
+- Staff risk sensitivity (is he comfortable with differentiated alert thresholds per staff?)
+- Inventory integration (is he willing to provide a stock list?)
+- Correction UX (how does he want to tell the agent it's wrong?)
+
+**9. Edge cases captured**
+List any edge cases or exceptions Ashish raised that don't fit the standard workflow. These feed directly into the task taxonomy documentation.
+
+**10. Customer priority signals**
+What did Ashish say he most wants the agent to do well? What would make him confident enough to rely on it during a busy week? What would make him stop using it?
+
+---
+
+## OUTPUT FORMAT
+
+Structure your analysis as follows:
+
+---
+
+### INTERVIEW SUMMARY
+- Interviewee type: [Staff / Ashish]
+- Key role/context: [brief description]
+- Session length: [if stated]
+- Overall signal: [1-2 sentences on the most important thing this interview revealed]
+
+---
+
+### CURRENT WORKFLOW
+[Bullet points with direct quotes where available]
+
+---
+
+### PAIN POINTS
+[Bullet points with direct quotes. Flag severity: HIGH / MEDIUM / LOW based on emotional weight and frequency]
+
+---
+
+### QUALITY RISK VALIDATION
+
+For each risk:
+**[Risk name]**: VALIDATED / CONTRADICTED / NEUTRAL
+> "[Direct quote]"
+> Interpretation: [1 sentence]
+
+---
+
+### NEXT BEST ALTERNATIVE
+[What they use now. What bar the agent needs to clear.]
+
+---
+
+### TRUST AND ADOPTION SIGNALS
+[What would make them trust it. What would make them ignore it. Control needs.]
+
+---
+
+### STAFF-SPECIFIC FINDINGS (if applicable)
+- Privacy/comfort signals:
+- Override/control needs:
+- Noise tolerance:
+
+---
+
+### ASHISH-SPECIFIC FINDINGS (if applicable)
+
+**Task taxonomy inputs:**
+| Order type | Steps described | Frequently skipped | Off-platform steps | Assigned to |
+|---|---|---|---|---|
+| [type] | [steps] | [gaps] | [off-platform] | [who] |
+
+**Design decisions:**
+[Bullet points]
+
+**Edge cases:**
+[Numbered list — each gets added to task taxonomy docs]
+
+**Customer priority signals:**
+[What he most wants. What would make him rely on it. What would make him stop.]
+
+---
+
+### SURPRISES AND NEW HYPOTHESES
+[Anything that challenges an existing assumption or reveals a new need. Flag with ⚠️]
+
+---
+
+### RECOMMENDED NEXT STEPS
+[2-3 specific actions to take based on this interview — changes to the agent, follow-up questions, design decisions to make]
+
+---
+
+## IMPORTANT NOTES FOR ANALYSIS
+
+- Prioritise direct quotes over paraphrase wherever possible
+- If the transcript is in Hinglish, do not lose meaning in translation — preserve the original phrase and add a translation in brackets
+- Do not infer things not stated — mark uncertainty explicitly with [UNCERTAIN]
+- If a quality risk is not addressed in the transcript at all, mark it as NEUTRAL with note "not discussed"
+- Flag any finding that directly contradicts a design assumption already in the system with ⚠️ ASSUMPTION CHALLENGED

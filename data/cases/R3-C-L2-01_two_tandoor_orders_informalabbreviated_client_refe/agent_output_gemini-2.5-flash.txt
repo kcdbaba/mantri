@@ -1,0 +1,73 @@
+UNIFIED TASK LIST — 24 Mar
+Threads processed: Client Group, All Staff Group
+
+📦 PARENT TASK: Tandoor Order — Tezpur Unit
+   Entity: Tezpur Unit (Client), Ashish, Staff 1
+   Item: Tandoor (2 units)
+   Status: In Progress — Order confirmed
+   Due: Not specified
+   Priority: Medium
+   Source threads: Client Group
+
+   ↳ SUBTASK 1: Issue Purchase Order (PO) to supplier
+      Assigned to: Ashish / Staff 1
+      Status: Pending — implicit task
+      Note: Expected at this stage for Standard Equipment Procurement orders. No message evidence found.
+      Next step: Identify supplier and issue a formal PO for 2 tandoor units.
+
+   ↳ SUBTASK 2: Arrange advance payment to supplier (if required)
+      Assigned to: Ashish / Staff 1
+      Status: Pending — implicit task
+      Note: Expected at this stage for Standard Equipment Procurement orders. No message evidence found.
+      Next step: Confirm if supplier requires advance payment and arrange accordingly.
+
+   ↳ SUBTASK 3: Confirm delivery date from supplier
+      Assigned to: Staff 1
+      Status: Pending — implicit task
+      Note: Expected at this stage for Standard Equipment Procurement orders. No message evidence found.
+      Next step: Contact the identified supplier to get a committed delivery date for the 2 tandoor units.
+
+⚠️ FLAGS:
+   - No supplier identified yet for the Tezpur order, even though the order is confirmed.
+   - Specific model/specs for the tandoor not explicitly mentioned.
+
+---
+
+📦 PARENT TASK: Tandoor Order — Ranchi Unit
+   Entity: Ranchi Unit (Client), Staff 1
+   Item: Tandoor (1 unit)
+   Status: Pending — Enquiry received
+   Due: Not specified
+   Priority: Medium
+   Source threads: All Staff Group
+
+   ↳ SUBTASK 1: Request quote from supplier
+      Assigned to: Staff 1
+      Status: Pending — implicit task
+      Note: Expected at this stage for Standard Equipment Procurement orders. No message evidence found.
+      Next step: Identify suitable suppliers and request a quote for 1 tandoor unit, including rate, GST, and delivery.
+
+   ↳ SUBTASK 2: Receive quote from supplier
+      Assigned to: Staff 1
+      Status: Pending — implicit task
+      Note: Expected at this stage for Standard Equipment Procurement orders. No message evidence found.
+      Next step: Await supplier's response to the quote request.
+
+   ↳ SUBTASK 3: Send quote to Ranchi Unit
+      Assigned to: Staff 1
+      Status: Pending — implicit task
+      Note: Expected at this stage for Standard Equipment Procurement orders. No message evidence found.
+      Next step: Once quote is received from supplier, prepare and send it to the Ranchi Unit for approval.
+
+   ↳ SUBTASK 4: Confirm order with Ranchi Unit
+      Assigned to: Staff 1
+      Status: Pending — implicit task
+      Note: Expected at this stage for Standard Equipment Procurement orders. No message evidence found.
+      Next step: Follow up with Ranchi Unit for their confirmation after sending the quote.
+
+⚠️ FLAGS:
+   - No supplier identified yet for the Ranchi order.
+   - Specific model/specs for the tandoor not explicitly mentioned.
+
+❓ AMBIGUOUS CORRELATIONS:
+   - None in this example. Two distinct tandoor orders for different clients (Tezpur and Ranchi) were clearly identified and separated.

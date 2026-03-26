@@ -1,0 +1,18 @@
+{
+  "id": "R3-C-L2-01",
+  "name": "two_tandoor_orders_informalabbreviated_client_refe",
+  "framework": "R3-C",
+  "level": "L2",
+  "sprint": "S1",
+  "data_source": "fully-synthetic",
+  "description": "Two tandoor orders, informal/abbreviated client references",
+  "chat_inputs": null,
+  "completeness": {
+    "complete": true,
+    "missing": []
+  },
+  "expected_output": "Two separate tandoor orders: Tezpur unit (2 units) and Ranchi unit (1 unit). Different clients, same item.",
+  "pass_criteria": "PASS: Two separate orders attributed to two different clients. FAIL: Merged into one tandoor order or wrong client attribution.",
+  "challenge": "Clients referred to informally by location ('Tezpur walo', 'Ranchi unit') rather than formal unit names. Agent must recognise as different clients.",
+  "notes": "Tests informal location-based client references in order separation"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "R4-B-L3-01",
+  "name": "same_army_unit_3_reference_styles_across_3_threads",
+  "framework": "R4-B",
+  "level": "L3",
+  "sprint": "S1",
+  "data_source": "fully-synthetic",
+  "description": "Same Army unit, 3 reference styles across 3 threads",
+  "chat_inputs": null,
+  "completeness": {
+    "complete": true,
+    "missing": []
+  },
+  "expected_output": "Single client entity: HQ Eastern Command (Brigadier). Task: Delivery scheduled for tomorrow morning.",
+  "pass_criteria": "PASS: All three references resolved to single client entity. FAIL: Any variant creates duplicate record.",
+  "challenge": "Three reference styles: officer rank, informal location reference, formal unit name. Across three threads.",
+  "notes": "Validate HQ Eastern Command naming conventions with Ashish"
+}

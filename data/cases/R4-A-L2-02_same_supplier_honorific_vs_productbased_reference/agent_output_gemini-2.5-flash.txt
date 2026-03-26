@@ -1,0 +1,35 @@
+UNIFIED TASK LIST — 24 Mar
+Threads processed: Supplier Group, All Staff Group
+
+📦 PARENT TASK: Tandoor Order — Client Unknown (Needs Identification)
+   Entity: Kapoor ji (Supplier), Staff 1 (Staff), Ashish (Staff)
+   Item: Tandoor
+   Status: In Progress — Awaiting client identification and full quote details
+   Due: Not specified
+   Priority: Medium
+   Source threads: Supplier Group, All Staff Group
+
+   ↳ SUBTASK 1: Identify the client for this tandoor order — implicit task
+      Assigned to: Ashish / Staff 1
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Standard Equipment Procurement orders. No message evidence found about which client this tandoor quote is for.
+      Next step: Ashish or Staff 1 needs to clarify which specific client order Kapoor ji's tandoor quote (47000) pertains to.
+
+   ↳ SUBTASK 2: Get full quote details from Kapoor ji
+      Assigned to: Staff 1
+      Status: Pending — only rate confirmed
+      Due: Not specified
+      Next step: Staff 1 needs to contact Kapoor ji to confirm GST details, delivery charges, and expected delivery timeline for the tandoor.
+
+   ↳ SUBTASK 3: Prepare and send quote to client — implicit task
+      Assigned to: Ashish / Staff 1
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Standard Equipment Procurement orders (Step 4). Requires client identification and full quote details (Subtasks 1 & 2).
+      Next step: Once client is identified and all quote details (rate, GST, delivery) are available, prepare a complete quote and send it to the respective client.
+
+⚠️ FLAGS:
+   - **Missing Information**: The client for this tandoor order is not identified in the provided threads. It is unclear if Ashish's question in "Supplier Group" (referring to "Delhi wale") is directly linked to Staff 1's update about "Kapoor ji", but the item (tandoor) and context strongly suggest correlation.
+   - **Incomplete Quote**: Only the base rate (47000) from Kapoor ji has been confirmed. GST and delivery charges are missing, making it impossible to prepare a full quote for the client.
+
+❓ AMBIGUOUS CORRELATIONS:
+   - While "Delhi wale" in Thread 1 and "Kapoor ji" in Thread 2 are contextually linked to a Tandoor, there's no explicit confirmation that Kapoor ji *is* "Delhi wale" or that this is the *only* tandoor being sourced from Delhi. Assuming correlation based on item and timing.

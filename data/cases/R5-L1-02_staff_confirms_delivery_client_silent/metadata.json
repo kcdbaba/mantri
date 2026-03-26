@@ -1,0 +1,18 @@
+{
+  "id": "R5-L1-02",
+  "name": "staff_confirms_delivery_client_silent",
+  "framework": "R5",
+  "level": "L1",
+  "sprint": "S2",
+  "data_source": "fully-synthetic",
+  "description": "Staff confirms delivery in staff group — client group has no receipt acknowledgement",
+  "chat_inputs": null,
+  "completeness": {
+    "complete": true,
+    "missing": []
+  },
+  "expected_output": "One parent task: Tandoor delivery to Client A. Status: Delivered (unconfirmed). Next step must be to verify delivery receipt with client — NOT raise invoice. Ambiguity flag: delivery reported by staff only; no acknowledgement from Client A in client group. Staff confirmation alone is not sufficient to trigger invoicing.",
+  "pass_criteria": "PASS: Agent's next step is to confirm delivery receipt with Client A before raising invoice, OR flags that client acknowledgement is missing. FAIL: Agent suggests raising invoice or marking order complete based solely on staff's delivery report in the staff group without noting the absence of client confirmation.",
+  "challenge": "Staff's delivery report ('deliver kar diya') is a strong completion signal. Agent must cross-check against the client thread, notice the silence, and hold off on invoice/completion rather than treating staff's word as ground truth.",
+  "notes": "L1 because the gap is visible across just two threads and the correct caution (verify with client) is straightforward. The failure mode — raising invoice on unconfirmed delivery — is operationally dangerous: if client disputes receipt later, invoice is contested."
+}

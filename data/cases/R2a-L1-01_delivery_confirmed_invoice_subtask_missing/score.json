@@ -1,0 +1,51 @@
+{
+  "verdict": "PASS",
+  "overall_score": 96,
+  "dimensions": {
+    "task_recall": {
+      "score": 98,
+      "notes": "All tasks identified, including the core implicit invoicing subtask (Subtask 2), a delivery sign-off subtask (Subtask 3), and a forward-looking payment follow-up subtask (Subtask 4). The agent goes beyond the minimum required and captures the full post-delivery task chain. No tasks appear to have been missed."
+    },
+    "entity_accuracy": {
+      "score": null,
+      "notes": null
+    },
+    "cross_thread_correlation": {
+      "score": null,
+      "notes": null
+    },
+    "next_step_quality": {
+      "score": 95,
+      "notes": "Next steps are highly actionable and correctly sequenced. Subtask 2 explicitly calls for raising and sending the invoice to Client A immediately after delivery. Subtask 3 correctly identifies the dependency — formal sign-off may be a prerequisite before invoicing Army clients — and provides a concrete follow-up action. Subtask 4 correctly defers payment follow-up as a future calendar item. The stage summary reinforces clarity. Minor deduction only because the sign-off prerequisite framing, while accurate, could introduce a slight hesitation loop before invoicing when the core criterion is simply to flag invoice-first."
+    },
+    "implicit_task_detection": {
+      "score": 96,
+      "notes": "The agent correctly detects the invoicing requirement as an implicit cadence task triggered by delivery confirmation, with no explicit mention of invoicing in any thread. It anchors this correctly to Type 1 Step 16 and Type 3 Step 18. Additionally, it surfaces a formal sign-off/GRN requirement and a future payment follow-up — both legitimate implicit tasks for an Army supply context. The detection is thorough and well-reasoned."
+    },
+    "ambiguity_flagging": {
+      "score": null,
+      "notes": null
+    }
+  },
+  "pass_criteria_met": true,
+  "passes": [
+    "Invoice subtask explicitly created as Subtask 2 — 'Raise invoice to Client A — implicit task' — satisfying the primary pass criterion.",
+    "Correctly identifies invoicing as a cadence/checklist step triggered by delivery confirmation without any explicit mention in threads.",
+    "Next step for invoicing is clear and actionable: 'Raise and send invoice to Client A promptly.'",
+    "Delivery is not marked as fully complete/closed — the stage summary correctly shows Invoice as not initiated.",
+    "Cross-references checklist steps (Type 1 Step 16, Type 3 Step 18) demonstrating structured reasoning.",
+    "Adds contextually appropriate implicit tasks beyond minimum: formal sign-off/DO requirement and payment follow-up calendar flag.",
+    "Flags are clearly listed and operationally relevant, including the absence of any billing discussion in any thread."
+  ],
+  "failures": [
+    "Minor: The sign-off prerequisite framing in Subtask 3 could be interpreted as blocking invoice issuance — in practice, the invoice should be raised in parallel or immediately, with sign-off collected concurrently rather than as a hard gate. This could cause a slight operational hesitation but does not constitute a FAIL-level issue."
+  ],
+  "notes": "Strong output that fully satisfies the pass criteria. The agent correctly identifies that delivery confirmation, absent any invoicing discussion, should automatically trigger an invoice subtask — the core test of implicit task detection in this case. The response is well-structured, operationally grounded, and goes beyond the minimum by surfacing the full post-delivery financial chain. The only minor concern is that the sign-off framing in Subtask 3 could be read as a prerequisite gate on invoicing, but this does not undermine the primary outcome. Overall an excellent result for an L1 implicit cadence task.",
+  "case_id": "R2a-L1-01",
+  "case_name": "delivery_confirmed_invoice_subtask_missing",
+  "framework": "R2",
+  "level": "L1",
+  "evaluated_at": "2026-03-26T06:18:43",
+  "model_used": "claude-sonnet-4-6",
+  "eval_model": "claude-sonnet-4-6"
+}

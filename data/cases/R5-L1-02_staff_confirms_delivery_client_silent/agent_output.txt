@@ -1,0 +1,97 @@
+```
+UNIFIED TASK LIST — 20 Mar
+Threads processed: All Staff Group, Client A Group
+
+📦 PARENT TASK: Tandoor Order — Client A
+   Entity: Client A (customer)
+   Item: Tandoor
+   Status: Completed (delivery) — post-delivery steps pending
+   Due: Was committed 19–20 Mar; delivered 20 Mar ✓
+   Priority: Medium (delivery done; remaining steps are admin/financial)
+   Source threads: All Staff Group, Client A Group
+
+   ↳ SUBTASK 1: Delivery to Client A — COMPLETED
+      Assigned to: Staff 1 / Driver
+      Status: Completed — 20 Mar morning (confirmed by Staff 1 in All Staff Group)
+      Next step: No action needed on delivery itself.
+
+   ↳ SUBTASK 2: Client acceptance / sign-off — implicit task
+      Assigned to: Staff 1 or Ashish
+      Status: Pending — not detected in threads
+      Note: Delivery confirmed by staff internally, but no message from Client A
+      acknowledging receipt or acceptance. For Army supply orders, verbal or
+      written acceptance is expected. No client-side confirmation visible in
+      Client A Group post-delivery.
+      Next step: Confirm with Staff 1 whether Client A acknowledged receipt
+      at the time of delivery, and whether any sign-off document (delivery
+      challan, acknowledgement slip) was obtained.
+
+   ↳ SUBTASK 3: DO / GRN / signed delivery note received — implicit task
+      Assigned to: Ashish / Staff 1
+      Status: Pending — not detected in threads
+      Note: No mention of delivery order, GRN, or signed delivery note in
+      either thread. Required for formal invoice and payment processing on
+      Army orders.
+      Next step: Verify whether driver collected a signed delivery note or
+      challan from the client site. If not, follow up with Client A to
+      obtain written acknowledgement before raising invoice.
+
+   ↳ SUBTASK 4: Invoice raised — implicit task
+      Assigned to: Ashish
+      Status: Pending — not detected in threads
+      Note: Delivery completed 20 Mar. No invoice mentioned in any thread.
+      Expected at this stage.
+      Next step: Raise invoice and send to Client A. If Army direct delivery,
+      include DO/GRN reference on invoice.
+
+   ↳ SUBTASK 5: Payment follow-up — implicit task
+      Assigned to: Ashish / Staff 1
+      Status: Pending — not yet due (invoice not yet raised)
+      Note: Cannot begin payment follow-up until invoice is raised (Subtask 4).
+      Flag for follow-up 30 days after invoice date.
+      Next step: Log invoice date once raised; set reminder for Day 30
+      follow-up.
+
+   ↳ SUBTASK 6: GST reconciliation — implicit task
+      Assigned to: Ashish
+      Status: Pending
+      Note: Monthly cadence task. No mention in threads.
+      Next step: Ensure this transaction is captured in March GST
+      reconciliation before month-end.
+
+⚠️ FLAGS:
+   - No client-side confirmation of delivery visible in Client A Group —
+     Client A has not acknowledged receipt in any thread. Could be verbal
+     only; needs verification.
+   - Invoice not yet raised as of 20 Mar — this is the immediate open
+     financial step.
+   - No mention of delivery documentation (challan, GRN, signed note) in
+     either thread. For Army clients this is typically required before
+     invoice can be processed by the client's finance department.
+   - Supplier-side threads are absent from this input. Cannot confirm
+     whether supplier payment, PO closure, or any upstream steps are
+     complete. If supplier is still owed payment, that is not visible here.
+   - Information gap: Staff 1 confirmed delivery in All Staff Group
+     (Thread 1) but this update was NOT posted to Client A Group
+     (Thread 2). Client A Group has no post-delivery messages from
+     either side. No client acknowledgement has been logged in the
+     client-facing thread.
+
+❓ AMBIGUOUS CORRELATIONS:
+   - None. Both threads clearly refer to the same tandoor delivery for
+     Client A. Correlation is unambiguous.
+
+📋 TASK TYPE ASSESSMENT:
+   Classified as: TYPE 3 (Army Direct Delivery) — assumed based on
+   business context (Army supply business). If this is not an Army
+   direct delivery (e.g., delivery to a civilian or non-cantonment
+   address), reclassify as TYPE 1 and disregard Gate Pass / DO / GRN
+   implicit tasks. Human confirmation recommended.
+
+   Stages visible in threads: Delivery committed (18 Mar) → Delivery
+   completed (20 Mar).
+   Stages with NO thread evidence (expected by this point):
+   Inspection and sorting, pre-dispatch checklist, transport arrangement,
+   gate pass / entry documentation, client acceptance, delivery note,
+   invoice — all flagged above as implicit tasks.
+```

@@ -1,0 +1,18 @@
+{
+  "id": "R5-L2-02",
+  "name": "spec_change_in_1on1_not_yet_sent_to_supplier",
+  "framework": "R5",
+  "level": "L2",
+  "sprint": "S2",
+  "data_source": "fully-synthetic",
+  "description": "Spec changed from heavy duty to standard in a 1:1 chat — supplier group still shows heavy duty order confirmed for dispatch tomorrow morning",
+  "chat_inputs": null,
+  "completeness": {
+    "complete": true,
+    "missing": []
+  },
+  "expected_output": "One parent task: Tandoor order from Supplier A. Status: URGENT — spec change pending, dispatch imminent. Next step: Verify whether Staff 1 has already sent the spec update to supplier (per the 14:45 'ok sir' in Thread 2) — if not confirmed, contact supplier immediately to stop heavy duty dispatch. Do NOT suggest confirming delivery logistics or client-side preparation. Ambiguity flag: Staff 1 acknowledged the instruction ('ok sir') but no update is visible in the supplier group — spec change may not have been communicated.",
+  "pass_criteria": "PASS: Agent identifies the spec change from Thread 2, notes it has not appeared in the supplier group (Thread 1), flags the risk that supplier may dispatch wrong spec tomorrow morning, and recommends verifying/confirming the update with supplier as the urgent next step. FAIL: Agent suggests confirming delivery receipt logistics or preparing client-side delivery without flagging the unresolved spec change. FAIL: Agent treats 'ok sir' in Thread 2 as confirmation that supplier was updated without noting the absence of any update message in Thread 1.",
+  "challenge": "Thread 1 ends with a confirmed dispatch for tomorrow — a strong completion signal. The spec change is buried in a 1:1 chat (Thread 2) that staff acknowledged but may not have acted on. The agent must (a) detect the spec change across threads, (b) notice that no update appears in the supplier thread, and (c) treat 'ok sir' as unverified acknowledgement, not confirmed action.",
+  "notes": "L2 because the critical information is split between a 1:1 chat and the supplier group, and the failure requires cross-thread reasoning. This scenario directly models a known real-world failure mode in Ashish's business: verbal/chat instructions given to staff that are acknowledged but not executed before a deadline."
+}

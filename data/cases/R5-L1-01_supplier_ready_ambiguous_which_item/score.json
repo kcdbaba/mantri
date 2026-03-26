@@ -1,0 +1,51 @@
+{
+  "verdict": "PASS",
+  "overall_score": 92,
+  "dimensions": {
+    "task_recall": {
+      "score": null,
+      "notes": null
+    },
+    "entity_accuracy": {
+      "score": null,
+      "notes": null
+    },
+    "cross_thread_correlation": {
+      "score": null,
+      "notes": null
+    },
+    "next_step_quality": {
+      "score": 93,
+      "notes": "The agent correctly gates all dispatch activity behind a clarification step. Subtask 1 in both parent tasks explicitly states 'Contact Supplier A to confirm whether maal ready hai refers to the Tandoor, the AC, or both — before issuing any dispatch instruction. Do not assume it covers both items.' Subtask 3 (dispatch instruction) is explicitly marked Blocked until subtasks 1 and 2 are resolved. No dispatch or transport action is recommended without first resolving the ambiguity. The additional subtasks (quote to client, PO, installation) are reasonable and well-reasoned. Minor deduction: the agent splits into two parent tasks when the expected output specifies one combined parent task, which could marginally complicate the clarity of the primary next step, but does not violate the pass criteria."
+    },
+    "implicit_task_detection": {
+      "score": null,
+      "notes": null
+    },
+    "ambiguity_flagging": {
+      "score": 95,
+      "notes": "Ambiguity is flagged extensively and precisely. The agent explicitly identifies that 'maal ready hai' does not specify Tandoor vs AC, marks it as ambiguous in the pre-analysis, flags it at the subtask level for both parent tasks, and raises it again in the dedicated Ambiguous Correlations section. The flag is accurate, specific, and directly actionable. A second ambiguity (same client or different clients) is also surfaced appropriately. No silent assumptions are made about which item is ready."
+    }
+  },
+  "pass_criteria_met": true,
+  "passes": [
+    "Next step correctly requires clarifying with Supplier A which item(s) are ready before any dispatch instruction is issued",
+    "Dispatch subtask is explicitly marked Blocked pending clarification — no premature transport or delivery action suggested",
+    "Agent does not assume both items are ready; treats the signal as ambiguous throughout",
+    "'Maal ready hai' ambiguity is flagged clearly, specifically, and multiple times at the subtask, parent task, and global flag levels",
+    "Clarification call is identified as resolvable in a single contact with Supplier A — practical and actionable",
+    "Secondary ambiguity (same client vs different clients) is also surfaced and correctly linked to the dispatch decision",
+    "Pre-output reasoning is transparent and shows the agent explicitly checking the ambiguity rule before acting"
+  ],
+  "failures": [
+    "Agent creates two separate parent tasks (Tandoor + AC) rather than one combined parent task as specified in the expected output — this is a structural deviation, though it does not violate the pass/fail criteria and is defensible given the ambiguity about client identity"
+  ],
+  "notes": "The agent fully satisfies the pass criteria: it does not suggest arranging delivery or transport for either item without first resolving which item the supplier is referring to, and it does not assume both items are ready. The ambiguity is caught, named, and acted upon correctly. The one structural deviation — splitting into two parent tasks instead of one — is reasonable given the agent's instructions to default to separation when client identity is uncertain, and does not cause any operational harm in this case. Overall a strong, safe, well-reasoned output for an L1 ambiguity test.",
+  "case_id": "R5-L1-01",
+  "case_name": "supplier_ready_ambiguous_which_item",
+  "framework": "R5",
+  "level": "L1",
+  "evaluated_at": "2026-03-26T05:52:52",
+  "model_used": "claude-sonnet-4-6",
+  "eval_model": "claude-sonnet-4-6"
+}

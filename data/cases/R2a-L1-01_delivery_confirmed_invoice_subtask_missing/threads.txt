@@ -1,0 +1,8 @@
+=== THREAD 1: Client Group (Ashish + Staff 1 + Client A) ===
+[24 Mar 11:30] Staff 1: sir maal pahunch gaya, driver wapas aa gaya
+[24 Mar 11:45] Client A: haan mila, shukriya
+[24 Mar 11:46] Ashish: good
+
+=== THREAD 2: All Staff Group ===
+[24 Mar 09:00] Ashish: aaj Client A ka tandoor deliver karna hai
+[24 Mar 12:00] Staff 1: Client A delivery ho gayi

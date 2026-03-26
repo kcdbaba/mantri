@@ -1,0 +1,15 @@
+{
+  "id": "R2a-L1-01",
+  "name": "delivery_confirmed_invoice_subtask_missing",
+  "framework": "R2",
+  "level": "L1",
+  "sprint": "S2",
+  "data_source": "fully-synthetic",
+  "description": "Delivery confirmed by client — no invoice raised, no explicit invoicing instruction in any thread",
+  "chat_inputs": null,
+  "completeness": {"complete": true, "missing": []},
+  "expected_output": "Parent task: Tandoor delivery to Client A — Status: Delivered. Implicit subtask automatically created: Raise invoice for Client A (cadence task — triggered by delivery confirmation). Next step: raise and send invoice to Client A.",
+  "pass_criteria": "PASS: Agent creates an invoice subtask or flags invoicing as a required next step triggered by delivery confirmation, without any explicit mention of invoicing in the threads. FAIL: Agent marks task as complete or closes it without creating an invoice/payment subtask. FAIL: Agent only notes delivery complete with no forward-looking financial step.",
+  "challenge": "Client confirms receipt ('haan mila'), staff confirms delivery — these are strong task-closure signals. Agent must resist closing the order and instead recognise that delivery confirmation automatically triggers the invoicing cadence step.",
+  "notes": "R2a — cadence implicit task. Invoicing is a universal post-delivery step that is almost never mentioned in WhatsApp threads. Tests whether the agent applies the Type 1 checklist step 16 (invoice raised) proactively after delivery."
+}

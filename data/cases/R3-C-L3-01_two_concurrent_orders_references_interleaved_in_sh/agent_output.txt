@@ -1,0 +1,152 @@
+I'll process this single thread now, then show what richer cross-thread analysis would look like.
+
+---
+
+```
+UNIFIED TASK LIST — 24 Mar
+Threads processed: All Staff Group
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📦 PARENT TASK 1: Tandoor Delivery — Tezpur Client
+   Entity: Client — Tezpur (identity unconfirmed; location used as identifier)
+   Item: Tandoor
+   Status: ✅ Completed
+   Due: 24 Mar 11:00 (committed delivery time)
+   Priority: High → Resolved
+   Source threads: All Staff Group
+
+   ↳ SUBTASK 1: Execute delivery to Tezpur client
+      Assigned to: Staff 1 (led / confirmed)
+      Status: Completed — confirmed 10:45
+      Next step: Verify with Ashish or client group that delivery
+      acknowledgement / receipt has been obtained from client.
+      No further action needed on logistics unless confirmation
+      is missing.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📦 PARENT TASK 2: Tandoor Delivery — Ranchi Client
+   Entity: Client — Ranchi (identity unconfirmed; location used as identifier)
+   Item: Tandoor
+   Status: ⚠️ In Progress — delayed
+   Due: Originally 14:00; revised to 15:00 (driver running late)
+   Priority: High
+   Source threads: All Staff Group
+
+   ↳ SUBTASK 1: Receive Ranchi driver and complete delivery
+      Assigned to: Staff 2 (monitoring)
+      Status: In Progress — driver delayed, ETA 15:00
+      Next step: Staff 2 to confirm driver arrival at 15:00 and
+      post delivery confirmation to the group once done.
+      If driver does not arrive by 15:15, escalate to Ashish
+      immediately.
+
+   ↳ SUBTASK 2: Notify Ranchi client of delay (if not already done)
+      Assigned to: Ashish / Staff 2
+      Status: Pending — no mention in thread of client being informed
+      Next step: Check whether Ranchi client has been notified of
+      the 1-hour delay. If not, inform client proactively via
+      client group or direct contact before 15:00.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️ FLAGS:
+
+   PARENT TASK 1 — Tezpur:
+   - Delivery confirmed in staff group but NO delivery receipt /
+     client acknowledgement visible in this thread. Cannot confirm
+     whether client signed off or dispute risk exists.
+   - Invoice/payment status unknown — no mention in this thread.
+     Separate invoice/collection task may exist in client group
+     or 1:1 chat not visible here.
+
+   PARENT TASK 2 — Ranchi:
+   - Driver is 1 hour late (original 14:00 → now 15:00). Reason
+     for delay not stated — traffic, loading issue, or route
+     problem unknown.
+   - No evidence that Ranchi client was informed of the delay.
+     Army clients typically have strict schedules — proactive
+     communication is important.
+   - Delivery not yet confirmed as of last message (14:10).
+     Final status unknown — thread may be incomplete.
+   - Invoice/payment status unknown for Ranchi order as well.
+
+   CROSS-ORDER:
+   - Both client identities (Tezpur, Ranchi) are inferred from
+     location references only. Actual client names, order numbers,
+     and invoice details are not visible in this thread.
+   - No transporter/driver names or vehicle details mentioned —
+     if a dispute arises post-delivery, traceability is limited
+     from this thread alone.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❓ AMBIGUOUS CORRELATIONS (needs human review):
+
+   1. TEZPUR CLIENT IDENTITY
+      Staff 1 says "Tezpur pehle" — this is a location, not a
+      client name. If multiple clients exist in or near Tezpur,
+      this reference is insufficient to uniquely identify the
+      order. Human confirmation needed: which client / order
+      number is the Tezpur tandoor delivery linked to?
+
+   2. RANCHI CLIENT IDENTITY
+      Same issue — "Ranchi wala" identifies a location, not a
+      client. Human confirmation needed: which client / order
+      number is the Ranchi tandoor delivery linked to?
+
+   3. ARE THESE TWO SEPARATE ORDERS OR ONE SPLIT DELIVERY?
+      Two tandoors, two locations, two drivers — most likely two
+      separate client orders. Treated as separate here.
+      ✅ Assumption: separate orders. Flag: LOW confidence — no
+      explicit order numbers or client names to confirm this.
+      Human should verify.
+
+   4. RANCHI DELIVERY FINAL STATUS UNKNOWN
+      Last message (14:10) says driver will arrive at 15:00.
+      Thread ends there. It is unknown whether delivery was
+      subsequently completed, further delayed, or cancelled.
+      Human should check current status.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 WHAT ADDITIONAL THREADS WOULD UNLOCK:
+
+   This analysis is operating on a single staff coordination
+   thread. The following gaps would be filled by other threads:
+
+   ┌─────────────────────────────┬────────────────────────────┐
+   │ Missing thread              │ What it would provide      │
+   ├─────────────────────────────┼────────────────────────────┤
+   │ Tezpur Client Group         │ Client name, order confirm,│
+   │                             │ delivery receipt, invoice  │
+   ├─────────────────────────────┼────────────────────────────┤
+   │ Ranchi Client Group         │ Client name, delay notif., │
+   │                             │ updated ETA, receipt       │
+   ├─────────────────────────────┼────────────────────────────┤
+   │ Transporter 1:1 chats       │ Driver details, actual ETA,│
+   │ (Staff 2 ↔ Ranchi driver)   │ reason for delay           │
+   ├─────────────────────────────┼────────────────────────────┤
+   │ Supplier Groups             │ Whether both tandoors were │
+   │                             │ from same supplier, quality│
+   │                             │ checks done pre-dispatch   │
+   ├─────────────────────────────┼────────────────────────────┤
+   │ Finance/Invoice thread      │ Invoice status, payment    │
+   │                             │ terms for both orders      │
+   └─────────────────────────────┴────────────────────────────┘
+```
+
+---
+
+## Analyst Note
+
+This is a good stress test of **Scenario 2** (two similar orders, separate clients) from the testing brief. The agent correctly:
+
+- **Kept the two orders separate** despite identical item types, based on distinct location signals and separate driver references
+- **Did not silently merge** them into one "2 tandoor delivery" parent task
+- **Flagged both client identities as unresolved** (location ≠ client name)
+- **Detected the information gap**: Ranchi client likely not notified of delay, but this cannot be confirmed from this thread alone
+- **Flagged thread incompleteness**: Ranchi delivery outcome is unknown because the thread ends mid-event
+
+The main limitation here is expected — single thread input means roughly 60% of the operational picture is missing. Add the client groups and transporter 1:1s and the task list would fill in significantly.

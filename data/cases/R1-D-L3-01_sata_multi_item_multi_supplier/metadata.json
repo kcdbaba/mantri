@@ -1,0 +1,42 @@
+{
+  "id": "R1-D-L3-01",
+  "name": "sata_multi_item_multi_supplier",
+  "framework": "R1-D",
+  "level": "L3",
+  "sprint": "S2",
+  "data_source": "real",
+  "description": "Single SATA Artillery battery order spanning ~24 days (3/1–3/24/26). Multiple items (sports equipment, batteries, electronics, stationery, GEM portal items) sourced across Voltas and LG suppliers, with internal staff coordination. Some supplier chats not available. Tests whether the agent tracks all items and milestones across threads, detects gaps where supplier chats are missing, and surfaces proactive follow-ups throughout the order lifecycle.",
+  "chat_inputs": {
+    "start": "3/1/26, 13:35",
+    "end": "3/24/26, 18:54",
+    "chats": [
+      {
+        "path": "data/raw_chats/full_chat_logs/sata_jobs",
+        "label": "SATA Artillery Regiment Client Group"
+      },
+      {
+        "path": "data/raw_chats/full_chat_logs/Voltas_supplier",
+        "label": "Voltas Supplier Group (Uttam Enterprise / JRBK)"
+      },
+      {
+        "path": "data/raw_chats/full_chat_logs/LG_supplier",
+        "label": "LG Supplier Group"
+      },
+      {
+        "path": "data/raw_chats/full_chat_logs/Tasks",
+        "label": "Internal Tasks Group"
+      }
+    ]
+  },
+  "completeness": {
+    "complete": false,
+    "missing": [
+      "Supplier chats for batteries, basketball shoes, stationery, and other GEM items not available",
+      "Payment confirmation not yet in window",
+      "Final delivery challan / inspection not confirmed"
+    ]
+  },
+  "expected_output": "Unified parent task: SATA regiment order. Multiple child tasks per item with correct supplier attribution (Voltas for applicable items, LG for applicable items, unknown/missing for others). Proactive follow-up tasks flagged where supplier chat is absent. Information gap flags where items are ordered but no supplier thread is available to confirm status.",
+  "pass_criteria": "PASS: All items identified as separate subtasks under one parent order; correct supplier attributed where chat is available; information gap flagged for items with no supplier thread; proactive milestone tracking present. FAIL: Items missed, merged across clients, or no gap flags for missing supplier threads.",
+  "notes": "Client is Sata Bty Bn Sub Arvind Sir (Sep 22 contact). Key staff: Mrs Samita Roy, Abhisha (UE), Mousumi Banik, Rahul, Sammsul Haque. GEM portal links appear in client chat — these are Government e-Marketplace procurement links, not commercial supplier links. By 3/24/26 Abhisha confirms 'all items are ready'. This is the most complete real case available so far."
+}

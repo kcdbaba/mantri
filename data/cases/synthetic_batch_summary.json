@@ -1,0 +1,63 @@
+{
+  "run_at": "2026-03-25T02:08:05",
+  "model": "claude-sonnet-4-6",
+  "total": 1,
+  "passed": 1,
+  "partial": 0,
+  "failed": 0,
+  "errored": 0,
+  "avg_score": 91.0,
+  "results": [
+    {
+      "verdict": "PASS",
+      "overall_score": 91,
+      "dimensions": {
+        "task_recall": {
+          "score": null,
+          "notes": null
+        },
+        "entity_accuracy": {
+          "score": 90,
+          "notes": "Kapoor ji and 'Delhi wale' are correctly unified into a single supplier entity rather than treated as two separate suppliers. Rate of ₹47,000 is accurately attributed. Minor: the agent notes Kapoor ji's location is unconfirmed, which is technically correct but slightly hedges what the data supports."
+        },
+        "cross_thread_correlation": {
+          "score": 93,
+          "notes": "Threads are correctly correlated on item match (tandoor) and timing (30-minute gap). The agent produces a single parent task spanning both threads rather than two separate task trees. The soft-assumption methodology is appropriate and well-reasoned."
+        },
+        "next_step_quality": {
+          "score": null,
+          "notes": null
+        },
+        "implicit_task_detection": {
+          "score": null,
+          "notes": null
+        },
+        "ambiguity_flagging": {
+          "score": 92,
+          "notes": "Exemplary ambiguity handling. The agent explicitly labels the Delhi wale = Kapoor ji merge as tentative, calls it out in a dedicated AMBIGUOUS CORRELATIONS section, and requests human confirmation. Additional flags for missing GST breakdown, missing client, and unclear thread relationship are all appropriate. Matches the additional note to flag for Ashish validation."
+        }
+      },
+      "pass_criteria_met": true,
+      "passes": [
+        "Single supplier entity correctly produced — 'Delhi wale' and 'Kapoor ji' are unified, not split into two suppliers.",
+        "Rate of ₹47,000 correctly captured and attributed to the merged Kapoor ji entity.",
+        "Tentative merge is explicitly labeled as an assumption requiring human confirmation, directly satisfying the ambiguity-flagging criterion.",
+        "Cross-thread correlation is documented with reasoning (item match + timing), making the logic auditable.",
+        "Dedicated AMBIGUOUS CORRELATIONS section calls out the city-based reference resolution for Ashish review, consistent with the additional notes in the case metadata.",
+        "Agent does not invent a client, deadline, or order number not present in the source threads.",
+        "Missing data (GST, delivery charges, client identity) flagged without blocking the task list from being produced."
+      ],
+      "failures": [
+        "The agent notes Kapoor ji's location is 'not stated' as a reason to hedge the merge, but this slightly undersells the strength of the correlation (item + timing together are strong signals); the hedge is acceptable but marginally over-cautious.",
+        "No explicit mention that 'city wala' reference patterns (as flagged in the case metadata additional notes) are a known ambiguity category worth generalizing — a minor missed opportunity to surface a systemic pattern."
+      ],
+      "notes": "The agent handles the core L2 challenge — honorific ('Kapoor ji') vs location-based ('Delhi wale') reference to the same supplier — correctly and with appropriate epistemic humility. The output satisfies the pass criterion (single supplier entity) while also meeting the ambiguity-flagging requirement by explicitly requesting human confirmation. The task structure is clean, hierarchical, and operationally actionable. The meta-note at the end adds analytical value without cluttering the task list. Overall a strong, production-quality response for this scenario.",
+      "case_id": "R4-A-L2-02",
+      "case_name": "same_supplier_honorific_vs_productbased_reference",
+      "framework": "R4-A",
+      "level": "L2",
+      "evaluated_at": "2026-03-25T02:08:05",
+      "model_used": "claude-sonnet-4-6"
+    }
+  ]
+}

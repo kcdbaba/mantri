@@ -1,0 +1,144 @@
+I'll process these two threads and produce the unified task list.
+
+---
+
+## Analysis Notes (Pre-Output Reasoning)
+
+**Entity resolution:**
+- Thread 1 references "Tezpur walo" — likely Army unit/client based in Tezpur
+- Thread 2 references "Ranchi unit" — likely Army unit/client based in Ranchi
+- These are geographically distinct locations → **two separate orders, not one**
+- Both are for tandoors, but different clients, different quantities (2 vs 1 unit)
+
+**Cross-thread correlation:**
+- No signals that these two orders are linked (different locations, different quantities, no shared supplier or delivery reference)
+- Keeping them as **two separate parent tasks**
+
+---
+
+```
+UNIFIED TASK LIST — 24 Mar
+Threads processed: Client Group, All Staff Group
+
+─────────────────────────────────────────
+
+📦 PARENT TASK 1: Tandoor Order — Tezpur Unit
+   Entity: Client — Tezpur Army Unit (customer); Supplier — unconfirmed
+   Item: Tandoor (2 units)
+   Status: Partially confirmed — order quantity confirmed, no further details visible
+   Due: Not mentioned
+   Priority: Medium (no urgency signals in thread)
+   Source threads: Client Group
+
+   ↳ SUBTASK 1: Confirm order details with Tezpur client
+      Assigned to: Staff 1 (confirmed quantity)
+      Status: In Progress
+      Due: Not specified
+      Next step: Verify and document full order spec — model/type of tandoor,
+      delivery address, required delivery date — and post confirmation to
+      the Client Group.
+
+   ↳ SUBTASK 2: Source supplier for 2 tandoor units
+      Assigned to: Unassigned
+      Status: Pending — no supplier activity visible in either thread
+      Due: Not specified
+      Next step: Identify supplier, get rate and availability for 2 units,
+      and initiate a supplier coordination thread.
+
+   ↳ SUBTASK 3: Prepare and send quotation to Tezpur client
+      Assigned to: Unassigned
+      Status: Pending — blocked until supplier rate confirmed
+      Due: Not specified
+      Next step: Once supplier rate is confirmed, calculate final price
+      and send formal quotation to Tezpur client.
+
+⚠️ FLAGS (Tezpur Order):
+   - No supplier has been identified or engaged yet — procurement not started
+   - No delivery timeline mentioned by client or committed by Ashish
+   - Delivery to Tezpur is inter-city — transport arrangements will need
+     lead time; flag if Tezpur is a remote/restricted Army location
+     requiring additional clearance or coordination
+   - Order confirmation is verbal only (WhatsApp) — no written PO or
+     formal confirmation visible in threads
+
+─────────────────────────────────────────
+
+📦 PARENT TASK 2: Tandoor Order — Ranchi Unit
+   Entity: Client — Ranchi Army Unit (customer); Supplier — unconfirmed
+   Item: Tandoor (1 unit)
+   Status: Pending — order information posted to staff group only;
+   no client thread visible, no supplier engagement visible
+   Due: Not mentioned
+   Priority: Medium (no urgency signals in thread)
+   Source threads: All Staff Group
+
+   ↳ SUBTASK 1: Confirm order details with Ranchi client
+      Assigned to: Unassigned
+      Status: Pending — no client thread visible
+      Due: Not specified
+      Next step: Reach out to the Ranchi client (or check if a dedicated
+      client group exists) to confirm full order spec — tandoor type,
+      delivery date, delivery address — and create/update a client thread.
+
+   ↳ SUBTASK 2: Source supplier for 1 tandoor unit
+      Assigned to: Unassigned
+      Status: Pending — no supplier activity visible
+      Due: Not specified
+      Next step: Identify supplier, get rate and availability for 1 unit,
+      and initiate procurement coordination.
+
+   ↳ SUBTASK 3: Prepare and send quotation to Ranchi client
+      Assigned to: Unassigned
+      Status: Pending — blocked until supplier rate confirmed
+      Due: Not specified
+      Next step: Once supplier rate is confirmed, prepare and send
+      quotation to Ranchi client.
+
+⚠️ FLAGS (Ranchi Order):
+   - Order announced in all-staff group only — no dedicated client thread
+     visible; unclear if client has been formally engaged
+   - No delivery timeline, no client contact details, no PO visible
+   - Ranchi is inter-state (Assam → Jharkhand) — transport logistics
+     and GST/e-way bill requirements will apply; flag for early planning
+   - No supplier engaged yet — procurement not started
+
+─────────────────────────────────────────
+
+❓ AMBIGUOUS CORRELATIONS (needs human review):
+
+   - NONE detected: Tezpur and Ranchi are distinct locations with
+     different quantities (2 units vs 1 unit) — treated as two
+     separate orders. Confirm with Ashish if these are being
+     fulfilled from the same supplier batch (which would affect
+     procurement and logistics planning) or independently.
+
+   - CLIENT IDENTITY (both orders): "Tezpur walo" and "Ranchi unit"
+     are location-based references, not named contacts. Confirm
+     the actual point-of-contact name, designation, and client
+     group details for each, especially if formal quotations or
+     invoices need to be raised.
+
+─────────────────────────────────────────
+
+📋 CROSS-ORDER NOTE:
+   Both orders are for the same item (tandoor). If sourced from
+   the same supplier, a combined procurement (3 units total) may
+   offer better pricing or logistics efficiency. Flag for Ashish's
+   decision before initiating supplier outreach separately for
+   each order.
+```
+
+---
+
+**Test self-evaluation (per your rubric):**
+
+| Criterion | Result |
+|---|---|
+| All tasks identified across threads | ✅ Both orders extracted |
+| Same order unified, different orders separated | ✅ Kept as 2 parent tasks |
+| Hierarchy correct | ✅ Parent + subtasks |
+| Entities tagged | ✅ With alias resolution noted |
+| Ambiguous correlations flagged not guessed | ✅ Explicitly noted as non-ambiguous with reasoning |
+| Information gaps detected | ✅ Missing supplier, timeline, client thread flagged |
+
+**Limitation to flag**: Both threads are very sparse (2 messages each). In a real scenario, more context would exist — this output reflects maximum inference from minimal input, which means the flag density is high relative to confirmed facts. That is the correct behaviour for sparse input.

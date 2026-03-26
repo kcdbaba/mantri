@@ -1,0 +1,69 @@
+UNIFIED TASK LIST — 24 Mar
+Threads processed: All Staff Group
+
+📦 PARENT TASK: Tandoor Delivery - Tezpur
+   Entity: Client (Tezpur location), Staff 1, Staff 2
+   Item: Tandoor
+   Status: Completed
+   Due: 24 Mar 11:00 (initially planned, met)
+   Priority: High
+   Source threads: All Staff Group
+
+   ↳ SUBTASK 1: Deliver tandoor to Tezpur
+      Assigned to: Staff 1 (coordinated)
+      Status: Completed
+      Due: 24 Mar 11:00
+      Next step: Confirm all necessary delivery paperwork (DO/GRN) has been collected.
+
+   ↳ SUBTASK 2: DO / GRN / signed delivery note received — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Army Direct Delivery (Type 3) orders. No message evidence found.
+      Next step: Staff 1 to confirm receipt of signed delivery documents from the Tezpur client.
+
+   ↳ SUBTASK 3: Invoice raised — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Army Direct Delivery (Type 3) orders. No message evidence found.
+      Next step: Raise an invoice for the Tezpur delivery.
+
+📦 PARENT TASK: Tandoor Delivery - Ranchi
+   Entity: Client (Ranchi location), Staff 1, Staff 2, Driver
+   Item: Tandoor
+   Status: In Progress — driver delayed
+   Due: 24 Mar 15:00 (revised from 14:00)
+   Priority: High
+   Source threads: All Staff Group
+
+   ↳ SUBTASK 1: Arrange driver for Ranchi delivery
+      Assigned to: Staff 2
+      Status: In Progress — driver is late
+      Due: 24 Mar 14:00 (initial), revised to 15:00
+      Next step: Staff 2 to confirm driver's current ETA and relay to the client if needed.
+
+   ↳ SUBTASK 2: Deliver tandoor to Ranchi
+      Assigned to: Driver
+      Status: Pending — driver en route, delayed
+      Due: 24 Mar 15:00
+      Next step: Await confirmation from driver/Staff 2 once delivery is completed.
+
+   ↳ SUBTASK 3: Army unit coordination — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Army Direct Delivery (Type 3) orders. No message evidence found.
+      Next step: Staff 2 to ensure receiving officer and address details are confirmed with the Ranchi client.
+
+   ↳ SUBTASK 4: Gate pass / entry documentation — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Army Direct Delivery (Type 3) orders. No message evidence found.
+      Next step: Staff 2 to confirm all necessary gate pass or entry documentation is ready for the Ranchi delivery.
+
+   ↳ SUBTASK 5: Pre-dispatch checklist completed — implicit task
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Army Direct Delivery (Type 3) orders. No message evidence found.
+      Next step: Staff 2 to confirm that a pre-dispatch checklist for the Ranchi tandoor was completed.
+
+⚠️ FLAGS:
+   - Ranchi delivery driver is late by 1 hour (initial 14:00 ETA, new 15:00 ETA) — potential delay for client.
+   - For Tezpur delivery: No explicit mention of DO/GRN collection or invoice being raised.
+   - For Ranchi delivery: No explicit mention of Army unit coordination, gate pass/entry documentation, or pre-dispatch checklist completion.
+
+❓ AMBIGUOUS CORRELATIONS:
+   - None. The two tandoor deliveries are clearly distinguished by destination (Tezpur vs. Ranchi).

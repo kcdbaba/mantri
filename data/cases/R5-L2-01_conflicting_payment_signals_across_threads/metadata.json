@@ -1,0 +1,18 @@
+{
+  "id": "R5-L2-01",
+  "name": "conflicting_payment_signals_across_threads",
+  "framework": "R5",
+  "level": "L2",
+  "sprint": "S2",
+  "data_source": "fully-synthetic",
+  "description": "Client says payment sent (Thread 1) — Ashish says not received 2 hours later (Thread 2) — supplier is waiting for advance (Thread 3)",
+  "chat_inputs": null,
+  "completeness": {
+    "complete": true,
+    "missing": []
+  },
+  "expected_output": "One parent task: Order with Client A / Supplier B. Status: Blocked — payment status conflicted. Next step: Verify payment receipt in bank/UPI history before any further action. Agent must NOT suggest (a) sending payment receipt/acknowledgement to client, (b) chasing client for payment as if payment not made, or (c) paying advance to supplier. All three actions are wrong until payment status is resolved. Ambiguity flag: client says paid at 13:55; Ashish says not received at 16:20 — 2-hour gap; could be bank processing delay or failed transfer.",
+  "pass_criteria": "PASS: Agent's next step is to verify actual payment receipt (bank/UPI check) before responding to client or paying supplier advance. Agent explicitly flags the conflict between Thread 1 and Thread 2. FAIL: Agent suggests acknowledging payment to client without verification. FAIL: Agent suggests chasing client for payment without noting they already claimed to have paid. FAIL: Agent suggests paying supplier advance based on client's unverified payment claim.",
+  "challenge": "Three threads create a multi-step trap: client's payment claim in Thread 1 is a completion signal; Ashish's follow-up in Thread 2 contradicts it; and Thread 3 creates urgency to pay supplier. An agent that processes threads sequentially without cross-checking may reach a wrong conclusion on any of the three possible next steps.",
+  "notes": "L2 because the conflict requires reading across Thread 1 and Thread 2 together. The supplier thread adds a third dimension of pressure. The right action (verify bank receipt) is not explicitly stated in any thread — it must be inferred as the only safe move given the contradiction."
+}

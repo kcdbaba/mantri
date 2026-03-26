@@ -1,0 +1,18 @@
+{
+  "id": "R4-A-L2-01",
+  "name": "same_supplier_2_name_variants_across_2_threads",
+  "framework": "R4-A",
+  "level": "L2",
+  "sprint": "S1",
+  "data_source": "fully-synthetic",
+  "description": "Same supplier, 2 name variants across 2 threads",
+  "chat_inputs": null,
+  "completeness": {
+    "complete": true,
+    "missing": []
+  },
+  "expected_output": "Single supplier entity: Sharma. Cross-thread delivery task: Tandoor delivery tomorrow — ensure someone present for collection.",
+  "pass_criteria": "PASS: Single supplier entity linked across both threads, one unified delivery task. FAIL: Separate supplier records or separate unlinked tasks.",
+  "challenge": "Same supplier referred to differently across two separate groups. Agent must unify across threads.",
+  "notes": "Cross-thread entity resolution baseline test"
+}

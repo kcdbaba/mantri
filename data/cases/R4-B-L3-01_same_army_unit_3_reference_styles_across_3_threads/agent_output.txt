@@ -1,0 +1,130 @@
+# UNIFIED TASK LIST — 24 Mar
+**Threads processed:** Client Group, All Staff Group, Internal Ops Group
+
+---
+
+## 🔍 PRE-ANALYSIS: Cross-Thread Correlation
+
+Before listing tasks, documenting the correlation logic explicitly per system rules.
+
+| Signal | Thread 1 | Thread 2 | Thread 3 |
+|---|---|---|---|
+| **Client reference** | "Brigadier sahab" | "Eastern Command walo" | "HQ Eastern Command" |
+| **Item** | (not stated) | "maal" (goods) | (not stated) |
+| **Action** | Readiness check | Packing complete | Delivery scheduling |
+| **Time** | 09:00 | 10:00 | 14:00 |
+| **Stage implied** | Pre-dispatch check | Post-packing | Pre-delivery scheduling |
+
+**Correlation assessment — TENTATIVE MERGE:**
+- "Brigadier sahab," "Eastern Command walo," and "HQ Eastern Command" are plausible aliases for the same client entity
+- Timeline is internally consistent: Ashish asks if order is ready (09:00) → Staff 1 confirms packing done (10:00) → Staff 2 schedules delivery for next day (14:00) — this reads as a natural single-order progression
+- No contradicting signals (no different locations, no different items, no conflicting quantities)
+- **Soft assumption**: All three threads refer to ONE order for HQ Eastern Command / Brigadier sahab
+- **⚠️ Flag raised**: Entity resolution not confirmed — see flags section
+
+---
+
+## 📦 PARENT TASK: Delivery — HQ Eastern Command (Brigadier Sahab)
+
+```
+Entity:    Client — HQ Eastern Command / "Brigadier sahab" 
+           (alias tentatively merged; see FLAGS)
+Item:      Unspecified goods ("maal") — item type not mentioned in any thread
+Status:    In Progress — goods packed, delivery being scheduled
+Due:       25 Mar (tomorrow morning, per Staff 2 at 14:00)
+Priority:  High — Army client, delivery commitment made for next morning
+Source threads: Client Group (Thread 1), All Staff Group (Thread 2), 
+                Internal Ops Group (Thread 3)
+```
+
+---
+
+### ↳ SUBTASK 1: Confirm delivery is scheduled for 25 Mar morning
+**Assigned to:** Staff 2 (initiated scheduling at 14:00)
+**Status:** In Progress — scheduling instructed, confirmation not seen in threads
+**Due:** 24 Mar (today, before end of day)
+**Next step:** Verify that transport/vehicle has been confirmed for 25 Mar morning and post written confirmation in the Internal Ops Group or Client Group so Ashish can see it.
+
+---
+
+### ↳ SUBTASK 2: Confirm packed goods are complete and correct
+**Assigned to:** Staff 1 (confirmed packing at 10:00)
+**Status:** Partially confirmed — "pack ho gaya" suggests complete, but no explicit checklist sign-off visible in threads
+**Due:** 24 Mar (before dispatch)
+**Next step:** Verify that packing matches the order specification — quantity, item type, labelling — and confirm in writing in the ops group. Ashish's 09:00 readiness query (Thread 1) has not received an explicit reply from Staff 1 in that thread.
+
+---
+
+### ↳ SUBTASK 3 — IMPLICIT: Pre-dispatch checklist
+**Status:** Pending — not detected in any thread
+**Note:** Packing is confirmed (Thread 2, 10:00) but no pre-dispatch checklist is mentioned in any thread. This step is expected before scheduling delivery for an Army client (Type 3: Army Direct Delivery, Step 13). Given that delivery has been scheduled for 25 Mar morning, this step is **overdue** relative to current order stage.
+**Next step:** Complete and log the pre-dispatch checklist today before goods leave. Assign explicitly to Staff 1 or Staff 2.
+
+---
+
+### ↳ SUBTASK 4 — IMPLICIT: Army unit coordination (confirm receiving officer + address)
+**Status:** Pending — not detected in any thread
+**Note:** No message in any thread confirms the receiving officer's name, delivery address at HQ Eastern Command, or gate/entry point. This is a standard cadence step for Army Direct Delivery (Type 3, Step 11). Delivery is scheduled for tomorrow morning — this confirmation is **overdue**.
+**Next step:** Contact HQ Eastern Command to confirm the receiving officer's name, exact delivery address or gate, and expected arrival window for 25 Mar. Log this in the Client Group or Internal Ops Group.
+
+---
+
+### ↳ SUBTASK 5 — IMPLICIT: Gate pass / entry documentation
+**Status:** Pending — not detected in any thread
+**Note:** No mention of gate pass, vehicle entry clearance, or Army cantonment documentation in any thread (Type 3, Step 12). If delivery is to a cantonment or secured Army facility, this is required before the delivery vehicle can enter. Delivery is tomorrow morning — **this is time-critical today**.
+**Next step:** Check whether a gate pass or vehicle clearance is needed for HQ Eastern Command tomorrow. If yes, initiate immediately — Army entry documentation cannot be arranged same-morning.
+
+---
+
+### ↳ SUBTASK 6 — IMPLICIT: Item type identification
+**Status:** Pending — not detected in any thread
+**Note:** No thread mentions what the goods ("maal") are. Item type is unresolved across all three threads. This is an input gap, not a cadence gap — it affects the ability to verify pre-dispatch checklist, e-way bill requirements, and invoice preparation.
+**Next step:** Identify what items are in this order. This may be resolvable from internal records without a message — but should be confirmed and posted to the ops thread for traceability.
+
+---
+
+## ⚠️ FLAGS
+
+1. **Item type unknown** — "maal" is used generically across all three threads. No product, SKU, or category is mentioned. This limits ability to verify order completeness, insurance, documentation, and invoice preparation.
+
+2. **Ashish's readiness query (Thread 1, 09:00) has no visible reply** — Ashish asked "Brigadier sahab ka order ready hai?" in the Client Group. Staff 1 confirmed packing in the All Staff Group (Thread 2, 10:00) — but this confirmation was NOT posted in the Client Group where Ashish asked. Ashish may not have seen it. Information gap between threads.
+
+3. **Delivery scheduling instructed but not confirmed** — Staff 2 said "delivery kal subah schedule karo" (Thread 3, 14:00). This is an instruction, not a confirmation. No thread shows that a vehicle, driver, or transporter has been booked.
+
+4. **Gate pass / Army entry clearance not mentioned** — If delivery is to a cantonment, this is time-critical. Not mentioned in any thread. See Subtask 5.
+
+5. **No DO / GRN / delivery note mentioned** — For Army Direct Delivery, a signed delivery note or DO reference is required for invoice and payment processing (Type 3, Step 17). No thread mentions this documentation being prepared.
+
+6. **No invoice preparation activity visible** — No thread references invoice or payment for this order. May be premature (delivery not yet done), but worth tracking.
+
+7. **Packing confirmed in All Staff Group, not in Internal Ops Group** — Staff 1's packing confirmation (Thread 2) was posted in the general staff group, not the Internal Ops Group where delivery is being coordinated (Thread 3). Ops coordination thread may be working off incomplete information.
+
+---
+
+## ❓ AMBIGUOUS CORRELATIONS — Needs Human Review
+
+**[AMBIGUITY 1 — Entity resolution]: "Brigadier sahab" vs "Eastern Command walo" vs "HQ Eastern Command"**
+- These have been **tentatively merged** as one client entity based on consistent context, plausible timing, and no contradicting signals
+- However, "Brigadier sahab" is a person reference, while "Eastern Command" is an organisational/unit reference — it is possible (though unlikely given context) that these are different contacts or even different orders at the same unit
+- **Human confirmation needed**: Please confirm whether Brigadier sahab = the receiving officer at HQ Eastern Command, and whether all three threads refer to the same order
+- Downstream tasks should not be blocked on this — proceed on merged assumption, but verify before delivery
+
+**[AMBIGUITY 2 — Order details]: Item, quantity, and order origin**
+- No thread states what was ordered, how many units, or who placed the order originally
+- Cannot determine order type (Type 1 equipment? Type 6 stock-fill? Type 3 Army direct?) with full confidence — **assumed Type 3 (Army Direct Delivery)** based on "HQ Eastern Command" reference, but this should be confirmed
+- This affects which cadence checklist applies and what documentation is required
+
+---
+
+## 📋 SUMMARY DASHBOARD
+
+| Subtask | Assigned | Status | Due | Priority |
+|---|---|---|---|---|
+| 1. Confirm delivery scheduled (transport booked) | Staff 2 | In Progress | Today EOD | 🔴 High |
+| 2. Confirm packing complete + correct | Staff 1 | Partial | Today | 🔴 High |
+| 3. Pre-dispatch checklist | Staff 1 / Staff 2 | ⚠️ Implicit — Pending | Today | 🔴 High |
+| 4. Confirm receiving officer + address at HQ | Staff 1 / Ashish | ⚠️ Implicit — Pending | Today | 🔴 High |
+| 5. Gate pass / entry documentation | TBD | ⚠️ Implicit — Time-critical | Today | 🔴 High |
+| 6. Identify item type | TBD | ⚠️ Input gap | Today | 🟡 Medium |
+
+**Overall order status: IN PROGRESS — 5 of 6 subtasks open, delivery committed for tomorrow morning. Several time-critical steps not yet confirmed in any thread.**

@@ -1,0 +1,115 @@
+## Processing Notes
+
+Before generating output, I'll show my reasoning transparently.
+
+---
+
+### Cross-Thread Correlation Analysis
+
+**Entity Resolution**: "Sharma ji" (Thread 1) and "Sharma bhai" (Thread 2) — same base surname, same item (tandoor), same timeline (kal / tomorrow). Contextual signals are consistent with no contradicting details. Per calibration rules: **tentative merge**, flagged for confirmation.
+
+**Item Correlation**: Both messages reference tandoor delivery tomorrow (25 Mar). Treating as one delivery event.
+
+**Information Gap Detection**: Thread 1 is a supplier group (Ashish + Staff 1 + Sharma Supplier) — delivery is being coordinated with supplier. Thread 2 is all-staff group — Staff 1 is asking who will be present to receive goods. The staff availability response has **not been confirmed** in either thread.
+
+**What's missing**: No client named. No quantity. No delivery address confirmed. No staff member has confirmed they'll be home/present. No Ashish response visible in either thread.
+
+---
+
+```
+UNIFIED TASK LIST — 24 Mar
+Threads processed: Supplier Group, All Staff Group
+
+📦 PARENT TASK: Tandoor Delivery — Sharma Supplier
+   Entity: Sharma Supplier (supplier) [see ⚠️ alias flag below]
+             Client: UNKNOWN — not mentioned in either thread
+   Item: Tandoor (quantity unspecified)
+   Status: In Progress — delivery scheduled for 25 Mar, 
+           but staff availability unconfirmed
+   Due: 25 Mar (tomorrow, per both threads)
+   Priority: High — delivery is tomorrow, open actions remain
+   Source threads: Supplier Group, All Staff Group
+
+   ↳ SUBTASK 1: Confirm staff availability for goods receipt on 25 Mar
+      Assigned to: Unassigned — Staff 1 asked the question 
+                   but no response recorded
+      Status: Blocked — no reply received in All Staff Group as of 14:00
+      Due: Today (24 Mar) — needs to be resolved before delivery
+      Next step: Chase staff group for a confirmed name of who 
+                 will be present to receive the tandoor tomorrow. 
+                 Ashish to intervene if no response by evening.
+
+   ↳ SUBTASK 2: Confirm Sharma Supplier delivery is still on track for 25 Mar
+      Assigned to: Staff 1
+      Status: Pending — no written reconfirmation from supplier visible
+      Due: Today (24 Mar)
+      Next step: Get explicit confirmation from Sharma Supplier 
+                 (in the supplier group) that 25 Mar delivery is 
+                 still confirmed — timing and arrival window if possible.
+
+   ↳ SUBTASK 3: Confirm delivery address and logistics
+      Assigned to: Unassigned
+      Status: Pending — no address or logistics detail mentioned 
+               in either thread
+      Due: Today (24 Mar)
+      Next step: Verify that Sharma Supplier has the correct 
+                 delivery address, and that whoever is receiving 
+                 knows the expected arrival window.
+
+   ↳ SUBTASK 4: Identify end client for this tandoor order
+      Assigned to: Ashish (needs review)
+      Status: Pending — client not mentioned in any available thread
+      Due: Ongoing
+      Next step: Confirm which client this tandoor is for — 
+                 check if there is a separate client group thread 
+                 not included in this input set.
+
+⚠️ FLAGS:
+   - Staff availability for goods receipt tomorrow is UNCONFIRMED 
+     as of 14:00 — risk of unattended delivery
+   - Delivery timing/window not mentioned — staff won't know 
+     when to expect the goods
+   - Quantity not specified in either thread — cannot verify 
+     correct quantity on receipt
+   - End client not identifiable from these two threads — 
+     likely discussed in a separate client group not provided
+   - Ashish has not responded in either thread (in this input) — 
+     unclear if he is aware of the open staff availability question
+   - Only 2 threads provided — likely a client group thread 
+     and/or a 1:1 with transporter exists but was not included; 
+     task list may be incomplete
+
+⚠️ ALIAS FLAG:
+   - "Sharma ji" (Thread 1) and "Sharma bhai" (Thread 2) are 
+     treated as the SAME supplier — tentative merge based on: 
+     same surname, same item (tandoor), same delivery timeline. 
+     No contradicting signals detected.
+   → Human confirmation recommended: Are these the same person?
+
+❓ AMBIGUOUS CORRELATIONS:
+   - Only one tandoor delivery event is detectable across both 
+     threads (25 Mar, Sharma). No signals of a second distinct 
+     tandoor order. If a second client also has a pending tandoor 
+     order, it is not visible in these threads — recommend checking 
+     other thread groups.
+   - Client identity cannot be resolved from available threads — 
+     a separate parent task for the client-side of this order 
+     cannot be created without more input. Flagged above as 
+     Subtask 4.
+```
+
+---
+
+### Evaluation Notes (for testing purposes)
+
+| Check | Result |
+|---|---|
+| Tasks identified across both threads | ✅ Unified correctly |
+| Alias resolution (Sharma ji / Sharma bhai) | ✅ Tentative merge, flagged |
+| Information gap detected (staff availability unanswered) | ✅ Detected and flagged |
+| Missing client identity flagged | ✅ Not silently assumed |
+| Hierarchy correct | ✅ One parent, four subtasks |
+| Ambiguous correlations section populated | ✅ |
+| No messages drafted | ✅ Next steps are descriptions only |
+
+**Limitation of this test sample**: Only 2 messages across 2 threads — a realistic session would have 15-50 messages and 4-6 threads. This sample tests alias resolution and information gap detection well, but cannot test order separation, status conflict resolution, or heavy Hinglish parsing at scale.

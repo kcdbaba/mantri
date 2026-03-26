@@ -1,0 +1,51 @@
+{
+  "verdict": "PASS",
+  "overall_score": 88,
+  "dimensions": {
+    "task_recall": {
+      "score": null,
+      "notes": null
+    },
+    "entity_accuracy": {
+      "score": 92,
+      "notes": "Correctly identifies S.K. Enterprises as the supplier and Suresh ji as the contact person, treating them as a single unified entity rather than two separate records. The parent task and subtasks both reference the same entity consistently. Minor deduction for labeling Suresh ji as 'contact person' rather than proprietor, but this is a reasonable interpretation."
+    },
+    "cross_thread_correlation": {
+      "score": 85,
+      "notes": "Only one thread is present (Supplier Group), so multi-thread correlation is not truly tested here. The agent correctly processes the single thread without creating duplicate or conflicting entities. The agent notes 'None' for ambiguous correlations, which is appropriate."
+    },
+    "implicit_task_detection": {
+      "score": null,
+      "notes": null
+    },
+    "next_step_quality": {
+      "score": null,
+      "notes": null
+    },
+    "ambiguity_flagging": {
+      "score": 88,
+      "notes": "Agent correctly flags that 'maal' is unspecified goods and that dispatch confirmation is missing. It proactively recommends confirming dispatch with Suresh ji/S.K. Enterprises. The flag about item unspecified is particularly appropriate for an Army supply context where item specificity matters. Good use of the ⚠️ FLAGS section without over-flagging."
+    }
+  },
+  "pass_criteria_met": true,
+  "passes": [
+    "S.K. Enterprises and Suresh ji are treated as a single supplier entity, not as separate records — directly satisfying the pass criterion",
+    "Delivery task correctly captured: goods expected on 25 Mar morning (tomorrow morning)",
+    "Suresh ji identified as contact person within the S.K. Enterprises entity, maintaining proper association",
+    "Ambiguity about unspecified goods ('maal') is flagged rather than silently assumed",
+    "Missing dispatch confirmation appropriately flagged for human review",
+    "Clean hierarchical task structure with parent task and subtasks"
+  ],
+  "failures": [
+    "Subtask 2 references 'Standard Equipment Procurement (Type 1)' — this appears to be an invented classification not grounded in the thread content, which could introduce confusion",
+    "Cross-thread correlation cannot be fully evaluated as only one thread was provided; the agent's note of 'None in this example' is slightly awkward phrasing suggesting template boilerplate"
+  ],
+  "notes": "The agent passes the core criterion: S.K. Enterprises and Suresh ji are unified into a single supplier entity. The output is well-structured with appropriate flagging of the 'maal' ambiguity and missing dispatch confirmation. The main concern is the invented 'Standard Equipment Procurement (Type 1)' label in Subtask 2, which is not grounded in the source thread and could mislead operators. Otherwise, the agent handles this common Indian SME name variant (company name vs proprietor name) correctly.",
+  "case_id": "R4-A-L1-02",
+  "case_name": "same_supplier_company_name_vs_proprietor_name_sing",
+  "framework": "R4-A",
+  "level": "L1",
+  "evaluated_at": "2026-03-26T05:07:49",
+  "model_used": "gemini-2.5-flash",
+  "eval_model": "claude-sonnet-4-6"
+}

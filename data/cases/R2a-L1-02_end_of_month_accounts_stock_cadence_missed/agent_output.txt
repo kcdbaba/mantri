@@ -1,0 +1,302 @@
+```
+UNIFIED TASK LIST — 29 Mar
+Threads processed: All Staff Group, Supplier Group (Malerkotla), Client Group (SATA)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 PARENT TASK 1: Delivery — SATA
+   Entity: SATA (client)
+   Item: Unspecified (not mentioned in threads)
+   Status: ✅ Completed — delivery confirmed by client
+   Due: 29 Mar (delivered)
+   Priority: Low (resolved)
+   Source threads: All Staff Group, Client Group (SATA)
+
+   ↳ SUBTASK 1: Delivery execution
+      Assigned to: Staff 1
+      Status: ✅ Completed — Staff 1 confirmed at 14:00; SATA confirmed receipt at 15:00
+      Next step: No action required — delivery confirmed by both sides.
+
+   ↳ SUBTASK 2: Invoice raised — implicit task
+      Status: Pending — not detected in threads
+      Note: Delivery is confirmed. No mention of invoice in any thread.
+            Expected at this stage for Army Direct Delivery / Standard Procurement orders.
+      Next step: Confirm whether invoice has been raised or is due to be raised.
+                 If not yet raised, raise and share with SATA with relevant DO/GRN reference.
+
+   ↳ SUBTASK 3: Delivery note / GRN / signed acknowledgement received — implicit task
+      Status: Pending — not detected in threads
+      Note: SATA confirmed receipt informally via WhatsApp ("maal mil gaya").
+            For Army clients, a formal signed delivery note or GRN is required to support
+            the payment claim. WhatsApp acknowledgement alone is insufficient.
+      Next step: Confirm whether a signed delivery document was collected at time of delivery.
+                 If not, follow up with SATA to obtain formal acknowledgement before raising invoice.
+
+   ↳ SUBTASK 4: Payment follow-up (Day 30) — implicit cadence task
+      Status: Pending — not yet due, but schedule now
+      Note: Invoice not yet raised (per Subtask 2). Once raised, Day 30 follow-up applies.
+            For Army clients, 30–45 days is within normal cycle — this is an awareness flag,
+            not an urgent chase.
+      Next step: Ashish to diarise a courtesy check-in with SATA accounts section
+                 approximately 30 days after invoice date.
+
+   ↳ SUBTASK 5: GST reconciliation — calendar-triggered implicit task
+      Status: Pending — not detected in threads
+      Note: Thread date is 29 Mar — year-end. This invoice (when raised) must be reconciled
+            for the financial year closing. GST filing for March is a hard deadline.
+      Next step: Ensure this invoice is included in March GST return.
+                 Coordinate with accounts to close all outstanding March invoices before filing.
+
+⚠️ FLAGS (SATA):
+   - Item delivered is unspecified across all threads — item type cannot be confirmed
+   - Invoice not yet raised post-delivery — time-sensitive at year-end
+   - Formal delivery acknowledgement (GRN/DO) not confirmed — verbal/WhatsApp only
+   - 29 Mar delivery + year-end = this invoice must be captured in FY closing
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 PARENT TASK 2: Delivery — Tezpur
+   Entity: Tezpur (client — likely Army unit given context; confirm)
+   Item: Unspecified
+   Status: ✅ Completed — Staff 2 confirmed delivery at 16:30
+   Due: 29 Mar (delivered)
+   Priority: Low (resolved)
+   Source threads: All Staff Group
+
+   ↳ SUBTASK 1: Delivery execution
+      Assigned to: Staff 2
+      Status: ✅ Completed — confirmed by Staff 2 at 16:30
+      Next step: No action required on delivery itself.
+
+   ↳ SUBTASK 2: Client delivery confirmation — not yet received
+      Status: Pending — not detected in threads
+      Note: Unlike SATA, there is NO client-side acknowledgement for Tezpur in any thread.
+            Staff 2 confirmed delivery, but no client message received.
+            This may be normal (client may confirm later or via separate channel),
+            but it is an information gap.
+      Next step: Confirm with Staff 2 whether client accepted goods at point of delivery
+                 and whether a signed delivery note was obtained.
+
+   ↳ SUBTASK 3: Invoice raised — implicit task
+      Status: Pending — not detected in threads
+      Note: Delivery complete but no invoice mentioned.
+      Next step: Raise invoice for Tezpur delivery and share with client with DO reference.
+
+   ↳ SUBTASK 4: Delivery note / GRN / signed acknowledgement — implicit task
+      Status: Pending — not detected in threads
+      Note: Same applies as SATA — Army client requires formal signed document
+            to support payment claim. No confirmation in threads.
+      Next step: Confirm with Staff 2 whether signed delivery note was obtained.
+                 If not, follow up with Tezpur unit to formalise.
+
+   ↳ SUBTASK 5: Payment follow-up (Day 30) — implicit cadence task
+      Status: Pending — not yet due
+      Note: Army client — 30-day flag is for awareness only. Ashish to make
+            personal courtesy contact with unit CO or accounts officer, not staff.
+      Next step: Diarise for ~30 days after invoice date. Ashish to contact
+                 Tezpur accounts section directly at that point.
+
+   ↳ SUBTASK 6: GST reconciliation — calendar-triggered implicit task
+      Status: Pending — not detected in threads
+      Note: 29 Mar — year-end. Invoice must be captured in March GST return.
+      Next step: Ensure Tezpur invoice is included in March GST filing.
+
+⚠️ FLAGS (Tezpur):
+   - No client-side delivery confirmation in any thread — gap vs SATA pattern
+   - Item unspecified
+   - Invoice not raised — year-end urgency applies
+   - Signed delivery note status unknown
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 PARENT TASK 3: Delivery — Ranchi
+   Entity: Ranchi (client — identity unconfirmed; likely Army unit)
+   Item: Unspecified
+   Status: 🔄 In Progress — driver dispatched, arrival expected 30 Mar morning
+   Due: 30 Mar morning (estimated)
+   Priority: High — delivery in transit, confirmation pending tomorrow
+   Source threads: All Staff Group
+
+   ↳ SUBTASK 1: Delivery in transit — driver en route
+      Assigned to: Staff 1 (coordinating driver)
+      Status: In Progress — driver departed night of 29 Mar
+      Next step: Confirm with Staff 1 and driver on morning of 30 Mar
+                 that delivery is on track and ETA is holding.
+
+   ↳ SUBTASK 2: Pre-emptive delivery confirmation — Ranchi driver
+      Status: Scheduled — to be actioned morning of 30 Mar
+      Due: Morning of 30 Mar (before arranging any receiving logistics)
+      Next step: Contact driver on morning of 30 Mar to confirm vehicle is
+                 on track and ETA to Ranchi client is as expected before
+                 any receiving arrangements are made at the Ranchi end.
+
+   ↳ SUBTASK 3: Client delivery confirmation — Ranchi
+      Status: Pending — delivery not yet completed
+      Next step: Once delivery is confirmed on 30 Mar, get client acknowledgement
+                 and a signed delivery note. Post confirmation to All Staff Group
+                 to close the loop.
+
+   ↳ SUBTASK 4: Invoice raised — implicit task
+      Status: Pending — delivery not yet complete; invoice due after delivery
+      Note: Invoice cannot be raised until delivery is confirmed.
+            Given year-end date (29–30 Mar), this invoice needs to be raised
+            immediately on delivery confirmation to be captured in the
+            current financial year.
+      Next step: As soon as 30 Mar delivery is confirmed, raise invoice
+                 same day. This is time-critical — 30 Mar is year-end.
+
+   ↳ SUBTASK 5: Delivery note / GRN — implicit task
+      Status: Pending — delivery not yet complete
+      Note: If Ranchi is an Army client, a signed delivery document is required.
+            Driver should carry a delivery note to be signed at point of delivery.
+      Next step: Confirm with Staff 1 that driver has the delivery note paperwork
+                 before arrival. Obtain signed copy and photograph for records.
+
+   ↳ SUBTASK 6: Payment follow-up — implicit cadence task
+      Status: Pending — not yet due (invoice not raised)
+      Note: Army client (if confirmed) — 30-day flag after invoice is awareness only.
+            Ashish to make personal contact, not staff.
+      Next step: Diarise for ~30 days after invoice date.
+
+   ↳ SUBTASK 7: GST reconciliation — calendar-triggered implicit task
+      Status: URGENT — delivery and invoice must fall in FY closing (30 Mar)
+      Note: If invoice is raised on 30 Mar, it falls in the current financial year.
+            If delayed to 31 Mar or later, confirm whether it still qualifies.
+            This is the highest-urgency year-end task across all three deliveries.
+      Next step: Confirm with accounts that Ranchi invoice will be raised on
+                 30 Mar (day of delivery) and captured in March GST return.
+
+⚠️ FLAGS (Ranchi):
+   - Driver in transit overnight — no real-time status available
+   - Delivery not yet confirmed — do NOT mark as complete based on driver's stated plan
+   - Year-end invoice timing is critical — must raise invoice on 30 Mar itself
+   - Item unspecified across all threads
+   - Client identity not fully resolved — "Ranchi" is a city/location, not a named unit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📦 PARENT TASK 4: April Orders Pipeline — Malerkotla Supplier
+   Entity: Malerkotla Supplier (inter-state supplier)
+   Item: Unspecified — "2 aur orders" (two more orders, details not shared)
+   Status: 🟡 Early stage — Ashish flagged upcoming orders; supplier acknowledged
+   Due: April (no specific date)
+   Priority: Medium — pipeline planning, not yet urgent
+   Source threads: Supplier Group (Malerkotla)
+
+   ↳ SUBTASK 1: Share order details with Malerkotla Supplier
+      Assigned to: Ashish
+      Status: Pending — supplier said "batao" (tell me), Ashish has not shared specs yet
+      Next step: Share item specifications, quantities, and required delivery
+                 timelines for both April orders so supplier can confirm
+                 availability and lead times.
+
+   ↳ SUBTASK 2: Order specifications not yet defined in threads — implicit task
+      Status: Pending — not detected in threads
+      Note: Two orders are mentioned but neither client identity, item,
+            quantity, nor delivery date is specified in any thread.
+            Cannot proceed with supplier or client quoting without this.
+      Next step: Ashish to confirm internally: which clients are these orders for,
+                 what items, what quantities, and what delivery commitment is needed?
+
+   ↳ SUBTASK 3: E-way bill and interstate transport planning — implicit task
+      Status: Pending — not yet at dispatch stage
+      Note: Malerkotla is inter-state (Punjab → Assam). E-way bill and
+            transporter booking are required. Transit time ~3–4 days.
+            Must be planned once order details are confirmed.
+      Next step: Once specs are finalised and order confirmed, begin
+                 transporter identification and e-way bill preparation.
+
+   ↳ SUBTASK 4: Quote from supplier — implicit task
+      Status: Pending — not yet requested (too early; specs not shared)
+      Note: Standard procurement step 2 not yet triggered.
+            Will be needed once SUBTASK 1 is actioned.
+      Next step: After sharing order details, request rate + GST + delivery
+                 quote from Malerkotla Supplier with 48h response expectation.
+
+⚠️ FLAGS (April Pipeline):
+   - Both April orders are completely unspecified — no client, no item, no quantity
+   - Cannot assess cash flow or working capital impact without order values
+   - If either April order requires supplier advance (Malerkotla often does for
+     inter-state), working capital flag will apply — assess once order values known
+   - Supplier conversation is a forward-planning message only; no commitments made
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🗓️ YEAR-END / CALENDAR IMPLICIT TASKS (Global — 29 Mar)
+
+These apply across all threads and the business as a whole.
+
+   ↳ CALENDAR TASK 1: End-of-month accounts reconciliation — March
+      Status: Pending — not detected in any thread
+      Note: 29 Mar — 2 days to financial year-end. All March transactions
+            (SATA, Tezpur, Ranchi deliveries + any other March orders)
+            must be reconciled before 31 Mar.
+      Next step: Ashish / accounts to compile all March invoices, payments
+                 received, and outstanding balances for month-close.
+
+   ↳ CALENDAR TASK 2: GST reconciliation — March (financial year-end)
+      Status: URGENT — not detected in any thread
+      Note: March GST return covers the full financial year's last month.
+            All invoices raised in March (including today's deliveries) must
+            be captured. Any invoice raised after 31 Mar falls in the new FY.
+            Ranchi invoice (expected 30 Mar) is the most time-sensitive.
+      Next step: Confirm with accounts the complete list of March invoices.
+                 Ensure SATA, Tezpur, and Ranchi invoices are all included.
+                 File GST return before deadline.
+
+   ↳ CALENDAR TASK 3: Annual accounts closure preparation
+      Status: Pending — not detected in any thread
+      Note: 29 Mar = 2 days to FY end. Year-end stock-take, P&L review,
+            and outstanding receivables summary are expected at this stage.
+      Next step: Ashish to initiate year-end stock-take of warehouse inventory.
+                 Compile full list of outstanding receivables (all clients with
+                 unpaid invoices) for FY closing.
+
+   ↳ CALENDAR TASK 4: Advance tax review — Q4 / year-end
+      Status: Pending — not detected in any thread
+      Note: March is the Q4 advance tax deadline. If Ashish's business is
+            liable for advance tax, final instalment is due 15 Mar (already
+            passed). Confirm compliance or flag for CA.
+      Next step: Confirm with CA / accounts whether advance tax obligation
+                 for FY has been met. If any shortfall, address before 31 Mar.
+
+   ↳ CALENDAR TASK 5: Review of all outstanding payment follow-ups — March
+      Status: Pending — not detected in any thread
+      Note: Year-end is the natural point to review all outstanding receivables.
+            Any Army client invoices raised in Dec–Jan (90 days ago) should
+            be gently reviewed by Ashish.
+      Next step: Ashish to review complete outstanding receivables list.
+                 For any Army client invoices >60 days old, Ashish to make
+                 personal contact with unit CO or accounts officer directly —
+                 not through staff, not as a payment demand, as a relationship
+                 check-in and gentle awareness call.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+❓ AMBIGUOUS CORRELATIONS (needs human review)
+
+1. SATA, Tezpur, Ranchi — client and order identity
+   All three are referenced by location/unit name only. Item type, order value,
+   and whether these are direct Army deliveries or via GeM are unspecified.
+   This affects: invoice format, GST treatment, payment follow-up protocol,
+   and whether gate pass / DO documentation applies.
+   → Human input needed: Confirm client full names, order items, and delivery type
+     for all three before raising invoices.
+
+2. "2 aur orders" — April pipeline
+   Two orders mentioned but zero details provided. Cannot determine client,
+   item, value, or whether Malerkotla Supplier is confirmed source.
+   → Human input needed: Ashish to specify both orders before supplier
+     conversation progresses.
+
+3. Staff 1 "ok sir" (09:30) — delivery scope understood?
+   Staff 1 acknowledged Ashish's 3-delivery message with "ok sir" — no
+   confirmation that all three delivery logistics (SATA, Tezpur, Ranchi) were
+   understood and actioned separately. Ranchi driver logistics appear to have
+   been handled, but there is no visibility on who handled Tezpur logistics
+   or whether Staff 2 had separate briefing.
+   → Human input needed: Confirm Staff 2's briefing for Tezpur was separate
+     and adequate, not inferred from Staff 1's "ok sir".
+
+4. Malerkotla Supplier — connection to today's deliveries
+   It is possible (but unconfirmed) that the goods delivered today to SATA,
+   Tezpur, and/or Ranchi were sourced from Malerkotla Supplier. If so,
+   the supplier thread and delivery threads may be part of the same order
+   chains. No evidence in threads to confirm or deny.
+   → Human input needed: Were today's three deliveries from Malerkotla stock,
+     or separate suppliers? This affects inter-state procurement cadence checks.
+```

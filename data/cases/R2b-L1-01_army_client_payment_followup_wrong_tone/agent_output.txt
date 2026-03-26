@@ -1,0 +1,74 @@
+```
+UNIFIED TASK LIST — 25 Mar
+Threads processed: All Staff Group, Client Group (Ashish + 51 Sub Area)
+
+📦 PARENT TASK: Payment Collection — 51 Sub Area
+   Entity: 51 Sub Area (Army client)
+   Item: Unknown — not specified in threads
+   Status: In Progress — invoice raised, payment outstanding
+   Due: Overdue — invoice raised 8 Feb, 45 days elapsed as of 25 Mar
+   Priority: Medium (awareness flag, not urgent chase — see flags below)
+   Source threads: All Staff Group, Client Group (Ashish + 51 Sub Area)
+
+   ↳ SUBTASK 1: Ashish to make personal courtesy contact with 51 Sub Area CO or accounts section
+      Assigned to: Ashish (NOT Staff 1)
+      Status: Pending — incorrect escalation path detected (see flags)
+      Due: This week
+      Next step: Ashish to call the CO or accounts officer at 51 Sub Area directly — as a relationship-aware courtesy check-in, not a payment demand. Tone: "bas confirm karna tha, aapke end pe koi issue toh nahi" — not "payment abhi tak nahi aaya."
+
+   ↳ SUBTASK 2: Confirm signed delivery note / GRN / DO was received at time of delivery
+      Assigned to: Ashish / Staff 1 (internal check only — do not contact Army unit for this)
+      Status: Pending — not detected in threads
+      Note: Implicit task. Thread 2 shows "maal mil gaya" (12 Feb) — verbal/WhatsApp acknowledgement only. No mention of a signed delivery order, GRN, or formal receipt. For Army clients, a signed DO/GRN is required to support the payment claim. If this was not obtained, it may be contributing to the payment delay.
+      Next step: Check internally whether a signed delivery note or DO reference was collected at the time of delivery on or before 12 Feb. If not obtained, Ashish to request it during the courtesy call with the unit (framed as an internal accounts requirement, not a pressure tactic).
+
+   ↳ SUBTASK 3: Confirm invoice was formally submitted to unit accounts section (not just WhatsApp)
+      Assigned to: Ashish / Staff 1 (internal check only)
+      Status: Pending — not confirmed in threads
+      Note: Implicit task. Thread 2 shows invoice was sent via WhatsApp (12 Feb). Army unit payment processing typically requires a hard copy invoice submitted to the accounts/finance section — a WhatsApp-only submission may not have triggered the internal approval process at the unit end.
+      Next step: Ashish to confirm during courtesy contact whether the invoice reached the unit accounts section in the required format, and whether any additional documentation (e-way bill copy, GRN, etc.) is needed from Ashish's end to process the payment.
+
+   ↳ SUBTASK 4: GST reconciliation — February invoices
+      Status: Pending — not detected in threads
+      Note: Calendar-triggered implicit task. Thread date is 25 Mar — end of month and year-end. Invoice for this order was raised in February. GST reconciliation for February invoices (and all invoices raised in FY) should be confirmed complete before year-end.
+      Next step: Ashish / accounts to confirm this invoice (Rs 87,500 + GST) is correctly reflected in GSTR-1 / GSTR-3B for February. Reconcile against all other invoices raised in Feb before 31 Mar.
+
+   ↳ SUBTASK 5: Year-end accounts closure preparation
+      Status: Pending — not detected in threads
+      Note: Calendar-triggered implicit task. Thread date is 25 Mar — year-end. Annual accounts closure, outstanding receivables review, and stock-take are expected at this time and are almost never mentioned in WhatsApp.
+      Next step: Ashish to initiate year-end checklist — outstanding receivables (including this 87,500), stock-take, annual accounts preparation with CA/accountant before 31 Mar.
+
+   ↳ SUBTASK 6: End-of-month outstanding payment review — all clients
+      Status: Pending — not detected in threads
+      Note: Calendar-triggered implicit task. Thread date is 25 Mar. A review of all outstanding invoices across all clients (not just 51 Sub Area) is expected at month-end and year-end.
+      Next step: Ashish to run a full outstanding receivables report for all clients as of 25 Mar before month close. Prioritise any commercial client invoices that are genuinely overdue (Army client delays are normal; commercial client delays at 45+ days require separate escalation assessment).
+
+⚠️ FLAGS:
+
+   — INCORRECT ESCALATION PATH DETECTED (Action Required):
+     Staff 1 has been directed to "follow up" with 51 Sub Area on payment (All Staff Group, 10:05). This is an Army client. Staff should NOT contact the Army unit directly on payment matters. Ashish must intercept this immediately — confirm to Staff 1 that no direct contact with the unit on payment is to be made. Ashish will handle personally.
+
+   — 45-day overdue on Army client — within normal cycle, not an emergency:
+     45 days from invoice date (8 Feb) on an Army unit is within the expected 60–90 day payment cycle. This is an awareness flag, not an urgent collections situation. Tone of any contact must be courteous and relationship-preserving — not commercial collections framing.
+
+   — Invoice delivery method — WhatsApp only (unconfirmed):
+     Thread 2 shows invoice was sent via WhatsApp on 12 Feb. No confirmation that it was formally submitted to the unit accounts section in hard copy or required format. This is a potential blocker for payment processing at the unit end — Army internal approval processes may not be triggered by a WhatsApp message alone.
+
+   — Signed delivery note / DO not confirmed:
+     "Maal mil gaya" (12 Feb) is an informal WhatsApp acknowledgement — not a signed GRN or delivery order. If a formal signed receipt was not obtained, Ashish may lack the documentation required to formally support the payment claim.
+
+   — Item not identified in threads:
+     The goods delivered to 51 Sub Area are not named in either thread. Invoice amount is Rs 87,500. Item identity unknown — relevant for GST reconciliation and records.
+
+   — Original delivery and order history not in threads:
+     No thread evidence of enquiry, quote, order confirmation, or delivery logistics. Either these happened outside the provided threads, or were conducted verbally / in threads not shared. Delivery appears to have been completed before 12 Feb (client acknowledges receipt on 12 Feb).
+
+❓ AMBIGUOUS CORRELATIONS:
+   — None. Both threads clearly refer to the same transaction: a completed delivery to 51 Sub Area, invoice raised 8 Feb for Rs 87,500, payment outstanding as of 25 Mar.
+
+❓ OPEN QUESTION FOR ASHISH (human review required):
+   — What item was delivered to 51 Sub Area? (Needed for GST reconciliation and records.)
+   — Was a signed delivery note / DO collected at the time of delivery? (Critical for payment support documentation.)
+   — Was the invoice submitted to the unit accounts section formally, or only via WhatsApp?
+   — Has Staff 1 already contacted 51 Sub Area following the 10:05 message? If yes, Ashish to assess whether any damage control is needed before making his own courtesy call.
+```

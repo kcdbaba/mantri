@@ -1,0 +1,14 @@
+# Claude Code settings
+.claude/settings.local.json
+
+# Environment variables and secrets
+.env
+.env.local
+*.pem
+
+*.pyc
+__pycache__/
+.DS_Store
+logs/
+data/enriched/
+data/raw_chats/

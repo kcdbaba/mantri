@@ -1,0 +1,106 @@
+```
+UNIFIED TASK LIST — 24 Mar
+Threads processed: Client A Group, Client B Group
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📦 PARENT TASK 1: Tandoor Order — Client A
+   Entity: Client A (customer)
+   Item: Tandoor × 2
+   Status: In Progress — verbal commitment made, not yet confirmed
+   Due: 25 Mar (client requested delivery by "kal" from 24 Mar)
+   Priority: High
+   Source threads: Client A Group
+
+   ↳ SUBTASK 1: Source 2 tandoors — confirm availability and delivery by 25 Mar
+      Assigned to: Unassigned (no supplier thread present)
+      Status: Pending
+      Due: Today (24 Mar) — needs to be confirmed urgently to meet 25 Mar deadline
+      Next step: Contact supplier(s) to confirm availability of 2 units and delivery
+                 by 25 Mar. Post confirmation to Client A Group.
+
+   ↳ SUBTASK 2: Confirm order and delivery date with Client A
+      Assigned to: Ashish
+      Status: Pending — Ashish said "confirm karte hain" but no follow-up visible
+      Due: Today (24 Mar)
+      Next step: Once supplier confirms, formally confirm delivery date with
+                 Client A in the group.
+
+   ↳ SUBTASK 3: Prepare quotation / rate for Client A
+      Assigned to: Ashish / Staff
+      Status: Not started (no rate discussion visible in thread)
+      Due: Today (24 Mar)
+      Next step: Confirm whether rate was already agreed with Client A separately,
+                 or if a formal quote still needs to be sent.
+
+⚠️ FLAGS:
+   - No supplier thread present — it is unknown whether sourcing has been initiated
+     for this order. Ashish committed to confirming "today" but no supplier
+     coordination is visible.
+   - Delivery deadline is 25 Mar — only 1 day from order date. Sourcing and
+     logistics need to be confirmed immediately.
+   - Quantity is 2 units — confirm supplier can fulfil both in one delivery.
+   - No rate/quote visible in this thread — unclear if Client A has been quoted yet.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📦 PARENT TASK 2: Tandoor Order — Client B
+   Entity: Client B (customer)
+   Item: Tandoor × 1 (quantity assumed — "ek tandoor" stated)
+   Status: In Progress — rate to be sent, order not yet confirmed
+   Due: Not specified by client
+   Priority: Medium (no deadline stated)
+   Source threads: Client B Group
+
+   ↳ SUBTASK 1: Send rate / quotation to Client B
+      Assigned to: Ashish
+      Status: Pending — Ashish said "rate bhej raha hoon" but no rate
+              visible in thread yet
+      Due: Today (24 Mar) — commitment made in the same conversation
+      Next step: Confirm whether rate was sent after the last visible message.
+                 If not, send the rate to Client B Group immediately.
+
+   ↳ SUBTASK 2: Follow up for order confirmation from Client B
+      Assigned to: Ashish / Staff
+      Status: Not started — rate not yet confirmed, order not placed
+      Due: TBD (no deadline from client)
+      Next step: Once rate is sent, follow up with Client B for confirmation
+                 and ask for required delivery date.
+
+   ↳ SUBTASK 3: Source tandoor for Client B (post order confirmation)
+      Assigned to: Unassigned
+      Status: Not started — pending Client B confirmation
+      Due: TBD
+      Next step: Do not initiate sourcing until Client B confirms the order.
+                 Clarify delivery date requirement at confirmation stage.
+
+⚠️ FLAGS:
+   - Rate not visible in thread — unclear if Ashish has sent it yet.
+     Needs verification.
+   - No delivery date requested by Client B — must be asked at order
+     confirmation stage.
+   - No supplier thread present for this order.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❓ AMBIGUOUS CORRELATIONS (needs human review):
+
+   - KEPT SEPARATE (correct): Client A and Client B are both ordering
+     tandoors on the same day. These have been treated as TWO DISTINCT
+     ORDERS per operating rules. No evidence they are related.
+     Human should confirm this separation is correct.
+
+   - Supplier thread missing for BOTH orders: It is possible a single
+     supplier conversation covers both tandoor orders, but no such thread
+     was provided. If a supplier thread exists, it should be reviewed
+     to link it to the correct parent task(s).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 SUMMARY SNAPSHOT
+
+   Order                  | Item      | Qty | Due     | Status         | Priority
+   ───────────────────────|───────────|─────|─────────|────────────────|─────────
+   Tandoor — Client A     | Tandoor   |  2  | 25 Mar  | In Progress    | High
+   Tandoor — Client B     | Tandoor   |  1  | TBD     | Rate Pending   | Medium
+```

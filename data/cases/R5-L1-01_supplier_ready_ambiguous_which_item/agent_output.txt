@@ -1,0 +1,285 @@
+I'll process these two threads carefully before generating output.
+
+---
+
+## Pre-Output Analysis (Internal Reasoning — shown for transparency)
+
+**Step 1: What orders are present?**
+
+Thread 1 shows Ashish requesting rates for **two distinct items** — a Tandoor and an AC (1.5 ton) — from Supplier A in a single message. These are two separate products that would be delivered to a client (or clients). The thread does not name any client.
+
+Thread 2 confirms Staff 1 placed the order with Supplier A, but again no client is named.
+
+**Step 2: Are these one order or two?**
+
+Per the system instructions: *"A single WhatsApp thread may contain goods for multiple clients placed in one batch... That is still three parent tasks, not one. The unit of analysis is what needs to be delivered to each client independently."*
+
+Key question: Are the Tandoor and AC going to the **same client** or **different clients**?
+
+- Nothing in either thread names a client for either item.
+- Nothing in either thread links both items to the same client explicitly.
+- It is *possible* (and common in this business) that Ashish batched two separate client orders into one supplier message.
+- It is also possible both items are for the same client.
+
+**Decision**: I cannot resolve this from the text. Per instructions: *"Default to separation... When uncertain whether messages refer to one order or multiple distinct orders, create SEPARATE parent tasks and flag the uncertainty."*
+
+→ Create **two separate parent tasks**: one for the Tandoor, one for the AC. Flag client identity as unresolved for both.
+
+**Step 3: Supplier A's "maal ready hai" message (17 Mar 09:00)**
+
+This message says goods are ready but does **not specify which item** — Tandoor, AC, or both. Two items are outstanding from the same supplier. Per instructions: *"when a supplier message uses unqualified language ('maal ready hai') without naming the specific item or order, and multiple items or orders are outstanding from the same supplier, treat the signal as ambiguous."*
+
+→ "Maal ready hai" is **ambiguous** — applies to both parent tasks tentatively, but must be clarified before acting.
+
+**Step 4: Task type classification**
+
+Both items are standard equipment. No client named, so Army direct delivery (Type 3) cannot be confirmed — default to **Type 1: Standard Equipment Procurement**. Inter-state cannot be confirmed either — treating as local for now but flagging.
+
+**Step 5: Cadence implicit task check**
+
+Order was placed 14 Mar. Supplier says ready 17 Mar (3 days — within committed 3–4 day window). Current stage appears to be: goods ready at supplier, pending dispatch/collection.
+
+For Type 1, steps that should have occurred by now:
+- Step 1 (Enquiry logged) ✅ — Thread 1
+- Step 2 (Quote requested) ✅ — Thread 1
+- Step 3 (Quote received) ✅ — Thread 1, 11:30
+- Step 4 (Quote sent to client) — ❌ **Not detected in any thread**
+- Step 5 (Order confirmed by client) — ❌ **Not detected in any thread**
+- Step 6 (PO issued to supplier) — ❌ **Not clearly detected** — Staff 1 says "order place kar diya" but no formal PO reference
+- Step 8 (Delivery date committed) ✅ — 3–4 days per Supplier A
+- Step 9 (Goods dispatched) — ❌ Not yet (goods are ready but not dispatched)
+- Step 10 (Goods received) — ❌ Not yet
+
+Steps 4 and 5 are **overdue** relative to current stage (order was placed 14 Mar, goods are ready 17 Mar, but no client confirmation is visible). Step 6 is partially evidenced but informal. Steps 11–19 are future.
+
+**Step 6: Thread count and information gaps**
+
+Only 2 threads provided. No client thread. No 1:1 transporter chat. This itself is a flag — if the client confirmed this order, that confirmation is not visible in these threads.
+
+---
+
+## OUTPUT
+
+```
+UNIFIED TASK LIST — 17 Mar
+Threads processed: Supplier Group (Ashish + Staff 1 + Supplier A), All Staff Group
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📦 PARENT TASK 1: Tandoor Procurement
+   Entity: Supplier A (supplier) | Client — unidentified (needs human review)
+   Item: Tandoor × 1
+   Status: In Progress — goods reportedly ready at supplier; dispatch not confirmed
+   Due: Not confirmed (supplier committed 3–4 days from 14 Mar → expected by 17–18 Mar)
+   Priority: High (supplier is prompting for dispatch instruction; no response visible)
+   Source threads: Supplier Group, All Staff Group
+
+   ↳ SUBTASK 1: Clarify which item(s) "maal ready hai" refers to
+      Assigned to: Staff 1 / Ashish
+      Status: Pending — ambiguous signal
+      Due: Immediately
+      Next step: Contact Supplier A to confirm whether "maal ready hai" (17 Mar, 09:00)
+      refers to the Tandoor, the AC, or both — before issuing any dispatch instruction.
+      Do not assume it covers both items.
+
+   ↳ SUBTASK 2: Identify the client for this order
+      Assigned to: Ashish
+      Status: Pending — client not named in any thread
+      Due: Immediately
+      Next step: Confirm internally which client this Tandoor is for, so delivery address,
+      timeline, and invoicing can proceed correctly.
+
+   ↳ SUBTASK 3: Issue dispatch instruction to Supplier A (once subtasks 1 & 2 resolved)
+      Assigned to: Staff 1 / Ashish
+      Status: Blocked — pending clarification on items and client
+      Due: Today (supplier is waiting)
+      Next step: Once item confirmation and client identity are resolved, respond to
+      Supplier A in the group with dispatch instruction including delivery address
+      and target delivery date.
+
+   ↳ SUBTASK 4: Quote sent to client — IMPLICIT TASK
+      Status: Pending — not detected in any thread
+      Note: Expected at this stage for Type 1 (Standard Equipment Procurement) orders.
+      Order was placed with supplier 14 Mar; no message in any thread shows the
+      quote (38,000 + GST for Tandoor) being communicated to a client.
+      Next step: Confirm whether a quote was sent to the client through a channel
+      not captured here (e.g., a client WhatsApp group or 1:1). If not sent, send
+      immediately — goods are ready and dispatch is imminent.
+
+   ↳ SUBTASK 5: Client order confirmation — IMPLICIT TASK
+      Status: Pending — not detected in any thread
+      Note: Expected at this stage for Type 1 orders. No client confirmation of the
+      Tandoor order is visible in any thread. Order was placed with Supplier A on
+      14 Mar (Staff 1: "order place kar diya") — but whether this followed explicit
+      client sign-off is not confirmed.
+      Next step: Verify whether the client formally confirmed this order before
+      14 Mar. If confirmation exists in another thread (e.g., client group), no
+      action needed — but that thread should be added to the next monitoring cycle.
+      If not confirmed, hold dispatch until client confirms.
+
+   ↳ SUBTASK 6: Formal PO to Supplier A — IMPLICIT TASK
+      Status: Unconfirmed — partially evidenced
+      Note: Staff 1 said "order place kar diya" (14 Mar 12:30) but no PO number,
+      written order, or formal confirmation is visible. For Type 1 orders, a PO
+      should be issued before payment or dispatch.
+      Next step: Confirm whether a written PO was shared with Supplier A. If not,
+      issue one before dispatch — especially if advance payment or credit terms
+      are involved.
+
+   ↳ SUBTASK 7: Arrange transport / collection from Supplier A
+      Assigned to: Staff 1
+      Status: Pending
+      Due: Today / tomorrow
+      Next step: Once dispatch instruction is issued, confirm transport arrangements
+      — whether Supplier A delivers or whether collection from their end is needed.
+      Transporter booking should be logged in the group, not managed in a 1:1 chat.
+
+⚠️ FLAGS — PARENT TASK 1 (Tandoor):
+   - "Maal ready hai" (17 Mar 09:00) does not specify Tandoor vs AC — ambiguous;
+     must be clarified before dispatch instruction
+   - No client named in any thread — client identity is a hard dependency for
+     delivery address, invoicing, and payment tracking
+   - No client quote or client confirmation visible in these threads — either
+     happened in an unshared thread, or was skipped
+   - Supplier A message went unanswered for the duration of the captured threads —
+     supplier is waiting for a dispatch instruction with no visible response
+   - If transport is being coordinated in a 1:1 chat (Ashish-transporter or
+     Staff 1-transporter), that information is not reflected in either group thread
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📦 PARENT TASK 2: AC Procurement
+   Entity: Supplier A (supplier) | Client — unidentified (needs human review)
+   Item: AC × 1 (1.5 ton)
+   Status: In Progress — goods reportedly ready at supplier; dispatch not confirmed
+   Due: Not confirmed (supplier committed 3–4 days from 14 Mar → expected by 17–18 Mar)
+   Priority: High (same supplier prompt; same ambiguity)
+   Source threads: Supplier Group, All Staff Group
+
+   ↳ SUBTASK 1: Clarify which item(s) "maal ready hai" refers to
+      Assigned to: Staff 1 / Ashish
+      Status: Pending — ambiguous signal
+      Due: Immediately
+      Next step: Same clarification call as Parent Task 1 Subtask 1 — this can be
+      resolved in one contact with Supplier A. Confirm whether AC is included in
+      the "ready" status or still pending.
+
+   ↳ SUBTASK 2: Identify the client for this order
+      Assigned to: Ashish
+      Status: Pending — client not named in any thread
+      Due: Immediately
+      Next step: Confirm which client the AC is for. This may be the same client
+      as the Tandoor (in which case Parent Tasks 1 and 2 may be unified — see
+      Ambiguous Correlations below) or a separate client entirely.
+
+   ↳ SUBTASK 3: Issue dispatch instruction to Supplier A (once subtasks 1 & 2 resolved)
+      Assigned to: Staff 1 / Ashish
+      Status: Blocked — pending clarification
+      Due: Today
+      Next step: Same as Parent Task 1 Subtask 3 — dispatch instructions for both
+      items can be issued in one message if both are confirmed ready and going to
+      the same address. If different clients / addresses, issue separately.
+
+   ↳ SUBTASK 4: Quote sent to client — IMPLICIT TASK
+      Status: Pending — not detected in any thread
+      Note: Expected at this stage for Type 1 orders. No message shows the AC quote
+      (42,000 + GST) being sent to any client.
+      Next step: Same as Parent Task 1 Subtask 4 — verify whether this happened
+      in an unshared thread, or action immediately if not.
+
+   ↳ SUBTASK 5: Client order confirmation — IMPLICIT TASK
+      Status: Pending — not detected in any thread
+      Note: Same gap as Parent Task 1. No client confirmation of AC order is visible.
+      Next step: Same as Parent Task 1 Subtask 5.
+
+   ↳ SUBTASK 6: Formal PO to Supplier A — IMPLICIT TASK
+      Status: Unconfirmed — partially evidenced
+      Note: Same as Parent Task 1 — "order place kar diya" covers both items but
+      no written PO is visible for either.
+      Next step: Same as Parent Task 1 Subtask 6.
+
+   ↳ SUBTASK 7: Arrange transport / collection from Supplier A
+      Assigned to: Staff 1
+      Status: Pending
+      Due: Today / tomorrow
+      Next step: Same logistics consideration as Parent Task 1. If both items are
+      going to the same client and location, a single vehicle / trip may suffice —
+      confirm this once client identities are resolved.
+
+   ↳ SUBTASK 8: AC installation coordination — IMPLICIT TASK
+      Status: Not yet due — flag for planning
+      Note: ACs typically require installation at the client's site. This is not
+      yet an overdue step, but should be planned before delivery is confirmed —
+      especially for Army/cantonment clients where site access and coordination
+      lead time can be significant.
+      Next step: Once client is identified, confirm whether installation is in scope
+      and whether a technician needs to be arranged.
+
+⚠️ FLAGS — PARENT TASK 2 (AC):
+   - Same "maal ready hai" ambiguity as Parent Task 1 — applies to both
+   - No client named — same dependency gap
+   - No client quote or confirmation visible
+   - AC installation scope not discussed anywhere — may be an oversight
+   - Supplier A unanswered — same escalation risk as Parent Task 1
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❓ AMBIGUOUS CORRELATIONS (needs human review):
+
+1. TANDOOR + AC: SAME CLIENT OR DIFFERENT CLIENTS?
+   Ashish requested both items in a single message to Supplier A (14 Mar 10:15).
+   This could mean:
+   (a) Both items are for the same client — one combined order, two items
+   (b) Two separate client orders batched into one supplier message (common practice
+       per business context)
+   No client thread, no client name, and no delivery address is present in either
+   thread to resolve this.
+   → Kept as two separate parent tasks per instructions.
+   → If Ashish confirms both items are for the same client, these two parent tasks
+     should be merged into one, with a single delivery, single invoice, and single
+     payment tracking thread.
+   → If they are for different clients, they must remain separate — different
+     delivery addresses, potentially different delivery timelines, separate invoices.
+   ACTION REQUIRED: Ashish to confirm client allocation for both items before
+   dispatch instruction is issued.
+
+2. "MAAL READY HAI" — WHICH ITEM(S)?
+   Supplier A's 17 Mar message does not specify whether Tandoor, AC, or both are
+   ready. Both items were ordered together with a 3–4 day delivery commitment.
+   Treating as ambiguous — could be either or both.
+   ACTION REQUIRED: Resolve in the same clarification call recommended in
+   Subtask 1 of both parent tasks.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️ GLOBAL FLAGS (across all threads):
+
+1. MISSING THREAD — CLIENT COMMUNICATION NOT VISIBLE
+   There is no client group or client 1:1 thread in the data provided. For two
+   items totalling ₹80,000+ (before GST), there should be a thread showing the
+   client enquiry, quote sent, and client confirmation. Either:
+   (a) This happened in a thread not shared for this analysis, or
+   (b) Client communication is happening verbally or informally and is not logged
+   This is a significant operational risk — goods are ready for dispatch and no
+   written client confirmation is visible anywhere.
+
+2. SUPPLIER A UNANSWERED — ESCALATION RISK
+   Supplier A asked "kab bhejna hai?" at 09:00 on 17 Mar. No response is visible
+   in either thread. Supplier is waiting for a dispatch instruction. Delay in
+   responding risks the delivery slot or supplier prioritising another customer.
+
+3. GST AMOUNTS NOT CONFIRMED
+   Rates given are "38,000 + GST" and "42,000 + GST" but GST percentage is not
+   specified. For client quoting and invoicing, the applicable GST rate must be
+   confirmed (likely 18% for both, but not stated).
+
+4. PAYMENT TERMS NOT DISCUSSED
+   No mention of advance payment, credit terms, or payment schedule with
+   Supplier A. For an order of this size, payment terms should be in writing
+   before dispatch.
+
+5. DELIVERY CHARGES NOT MENTIONED
+   Supplier A gave item rates but did not mention delivery charges. Whether
+   delivery is included or separate is not confirmed. This affects the final
+   quote to the client.
+```

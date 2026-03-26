@@ -1,0 +1,58 @@
+```
+UNIFIED TASK LIST — 22 Mar
+Threads processed: Client A Group, All Staff Group, Supplier Group
+
+📦 PARENT TASK: Order — Client A (Supplier B fulfillment)
+   Entity: Client A (customer), Supplier B (supplier), Staff 1 (staff)
+   Item: Not specified — order amount ₹45,000
+   Status: Blocked — Client A payment unconfirmed; Supplier B advance on hold
+   Due: Today (payment expected today; advance to Supplier B contingent on receipt)
+   Priority: High
+   Source threads: Client A Group, All Staff Group, Supplier Group
+
+   ↳ SUBTASK 1: Verify whether Client A's UPI payment of ₹45,000 has been received
+      Assigned to: Staff 1 (instructed by Ashish at 16:21)
+      Status: Blocked — payment claimed at 13:55 but not confirmed in account as of 16:20
+      Due: Today — urgent
+      Next step: Check the UPI account directly for the incoming transaction. If not found, ask Client A to share the UPI transaction reference/screenshot so the exact UTR can be traced with the bank.
+
+   ↳ SUBTASK 2: Inform Supplier B once payment is confirmed and release advance
+      Assigned to: Ashish
+      Status: Pending — blocked by Subtask 1
+      Due: Today (per commitment to Supplier B at 11:00)
+      Next step: Once Client A's payment is confirmed in the account, notify Supplier B in the Supplier Group and arrange the advance payment immediately, as committed.
+
+⚠️ FLAGS:
+   - Payment gap: Client A claims UPI payment sent at 13:55, but Ashish reports it not received as of 16:20 — 85-minute discrepancy unresolved. Possible causes: wrong UPI ID entered by client, bank processing delay, or transaction failure on client side.
+   - Staff 1 responded "ok sir check karte hain" at 14:10 in Client A Group but did NOT post any update to the All Staff Group or Client A Group after checking — either the check was not done, or the result was not communicated. This is an information gap between Thread 1 and Thread 2.
+   - Supplier B is waiting on a commitment Ashish made (advance after payment receipt). Every hour of delay risks Supplier B deprioritising this order.
+   - Item name is not mentioned in any thread — order is identified only by client name and amount. If multiple orders are active with Client A or Supplier B, this creates correlation risk.
+
+❓ AMBIGUOUS CORRELATIONS:
+   - The ₹45,000 amount in Thread 1 (Client A's payment) and the ₹45,000 implied as the order value in Thread 3 (Supplier B's order) are consistent — treated as the same order. Assumption is soft; no item name is present in either thread to confirm. Flag for human verification: is there only one active order with Client A at this value, or could there be multiple?
+
+---
+
+📋 IMPLICIT SUBTASK AUDIT
+
+   Parent task type identified: TYPE 1 (Standard Equipment Procurement) — assumed, based on supplier involvement and advance payment structure. Could be TYPE 3 (Army Direct Delivery) if Client A is an Army unit; confirm.
+
+   Current stage detected: Step 5–7 range (order confirmed, payment in transit, advance to supplier pending)
+
+   Expected steps at or before this stage with no message evidence:
+
+   ↳ SUBTASK 3: Quote sent to Client A — implicit task
+      Status: Pending — not detected in threads
+      Note: Order is confirmed and payment sent by client, implying a quote was issued and accepted. However, no message evidence of quote being sent or client confirming acceptance exists in these threads. If the quote was communicated outside these threads (e.g., a separate 1:1 with Client A), it should be moved to the group for documentation.
+      Next step: Confirm in the Client A Group that the quoted amount, item, and terms are on record in writing.
+
+   ↳ SUBTASK 4: PO issued to Supplier B — implicit task
+      Status: Pending — not detected in threads
+      Note: Supplier B has been told the order is confirmed but no purchase order, item specification, or quantity is visible in Thread 3. Verbal confirmation only.
+      Next step: Issue a written PO to Supplier B (in the Supplier Group or by message) specifying item, quantity, agreed rate, and delivery timeline before releasing the advance.
+
+   ↳ SUBTASK 5: Delivery date committed by Supplier B — implicit task
+      Status: Pending — not detected in threads
+      Note: Supplier B said "payment aate hi bata dena" — no delivery date has been discussed or committed yet. Order cannot be tracked for on-time delivery without this.
+      Next step: Once advance is released, ask Supplier B in the group to confirm a specific delivery date, and log it.
+```

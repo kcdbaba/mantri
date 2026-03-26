@@ -1,0 +1,11 @@
+=== THREAD 1: Client A Group (Ashish + Staff 1 + Client A) ===
+[22 Mar 13:55] Client A: bhai payment bhej diya UPI se abhi, 45000 — check kar lo
+[22 Mar 14:10] Staff 1: ok sir check karte hain
+
+=== THREAD 2: All Staff Group ===
+[22 Mar 16:20] Ashish: Client A ka payment abhi tak account mein nahi aaya
+[22 Mar 16:21] Ashish: Staff 1 follow up karo
+
+=== THREAD 3: Supplier Group (Ashish + Supplier B) ===
+[22 Mar 11:00] Ashish: bhai Client A ka order confirm ho gaya, aaj payment aane ke baad aapko advance denge
+[22 Mar 11:15] Supplier B: theek hai, payment aate hi bata dena

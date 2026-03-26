@@ -1,0 +1,182 @@
+```
+UNIFIED TASK LIST — 20 Mar
+Threads processed: Supplier Group (Ashish + Malerkotla Supplier), All Staff Group
+
+────────────────────────────────────────────────────────────────────────────────
+
+📦 PARENT TASK: Tandoor Procurement — Client UNIDENTIFIED
+   Entity: Malerkotla Supplier (supplier); end client unknown
+   Item: Tandoor — 1 nos, heavy duty
+   Status: In Progress — order confirmed, goods in transit (or pre-dispatch)
+   Due: 23 Mar (supplier committed 3 days from 20 Mar)
+   Priority: High — transit window is live; arrival date is imminent
+   Source threads: Supplier Group, All Staff Group
+
+   ↳ SUBTASK 1: Confirm dispatch status with Malerkotla Supplier
+      Assigned to: Staff 1 (by Ashish's 12:00 instruction) / Ashish
+      Status: Pending — no dispatch confirmation seen in any thread
+      Due: 20 Mar (same day — order was confirmed at 11:00, dispatch status should follow)
+      Next step: Ask Malerkotla Supplier in the Supplier Group thread to confirm
+      whether the tandoor has actually been dispatched — get transporter name,
+      vehicle number, and LR (lorry receipt) number. Do not assume dispatch has
+      happened just because the supplier said "3 din mein pahunch jayega."
+
+   ↳ SUBTASK 2: Get transporter details and track transit
+      Assigned to: Staff 1
+      Status: Pending — no transporter mentioned anywhere
+      Due: Once dispatch confirmed (expected same day or 21 Mar)
+      Next step: Once LR number received, identify the transporter and set up a
+      transit follow-up schedule. Malerkotla → Guwahati is typically 3–4 days;
+      check in with transporter at midpoint (21–22 Mar) to confirm no delays.
+
+   ↳ SUBTASK 3: Confirm arrival and receive goods at Guwahati
+      Assigned to: Staff 1
+      Status: Pending
+      Due: 23 Mar
+      Next step: On expected arrival date (23 Mar), confirm with transporter that
+      vehicle is on schedule. Arrange receiving at Guwahati end — confirm who
+      will be present and where goods will be offloaded.
+
+   ↳ SUBTASK 4: Transit damage inspection on arrival
+      Assigned to: Staff 1
+      Status: Pending — implicit task
+      Note: Expected at this stage for inter-state procurement. No message
+      evidence found. Transit damage risk is higher for heavy equipment over
+      long distances.
+      Next step: On receipt, inspect tandoor for transit damage before signing
+      off on the delivery. Document any damage photographically before accepting.
+
+   ↳ SUBTASK 5: E-way bill / transport documentation — implicit task
+      Assigned to: Ashish / Malerkotla Supplier
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Type 5 (Inter-State Procurement). E-way
+      bill is mandatory for inter-state goods movement. No mention in any thread.
+      Next step: Confirm with Malerkotla Supplier that e-way bill has been
+      generated and will accompany the consignment. Obtain a copy before or at
+      the time of dispatch confirmation.
+
+   ↳ SUBTASK 6: Identify end client and confirm delivery commitment
+      Assigned to: Ashish
+      Status: Pending — implicit task
+      Note: No client is named in any thread. The tandoor has been ordered, but
+      it is unclear whether this is for a confirmed client order or for stock.
+      This affects delivery planning, invoicing, and urgency calibration.
+      Next step: Ashish to clarify internally: is this order against a specific
+      client's confirmed requirement, or is it a stock purchase? If client-
+      specific, the client parent task should be created and linked.
+
+   ↳ SUBTASK 7: Arrange delivery to client (post-receipt)
+      Assigned to: Staff 1
+      Status: Pending — blocked by Subtask 6 (client unknown)
+      Due: After 23 Mar
+      Next step: Once client is confirmed (Subtask 6), plan last-mile delivery
+      from Guwahati receiving point to client. If Army direct delivery, gate
+      pass and receiving officer coordination will also be required.
+
+   ↳ SUBTASK 8: Inspection and sorting — implicit task
+      Assigned to: Staff 1
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for equipment orders. No message evidence
+      found. Should happen immediately after goods received (post-Subtask 4).
+      Next step: After transit damage inspection, do a full functional/quality
+      check and sort/pack appropriately before client delivery.
+
+   ↳ SUBTASK 9: Pre-dispatch checklist — implicit task
+      Assigned to: Staff 1
+      Status: Pending — not detected in threads
+      Note: Expected before client delivery for all equipment orders. Rarely
+      appears in WhatsApp threads.
+      Next step: Complete pre-dispatch checklist before goods leave Guwahati
+      for client. This step should be confirmed in writing in the staff group.
+
+   ↳ SUBTASK 10: Invoice raised (post-delivery)
+      Assigned to: Ashish / Staff 1
+      Status: Pending
+      Due: After client delivery
+      Next step: Raise invoice to client after delivery confirmation. If Army
+      direct delivery, invoice must include DO/GRN reference.
+
+   ↳ SUBTASK 11: Payment follow-up — implicit task
+      Assigned to: Staff 1 / Ashish
+      Status: Pending — not detected in threads
+      Note: Expected 30 days post-invoice for all order types. Flagged as a
+      cadence task — most commonly missed step in the process.
+      Next step: Set a reminder to follow up on payment 30 days after invoice
+      is raised.
+
+────────────────────────────────────────────────────────────────────────────────
+
+⚠️ FLAGS:
+
+   1. CLIENT NOT IDENTIFIED — No client is named in any thread. It is unknown
+      whether this tandoor is destined for a specific Army unit, a private
+      client, or Ashish's stock. This is the most critical missing piece of
+      information. All downstream steps (delivery address, gate pass, invoice
+      recipient, payment follow-up) are blocked or undefined until this is
+      resolved.
+
+   2. NO DISPATCH CONFIRMATION — Supplier said "3 din mein pahunch jayega" but
+      there is no subsequent message confirming actual dispatch, LR number, or
+      transporter name. "Ok sir" from supplier is a soft acknowledgement, not a
+      dispatch confirmation. Do not assume goods are in transit.
+
+   3. NO TRANSPORTER DETAILS — For an inter-state consignment (Malerkotla →
+      Guwahati), the transporter name, vehicle number, and LR number are
+      essential for transit tracking. None present in any thread.
+
+   4. E-WAY BILL NOT MENTIONED — Mandatory for inter-state goods movement above
+      threshold value. No evidence this has been arranged or confirmed.
+
+   5. STAFF 1 ACKNOWLEDGED BUT NO ACTION CONFIRMED — Staff 1's response
+      ("ok sir, noted") at 12:05 is a passive acknowledgement. There is no
+      message showing Staff 1 has actually followed up with the supplier or
+      transporter. This pattern ("ok sir" without visible follow-through) is a
+      known operational gap.
+
+   6. TIGHT TIMELINE — If arrival is 23 Mar, and inspection + delivery
+      preparation + client delivery all need to happen post-arrival, there is
+      no buffer built into any thread. Any transit delay pushes the entire
+      delivery timeline.
+
+   7. PRICE / PAYMENT TERMS NOT VISIBLE — No rate, total value, GST, or advance
+      payment terms mentioned in any thread. Either discussed elsewhere (not
+      provided) or not yet agreed. This needs to be in writing before goods
+      arrive.
+
+   8. INFORMATION GAP — All substantive detail is in the Supplier Group (1:1
+      effectively). Staff 1 received only the summary ("tandoor aa raha hai,
+      23 March tak") — not the supplier's exact commitment, no transporter info,
+      no documentation status. If Ashish is unreachable on 23 Mar, Staff 1 has
+      insufficient information to manage receipt independently.
+
+────────────────────────────────────────────────────────────────────────────────
+
+❓ AMBIGUOUS CORRELATIONS (needs human review):
+
+   1. CLIENT IDENTITY — UNRESOLVED
+      The tandoor order in Thread 1 (Supplier Group) is not linked to any named
+      client in either thread. It is possible this is:
+      (a) A confirmed order for a specific Army client, discussed separately in
+          a client group thread not provided here;
+      (b) A stock purchase with no single client assigned yet;
+      (c) Part of a larger multi-item order for a client, of which only the
+          tandoor component appears here.
+      Cannot determine from available threads. Human input required before
+      delivery planning begins.
+
+   2. ORDER TYPE CLASSIFICATION — TENTATIVE
+      This has been classified as TYPE 5 (Inter-State Procurement) based on
+      "Malerkotla" being an out-of-state supplier. If the end client is an
+      Army unit (cantonment), TYPE 3 (Army Direct Delivery) steps will also
+      apply post-receipt — specifically gate pass, receiving officer
+      confirmation, DO/GRN. This dual classification should be confirmed once
+      client identity is resolved.
+
+   3. "3 DIN MEIN PAHUNCH JAYEGA" — AMBIGUITY
+      It is unclear whether the supplier means 3 calendar days from order
+      confirmation (i.e., goods leave Malerkotla today and arrive Guwahati by
+      23 Mar), or 3 days from dispatch (which may not have happened yet). These
+      are meaningfully different timelines. The 23 Mar arrival date in Ashish's
+      staff message assumes the first interpretation. This should be explicitly
+      confirmed with the supplier.
+```

@@ -1,0 +1,115 @@
+# Running the prompt against your sample...
+
+---
+
+```
+UNIFIED TASK LIST — 24 Mar
+Threads processed: Client Group, Supplier Group, All Staff Group
+
+📦 PARENT TASK: Tandoor Order — Client (unidentified)
+   Entity: Client — unidentified (customer); S. Sharma & Co. / "Sharma ji" 
+           (supplier) [see entity note below]
+   Item: Tandoor
+   Status: In Progress — delivery confirmed for 25 Mar
+   Due: 25 Mar
+   Priority: High
+   Source threads: Client Group, Supplier Group, All Staff Group
+
+   ↳ SUBTASK 1: Delivery confirmation — Supplier to deliver by 25 Mar
+      Assigned to: Staff 1
+      Status: Completed — confirmed verbally in Supplier Group (10:05)
+      Due: 25 Mar
+      Next step: Ensure written confirmation is on record in Supplier Group 
+      (already present); no further action needed on this subtask unless 
+      delivery does not arrive by morning of 25 Mar.
+
+   ↳ SUBTASK 2: Packaging preparation
+      Assigned to: Staff 2
+      Status: In Progress — Staff 2 has flagged this to all-staff group
+      Due: Before goods arrive on 25 Mar
+      Next step: Staff 2 (or designated staff) to confirm packaging materials 
+      are ready before close of business 24 Mar. No confirmation of readiness 
+      has been posted yet — this should be verified.
+
+   ↳ SUBTASK 3: Delivery update to Client
+      Assigned to: Ashish / Staff 1
+      Status: Pending
+      Due: 24 Mar (or latest by morning 25 Mar)
+      Next step: Once packaging is confirmed ready, update the Client Group 
+      with the confirmed delivery date (25 Mar) so client is informed and 
+      can make arrangements on their end.
+
+⚠️ FLAGS:
+   - Client identity not captured in any thread — Client Group shows only 
+     Ashish's message with no client name or order reference number. 
+     If multiple client orders are active, this task cannot be reliably 
+     assigned to the correct client without human confirmation.
+
+   - Packaging readiness not yet confirmed — Staff 2 has flagged the 
+     requirement but no one has acknowledged or confirmed materials are 
+     actually ready.
+
+   - No inspection subtask visible — standard process includes inspection 
+     before packaging. No message in any thread references inspection. 
+     Either it is planned but not yet discussed, or it has been skipped 
+     inadvertently.
+
+   - No invoice/payment thread detected — downstream steps (invoice 
+     generation, payment collection) not yet in motion. May be premature 
+     at this stage but worth monitoring.
+
+   - Delivery logistics not confirmed — no transporter or vehicle 
+     mentioned in any thread. Unknown whether last-mile delivery from 
+     supplier to Ashish's premises, or directly to client, has been 
+     arranged.
+
+❓ AMBIGUOUS CORRELATIONS (needs human review):
+
+   - ENTITY RESOLUTION: "Sharma ji" (Supplier Group, Staff 1, 10:00) and 
+     "S. Sharma & Co." (All Staff Group, Staff 2, 15:00) — tentatively 
+     merged as the same supplier entity based on consistent context 
+     (same item, same date, same delivery timeline, no contradicting 
+     signals). However, "Sharma ji" could refer to an individual contact 
+     at a different firm, and S. Sharma & Co. is a registered business 
+     name. Human confirmation recommended: is "Sharma ji" the contact 
+     person at S. Sharma & Co., or a different supplier entirely?
+
+   - THREAD COVERAGE: Client Group contains only one message (Ashish's 
+     instruction to confirm delivery). No client messages are visible. 
+     It is unclear whether this is a complete export of the thread or 
+     whether earlier context (enquiry, quotation, order confirmation) 
+     exists but was not included. If earlier context exists, 
+     additional parent tasks (e.g., Quotation, Order Confirmation) 
+     may be missing from this list.
+```
+
+---
+
+## Meta-evaluation of this sample
+
+| Check | Result |
+|---|---|
+| Tasks identified across all 3 threads | ✅ All 3 threads used |
+| Cross-thread correlation (same order unified) | ✅ Unified correctly |
+| Hierarchy correct | ✅ 1 parent, 3 subtasks |
+| Entity resolution flagged (not silently merged) | ✅ Sharma ji / S. Sharma & Co. flagged |
+| Ambiguous client flagged | ✅ |
+| Information gaps flagged (inspection, transport, packaging confirmation) | ✅ |
+| No hallucinated details | ✅ |
+
+---
+
+## What this sample tests well
+
+- **Alias resolution** — the Sharma ji / S. Sharma & Co. case is a realistic Hinglish pattern and the agent handled it correctly: tentative merge with explicit flag, not a silent assumption and not a paralysing split.
+
+## What this sample doesn't stress-test yet
+
+To hit the harder scenarios in your testing list, you'd want to add:
+
+- **A second active order** in the same threads (same item, different client) — to test whether the agent separates them or conflates
+- **A 1:1 Staff–Transporter chat** where information doesn't reach the group — to test gap detection
+- **An "uska maal" reference** with no explicit name — to test context-based resolution
+- **A status conflict** (one thread says delivered, another still chasing)
+
+Want me to generate a harder multi-order test scenario, or run your next real sample?

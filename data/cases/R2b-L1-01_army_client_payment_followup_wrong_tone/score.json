@@ -1,0 +1,44 @@
+{
+  "verdict": "PASS",
+  "overall_score": 95,
+  "dimensions": {
+    "task_recall": {
+      "score": 98,
+      "notes": "All core tasks are identified with exceptional completeness. The primary payment follow-up task is captured accurately (Rs 87,500, 45 days outstanding, 51 Sub Area). Beyond the minimum expected output, the agent correctly identifies the incorrect escalation path (Staff 1 being directed to follow up), invoice submission method concern, missing GRN/signed delivery note, GST reconciliation, and year-end accounts closure. No meaningful task is missed."
+    },
+    "entity_accuracy": null,
+    "cross_thread_correlation": null,
+    "next_step_quality": {
+      "score": 97,
+      "notes": "Next steps are highly specific, actionable, and relationship-aware. Subtask 1 correctly assigns the follow-up to Ashish personally (not staff), provides explicit tone guidance including a sample phrase in appropriate Hinglish ('bas confirm karna tha, aapke end pe koi issue toh nahi'), and frames it as a courtesy check-in rather than a collections demand. The agent also correctly flags the urgent need for Ashish to intercept Staff 1's pending follow-up action. Additional subtasks on invoice format, GRN, and GST are all actionable with clear owners and framing guidance."
+    },
+    "implicit_task_detection": {
+      "score": 95,
+      "notes": "Excellent implicit task detection across multiple layers. The agent detects: (1) the incorrect escalation path implied by Staff 1's directive that was never explicitly flagged as a problem; (2) the invoice-via-WhatsApp issue implying possible non-triggering of Army internal payment approval; (3) the missing signed GRN/DO implied by informal 'maal mil gaya' acknowledgement; (4) GST reconciliation implied by the February invoice date and March 25 thread date; (5) year-end accounts closure implied by the calendar date. All are grounded in reasonable operational inference rather than speculation."
+    },
+    "ambiguity_flagging": null
+  },
+  "pass_criteria_met": true,
+  "passes": [
+    "Correctly identifies 51 Sub Area as an Army client requiring relationship-aware handling",
+    "Explicitly recommends Ashish make personal contact rather than staff-driven follow-up",
+    "Explicitly prohibits standard payment chase language and provides correct tone framing",
+    "Flags that 45-day delay is within normal Army payment cycle (60-90 days) — not an emergency",
+    "Detects and urgently flags the incorrect escalation where Staff 1 was directed to follow up with the Army unit on payment",
+    "Identifies implicit documentation risks (no signed GRN, WhatsApp-only invoice submission)",
+    "Provides actionable next steps with appropriate framing for each subtask",
+    "Raises open questions for Ashish covering all key unknowns without overstepping"
+  ],
+  "failures": [
+    "Minor: The item delivered is noted as unknown — this is correctly flagged as a gap, but the agent could have noted this does not block the follow-up action (low impact)",
+    "Minor: Year-end tasks (Subtasks 4-6) are somewhat peripheral to the core case scenario and could distract from the primary action items, though they are operationally valid"
+  ],
+  "notes": "This is an exemplary output. The agent fully meets all pass criteria: it recommends a relationship-aware approach, assigns the follow-up to Ashish personally, explicitly avoids aggressive payment chase framing, and provides appropriate tone guidance. Beyond the minimum criteria, the agent adds high-value implicit task detection — particularly the Staff 1 escalation interception, which is arguably the most time-sensitive action item and was not explicitly stated in the threads. The tone guidance in Subtask 1 (sample Hinglish phrase) is a practical operational touch that demonstrates genuine understanding of the client relationship context. The output is thorough without being speculative, and flags are clearly separated from confirmed tasks.",
+  "case_id": "R2b-L1-01",
+  "case_name": "army_client_payment_followup_wrong_tone",
+  "framework": "R2",
+  "level": "L1",
+  "evaluated_at": "2026-03-26T06:30:00",
+  "model_used": "claude-sonnet-4-6",
+  "eval_model": "claude-sonnet-4-6"
+}

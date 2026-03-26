@@ -1,0 +1,50 @@
+{
+  "verdict": "PASS",
+  "overall_score": 88,
+  "dimensions": {
+    "task_recall": {
+      "score": null,
+      "notes": null
+    },
+    "entity_accuracy": {
+      "score": 90,
+      "notes": "Correctly unified 'Sharma ji' and 'Sharma bhai' into a single supplier entity. The entity label 'Supplier (Sharma ji/bhai)' clearly represents one record, not two. Minor issue: the supplier's full name or primary canonical name could be more consistently applied across subtasks (Subtask 1 only uses 'Sharma ji')."
+    },
+    "cross_thread_correlation": {
+      "score": 80,
+      "notes": "Only one thread (Supplier Group) was present in this case, so true cross-thread correlation was not tested here. Within the single thread, messages were correctly unified into one parent task. Score reflects competent single-thread handling rather than multi-thread merging."
+    },
+    "implicit_task_detection": {
+      "score": null,
+      "notes": null
+    },
+    "next_step_quality": {
+      "score": null,
+      "notes": null
+    },
+    "ambiguity_flagging": {
+      "score": 92,
+      "notes": "Explicitly called out in the AMBIGUOUS CORRELATIONS section that 'Sharma ji' and 'Sharma bhai' are the same entity, preempting any confusion. Also flagged the unidentified final client and the pending exact delivery time. The unidentified client flag is a good catch — proactive human review requested where genuine uncertainty exists."
+    }
+  },
+  "pass_criteria_met": true,
+  "passes": [
+    "Single unified supplier entity created for 'Sharma ji/bhai' — no duplicate records.",
+    "Explicit disambiguation note states they are the same entity, directly satisfying the pass criterion.",
+    "Delivery confirmation task (confirm exact time today) correctly identified as the key pending action.",
+    "Ambiguity section clearly documents the name-variant resolution decision for human verification.",
+    "Unidentified final client correctly flagged for human review rather than silently assumed."
+  ],
+  "failures": [
+    "Subtask 1 uses only 'Sharma ji' while the parent uses 'Sharma ji/bhai' — minor inconsistency in canonical name usage across the task list.",
+    "Cross-thread correlation is not truly exercised here (single thread), so this dimension provides limited signal for this case."
+  ],
+  "notes": "The agent correctly satisfies the core pass criterion: one supplier entity for both name variants, with the resolution explicitly documented rather than silently assumed. The ambiguity flagging is notably strong — the agent called out the name-variant unification in the dedicated AMBIGUOUS CORRELATIONS section, which is exactly the right behavior for human auditability. Minor cosmetic inconsistency in name usage across subtasks does not constitute an operational failure. Overall a solid L1 performance on entity deduplication and transparency.",
+  "case_id": "R4-A-L1-01",
+  "case_name": "same_supplier_2_name_variants_single_thread",
+  "framework": "R4-A",
+  "level": "L1",
+  "evaluated_at": "2026-03-26T05:02:48",
+  "model_used": "gemini-2.5-flash",
+  "eval_model": "claude-sonnet-4-6"
+}

@@ -1,0 +1,9 @@
+=== THREAD 1: Supplier Group (Ashish + Supplier A) ===
+[20 Mar 10:00] Ashish: bhai AC 1.5 ton chahiye - 1 nos
+[20 Mar 10:30] Supplier A: hai sir, 42000 + GST
+[20 Mar 10:45] Ashish: ok, kal tak de sakte ho?
+[20 Mar 11:00] Supplier A: kal dopahar tak pakka
+
+=== THREAD 2: All Staff Group ===
+[20 Mar 11:30] Ashish: Supplier A se AC aa raha hai kal dopahar tak
+[20 Mar 11:35] Staff 1: ok sir

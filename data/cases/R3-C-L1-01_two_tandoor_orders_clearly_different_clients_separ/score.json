@@ -1,0 +1,53 @@
+{
+  "verdict": "PASS",
+  "overall_score": 93,
+  "dimensions": {
+    "task_recall": {
+      "score": 95,
+      "notes": "Both parent tasks fully captured with appropriate subtasks. Client A's order (2 units, urgent, 25 Mar deadline) and Client B's order (1 unit, quotation stage) are both present. Subtasks cover sourcing, confirmation, and quoting for each. Minor: Subtask 3 for Client A (quotation/rate) is a reasonable inference but slightly speculative given no rate discussion was flagged in the thread — still a useful implicit task detection."
+    },
+    "entity_accuracy": {
+      "score": 95,
+      "notes": "Entities correctly attributed: Client A linked to 2-unit urgent order, Client B linked to 1-unit quotation-stage order. Ashish correctly identified as responsible party in both threads. Item (tandoor), quantities, and stages all accurately reflected. No cross-attribution errors detected."
+    },
+    "cross_thread_correlation": {
+      "score": 90,
+      "notes": "The two orders are correctly kept separate despite being the same item type from different clients on the same day. The agent explicitly calls this out in the ambiguous correlations section, noting they are treated as distinct orders with a recommendation for human confirmation. Source threads are correctly tagged per parent task. No false merging occurred."
+    },
+    "next_step_quality": {
+      "score": null,
+      "notes": null
+    },
+    "implicit_task_detection": {
+      "score": null,
+      "notes": null
+    },
+    "ambiguity_flagging": {
+      "score": 92,
+      "notes": "Strong ambiguity flagging throughout. The agent explicitly notes: missing supplier threads for both orders, unverified rate send status for Client B, unknown whether sourcing has been initiated for Client A, and the need to confirm that the two tandoor orders are indeed separate. The dedicated 'AMBIGUOUS CORRELATIONS' section directly surfaces the same-item same-day coincidence for human review rather than silently assuming. Slight over-flagging on the 'kept separate — human should confirm' note (could be seen as unnecessary hedging given clear separate threads) but this is a minor issue."
+    }
+  },
+  "pass_criteria_met": true,
+  "passes": [
+    "Two distinct parent task records created — one for Client A, one for Client B",
+    "Client A correctly linked to 2-unit urgent order with 25 Mar deadline",
+    "Client B correctly linked to 1-unit quotation-stage order with no deadline",
+    "No cross-attribution: quantities, stages, and clients are not mixed between tasks",
+    "Same-item same-day coincidence explicitly flagged for human review rather than silently merged",
+    "Missing supplier threads flagged as operational risk for both orders",
+    "Rate-not-sent status for Client B correctly identified as pending verification",
+    "Summary snapshot table correctly reflects different statuses and priorities"
+  ],
+  "failures": [
+    "Minor: Subtask 3 for Client A (prepare quotation/rate) is somewhat speculative — no direct evidence from thread that rate discussion is missing; this could be noise in an otherwise clean output",
+    "Minor: The 'Human should confirm this separation is correct' note in ambiguous correlations, while well-intentioned, slightly undercuts confidence in what should be a straightforward separation given distinct thread sources"
+  ],
+  "notes": "This is a high-quality output that cleanly satisfies the core pass criteria. The agent correctly separates two tandoor orders into distinct parent tasks, links each to the right client with correct quantities and stages, and avoids the primary failure mode of merging or cross-attributing. Ambiguity flagging is proactive and operationally useful, particularly the missing-supplier-thread flag for both orders. The output is well-structured and actionable. Minor speculative subtask generation and slight hedging on an obvious separation are the only meaningful deductions.",
+  "case_id": "R3-C-L1-01",
+  "case_name": "two_tandoor_orders_clearly_different_clients_separ",
+  "framework": "R3-C",
+  "level": "L1",
+  "evaluated_at": "2026-03-26T04:39:34",
+  "model_used": "claude-sonnet-4-6",
+  "eval_model": "claude-sonnet-4-6"
+}

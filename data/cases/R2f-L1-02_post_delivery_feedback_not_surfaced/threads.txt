@@ -1,0 +1,15 @@
+=== THREAD 1: Client Group (Ashish + 2 Corps Supply) ===
+[18 Mar 09:00] 2 Corps Supply: bhai 20 office chairs chahiye, standard government spec
+[18 Mar 09:30] Ashish: sir rate confirm karta hoon aaj
+[18 Mar 14:00] Ashish: sir 4800 per chair + GST - total 96,000 + GST
+[18 Mar 14:30] 2 Corps Supply: theek hai, aage badhao
+[19 Mar 10:00] Ashish: sir supplier ko order de diya, 20-21 Mar tak delivery hogi
+[20 Mar 11:00] 2 Corps Supply: bhai maal aa gaya, sab theek lag raha hai
+[20 Mar 11:15] Ashish: great sir, invoice WhatsApp pe bhej deta hoon
+[22 Mar 14:00] 2 Corps Supply: payment kar diya - 1,13,280 NEFT ho gaya
+[22 Mar 14:15] Ashish: received, thank you sir
+
+=== THREAD 2: All Staff Group ===
+[19 Mar 10:15] Ashish: 2 Corps ka chairs order confirm - Staff 1 supplier ke saath coordinate karo
+[20 Mar 11:30] Staff 1: 2 Corps delivery confirm ho gayi, client ne accept kiya
+[22 Mar 14:30] Ashish: 2 Corps payment aa gaya - order complete

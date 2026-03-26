@@ -1,0 +1,18 @@
+{
+  "id": "R4-B-L2-01",
+  "name": "same_army_unit_2_reference_styles_across_2_threads",
+  "framework": "R4-B",
+  "level": "L2",
+  "sprint": "S1",
+  "data_source": "fully-synthetic",
+  "description": "Same Army unit, 2 reference styles across 2 threads",
+  "chat_inputs": null,
+  "completeness": {
+    "complete": true,
+    "missing": []
+  },
+  "expected_output": "Single client entity: 51 Sub Area (Colonel). Urgent task: Delivery must happen tomorrow — unit relocating next week.",
+  "pass_criteria": "PASS: Single client entity linked across threads, urgency flag captured. FAIL: Two separate client records.",
+  "challenge": "Officer reference in client group, formal unit name in staff group. Cross-thread entity resolution.",
+  "notes": "Unit relocation context adds urgency — agent should also flag relocation as risk to payment timeline"
+}

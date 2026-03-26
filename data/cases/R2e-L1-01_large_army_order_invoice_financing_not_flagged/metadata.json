@@ -1,0 +1,15 @@
+{
+  "id": "R2e-L1-01",
+  "name": "large_army_order_invoice_financing_not_flagged",
+  "framework": "R2",
+  "level": "L1",
+  "sprint": "S2",
+  "data_source": "fully-synthetic",
+  "description": "Large Army order (15 AC units, Rs 6.3L + GST) confirmed — Ashish must pay 50% advance to supplier upfront while Army payment will take 60-90 days — invoice financing not flagged",
+  "chat_inputs": null,
+  "completeness": {"complete": true, "missing": []},
+  "expected_output": "Parent task: 15 AC units order for Eastern Command — Rs 6,30,000 + GST. Key financial implicit task: Ashish must pay Rs 3,15,000 advance to supplier immediately while waiting 60-90 days for Army payment — significant cash flow gap. Agent should flag: (1) Cash flow gap: advance outflow of Rs 3,15,000 with 60-90 day Army payment cycle creates a large working capital requirement. (2) Consider invoice financing / bill discounting options to bridge the gap. Note: invoice financing is TBC with Ashish — agent should flag the risk and prompt Ashish to evaluate, not prescribe a solution.",
+  "pass_criteria": "PASS: Agent flags the cash flow gap between the supplier advance (immediate) and Army payment timeline (60-90 days) and notes invoice financing or working capital management as something Ashish should consider. FAIL: Agent processes the order operationally without any flag about the financial exposure — treating the Rs 3.15L advance as just another payment task without noting the cash flow risk.",
+  "challenge": "The order is large (Rs 6.3L), the Army payment cycle is long, and the supplier requires an immediate 50% advance. The agent must connect these three signals and surface the financial risk proactively. Tests R2e (invoice financing implicit flag). All threads are operational — no one discusses cash flow or financing.",
+  "notes": "TBC with Ashish: value threshold above which this flag fires, and what financing options he actually has access to (bank OD, bill discounting, MSME schemes). The testable behaviour is: large order + Army client + immediate supplier advance = cash flow flag created."
+}

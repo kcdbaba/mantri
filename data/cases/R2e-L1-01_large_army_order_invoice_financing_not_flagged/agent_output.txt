@@ -1,0 +1,154 @@
+```
+UNIFIED TASK LIST — 18 Mar
+Threads processed: Client Group (Ashish + Eastern Command), Supplier Group (Ashish + Supplier A), All Staff Group
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📦 PARENT TASK: AC Units Procurement & Delivery — Eastern Command
+   Entity: Eastern Command (client), Supplier A (supplier)
+   Item: 15 × 1.5 ton AC units
+   Status: In Progress — order confirmed, supplier advance pending
+   Due: Not yet committed (delivery date not mentioned in any thread)
+   Priority: High — large order, advance due tomorrow, client marked urgent
+   Source threads: Client Group, Supplier Group, All Staff Group
+
+   ↳ SUBTASK 1: Transfer 50% advance to Supplier A — Rs 3,15,000
+      Assigned to: Ashish
+      Status: Pending — Ashish committed to transfer by 19 Mar
+      Due: 19 Mar
+      Next step: Ashish to initiate the bank transfer to Supplier A on 19 Mar morning and share payment confirmation in the Supplier Group.
+
+   ↳ SUBTASK 2: Obtain committed delivery date from Supplier A
+      Assigned to: Staff 1 (per all-staff coordination instruction)
+      Status: Pending — no delivery date discussed in any thread
+      Due: Immediately (client said urgent; no timeline yet agreed with supplier)
+      Next step: Staff 1 to ask Supplier A for a firm delivery date in the Supplier Group, and escalate to Ashish immediately if Supplier A cannot commit within 48 hours of advance receipt.
+
+   ↳ SUBTASK 3: Confirm PO / written order to Supplier A
+      Assigned to: Ashish / Staff 1
+      Status: Pending — not detected in any thread
+      Note: Order was verbally confirmed in Supplier Group chat but no formal PO mentioned. Implicit task — expected at this stage for a Rs 6.3L+ order.
+      Next step: Issue a written PO to Supplier A (even a WhatsApp message listing item, quantity, rate, and delivery date) before or alongside the advance transfer. This creates a paper trail and locks in the terms.
+
+   ↳ SUBTASK 4: Army unit coordination — confirm delivery address and receiving officer
+      Assigned to: Staff 1
+      Status: Pending — not detected in any thread
+      Note: Eastern Command is an Army client. Delivery location, specific unit address, and receiving officer name not confirmed in any thread. Implicit task for Army Direct Delivery (Type 3, Step 11).
+      Next step: Staff 1 to check with Ashish on the exact delivery address and receiving officer details for Eastern Command — to be confirmed before dispatch is arranged.
+
+   ↳ SUBTASK 5: Gate pass / entry documentation — Army delivery
+      Assigned to: Staff 1 / Ashish
+      Status: Pending — not detected in any thread
+      Note: Army cantonment deliveries typically require advance gate pass or entry authorization. Implicit task for Army Direct Delivery (Type 3, Step 12). Not mentioned anywhere in threads.
+      Next step: Ashish to confirm with Eastern Command contact what documentation is required for the delivery vehicle to enter the unit — and initiate that process well before dispatch date.
+
+   ↳ SUBTASK 6: Pre-emptive delivery confirmation — Supplier A
+      Status: Scheduled — to be actioned morning of delivery date (once committed)
+      Due: Morning of [delivery date — TBD, see Subtask 2]
+      Note: No delivery date has been committed yet. Once Supplier A gives a delivery date (Subtask 2), this task activates automatically.
+      Next step: On the morning of the committed delivery date, contact Supplier A to confirm delivery is still on track before arranging receiving staff or transport to the Army unit.
+
+   ↳ SUBTASK 7: Inspection and sorting upon goods receipt
+      Assigned to: Staff 1 / Ashish
+      Status: Pending — not yet relevant (goods not dispatched)
+      Note: Standard Equipment Procurement cadence step (Type 1, Step 11). Not in threads — flagged for future action.
+      Next step: When goods arrive, ensure all 15 units are physically inspected before delivery to Eastern Command. Log condition of each unit.
+
+   ↳ SUBTASK 8: Pre-dispatch checklist before delivery to Eastern Command
+      Assigned to: Staff 1
+      Status: Pending — not yet relevant
+      Note: Type 3 cadence step (Step 13). Rarely appears in WhatsApp threads.
+      Next step: Before dispatch to Eastern Command, complete a pre-dispatch checklist — quantity count, unit condition, documentation ready (DO reference, delivery challan, GST invoice).
+
+   ↳ SUBTASK 9: DO / GRN / signed delivery note from Eastern Command
+      Assigned to: Staff 1 / Ashish
+      Status: Pending — not yet relevant
+      Note: Type 3 cadence step (Step 17). Required for formal Army payment processing. Critical — invoice cannot be formally processed without a signed delivery acknowledgement.
+      Next step: Ensure the delivery team collects a signed DO / GRN from the receiving officer at Eastern Command at the time of delivery. Do not leave the unit without this document.
+
+   ↳ SUBTASK 10: Invoice raised — with DO reference
+      Assigned to: Ashish
+      Status: Pending — delivery not yet completed
+      Note: Type 3 cadence step (Step 18). Invoice must reference the DO number received at delivery.
+      Next step: After delivery and receipt of signed DO, raise GST invoice to Eastern Command (Rs 6,30,000 + GST) with DO reference included.
+
+   ↳ SUBTASK 11: Payment follow-up — Eastern Command
+      Assigned to: Ashish (not staff)
+      Status: Pending — invoice not yet raised
+      Due: ~Day 30 post-invoice (flag for awareness; Army payment cycle is 60–90 days)
+      Note: Type 3 / Type 8 cadence. Army client — payment delays of 60–90 days are normal and expected. First awareness flag at Day 30, not an aggressive follow-up. All payment contact must go through Ashish personally to the CO or accounts officer — staff must not contact the Army unit on payment matters.
+      Next step: Ashish to note invoice date when raised and schedule a personal courtesy check-in with the Eastern Command accounts section at approximately Day 30 post-invoice — framed as a relationship touch, not a payment demand.
+
+   ↳ SUBTASK 12: Working capital / cash flow assessment — implicit financial flag
+      Status: Pending — flag for Ashish's attention
+      Note: This deal requires an immediate supplier advance of Rs 3,15,000 (50% of supplier cost) payable 19 Mar, while Eastern Command as an Army client has a payment cycle of 60–90 days post-invoice. The delivery timeline is also not yet committed, extending the exposure window further. This creates a working capital gap of approximately Rs 3,15,000+ for a minimum of 60–90 days (from advance payment to client payment receipt) — potentially longer if delivery is delayed. This is a significant cash flow exposure on a single order.
+      Next step: Ashish to assess whether the business can absorb this gap from current working capital, or whether invoice financing, bill discounting, or bank OD facility is needed to bridge the advance-to-payment gap — and confirm this assessment before transferring the advance to Supplier A tomorrow.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️ FLAGS:
+
+   1. NO DELIVERY DATE COMMITTED — Client said "urgent" (18 Mar 09:00) but no delivery date has been discussed with Supplier A in any thread. A Rs 6.3L order is moving to advance payment without a delivery commitment. This is the highest operational risk in the current state.
+
+   2. ADVANCE TRANSFER BEFORE DELIVERY DATE KNOWN — Ashish is scheduled to transfer Rs 3,15,000 to Supplier A on 19 Mar, but Supplier A has not committed a delivery date. Recommendation: make the advance transfer conditional on receiving a firm delivery date from Supplier A first — or at minimum, get the delivery date commitment in writing in the Supplier Group before 19 Mar morning.
+
+   3. NO PO ISSUED — Order confirmed verbally (WhatsApp messages) but no formal Purchase Order raised to Supplier A. For a 15-unit, Rs 6.3L order, a written PO is strongly advisable before advance is transferred.
+
+   4. STAFF 1 COORDINATION SCOPE UNCLEAR — Ashish told Staff 1 to "coordinate with Supplier A" in the all-staff group but did not specify what to coordinate on. Staff 1 has no delivery date, no specification details, and no checklist. Coordination instruction is too open-ended to action without clarification.
+
+   5. REMAINING BALANCE PAYMENT TO SUPPLIER — 50% advance = Rs 3,15,000. Remaining 50% (Rs 3,15,000) payment terms to Supplier A not discussed in any thread. When is the balance due — on dispatch, on delivery, or on client payment? This must be clarified before advance is paid.
+
+   6. SUPPLIER A SPECIFICATION CONFIRMATION — Thread 2 only mentions "15 AC units" — no confirmation that Supplier A has acknowledged the spec (1.5 ton, brand, model, any Army-specific requirements). Implicit risk that Supplier A supplies wrong specification.
+
+   7. CASH FLOW EXPOSURE IS MATERIAL — Rs 3,15,000 advance out immediately + remaining Rs 3,15,000 due at some point, against an Army client payment cycle of 60–90 days. Full supplier payment could be Rs 6,30,000 out before any client payment comes in. See Subtask 12.
+
+   8. MARGIN NOT VISIBLE — Ashish quoted Eastern Command Rs 42,000/unit. Supplier A's rate not mentioned in Thread 2 — only the 50% advance amount (Rs 3,15,000 = 50% of Rs 6,30,000, implying Supplier A's total is Rs 6,30,000). If Supplier A's total is Rs 6,30,000 and client price is also Rs 6,30,000 + GST, the gross margin may be zero or only GST differential. Ashish should verify his cost from Supplier A vs. his quote to Eastern Command.
+
+   9. END-OF-MONTH PROXIMITY — Thread date is 18 Mar. Month-end (31 Mar) and financial year-end are approaching. See calendar-triggered implicit tasks below.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📅 CALENDAR-TRIGGERED IMPLICIT TASKS (Year-End — late March)
+
+   ↳ SUBTASK [CAL-1]: GST reconciliation for March — calendar-triggered implicit task
+      Status: Pending — not detected in threads
+      Note: Thread date is 18 Mar — financial year-end (31 Mar) is 13 days away. All GST invoices raised in FY must be reconciled before year-end. This is almost never mentioned in WhatsApp threads.
+      Next step: Ashish / accounts to compile all invoices raised in FY (Apr–Mar), reconcile with GSTR filings, and identify any gaps before 31 Mar.
+
+   ↳ SUBTASK [CAL-2]: Annual accounts closure preparation — calendar-triggered implicit task
+      Status: Pending — not detected in threads
+      Note: Thread date is 18 Mar — financial year closes 31 Mar. Annual accounts preparation (P&L, balance sheet, outstanding receivables, payables) needs to begin now if not already started.
+      Next step: Ashish to engage CA / accountant to begin year-end closure — share all March invoices, receipts, and bank statements promptly.
+
+   ↳ SUBTASK [CAL-3]: Year-end stock-take — calendar-triggered implicit task
+      Status: Pending — not detected in threads
+      Note: Thread date is 18 Mar — year-end stock count is standard practice before 31 Mar. Physical inventory should be verified against records.
+      Next step: Schedule a warehouse stock-take before 31 Mar. Staff 1 to assist with physical count; reconcile against inventory records.
+
+   ↳ SUBTASK [CAL-4]: Review of all outstanding payment follow-ups — calendar-triggered implicit task
+      Status: Pending — not detected in threads
+      Note: Thread date is 18 Mar — approaching financial year-end. All outstanding receivables should be reviewed before 31 Mar to ensure accurate books and to initiate any overdue follow-ups before the year closes.
+      Next step: Ashish to pull list of all outstanding invoices across all clients, check payment status, and flag any that need a personal follow-up before 31 Mar.
+
+   ↳ SUBTASK [CAL-5]: Advance tax review — calendar-triggered implicit task
+      Status: Pending — not detected in threads
+      Note: Thread date is 18 Mar — Q4 advance tax deadline is 15 Mar (just passed). Confirm whether advance tax for Q4 has been paid; if not, assess exposure and pay immediately to avoid interest.
+      Next step: Ashish to check with CA whether Q4 advance tax (due 15 Mar) was paid. If missed, arrange payment immediately and assess penalty/interest implications.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❓ AMBIGUOUS CORRELATIONS (needs human review):
+
+   - None detected. All three threads clearly refer to the same order (15 AC units, Eastern Command, 18 Mar). Correlation is unambiguous.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SUMMARY — IMMEDIATE ACTIONS FOR ASHISH (19 Mar morning):
+
+   1. ⚠️ BEFORE transferring advance: Get firm delivery date from Supplier A in writing
+   2. ⚠️ BEFORE transferring advance: Do the working capital assessment (Subtask 12) — Rs 6.3L+ could be out before any client payment comes in
+   3. Clarify Supplier A's per-unit rate vs. your quote to Eastern Command — verify margin exists
+   4. Issue written PO to Supplier A alongside or before advance transfer
+   5. Clarify with Staff 1 exactly what to coordinate with Supplier A (delivery date, spec confirmation, balance payment terms)
+   6. Engage CA on year-end accounts and advance tax status
+```

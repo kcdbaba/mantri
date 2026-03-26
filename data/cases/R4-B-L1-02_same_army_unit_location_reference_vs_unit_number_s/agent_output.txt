@@ -1,0 +1,98 @@
+I'll process this input carefully before producing output.
+
+---
+
+## Pre-Output Analysis
+
+**Threads received**: 1 (Client Group only)
+**Messages**: 2
+
+**What's present**:
+- Staff 1 states delivery to "Tezpur unit" is planned for tomorrow (25 Mar)
+- Ashish asks whether "51 Sub Area Tezpur" order is complete
+
+**What's absent**:
+- No supplier thread
+- No staff coordination thread
+- No transporter thread
+- No item mentioned
+- No explicit confirmation from Staff 1 answering Ashish's question
+- No invoice/payment reference
+- No client contact visible in this thread
+
+**Cross-thread correlation**: Only one thread provided — no cross-thread correlation possible.
+
+**Entity resolution**:
+- "Tezpur unit" (Staff 1, 11:00) and "51 Sub Area Tezpur" (Ashish, 11:10) — these almost certainly refer to the same entity. "Tezpur unit" is an informal shorthand; "51 Sub Area Tezpur" is the formal/official designation. Treating as **tentative merge** — flagged for human confirmation.
+
+**Status ambiguity**:
+- Ashish's question ("complete hai?") implies he is *not* certain the order is complete — it is a status check, not a confirmation. Staff 1 has not replied within the visible thread. Order completion status is therefore **unconfirmed**.
+
+**Delivery date**:
+- "Kal" said on 24 Mar → implies 25 Mar delivery
+
+---
+
+```
+UNIFIED TASK LIST — 24 Mar
+Threads processed: Client Group
+
+📦 PARENT TASK: Order Delivery — Tezpur Unit (51 Sub Area Tezpur)
+   Entity: Tezpur unit / 51 Sub Area Tezpur (customer)
+     [Entity note: "Tezpur unit" (Staff 1) and "51 Sub Area Tezpur"
+     (Ashish) treated as the same client — tentative assumption,
+     confirm if these are distinct units]
+   Item: Not mentioned
+   Status: Blocked — order completion unconfirmed; Ashish's
+           question unanswered in visible thread
+   Due: 25 Mar (delivery planned "kal" per Staff 1 on 24 Mar)
+   Priority: High (delivery is tomorrow; completion status unknown)
+   Source threads: Client Group
+
+   ↳ SUBTASK 1: Confirm whether order is fully complete
+      Assigned to: Staff 1 (implied — Ashish directed the question
+                   in the same thread)
+      Status: Pending — no reply from Staff 1 visible
+      Due: Today, 24 Mar (delivery is tomorrow)
+      Next step: Staff 1 to reply to Ashish's question in the
+                 thread with explicit confirmation (or raise
+                 blockers) so Ashish can greenlight tomorrow's
+                 delivery.
+
+   ↳ SUBTASK 2: Execute delivery to Tezpur unit
+      Assigned to: Staff 1 (stated intent)
+      Status: Pending — blocked by Subtask 1
+      Due: 25 Mar
+      Next step: Once order completion is confirmed, verify
+                 transport arrangement is in place for 25 Mar
+                 delivery and log confirmation in the group.
+
+⚠️ FLAGS:
+   - Order completion status unconfirmed — Staff 1 has not
+     responded to Ashish's direct question in the visible thread.
+     Delivery is scheduled for tomorrow; this needs same-day
+     resolution.
+   - Item not mentioned in any message — cannot verify what
+     goods are being delivered or whether quantity/quality checks
+     are done.
+   - Transport arrangement not mentioned — no transporter, vehicle,
+     or logistics detail visible. If a 1:1 chat exists between
+     Staff 1 and a transporter, that information is not reflected
+     in this group.
+   - No invoice or payment status visible for this order.
+   - Only 1 thread provided — supplier-side, staff coordination,
+     and transporter threads (if they exist) have not been
+     processed. Significant information gaps likely.
+
+❓ AMBIGUOUS CORRELATIONS (needs human review):
+   - "Tezpur unit" vs "51 Sub Area Tezpur": Treated as the same
+     client (tentative merge). If these are two separate units
+     or orders within the Tezpur area, this parent task must be
+     split. Human confirmation needed.
+   - Only one thread provided for a delivery event that would
+     typically generate activity in supplier, staff, and
+     transporter threads. It is unknown whether parallel threads
+     exist that contain additional order or delivery details.
+     Recommend providing those threads for complete task
+     extraction.
+```

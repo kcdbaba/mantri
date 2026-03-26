@@ -1,0 +1,41 @@
+```
+UNIFIED TASK LIST — 24 Mar
+Threads processed: Supplier Group, All Staff Group
+
+📦 PARENT TASK: Tandoor Order — 51 Sub Area (51 SA)
+   Entity: 51 Sub Area / 51 SA (client), Sharma ji (supplier — tentative, see flags)
+   Item: Tandoor
+   Status: Pending — unclear if order has been placed yet
+   Due: Not specified
+   Priority: High (Ashish personally following up within 2 hours of Staff 1's message)
+   Source threads: Supplier Group, All Staff Group
+
+   ↳ SUBTASK 1: Confirm whether tandoor order has been placed with Sharma ji
+      Assigned to: Staff 1
+      Status: Pending — Ashish's question (Thread 2, 11:00) has no recorded response
+      Due: Immediately
+      Next step: Staff 1 to confirm in All Staff Group whether the order was placed with Sharma ji, and if so, share the committed delivery date and quantity.
+
+   ↳ SUBTASK 2: Place order with Sharma ji (if not yet done)
+      Assigned to: Staff 1
+      Status: Pending — conditional on Subtask 1
+      Due: Today
+      Next step: If order not yet placed, Staff 1 to call Sharma ji immediately, confirm availability, price, and delivery timeline, then post confirmation in the Supplier Group.
+
+   ↳ SUBTASK 3: Capture order details — quantity, price, delivery date
+      Assigned to: Staff 1
+      Status: Pending
+      Due: Today
+      Next step: Ensure quantity, rate, delivery commitment, and any transport/delivery charges are confirmed with Sharma ji and documented in the group.
+
+⚠️ FLAGS:
+   - No quantity mentioned in either thread — number of tandoors required for 51 SA is unknown. Must be confirmed before order is placed.
+   - No price or delivery timeline mentioned — order is at a very early stage with critical details missing.
+   - Ashish's follow-up (11:00) came only 2 hours after Staff 1's initial message (09:00) — suggests this is time-sensitive, possibly a client deadline exists that is not captured in these threads.
+   - No response from Staff 1 to Ashish's 11:00 query is visible in the threads — status of acknowledgement is unknown.
+   - "Sharma ji" appears only in Ashish's message (Thread 2) — it is unclear if this is a supplier Ashish has already decided on, or a suggestion. Staff 1's Thread 1 message does not name any supplier. Relationship between Thread 1 intent and Ashish's Sharma ji reference needs clarification.
+
+❓ AMBIGUOUS CORRELATIONS:
+   - Thread 1 (Staff 1: "order karna hai") and Thread 2 (Ashish: "order diya kya?") are treated as the same order based on matching client name (51 SA / 51 Sub Area) and item (tandoor). This correlation is HIGH CONFIDENCE — same item, same client, same date, plausible 2-hour gap. Flagged as soft assumption, human confirmation recommended.
+   - "Sharma ji" (Thread 2) — identity not confirmed. Could be a known supplier referred to by Ashish from prior context not visible in these threads. Cannot resolve to a full entity name from available text. Needs human input: Is Sharma ji the intended supplier for this order, and has Ashish already communicated this to Staff 1 separately?
+```

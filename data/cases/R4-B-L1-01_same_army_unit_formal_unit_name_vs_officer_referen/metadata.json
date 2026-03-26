@@ -1,0 +1,18 @@
+{
+  "id": "R4-B-L1-01",
+  "name": "same_army_unit_formal_unit_name_vs_officer_referen",
+  "framework": "R4-B",
+  "level": "L1",
+  "sprint": "S1",
+  "data_source": "fully-synthetic",
+  "description": "Same Army unit, formal unit name vs officer reference, single thread",
+  "chat_inputs": null,
+  "completeness": {
+    "complete": true,
+    "missing": []
+  },
+  "expected_output": "Single client entity: 51 Sub Area (Colonel). Task: Confirm delivery date with client.",
+  "pass_criteria": "PASS: Single client entity. FAIL: '51 Sub Area' and 'Colonel sahab' treated as separate entities.",
+  "challenge": "Formal unit name ('51 Sub Area') and officer reference ('Colonel sahab') used in same thread for same client.",
+  "notes": "Army naming conventions to be validated with Ashish"
+}

@@ -1,0 +1,9 @@
+=== THREAD 1: Client Group ===
+[24 Mar 09:00] Ashish: Tandoor supplier se confirm karo delivery
+
+=== THREAD 2: Supplier Group ===
+[24 Mar 10:00] Staff 1: Sharma ji kal tak denge
+[24 Mar 10:05] Supplier: haan confirmed
+
+=== THREAD 3: All Staff Group ===
+[24 Mar 15:00] Staff 2: S. Sharma & Co. ka maal kal aayega, packaging ready rakhna

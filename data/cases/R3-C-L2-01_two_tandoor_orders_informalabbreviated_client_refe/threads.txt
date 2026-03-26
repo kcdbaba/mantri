@@ -1,0 +1,6 @@
+=== THREAD 1: Client Group ===
+[24 Mar 09:00] Ashish: Tezpur walo ka tandoor order confirm hua?
+[24 Mar 09:10] Staff 1: haan, 2 units
+
+=== THREAD 2: All Staff Group ===
+[24 Mar 10:00] Staff 1: Ranchi unit ke liye bhi tandoor order aaya hai, ek unit chahiye

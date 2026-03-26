@@ -1,0 +1,41 @@
+```
+UNIFIED TASK LIST — 24 Mar
+Threads processed: Client Group (Ashish + Staff + Client), All Staff Group
+
+📦 PARENT TASK: Urgent Delivery — 51 Sub Area / Colonel sahab
+   Entity: Colonel sahab (client, tentatively = 51 Sub Area — see flags)
+   Item: Unspecified (not mentioned in either thread)
+   Status: In Progress — urgency flagged, delivery pending
+   Due: 25 Mar (Staff 1 says "kal tak" in All Staff Group)
+   Priority: High
+   Source threads: Client Group, All Staff Group
+
+   ↳ SUBTASK 1: Confirm item(s) to be delivered
+      Assigned to: Unassigned
+      Status: Blocked — item not mentioned in any thread
+      Due: Immediately
+      Next step: Check previous threads, order confirmations, or invoices to identify exactly what goods are due for delivery to Colonel sahab / 51 Sub Area.
+
+   ↳ SUBTASK 2: Confirm delivery logistics (transporter, vehicle, route)
+      Assigned to: Unassigned (no transporter or driver mentioned)
+      Status: Pending
+      Due: Today (25 Mar delivery requires same-day dispatch arrangement)
+      Next step: Assign a transporter and confirm vehicle availability for tomorrow delivery. If a transporter has already been contacted in a separate 1:1 chat, bring that confirmation into the staff group.
+
+   ↳ SUBTASK 3: Confirm delivery completion before client's move
+      Assigned to: Ashish / Staff 1
+      Status: Pending
+      Due: Before client relocation (next week per Colonel sahab)
+      Next step: Ensure delivery is executed by 25 Mar as committed internally — client's move next week means there is no recovery window if delivery slips.
+
+⚠️ FLAGS:
+   - Item not identified in any thread — core information missing, cannot confirm delivery readiness without knowing what is being delivered
+   - No transporter or logistics arrangements visible in either thread — possible 1:1 chat with transporter exists but is not reflected in any group
+   - Deadline discrepancy to watch: Colonel sahab says "next week" (softer), Staff 1 says "kal tak / 25 Mar" (harder internal deadline) — internal deadline appears tighter than client's stated deadline, which is correct practice, but source of the 25 Mar commitment is not visible in these threads
+   - No Ashish response visible in Client Group — Colonel sahab's message at 09:00 has not been acknowledged; client may be waiting for confirmation
+   - No quantity, no PO reference, no invoice detail visible — payment/invoice status unknown
+
+❓ AMBIGUOUS CORRELATIONS (needs human review):
+   - TENTATIVE MERGE: "Colonel sahab" (Thread 1) and "51 Sub Area" (Thread 2) are assumed to refer to the same order/client. Signals supporting this: same date, same urgency framing, no contradicting details. However, "51 Sub Area" is a unit/location designation and "Colonel sahab" is an individual — it is possible these are two separate clients or two separate deliveries pending at the same location. Human confirmation needed: Are these the same delivery, or are there two distinct pending deliveries at 51 Sub Area?
+   - Item is completely unspecified across both threads — no correlation to any prior order thread is possible from the given input alone. If prior order threads exist (quotation stage, supplier group, etc.), they should be pulled in to complete this task record.
+```

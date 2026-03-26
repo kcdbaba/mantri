@@ -1,0 +1,18 @@
+{
+  "id": "R4-A-L1-01",
+  "name": "same_supplier_2_name_variants_single_thread",
+  "framework": "R4-A",
+  "level": "L1",
+  "sprint": "S1",
+  "data_source": "fully-synthetic",
+  "description": "Same supplier, 2 name variants, single thread",
+  "chat_inputs": null,
+  "completeness": {
+    "complete": true,
+    "missing": []
+  },
+  "expected_output": "Single supplier entity: Sharma (Supplier). One delivery task: Confirm exact delivery time today.",
+  "pass_criteria": "PASS: Single supplier entity record created. FAIL: Two separate supplier records for 'Sharma ji' and 'Sharma bhai'.",
+  "challenge": "Same supplier referred to as 'Sharma ji' (by Staff 1) and 'Sharma bhai' (by Ashish) in same thread. Agent must resolve both to one entity.",
+  "notes": "Validate naming conventions with Ashish"
+}

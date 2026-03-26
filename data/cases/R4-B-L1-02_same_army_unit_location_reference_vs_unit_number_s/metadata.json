@@ -1,0 +1,18 @@
+{
+  "id": "R4-B-L1-02",
+  "name": "same_army_unit_location_reference_vs_unit_number_s",
+  "framework": "R4-B",
+  "level": "L1",
+  "sprint": "S1",
+  "data_source": "fully-synthetic",
+  "description": "Same Army unit, location reference vs unit number, single thread",
+  "chat_inputs": null,
+  "completeness": {
+    "complete": true,
+    "missing": []
+  },
+  "expected_output": "Single client entity: 51 Sub Area Tezpur. Task: Delivery to Tezpur unit tomorrow.",
+  "pass_criteria": "PASS: Single client entity. FAIL: 'Tezpur unit' and '51 Sub Area Tezpur' treated as separate clients.",
+  "challenge": "Location-based reference ('Tezpur unit') vs formal unit name ('51 Sub Area Tezpur') in same thread.",
+  "notes": "Validate with Ashish — are location-based references common?"
+}

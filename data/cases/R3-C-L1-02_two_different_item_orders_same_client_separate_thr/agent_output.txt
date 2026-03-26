@@ -1,0 +1,101 @@
+```
+UNIFIED TASK LIST — 24–25 Mar
+Threads processed: Client A Group (24 Mar), Client A Group (25 Mar)
+
+────────────────────────────────────────────────────────────────────────────────
+
+📦 PARENT TASK 1: Tandoor Order — Client A
+   Entity: Client A (customer)
+   Item: Tandoor
+   Status: Pending — details not yet received from client
+   Due: Not specified
+   Priority: Medium (no urgency signal given)
+   Source threads: Client A Group (24 Mar)
+
+   ↳ SUBTASK 1: Collect order details from Client A
+      Assigned to: Ashish (requested details at 09:10)
+      Status: Blocked — no follow-up response from Client A visible in thread
+      Due: ASAP (details needed before any sourcing can begin)
+      Next step: Follow up with Client A to collect the required order details
+      (quantity, spec, delivery location, timeline) so that supplier
+      sourcing and quotation can begin.
+
+⚠️ FLAGS:
+   - Client A has not responded to Ashish's request for details (24 Mar 09:10
+     onward) — no details received in this thread
+   - No quantity, specification, delivery date, or delivery location mentioned
+     for the tandoor
+   - No supplier sourcing has been initiated (expected, since details are
+     still missing)
+
+────────────────────────────────────────────────────────────────────────────────
+
+📦 PARENT TASK 2: Generator Order — Client A
+   Entity: Client A (customer)
+   Item: Generator
+   Status: Pending — enquiry only, no details provided
+   Due: Not specified
+   Priority: Medium (no urgency signal given)
+   Source threads: Client A Group (25 Mar)
+
+   ↳ SUBTASK 1: Acknowledge generator enquiry and collect details
+      Assigned to: Ashish (unacknowledged as of last message in thread)
+      Status: Pending — no acknowledgement visible in thread after
+      Client A's 25 Mar 11:00 message
+      Due: ASAP
+      Next step: Acknowledge the generator requirement to Client A and
+      collect specs (type, capacity/KVA, fuel type, usage context,
+      quantity, delivery date and location) before initiating supplier
+      sourcing.
+
+⚠️ FLAGS:
+   - Generator enquiry (25 Mar 11:00) appears unacknowledged in this thread
+   - No specs or timeline provided for the generator
+   - Two separate items now in pipeline from the same client — ensure both
+     are tracked independently as they will likely involve different
+     suppliers and delivery timelines
+
+────────────────────────────────────────────────────────────────────────────────
+
+❓ AMBIGUOUS CORRELATIONS (needs human review):
+
+   1. SAME THREAD, DIFFERENT ORDERS — kept separate (correct default):
+      The tandoor (24 Mar) and generator (25 Mar) are treated as two distinct
+      parent tasks. Both are from Client A in what appears to be the same
+      WhatsApp group, but they involve different items, different enquiry dates,
+      and will involve separate sourcing workflows. Merging them into a single
+      parent task would risk operational blind spots. Kept separate unless
+      Ashish confirms they are part of a single combined order.
+
+   2. MISSING CONTEXT — no cross-thread data available:
+      Only one group thread (Client A Group) is provided, and only 4 messages
+      total. There are no supplier threads, staff threads, or 1:1 chats to
+      correlate against. Any supplier sourcing, internal coordination, or
+      transport discussions that may have happened in other threads are not
+      visible and cannot be accounted for here. Human review recommended to
+      confirm whether any parallel activity exists in other threads.
+
+   3. THREAD LABELLING NOTE:
+      The two threads are both labelled "Client A Group" — it is assumed these
+      are the same WhatsApp group on two consecutive days (24 Mar and 25 Mar),
+      not two separate groups. If these are in fact two distinct groups, flag
+      for human review.
+
+────────────────────────────────────────────────────────────────────────────────
+
+SUMMARY DASHBOARD
+
+ Task                          Status     Priority  Due         Blocker
+ ─────────────────────────────────────────────────────────────────────────
+ Tandoor — Client A            Pending    Medium    TBD         Details not
+                                                                received
+ Generator — Client A          Pending    Medium    TBD         Not yet
+                                                                acknowledged
+ ─────────────────────────────────────────────────────────────────────────
+
+IMMEDIATE ACTIONS NEEDED (in order):
+  1. Follow up with Client A on tandoor details (overdue since 24 Mar 09:10)
+  2. Acknowledge and collect details for generator requirement (25 Mar 11:00)
+  3. Once details received for each item, initiate supplier sourcing in
+     separate supplier threads
+```

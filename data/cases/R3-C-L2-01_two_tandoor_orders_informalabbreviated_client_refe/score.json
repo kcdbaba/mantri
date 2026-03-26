@@ -1,0 +1,53 @@
+{
+  "verdict": "PASS",
+  "overall_score": 91,
+  "dimensions": {
+    "task_recall": {
+      "score": 92,
+      "notes": "Both tandoor orders are captured as separate parent tasks with full subtask hierarchies (confirm order details, source supplier, prepare quotation). No tasks appear to be missing. Subtask decomposition is thorough and operationally useful given the sparse input."
+    },
+    "entity_accuracy": {
+      "score": 90,
+      "notes": "Tezpur unit (2 units) and Ranchi unit (1 unit) are correctly identified with the right quantities. Informal references 'Tezpur walo' and 'Ranchi unit' are resolved to their respective Army clients with appropriate caveats. Supplier is correctly marked as unconfirmed for both. No mis-attribution detected."
+    },
+    "cross_thread_correlation": {
+      "score": 93,
+      "notes": "Agent correctly separates the two orders rather than merging them. Sources are tracked per task (Client Group vs All Staff Group). The cross-order note about potential combined procurement is a valuable addition. No false merging or incorrect thread attribution."
+    },
+    "implicit_task_detection": {
+      "score": null,
+      "notes": null
+    },
+    "next_step_quality": {
+      "score": null,
+      "notes": null
+    },
+    "ambiguity_flagging": {
+      "score": 88,
+      "notes": "Agent explicitly flags client identity ambiguity (location-based references vs named contacts), missing POs, no delivery timelines, inter-city/inter-state logistics considerations, and the question of whether these orders should be combined for procurement efficiency. Flags are well-reasoned and actionable rather than noise. Minor deduction: the 'no ambiguous correlations' declaration is slightly overconfident given how sparse the input is described to be — there could be edge cases not visible."
+    }
+  },
+  "pass_criteria_met": true,
+  "passes": [
+    "Two separate parent tasks correctly created for Tezpur (2 units) and Ranchi (1 unit) — not merged",
+    "Correct client attribution: Tezpur Army Unit and Ranchi Army Unit separately identified",
+    "Informal client references ('Tezpur walo', 'Ranchi unit') resolved with explicit annotation and caveat",
+    "Source threads tracked separately (Client Group vs All Staff Group)",
+    "Client identity ambiguity flagged for human review — actual contact names not assumed",
+    "Cross-order procurement efficiency opportunity flagged for Ashish's decision",
+    "Missing supplier, timeline, and formal PO gaps all surfaced as actionable flags",
+    "Logical subtask hierarchy maintained under each parent task"
+  ],
+  "failures": [
+    "Slight overconfidence in declaring 'no ambiguity' on correlation — input sparseness acknowledged in self-evaluation but the ambiguity section could have more explicitly invited human confirmation rather than declaring separation certain",
+    "Pre-output reasoning and self-evaluation tables are included in the output, which adds noise for an operational system expecting clean task list output only"
+  ],
+  "notes": "Strong output that cleanly satisfies the core pass criterion: two separate orders correctly attributed to two different clients with right quantities. The agent handled informal location-based references well, resolved them without silently guessing, and appropriately flagged the identity gap. The cross-order procurement note shows good operational awareness. Minor issues are stylistic (verbose self-evaluation included in response) and a marginal overconfidence on ambiguity resolution, neither of which would cause operational failure.",
+  "case_id": "R3-C-L2-01",
+  "case_name": "two_tandoor_orders_informalabbreviated_client_refe",
+  "framework": "R3-C",
+  "level": "L2",
+  "evaluated_at": "2026-03-26T04:40:35",
+  "model_used": "claude-sonnet-4-6",
+  "eval_model": "claude-sonnet-4-6"
+}

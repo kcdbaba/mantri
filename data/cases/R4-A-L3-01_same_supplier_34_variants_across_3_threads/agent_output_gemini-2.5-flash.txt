@@ -1,0 +1,46 @@
+UNIFIED TASK LIST — 24 Mar
+Threads processed: Client Group, Supplier Group, All Staff Group
+
+📦 PARENT TASK: Tandoor Order — Client (Unidentified)
+   Entity: Client (Unidentified - implied by "Client Group"), Ashish (internal), Staff 1 (internal), Staff 2 (internal), S. Sharma & Co. / Sharma ji (supplier)
+   Item: Tandoor
+   Status: In Progress — goods expected tomorrow (25 Mar)
+   Due: 25 Mar (receipt at Ashish's end)
+   Priority: Medium
+   Source threads: Client Group, Supplier Group, All Staff Group
+
+   ↳ SUBTASK 1: Confirm tandoor delivery from S. Sharma & Co.
+      Assigned to: Staff 1
+      Status: Completed — confirmed for tomorrow (25 Mar)
+      Next step: No further action required for this specific confirmation, but monitor for receipt.
+
+   ↳ SUBTASK 2: Prepare packaging for incoming goods
+      Assigned to: Staff 2
+      Status: Pending
+      Due: 25 Mar (before goods arrive)
+      Next step: Ensure necessary packaging materials are available and ready for the tandoor's arrival.
+
+   ↳ SUBTASK 3 (Implicit): Goods received at Ashish's end
+      Assigned to: Staff (relevant receiving staff)
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Standard Equipment Procurement orders (Type 1). No message evidence found yet.
+      Next step: Track arrival of goods on 25 Mar. Assign staff to receive and log the tandoor once it arrives.
+
+   ↳ SUBTASK 4 (Implicit): Inspection and sorting of tandoor
+      Assigned to: Staff (relevant inspection staff)
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Standard Equipment Procurement orders (Type 1). No message evidence found.
+      Next step: Schedule inspection immediately upon receipt of the tandoor.
+
+   ↳ SUBTASK 5 (Implicit): Arrange delivery to client
+      Assigned to: Ashish / Staff
+      Status: Pending — not detected in threads
+      Note: Expected at this stage for Standard Equipment Procurement orders (Type 1). No message evidence found.
+      Next step: Once goods are received and inspected, determine the client's preferred delivery method and schedule.
+
+⚠️ FLAGS:
+   - Client identity is not explicitly mentioned in the provided threads; assumed to be for an unidentified client based on "Client Group" context.
+   - The specific model/type of tandoor is not mentioned. Assumed to be a single tandoor based on singular references.
+
+❓ AMBIGUOUS CORRELATIONS (needs human review):
+   - "Sharma ji" (Thread 2) and "S. Sharma & Co." (Thread 3) are tentatively correlated as the same supplier based on the context of imminent delivery ("kal tak"/"kal aayega") of goods (tandoor). Please confirm if these refer to the same entity.
