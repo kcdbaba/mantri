@@ -37,16 +37,16 @@ RED        = (255, 90, 90)
 # ── Font helpers ─────────────────────────────────────────────────────────────
 def font(size, bold=False):
     """Load SF Pro or fallback system font."""
+    # DejaVu Sans first — full Unicode coverage (✓ ✗ → ● etc.)
     candidates = [
+        "/Users/kunalc/anaconda3/pkgs/font-ttf-dejavu-sans-mono-2.37-hab24e00_0/fonts/DejaVuSans.ttf",
         "/System/Library/Fonts/Supplemental/Arial.ttf",
         "/System/Library/Fonts/Helvetica.ttc",
-        "/System/Library/Fonts/SFNS.ttf",
         "/Library/Fonts/Arial.ttf",
     ]
     if bold:
         bold_candidates = [
             "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
-            "/System/Library/Fonts/Helvetica.ttc",
         ]
         candidates = bold_candidates + candidates
     for path in candidates:
@@ -174,11 +174,11 @@ def slide_03():
     draw.line([(80, 142), (480, 142)], fill=ACCENT, width=3)
 
     features = [
-        ("👁  Passive observer",   "Monitors messages — never posts to groups"),
-        ("🔗  Cross-group linking", "Correlates the same order across multiple threads"),
-        ("🏷  Entity resolution",   "Understands 'Kapoor ji', 'Kapoor Steel', 'KS' → same entity"),
-        ("⚡  Implicit task detection", "Surfaces tasks implied by context, not just explicit requests"),
-        ("🚨  Priority alerting",   "Flags what needs action before it's too late"),
+        ("◉  Passive observer",   "Monitors messages — never posts to groups"),
+        ("⊕  Cross-group linking", "Correlates the same order across multiple threads"),
+        ("◈  Entity resolution",   "Understands 'Kapoor ji', 'Kapoor Steel', 'KS' → same entity"),
+        ("◆  Implicit task detection", "Surfaces tasks implied by context, not just explicit requests"),
+        ("▲  Priority alerting",   "Flags what needs action before it's too late"),
     ]
 
     y = 175
@@ -199,14 +199,14 @@ def slide_04():
     f_sm = font(26)
     f_xs = font(22)
 
-    draw.text((80, 70), "SATA Prototype — Real Data Test", font=f_h, fill=WHITE)
-    draw.line([(80, 142), (740, 142)], fill=ACCENT2, width=3)
+    draw.text((80, 70), "The Prototype", font=f_h, fill=WHITE)
+    draw.line([(80, 142), (380, 142)], fill=ACCENT2, width=3)
 
     # Left: order facts
     facts = [
-        ("Army unit:", "SATA Battery Battalion"),
-        ("Items:",     "14 procurement items"),
-        ("Suppliers:", "Voltas, LG / Sanbira, GeM portal + 2 more"),
+        ("Army unit:", "SATA Battery"),
+        ("Order:",     "14 procurement items"),
+        ("Suppliers:", "Voltas, LG / Sanbira, + 2 more"),
         ("Groups:",    "4 WhatsApp threads merged"),
         ("Data:",      "Real messages, names replaced"),
     ]
@@ -221,7 +221,7 @@ def slide_04():
     draw.text((1460, 180), "Agent Surfaced", font=font(30, bold=True), fill=ACCENT, anchor="mm")
 
     highlights = [
-        (GREEN, "✓", "All 14 item types identified"),
+        (GREEN, "✓", "All 14 itemss identified"),
         (GREEN, "✓", "7 ambiguities flagged for human review"),
         (GREEN, "✓", "21-day Amazon silent drop detected"),
         (GREEN, "✓", "Missing supplier threads flagged"),
@@ -287,7 +287,7 @@ def slide_05():
 
     draw.text((1475, 885), "31 test cases total · LLM-as-judge auto-scorer", font=font(24), fill=ACCENT, anchor="mm")
 
-    add_footer(draw, 5, 11)
+    add_footer(draw, 6, 11)
     return img
 
 
@@ -325,7 +325,7 @@ def slide_06():
     draw.text((1410, 540), "Complex real-world order, 4 groups", font=f_sm, fill=MID_GRAY, anchor="mm")
     draw.text((1410, 580), "claude-sonnet-4-6", font=font(24), fill=DIM_GRAY, anchor="mm")
 
-    add_footer(draw, 6, 11)
+    add_footer(draw, 7, 11)
     return img
 
 
@@ -379,7 +379,7 @@ def slide_07():
 
     draw.text((W // 2, 940), "Verdict: Claude Sonnet remains production model at current complexity", font=f_sm, fill=ACCENT, anchor="mm")
 
-    add_footer(draw, 7, 11)
+    add_footer(draw, 8, 11)
     return img
 
 
@@ -424,7 +424,7 @@ def slide_08():
     draw.text((W // 2, 900), "Sprint 2 fix: task-type subtask checklists injected into prompt", font=f_sm, fill=ACCENT, anchor="mm")
     draw.text((W // 2, 945), "Precursor to Sprint 3 task lifecycle state machine", font=font(24), fill=MID_GRAY, anchor="mm")
 
-    add_footer(draw, 8, 11)
+    add_footer(draw, 9, 11)
     return img
 
 
@@ -462,7 +462,7 @@ def slide_09():
             y += 56
         y += 30
 
-    add_footer(draw, 9, 11)
+    add_footer(draw, 10, 11)
     return img
 
 
@@ -484,12 +484,14 @@ def slide_10():
         ("Output",   "Structured threads.txt — exact agent input format"),
     ]
     y = 185
+    DESC_MAX_W = 590   # x=260 to x=850, safely inside the pill (80+860=940)
+    PILL_H     = 120
     for label, desc in steps:
-        pill(draw, 80, y, 860, 100, (25, 38, 55), radius=14)
-        pill(draw, 96, y + 18, 130, 64, ACCENT2, radius=10)
-        draw.text((161, y + 37), label, font=font(26, bold=True), fill=BG, anchor="mm")
-        draw.text((260, y + 24), desc, font=f_b, fill=WHITE)
-        y += 114
+        pill(draw, 80, y, 860, PILL_H, (25, 38, 55), radius=14)
+        pill(draw, 96, y + 22, 130, 76, ACCENT2, radius=10)
+        draw.text((161, y + 47), label, font=font(26, bold=True), fill=BG, anchor="mm")
+        draw_text_wrapped(draw, desc, 260, y + 20, DESC_MAX_W, f_sm, WHITE, line_spacing=1.35)
+        y += PILL_H + 14
 
     # Right: two modes
     pill(draw, 1000, 160, 860, 760, (20, 32, 48), radius=18)
@@ -511,7 +513,7 @@ def slide_10():
     draw.text((1430, 840), "Vision annotation: payment_confirmation · proforma_invoice", font=f_xs, fill=MID_GRAY, anchor="mm")
     draw.text((1430, 875), "delivery_challan · order_list · payment_ledger", font=f_xs, fill=MID_GRAY, anchor="mm")
 
-    add_footer(draw, 10, 11)
+    add_footer(draw, 5, 11)
     return img
 
 
@@ -547,81 +549,108 @@ def slide_11():
 
 
 # ── Voiceover scripts ─────────────────────────────────────────────────────────
+# Order must match SLIDE_FUNCS exactly:
+# 01 Title | 02 Problem | 03 Solution | 04 SATA | 05 Case Extractor |
+# 06 Eval Framework | 07 Results | 08 Model Comparison | 09 Cadence Gap |
+# 10 Sprint 2 | 11 Wrap-up
 VOICEOVERS = [
-    # Slide 1
-    "This is the Sprint 1 demo for Mantri — an A.I. operations agent for Ashish's Army supply business. "
-    "I'm Kunal Chowdhury's demo agent. Here's what we built.",
+    # Slide 1 — Title
+    "This is the Sprint 1 demo for Mantri — an A.I. operations agent for an Army supply business.",
 
-    # Slide 2
-    "Ashish runs an Army supply business in Guwahati, tracking 10 to 20 concurrent orders across dozens of WhatsApp groups — "
-    "Army units, suppliers, and staff — entirely in his head. "
-    "No system. A supplier confirms delivery in one group, payment happens in another. "
-    "At scale, things get missed.",
+    # Slide 2 — The Problem
+    "Ashish runs an Army supply business in Guwahati. He manages procurement, delivery, and client coordination "
+    "entirely through WhatsApp — across dozens of groups and one-on-ones. "
+    "At any moment he's tracking 10 to 20 concurrent orders involving multiple suppliers, Army units, and staff members. "
+    "The problem: there is no system. Tasks fall through the gaps. A supplier confirms delivery in one group, "
+    "payment is discussed in another, and Ashish has to mentally correlate it all in real time — "
+    "in Hinglish, with informal names and abbreviations. At scale, things get missed.",
 
-    # Slide 3
-    "Mantri is a background A.I. agent that monitors Ashish's WhatsApp messages, extracts tasks, "
-    "and surfaces what needs attention — without ever posting or interfering. "
-    "It speaks the same informal Hinglish his team uses, including supplier nicknames and officer titles. "
-    "Ashish doesn't change how he works.",
+    # Slide 3 — The Solution
+    "Mantri is a background A.I. agent that monitors Ashish's WhatsApp messages. "
+    "It extracts tasks, tracks their status across groups, and surfaces what needs attention — "
+    "without ever posting or interfering with Ashish's existing workflows. "
+    "The agent speaks the same informal language Ashish's team uses: Hinglish, location shorthand, "
+    "officer titles, supplier nicknames. It doesn't require Ashish to change how he works.",
 
-    # Slide 4
-    "In Sprint 1 we tested the extraction agent on a real Army procurement — SATA Battery Battalion. "
-    "Four WhatsApp groups. 14 items. 5 suppliers. "
-    "The agent identified all items, attributed them to the right suppliers, "
-    "flagged 7 ambiguities for human review, "
-    "and surfaced a 21-day Amazon silent drop with no explicit mention in the messages.",
+    # Slide 4 — The Prototype
+    "In Sprint 1 we built and tested the extraction agent on the SATA order — "
+    "a real, complex multi-item procurement from a real Army unit. "
+    "The order spanned four WhatsApp groups: a client group, two supplier groups, and an internal coordination group. "
+    "14 items. 5 suppliers. Multiple concurrent payment and delivery threads. "
+    "We ran the agent on the complete four-thread context. "
+    "It identified all major items, correctly attributed them to the right suppliers, "
+    "flagged 7 ambiguous correlations for human review, and surfaced implicit tasks — "
+    "like a 21-day gap on an Amazon order with no follow-up — without any explicit mention in the messages.",
 
-    # Slide 5
-    "To build test cases from real data, we wrote a case extractor. "
-    "It takes raw WhatsApp exports, filters a time window across multiple groups, "
-    "and uses Claude Vision to annotate attached files — "
-    "payment screenshots, invoices, delivery challans — "
-    "producing a structured multi-thread input ready for the evaluation agent.",
+    # Slide 5 — Case Extractor Tool
+    "To build test cases from real data, we wrote a case extractor tool. "
+    "It takes raw WhatsApp chat exports, filters a time window across multiple groups, "
+    "and uses Claude Vision to annotate attached images and documents — "
+    "payment screenshots, invoices, and delivery challans — "
+    "producing a structured multi-thread input in exactly the format the evaluation agent expects. "
+    "Cases can be defined with a metadata file for repeatability, "
+    "or extracted ad-hoc for quick exploration. "
+    "This tool is what bridges Ashish's real WhatsApp data and our evaluation pipeline.",
 
-    # Slide 6
-    "We designed an evaluation framework with six quality dimensions: "
-    "task recall, entity accuracy, cross-thread correlation, next step quality, "
-    "implicit task detection, and ambiguity flagging. "
-    "31 test cases across three complexity levels, "
-    "automatically scored by a second L.L.M. acting as judge.",
+    # Slide 6 — Evaluation Framework
+    "To measure quality systematically, we designed an evaluation framework with six dimensions: "
+    "task recall, entity accuracy, cross-thread correlation, next step quality, implicit task detection, and ambiguity flagging. "
+    "The hardest and most important is recall — missing a task entirely is the most costly failure mode. "
+    "We built 31 test cases across three complexity levels. "
+    "Level 1 covers single-thread, single-entity scenarios. "
+    "Level 2 adds abbreviation and cross-thread challenges. "
+    "Level 3 handles the hardest cases: interleaved messages, concurrent orders, and real multi-supplier complexity. "
+    "Each run is automatically scored by a second L.L.M. acting as judge, evaluating against structured pass criteria.",
 
-    # Slide 7
-    "On 16 synthetic test cases, three rounds of prompt iteration brought us from 11 out of 16 to 16 out of 16. "
-    "On the real SATA case — the hardest in the set — Claude Sonnet scored 88 out of 100. "
-    "Entity resolution and cross-thread correlation held up. The core logic worked.",
+    # Slide 7 — Sprint 1 Results
+    "On the 16 synthetic test cases, we ran three rounds of prompt iteration. "
+    "The first run scored 11 out of 16. "
+    "After calibrating entity resolution, adding a separation-default rule, "
+    "and fixing the structural decomposition for unidentified clients, we reached 16 out of 16. "
+    "On the real SATA case — the hardest case in the set — Claude Sonnet scored 88 out of 100. "
+    "The main gaps were at the margin: two item categories not surfaced as discrete tasks, "
+    "and post-delivery checklist items not made explicit. The core logic worked.",
 
-    # Slide 8
-    "We also ran Gemini 2.5 Flash as a cheaper alternative. "
-    "Same SATA case: 52 out of 100 — partial fail. "
-    "Output truncated mid-sentence. Half the task list never delivered. "
-    "No supplier-gap flags raised. "
+    # Slide 8 — Model Comparison
+    "We also evaluated Gemini 2.5 Flash as a cheaper alternative. "
+    "On the same SATA case, Gemini scored 52 out of 100 — a partial fail. "
+    "The critical failure was output truncation: the response cut off mid-sentence, "
+    "meaning roughly half the task list was never delivered. "
+    "Items like batteries and basketball shoes were absent entirely. "
+    "No supplier-thread gap flags were raised. "
+    "The verdict: Gemini 2.5 Flash is not reliable enough for this task at current complexity. "
     "Claude Sonnet remains the production model.",
 
-    # Slide 9
-    "Testing confirmed one gap: cadence implicit tasks. "
-    "Reactive implicit tasks — inferring a follow-up from supplier silence — were handled well. "
-    "But procedural milestones that should always happen at a certain stage, "
-    "regardless of what messages say, were missed. "
-    "This is Sprint 2's top priority.",
+    # Slide 9 — Cadence Gap
+    "Testing also revealed a confirmed gap: cadence implicit tasks. "
+    "The agent handles reactive implicit tasks well — "
+    "inferring a follow-up from a supplier's silence, for example. "
+    "But procedural milestones — things that should always happen at a certain stage of every order, "
+    "regardless of what messages say — were missed. Pre-dispatch checklist review. Final payment confirmation. "
+    "This is the highest-priority quality risk going into Sprint 2.",
 
-    # Slide 10
-    "Sprint 2 injects task-type subtask checklists to catch procedural milestones, "
-    "conducts user research with Ashish and staff, and finalises the live monitoring design. "
-    "Sprint 3 target: full deployment, Ashish using it in production.",
+    # Slide 10 — Sprint 2 Direction
+    "Sprint 2 builds on this. "
+    "We're injecting task-type subtask checklists into the prompt — "
+    "empirically derived from Ashish's historical orders — to catch procedural milestones. "
+    "We're also designing the live monitoring system and conducting user research with Ashish and his staff. "
+    "The goal by Sprint 2 end: reliable extraction on live data, with Ashish validating in real conditions. "
+    "Sprint 3 target is full live deployment — Ashish using it.",
 
-    # Slide 11
-    "Sprint 1 delivered: problem defined, real-data prototype validated, "
-    "case extractor built, 31-case evaluation framework live, "
-    "and model comparison done. "
-    "Final demo: May 1st.",
+    # Slide 11 — Wrap-up
+    "Sprint 1 delivered: problem defined, extraction prototype validated on real data, "
+    "case extractor tool built, 31-case evaluation framework live, "
+    "evaluation data workflow complete, and the first model comparison done. "
+    "The live monitoring and message router designs are also complete, setting up the Sprint 3 build. "
+    "Final demo target: May 1st. Thank you.",
 ]
 
 # Duration per slide (seconds) — approximate, actual is driven by audio length
-DURATIONS = [10, 26, 22, 28, 25, 28, 25, 22, 22, 18, 14]
+DURATIONS = [12, 35, 28, 35, 30, 40, 33, 32, 28, 28, 20]
 
 SLIDE_FUNCS = [
-    slide_01, slide_02, slide_03, slide_04, slide_05,
-    slide_06, slide_07, slide_08, slide_09, slide_10, slide_11,
+    slide_01, slide_02, slide_03, slide_04, slide_10,   # 1-5: case extractor now pos 5
+    slide_05, slide_06, slide_07, slide_08, slide_09, slide_11,  # 6-11
 ]
 
 
@@ -706,17 +735,30 @@ def _say_tts(text: str, wav_path: Path):
     aiff_path.unlink(missing_ok=True)
 
 
-def generate_audio(gemini_voice: str = "Kore"):
+def generate_audio(gemini_voice: str = "Kore", overwrite: bool = True):
     use_gemini = bool(os.environ.get("GOOGLE_API_KEY"))
     engine = f"Gemini TTS (voice: {gemini_voice})" if use_gemini else "macOS `say` (fallback)"
     print(f"Generating audio with {engine}...")
 
+    import time
     for i, vo in enumerate(VOICEOVERS):
         wav_path = AUDIO_DIR / f"slide_{i+1:02d}.wav"
-        if use_gemini:
-            _gemini_tts(vo, wav_path, voice=gemini_voice)
-        else:
-            _say_tts(vo, wav_path)
+        if not overwrite and wav_path.exists():
+            print(f"  – {wav_path} (skipped, exists)")
+            continue
+        for attempt in range(3):
+            try:
+                if use_gemini:
+                    _gemini_tts(vo, wav_path, voice=gemini_voice)
+                else:
+                    _say_tts(vo, wav_path)
+                break
+            except Exception as e:
+                if attempt < 2:
+                    print(f"  ⚠ slide {i+1:02d} attempt {attempt+1} failed: {e} — retrying in 5s")
+                    time.sleep(5)
+                else:
+                    raise
         print(f"  ✓ {wav_path}")
 
 
@@ -731,48 +773,45 @@ def get_audio_duration(audio_path):
 
 
 def assemble_video():
-    print("Assembling video...")
+    """Single-pass assembly using filter_complex concat — no intermediate segments."""
+    print("Assembling video (single-pass filter_complex)...")
 
-    # Build a concat list with per-segment files
-    segment_files = []
-    for i in range(len(SLIDE_FUNCS)):
+    n = len(SLIDE_FUNCS)
+    cmd = ["ffmpeg", "-y"]
+
+    # Add all inputs: alternating slide image + audio wav
+    durations = []
+    for i in range(n):
         slide_path = SLIDE_DIR / f"slide_{i+1:02d}.png"
         audio_path = AUDIO_DIR / f"slide_{i+1:02d}.wav"
-
-        # Get actual audio duration (+ 0.5s pause)
         duration = get_audio_duration(audio_path) + 0.5
+        durations.append(duration)
+        cmd += ["-loop", "1", "-t", str(duration), "-i", str(slide_path)]
+        cmd += ["-i", str(audio_path)]
 
-        # Create a short video segment: still image + audio (encode WAV → AAC once here)
-        seg_path = AUDIO_DIR / f"seg_{i+1:02d}.mp4"
-        subprocess.run([
-            "ffmpeg", "-y",
-            "-loop", "1", "-i", str(slide_path),
-            "-i", str(audio_path),
-            "-c:v", "libx264", "-preset", "fast", "-crf", "20",
-            "-c:a", "aac", "-b:a", "192k", "-ar", "44100",
-            "-t", str(duration),
-            "-vf", "scale=1920:1080",
-            "-pix_fmt", "yuv420p",
-            str(seg_path),
-        ], check=True, capture_output=True)
-        segment_files.append(seg_path)
-        print(f"  ✓ segment {i+1:02d}  ({duration:.1f}s)")
+    # Build filter_complex: scale each video input, pad audio to slide duration, then concat
+    filter_parts = []
+    for i in range(n):
+        vi = i * 2       # video input index
+        ai = i * 2 + 1   # audio input index
+        d  = durations[i]
+        filter_parts.append(f"[{vi}:v]scale=1920:1080,setsar=1,fps=25[v{i}]")
+        # apad ensures audio fills exactly the slide duration — no trailing bleed
+        filter_parts.append(f"[{ai}:a]aresample=44100,apad=whole_dur={d}[a{i}]")
 
-    # Write concat list
-    concat_list = AUDIO_DIR / "concat.txt"
-    with open(concat_list, "w") as f:
-        for seg in segment_files:
-            f.write(f"file '{seg.resolve()}'\n")
+    v_inputs = "".join(f"[v{i}][a{i}]" for i in range(n))
+    filter_parts.append(f"{v_inputs}concat=n={n}:v=1:a=1[outv][outa]")
 
-    # Concatenate all segments
-    subprocess.run([
-        "ffmpeg", "-y",
-        "-f", "concat", "-safe", "0",
-        "-i", str(concat_list),
-        "-c", "copy",
-        OUTPUT_VIDEO,
-    ], check=True)
+    cmd += ["-filter_complex", ";".join(filter_parts)]
+    cmd += ["-map", "[outv]", "-map", "[outa]"]
+    cmd += ["-c:v", "libx264", "-preset", "fast", "-crf", "20", "-pix_fmt", "yuv420p"]
+    cmd += ["-c:a", "aac", "-b:a", "192k"]
+    cmd += [OUTPUT_VIDEO]
 
+    for i, d in enumerate(durations):
+        print(f"  slide {i+1:02d}  ({d:.1f}s)")
+
+    subprocess.run(cmd, check=True, capture_output=True)
     print(f"\n✅  Video written to: {OUTPUT_VIDEO}")
 
 
@@ -790,9 +829,12 @@ if __name__ == "__main__":
     # --video-only skips slide rendering and audio (re-assemble video only)
     video_only = "--video-only" in sys.argv
 
+    # --no-overwrite keeps existing WAV files (useful when retrying failed slides)
+    overwrite = "--no-overwrite" not in sys.argv
+
     if not audio_only and not video_only:
         render_slides()
     if not video_only:
-        generate_audio(gemini_voice=voice)
+        generate_audio(gemini_voice=voice, overwrite=overwrite)
     if not audio_only:
         assemble_video()

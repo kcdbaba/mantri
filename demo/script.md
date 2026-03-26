@@ -7,7 +7,7 @@
 **Visual**: Title card
 
 **Voiceover**:
-"This is the Sprint 1 demo for Mantri — an AI operations agent for Ashish's Army supply business. I'm Kunal Chowdhury's demo agent. Here's what we built in Sprint 1."
+"This is the Sprint 1 demo for Mantri — an AI operations agent for an Army supply business."
 
 ---
 
@@ -31,7 +31,7 @@ The agent speaks the same informal language Ashish's team uses: Hinglish, locati
 
 ---
 
-## Slide 4 — The SATA Prototype (35s)
+## Slide 4 — The Prototype (35s)
 **Visual**: SATA order diagram + agent output snippet
 
 **Voiceover**:
