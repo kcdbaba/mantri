@@ -269,6 +269,19 @@ These parameters directly affect when and how the agent fires implicit tasks. Th
 - "When a staff member is on leave or unavailable, how does the team currently handle task hand-offs and follow-ups? Would you want the agent to detect staff inactivity — no WhatsApp activity for an unusual period — and flag it automatically? Or would you prefer someone to manually mark a staff member as absent on a dashboard so alerts re-route correctly? Or both?" *(Alert routing design — absent/on-leave staff handling: determines whether inactivity detection is needed or manual dashboard tagging is sufficient)*
 - "We plan to allow staff to update task statuses on a dashboard, but with a required approval step for more junior staff. Who in your team would have approval authority — just you, or would Pramod or another senior staff member also be able to approve? And would that authority be the same across all task types, or should different people have authority over different kinds of tasks — for example, Pramod for CDA and accounts corrections, Samita for supplier-related ones?" *(Correction flow design — approval authority and task-type-based routing: determines how many approvers, whether approval is role-based or task-type-based, and whether any corrections can bypass approval entirely)*
 
+### WhatsApp Business API Setup (5 min — action item)
+
+**Context to explain to Ashish**: The agent uses two separate WhatsApp numbers. One monitors your existing groups by being added as a member (visible, but never posts). The other is a dedicated bot number that sends you and staff alerts in 1:1 chats only — it never posts to any group, enforced in the code. To use the official Meta WhatsApp Business API for the bot number, we need to register a new dedicated phone number through Meta and complete a one-time business verification. This takes 3–7 business days and must happen before the May 1 final demo.
+
+**Why this matters**: Using an unofficial approach (Baileys) for automated sends risks the bot number being banned by WhatsApp, which would stop all alerts and digests. The official API has no ban risk and costs approximately ₹33–50/month at expected alert volumes.
+
+**Questions:**
+- "We need a new dedicated SIM card for the bot number — not your personal number. Are you comfortable getting one for this?"
+- "Meta requires business verification: business name (Uttam Enterprise), address, and a tax document (GST certificate or similar). Can you have those ready? We'll do the registration together."
+- "The bot number would be added to your operational groups as a silent member — it reads messages there but never posts. You and staff would save it as a contact for 1:1 alerts. Does that work?"
+
+*(Critical path: verification must start by April 18 to be ready for May 1. If not feasible, we fall back to a Baileys second number — functional but carries ToS risk.)*
+
 ### Closing (5 min)
 - "What's the one thing you most want this to do well that we haven't covered today?"
 - "What would make you confident enough to rely on this in a busy week?"
