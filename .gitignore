@@ -13,3 +13,4 @@ temp/
 logs/
 data/enriched/
 data/raw_chats/
+data/mantri.db

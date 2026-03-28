@@ -29,8 +29,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from src.agent.update_agent import run_update_agent, AgentOutput
 from src.router.router import route
 
-CASES_DIR = Path("functional_tests")
-RESULTS_DIR = Path("functional_tests/results")
+CASES_DIR = Path("tests/functional_tests")
+RESULTS_DIR = Path("tests/functional_tests/results")
 
 
 # ---------------------------------------------------------------------------
