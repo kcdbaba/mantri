@@ -5,7 +5,7 @@ Requires=redis.service
 
 [Service]
 Type=simple
-User={{ app_user }}
+User=root
 WorkingDirectory={{ app_dir }}
 EnvironmentFile=/etc/mantri/secrets.env
 Environment=REDIS_URL={{ redis_url }}

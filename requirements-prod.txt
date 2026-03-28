@@ -1,0 +1,15 @@
+# Production dependencies — Sprint 3
+# Excludes: sentence-transformers (MiniLM deferred), openai-whisper,
+#           paddlepaddle, paddleocr (OCR pipeline deferred), ffmpeg-python
+
+fastapi
+uvicorn[standard]
+redis
+anthropic
+pydantic
+rapidfuzz
+google-generativeai
+datasette
+jinja2
+python-multipart
+httpx

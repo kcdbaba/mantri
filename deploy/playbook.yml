@@ -1,13 +1,12 @@
 ---
 # Mantri deployment playbook
-# Usage: ansible-playbook deploy/playbook.yml --ask-vault-pass
-#
-# Prerequisites:
-#   1. DigitalOcean Droplet created (Ubuntu 24.04, Bangalore, 2GB)
-#   2. MANTRI_HOST env var set to Droplet IP: export MANTRI_HOST=<ip>
-#   3. SSH key added to Droplet during creation
-#   4. secrets.yml encrypted: ansible-vault encrypt deploy/vars/secrets.yml
-#      (fill in real values before encrypting)
+# Usage (from project root):
+#   source .env
+#   ssh-add ~/.ssh/DO_Mantri_droplet
+#   echo "$ANSIBLE_VAULT_PASSWORD" | ansible-playbook deploy/playbook.yml \
+#     --vault-password-file /dev/stdin \
+#     -i deploy/inventory.yml \
+#     --private-key ~/.ssh/DO_Mantri_droplet
 
 - name: Provision and configure Mantri server
   hosts: mantri
@@ -35,7 +34,7 @@
           - python3-pip
           - redis-server
           - git
-          - ffmpeg        # whisper transcription
+          - ffmpeg
           - ufw
         state: present
 
@@ -71,28 +70,14 @@
         direction: incoming
 
     # -----------------------------------------------------------------------
-    # App user + directories
+    # Directories
     # -----------------------------------------------------------------------
 
-    - name: Create app user
-      ansible.builtin.user:
-        name: "{{ app_user }}"
-        system: yes
-        shell: /bin/bash
-        home: "{{ app_dir }}"
-        create_home: yes
-
-    - name: Create required directories
+    - name: Create /etc/mantri directory
       ansible.builtin.file:
-        path: "{{ item }}"
+        path: /etc/mantri
         state: directory
-        owner: "{{ app_user }}"
-        group: "{{ app_user }}"
         mode: "0755"
-      loop:
-        - "{{ app_dir }}/data"
-        - "{{ app_dir }}/logs"
-        - /etc/mantri
 
     # -----------------------------------------------------------------------
     # Secrets
@@ -102,8 +87,6 @@
       ansible.builtin.template:
         src: templates/secrets.env.j2
         dest: /etc/mantri/secrets.env
-        owner: "{{ app_user }}"
-        group: "{{ app_user }}"
         mode: "0600"
 
     # -----------------------------------------------------------------------
@@ -116,19 +99,26 @@
         dest: "{{ app_dir }}"
         version: "{{ repo_branch }}"
         force: yes
-      become_user: "{{ app_user }}"
+        update: yes
+
+    - name: Create data and logs directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0755"
+      loop:
+        - "{{ app_dir }}/data"
+        - "{{ app_dir }}/logs"
 
     - name: Create Python venv
       ansible.builtin.command:
         cmd: python3.12 -m venv "{{ venv_dir }}"
         creates: "{{ venv_dir }}/bin/activate"
-      become_user: "{{ app_user }}"
 
     - name: Install Python dependencies
       ansible.builtin.pip:
-        requirements: "{{ app_dir }}/requirements.txt"
+        requirements: "{{ app_dir }}/{{ requirements_file }}"
         virtualenv: "{{ venv_dir }}"
-      become_user: "{{ app_user }}"
 
     # -----------------------------------------------------------------------
     # Database
@@ -140,7 +130,6 @@
         chdir: "{{ app_dir }}"
       environment:
         DB_PATH: "{{ db_path }}"
-      become_user: "{{ app_user }}"
       register: db_init
       changed_when: "'Schema initialised' in db_init.stdout"
 
