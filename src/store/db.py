@@ -190,6 +190,21 @@ CREATE TABLE IF NOT EXISTS task_event_log (
     ts              INTEGER
 );
 
+-- Dead-letter queue for linkage_worker events that fail after all retries.
+-- Developer-facing: inspect payload, fix root cause, replay by re-publishing
+-- fields_json back to the task_events stream.
+CREATE TABLE IF NOT EXISTS dead_letter_events (
+    id              TEXT PRIMARY KEY,
+    stream_key      TEXT NOT NULL,
+    event_id        TEXT NOT NULL,
+    fields_json     TEXT NOT NULL,  -- full Redis stream fields as JSON
+    failure_reason  TEXT NOT NULL,
+    attempts        INTEGER NOT NULL DEFAULT 1,
+    first_failed_at INTEGER NOT NULL,
+    last_failed_at  INTEGER NOT NULL,
+    resolved        INTEGER NOT NULL DEFAULT 0  -- 1 once replayed / dismissed
+);
+
 -- Usage / cost tracking
 
 CREATE TABLE IF NOT EXISTS usage_log (

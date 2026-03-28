@@ -1,0 +1,177 @@
+---
+# Mantri deployment playbook
+# Usage: ansible-playbook deploy/playbook.yml --ask-vault-pass
+#
+# Prerequisites:
+#   1. DigitalOcean Droplet created (Ubuntu 24.04, Bangalore, 2GB)
+#   2. MANTRI_HOST env var set to Droplet IP: export MANTRI_HOST=<ip>
+#   3. SSH key added to Droplet during creation
+#   4. secrets.yml encrypted: ansible-vault encrypt deploy/vars/secrets.yml
+#      (fill in real values before encrypting)
+
+- name: Provision and configure Mantri server
+  hosts: mantri
+  vars_files:
+    - vars/main.yml
+    - vars/secrets.yml
+
+  tasks:
+
+    # -----------------------------------------------------------------------
+    # System setup
+    # -----------------------------------------------------------------------
+
+    - name: Update apt cache and upgrade packages
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: dist
+        cache_valid_time: 3600
+
+    - name: Install system dependencies
+      ansible.builtin.apt:
+        name:
+          - python3.12
+          - python3.12-venv
+          - python3-pip
+          - redis-server
+          - git
+          - ffmpeg        # whisper transcription
+          - ufw
+        state: present
+
+    - name: Enable and start Redis
+      ansible.builtin.systemd:
+        name: redis-server
+        enabled: yes
+        state: started
+
+    # -----------------------------------------------------------------------
+    # Firewall
+    # -----------------------------------------------------------------------
+
+    - name: Allow SSH
+      community.general.ufw:
+        rule: allow
+        port: "22"
+
+    - name: Allow HTTPS
+      community.general.ufw:
+        rule: allow
+        port: "443"
+
+    - name: Allow HTTP (for Let's Encrypt renewal)
+      community.general.ufw:
+        rule: allow
+        port: "80"
+
+    - name: Enable UFW (deny all other inbound)
+      community.general.ufw:
+        state: enabled
+        policy: deny
+        direction: incoming
+
+    # -----------------------------------------------------------------------
+    # App user + directories
+    # -----------------------------------------------------------------------
+
+    - name: Create app user
+      ansible.builtin.user:
+        name: "{{ app_user }}"
+        system: yes
+        shell: /bin/bash
+        home: "{{ app_dir }}"
+        create_home: yes
+
+    - name: Create required directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: "{{ app_user }}"
+        group: "{{ app_user }}"
+        mode: "0755"
+      loop:
+        - "{{ app_dir }}/data"
+        - "{{ app_dir }}/logs"
+        - /etc/mantri
+
+    # -----------------------------------------------------------------------
+    # Secrets
+    # -----------------------------------------------------------------------
+
+    - name: Write secrets env file
+      ansible.builtin.template:
+        src: templates/secrets.env.j2
+        dest: /etc/mantri/secrets.env
+        owner: "{{ app_user }}"
+        group: "{{ app_user }}"
+        mode: "0600"
+
+    # -----------------------------------------------------------------------
+    # Code deployment
+    # -----------------------------------------------------------------------
+
+    - name: Clone / update repo
+      ansible.builtin.git:
+        repo: "{{ repo_url }}"
+        dest: "{{ app_dir }}"
+        version: "{{ repo_branch }}"
+        force: yes
+      become_user: "{{ app_user }}"
+
+    - name: Create Python venv
+      ansible.builtin.command:
+        cmd: python3.12 -m venv "{{ venv_dir }}"
+        creates: "{{ venv_dir }}/bin/activate"
+      become_user: "{{ app_user }}"
+
+    - name: Install Python dependencies
+      ansible.builtin.pip:
+        requirements: "{{ app_dir }}/requirements.txt"
+        virtualenv: "{{ venv_dir }}"
+      become_user: "{{ app_user }}"
+
+    # -----------------------------------------------------------------------
+    # Database
+    # -----------------------------------------------------------------------
+
+    - name: Initialise SQLite schema
+      ansible.builtin.command:
+        cmd: "{{ venv_dir }}/bin/python -m src.store.db"
+        chdir: "{{ app_dir }}"
+      environment:
+        DB_PATH: "{{ db_path }}"
+      become_user: "{{ app_user }}"
+      register: db_init
+      changed_when: "'Schema initialised' in db_init.stdout"
+
+    # -----------------------------------------------------------------------
+    # Systemd services
+    # -----------------------------------------------------------------------
+
+    - name: Install systemd service files
+      ansible.builtin.template:
+        src: "templates/{{ item }}.service.j2"
+        dest: "/etc/systemd/system/mantri-{{ item }}.service"
+        mode: "0644"
+      loop:
+        - router_worker
+        - linkage_worker
+        - cron_worker
+        - ambiguity_worker
+      notify: Reload systemd
+
+    - name: Enable and start Mantri services
+      ansible.builtin.systemd:
+        name: "mantri-{{ item }}"
+        enabled: yes
+        state: started
+      loop:
+        - router_worker
+        - linkage_worker
+        - cron_worker
+        - ambiguity_worker
+
+  handlers:
+    - name: Reload systemd
+      ansible.builtin.systemd:
+        daemon_reload: yes

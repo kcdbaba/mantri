@@ -1,0 +1,21 @@
+[Unit]
+Description=Mantri Ambiguity Worker
+After=network.target redis.service
+Requires=redis.service
+
+[Service]
+Type=simple
+User={{ app_user }}
+WorkingDirectory={{ app_dir }}
+EnvironmentFile=/etc/mantri/secrets.env
+Environment=REDIS_URL={{ redis_url }}
+Environment=DB_PATH={{ db_path }}
+ExecStart={{ venv_dir }}/bin/python -m src.alerts.ambiguity_worker
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=mantri-ambiguity
+
+[Install]
+WantedBy=multi-user.target

@@ -12,17 +12,26 @@ Stream entry fields:
 
 Sprint 3: processes events from all task types (standard_procurement,
 client_order, supplier_order). Skips linkage_task events to avoid loops.
+
+Retry + dead-letter:
+  Transient errors (Redis, DB lock) and agent failures are retried up to
+  MAX_RETRY_ATTEMPTS times with linear backoff. After all retries are
+  exhausted the event is written to dead_letter_events and acked to
+  prevent the PEL from growing unbounded.
+
+  Dead-letter alerts are logged at CRITICAL level and are intended for
+  the developer only — Ashish receives business-level alerts via the
+  ambiguity worker, not system health alerts.
 """
 
 import json
 import logging
 import time
 import uuid
-from pathlib import Path
 
 import redis
 
-from src.config import REDIS_URL, CRON_INTERVAL_SECONDS, AGENT_ERROR_LOG_PATH
+from src.config import REDIS_URL, CRON_INTERVAL_SECONDS, TASK_EVENTS_STREAM
 from src.linkage.agent import run_linkage_agent
 from src.store.task_store import (
     get_open_orders_summary,
@@ -35,16 +44,19 @@ from src.store.db import transaction
 
 log = logging.getLogger(__name__)
 
-TASK_EVENTS_STREAM = "task_events"
 CONSUMER_GROUP = "linkage_worker_group"
 CONSUMER_NAME = "linkage_worker_1"
+MAX_RETRY_ATTEMPTS = 3
 
 
-def _get_all_fulfillment_links() -> list[dict]:
+# ---------------------------------------------------------------------------
+# Internal helpers
+# ---------------------------------------------------------------------------
+
+def _get_all_fulfillment_links(open_orders: dict) -> list[dict]:
     """Return current fulfillment links for all open client orders."""
-    summary = get_open_orders_summary()
     all_links = []
-    for order in summary.get("client_orders", []):
+    for order in open_orders.get("client_orders", []):
         all_links.extend(get_fulfillment_links(order["task_id"]))
     return all_links
 
@@ -57,7 +69,53 @@ def _ensure_consumer_group(r: redis.Redis):
             raise
 
 
+def _write_dead_letter(
+    event_id: str, fields: dict, failure_reason: str, attempts: int
+):
+    now = int(time.time())
+    with transaction() as conn:
+        conn.execute(
+            """INSERT INTO dead_letter_events
+               (id, stream_key, event_id, fields_json, failure_reason,
+                attempts, first_failed_at, last_failed_at)
+               VALUES (?,?,?,?,?,?,?,?)""",
+            (
+                str(uuid.uuid4()),
+                TASK_EVENTS_STREAM,
+                event_id,
+                json.dumps(fields),
+                failure_reason,
+                attempts,
+                now,
+                now,
+            ),
+        )
+
+
+def _log_new_task_candidate(candidate: dict, message: dict, task_id: str):
+    with transaction() as conn:
+        conn.execute(
+            "INSERT INTO task_event_log (id, task_id, event_type, payload, ts) VALUES (?,?,?,?,?)",
+            (
+                str(uuid.uuid4()),
+                task_id,
+                "new_task_candidate",
+                json.dumps({"candidate": candidate, "source_message_id": message.get("message_id")}),
+                int(time.time()),
+            ),
+        )
+    log.info("Linkage new task candidate: %s", candidate)
+
+
+# ---------------------------------------------------------------------------
+# Core event processing — raises on retryable failures, returns on skips
+# ---------------------------------------------------------------------------
+
 def process_event(event_id: str, fields: dict, r: redis.Redis):
+    """
+    Process one stream event. Acks on success or deliberate skip.
+    Raises RuntimeError for failures that should be retried / dead-lettered.
+    """
     event_type = fields.get("event_type", "")
     if event_type != "message_processed":
         r.xack(TASK_EVENTS_STREAM, CONSUMER_GROUP, event_id)
@@ -70,7 +128,8 @@ def process_event(event_id: str, fields: dict, r: redis.Redis):
 
     try:
         message = json.loads(raw_message)
-    except json.JSONDecodeError:
+    except json.JSONDecodeError as e:
+        # Permanent failure — malformed payload can never be fixed by retry
         log.error("Linkage worker: malformed message_json in event %s", event_id)
         r.xack(TASK_EVENTS_STREAM, CONSUMER_GROUP, event_id)
         return
@@ -81,14 +140,14 @@ def process_event(event_id: str, fields: dict, r: redis.Redis):
         r.xack(TASK_EVENTS_STREAM, CONSUMER_GROUP, event_id)
         return
 
-    all_links = _get_all_fulfillment_links()
+    all_links = _get_all_fulfillment_links(open_orders)
 
     output = run_linkage_agent(open_orders, all_links, message)
     if output is None:
-        log.error("Linkage agent failed for event=%s message=%s",
-                  event_id, message.get("message_id"))
-        r.xack(TASK_EVENTS_STREAM, CONSUMER_GROUP, event_id)
-        return
+        raise RuntimeError(
+            f"Linkage agent returned None for event={event_id} "
+            f"message={message.get('message_id')}"
+        )
 
     # Apply linkage_updates
     for upd in output.linkage_updates:
@@ -134,8 +193,7 @@ def process_event(event_id: str, fields: dict, r: redis.Redis):
 
     # Log new task candidates
     for candidate in output.new_task_candidates:
-        log.info("Linkage new task candidate: %s", candidate)
-        _log_new_task_candidate(candidate, message)
+        _log_new_task_candidate(candidate, message, fields.get("task_id", ""))
 
     # Log ambiguity flags
     for flag in output.ambiguity_flags:
@@ -165,11 +223,39 @@ def process_event(event_id: str, fields: dict, r: redis.Redis):
     r.xack(TASK_EVENTS_STREAM, CONSUMER_GROUP, event_id)
 
 
-def _log_new_task_candidate(candidate: dict, message: dict):
-    Path("logs").mkdir(parents=True, exist_ok=True)
-    with open("logs/linkage_new_tasks.log", "a") as f:
-        f.write(json.dumps({"candidate": candidate, "source_message": message}) + "\n")
+# ---------------------------------------------------------------------------
+# Retry wrapper — 3 attempts with linear backoff, dead-letter on exhaustion
+# ---------------------------------------------------------------------------
 
+def _process_with_retry(event_id: str, fields: dict, r: redis.Redis):
+    last_exc = None
+    for attempt in range(1, MAX_RETRY_ATTEMPTS + 1):
+        try:
+            process_event(event_id, fields, r)
+            return
+        except Exception as e:
+            last_exc = e
+            if attempt < MAX_RETRY_ATTEMPTS:
+                log.warning(
+                    "Linkage worker: event=%s attempt=%d/%d failed (%s) — retrying in %ds",
+                    event_id, attempt, MAX_RETRY_ATTEMPTS, e, attempt,
+                )
+                time.sleep(attempt)  # 1s, 2s
+
+    # All attempts exhausted — dead-letter and ack
+    _write_dead_letter(event_id, fields, str(last_exc), MAX_RETRY_ATTEMPTS)
+    r.xack(TASK_EVENTS_STREAM, CONSUMER_GROUP, event_id)
+    log.critical(
+        "DEAD LETTER: event=%s written after %d failed attempts — %s. "
+        "Inspect dead_letter_events table; replay by re-publishing fields_json "
+        "to the %s stream. This alert is for the developer.",
+        event_id, MAX_RETRY_ATTEMPTS, last_exc, TASK_EVENTS_STREAM,
+    )
+
+
+# ---------------------------------------------------------------------------
+# Main loop
+# ---------------------------------------------------------------------------
 
 def run():
     log.info("Linkage worker started — consuming stream %s", TASK_EVENTS_STREAM)
@@ -188,12 +274,7 @@ def run():
                 continue
             for stream_name, entries in results:
                 for event_id, fields in entries:
-                    try:
-                        process_event(event_id, fields, r)
-                    except Exception as e:
-                        log.exception("Error processing event %s: %s", event_id, e)
-                        # Ack anyway to avoid infinite retry loop in Sprint 3
-                        r.xack(TASK_EVENTS_STREAM, CONSUMER_GROUP, event_id)
+                    _process_with_retry(event_id, fields, r)
         except redis.RedisError as e:
             log.error("Linkage worker Redis error: %s — retrying in 5s", e)
             time.sleep(5)

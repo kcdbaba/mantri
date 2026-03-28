@@ -1,0 +1,14 @@
+# Plaintext deployment vars — safe to commit
+app_user: mantri
+app_dir: /opt/mantri
+venv_dir: /opt/mantri/venv
+db_path: /opt/mantri/data/mantri.db
+logs_dir: /opt/mantri/logs
+repo_url: git@github.com:kcdbaba/mantri.git
+repo_branch: main
+
+redis_url: "redis://localhost:6379"
+ingest_queue_key: "ingest_queue"
+task_events_stream: "task_events"
+cron_interval_seconds: 900
+claude_model: "claude-sonnet-4-6"

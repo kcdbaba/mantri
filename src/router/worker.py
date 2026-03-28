@@ -13,7 +13,7 @@ import redis
 
 from src.config import (
     REDIS_URL, INGEST_QUEUE_KEY,
-    UNROUTED_LOG_PATH, NEW_TASK_LOG_PATH,
+    UNROUTED_LOG_PATH,
     PROVISIONAL_THRESHOLD,
     ESCALATION_PROFILES, ACTIVE_ESCALATION_PROFILE,
     ESCALATION_CATEGORY_OVERRIDES, GATE_NODES,
@@ -27,10 +27,9 @@ from src.store.task_store import (
 from src.store.db import transaction
 
 log = logging.getLogger(__name__)
-redis_client = redis.from_url(REDIS_URL, decode_responses=True)
 
 
-def process_message(message: dict):
+def process_message(message: dict, r: redis.Redis):
     routes = route(message)
 
     if not routes:
@@ -38,11 +37,15 @@ def process_message(message: dict):
         return
 
     for task_id, confidence in routes:
+        # Fetch task once — used for order_type and agent context
+        task = get_task(task_id)
+        order_type = task["order_type"] if task else "standard_procurement"
+
         # Store message against this task
         append_message(task_id, message, routing_confidence=confidence)
 
         # Run update agent
-        output = run_update_agent(task_id, message)
+        output = run_update_agent(task_id, message, task_override=task)
         if output is None:
             log.error("Update agent failed for task=%s message=%s",
                       task_id, message.get("message_id"))
@@ -69,7 +72,7 @@ def process_message(message: dict):
 
         # Log new task candidates (no creation flow in Sprint 3)
         for candidate in output.new_task_candidates:
-            _log_new_task_candidate(candidate, message)
+            _log_new_task_candidate(candidate, message, task_id)
 
         # Handle ambiguity flags — enqueue, escalate, block gate nodes
         for flag in output.ambiguity_flags:
@@ -83,27 +86,26 @@ def process_message(message: dict):
 
         # Apply item extractions and check for post-confirmation changes
         if output.item_extractions:
-            task = get_task(task_id)
-            order_type = task["order_type"] if task else "standard_procurement"
             apply_item_extractions(task_id, order_type, output.item_extractions)
             _check_post_confirmation_item_changes(
                 task_id, order_type, output.item_extractions, message
             )
 
         # Publish to task_events stream for linkage_worker consumption
-        _publish_task_event(task_id, message)
+        _publish_task_event(task_id, message, r)
 
 
 def run():
     log.info("Router worker started — listening on %s", INGEST_QUEUE_KEY)
+    r = redis.from_url(REDIS_URL, decode_responses=True)
     while True:
         try:
-            result = redis_client.brpop(INGEST_QUEUE_KEY, timeout=5)
+            result = r.brpop(INGEST_QUEUE_KEY, timeout=5)
             if result is None:
                 continue
             _, raw = result
             message = json.loads(raw)
-            process_message(message)
+            process_message(message, r)
         except redis.RedisError as e:
             log.error("Redis error: %s — retrying in 5s", e)
             time.sleep(5)
@@ -143,10 +145,11 @@ def _handle_ambiguity(flag: AmbiguityFlag, task_id: str, message: dict):
 
     now = int(time.time())
 
-    # Write to ambiguity_queue
+    # Write to ambiguity_queue — no deduplication at DB level; a single message
+    # may legitimately raise multiple distinct flags (e.g. entity + quantity).
     with transaction() as conn:
         conn.execute(
-            """INSERT OR IGNORE INTO ambiguity_queue
+            """INSERT INTO ambiguity_queue
                (id, message_id, task_id, node_id, group_id, body, description,
                 severity, category, escalation_target, blocking, status, created_at)
                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)""",
@@ -232,10 +235,10 @@ def _check_post_confirmation_item_changes(
     )
 
 
-def _publish_task_event(task_id: str, message: dict):
+def _publish_task_event(task_id: str, message: dict, r: redis.Redis):
     """Publish a message_processed event to the task_events Redis stream."""
     try:
-        redis_client.xadd(
+        r.xadd(
             "task_events",
             {
                 "event_type": "message_processed",
@@ -243,15 +246,25 @@ def _publish_task_event(task_id: str, message: dict):
                 "message_id": message.get("message_id", ""),
                 "message_json": json.dumps(message),
             },
+            maxlen=10_000,  # approximate trim — keeps ~10k events in memory
+            approximate=True,
         )
     except redis.RedisError as e:
         log.warning("Failed to publish task_event for task=%s: %s", task_id, e)
 
 
-def _log_new_task_candidate(candidate: dict, message: dict):
-    Path(NEW_TASK_LOG_PATH).parent.mkdir(parents=True, exist_ok=True)
-    with open(NEW_TASK_LOG_PATH, "a") as f:
-        f.write(json.dumps({"candidate": candidate, "source_message": message}) + "\n")
+def _log_new_task_candidate(candidate: dict, message: dict, task_id: str):
+    with transaction() as conn:
+        conn.execute(
+            "INSERT INTO task_event_log (id, task_id, event_type, payload, ts) VALUES (?,?,?,?,?)",
+            (
+                str(uuid.uuid4()),
+                task_id,
+                "new_task_candidate",
+                json.dumps({"candidate": candidate, "source_message_id": message.get("message_id")}),
+                int(time.time()),
+            ),
+        )
     log.info("New task candidate detected: %s", candidate)
 
 

@@ -1,0 +1,4 @@
+all:
+  hosts:
+    mantri:
+      ansible_host: "{{ lookup('env', 'MANTRI_HOST') }}"  # set after Droplet is created

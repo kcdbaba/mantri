@@ -14,3 +14,4 @@ logs/
 data/enriched/
 data/raw_chats/
 data/mantri.db
+deploy/vars/secrets.yml
