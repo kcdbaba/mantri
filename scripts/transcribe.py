@@ -28,11 +28,11 @@ MODELS (accuracy vs speed trade-off):
 
 LANGUAGE:
     Omit --language for auto-detect (works well for Hinglish).
-    Use --language hi to force Hindi if auto-detect struggles.
     Use --language en to force English.
+    - Model weights are downloaded once and cached (~/.cache/whisper/)
 
 NOTES:
-    - Model weights are downloaded once and cached (~/.cache/whisper/)
+    Use --language hi to force Hindi if auto-detect struggles.
     - Works directly on .mp4, .m4a, .mp3, .wav — no need to extract audio first
     - If a segment comes out garbled, try --language hi to force Hindi mode
 """
@@ -54,6 +54,7 @@ def transcribe(audio_path: Path, model_name: str, language: str | None) -> Path:
 
     print(f"Transcribing: {audio_path}")
     options = {"verbose": True}
+    options["initial_prompt"] = "Transcribe in Hinglish, using Latin characters."
     if language:
         options["language"] = language
 

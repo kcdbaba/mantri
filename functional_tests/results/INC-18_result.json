@@ -1,0 +1,62 @@
+{
+  "case_id": "INC-18",
+  "verdict": "PASS",
+  "required_passed": 1,
+  "required_total": 1,
+  "forbidden_violations": 0,
+  "routing_correct": null,
+  "details": [
+    "\u2713 ambiguity_flag: medium/entity blocking=None"
+  ],
+  "elapsed_s": 11.6,
+  "raw_updates": [
+    {
+      "node_id": "order_confirmation",
+      "status": "completed",
+      "conf": 0.9
+    },
+    {
+      "node_id": "client_quotation",
+      "status": "completed",
+      "conf": 0.9
+    },
+    {
+      "node_id": "quote_followup_48h",
+      "status": "completed",
+      "conf": 0.9
+    },
+    {
+      "node_id": "filled_from_stock",
+      "status": "active",
+      "conf": 0.55
+    }
+  ],
+  "raw_candidates": [],
+  "raw_item_extractions": [],
+  "raw_node_data": [
+    {
+      "node_id": "order_confirmation",
+      "keys": [
+        "confirmed_by",
+        "confirmed_at"
+      ]
+    }
+  ],
+  "raw_ambiguity_flags": [
+    {
+      "severity": "medium",
+      "category": "entity",
+      "blocking": null
+    },
+    {
+      "severity": "high",
+      "category": "status",
+      "blocking": "order_ready"
+    },
+    {
+      "severity": "medium",
+      "category": "entity",
+      "blocking": null
+    }
+  ]
+}

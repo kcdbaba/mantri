@@ -1,0 +1,8 @@
+{
+  "id": "INC-13",
+  "name": "full_supplier_path",
+  "description": "Three-message sequence covering order confirmation, supplier collection with QC pass, and dispatch via the full supplier subgraph path.",
+  "quality_risk_dimension": "multi_message_supplier_path_end_to_end",
+  "source": "synthetic",
+  "routing": "layer_2a_2b"
+}

@@ -1,0 +1,66 @@
+{
+  "case_id": "INC-03",
+  "verdict": "PASS",
+  "required_passed": 1,
+  "required_total": 1,
+  "forbidden_violations": 0,
+  "routing_correct": null,
+  "details": [
+    "\u2713 order_confirmation \u2192 completed (conf=0.92)"
+  ],
+  "elapsed_s": 10.66,
+  "raw_updates": [
+    {
+      "node_id": "order_confirmation",
+      "status": "completed",
+      "conf": 0.92
+    },
+    {
+      "node_id": "client_quotation",
+      "status": "completed",
+      "conf": 0.92
+    }
+  ],
+  "raw_candidates": [],
+  "raw_item_extractions": [
+    {
+      "op": "add",
+      "desc": "cement",
+      "qty": null,
+      "unit": null
+    },
+    {
+      "op": "add",
+      "desc": "sand",
+      "qty": null,
+      "unit": null
+    }
+  ],
+  "raw_node_data": [
+    {
+      "node_id": "order_confirmation",
+      "keys": [
+        "confirmed_by",
+        "confirmed_at",
+        "delivery_deadline"
+      ]
+    }
+  ],
+  "raw_ambiguity_flags": [
+    {
+      "severity": "medium",
+      "category": "timing",
+      "blocking": "dispatched"
+    },
+    {
+      "severity": "medium",
+      "category": "quantity",
+      "blocking": "dispatched"
+    },
+    {
+      "severity": "high",
+      "category": "status",
+      "blocking": "order_ready"
+    }
+  ]
+}

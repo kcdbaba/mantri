@@ -1,0 +1,6 @@
+{
+  "id": "INC-17",
+  "name": "node_data_supplier_delivery_date",
+  "quality_risk_dimension": "node_data_extraction_expected_delivery_date",
+  "description": "Supplier confirms a delivery date in a message. Agent must extract expected_delivery_date into supplier_indent node_data. Critical for pre-delivery alert triggers."
+}

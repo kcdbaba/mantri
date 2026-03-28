@@ -1,0 +1,6 @@
+{
+  "id": "INC-20",
+  "name": "vision_payment_screenshot",
+  "quality_risk_dimension": "vision_image_payment_extraction",
+  "description": "Real Ashish ops payment screenshot (Axis Bank NEFT to Saraf Marketing). Tests Claude Vision path: image only, no text body. Payment is PENDING so supplier_payment should be in_progress, not completed. UTR and amount must be extracted from image."
+}

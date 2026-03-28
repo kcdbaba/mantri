@@ -1,0 +1,34 @@
+{
+  "case_id": "INC-19",
+  "verdict": "PASS",
+  "required_passed": 2,
+  "required_total": 2,
+  "forbidden_violations": 0,
+  "routing_correct": null,
+  "details": [
+    "\u2713 supplier_payment \u2192 completed (conf=0.97)",
+    "\u2713 node_data_extraction: supplier_payment keys=['payment_amount', 'payment_mode', 'utr_number', 'payment_date']"
+  ],
+  "elapsed_s": 3.76,
+  "raw_updates": [
+    {
+      "node_id": "supplier_payment",
+      "status": "completed",
+      "conf": 0.97
+    }
+  ],
+  "raw_candidates": [],
+  "raw_item_extractions": [],
+  "raw_node_data": [
+    {
+      "node_id": "supplier_payment",
+      "keys": [
+        "payment_amount",
+        "payment_mode",
+        "utr_number",
+        "payment_date"
+      ]
+    }
+  ],
+  "raw_ambiguity_flags": []
+}

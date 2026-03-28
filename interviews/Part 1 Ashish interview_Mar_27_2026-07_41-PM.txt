@@ -1,0 +1,422 @@
+[00:00:00 --> 00:00:04]  Okay.
+[00:00:04 --> 00:00:06]  Okay.
+[00:00:06 --> 00:00:08]  Okay, Ashish.
+[00:00:08 --> 00:00:20]  This is a user interview session to determine all the future design choices that are right now open questions for us, which we require your expert guidance on.
+[00:00:20 --> 00:00:22]  Okay.
+[00:00:22 --> 00:00:29]  विश्व वॉप थ्रू अ द प्रोटोटाइप थिंग्स यू ऑर्डी सीट बिफोर विल वॉप थ्रू फॉर द पॉपोस रिकॉर्डिंग
+[00:00:29 --> 00:00:40]  एन एनालिसिस एन आर्ड वर्कफ्लो ओके एक अम तो लेकिन स्टार्टर इमीडिटिव आफ पुण आप थे
+[00:00:40 --> 00:00:53]  शाटा आउटपूट ओके यू शुट बी अब रॉड थोड़ सीट ऑन द स्क्रीन येस इस टू स्मॉल इन रिड इट येस आइकन रिड इट विच
+[00:00:53 --> 00:01:04]  रिपोर्ट वन पुल एजेंट ऑफ वॉक्ट रूप साटा केस आफ आट वन फुल आउटपूट नहीं ऑन द स्क्रीन आफ शेयर इसके नियुक्त
+[00:01:04 --> 00:01:10]  सॉरी सॉरी लेट मी शेयर में स्क्रीन एजवर नेट प्रस्टूफिक इन ने
+[00:01:10 --> 00:01:23]  ओके दिख रहा है नोट येट ओके दिख रहा है ना यह नैस कॉन्वर्जेशन गाइड को एक साइड कर देता हूं
+[00:01:23 --> 00:01:40]  ओके ओके ओके तो यह विशेष देट टाट आफ बैटरी केस वेडियो व्हाट्सएप रूप थ्रेड्स वन फ्रॉम द लाइन ग्रूप वन
+[00:01:40 --> 00:01:40]  अ
+[00:01:40 --> 00:01:49]  फ्रॉम द इंटरनल ग्रूप एंड टू सप्लायर ग्रूप्स वो टाइस सेकंड वन इस एटिंग एलजी ये राइट वीव
+[00:01:49 --> 00:01:57]  गॉट थे अरली प्रोटोटाइप आउटपुट यहां फ्रॉम द एजेंट वेड क्रिएटिव एंड इट आज मेड अफ यू मिस्टेक्स विच वी
+[00:01:57 --> 00:02:06]  अप इडेंटिफाइड अलियर ऑल सो फॉर एक्सांपल इट डिड़िंग नो अट टाइम द यूर फर्म्स नेम इस उत्तम एंटरप्राइस
+[00:02:06 --> 00:02:11]  वह टाइम अप गेस्ट उत्तम एंटरप्राइस मस्ट वियर सप्लायर सिंग्र नॉर्ड प्लाइंट एंड विकल्ड विस्ट यू आर ऑफिस डिस्कसिंग
+[00:02:11 --> 00:02:18]  उत्तम विल सप्लायर समझ देंगे चैट समझ एंड इन फॉर्ड टेक्टर टाइम इस ऑफिस अपने सप्लायर जो एक बिकुल वियर फिक्स देखने के लिए
+[00:02:18 --> 00:02:24]  सब्सक्राइबन डिप्लार रिकॉरडिंग सैशन प्रॉपरली
+[00:02:25 --> 00:02:41]  कि ऑके वांट आईट स्टेटिफाइड प्रीमाइड प्लाइंट विकेसटस सबस्क्राइब टेंटिफाइड प्लाइड जूनिट ऊ कि आज डेफिक्ट पर सेंटिरल
+[00:02:41 --> 00:02:48]  पर्सनेल वह इंटरेक्टिंग इन ग्रूप एंड बिकम्स एक एलियस सो बोध कैंबी यूज़ डाज रेफरेंस टू से की दिस इस था
+[00:02:48 --> 00:02:56]  पर्टिकुलर प्लाइंट यस अंडर्स्ट्रोड या एंड एज अप्लाइड इट एस इंफॉर्ट बस अप्लायर अप्लाइड और नॉट वी
+[00:02:56 --> 00:03:04]  रेट पर इस टाइप इन बिल मूव ऑन इट एड डिटेक्टेड व्हाट इज दी आइटम वन आफ दिए आइटम देटीज इट्स लिस्टेड इन फर्स्ट टास्क
+[00:03:04 --> 00:03:12]  यह यह तो एसेंचियल यू के रॉजर सी हियर बैठ इच आइटम इस विदमिन इस ओन टास्क यह चेंज देट ऑफ इन थे
+[00:03:12 --> 00:03:19]  अरेंड डिजाइन एवरी ऑर्डर इस इस ओन थिंग ओके तो यह बिल्कुल आइटम इन फॉर्टीटीज इन थे यह आधे यू के नॉट आफ
+[00:03:34 --> 00:03:41]  टू सप्लाई ऑर्डर्स राइट यह फॉर्ट में भी फ्री क्लाइंट ऑर्डर्स एडिटेंस फ्रॉम सप्लायर ए ऑर्डर विडिटी
+[00:03:41 --> 00:03:48]  बुटर इन इस पर्टिकुलर वे देश मैपिंग टू द प्लाइंट ऑर्डर्स ये ऑफ वर्डर सेकंड ऑर्डर फॉर्म द आधे सप्लायर राइट
+[00:03:48 --> 00:04:18]  बुटर इन इस पर्टिकुलर वे देश मैपिंग टू द प्लाइंट ऑर्डर वे देश मैपिंग टू द प्लाइंट
+[00:04:18 --> 00:04:48]  बुटर इन इस पर्टिकुलर वे देश मैपिंग टू द प्लाइंट ऑर्डर फॉर्म द द प्लाइंट
+[00:04:48 --> 00:05:18]  बुटर इन इस पर्टिकुलर वे देश मैपिंग टू द प्लाइंट
+[00:05:18 --> 00:05:48]  बुटर इन इस पर्टिकुलर वे देश मैपिंग टू द प्लाइंट
+[00:05:48 --> 00:05:54]  We had given some inputs to say that if the date is nearby then the priority should be high and all that.
+[00:05:54 --> 00:06:03]  So, using our words as a kind of instruction, it uses its intelligence also and decides the priority.
+[00:06:03 --> 00:06:04]  Understood.
+[00:06:04 --> 00:06:05]  Okay.
+[00:06:05 --> 00:06:10]  And we test for this. So we build test cases in our pipeline.
+[00:06:10 --> 00:06:19]  या निश्चियों विद नोट या डिफाइनिंग वर्ड्स वर्ड इसे रिजल्टिंग इन द रिप्रायर्टीज एस पर आर करेंट एक्सपेक्टेशन टेस्टिंग
+[00:06:19 --> 00:06:32]  इस बेसिकली प्रॉम्ट इंजीनियरिंग लाज लांग्वेज मॉडल एजेंट एइड नॉर्मल एइ बेसिकली बूद इनिशियल प्रॉम्ट
+[00:06:32 --> 00:06:39]  एक बेहРИन और पर उन्हें आप बbayंबूनं से अपना में कैसे चोट कर सकते हैं और प्राप्त कर सकते हैं कि नहीं सिर्फलेट
+[00:06:39 --> 00:06:45]  को झाला अपना आपके वार्त में पूरा करें अगर जी आप अपना। अगर क्वेश्चन को एक में लेंगे एकर जो
+[00:06:45 --> 00:06:52]  information की वेडियो इनफॉरमेशन फ्रॉम विच वाट्सएप रूप से अलग एक ट्राइस पर एडिटिफाइस सब्ट
+[00:06:52 --> 00:06:59]  टास्क्स इन पर्टिकुलर ऑर्डर और डिटेल्स अब आपके यहां से आने स्क्रीन ओके यह नियुक्त थे
+[00:06:59 --> 00:07:10]  अब इन पर्टिकुलर स्टाफ ऑफ ए या दिस वॉज नाइस बिकुल कैच फॉर नेसेजिंग और मेक ए सेंस ऑफ इट वॉज इंटरेस्टिंग
+[00:07:10 --> 00:07:20]  इस विभाग नॉट एक्स्प्लिसिटली डिफाइंड असाइनमेंट राइट नाओ इन आर इन आफ लो ओके यह फिल्म इन नैचुरली लाइट इस ओके वी
+[00:07:20 --> 00:07:29]  एक्स्प्लिसिटली आडिट ऑफ इस तो इफ यू वांट ओके आई के अडिट एजन ओपन आइटम राइट नाओ तो इवेल इप्लीमेंट एवरी
+[00:07:29 --> 00:07:35]  पास्ट नीचे नीचे टू बी आइटर सो वी हैव ओफ इंस्ट्रक्शन इन नैचुरल वर्ड्स राइट नाओ तो द प्रॉब्लम वी
+[00:07:35 --> 00:07:52]  पेटिकुलर रिस्पोंसिबिलिटी ओके हेलो प्रिपर्सन हेलो के नियुक्त या या वह टाइम फ्रेंड टू से या इस लुट देरा
+[00:07:52 --> 00:08:00]  थ्री पीपल हेलो द ऑल लुक आफ्टर वाइट सिमिलर स्टफ सडनली संबड़ी नॉट ऑन द बेंच तो इस द अदर पर सॉफ्ट जॉब यह
+[00:08:00 --> 00:08:07]  प्रिपेर एक्स्क्लूजिव जॉब द ना इडेंटिफाइव के यू आर पर्टिकुलर ली असाइंड फॉर दिस बट वेंड इस कैन अव डिलीवरी
+[00:08:07 --> 00:08:15]  अपने एनी एवन वो एवर इस देर अपफ्रेंट लेकिन वो एवर हैस द लेसर लोड ऑन द हैंड हैस टू बी पास टेट ऑन तो यू
+[00:08:15 --> 00:08:22]  नट सेट एड एक्स्क्लूजिव ली समित जी जॉब और माइ जॉब तो इट विल बी वीकेन असाइंड द दिस टास्प विल लुक आफ्टर
+[00:08:22 --> 00:08:30]  पा� leicht प्रैक्टिकली स्पीकिंग वी केयरहार प्री डिफाइन इट रेट कॉट एवरी टास्ट वह है फुर डिपाइंड इट विल बी
+[00:08:30 --> 00:08:39]  ऑन थे गो इट विल डिफाइंड ऑके इसेस यूर एडिक या याी अकरेसफल सो आइएव ओपने वह मैंने उस लिए टॉपेट
+[00:08:39 --> 00:09:02]  नहीं तो वह इसके लिए इस दिए अच्छे फुल प्रॉम्ट द एडिट राइट नाओ इसके लिए इस टेस्टिंग
+[00:09:02 --> 00:09:32]  प्रॉम्ट एडिट राइट नाओ इसके लिए इसके लिए इसके लिए इसके लिए इसके
+[00:09:32 --> 00:09:40]  प्रॉब्लम सिफल ए सbbe टिंग बर सबस्क्राइब
+[00:09:40 --> 00:09:45]  शास्ट्रों दिए damaging
+[00:09:47 --> 00:09:48]  कि लुट तो
+[00:09:50 --> 00:09:57]  ओइस प्रॉब्लम �하죠
+[00:09:57 --> 00:09:59]  य सिजिर Kitty
+[00:09:59 --> 00:10:02]  फैंकदर
+[00:10:02 --> 00:10:04]  we can have multiple staff responsible for multiple roles.
+[00:10:05 --> 00:10:05]  Yes.
+[00:10:05 --> 00:10:10]  Right, some senior staff may be responsible overall for particular roles only.
+[00:10:11 --> 00:10:14]  Okay, all this is not clear. We need to discuss with Ashish and confirm.
+[00:10:14 --> 00:10:15]  You have said all this to the AI.
+[00:10:15 --> 00:10:16]  Yes.
+[00:10:16 --> 00:10:17]  All right.
+[00:10:17 --> 00:10:23]  And obviously if you want to explicitly implement some sort of responsibility flow,
+[00:10:23 --> 00:10:29]  where you want to also, you know, cater to multiple staff having multiple roles, etc.
+[00:10:29 --> 00:10:34]  And then covering for each other when they're absent or, you know, temporarily not working.
+[00:10:35 --> 00:10:35]  Right.
+[00:10:36 --> 00:10:39]  Then we can do that, but that will be an engineering process.
+[00:10:39 --> 00:10:39]  Okay.
+[00:10:39 --> 00:10:42]  And we can leave it as an open item for now at least.
+[00:10:42 --> 00:10:42]  Yes.
+[00:10:43 --> 00:10:44]  Okay.
+[00:10:44 --> 00:10:48]  So I'll skip the going through the entire prompt for now.
+[00:10:49 --> 00:10:52]  Just coming back to the example output.
+[00:10:55 --> 00:10:58]  Obviously you've gone through this before, so I'll be very quick about it.
+[00:10:58 --> 00:11:04]  You can see the sub tasks, you can see what staff it has picked up as having been assigned to the task.
+[00:11:04 --> 00:11:04]  Right.
+[00:11:04 --> 00:11:05]  Yes.
+[00:11:06 --> 00:11:10]  Then again, you have the detailed status.
+[00:11:10 --> 00:11:12]  So each sub task will have its own status.
+[00:11:12 --> 00:11:15]  All these together form the overall task status.
+[00:11:15 --> 00:11:15]  Right.
+[00:11:15 --> 00:11:16]  Yes.
+[00:11:16 --> 00:11:17]  Yeah.
+[00:11:17 --> 00:11:19]  And then what is the next step for each sub task, etc.
+[00:11:20 --> 00:11:21]  Understood.
+[00:11:21 --> 00:11:22]  Yeah.
+[00:11:22 --> 00:11:23]  How does this feel to you?
+[00:11:23 --> 00:11:25]  Does it feel like a good progress?
+[00:11:25 --> 00:11:26]  You see promise in it?
+[00:11:27 --> 00:11:28]  It is a very good progress.
+[00:11:28 --> 00:11:28]  Because this is a very good progress.
+[00:11:28 --> 00:11:30]  This is what exactly we are looking for.
+[00:11:30 --> 00:11:40]  Only thing is that instead of like what we discussed in the beginning only, instead of one order being broken down into a couple of tasks, it should be part of a one parent head like the SATA job.
+[00:11:41 --> 00:11:43]  Five orders are there in one list.
+[00:11:43 --> 00:11:44]  There are five items to be delivered.
+[00:11:44 --> 00:11:47]  So it should be, there should be a kind of a flow chart kind of a thing.
+[00:11:47 --> 00:11:48]  Okay.
+[00:11:48 --> 00:11:49]  AC click on the right side.
+[00:11:49 --> 00:11:50]  Then you see the details.
+[00:11:51 --> 00:11:53]  Uh, then the refrigerator 45 liter.
+[00:11:53 --> 00:11:54]  This is the detail happening.
+[00:11:54 --> 00:11:57]  So kind of a chart kind of a thing will be much easier in the future.
+[00:11:58 --> 00:11:58]  But to get started.
+[00:11:58 --> 00:12:01]  And that they have identified everything that is good enough.
+[00:12:03 --> 00:12:04]  Yeah, I understand what you're saying.
+[00:12:05 --> 00:12:10]  So I'm not showing you the current state of what we are building, which is far ahead of this state.
+[00:12:11 --> 00:12:12]  Okay.
+[00:12:12 --> 00:12:19]  Where, you know, things that you're describing right now in very, um, uh, shallow terms and level, right.
+[00:12:20 --> 00:12:25]  Very deeply down into as clean and organic pieces as possible.
+[00:12:26 --> 00:12:28]  Uh, not just in terms of how it is.
+[00:12:28 --> 00:12:28]  Visualized.
+[00:12:28 --> 00:12:29]  To you.
+[00:12:29 --> 00:12:37]  But also how it is going to be ingested by our, uh, system then handled by the agent then stored in the database.
+[00:12:37 --> 00:12:43]  Then after that, um, basically how's it going to be progressed for the next iteration, right?
+[00:12:43 --> 00:12:44]  Next message comes.
+[00:12:44 --> 00:12:45]  How is it going to progress for that?
+[00:12:46 --> 00:12:52]  All of that, we have done a deep amount of work in it and I'm sure in the future we'll take you through that.
+[00:12:52 --> 00:12:56]  And there are some open questions coming about that within this interview also.
+[00:12:57 --> 00:12:57]  Okay.
+[00:12:58 --> 00:12:58]  Okay.
+[00:12:58 --> 00:12:58]  But yeah.
+[00:12:58 --> 00:13:00]  Your points are absolutely taken.
+[00:13:00 --> 00:13:03]  We had anticipated that you will go along these lines.
+[00:13:03 --> 00:13:07]  So that's why we assumed and made some progress and the, whatever open questions we have, we will ask you.
+[00:13:08 --> 00:13:08]  Sure thing.
+[00:13:08 --> 00:13:09]  In that direction.
+[00:13:09 --> 00:13:11]  And it matches exactly what you want.
+[00:13:11 --> 00:13:11]  Right.
+[00:13:11 --> 00:13:12]  Sure thing.
+[00:13:12 --> 00:13:13]  Okay.
+[00:13:13 --> 00:13:18]  So similar thing you can see for, like you said, all the other items are here as separate tasks.
+[00:13:19 --> 00:13:19]  Yes.
+[00:13:19 --> 00:13:20]  We won't have in the future.
+[00:13:21 --> 00:13:21]  Yes.
+[00:13:21 --> 00:13:22]  Okay.
+[00:13:22 --> 00:13:27]  And, uh, once you go through all the individual items as separate tasks, you also come to the next section.
+[00:13:27 --> 00:13:32]  So, uh, sorry, we are looking at the bed.
+[00:13:32 --> 00:13:32]  Yes.
+[00:13:32 --> 00:13:32]  Yeah.
+[00:13:33 --> 00:13:38]  Uh, you will, uh, Oh yeah.
+[00:13:38 --> 00:13:43]  So one thing that I need to note that at this point already, we were ingesting the images.
+[00:13:44 --> 00:13:45]  Right.
+[00:13:45 --> 00:13:52]  You see that the images have been basically scraped or, uh, some OCR has done on it and all the actual information has been pulled out.
+[00:13:53 --> 00:13:54]  Yes.
+[00:13:54 --> 00:13:54]  Yeah.
+[00:13:54 --> 00:13:57]  So this table that you see right now on the screen for one particular.
+[00:13:57 --> 00:13:59]  Uh, order, maybe.
+[00:14:00 --> 00:14:00]  Right.
+[00:14:00 --> 00:14:05]  These are a couple of things that they copied that these are the payments or the amounts transferred.
+[00:14:05 --> 00:14:06]  The screenshots were there.
+[00:14:07 --> 00:14:11]  So the, the AI agent has translated them into a table.
+[00:14:12 --> 00:14:15]  So that's a wonderful thing because this gives us a reminder.
+[00:14:15 --> 00:14:16]  This most of the time happens.
+[00:14:17 --> 00:14:26]  Suppose in one week you have asked me to transfer, uh, even the buyers asked me that Ashish, instead of you sending it to me, I am picking it up from a neighborhood shop.
+[00:14:26 --> 00:14:27]  So you make the payment.
+[00:14:27 --> 00:14:28]  I'm going to send the payment to him directly.
+[00:14:29 --> 00:14:32]  What happens is I made the payment down the line.
+[00:14:32 --> 00:14:32]  I forget.
+[00:14:32 --> 00:14:40]  And then I lose the money because they will never remind me that actually she made this payment now because of this table, I can have a recheck quickly done.
+[00:14:40 --> 00:14:41]  Okay.
+[00:14:41 --> 00:14:42]  These are the payments that were recently done.
+[00:14:43 --> 00:14:46]  Have a recheck that whether I have made bills for the same amount also or not.
+[00:14:46 --> 00:14:48]  So a wonderful thing again.
+[00:14:49 --> 00:14:49]  Okay.
+[00:14:49 --> 00:14:53]  So this is one critical new information, which I didn't have with, sorry, one second.
+[00:14:53 --> 00:14:56]  I'll just go back to, uh, the screen.
+[00:14:56 --> 00:14:57]  Uh, we did.
+[00:14:57 --> 00:15:04]  Not know that, uh, you sort of have a situation where, um, it happens very often.
+[00:15:05 --> 00:15:05]  Yeah.
+[00:15:05 --> 00:15:06]  Can you describe it again for me?
+[00:15:07 --> 00:15:12]  Now, suppose you want a product and you are located in a very remote location.
+[00:15:12 --> 00:15:14]  All my army camps are like that.
+[00:15:14 --> 00:15:14]  Yeah.
+[00:15:14 --> 00:15:16]  But you want it right now.
+[00:15:16 --> 00:15:16]  Yeah.
+[00:15:16 --> 00:15:17]  Yeah.
+[00:15:17 --> 00:15:19]  So what is the solution?
+[00:15:19 --> 00:15:21]  You don't worry too much about the cost involved.
+[00:15:22 --> 00:15:23]  You just need the product.
+[00:15:23 --> 00:15:26]  So what you are going to ask me because they don't have the money to buy it.
+[00:15:26 --> 00:15:27]  They will just ask me.
+[00:15:27 --> 00:15:27]  Ashish.
+[00:15:27 --> 00:15:30]  We are going to pick it up from the neighborhood shop.
+[00:15:31 --> 00:15:33]  The bill will be made in my name.
+[00:15:33 --> 00:15:36]  I will make the payment right away to that neighborhood shop.
+[00:15:36 --> 00:15:38]  They will collect the store, go to the office.
+[00:15:38 --> 00:15:40]  Now my job is because I've made the payment.
+[00:15:40 --> 00:15:46]  Now the bill that the shopkeeper has issued in my name, it has to be transferred from there.
+[00:15:46 --> 00:15:53]  I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit.
+[00:15:53 --> 00:15:55]  And then I have to put it in their account.
+[00:15:56 --> 00:15:57]  Now, how this happens?
+[00:15:57 --> 00:16:02]  When they ask me to make a payment, I will share a screenshot because think about it.
+[00:16:02 --> 00:16:05]  How, why will the shopkeeper let them carry the goods out?
+[00:16:05 --> 00:16:07]  He has to see the proof of the payment.
+[00:16:07 --> 00:16:10]  So my screenshot of the payment is shown to the shopkeeper.
+[00:16:10 --> 00:16:13]  They collect the material and go and get that job completed.
+[00:16:14 --> 00:16:18]  The hardship at times what happens is because we were also in a Russian chaos.
+[00:16:18 --> 00:16:27]  This payment that has been transferred is overlooked to be entered into the book of accounts for that client.
+[00:16:27 --> 00:16:28]  They are asked to pay for the payment.
+[00:16:28 --> 00:16:31]  Now, this table that you have just shared helps me a lot on that.
+[00:16:32 --> 00:16:34]  Okay, so I'm going to break it down like this.
+[00:16:34 --> 00:16:37]  Essentially, what they do is they ask you to maintain a wallet for them.
+[00:16:38 --> 00:16:41]  Hmm, so it's not like this feed.
+[00:16:41 --> 00:16:44]  They provide some balance to the wallet beforehand.
+[00:16:44 --> 00:16:52]  Instead, what happens is the client has an ongoing payables wallet, right?
+[00:16:53 --> 00:16:57]  Yes, Ashish, which is like a you can think of it like a credit account.
+[00:16:57 --> 00:17:06]  इस एक प्यूट एविटेंट रिटेड अकाउंट इस एक सिंगल लेजेड और डेबिट तो होगा नहीं इस मोस्ट लाइक जस्ट अक्रेडिट अकाउंट रिट इस राइट आ
+[00:17:06 --> 00:17:27]  के अब पॉज इनी और एक ऑफ के लिए जिस अब चीज लोकेशन एमरजेंसी पर चीज लोकिया ब्रॉब्बू ऑफ करें इमरी जिनसी क क्लाउंट लोकेशन आसफ व आशीश
+[00:17:28 --> 00:17:36]  कि फर्स्ट रेजल सतल एंड सेटल लेटर
+[00:17:36 --> 00:17:53]  विलिंग या वेरी ट्रू दिस एसेंचियल व्हाट है पैसा राइट यह रिकॉर्ड्स फॉर दिस आर नॉट एक
+[00:17:54 --> 00:18:04]  रेगिलर ली वे आपके बट एट टाइम देया मिस्टेक्स आ दे वे आपके वेरी रेगुलरली विडियार मिस्टेक्स
+[00:18:04 --> 00:18:29]  एक रेगिलर ली वे समझ टाइम एटम्स गेट निस्ट कॉज रिकॉर्ड्स आर मेड इमेजिस नॉट नोटेड नॉट इन द पॉज़ रूप
+[00:18:32 --> 00:18:33]  पर रूप
+[00:18:34 --> 00:18:44]  ऑर इन पॉज़ ओके इसे अच्छा लीजिए तो वह प्रेसेंट इस अमेजिए
+[00:18:44 --> 00:18:57]  इंजुरेश साथ
+[00:19:00 --> 00:19:06]  जो सब्सक्राइब सब्सक्राइब
+[00:19:07 --> 00:19:09]  पेंट फैबंट का
+[00:19:10 --> 00:19:11]  के रेलाइट
+[00:19:11 --> 00:19:12]  ये
+[00:19:13 --> 00:19:13]  करें secure.io
+[00:19:13 --> 00:19:14]  org.f pinch email me gatecoach.co.ar
+[00:19:14 --> 00:19:26]  इन इस केस ऑफिस फॉलो दिसेम लॉजिक रहेगी देलीवरी विद्धि स्किप्ट यह डिलीवर एनिथिंग यह पिछले बाइंड से न्यू पैटर्न
+[00:19:26 --> 00:19:45]  इस अब्सर्व वेर नो डिलीवरी इस प्रिकॉर्ट इस विद्धि एन यू थिंग फॉर अस राइट आटो अकाउंटिंग अकाउंटिंग ऑफिस एन यू पैटर्न
+[00:19:45 --> 00:19:54]  अकाउंटिंग प्रोडक्शन एंडिशनल ऑपरेशनल
+[00:19:56 --> 00:19:56]  पीटर्स
+[00:19:56 --> 00:20:01]  किसले सब्सक्राइब
+[00:20:02 --> 00:20:16]  लुटा की अंदू सभी पर मेटिकीम ई कॉस्टिस में हुल आने सभी हो चाहिए
+[00:20:22 --> 00:20:26]  हैं चैन्मेंट इस वच्चन टॉम ETH एक्सलेंट इस लॉट रैन्ड है सेक्शन ओपन
+[00:20:26 --> 00:20:33]  ओपन इशूज और समझ थे यू वांट टो आड ऑन बट विशूट बेसिकली ट्रैक देश अजय को
+[00:20:33 --> 00:20:40]  तो या इमेजेस यू टाक बट हाउ इमेजेस आफ बिंग प्रोसेस्ट वेल एंड इट इस यूजफुल चिरली यू विव गिवन यू
+[00:20:40 --> 00:20:51]  इन विश इन विच यू नोट इमेजेस प्रोसेसिंग इस वेरी यूजफुल टू ये आफ बेसिकली प्लानिंग और राद वी है जस्ट इंपलीमेंटेड
+[00:20:51 --> 00:21:08]  वॉइस नोट वॉइस नोट आता है इटली गेट ट्रांस्क्राइब एंड स्टोर एस यू नो डिटेल्स इन टेक्स्ट अब इस टास्ट आर हैंडल्ड एंड ऑलसो यू रिमेंबर वी है बेसिकली
+[00:21:08 --> 00:21:22]  ऑवर ऑल व्यूज राइट सो यू आफ ब्रेगड़ाउन आफ इच एक्टिविटी इच टास्क यह सब्लायर और क्लाइंड और इच अधर एक्टिविटी और चुके ट्रैंड टू कैप्चर ऑल एक्टिविटीज अकाउंट कीपिंग
+[00:21:22 --> 00:21:31]  टॉप टेकिंग एवरीथिंग विल ट्राइन कैप्चर ये एंड फाइनली वी हैव वॉर्डनिंग्स राइस राइट इफी फाइंड देख यू नो देर सम थिंग
+[00:21:31 --> 00:21:41]  सिंग देख समझिए एंड फोटो फ्रेंड्स समझने और सर्व ऐड्रेज एंड एंड इंट्रेप्ट इन बिट्टील टोड़े जस्ट ट्यू
+[00:21:41 --> 00:21:46]  पैसे इस इश्यों है पर इस स्माल सप्लायर ऑफ माइन हो सप्लाइस में पाइल्स एंड फोल्डर्स अ
+[00:21:47 --> 00:21:51]  कि वी हैड एसपर अस ओनली वन बिल आउटस्टेंडिंग पर द थरी फर्स्ट ऑफ मार्च क्लोजिंग
+[00:21:51 --> 00:21:57]  सिस्टी सिस हेंड्रेड बट इकेम अब इन अदर बिल आफ हार्डली 495 रुपी विच इस फ्रॉम जेनवरी मंथ
+[00:21:58 --> 00:22:05]  पर सफल द पिछन गौर टू माइन वह नोबडी किप सिट पेंडिंग फॉर थ्री मंथ नंबर वन पॉइंट नंबर दूसरे बीलो इट
+[00:22:05 --> 00:22:12]  इस सच स्माल अमाउंट शीघ्र लेफ्ट बिहाइन बट सडल इस प्रक्ष माइन देख वन माइन यू रेफ गॉन दे इडेंट आइडेंटिफाइंग
+[00:22:12 --> 00:22:20]  पेट पेमेंट अपफरेंट एंड वन ली वह जो हैंड ओवर दाइटर वाइट कॉल्ड देड़ आफ मेड द पेमेंट
+[00:22:20 --> 00:22:27]  नौ बिकॉज इट वास जस्ट ए इमेज एंड इट वास इन मेड आइवर्स एंड अडर लोट आफ प्रेशर एड देख पॉइंट आफ टाइम एंड दे
+[00:22:27 --> 00:22:32]  आफ आफ आ स्टैंडिंग देर तो आई मेड द पेमेंट एंड द इमेज वाइट शेयर्ड एंड द क्लाइंट वास द सप्लायर न्यू
+[00:22:32 --> 00:22:39]  बाउट एड एंड इमेज एंड वास एड बट इट डिंग गो टो द रिस्पेक्टिव व्हाट्सएप ग्रुप वी हैव कॉल्ड पेमेंट्स
+[00:22:39 --> 00:22:48]  एंट्री वास नॉट मेड सो दे क्रिएटेड प्रॉब्लम बट सिंस आई हैड ए रीक्लेक्शन अबॉट एड आई जस्ट रैंडमली सर्च्ट इन माइट
+[00:22:48 --> 00:23:04]  सेट द होल लॉग एक्सपोनेंशल पेमेंट्स द डिफरेंट ग्रुप एंट्री विच नॉट रिप्लेक्ट इट द शेयर्ड द इनशॉट विद द इन ऑल सो
+[00:23:04 --> 00:23:15]  विद द सप्लायर द यू रिसीव द पेमेंट इट वास्ट लोग इस ऑन वाइट डे वाय हैव यू कनेंगली स्टार्टेड इट अगेंड तो दीज इमेजेस दिस वन एन
+[00:23:15 --> 00:23:21]  है ग्लू मून केस प्रटिक्ट डज है पर इस डज हैपन मैंने गूटो अमीकेंप्स दूसर मैंने आज कि यू एक
+[00:23:21 --> 00:23:28]  मिर्ड द पेमेंट समग बेम अ वेरी ब्रीड इस चैप्टर्स यह नैशी फिर एक विच यू एडमेट दिस पेमेंट आई डों कैंसीट इन एनी
+[00:23:28 --> 00:23:33]  विप एस्टेटमेंट्स ट्राइटिंग यह फॉर फॉर्ट एंड टू कंवर्टेड इंटो वन ऑफ चलान और बिलिंग
+[00:23:33 --> 00:23:40]  बॉचर्स तो देना इस थैंक देम एंड मूव पॉवर्ड थे इस मिस्टेक्स विल हैपपन एंड द गुड़ थिंग इस
+[00:23:40 --> 00:23:47]  पर यू है वॉल्ड लॉग फॉर्म डिफरेंट चैंट्स मेबी देन द एजेंट विल बी एबल टू कैच अब देट दिस पेमेंट
+[00:23:47 --> 00:23:54]  रिप्लेक्टेड इन ए रॉंग चैट ग्रुप वेराज इट शुट है वांट एर ऑल सो यू अंडर स्टेटिंग इन प्राइंट पूछे
+[00:23:54 --> 00:24:07]  अब इसके लिए आप पेमेंट ग्रूप राइट आई ऑल बेसिकली पेमेंट लॉग्ड एज इमेजेस दे आटू थिंग्स वी ऑलवेस लॉग ए
+[00:24:07 --> 00:24:14]  इमेज बट देन द प्रॉब्लम इस हॉविल आई एवर फाइंड देट बिकॉज द इमेज एस नो वर्ड टो बी यू नो प्रेस ट्रैप ऑन सो
+[00:24:14 --> 00:24:19]  पीडो वी पूट अप एस्क्रीन शॉट ऑफ द पेमेंट एन ऑन द बॉटम वी राइट सपोस कुनाल इस पेट
+[00:24:19 --> 00:24:28]  तन थाउसन रुपी ऑन देस्ट डेट ऑन एकाउंट टो क्लियर द एकाउंट अस्माल नेरेशन एज ऑल्सएप पंच टेंड ए तो द डाउन द लाइन
+[00:24:28 --> 00:24:35]  एनेवर वी नीचे ट्रेस डाउन वी असेटिंग द एकाउंट इफी जस्ट वो क्लिक स्कूनाल तो ऑल द रिलेवेंट
+[00:24:35 --> 00:24:42]  सेजेस विल बी हाइलाइटेड एन इट इजियर टो आइडेंटिफाइड एनी मिस्टेक्स वे नी लेफ्ट ओवर्स तो देखेंगे हो वे डू वे
+[00:24:42 --> 00:24:55]  राइट सो इन माई प्रॉसेसिंग वो आटा इकेन सी डेट विल हापएं उन सेकंड या डोनों वाइड्स टो
+[00:24:56 --> 00:25:06]  कि अब वो वो टाइसी विल हापएं नंबर वन इस है अब जस शेयर ड थिंग ऑन योर वॉटसएप डाइट विल टेल यू
+[00:25:06 --> 00:25:14]  टाइम प्रांट विल चेयर यू द होली लॉग वर्ग पर एक्सपोर्टेड लॉग नोटिशन नोटिशन डेस्टेंट प्रॉसेस नाओ एंड जिसको राइट डाउन व्हाट आई
+[00:25:14 --> 00:25:28]  एस एंड इंप्लीमेंटेशन डिटेल फॉर मीडियो वह प्रॉसेस फर्स्ट लॉग पेमेंट्स आर मेंट फॉर क्लाइंट्स एंड स्क्रीनशॉट
+[00:25:28 --> 00:25:40]  और फोटो एक बार मेरा व्हाटसएप देखिए ना जस्ट एक बार एनिए व्हाटसएप बाद में देखिए इट्स नॉट इंपोर्टेंट यू जिस फॉलो व्हाट आई
+[00:25:40 --> 00:25:45]  रहे हैं नाओ एंड करेक्ट पीछा गोई रॉन ये एस ये एस ये एक सो व्हाट आईएस
+[00:25:47 --> 00:25:53]  कि इशू नेम एम गिविंग इस पेमेंट्स व्हाटसएप रूप के इग्नोर दाइट पर नाओ पर देखिए नंबर वन पेमेंट्स आफ
+[00:25:53 --> 00:26:04]  इटेन फ्लाइंड्स नॉट फ्लैंस वरी सफर रेसंट ए स्क्रीन शॉट स्क्रीन शॉट और फोटो इस शेयर्ड इन तरफ सप्लायर ग्रूब
+[00:26:04 --> 00:26:12]  इमीडीटली राइट और वह तो इमीडिटली हो जाता है बिलकुल बैदर यू तैम्यू ध्यान टेन कि
+[00:26:12 --> 00:26:19]  नॉट इस अपने पेमेंट ग्रूप और नॉट इस है इस मिस्टेक एड टाइम्स है इस नॉट ऑफ शेयर इन दो पेमेंट
+[00:26:19 --> 00:26:25]  ग्रूप राइट सेम स्क्रीनशॉट और फोटो अ
+[00:26:25 --> 00:26:48]  अलांग विद एडिशनल डिटेल्स एडिशनल नैरेशन राइट एडिशनल नैरेशन इस शेयर इस अपडेटेड
+[00:26:50 --> 00:26:53]  तो अनुसार ग्रूप
+[00:26:55 --> 00:27:05]  पेमेंट एस विल्कुल ए आवर
+[00:27:07 --> 00:27:14]  ए समटाइम्स इस सेकंड स्टेप एबी मिस्ट
+[00:27:15 --> 00:27:24]  ओके फॉर थ्री एट द एंड ऑफ अकाउंटिंग पीरियड और पेमेंट्स
+[00:27:24 --> 00:27:25]  ओके
+[00:27:25 --> 00:27:34]  ऑके आए तो नौ फॉर्म आट इंजेस्टिंग पर्सपेक्टिव आल सेट वर्ड आंसी के एक
+[00:27:34 --> 00:27:38]  अश्लीन इंचेस्ट
+[00:27:41 --> 00:27:47]  कि फीस ऑपडेड इस थे एक समय इस
+[00:27:48 --> 00:27:55]  ओनीड कैप्चर ए न्यू कार्ड आस्क टाइप
+[00:27:55 --> 00:28:04]  पर पेमेंट्स पर सब्सक्राइब यह एंड डी डूप्लिकेट ए
+[00:28:04 --> 00:28:23]  डी डूप्लिकेट द डबल इमेज अपडेट्स और डबल अपडेट्स इन द टू ग्रूप्स करें वेरी टू ऑन साइड यू दिस वेदर यू शेयर इट इन द पेमेंट्स वाट्सएप ग्रूप और नॉट
+[00:28:23 --> 00:28:35]  इधर से करो या उधर से करो डॉजन मैटर इटल है बोट कॉपी एप बोट अपने एंड इटल बेसिकली से यह तो सेम है
+[00:28:35 --> 00:28:45]  जैकली पर हम हमारे पास आ जाएगा यह इंफॉर्मेशन राइट डाइट्स ऑल नीचे वर्य बॉट कि वह डिप्लीट आपको कंफ्यूज ना करें यह
+[00:28:45 --> 00:28:54]  लुटे पर यह मैंने एक ओपन कर लिया यह इंपॉर्टेंट पॉइंट है यह दो जगह आएगा और मैं डूप डीडूप्लिकेट करूंगा तो
+[00:28:54 --> 00:29:13]  यह ना आपको भी नियुक्त दिसकवरी दिन यह डिसकवरी इसके लिए फीड ना बोकेंट ट्रू फ्रॉम और बिकॉज बिंट अलोड़िट टाइम ओं थिस वाप ट्रू इट्सल
+[00:29:13 --> 00:29:38]  सब्सक्राइब और जो है अब आप अपने प्रोसेस्ट और लुकेंगे और बहुत हुआ था और तो फिर आप पॉइंटिंग आप बॉटेंशन गैप्स
+[00:29:38 --> 00:30:08]  नहीं है और अब आप अपने प्रोसेस्ट और लुकेंगे और बहुत हुआ था और तो फिर आप पॉइंटिंग आप बॉटेंशन गैप्स
+[00:30:08 --> 00:30:38]  नहीं है और अब आप पॉइंटिंग आप बॉटेंशन गैप्स
+[00:30:38 --> 00:30:44]  और अब आप पॉइंटिंग आप बॉटेंशन गैप्स
+[00:30:45 --> 00:30:53]  और तो
+[00:30:53 --> 00:30:57]  अब आप सर र� shields
+[00:31:00 --> 00:31:04]  एरवेन ए
+[00:31:06 --> 00:31:08]  क्लोंट ट्रू ट्रू ट्रू ट्रू
+[00:31:08 --> 00:31:11]  इसे 20 विकेसे को लगाना नहीं है।
+[00:31:11 --> 00:31:13]  आपको ख़ुश होना चाहिए।
+[00:31:13 --> 00:31:20]  दूसरा दिन है, जो किसी बार को कहाने का ज़रूरत है,
+[00:31:24 --> 00:31:30]  कि कैसे हम ज़िसे जान सकते हैं कि हमारे उदाहरण या कंपनी का ज़िस्टम सरक्षण ज़िस्टम से बिलता है।
+[00:31:30 --> 00:31:38]  शुद्ध बीटेलर्ड फॉर यू एंड फॉर द स्टाफ एक सो देख यू नो वी के बिल्ड तरस टिन द सिस्टम
+[00:31:38 --> 00:31:47]  एक सो अमिन देश लॉट ऑफ सजेस्टेड क्वेस्टेंस यह इप आसकिंग देंगे तो यू टेल में वो टी थिंक अबॉटीज
+[00:31:47 --> 00:31:56]  चुर्टिंग एक वॉट पॉइंट वुद यू बी कंफर्टेबल विद एजेंट फ्लागिंग ए सप्लायर एस अनरेस्पॉंसिव विदाउट यू अप्रूविंग इंट
+[00:31:56 --> 00:32:04]  रिपोर्ट आज फोर्ट एट आर्स वेडिफोर आज सो अब देखिए नॉट रिस्पोंटेड यू किन बेट अपने टू प्लेटी फॉर आज
+[00:32:04 --> 00:32:11]  एक एक्चुली नॉट इवेंट वेडिफोर आज विकल्स मोस्ट ऑफ द लाइंट वांट द आंसर विद एक्स इन टूड़ेज वर्किंग पीरियर
+[00:32:11 --> 00:32:21]  एक टू वेन यू बेसिकली अम कि वे न्यू वर्किंग विद अस्प्लायर इट एस ऑलवेज डिरेक्टेड बेस्ट ऑन व्हाट क्लाइंट इज आस्किंग
+[00:32:21 --> 00:32:29]  इमीडियटली ऑर इस इट ऑफ बेस्ट ऑन यॉर अंडरस्टेंडिंग देट अस्प्लायर विल नीड टू बी चेस्ट वेदर द लाइंट इस आस्किंग और नॉट
+[00:32:29 --> 00:32:36]  इस विच इस बोथ अ
+[00:32:36 --> 00:32:46]  इन क्वारी हैस टू बी क्लोस टू डे वी कांट कीप इट पेंडिंग फॉर टुमारों इस व्यू ओनली थिंग यॉस्ट
+[00:32:46 --> 00:32:53]  प्लायर एंक्वायरी इस ओके व्हाट अबॉट फॉर लाइक अदर थिंग जिव ऑर्डर डिफिनर ऑडर टो सप्लायर एंड यॉर बेटिंग फॉर डिलीवरी
+[00:32:53 --> 00:33:19]  फॉर एंड अब डेट इफ डेट्स आ नॉट देव देने में किया इस ट्रैकिंग डाइन इन्ट्राजेट इफ आयुड़ फॉर सब्सक्राइब
+[00:33:19 --> 00:33:23]  न फॉर विल आई अपडेट में प्लाइन बिकोश एवरीवन गेट्स रेस्टलेस
+[00:33:23 --> 00:33:33]  वेरी पास टेक्स ओके सो आइम गोर्न एजूम देट वाटेवर रीजन यू हाव फॉर्टेक्टर सप्लायर इधर इट नीचे
+[00:33:33 --> 00:33:40]  टो बी डन इमीडियटली और इट हैस्ट बिटन विदिन देट टेट सेल और द प्रॉपर अपडेट्स हाफ टो बीडे
+[00:33:40 --> 00:33:49]  ओ सो बेसिकली अनलेस प्रॉबर अपडेट्स आर ऑलरेडी देर यू चेस द सप्लायर फंडेट पर सिंह अपडेटेड में द रेटेड
+[00:33:49 --> 00:33:57]  इन ट्रांजेट आशिश थ्री मोड इस आफ आइन विद दाट आंसर ओके सो इन दाट केस यू विल नॉट बेसिकली आस द सप्लायर
+[00:34:10 --> 00:34:23]  ट्यू आज सप्लायर प्लेशन थे अब इस प्लेशन टू एनी आफ मैं एंड इस टिंग व्हाट्सएप ग्रॉप एंड बाउंट नॉट टो गेट एनी आंसर नॉट एवरीवन इस वर्किंग ऑल था
+[00:34:23 --> 00:34:29]  विडियो लाइक मिल तो एम बाउंट टो गेट ए रिस्पॉंस ओनली इस टेन 30 आफ्टर टेन 30 इन दे मॉर्निंग टुमारों तो
+[00:34:30 --> 00:34:36]  कि देश नो अदर ऑप्शन देख रहा है कैप्टर विंडो ऑफ 24 आवर्स आई इन इफ देख इन क्वेश्चन में टोड़े इतसेल्फ
+[00:34:36 --> 00:34:41]  विद एन ए डीसेंट वर्किंग टाइम गुड इन अफ एनिथिंग पोर्ट सेवन इन दे इवनिंग यू कांट एक्सपेक्ट
+[00:34:41 --> 00:34:49]  एनी आंसर्स कमिंग योवे इफ रिपोर्ट अब तो सेवन दे रिस्पॉंड मतलब यू आसके राउंड 630 यू कैसे रिस्पॉंड
+[00:34:49 --> 00:34:59]  सेवन इस विडियो सिलिए इस एक वेडियो टाइम टू व्हाट इस डाइम इन देव एड विच पॉइंट एंसे दोके ऐड एक्सपेक्ट प्लेट पांच
+[00:34:59 --> 00:35:06]  टुम ऑरो बेसिकली यू कैन काउंट वेन माई टीम इस ऑल सॉफ्ट देट इस देटाइम एंड मोस्ट ऑफ द ऑफिसेस कपल ऑफ दें फ्लॉज डाउन एड
+[00:35:06 --> 00:35:36]  बट यूजियल ट्रेंड इस बाइस 7 मोस्ट ऑफ द ऑफिसेस टॉप रिस्पॉंडिंग अब यू एक तो या ओके आंडर सेंट वॉट यू सेंग बट इद डोंट रिस्पॉंड एक्सवाइट आमेंट इस पॉइंट ओके फाइन आ गेट इट फाइन आई वोंट लामी ड
+[00:35:36 --> 00:35:44]  में डॉन टॉऩ पॉइंटिंग टॉल जो आह एसरी ऑस्ट मैनेज़्यन ट में नियुक्त फॉर्मी टॉइंट ऑटोमेटिक सब्सक्राइब है
+[00:35:44 --> 00:35:53]  निमान पर जो इसमें करें अच्छा फाइनेज जो बहुत धịch्युक्त करते हैं वह ग्राहम अब दो किए कर दें
+[00:35:53 --> 00:36:06]  नंबर वन नंबर टू नॉट टू कमेंट एनिथिंग ऑन एडिस्प्यूटेड मैसेज ए एंड
+[00:36:06 --> 00:36:35]  या नियुक्त लोग बेसिकली ओके नेवर टू टू एक्शन फॉर एजेंट वन वाज़ नो रेड कोड्स टू क्लाइंड और एंड टू वाज़ नो अब डेट सॉट रिप्लाइज ऑफ डिस्प्यूट
+[00:36:35 --> 00:36:35]  और
+[00:36:35 --> 00:36:35]  और
+[00:36:35 --> 00:36:35]  और
+[00:36:35 --> 00:36:35]  और
+[00:36:35 --> 00:36:35]  और
+[00:36:35 --> 00:36:35]  और
+[00:36:35 --> 00:36:35]  और
+[00:36:35 --> 00:36:35]  और
+[00:36:35 --> 00:36:36]  और
+[00:36:36 --> 00:36:36]  और
+[00:36:36 --> 00:36:36]  और
+[00:36:36 --> 00:36:41]  ऑफ ओके टू इस्प्यूट ऑके
+[00:36:43 --> 00:36:53]  देशिप यह लोग बैक्स क्वेश्चन व्हाट वूटर फॉल्स पॉजिटिव लुट लाइक पॉइंट नओ फॉर एग्सांपल डिजेंट इस एलर्टिंग यू
+[00:36:53 --> 00:36:59]  something okay and it turned out that it was a fake alert there was no issue at all for it to alert
+[00:37:01 --> 00:37:05]  so what would that situation look like what would such a situation where there's a false
+[00:37:05 --> 00:37:09]  alert what would it look like and how much tolerance do you have for those
+[00:37:10 --> 00:37:15]  i have full tolerance it's a simple thing that you have reminded reminders are always appreciated
+[00:37:16 --> 00:37:21]  i will just it is a done task i will put a tick and move on rather than not being reminded of
+[00:37:21 --> 00:37:26]  something the ai agent thinks that maybe and maybe not wherever there is a maybe question just
+[00:37:26 --> 00:37:35]  remind me let me take it out whether it is required or it is done and not okay that's that's uh okay
+[00:37:36 --> 00:37:36]  i understand
+[00:37:41 --> 00:37:48]  okay then um if the agent is associated a message with the wrong order
+[00:37:50 --> 00:37:51]  right uh for example
+[00:37:51 --> 00:37:57]  um
+[00:38:03 --> 00:38:11]  so agent agent has made that mistake but how quickly would you uh catch that see if i say
+[00:38:11 --> 00:38:16]  my expertise is very good i have a very good memory i don't usually forget things so i will
+[00:38:16 --> 00:38:21]  be able to identify it right away but then again there are possibility that i might also not know
+[00:38:21 --> 00:38:28]  among a list of 20 item one or two item i might also mess up but then again such mistakes are acceptable
+[00:38:28 --> 00:38:34]  if it is less than five percent of the whole deal i'm okay with that less than five percent of the
+[00:38:34 --> 00:38:42]  whole deal okay next question similar uh follow up to the previous question right so if it is unsure
+[00:38:43 --> 00:38:50]  about uh which order it belongs to etc let it ask me so it should always ask you or is there like a
+[00:38:50 --> 00:38:56]  let it ask me just a prompt to me and i will update prompt to me or senior most member of the
+[00:38:56 --> 00:39:01]  team samitha ma'am any one of us should be asked if it is a high priority or a high risk is involved
+[00:39:01 --> 00:39:07]  everything which is above medium or medium and above uh higher risk rating must be directly
+[00:39:07 --> 00:39:12]  prompted to me otherwise anything low and up to medium might be just asked by the senior staff
+[00:39:12 --> 00:39:18]  member that role i will assign there is not an issue or higher uh ambiguity
+[00:39:20 --> 00:39:27]  to always be clarified by ashish
+[00:39:30 --> 00:39:34]  or no restrictions on frequency
+[00:39:36 --> 00:39:48]  okay and then you're saying uh uh low low ambiguity should be highlighted yeah can be
+[00:39:48 --> 00:39:50]  referred to the senior staff member
+[00:39:50 --> 00:39:54]  yeah highlighted to senior uh
+[00:39:56 --> 00:40:01]  staff or both to you and senior staff or only to senior staff
+[00:40:01 --> 00:40:05]  vote to us vote to me and the senior staff one of us will respond right away
+[00:40:05 --> 00:40:09]  so low ambiguity also and never silently
+[00:40:12 --> 00:40:12]  um
+[00:40:15 --> 00:40:20]  hide ambiguity that is the main point it has to be highlighted
+[00:40:20 --> 00:40:27]  okay okay because i had actually made a uh wrong assumption in that case so far i had decided that
+[00:40:27 --> 00:40:33]  let us try and limit a little bit of it and if there is an ambiguity also wait and see maybe in
+[00:40:33 --> 00:40:38]  the future some message will come in and that will resolve the ambiguity so take both the directions
+[00:40:38 --> 00:40:44]  that are there and mark it as you know a potential issue and later if a message comes which resolves
+[00:40:44 --> 00:40:49]  the ambiguity for you then you update that's what i was trying to design for but in this case i'm going
+[00:40:49 --> 00:40:50]  to make it possible
+[00:40:50 --> 00:40:53]  make it faster yeah i will update it okay yeah
+[00:40:55 --> 00:41:01]  right um when the agent isn't sure which order a vague message belongs to
+[00:41:03 --> 00:41:08]  right this is related would you prefer it makes best guess and flags the uncertainty to you
+[00:41:08 --> 00:41:11]  or ask you to confirm before doing anything should it block and wait
+[00:41:11 --> 00:41:14]  or should it make a best guess and then resolve later
+[00:41:16 --> 00:41:20]  ask me why we should not do anything more
+[00:41:20 --> 00:41:24]  it should just ask me right away that my update is required on this
+[00:41:26 --> 00:41:30]  but then you might not respond immediately in that case any messages that are coming about it later
+[00:41:31 --> 00:41:34]  those are not being processed no updates are being taken it's blocked
+[00:41:35 --> 00:41:40]  but if it guesses it wrong suppose the order is for mrs samitha and it punches it in the name of
+[00:41:40 --> 00:41:45]  mr kunal then all the subsequential messages will also be getting wrongly placed
+[00:41:46 --> 00:41:49]  yes but we can undo it until it comes to the point where it makes a mistake
+[00:41:50 --> 00:41:57]  some serious decision. Okay. Right. See in any case it is not taking any actions. It is only tracking
+[00:41:57 --> 00:42:04]  updates. Correct. Right now at least. Even in that what I am trying to design right now is if it comes
+[00:42:04 --> 00:42:11]  to a critical point. Yeah. Where something like a real life thing is involved like a payment or a
+[00:42:11 --> 00:42:18]  delivery or an order. Right. Like an order to a supplier. If it does not come to that point
+[00:42:20 --> 00:42:24]  then you can continue making the assumption and wait for somebody to clarify.
+[00:42:25 --> 00:42:29]  That is my current design philosophy right now. The work that we are doing.
+[00:42:29 --> 00:42:35]  Yep. Okay. That goes. You continue processing and later we will change the thing.
+[00:42:36 --> 00:42:41]  We will undo it and redo the correct one. Yes. Can. Okay. So that is better.
+[00:42:41 --> 00:42:46]  Don't block then. Yes. That is better. When we come to a point where you know you should really
+[00:42:46 --> 00:42:53]  not move further. Okay. So in that case basically we will have initially we will say there is an
+[00:42:53 --> 00:42:59]  ambiguity please look at it and if it comes to a point and you have not yet you know said anything
+[00:42:59 --> 00:43:03]  it comes to a point where it has to block then it will be like alarm alarm alarm.
+[00:43:03 --> 00:43:09]  Look immediately. Look immediately. Something like that. Okay. Done. All right.
+[00:43:11 --> 00:43:16]  And then related question. At what point does being asked to clarify
+[00:43:16 --> 00:43:19]  right at what point does it more become more annoying than helpful?
+[00:43:21 --> 00:43:27]  It doesn't. It is my work so it never gets annoying for me. Perfect. Perfect. Now we are
+[00:43:27 --> 00:43:31]  coming to design questions. So so far we had only talked about like the trust and things like that.
+[00:43:33 --> 00:43:40]  Okay. This is going to take a long time. And it feels like to me maybe we should do this
+[00:43:41 --> 00:43:48]  tomorrow because already 8 30 now. Okay. Okay. So what do you feel? Should we continue now
+[00:43:48 --> 00:43:53]  or should we. If there is a smaller topic then that can be done now otherwise let's do it tomorrow
+[00:43:53 --> 00:44:00]  because it will take at least good enough good half an hour for me to get home so it will be
+[00:44:00 --> 00:44:04]  too late otherwise. Yes. Let's let's do it tomorrow because what I am seeing is this
+[00:44:04 --> 00:44:09]  these follow-on sections from this point will take another hour or so more than an hour in fact.
+[00:44:10 --> 00:44:11]  Lovely. So.
+[00:44:11 --> 00:44:15]  Let's do it tomorrow then. Yeah. Okay. So I am going to stop recording now.
+[00:44:15 --> 00:44:17]  Okay. Okay. And I will join the two records.

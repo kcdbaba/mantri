@@ -1,0 +1,22 @@
+{
+  "required_updates": [
+    {
+      "node_id": "supplier_payment",
+      "new_status": "completed",
+      "min_confidence": 0.85
+    }
+  ],
+  "required_node_data_extractions": [
+    {
+      "node_id": "supplier_payment",
+      "required_keys": ["payment_amount", "utr_number"]
+    }
+  ],
+  "forbidden_updates": [
+    {
+      "node_id": "supplier_collection",
+      "forbidden_statuses": ["pending", "active"],
+      "reason": "supplier_collection is already completed — must not be regressed"
+    }
+  ]
+}

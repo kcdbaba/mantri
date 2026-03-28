@@ -1,0 +1,23 @@
+{
+  "task_id": "task_inc19",
+  "order_type": "standard_procurement",
+  "nodes": [
+    {"node_id": "client_enquiry", "status": "completed"},
+    {"node_id": "client_quotation", "status": "completed"},
+    {"node_id": "order_confirmation", "status": "completed"},
+    {"node_id": "supplier_indent", "status": "completed"},
+    {"node_id": "supplier_invoice", "status": "completed"},
+    {"node_id": "supplier_collection", "status": "completed"},
+    {"node_id": "supplier_QC", "status": "completed"},
+    {"node_id": "supplier_po", "status": "completed"},
+    {"node_id": "supplier_payment", "status": "active"},
+    {"node_id": "filled_from_stock", "status": "skipped"},
+    {"node_id": "order_ready", "status": "completed"},
+    {"node_id": "dispatched", "status": "completed"},
+    {"node_id": "delivery_confirmed", "status": "completed"},
+    {"node_id": "predispatch_checklist", "status": "completed"},
+    {"node_id": "delivery_photo_check", "status": "completed"},
+    {"node_id": "quote_followup_48h", "status": "skipped"},
+    {"node_id": "payment_followup_30d", "status": "pending"}
+  ]
+}

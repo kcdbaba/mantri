@@ -1,0 +1,6 @@
+{
+  "id": "INC-15",
+  "name": "item_extractions_add",
+  "quality_risk_dimension": "item_extraction_from_enquiry_message",
+  "description": "Client enquiry lists multiple items with quantities. Agent must extract them as add operations and update client_enquiry status."
+}

@@ -1,0 +1,8 @@
+{
+  "id": "INC-10",
+  "name": "delivery_confirmed",
+  "description": "Client group message confirms delivery received, completing delivery_confirmed without activating time-triggered payment_followup.",
+  "quality_risk_dimension": "delivery_confirmation_and_time_trigger_boundary",
+  "source": "synthetic",
+  "routing": "layer_2a"
+}

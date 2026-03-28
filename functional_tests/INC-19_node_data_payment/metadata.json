@@ -1,0 +1,6 @@
+{
+  "id": "INC-19",
+  "name": "node_data_payment_details",
+  "quality_risk_dimension": "node_data_extraction_payment_utr",
+  "description": "Supplier payment message with UTR reference and amount. Agent must extract payment_amount and utr_number into supplier_payment node_data and mark payment completed."
+}

@@ -1,0 +1,23 @@
+{
+  "required_updates": [
+    {
+      "node_id": "order_confirmation",
+      "new_status": "completed",
+      "min_confidence": 0.85,
+      "evidence_must_contain": ["confirm"]
+    }
+  ],
+  "required_task_candidates": [],
+  "forbidden_updates": [
+    {
+      "node_id": "dispatched",
+      "forbidden_statuses": ["completed"],
+      "note": "Goods have not been dispatched yet"
+    },
+    {
+      "node_id": "delivery_confirmed",
+      "forbidden_statuses": ["completed"],
+      "note": "Delivery has not occurred yet"
+    }
+  ]
+}

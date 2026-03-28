@@ -1,0 +1,6 @@
+{
+  "id": "INC-16",
+  "name": "item_update_post_confirmation",
+  "quality_risk_dimension": "post_confirmation_item_change_escalation",
+  "description": "Staff message changes an item quantity after order_confirmation is already completed. Agent must extract the update AND raise a high-severity ambiguity flag."
+}

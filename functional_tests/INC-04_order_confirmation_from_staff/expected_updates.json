@@ -1,0 +1,15 @@
+{
+  "required_updates": [
+    {
+      "node_id": "order_confirmation",
+      "new_status": "completed",
+      "min_confidence": 0.80
+    }
+  ],
+  "required_task_candidates": [],
+  "forbidden_updates": [],
+  "routing": {
+    "expected_task_id": "task_001",
+    "note": "Agent must resolve 'Sata' as entity alias to route message to task_001"
+  }
+}

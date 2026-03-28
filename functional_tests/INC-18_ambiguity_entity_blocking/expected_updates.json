@@ -1,0 +1,15 @@
+{
+  "required_ambiguity_flags": [
+    {
+      "severity": "medium",
+      "category": "entity"
+    }
+  ],
+  "forbidden_updates": [
+    {
+      "node_id": "dispatched",
+      "forbidden_statuses": ["completed"],
+      "reason": "entity ambiguity present — dispatch should not proceed without clarification"
+    }
+  ]
+}

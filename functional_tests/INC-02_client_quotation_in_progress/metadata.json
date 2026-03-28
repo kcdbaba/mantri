@@ -1,0 +1,8 @@
+{
+  "id": "INC-02",
+  "name": "client_quotation_in_progress",
+  "description": "Staff sends price quotation to SATA client, moving client_quotation to in_progress and auto-activating order_confirmation.",
+  "quality_risk_dimension": "node_progression_and_auto_trigger",
+  "source": "synthetic",
+  "routing": "layer_2a"
+}

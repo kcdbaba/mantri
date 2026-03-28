@@ -1,0 +1,8 @@
+{
+  "id": "INC-01",
+  "name": "client_enquiry_activation",
+  "description": "First message from SATA client group triggers client_enquiry activation for a new cement and sand order.",
+  "quality_risk_dimension": "node_activation",
+  "source": "synthetic",
+  "routing": "layer_2a"
+}

@@ -1,0 +1,15 @@
+{
+  "final_state_must_have": {
+    "order_confirmation": "completed",
+    "supplier_collection": "completed",
+    "supplier_QC": "completed",
+    "order_ready": "completed",
+    "dispatched": "completed"
+  },
+  "final_state_acceptable": {
+    "supplier_indent": ["active", "completed", "pending"],
+    "predispatch_checklist": ["active", "completed", "pending"],
+    "delivery_photo_check": ["active", "pending"]
+  },
+  "notes": "Multi-message supplier path test: order confirmation via staff, collection + QC pass, then dispatch. supplier subgraph must transition from skipped to active across messages."
+}

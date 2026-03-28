@@ -1,0 +1,8 @@
+{
+  "id": "INC-05",
+  "name": "supplier_subgraph_activation",
+  "description": "Staff mentions Kapoor ji as supplier, activating the supplier subgraph from skipped state.",
+  "quality_risk_dimension": "subgraph_activation_from_skipped",
+  "source": "synthetic",
+  "routing": "layer_2b"
+}

@@ -65,6 +65,84 @@ PROVISIONAL_THRESHOLD = 0.75       # Update agent: below this → provisional no
 AMBIGUITY_THRESHOLD = 0.50         # Below this → dead letter queue
 
 # ---------------------------------------------------------------------------
+# Ambiguity escalation config
+# ---------------------------------------------------------------------------
+#
+# Profiles control how aggressively the system escalates ambiguity to humans.
+# "ashish_current" reflects Ashish's stated preference from interview (2026-03-28):
+#   medium+ always escalated, low highlighted to staff+Ashish, nothing silently hidden.
+#
+# Dimensions:
+#   escalation_threshold_high  — agent confidence below this → medium ambiguity → escalate to Ashish
+#   escalation_threshold_low   — agent confidence below this → low ambiguity → escalate to staff+Ashish
+#   blocking_threshold         — agent confidence below this on a gate node → set node to blocked
+#   silent_resolution_allowed  — if False, every ambiguity flag is surfaced regardless of confidence
+#   escalation_rate_limit      — max ambiguity escalations per task per hour (None = unlimited)
+#   resolution_timeout_high_s  — seconds before medium+ unresolved ambiguity re-escalates
+#   resolution_timeout_low_s   — seconds before low unresolved ambiguity auto-resolves provisional
+#   block_scope                — which node types can be blocked: "gate_only" | "all"
+#
+# Category-level overrides can supplement the profile for fine-grained control.
+# Categories: entity | quantity | status | timing | linkage
+
+ESCALATION_PROFILES = {
+    "ashish_current": {
+        "escalation_threshold_high":  0.85,   # medium+ ambiguity
+        "escalation_threshold_low":   0.65,   # low ambiguity
+        "blocking_threshold":         0.65,   # block gate nodes below this
+        "silent_resolution_allowed":  False,  # never silently hide
+        "escalation_rate_limit":      None,   # unlimited
+        "resolution_timeout_high_s":  1800,   # 30 min before re-escalation
+        "resolution_timeout_low_s":   14400,  # 4 hours before auto-provisional
+        "block_scope":                "gate_only",
+        "escalation_target_high":     ["ashish"],
+        "escalation_target_low":      ["senior_staff", "ashish"],
+    },
+    "balanced": {
+        "escalation_threshold_high":  0.80,
+        "escalation_threshold_low":   0.60,
+        "blocking_threshold":         0.55,
+        "silent_resolution_allowed":  False,
+        "escalation_rate_limit":      10,
+        "resolution_timeout_high_s":  3600,
+        "resolution_timeout_low_s":   28800,
+        "block_scope":                "gate_only",
+        "escalation_target_high":     ["ashish"],
+        "escalation_target_low":      ["senior_staff", "ashish"],
+    },
+    "high_trust": {
+        "escalation_threshold_high":  0.70,
+        "escalation_threshold_low":   0.50,
+        "blocking_threshold":         0.45,
+        "silent_resolution_allowed":  True,
+        "escalation_rate_limit":      3,
+        "resolution_timeout_high_s":  7200,
+        "resolution_timeout_low_s":   86400,
+        "block_scope":                "gate_only",
+        "escalation_target_high":     ["ashish"],
+        "escalation_target_low":      ["senior_staff"],
+    },
+}
+
+# Active profile — change this to switch system-wide escalation behaviour
+ACTIVE_ESCALATION_PROFILE = "ashish_current"
+
+# Per-category overrides applied on top of the active profile (optional)
+# e.g. {"entity": {"blocking_threshold": 0.75}} to block harder on entity ambiguity
+ESCALATION_CATEGORY_OVERRIDES: dict[str, dict] = {
+    "entity":   {"blocking_threshold": 0.75},   # wrong entity = wrong order; block earlier
+    "linkage":  {"blocking_threshold": 0.75},   # wrong M:N link = wrong delivery
+}
+
+# Gate nodes — ambiguity on these triggers blocking (when block_scope="gate_only")
+GATE_NODES = {
+    "order_confirmation",
+    "order_ready",
+    "dispatched",
+    "supplier_QC",
+}
+
+# ---------------------------------------------------------------------------
 # Update agent
 # ---------------------------------------------------------------------------
 
@@ -88,6 +166,7 @@ NEW_TASK_LOG_PATH = "logs/new_task_candidates.log"
 
 REDIS_URL = "redis://localhost:6379"
 INGEST_QUEUE_KEY = "ingest_queue"
+TASK_EVENTS_STREAM = "task_events"   # Redis stream; linkage_worker reads from this
 
 # ---------------------------------------------------------------------------
 # SQLite

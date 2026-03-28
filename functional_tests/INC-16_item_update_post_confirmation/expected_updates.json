@@ -1,0 +1,19 @@
+{
+  "required_item_extractions": [
+    {"operation": "update", "description_contains": "atta"}
+  ],
+  "required_ambiguity_flags": [
+    {
+      "severity": "high",
+      "category": "quantity",
+      "blocking_node_id": "dispatched"
+    }
+  ],
+  "forbidden_updates": [
+    {
+      "node_id": "order_confirmation",
+      "forbidden_statuses": ["pending", "active"],
+      "reason": "order_confirmation is already completed — must not be regressed"
+    }
+  ]
+}

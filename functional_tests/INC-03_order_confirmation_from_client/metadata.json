@@ -1,0 +1,8 @@
+{
+  "id": "INC-03",
+  "name": "order_confirmation_from_client",
+  "description": "SATA client confirms the order via the client group chat, completing order_confirmation.",
+  "quality_risk_dimension": "client_confirmation_detection",
+  "source": "synthetic",
+  "routing": "layer_2a"
+}

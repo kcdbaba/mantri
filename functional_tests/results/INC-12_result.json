@@ -1,0 +1,49 @@
+{
+  "case_id": "INC-12",
+  "verdict": "PASS",
+  "required_passed": 2,
+  "required_total": 2,
+  "forbidden_violations": 0,
+  "routing_correct": null,
+  "details": [
+    "\u2713 supplier_collection \u2192 completed (conf=0.92)",
+    "\u2713 supplier_QC \u2192 in_progress (conf=0.85)"
+  ],
+  "elapsed_s": 6.89,
+  "raw_updates": [
+    {
+      "node_id": "supplier_collection",
+      "status": "completed",
+      "conf": 0.92
+    },
+    {
+      "node_id": "supplier_QC",
+      "status": "in_progress",
+      "conf": 0.85
+    }
+  ],
+  "raw_candidates": [],
+  "raw_item_extractions": [],
+  "raw_node_data": [
+    {
+      "node_id": "supplier_collection",
+      "keys": [
+        "collection_date",
+        "received_by"
+      ]
+    },
+    {
+      "node_id": "supplier_indent",
+      "keys": [
+        "supplier_name"
+      ]
+    }
+  ],
+  "raw_ambiguity_flags": [
+    {
+      "severity": "medium",
+      "category": "status",
+      "blocking": "order_ready"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "id": "INC-11",
+  "name": "supplier_payment_gate_violation",
+  "description": "Payment made to supplier but invoice is still pending - agent should mark payment as provisional since gate condition not fully met.",
+  "quality_risk_dimension": "gate_condition_provisional_handling",
+  "source": "synthetic",
+  "routing": "layer_2b"
+}

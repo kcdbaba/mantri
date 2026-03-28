@@ -1,0 +1,30 @@
+{
+  "case_id": "INC-14",
+  "verdict": "PASS",
+  "details": [
+    "\u2713 filled_from_stock: completed",
+    "\u2713 order_ready: completed",
+    "\u2713 delivery_confirmed: completed",
+    "\u2713 dispatched: completed (acceptable)",
+    "\u2713 predispatch_checklist: active (acceptable)",
+    "\u2713 delivery_photo_check: active (acceptable)"
+  ],
+  "per_message": [
+    {
+      "seq": 1,
+      "updates": [
+        "filled_from_stock \u2192 completed",
+        "order_ready \u2192 completed",
+        "predispatch_checklist \u2192 active"
+      ]
+    },
+    {
+      "seq": 2,
+      "updates": [
+        "delivery_confirmed \u2192 completed",
+        "dispatched \u2192 completed",
+        "delivery_photo_check \u2192 active"
+      ]
+    }
+  ]
+}

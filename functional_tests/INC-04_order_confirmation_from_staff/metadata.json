@@ -1,0 +1,8 @@
+{
+  "id": "INC-04",
+  "name": "order_confirmation_from_staff",
+  "description": "Staff updates internal group that SATA confirmed the order, testing Layer 2b routing via entity alias resolution.",
+  "quality_risk_dimension": "layer_2b_routing_entity_alias",
+  "source": "synthetic",
+  "routing": "layer_2b"
+}

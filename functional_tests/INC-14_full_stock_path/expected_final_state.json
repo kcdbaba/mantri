@@ -1,0 +1,13 @@
+{
+  "final_state_must_have": {
+    "filled_from_stock": "completed",
+    "order_ready": "completed",
+    "delivery_confirmed": "completed"
+  },
+  "final_state_acceptable": {
+    "dispatched": ["completed", "active", "pending"],
+    "predispatch_checklist": ["active", "completed", "pending"],
+    "delivery_photo_check": ["active", "completed", "pending"]
+  },
+  "notes": "Multi-message stock path test: godown stock fulfillment activates filled_from_stock and order_ready, then delivery confirmation closes the loop. All supplier nodes must remain skipped throughout."
+}

@@ -1,10 +1,21 @@
 """
-Message router — 3-layer cascade.
+Message router — 4-layer cascade.
 
-Layer 1: noise filter (reactions, stickers, system messages)
-Layer 2a: direct group → task map
-Layer 2b: entity keyword + alias matching
-Layer 2c: embedding similarity (deferred — stub only)
+Layer 1:  noise filter (reactions, stickers, system messages)
+Layer 2a: direct group → task map (conf=0.90)
+Layer 2b: entity keyword + alias matching via rapidfuzz (conf varies, threshold 0.80)
+Layer 2c: MiniLM embedding similarity — STUB (deferred to post-Sprint 3)
+          Implementation plan: encode message body with all-MiniLM-L6-v2,
+          cosine-compare against per-task context_embedding stored in
+          task_routing_context.context_embedding (serialised float32 numpy array).
+          Threshold: 0.65. Updates task_routing_context.context_embedding
+          with EMA on new routed messages.
+Layer 2d: Gemini Flash 8B LLM routing call — STUB (fail-up from 2c)
+          Implementation plan: if 2c confidence < 0.65, call Gemini Flash 8B
+          with message body + all active task summaries, ask it to pick the
+          best-matching task. Output: task_id + confidence + reasoning.
+          Only invoked when 2c produces no result above threshold.
+→ ambiguity queue if all layers below threshold
 
 Returns: list of (task_id, confidence) tuples.
 Empty list → push to dead letter queue (unrouted).
@@ -63,7 +74,13 @@ def route(message: dict) -> list[tuple[str, float]]:
         if results:
             return results
 
-    # --- Layer 2c: embedding similarity (deferred) ---
-    # TODO: implement MiniLM embedding similarity routing
+    # --- Layer 2c: MiniLM embedding similarity (deferred — stub only) ---
+    # When implemented: encode body, cosine-compare against task_routing_context.context_embedding
+    # Threshold 0.65; update EMA on hit. See module docstring for full plan.
+
+    # --- Layer 2d: Gemini Flash 8B LLM routing (deferred — stub only) ---
+    # When implemented: call Gemini Flash 8B with message + all active task summaries.
+    # Only invoked when Layer 2c produces no result above threshold.
+
     log.debug("No route found for message %s — unrouted", message.get("message_id"))
     return []

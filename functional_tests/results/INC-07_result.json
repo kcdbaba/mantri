@@ -1,0 +1,75 @@
+{
+  "case_id": "INC-07",
+  "verdict": "PASS",
+  "required_passed": 2,
+  "required_total": 2,
+  "forbidden_violations": 0,
+  "routing_correct": null,
+  "details": [
+    "\u2713 supplier_QC \u2192 partial (conf=0.90)",
+    "\u2713 new_task_candidate: client_notification"
+  ],
+  "elapsed_s": 26.98,
+  "raw_updates": [
+    {
+      "node_id": "supplier_QC",
+      "status": "partial",
+      "conf": 0.9
+    },
+    {
+      "node_id": "order_ready",
+      "status": "partial",
+      "conf": 0.9
+    },
+    {
+      "node_id": "predispatch_checklist",
+      "status": "active",
+      "conf": 0.9
+    }
+  ],
+  "raw_candidates": [
+    {
+      "type": "client_notification",
+      "trigger_node": "supplier_QC",
+      "context": "Kapoor order: only 80 of 100 bags cement received from supplier \u2014 20 bags short. Client may need to be informed of partial delivery."
+    }
+  ],
+  "raw_item_extractions": [
+    {
+      "op": "update",
+      "desc": "cement \u2014 only 80 bags received out of 100 ordered; 20 bags missing",
+      "qty": 80.0,
+      "unit": "bags"
+    }
+  ],
+  "raw_node_data": [
+    {
+      "node_id": "supplier_QC",
+      "keys": [
+        "passed_items",
+        "failed_items",
+        "failure_reason",
+        "qc_date"
+      ]
+    },
+    {
+      "node_id": "supplier_collection",
+      "keys": [
+        "collection_date",
+        "received_by"
+      ]
+    }
+  ],
+  "raw_ambiguity_flags": [
+    {
+      "severity": "high",
+      "category": "status",
+      "blocking": "dispatched"
+    },
+    {
+      "severity": "medium",
+      "category": "entity",
+      "blocking": null
+    }
+  ]
+}

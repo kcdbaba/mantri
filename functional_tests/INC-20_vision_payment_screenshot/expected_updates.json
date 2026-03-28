@@ -1,0 +1,23 @@
+{
+  "required_updates": [
+    {
+      "node_id": "supplier_payment",
+      "new_status_one_of": ["in_progress", "provisional", "completed"],
+      "min_confidence": 0.75,
+      "evidence_must_contain": []
+    }
+  ],
+  "required_node_data_extractions": [
+    {
+      "node_id": "supplier_payment",
+      "required_keys": ["payment_amount", "utr_number"]
+    }
+  ],
+  "forbidden_updates": [
+    {
+      "node_id": "delivery_confirmed",
+      "forbidden_statuses": ["completed"],
+      "reason": "No delivery confirmation in this message"
+    }
+  ]
+}

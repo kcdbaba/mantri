@@ -1,0 +1,22 @@
+{
+  "required_updates": [
+    {
+      "node_id": "supplier_indent",
+      "new_status_one_of": ["active", "in_progress", "completed"],
+      "min_confidence": 0.75
+    }
+  ],
+  "required_node_data_extractions": [
+    {
+      "node_id": "supplier_indent",
+      "required_keys": ["expected_delivery_date"]
+    }
+  ],
+  "forbidden_updates": [
+    {
+      "node_id": "supplier_collection",
+      "forbidden_statuses": ["completed"],
+      "reason": "goods not collected yet, only delivery date confirmed"
+    }
+  ]
+}

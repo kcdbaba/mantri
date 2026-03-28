@@ -50,13 +50,18 @@ CREATE TABLE IF NOT EXISTS task_instances (
 CREATE TABLE IF NOT EXISTS task_nodes (
     id              TEXT PRIMARY KEY,
     task_id         TEXT REFERENCES task_instances(id),
-    node_type       TEXT,           -- 'agent_action' | 'real_world_milestone' | 'cadence' | 'decision' | 'human_review'
+    node_type       TEXT,           -- 'agent_action' | 'real_world_milestone' | 'auto_trigger' | 'time_trigger' | 'decision' | 'human_review'
     name            TEXT,
-    status          TEXT DEFAULT 'pending',  -- 'pending' | 'active' | 'completed' | 'blocked' | 'provisional'
+    status          TEXT DEFAULT 'pending',  -- 'pending' | 'active' | 'in_progress' | 'completed' | 'blocked' | 'provisional' | 'skipped' | 'failed' | 'partial'
     confidence      REAL,
     last_message_id TEXT,
     updated_at      INTEGER,
-    updated_by      TEXT            -- 'agent' | actor_id for manual corrections
+    updated_by      TEXT,           -- 'agent' | actor_id for manual corrections
+    optional        INTEGER DEFAULT 0,  -- 1 = node is skipped by default until subgraph activated
+    requires_all    TEXT,           -- JSON array of node IDs that must be completed; violation → failure alert
+    warns_if_incomplete TEXT,       -- JSON array of node IDs; incompleteness → warning only
+    node_data       TEXT,           -- JSON: accumulated structured extractions (items, prices, dates, etc.)
+    linked_task_ids TEXT            -- JSON array of task IDs spawned from this node (e.g. client_notification)
 );
 
 CREATE TABLE IF NOT EXISTS task_messages (
@@ -109,14 +114,80 @@ CREATE TABLE IF NOT EXISTS audit_log (
 );
 
 CREATE TABLE IF NOT EXISTS ambiguity_queue (
-    message_id      TEXT PRIMARY KEY,
+    id              TEXT PRIMARY KEY,   -- uuid
+    message_id      TEXT,
+    task_id         TEXT,
+    node_id         TEXT,               -- node blocked by this ambiguity (if any)
     group_id        TEXT,
-    body            TEXT,
-    candidates      TEXT,           -- JSON: [{task_id, label}, ...]
-    status          TEXT DEFAULT 'pending',  -- 'pending' | 'resolved' | 'expired'
-    resolved_task_id TEXT,
+    body            TEXT,               -- original message body
+    description     TEXT,               -- agent's description of the ambiguity
+    severity        TEXT,               -- 'high' | 'medium' | 'low'
+    category        TEXT,               -- 'entity' | 'quantity' | 'status' | 'timing' | 'linkage'
+    escalation_target TEXT,             -- JSON array: ['ashish', 'senior_staff']
+    blocking        INTEGER DEFAULT 0,  -- 1 = node_id is blocked until this resolves
+    status          TEXT DEFAULT 'pending',  -- 'pending' | 'escalated' | 'resolved' | 'expired'
+    escalated_at    INTEGER,
+    re_escalation_count INTEGER DEFAULT 0,
+    resolved_by     TEXT,
+    resolution_note TEXT,
     created_at      INTEGER,
     resolved_at     INTEGER
+);
+
+-- Tracks which time_trigger alert instances have already fired (prevents duplicates)
+CREATE TABLE IF NOT EXISTS task_alerts_fired (
+    id              TEXT PRIMARY KEY,   -- uuid
+    task_id         TEXT REFERENCES task_instances(id),
+    node_id         TEXT,               -- e.g. 'supplier_predelivery_enquiry'
+    alert_key       TEXT,               -- e.g. 'days_before_7' | 'elapsed_48h'
+    fired_at        INTEGER
+);
+
+-- M:N item linkage tables
+
+CREATE TABLE IF NOT EXISTS client_order_items (
+    id              TEXT PRIMARY KEY,
+    task_id         TEXT REFERENCES task_instances(id),
+    description     TEXT,           -- informal natural language (Hindi/Hinglish)
+    unit            TEXT,           -- e.g. 'kg', 'pcs', 'bags'
+    quantity        REAL,
+    specs           TEXT,           -- additional spec notes
+    created_at      INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS supplier_order_items (
+    id              TEXT PRIMARY KEY,
+    task_id         TEXT REFERENCES task_instances(id),
+    description     TEXT,
+    unit            TEXT,
+    quantity        REAL,
+    specs           TEXT,
+    created_at      INTEGER
+);
+
+-- Dual-description fulfillment links (no shared item_id; matching is LLM-reasoned)
+CREATE TABLE IF NOT EXISTS fulfillment_links (
+    id                          TEXT PRIMARY KEY,
+    client_order_id             TEXT REFERENCES task_instances(id),
+    client_item_description     TEXT,
+    supplier_order_id           TEXT REFERENCES task_instances(id),
+    supplier_item_description   TEXT,
+    quantity_allocated          REAL,
+    match_confidence            REAL,   -- 0.0–1.0; >= 0.92 → auto-confirmed
+    match_reasoning             TEXT,
+    status                      TEXT DEFAULT 'candidate',  -- 'confirmed' | 'candidate' | 'failed' | 'auto_allocated'
+    resolution_note             TEXT,   -- set when Ashish resolves ambiguity
+    created_at                  INTEGER,
+    updated_at                  INTEGER
+);
+
+-- Redis stream event log (for debugging / audit; primary stream is Redis task_events)
+CREATE TABLE IF NOT EXISTS task_event_log (
+    id              TEXT PRIMARY KEY,
+    task_id         TEXT,
+    event_type      TEXT,   -- 'node_updated' | 'message_processed' | 'linkage_updated'
+    payload         TEXT,   -- JSON
+    ts              INTEGER
 );
 
 -- Usage / cost tracking
@@ -174,11 +245,19 @@ def seed_task(task: dict, nodes: list[dict], entity_aliases: list[dict]):
             ),
         )
         for node in nodes:
+            default_status = "skipped" if node.get("optional") else "pending"
             conn.execute(
                 """INSERT OR IGNORE INTO task_nodes
-                   (id, task_id, node_type, name, status, updated_at, updated_by)
-                   VALUES (?, ?, ?, ?, 'pending', ?, 'seed')""",
-                (f"{task['id']}_{node['id']}", task["id"], node["type"], node["name"], now),
+                   (id, task_id, node_type, name, status, updated_at, updated_by,
+                    optional, requires_all, warns_if_incomplete)
+                   VALUES (?, ?, ?, ?, ?, ?, 'seed', ?, ?, ?)""",
+                (
+                    f"{task['id']}_{node['id']}", task["id"], node["type"], node["name"],
+                    default_status, now,
+                    1 if node.get("optional") else 0,
+                    json.dumps(node.get("requires_all", [])),
+                    json.dumps(node.get("warns_if_incomplete", [])),
+                ),
             )
         for alias in entity_aliases:
             conn.execute(

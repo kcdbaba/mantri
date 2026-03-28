@@ -1,0 +1,20 @@
+[
+  {
+    "message_id": "msg_inc14_001",
+    "task_id": "task_001",
+    "group_id": "all_staff_group@g.us",
+    "sender_jid": "haque_babu@s.whatsapp.net",
+    "body": "Ye order godown se de denge, cement aur sand dono stock mein hai",
+    "timestamp": "2026-03-27T10:00:00",
+    "seq": 1
+  },
+  {
+    "message_id": "msg_inc14_002",
+    "task_id": "task_001",
+    "group_id": "sata_client_group@g.us",
+    "sender_jid": "samita@s.whatsapp.net",
+    "body": "Delivery ho gayi, Sata ne receive kar liya sab kuch",
+    "timestamp": "2026-03-27T14:00:00",
+    "seq": 2
+  }
+]

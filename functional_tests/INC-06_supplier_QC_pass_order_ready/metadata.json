@@ -1,0 +1,8 @@
+{
+  "id": "INC-06",
+  "name": "supplier_QC_pass_order_ready",
+  "description": "Staff confirms QC passed after collection, auto-triggering order_ready and predispatch_checklist.",
+  "quality_risk_dimension": "auto_trigger_chain",
+  "source": "synthetic",
+  "routing": "layer_2b"
+}

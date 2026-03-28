@@ -1,0 +1,37 @@
+{
+  "required_updates": [
+    {
+      "node_id": "supplier_QC",
+      "min_confidence": 0.85,
+      "evidence_must_contain": [
+        "missing"
+      ],
+      "new_status_one_of": [
+        "failed",
+        "partial"
+      ]
+    }
+  ],
+  "required_task_candidates": [
+    {
+      "type": "client_notification",
+      "note": "Client should be notified about partial/delayed delivery due to QC failure"
+    }
+  ],
+  "forbidden_updates": [
+    {
+      "node_id": "order_ready",
+      "forbidden_statuses": [
+        "completed"
+      ],
+      "note": "QC failed - order_ready must not be marked completed"
+    },
+    {
+      "node_id": "dispatched",
+      "forbidden_statuses": [
+        "completed"
+      ],
+      "note": "Goods cannot be dispatched until QC issue is resolved"
+    }
+  ]
+}

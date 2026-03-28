@@ -1,0 +1,31 @@
+{
+  "case_id": "INC-16",
+  "verdict": "PASS",
+  "required_passed": 2,
+  "required_total": 2,
+  "forbidden_violations": 0,
+  "routing_correct": null,
+  "details": [
+    "\u2713 item_extraction: update 'atta 50kg bags'",
+    "\u2713 ambiguity_flag: high/quantity blocking=dispatched"
+  ],
+  "elapsed_s": 5.37,
+  "raw_updates": [],
+  "raw_candidates": [],
+  "raw_item_extractions": [
+    {
+      "op": "update",
+      "desc": "atta 50kg bags",
+      "qty": 70.0,
+      "unit": "bags"
+    }
+  ],
+  "raw_node_data": [],
+  "raw_ambiguity_flags": [
+    {
+      "severity": "high",
+      "category": "quantity",
+      "blocking": "dispatched"
+    }
+  ]
+}

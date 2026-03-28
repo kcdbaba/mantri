@@ -1,0 +1,45 @@
+{
+  "required_updates": [
+    {
+      "node_id": "supplier_QC",
+      "new_status": "completed",
+      "min_confidence": 0.85,
+      "evidence_must_contain": [
+        "check",
+        "theek"
+      ]
+    },
+    {
+      "node_id": "order_ready",
+      "min_confidence": 0.85,
+      "note": "Auto-trigger: order_ready activates when supplier_QC=completed",
+      "new_status_one_of": [
+        "active",
+        "completed"
+      ]
+    },
+    {
+      "node_id": "predispatch_checklist",
+      "new_status": "active",
+      "min_confidence": 0.75,
+      "note": "Auto-trigger: predispatch_checklist activates when order_ready=active"
+    }
+  ],
+  "required_task_candidates": [],
+  "forbidden_updates": [
+    {
+      "node_id": "dispatched",
+      "forbidden_statuses": [
+        "completed"
+      ],
+      "note": "Goods have not been dispatched yet"
+    },
+    {
+      "node_id": "delivery_confirmed",
+      "forbidden_statuses": [
+        "completed"
+      ],
+      "note": "Delivery has not occurred yet"
+    }
+  ]
+}

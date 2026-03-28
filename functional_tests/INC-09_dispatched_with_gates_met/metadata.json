@@ -1,0 +1,8 @@
+{
+  "id": "INC-09",
+  "name": "dispatched_with_gates_met",
+  "description": "Dispatch confirmed with both gate conditions met (order_confirmation and order_ready completed), auto-triggering delivery_photo_check.",
+  "quality_risk_dimension": "dispatch_gate_and_auto_trigger",
+  "source": "synthetic",
+  "routing": "layer_2b"
+}

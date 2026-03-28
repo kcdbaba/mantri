@@ -1,0 +1,60 @@
+{
+  "case_id": "INC-15",
+  "verdict": "PASS",
+  "required_passed": 5,
+  "required_total": 5,
+  "forbidden_violations": 0,
+  "routing_correct": null,
+  "details": [
+    "\u2713 client_enquiry \u2192 completed (conf=0.90)",
+    "\u2713 item_extraction: add 'atta'",
+    "\u2713 item_extraction: add 'dal chana'",
+    "\u2713 item_extraction: add 'refined oil'",
+    "\u2713 node_data_extraction: client_enquiry keys=['unit_name', 'required_by_date']"
+  ],
+  "elapsed_s": 6.02,
+  "raw_updates": [
+    {
+      "node_id": "client_enquiry",
+      "status": "completed",
+      "conf": 0.9
+    }
+  ],
+  "raw_candidates": [],
+  "raw_item_extractions": [
+    {
+      "op": "add",
+      "desc": "atta",
+      "qty": 50.0,
+      "unit": "bags (50kg each)"
+    },
+    {
+      "op": "add",
+      "desc": "dal chana",
+      "qty": 30.0,
+      "unit": "bags (25kg each)"
+    },
+    {
+      "op": "add",
+      "desc": "refined oil",
+      "qty": 10.0,
+      "unit": "boxes (15L each)"
+    }
+  ],
+  "raw_node_data": [
+    {
+      "node_id": "client_enquiry",
+      "keys": [
+        "unit_name",
+        "required_by_date"
+      ]
+    },
+    {
+      "node_id": "order_confirmation",
+      "keys": [
+        "delivery_deadline"
+      ]
+    }
+  ],
+  "raw_ambiguity_flags": []
+}

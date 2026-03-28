@@ -368,6 +368,14 @@ Ashish does a phone review with Pramod (senior staff). Both have the same task l
      [cached system prefix + template] + [variable section]
      Variable section: ~500–800 tokens (messages + node states)
    Call Claude Sonnet 4.6 API
+   // TODO (pre-live): enable Anthropic prompt caching on the system prompt.
+   // Use cache_control: {"type": "ephemeral", "ttl": "1h"} (not the default 5-min TTL).
+   // Rationale: messages arrive sporadically throughout the day; 5-min window gives near-zero
+   // cache hit rate at Ashish's volume. 1-hour TTL matches realistic burst patterns.
+   // Cost: write = 2× input tokens (once per hour); read = 0.1× input tokens (all subsequent).
+   // System prompt is ~3.5K tokens and identical per order_type — strong caching candidate.
+   // Implementation: wrap system_prompt string in a list with cache_control block in
+   // _call_with_retry() in src/agent/update_agent.py.
    Log: {call_type='update_agent', tokens_in, tokens_out, cost_usd, task_id, message_id, ts}
    Parse structured JSON response:
      {

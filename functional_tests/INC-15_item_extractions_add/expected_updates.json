@@ -1,0 +1,27 @@
+{
+  "required_updates": [
+    {
+      "node_id": "client_enquiry",
+      "new_status_one_of": ["active", "in_progress", "completed"],
+      "min_confidence": 0.80
+    }
+  ],
+  "required_item_extractions": [
+    {"operation": "add", "description_contains": "atta"},
+    {"operation": "add", "description_contains": "dal"},
+    {"operation": "add", "description_contains": "oil"}
+  ],
+  "required_node_data_extractions": [
+    {
+      "node_id": "client_enquiry",
+      "required_keys": ["required_by_date"]
+    }
+  ],
+  "forbidden_updates": [
+    {
+      "node_id": "order_confirmation",
+      "forbidden_statuses": ["completed"],
+      "reason": "order not confirmed yet, only enquiry received"
+    }
+  ]
+}

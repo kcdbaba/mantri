@@ -1,0 +1,18 @@
+{
+  "required_updates": [
+    {
+      "node_id": "delivery_confirmed",
+      "new_status": "completed",
+      "min_confidence": 0.85,
+      "evidence_must_contain": ["deliver"]
+    }
+  ],
+  "required_task_candidates": [],
+  "forbidden_updates": [
+    {
+      "node_id": "payment_followup_30d",
+      "forbidden_statuses": ["active"],
+      "note": "payment_followup_30d is a time-trigger node - must only be activated by cron, never by agent message processing"
+    }
+  ]
+}

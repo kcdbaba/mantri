@@ -1,0 +1,47 @@
+{
+  "required_updates": [
+    {
+      "node_id": "filled_from_stock",
+      "new_status_one_of": [
+        "active",
+        "completed"
+      ],
+      "min_confidence": 0.8,
+      "evidence_must_contain": [
+        "stock",
+        "godown"
+      ]
+    },
+    {
+      "node_id": "order_ready",
+      "min_confidence": 0.8,
+      "note": "Auto-trigger: order_ready activates when filled_from_stock is activated",
+      "new_status_one_of": [
+        "active",
+        "completed"
+      ]
+    }
+  ],
+  "required_task_candidates": [
+    {
+      "type": "stock_taking_update",
+      "note": "Stock levels should be updated to reflect goods being drawn from godown"
+    }
+  ],
+  "forbidden_updates": [
+    {
+      "node_id": "supplier_indent",
+      "forbidden_statuses": [
+        "completed"
+      ],
+      "note": "Supplier is not involved in this order path"
+    },
+    {
+      "node_id": "supplier_collection",
+      "forbidden_statuses": [
+        "completed"
+      ],
+      "note": "Supplier collection must not occur since stock path was chosen"
+    }
+  ]
+}

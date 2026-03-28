@@ -1,0 +1,8 @@
+{
+  "id": "INC-08",
+  "name": "filled_from_stock_order_ready",
+  "description": "Staff says order will be fulfilled from godown stock, activating filled_from_stock and auto-triggering order_ready.",
+  "quality_risk_dimension": "stock_path_auto_trigger",
+  "source": "synthetic",
+  "routing": "layer_2b"
+}

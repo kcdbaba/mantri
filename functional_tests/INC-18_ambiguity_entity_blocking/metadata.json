@@ -1,0 +1,6 @@
+{
+  "id": "INC-18",
+  "name": "ambiguity_entity_blocking",
+  "quality_risk_dimension": "entity_ambiguity_gate_blocking",
+  "description": "Message mentions an ambiguous entity (could be multiple suppliers). Agent must raise an entity-category ambiguity flag. order_confirmation should not be completed when entity is unclear."
+}

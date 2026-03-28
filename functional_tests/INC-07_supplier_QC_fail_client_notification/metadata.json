@@ -1,0 +1,8 @@
+{
+  "id": "INC-07",
+  "name": "supplier_QC_fail_client_notification",
+  "description": "Staff reports QC failure due to missing items, blocking order_ready and triggering client notification task candidate.",
+  "quality_risk_dimension": "failure_detection_and_blocking",
+  "source": "synthetic",
+  "routing": "layer_2b"
+}

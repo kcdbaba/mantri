@@ -1,0 +1,8 @@
+{
+  "id": "INC-12",
+  "name": "hinglish_supplier_collection",
+  "description": "Hinglish message about Kapoor's truck arriving and goods being unloaded, testing multilingual supplier_collection completion.",
+  "quality_risk_dimension": "multilingual_hinglish_extraction",
+  "source": "synthetic",
+  "routing": "layer_2b"
+}

@@ -4,17 +4,18 @@ Incremental update agent test runner.
 
 Tests the update agent against structured incremental test cases in
 data/incremental_cases/. Each case provides:
-  - task_state.json     : current node states (input)
-  - new_message.json    : single new message (input) — or messages.json for multi-step
-  - expected_updates.json / expected_final_state.json : ground truth
+  - metadata.json          : case ID, name, quality risk dimension
+  - task_state.json        : current node states (input)
+  - new_message.json       : single new message — OR messages.json for multi-step
+  - expected_updates.json  : ground truth for single-message cases
+  - expected_final_state.json : ground truth for multi-step cases
 
-Scoring is deterministic (no LLM judge needed) — checks structured JSON output
-against expected node updates.
+Scoring is deterministic (no LLM judge needed).
 
 Usage:
-    python scripts/run_incremental_test.py                    # all cases
-    python scripts/run_incremental_test.py INC-02             # single case by ID
-    python scripts/run_incremental_test.py --summary-only     # print summary table
+    python scripts/run_incremental_test.py                 # all cases
+    python scripts/run_incremental_test.py INC-02          # single case by ID prefix
+    python scripts/run_incremental_test.py --summary-only  # summary table only
 """
 
 import argparse
@@ -23,32 +24,51 @@ import sys
 import time
 from pathlib import Path
 
-# Allow running from project root
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from src.agent.update_agent import run_update_agent, AgentOutput
 from src.router.router import route
-from src.router.alias_dict import match_entities
 
-CASES_DIR = Path("data/incremental_cases")
-RESULTS_DIR = Path("data/incremental_results")
+CASES_DIR = Path("functional_tests")
+RESULTS_DIR = Path("functional_tests/results")
 
 
 # ---------------------------------------------------------------------------
-# Scoring helpers
+# Helpers
 # ---------------------------------------------------------------------------
+
+def build_node_states(task_state: dict) -> list[dict]:
+    """Convert test case node format → DB row format expected by prompt builder."""
+    task_id = task_state["task_id"]
+    return [
+        {
+            "id": f"{task_id}_{n['node_id']}",
+            "task_id": task_id,
+            "name": n["node_id"].replace("_", " ").title(),
+            "status": n["status"],
+        }
+        for n in task_state["nodes"]
+    ]
+
 
 def actual_updates_map(output: AgentOutput) -> dict[str, dict]:
     """node_id → {status, confidence, evidence}"""
-    return {u.node_id: {"status": u.new_status, "confidence": u.confidence,
-                        "evidence": u.evidence}
-            for u in output.node_updates}
+    return {
+        u.node_id: {"status": u.new_status, "confidence": u.confidence, "evidence": u.evidence}
+        for u in output.node_updates
+    }
 
+
+# ---------------------------------------------------------------------------
+# Scoring — single message
+# ---------------------------------------------------------------------------
 
 def score_single_message_case(case_dir: Path, output: AgentOutput | None) -> dict:
     expected = json.loads((case_dir / "expected_updates.json").read_text())
+    meta = json.loads((case_dir / "metadata.json").read_text())
+
     result = {
-        "case_id": json.loads((case_dir / "metadata.json").read_text())["id"],
+        "case_id": meta["id"],
         "verdict": "FAIL",
         "required_passed": 0,
         "required_total": 0,
@@ -63,9 +83,10 @@ def score_single_message_case(case_dir: Path, output: AgentOutput | None) -> dic
 
     actual = actual_updates_map(output)
 
-    # Check required updates
+    # --- Required node updates ---
     required = expected.get("required_updates", [])
-    result["required_total"] = len(required)
+    result["required_total"] += len(required)
+
     for req in required:
         node_id = req["node_id"]
         if node_id not in actual:
@@ -74,12 +95,11 @@ def score_single_message_case(case_dir: Path, output: AgentOutput | None) -> dic
 
         actual_node = actual[node_id]
 
-        # Status check (exact or one_of)
+        # Status check
         if "new_status" in req:
-            expected_status = req["new_status"]
-            if actual_node["status"] != expected_status:
+            if actual_node["status"] != req["new_status"]:
                 result["details"].append(
-                    f"WRONG STATUS for {node_id}: expected={expected_status} "
+                    f"WRONG STATUS for {node_id}: expected={req['new_status']} "
                     f"actual={actual_node['status']}"
                 )
                 continue
@@ -109,20 +129,106 @@ def score_single_message_case(case_dir: Path, output: AgentOutput | None) -> dic
                 break
         else:
             result["required_passed"] += 1
-            result["details"].append(f"✓ {node_id} → {actual_node['status']} "
-                                     f"(conf={actual_node['confidence']:.2f})")
-
-    # Check forbidden updates
-    for forbidden in expected.get("forbidden_updates", []):
-        node_id = forbidden["node_id"]
-        if node_id in actual:
-            result["forbidden_violations"] += 1
             result["details"].append(
-                f"FORBIDDEN update present: {node_id} → {actual[node_id]['status']} "
-                f"({forbidden['reason']})"
+                f"✓ {node_id} → {actual_node['status']} (conf={actual_node['confidence']:.2f})"
             )
 
-    # Routing check (INC-03 style)
+    # --- Required task candidates ---
+    required_candidates = expected.get("required_task_candidates", [])
+    result["required_total"] += len(required_candidates)
+
+    for cand in required_candidates:
+        found = any(c.get("type") == cand["type"] for c in output.new_task_candidates)
+        if found:
+            result["required_passed"] += 1
+            result["details"].append(f"✓ new_task_candidate: {cand['type']}")
+        else:
+            result["details"].append(f"MISSING task_candidate: {cand['type']}")
+
+    # --- Required item extractions ---
+    for req_item in expected.get("required_item_extractions", []):
+        result["required_total"] += 1
+        matched = [
+            e for e in output.item_extractions
+            if e.operation == req_item["operation"]
+            and req_item.get("description_contains", "").lower() in e.description.lower()
+        ]
+        if matched:
+            result["required_passed"] += 1
+            result["details"].append(
+                f"✓ item_extraction: {req_item['operation']} '{matched[0].description}'"
+            )
+        else:
+            result["details"].append(
+                f"MISSING item_extraction: op={req_item['operation']} "
+                f"contains='{req_item.get('description_contains', '')}'"
+            )
+
+    # --- Required node_data extractions ---
+    for req_nd in expected.get("required_node_data_extractions", []):
+        result["required_total"] += 1
+        node_id = req_nd["node_id"]
+        required_keys = req_nd.get("required_keys", [])
+        matched = [e for e in output.node_data_extractions if e.node_id == node_id]
+        if not matched:
+            result["details"].append(f"MISSING node_data_extraction for node={node_id}")
+            continue
+        nd = matched[0].data
+        missing_keys = [k for k in required_keys if k not in nd]
+        if missing_keys:
+            result["details"].append(
+                f"node_data for {node_id} missing keys: {missing_keys} (got: {list(nd.keys())})"
+            )
+        else:
+            result["required_passed"] += 1
+            result["details"].append(
+                f"✓ node_data_extraction: {node_id} keys={list(nd.keys())}"
+            )
+
+    # --- Required ambiguity flags ---
+    for req_flag in expected.get("required_ambiguity_flags", []):
+        result["required_total"] += 1
+        matched = [
+            f for f in output.ambiguity_flags
+            if f.severity == req_flag.get("severity", f.severity)
+            and f.category == req_flag.get("category", f.category)
+        ]
+        blocking_ok = True
+        if req_flag.get("blocking_node_id") and matched:
+            blocking_ok = any(f.blocking_node_id == req_flag["blocking_node_id"] for f in matched)
+        if matched and blocking_ok:
+            result["required_passed"] += 1
+            result["details"].append(
+                f"✓ ambiguity_flag: {matched[0].severity}/{matched[0].category} "
+                f"blocking={matched[0].blocking_node_id}"
+            )
+        else:
+            result["details"].append(
+                f"MISSING ambiguity_flag: severity={req_flag.get('severity')} "
+                f"category={req_flag.get('category')} blocking={req_flag.get('blocking_node_id')}"
+            )
+
+    # --- Forbidden updates ---
+    for forbidden in expected.get("forbidden_updates", []):
+        node_id = forbidden["node_id"]
+        if node_id not in actual:
+            continue
+        actual_status = actual[node_id]["status"]
+        forbidden_statuses = forbidden.get("forbidden_statuses")
+        if forbidden_statuses:
+            if actual_status in forbidden_statuses:
+                result["forbidden_violations"] += 1
+                result["details"].append(
+                    f"FORBIDDEN status for {node_id}: {actual_status} "
+                    f"(not allowed: {forbidden_statuses}) — {forbidden['reason']}"
+                )
+        else:
+            result["forbidden_violations"] += 1
+            result["details"].append(
+                f"FORBIDDEN update present: {node_id} → {actual_status} ({forbidden['reason']})"
+            )
+
+    # --- Routing check ---
     routing_exp = expected.get("routing")
     if routing_exp:
         message = json.loads((case_dir / "new_message.json").read_text())
@@ -136,12 +242,12 @@ def score_single_message_case(case_dir: Path, output: AgentOutput | None) -> dic
                 f"✗ Routing: expected {routing_exp['expected_task_id']}, got {routes}"
             )
 
-    # Verdict
-    all_required_passed = result["required_passed"] == result["required_total"]
+    # --- Verdict ---
+    all_required = result["required_passed"] == result["required_total"]
     no_forbidden = result["forbidden_violations"] == 0
-    routing_ok = result["routing_correct"] is not False  # None = not tested = OK
+    routing_ok = result["routing_correct"] is not False
 
-    if all_required_passed and no_forbidden and routing_ok:
+    if all_required and no_forbidden and routing_ok:
         result["verdict"] = "PASS"
     elif result["required_passed"] > 0 and no_forbidden:
         result["verdict"] = "PARTIAL"
@@ -149,8 +255,11 @@ def score_single_message_case(case_dir: Path, output: AgentOutput | None) -> dic
     return result
 
 
+# ---------------------------------------------------------------------------
+# Scoring — multi-message
+# ---------------------------------------------------------------------------
+
 def score_multi_message_case(case_dir: Path) -> dict:
-    """INC-05 style: run 3 sequential update agent calls, check final state."""
     meta = json.loads((case_dir / "metadata.json").read_text())
     initial_state = json.loads((case_dir / "task_state.json").read_text())
     messages = json.loads((case_dir / "messages.json").read_text())
@@ -163,31 +272,53 @@ def score_multi_message_case(case_dir: Path) -> dict:
         "per_message": [],
     }
 
-    # Simulate sequential state updates
     current_nodes = {n["node_id"]: n["status"] for n in initial_state["nodes"]}
+    message_history = []
 
     for msg in messages:
-        output = run_update_agent(initial_state["task_id"], msg)
+        node_states = [
+            {
+                "id": f"{initial_state['task_id']}_{node_id}",
+                "task_id": initial_state["task_id"],
+                "name": node_id.replace("_", " ").title(),
+                "status": status,
+            }
+            for node_id, status in current_nodes.items()
+        ]
+
+        output = run_update_agent(
+            initial_state["task_id"], msg,
+            node_states_override=node_states,
+            recent_messages_override=message_history[-20:],
+        )
         if output is None:
             result["details"].append(f"AGENT FAILURE on message seq={msg['seq']}")
             return result
 
+        message_history.append(msg)
         msg_result = {"seq": msg["seq"], "updates": []}
         for upd in output.node_updates:
             current_nodes[upd.node_id] = upd.new_status
             msg_result["updates"].append(f"{upd.node_id} → {upd.new_status}")
         result["per_message"].append(msg_result)
 
-    # Check final state
-    expected_nodes = expected_final.get("final_state_must_have", {})
     all_correct = True
-    for node_id, expected_status in expected_nodes.items():
-        actual_status = current_nodes.get(node_id, "MISSING")
-        if actual_status == expected_status:
-            result["details"].append(f"✓ {node_id}: {actual_status}")
+
+    for node_id, expected_status in expected_final.get("final_state_must_have", {}).items():
+        actual = current_nodes.get(node_id, "MISSING")
+        if actual == expected_status:
+            result["details"].append(f"✓ {node_id}: {actual}")
+        else:
+            result["details"].append(f"✗ {node_id}: expected={expected_status} actual={actual}")
+            all_correct = False
+
+    for node_id, acceptable in expected_final.get("final_state_acceptable", {}).items():
+        actual = current_nodes.get(node_id, "MISSING")
+        if actual in acceptable:
+            result["details"].append(f"✓ {node_id}: {actual} (acceptable)")
         else:
             result["details"].append(
-                f"✗ {node_id}: expected={expected_status} actual={actual_status}"
+                f"✗ {node_id}: expected one of {acceptable} actual={actual}"
             )
             all_correct = False
 
@@ -205,16 +336,27 @@ def run_case(case_dir: Path) -> dict:
     print(f"Running {meta['id']}: {meta['name']}")
     print(f"Quality risk dimension: {meta['quality_risk_dimension']}")
 
-    # Multi-message case
     if (case_dir / "messages.json").exists():
         return score_multi_message_case(case_dir)
 
-    # Single message case
     message = json.loads((case_dir / "new_message.json").read_text())
     task_state = json.loads((case_dir / "task_state.json").read_text())
+    node_states = build_node_states(task_state)
+
+    items_override = task_state.get("items")  # optional: pre-existing order items
+    task_override = {
+        "id": task_state["task_id"],
+        "order_type": task_state.get("order_type", "standard_procurement"),
+    }
 
     t0 = time.time()
-    output = run_update_agent(task_state["task_id"], message)
+    output = run_update_agent(
+        task_state["task_id"], message,
+        node_states_override=node_states,
+        recent_messages_override=[],
+        items_override=items_override,
+        task_override=task_override,
+    )
     elapsed = time.time() - t0
 
     result = score_single_message_case(case_dir, output)
@@ -224,6 +366,19 @@ def run_case(case_dir: Path) -> dict:
         result["raw_updates"] = [
             {"node_id": u.node_id, "status": u.new_status, "conf": u.confidence}
             for u in output.node_updates
+        ]
+        result["raw_candidates"] = output.new_task_candidates
+        result["raw_item_extractions"] = [
+            {"op": e.operation, "desc": e.description, "qty": e.quantity, "unit": e.unit}
+            for e in output.item_extractions
+        ]
+        result["raw_node_data"] = [
+            {"node_id": e.node_id, "keys": list(e.data.keys())}
+            for e in output.node_data_extractions
+        ]
+        result["raw_ambiguity_flags"] = [
+            {"severity": f.severity, "category": f.category, "blocking": f.blocking_node_id}
+            for f in output.ambiguity_flags
         ]
 
     return result
@@ -243,14 +398,14 @@ def print_result(result: dict):
         print(f"   {line}")
     if "per_message" in result:
         for pm in result["per_message"]:
-            print(f"   msg {pm['seq']}: {', '.join(pm['updates'])}")
+            print(f"   msg {pm['seq']}: {', '.join(pm['updates']) or '(no updates)'}")
 
 
 def run_all(case_filter: str | None = None) -> list[dict]:
     case_dirs = sorted(CASES_DIR.iterdir())
     results = []
     for d in case_dirs:
-        if not d.is_dir():
+        if not d.is_dir() or not (d / "metadata.json").exists():
             continue
         if case_filter and case_filter not in d.name:
             continue
@@ -275,24 +430,24 @@ def print_summary(results: list[dict]):
         marker = "✅" if r["verdict"] == "PASS" else ("⚠️ " if r["verdict"] == "PARTIAL" else "❌")
         print(f"  {marker}  {r['case_id']}")
 
-    # Highlight the primary risk case
-    inc02 = next((r for r in results if r["case_id"] == "INC-02"), None)
-    if inc02:
-        print()
-        status = inc02["verdict"]
-        if status == "PASS":
-            print("✅ INC-02 (cadence detection) PASSED — primary quality risk gap is closed")
-        else:
-            print("❌ INC-02 (cadence detection) FAILED — primary quality risk gap is NOT closed")
+    checkpoints = {
+        "INC-05": "supplier_QC → order_ready auto-trigger",
+        "INC-08": "filled_from_stock → order_ready auto-trigger",
+    }
+    print()
+    for case_id, label in checkpoints.items():
+        r = next((r for r in results if r["case_id"] == case_id), None)
+        if r:
+            status = "✅ PASSED" if r["verdict"] == "PASS" else "❌ FAILED — quality risk open"
+            print(f"{status}: {case_id} ({label})")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run incremental update agent tests")
-    parser.add_argument("case_id", nargs="?", help="Run a single case by ID prefix (e.g. INC-02)")
+    parser.add_argument("case_id", nargs="?", help="Run a single case by ID prefix")
     parser.add_argument("--summary-only", action="store_true")
     args = parser.parse_args()
 
-    # Initialise DB (needed for task store reads used by update agent)
     from src.store.db import init_schema, seed_task
     from src.config import SEED_TASK, ENTITY_ALIASES
     from src.agent.templates import STANDARD_PROCUREMENT_TEMPLATE

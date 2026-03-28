@@ -1,0 +1,8 @@
+{
+  "id": "INC-14",
+  "name": "full_stock_path",
+  "description": "Two-message sequence: order filled from godown stock then delivery confirmed, testing the complete stock fulfillment path without supplier involvement.",
+  "quality_risk_dimension": "multi_message_stock_path_end_to_end",
+  "source": "synthetic",
+  "routing": "layer_2a_2b"
+}
