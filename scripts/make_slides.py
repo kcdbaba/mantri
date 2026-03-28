@@ -13,7 +13,7 @@ Usage:
     python scripts/make_slides.py --output demo/staff_interview.pptx
 
 Setup:
-    pip install python-pptx google-generativeai python-dotenv
+    pip install python-pptx google-genai python-dotenv
     GOOGLE_API_KEY must be set in .env
 """
 

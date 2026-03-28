@@ -12,7 +12,7 @@ sentence-transformers   # MiniLM for Layer 2c (deferred but install now)
 # Media enrichment
 openai-whisper
 ffmpeg-python
-google-generativeai     # Gemini 1.5 Flash 8B for vision
+google-genai            # Gemini 1.5 Flash 8B for vision
 paddlepaddle            # PaddleOCR backend
 paddleocr
 

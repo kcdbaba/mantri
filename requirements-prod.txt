@@ -8,7 +8,7 @@ redis
 anthropic
 pydantic
 rapidfuzz
-google-generativeai
+google-genai
 datasette
 jinja2
 python-multipart
