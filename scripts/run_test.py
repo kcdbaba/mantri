@@ -30,6 +30,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 import anthropic
+from langsmith import traceable
+from langsmith.wrappers import wrap_anthropic
 
 # ── Constants ──────────────────────────────────────────────────────────────────
 
@@ -143,6 +145,7 @@ Return only valid JSON matching this exact schema — no markdown fences:
 
 # ── Run test ───────────────────────────────────────────────────────────────────
 
+@traceable(name="agent_run", run_type="llm")
 def run_test(case_dir: Path, model: str, client: anthropic.Anthropic) -> str:
     threads_path = case_dir / "threads.txt"
     if not threads_path.exists():
@@ -183,6 +186,7 @@ def _get_active_dimensions(framework: str) -> list[str]:
     return ALL_DIMENSIONS  # fallback: score everything
 
 
+@traceable(name="llm_judge", run_type="llm")
 def evaluate(case_dir: Path, model: str, client: anthropic.Anthropic) -> dict:
     meta_path   = case_dir / "metadata.json"
     agent_out_path, score_path = _output_paths(case_dir, model)
@@ -294,7 +298,7 @@ if __name__ == "__main__":
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
         raise EnvironmentError("ANTHROPIC_API_KEY not set. Add it to .env")
-    client   = anthropic.Anthropic(api_key=api_key)
+    client   = wrap_anthropic(anthropic.Anthropic(api_key=api_key))
     case_dir = Path(args.case)
 
     if not args.skip_run:
