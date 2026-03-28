@@ -1,8 +1,8 @@
 # User Research Plan
 
-**Status**: Draft
+**Status**: Active — Part 2 pending
 **Sprint**: Sprint 2
-**Date**: 2026-03-26
+**Date**: 2026-03-26 (Part 2 guide added 2026-03-29)
 
 ---
 
@@ -59,10 +59,11 @@ Coordination approach:
 
 ### Session Format
 
-| Session | Duration | Participants | Format |
-|---|---|---|---|
-| Staff walkthrough + interview | 45 min | All available staff | Group walkthrough of agent output (brief) → UX demo → structured interview |
-| Ashish design session | 90 min | Ashish only | Full agent output walkthrough → UX questions → business process + design discussion |
+| Session | Duration | Participants | Format | Status |
+|---|---|---|---|---|
+| Staff walkthrough + interview | 45 min | All available staff | Group walkthrough of agent output (brief) → UX demo → structured interview | ✅ Done 2026-03-27 |
+| Ashish Part 1 design session | 90 min | Ashish only | Full agent output walkthrough → UX questions → ambiguity routing | ✅ Done 2026-03-27 |
+| Ashish Part 2 | 60–75 min | Ashish only | Financial flows, off-platform gap, inventory, WhatsApp API setup | ❌ Pending — Ashish was busy Mar 27 |
 
 ---
 
@@ -306,6 +307,191 @@ Draft templates to review with Ashish:
 ### Closing (5 min)
 - "What's the one thing you most want this to do well that we haven't covered today?"
 - "What would make you confident enough to rely on this in a busy week?"
+
+---
+
+---
+
+## Conversation Guide: Ashish Part 2
+
+### Purpose
+Close the gaps that emerged from Part 1 and the staff session. Part 1 covered agent output quality, UX/trust, and the beginning of task taxonomy. Part 2 focuses on: the financial flow edge cases (client wallet, payments group), the operational coverage gap (off-platform resolutions), inventory/warehouse (untouched in Part 1), and the WhatsApp Business API setup which must start before April 18.
+
+### Status of open questions from Part 1 + staff synthesis
+
+| Topic | Status going into Part 2 |
+|---|---|
+| Agent output quality (SATA case) | ✅ Covered Part 1 |
+| False positive tolerance | ✅ Covered Part 1 — full tolerance confirmed |
+| Ambiguity routing policy | ✅ Covered Part 1 — escalate immediately, medium+ → Ashish |
+| Supplier unresponsive threshold | ✅ Covered Part 1 — 7 PM cutoff, 24hr window |
+| Hard agent constraints | ✅ Covered Part 1 — no pricing, no disputes |
+| Client wallet / ad-hoc payment flow | ❌ Open |
+| Payments group protocol & ownership | ❌ Open |
+| Dispute workflow | ❌ Open |
+| Off-platform resolution volume estimate | ❌ Open |
+| Completion loop mechanism (staff closing loop) | ❌ Open |
+| Warehouse / inventory | ❌ Open (not discussed at all) |
+| Amazon / online order tracking | ❌ Open |
+| WhatsApp Business API setup (critical path) | ❌ Not started — must complete by Apr 18 |
+| Two-digest model (Ashish vs staff timing) | ❌ Open |
+| Dedicated SIM for staff privacy | ❌ Open |
+| Smita as escalation target — fallback | ❌ Open |
+| Task taxonomy Types 1–11 | ❌ Partially covered — needs dedicated time |
+
+---
+
+### Part 1: Client Wallet and Payment Flow (15 min)
+
+The ad-hoc shopkeeper payment scenario from Part 1 (Ashish described losing money because billing gets skipped) is the most financially costly cadence implicit task identified so far. Map the full workflow.
+
+- "In Part 1 you described paying a local shopkeeper for urgent army client pickups and then billing the client separately. Walk me through the full sequence of steps from the moment you make that payment to when the client account is settled."
+- "Which of those steps most often gets skipped or delayed?"
+- "When it gets skipped — what's the trigger that eventually makes you catch it? Or does it sometimes just get lost?"
+- "Do you have any way of knowing how often this happens — even a rough guess of how many times a month?"
+- "You mentioned a ₹495 January payment you found by searching WhatsApp months later. Do you think there are other payments from the last year that are still unrecovered?"
+
+**For the agent design — confirm the detection rule:**
+- "If the agent noticed a payment screenshot posted in a supplier/task group but found no matching narration in the Payments group within a couple of hours, should it alert you? Or is there a reason you'd sometimes deliberately post to the task group only?"
+- "The narration in the Payments group is the key — it's what enables WhatsApp search. If the agent could auto-detect when step 2 is missing and send you a reminder, would that be valuable?"
+
+**Listen for:** the exact step sequence (how many steps, who owns each), failure patterns by step, whether the client is always Army or sometimes commercial
+
+---
+
+### Part 2: Payments Group Protocol and Dispute Workflow (15 min)
+
+**Payments group:**
+- "Who is responsible for posting the narrated screenshot to the Payments group — is it always you, or do staff also do it?"
+- "When you're busy and that step gets skipped, how far behind can the Payments group get? Days? Weeks?"
+- "Is there any other reconciliation mechanism — like a ledger or Tally entry — that partially covers what the Payments group is supposed to track?"
+- "If staff could post to the Payments group themselves with a standard format, would that work? Or does the narration require your judgment?"
+
+**Dispute workflow:**
+- "In Part 1 you said the agent should never comment on a disputed message — it must come to you directly. What does a typical dispute look like in practice — is it a client objecting to a bill, a supplier claiming a payment wasn't received, something else?"
+- "When a dispute arrives in a WhatsApp group, what's the current escalation path? Do you respond in the group, or take it to a private chat?"
+- "Is there a time limit by which you need to respond to a disputed message before it escalates further?"
+- "How should the agent flag a disputed message to you — same as a high-ambiguity item, or a separate alert type?"
+
+---
+
+### Part 3: Off-Platform Resolution and Completion Loop (15 min)
+
+The staff session confirmed that tasks are almost always resolved by phone with no WhatsApp update. This is the largest known gap in the agent's information model.
+
+**Volume estimate:**
+- "In a typical day — say 10–15 tasks are active. Roughly how many of those get resolved entirely by phone or in person, with no WhatsApp update posted after?"
+- "Is this more common for certain types of tasks — supplier follow-ups, deliveries, staff-internal coordination?"
+
+**Closing the loop:**
+- "The agent will know a task was assigned — it saw the WhatsApp message. But it won't know it was completed unless someone posts a WhatsApp update, which you've confirmed almost never happens. How would you want to handle this? A few options:"
+  - "Staff post a brief message back to the group ('done via phone — delivery confirmed') — is that too much friction?"
+  - "Staff use a dashboard or button to mark it done — feasible, but requires them to switch apps"
+  - "The agent waits for a configurable staleness window (e.g. 4 hours without any update → provisional complete flag) and only alerts if the window passes on a high-risk task"
+  - "The agent asks Ashish at the end of day: 'These 3 tasks have no update — are they done?'"
+- "Which of those would your team actually use?"
+
+**Listen for:** realistic friction thresholds, whether staff will adopt any new logging behaviour, which escalation path for stale tasks Ashish prefers
+
+---
+
+### Part 4: Warehouse and Inventory (10 min)
+
+This hypothesis has not been validated at all. The agent currently has no inventory model.
+
+- "Do you carry any physical stock in a warehouse or store? If yes — what categories of items?"
+- "When a client order comes in for an item you stock, how does the workflow differ from an item you have to order fresh from a supplier?"
+- "How do you currently track what's in stock — a physical register, Excel, WhatsApp photo sent to yourself, or something else?"
+- "When staff fulfil an order from stock, do they log it anywhere — WhatsApp message, notebook entry, anything?"
+- "Has there been a case where you thought you had something in stock but it turned out to be gone or short? What happened?"
+- "Would it be useful for the agent to maintain a basic running stock count — updated whenever a stock fulfilment message is detected — or is that more trouble than it's worth?"
+
+**Listen for:** whether inventory is even a relevant scope item (it may not be), how reliable current stock logging is, whether the agent adding inventory tracking would create extra work or reduce it
+
+---
+
+### Part 5: Amazon / Online Order Tracking (5 min)
+
+- "For orders sourced through Amazon or other online marketplaces — how does your current tracking work? Do you forward the order confirmation somewhere, or just watch your email?"
+- "When a client is asking for delivery status on an Amazon order and you don't have an update, what do you currently do?"
+- "Would it help if the agent could flag that an online order is approaching its estimated delivery date and you haven't had a supplier update — so you know to check before the client asks?"
+- "Is the agent reading an email inbox a realistic option, or should we leave online orders out of scope for now?"
+
+---
+
+### Part 6: Alert Design — Ashish's Own Digest and Channel (10 min)
+
+The staff preference for morning + evening digest was confirmed. Ashish's own cadence needs separate validation.
+
+- "Staff prefer to receive a morning digest of pending items and an evening wrap-up. For yourself — when you're remote and relying on the agent, do you also want a digest rhythm, or do you prefer real-time alerts for everything?"
+- "Are there hours when you'd want the agent to batch things up — for example late at night, early morning — and only interrupt for true emergencies?"
+- "What counts as a true emergency that should wake you up regardless of time?"
+- "For low-priority items — routine follow-up reminders, provisional task updates — would a WhatsApp digest once a day work? Or is the dashboard the better place for those?"
+
+**Smita as escalation target:**
+- "You said in Part 1 that low-ambiguity items should go to the senior staff member — Smita. What happens if Smita is out or unavailable? Who is the fallback?"
+- "Is there a hierarchy beyond Smita — a next person in line — or does everything roll up to you directly if she's not available?"
+
+---
+
+### Part 7: WhatsApp Business API Setup — Action Items (15 min)
+
+**Critical path:** verification must start by April 18 to be ready for May 1. This section has concrete action items that need to be agreed and started.
+
+Explain to Ashish:
+> The agent uses two separate WhatsApp numbers. One is added as a silent member to your existing groups — it reads but never posts. The other is a dedicated bot number that sends alerts to you and staff in 1:1 chats only. For the bot number we need to register with Meta's official WhatsApp Business API. This takes 3–7 business days and must start by April 18. Without it we have to use an unofficial approach that risks the number getting banned.
+
+**Setup questions:**
+- "We need a dedicated SIM card for the bot number — not your personal number. Are you comfortable getting one? I can tell you exactly what's needed for activation."
+- "Meta requires a business verification: business name (Uttam Enterprise), address, and a tax document — your GST certificate or MSME certificate works. Can you have those ready? We'll submit together."
+- "The bot number would be added to your operational groups as a silent read-only member. You and staff would save it in contacts and it sends 1:1 alerts only — it never posts to any group. Does that work?"
+
+**Also revisit the dedicated-SIM staff privacy question:**
+- "Staff raised the privacy concern — their personal phones have personal messages alongside business groups. One solution is giving them a second SIM dedicated to business groups, so the agent only reads the business SIM's groups. That solves privacy but means a new number with no chat history. The alternative is group whitelisting — the agent only reads groups you explicitly name. Which would you prefer to set up?"
+
+**Template pre-approval (10 min):**
+
+Draft templates need Ashish's input before submission. Walk through each:
+
+| Template name | Draft content |
+|---|---|
+| `morning_digest` | "Mantri Morning — {{date}}: {{pending_count}} pending. Top: {{top_item}}. Reply 'orders' for full list." |
+| `intraday_alert` | "Alert: No reply from {{supplier_name}} on {{order_desc}} — {{hours}}h since quote. Follow up?" |
+| `ambiguity_flag` | "Unclear order for: '{{message_snippet}}'. Reply 1 = {{option_1}}, 2 = {{option_2}}, 3 = new order." |
+| `payment_gap_alert` | "Payment to {{payee}} (₹{{amount}}) posted to {{group_name}} — no Payments group entry found. Log it?" |
+| `stale_task_alert` | "No update on {{task_desc}} for {{hours}}h. Still active? Reply 'done', 'pending', or 'ashish'." |
+
+- "Does the wording make sense? Is there shorthand your team would actually use that we should put in the templates instead?"
+- "Are there other alert types you'd want that aren't covered here?"
+- "For the payment gap alert — would you want that to go to you, or to the person who last posted in the Payments group, or both?"
+
+*(Templates must be submitted the same day the Meta Business account is created. Rejection adds 24–48h.)*
+
+---
+
+### Remaining Task Taxonomy (if time allows — 20 min)
+
+If Part 1 did not complete the full 11 task types, use remaining time for the ones not yet covered. Prioritise:
+
+| Priority | Type | Reason |
+|---|---|---|
+| High | Type 6 — Stock-filled orders | Needed for inventory model |
+| High | Type 4 — GeM portal orders | Portal-specific workflow unknown |
+| High | Type 11 — Period-end administration | Highest cadence implicit task risk |
+| Medium | Type 8 — Collections and payment follow-up | Cadence task trigger parameters |
+| Medium | Type 2 — Custom/made-to-order items | Rejection risk unknown |
+
+Use the same format as Part 1:
+1. "Walk me through from first message to final payment — key steps?"
+2. "Which steps most often get skipped or delayed?"
+3. "Which steps are staff vs you personally?"
+4. "Are there steps that always happen but never appear in WhatsApp?"
+
+---
+
+### Closing (5 min)
+- "Is there anything about your business that we still don't understand that would affect what we build?"
+- "What would make you confident enough to use this in a real busy week by May?"
 
 ---
 
