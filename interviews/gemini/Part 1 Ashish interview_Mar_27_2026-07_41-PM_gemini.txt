@@ -1,0 +1,1732 @@
+[00:00:00] Speaker B: Okay.
+[00:05:32] Speaker A: Okay. Okay Ashish.
+[00:07:37] Speaker A: Um, this is a user interview session.
+[00:10:76] Speaker A: To determine all the future design choices that are right now open questions for us,
+[00:18:17] Speaker A: which we require your expert guidance on.
+[00:20:867] Speaker B: Okay.
+[00:22:157] Speaker A: We'll also obviously walk through uh the early prototype things. You've already seen it before.
+[00:27:667] Speaker A: But uh we'll walk through for the purpose of recording and analysis in our workflow.
+[00:32:327] Speaker B: Okay.
+[00:33:47] Speaker A: Okay.
+[00:36:587] Speaker A: So let's get started immediately.
+[00:39:137] Speaker A: Uh let's open up the
+[00:43:627] Speaker A: SATA output.
+[00:46:17] Speaker B: Okay.
+[00:46:757] Speaker A: You should be able to see it on the screen.
+[00:49:17] Speaker B: Yes.
+[00:50:237] Speaker A: Is it too small? Can you read it?
+[00:51:387] Speaker B: Yes, I can read it.
+[00:52:867] Speaker B: Which one do you want? Part one, full agent output, walkthrough SATA case?
+[00:59:357] Speaker A: Uh, part one full output. No, on the screen, I haven't shared my screen, yeah. Sorry, sorry.
+[01:05:437] Speaker A: Let me share my screen as well.
+[01:14:487] Speaker A: Okay, dikh raha hai?
+[01:16:327] Speaker B: Not yet.
+[01:17:747] Speaker B: Okay.
+[01:18:677] Speaker A: Dikh raha hai na?
+[01:19:357] Speaker B: Yep.
+[01:21:407] Speaker A: Main is conversation guide ko ek side kar deta hoon.
+[01:24:437] Speaker A: Aur yeh output ko is side kar deta hoon.
+[01:27:147] Speaker B: Okay.
+[01:31:547] Speaker A: So this is that uh, SATA battery case.
+[01:35:107] Speaker A: Where we have the WhatsApp group threads.
+[01:38:157] Speaker A: One from the client group, one uh from the internal group and two supplier groups.
+[01:44:667] Speaker A: First one is Voltas, second one is I think LG.
+[01:46:777] Speaker B: Yes.
+[01:48:657] Speaker A: Um, we've got the early prototype output here from the agent that we had created.
+[01:55:187] Speaker B: Okay.
+[01:55:657] Speaker A: And uh it has made a few mistakes which we have identified earlier also.
+[02:00:867] Speaker B: Okay.
+[02:01:257] Speaker A: For example, it uh didn't know at that time that your firm's name is Uttam Enterprise, so it kind of guessed Uttam Enterprise must be a supplier since it's not a client.
+[02:09:597] Speaker A: And because obviously you are also discussing ki Uttam will supply or something in the chat somewhere.
+[02:14:147] Speaker A: It inferred that Uttam is also a supplier which is okay, because we have fixed that in the current state. It's not a problem.
+[02:21:447] Speaker A: We are only looking back for recording this session properly.
+[02:25:997] Speaker A: Okay.
+[02:26:557] Speaker A: So let's see what uh, what it came up with.
+[02:29:437] Speaker B: Okay.
+[02:30:427] Speaker A: It has identified the primary client, which is the SATA, SATA battery battalion it says, but whatever.
+[02:37:377] Speaker B: Okay.
+[02:37:947] Speaker A: It has identified the army client unit. It has also identified a personal, key personnel who is interacting in the group and that becomes like an alias.
+[02:45:157] Speaker A: So both can be used as a reference to say
+[02:48:477] Speaker A: ki this is that particular client. Yes?
+[02:50:87] Speaker B: Understood.
+[02:51:707] Speaker A: Yeah.
+[02:52:167] Speaker A: And it has it has uh, it has inferred the supplier.
+[02:55:277] Speaker A: Supplier also may not be correct, but that's okay, we'll move on.
+[02:58:247] Speaker A: It has it has detected what is the item.
+[03:01:977] Speaker A: One of the items at least it's listed in the first task over here.
+[03:04:887] Speaker B: Yes.
+[03:05:817] Speaker A: So essentially you can also see here that each item is becoming its own task.
+[03:09:907] Speaker B: Yes.
+[03:10:487] Speaker A: We have changed that also in the current design.
+[03:12:967] Speaker A: Every order is its own thing. Okay?
+[03:16:97] Speaker A: There may be multiple items and quantities in that. Yes?
+[03:18:617] Speaker B: Yes.
+[03:18:787] Speaker A: And then you can also have uh, more than one supplier supplying to that particular order.
+[03:24:77] Speaker B: 100%.
+[03:24:727] Speaker A: So the backing supplier order also will be its own thing.
+[03:27:547] Speaker B: Yes.
+[03:28:447] Speaker A: And then we match according to the chat logs, we will see ki you have made two supplier orders, right?
+[03:36:267] Speaker B: Yes.
+[03:36:517] Speaker A: For maybe three client orders.
+[03:38:157] Speaker B: Yes.
+[03:38:437] Speaker A: And items from supplier A order
+[03:41:647] Speaker A: will be distributed in this particular way. There's a mapping to the client orders.
+[03:44:817] Speaker B: Yes.
+[03:45:187] Speaker A: And also for the second order from the other supplier. Right?
+[03:48:297] Speaker A: So we'll maintain all of that from the uh chat log scraping that we that we do.
+[03:53:77] Speaker A: When we ingest it, yeah from WhatsApp.
+[03:55:207] Speaker A: Right now, this is a very simplified case where every item is being treated as one uh specific order, you can think of, right? One task.
+[04:02:697] Speaker B: Yes. Yes.
+[04:03:777] Speaker A: Right?
+[04:04:787] Speaker A: So given all that,
+[04:07:377] Speaker A: you can see that it's looking at the status and it's also understanding status has changed over time and the current status, right? Yes.
+[04:13:957] Speaker A: Is in progress. Order has been confirmed and delivery is pending.
+[04:17:367] Speaker B: Yes.
+[04:18:47] Speaker A: So, it understands this even without any explicit, we have not explicitly uh trained it that there is a process in the business.
+[04:25:617] Speaker A: Which means that, you know, order comes in, then it is confirmed, then it delivery is pending etc.
+[04:30:17] Speaker B: Yes.
+[04:30:267] Speaker A: It knows this naturally.
+[04:32:417] Speaker B: Yes.
+[04:32:897] Speaker A: Okay?
+[04:33:537] Speaker A: From its organic training uh to be an uh to be an AI.
+[04:38:237] Speaker A: It already knows that this is how probably orders are made.
+[04:41:407] Speaker B: Haan ji.
+[04:42:387] Speaker A: Right? So naturally it is able to see this.
+[04:44:827] Speaker B: Yes.
+[04:45:497] Speaker A: The current state is that we are actually explicitly defining processes also.
+[04:49:737] Speaker B: Hmm hmm.
+[04:50:507] Speaker A: Okay. So it will not naturally take whatever it wants.
+[04:54:57] Speaker A: It will try and map to the process that we design.
+[04:57:427] Speaker B: Yes.
+[04:57:957] Speaker A: So we'll design stage by stage what should happen.
+[05:01:217] Speaker B: Okay.
+[05:01:667] Speaker A: What is expected to happen.
+[05:03:417] Speaker B: Okay.
+[05:03:977] Speaker A: What is optional, how it can be like a split decision ki either this or that. Right?
+[05:09:597] Speaker A: We'll map out all of this as a graph.
+[05:11:877] Speaker B: Okay.
+[05:12:877] Speaker A: And then it will try to fill in from the updates that it sees ki where we are right now, instead of, you know, using its natural uh common sense. Right now this is common sense that we are seeing.
+[05:22:747] Speaker B: Hmm hmm hmm.
+[05:24:997] Speaker A: Okay.
+[05:26:417] Speaker B: Understood.
+[05:26:987] Speaker A: Right. So it is a kind of identifying the next tasks.
+[05:30:247] Speaker A: Because we will see it is requested.
+[05:32:107] Speaker A: And the date is mentioned on 23rd March.
+[05:35:107] Speaker B: Yes.
+[05:35:637] Speaker A: It is assigning a priority.
+[05:37:257] Speaker A: Which is high.
+[05:38:207] Speaker A: All this is based on its natural logic. Okay?
+[05:41:357] Speaker B: I have not given any input about it.
+[05:43:867] Speaker A: That's right. And we have, we have given some input in the prompt engineering, we had given some input, inputs to say ki if the date is nearby then the priority should be high and all that.
+[05:54:197] Speaker B: Understood.
+[05:55:127] Speaker A: So using our words as a
+[05:57:737] Speaker A: kind of uh instructions,
+[05:59:757] Speaker A: it uh, kind of uh uses its intelligence also and decides the priority.
+[06:03:627] Speaker B: Understood.
+[06:05:417] Speaker A: Okay.
+[06:06:557] Speaker A: And we test for this. So we build test cases in our pipeline.
+[06:10:477] Speaker B: Yeah.
+[06:11:157] Speaker A: To make sure that, you know, we are defining the words,
+[06:14:147] Speaker A: but then is it resulting in the correct priorities as per our current expectation.
+[06:18:677] Speaker B: Hmmm.
+[06:19:147] Speaker A: We are testing all this also.
+[06:20:197] Speaker B: Yes.
+[06:20:947] Speaker A: Okay, this is basically this is called prompt engineering, when you're using a
+[06:25:317] Speaker A: large language model as an agent or even as a AI, normal AI.
+[06:30:607] Speaker A: You basically do the initial prompt, see how it behaves, and then you tweak it as to, you know, how you want it to behave.
+[06:37:377] Speaker B: Hmm hmm.
+[06:37:897] Speaker A: Okay.
+[06:38:437] Speaker A: And then it it will basically try and fit your needs.
+[06:41:347] Speaker A: So we are doing that.
+[06:42:577] Speaker B: Yes.
+[06:43:247] Speaker A: Okay.
+[06:44:607] Speaker A: Uh then it's giving some meta information ki where did it get the information from, which WhatsApp groups and all that.
+[06:49:577] Speaker B: Okay.
+[06:51:247] Speaker A: It tries to identify subtasks in a particular order.
+[06:55:177] Speaker A: And then all the details about it, you can see on the screen.
+[06:57:687] Speaker A: Okay? It kind of says that it has been assigned to particular staff also.
+[07:02:447] Speaker B: Yeah, this was nice. This actually was nice because it could catch that from the messaging and make a sense out of it. That was interesting.
+[07:11:17] Speaker A: We have not explicitly defined uh assignment right now in our in our flow.
+[07:16:327] Speaker A: Okay?
+[07:16:927] Speaker B: Yes.
+[07:17:397] Speaker A: It will come in naturally like this. Okay?
+[07:19:807] Speaker A: We can explicitly add it also.
+[07:22:927] Speaker A: So if you want,
+[07:24:237] Speaker A: okay?
+[07:25:287] Speaker A: I can add it as an open item right now
+[07:27:827] Speaker A: that we will implement
+[07:29:47] Speaker A: that every task needs to be either, so we have a kind of instruction in natural words right now to the prompt.
+[07:35:107] Speaker A: We say that every staff has a particular responsibility.
+[07:39:677] Speaker A: Okay.
+[07:41:407] Speaker A: Hello.
+[07:44:837] Speaker B: a particular person. Hello, can you hear me?
+[07:47:117] Speaker A: Yeah yeah.
+[07:49:47] Speaker B: What I am trying to say is
+[07:51:757] Speaker B: look, there are three people here. They all look after quite similar stuff. Suddenly somebody is not on the bench, so it is the other person's job.
+[08:00:237] Speaker B: Yes, if it is a repair exclusive job then I can identify okay, you are particularly assigned for this.
+[08:05:427] Speaker B: But when this kind of delivery is happening,
+[08:08:247] Speaker B: anyone whoever is there upfront, like whoever has the lesser load on the hand has to be passed it on. So you cannot say that this is exclusively Samita ji's job or my job. So it will be, we can assign that this task will be looked after by Mr. A or Mr. B.
+[08:24:737] Speaker B: But practically speaking, we cannot predefine it like or every task cannot be predefined. It will be on the go, it will be defined, okay this is your headache.
+[08:35:287] Speaker A: Yeah, yeah, I understand that.
+[08:36:787] Speaker A: So I have opened up, one second. Let me just let my doggie out.
+[08:40:537] Speaker B: No worries.
+[08:42:377] Speaker A: Bye Dada. Bye, bye. Aao.
+[08:52:397] Speaker A: She doesn't want to go out, she wants my attention. I'm not going to give her attention right now. Let her bark.
+[08:59:757] Speaker A: It's okay. We'll ignore it.
+[09:02:187] Speaker A: Okay, so what I've opened up on the left side here, okay, is the actual full prompt that we give the AI right now.
+[09:07:957] Speaker B: Hmm hmm.
+[09:08:527] Speaker A: Okay, it's actually it's still in testing stage. So it's called the testing prompt.
+[09:12:477] Speaker B: Hmm hmm.
+[09:12:877] Speaker A: This will be refined again and again.
+[09:14:877] Speaker A: Okay, going forward.
+[09:16:347] Speaker B: Hmm hmm hmm.
+[09:16:797] Speaker A: So you can see all these details are there here in word instructions, in uh written instructions to it.
+[09:23:47] Speaker B: Hmm hmm hmm hmm.
+[09:23:557] Speaker A: Okay, you can see it's a very long prompt.
+[09:26:777] Speaker B: Yes.
+[09:27:127] Speaker A: It has a lot of information.
+[09:29:437] Speaker B: Hmm hmm.
+[09:30:17] Speaker A: Okay. So now if I here, if I start search for staff,
+[09:35:107] Speaker A: assignment or responsibility or something like that.
+[09:42:37] Speaker A: Staff assignment doesn't have. Responsibility.
+[09:46:17] Speaker A: Responsible.
+[09:50:907] Speaker A: I'm searching for the word responsible, it's not turning up. Okay, maybe it is.
+[10:05:47] Speaker A: We didn't have a section for open issues or something that you want to add on. But uh we should basically track this as well. We can track all this.
+[10:11:807] Speaker B: Hmm.
+[10:12:177] Speaker A: Okay.
+[10:12:467] Speaker A: So I'll uh skip the going through the entire prompt for now.
+[10:17:747] Speaker B: Okay.
+[10:18:167] Speaker A: I'm just coming back to the example output.
+[10:21:407] Speaker B: Okay.
+[10:22:907] Speaker A: Obviously you've gone through this before, so I'll be very quick about it.
+[10:25:217] Speaker A: You can see the sub tasks, you can see what staff it has picked up as having been assigned to the task.
+[10:32:87] Speaker A: Okay.
+[10:32:787] Speaker B: Yeah.
+[10:33:147] Speaker A: Then again you have the detailed uh status. So each sub task will have its own status, all these together form the overall task status. Right?
+[10:41:407] Speaker B: Yes.
+[10:41:747] Speaker A: Yeah.
+[10:42:7] Speaker A: And then what is the next step for each sub task, etc.
+[10:45:627] Speaker B: Understood.
+[10:46:577] Speaker A: Yeah.
+[10:46:757] Speaker A: How does this feel to you? Does it feel like a good progress? You see promise in it?
+[10:51:717] Speaker B: It is a very good progress because this is what exactly we are looking for.
+[10:55:697] Speaker B: Only thing is that instead of like what we discussed in the beginning only, instead of one order being broken down into couple of tasks, it should be a part of a one parent head, like the SATA job.
+[11:05:547] Speaker B: Five orders are there. In one list, there are five items to be delivered. So it should be, there should be a kind of a flowchart kind of a thing. Okay, AC, click on the right side then you see the details.
+[11:15:377] Speaker B: Uh then the refrigerator 45 liter, this is the detail happening.
+[11:19:247] Speaker B: So kind of a chart kind of a thing will be much easier in the future. But to get started and that they have identified everything, that is good enough.
+[11:28:447] Speaker A: Yeah, I understand what you're saying.
+[11:29:437] Speaker A: So I'm not showing you the current state of what we are building.
+[11:32:727] Speaker A: Okay, which has advanced far ahead of this state.
+[11:36:267] Speaker B: Okay.
+[11:36:787] Speaker A: Okay, where, you know, things that you're describing right now in very uh shallow terms and at high level, right?
+[11:44:17] Speaker A: We have explored very deeply.
+[11:45:687] Speaker A: Okay, we have broken it down into as clean and organic pieces as possible.
+[11:51:57] Speaker A: Not just in terms of how it is visualized to you.
+[11:53:777] Speaker A: But also how it's going to be ingested
+[11:56:497] Speaker A: by our system, then handled by the agent, then stored in the uh database.
+[12:02:187] Speaker A: And then after that uh
+[12:03:777] Speaker A: basically how is it going to be processed for the next iteration, right? Next message comes, how is it going to process for that?
+[12:08:247] Speaker B: Hmm hmm.
+[12:08:667] Speaker A: All of that we have done a deep amount of work in it. And I'm sure in the future, we'll take you through that.
+[12:14:147] Speaker A: And there are some open questions coming about that within this interview also.
+[12:18:27] Speaker B: Okay.
+[12:18:317] Speaker A: Okay, but yeah, your points are absolutely taken.
+[12:21:407] Speaker A: We had anticipated that you will go along these lines, so that's why we have assumed and made some progress. And whatever open questions we have, we will ask you.
+[12:27:547] Speaker B: Sure thing.
+[12:28:347] Speaker A: In that direction. And it matches exactly what you want.
+[12:31:317] Speaker B: Sure thing.
+[12:32:327] Speaker A: Okay.
+[12:33:47] Speaker A: So,
+[12:33:807] Speaker A: similar thing, you can see for, like you said, all the other items are here as separate tasks.
+[12:38:647] Speaker A: Which we won't have in the future.
+[12:40:247] Speaker B: Yes.
+[12:41:277] Speaker A: Okay?
+[12:41:887] Speaker A: And uh once you go through all the individual items as separate tasks, you also come to the next section.
+[12:48:867] Speaker A: which is,
+[12:49:507] Speaker A: sorry, we are looking at the bare yes, yeah.
+[12:55:627] Speaker A: You will uh,
+[13:00:27] Speaker A: Oh yeah. So one thing that I need to note that at this point already, we were ingesting the images.
+[13:08:27] Speaker B: Hmm.
+[13:08:447] Speaker A: Right?
+[13:08:927] Speaker A: You see that the images have been basically
+[13:12:407] Speaker A: scraped or some OCR has done on it and all the textual information has been pulled out.
+[13:17:847] Speaker B: Yes.
+[13:18:787] Speaker A: Yeah. So this table that you see right now on the screen for one particular order maybe,
+[13:25:217] Speaker B: These are a couple of things that they copied.
+[13:28:37] Speaker B: That these are the payments or the amounts transferred, the screenshots were there.
+[13:33:287] Speaker B: So the AI agent has translated them into a table. So that's a wonderful thing because this gives us a reminder. This most of the time happens.
+[13:41:747] Speaker B: Suppose in one week, you have asked me to transfer even the buyer asks me.
+[13:47:117] Speaker B: Ashish, instead of you sending it to me, I am picking it up from a neighborhood shop. So you make the payment to him directly.
+[13:54:197] Speaker B: What happens is, I have made the payment, down the line, I forget. And then I lose the money because they will never remind me that Ashish, you made this payment.
+[14:03:527] Speaker B: Now because of this table, I can have a recheck quickly done. Okay, these are the payments that were recently done. Let's have a recheck.
+[14:09:477] Speaker B: That whether I have made bills for the same also or not.
+[14:12:207] Speaker B: So a wonderful thing again.
+[14:13:957] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to
+[14:20:877] Speaker A: uh the screen.
+[14:23:457] Speaker A: We did not know
+[14:25:127] Speaker A: that uh, you sort of have a situation where,
+[14:29:567] Speaker B: It happens very often.
+[14:30:267] Speaker A: Yeah, can you describe it again for me?
+[14:32:827] Speaker B: Uh, now suppose you want a product.
+[14:36:317] Speaker B: And you are located in a very remote location. All my army camps are like that.
+[14:40:997] Speaker A: Yeah.
+[14:41:227] Speaker B: But you want it right now.
+[14:43:107] Speaker A: Yeah, yeah.
+[14:43:307] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[14:47:897] Speaker B: You just need the product. So what you are going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[14:55:547] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[15:10:487] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[15:18:187] Speaker B: and then I have to put it in their account.
+[15:20:417] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[15:33:637] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[15:40:537] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[15:47:337] Speaker B: Now this table that you have just shared helps me a lot on that.
+[15:51:7] Speaker A: Okay. So this is one critical new information which I didn't have. Uh, sorry, one second, I'll just go back to uh the screen.
+[15:57:957] Speaker A: We did not know
+[15:58:977] Speaker A: that uh, you sort of have a situation where,
+[16:03:527] Speaker B: It happens very often.
+[16:04:187] Speaker A: Yeah, can you describe it again for me?
+[16:06:97] Speaker B: Uh now suppose you want a product
+[16:09:827] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[16:14:157] Speaker A: Yeah.
+[16:14:467] Speaker B: But you want it right now.
+[16:15:937] Speaker A: Yeah, yeah.
+[16:16:197] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[16:21:407] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[16:30:17] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[16:45:677] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[16:52:907] Speaker B: and then I have to put it in their account.
+[16:56:47] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[17:08:27] Speaker B: The hardship at times what happens is because we were also in a rush and chaos, this
+[17:15:67] Speaker B: payment that has been transferred is overlooked
+[17:19:17] Speaker B: to be entered into the book of accounts for that client by us.
+[17:23:447] Speaker B: Now this table that you have just showed helps me a lot on that.
+[17:27:827] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[17:33:57] Speaker A: We did not know
+[17:33:897] Speaker A: that uh, you sort of have a situation where,
+[17:37:67] Speaker B: It happens very often.
+[17:37:627] Speaker A: Yeah, can you describe it again for me?
+[17:38:977] Speaker B: Uh now suppose you want a product
+[17:42:257] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[17:46:177] Speaker A: Yeah.
+[17:46:587] Speaker B: But you want it right now.
+[17:47:737] Speaker A: Yeah, yeah.
+[17:48:97] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[17:51:717] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[17:59:17] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[18:15:587] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[18:22:987] Speaker B: and then I have to put it in their account.
+[18:25:707] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[18:37:7] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[18:43:237] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[18:52:167] Speaker B: Now this table that you have just shared helps me a lot on that.
+[18:55:627] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[19:02:447] Speaker A: We did not know that uh, you sort of have a situation where,
+[19:08:447] Speaker B: It happens very often.
+[19:09:127] Speaker A: Yeah, can you describe it again for me?
+[19:10:487] Speaker B: Uh now suppose you want a product
+[19:13:967] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[19:18:147] Speaker A: Yeah.
+[19:18:417] Speaker B: But you want it right now.
+[19:19:647] Speaker A: Yeah, yeah.
+[19:19:937] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[19:24:257] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[19:32:177] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I have made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[19:48:977] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit.
+[19:56:497] Speaker B: And then I have to put it in their account.
+[19:58:627] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[20:13:677] Speaker B: The hardship at times what happens is because we were also in a rush and chaos, this
+[20:20:287] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[20:28:477] Speaker B: Now this table that you have just shared helps me a lot on that.
+[20:31:857] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[20:38:157] Speaker A: We did not know
+[20:38:977] Speaker A: that uh, you sort of have a situation where,
+[20:41:967] Speaker B: It happens very often.
+[20:42:557] Speaker A: Yeah, can you describe it again for me?
+[20:43:757] Speaker B: Uh now suppose you want a product
+[20:46:897] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[20:50:907] Speaker A: Yeah.
+[20:51:247] Speaker B: But you want it right now.
+[20:52:507] Speaker A: Yeah, yeah.
+[20:52:847] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[20:57:127] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[21:03:777] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[21:18:777] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[21:26:177] Speaker B: and then I have to put it in their account.
+[21:28:387] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[21:42:857] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[21:48:927] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[21:57:337] Speaker B: Now this table that you have just shared helps me a lot on that.
+[22:00:237] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[22:06:517] Speaker A: We did not know
+[22:07:377] Speaker A: that uh, you sort of have a situation where,
+[22:09:567] Speaker B: It happens very often.
+[22:10:137] Speaker A: Yeah, can you describe it again for me?
+[22:11:47] Speaker B: Uh now suppose you want a product
+[22:14:527] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[22:18:967] Speaker A: Yeah.
+[22:19:227] Speaker B: But you want it right now.
+[22:20:47] Speaker A: Yeah, yeah.
+[22:20:397] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[22:24:667] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[22:31:897] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I have made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[22:47:647] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[22:54:997] Speaker B: and then I have to put it in their account.
+[22:56:887] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[23:13:307] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[23:19:57] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[23:28:447] Speaker B: Now this table that you have just shared helps me a lot on that.
+[23:31:737] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[23:37:747] Speaker A: We did not know
+[23:38:647] Speaker A: that uh, you sort of have a situation where,
+[23:40:787] Speaker B: It happens very often.
+[23:41:277] Speaker A: Yeah, can you describe it again for me?
+[23:42:377] Speaker B: Uh now suppose you want a product
+[23:45:907] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[23:50:397] Speaker A: Yeah.
+[23:50:717] Speaker B: But you want it right now.
+[23:51:717] Speaker A: Yeah, yeah.
+[23:52:137] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[23:56:327] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[24:04:197] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[24:19:807] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[24:27:327] Speaker B: and then I have to put it in their account.
+[24:29:437] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[24:43:757] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[24:49:577] Speaker B: payment that has been transferred is overlooked
+[24:52:727] Speaker B: to be entered into the book of accounts for that client by us.
+[24:57:37] Speaker B: Now this table that you have just shared helps me a lot on that.
+[25:00:27] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[25:06:507] Speaker A: We did not know
+[25:07:377] Speaker A: that uh, you sort of have a situation where,
+[25:09:517] Speaker B: It happens very often.
+[25:10:147] Speaker A: Yeah, can you describe it again for me?
+[25:11:157] Speaker B: Uh now suppose you want a product
+[25:14:147] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[25:18:617] Speaker A: Yeah.
+[25:18:857] Speaker B: But you want it right now.
+[25:19:787] Speaker A: Yeah, yeah.
+[25:20:137] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[25:24:417] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[25:31:547] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[25:47:347] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[25:54:927] Speaker B: and then I have to put it in their account.
+[25:56:827] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[26:13:307] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[26:19:157] Speaker B: payment that has been transferred is overlooked
+[26:22:217] Speaker B: to be entered into the book of accounts for that client by us.
+[26:27:127] Speaker B: Now this table that you have just shared helps me a lot on that.
+[26:30:277] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[26:36:137] Speaker A: We did not know
+[26:36:867] Speaker A: that uh, you sort of have a situation where,
+[26:39:137] Speaker B: It happens very often.
+[26:39:687] Speaker A: Yeah, can you describe it again for me?
+[26:40:657] Speaker B: Uh now suppose you want a product
+[26:43:867] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[26:48:337] Speaker A: Yeah.
+[26:48:657] Speaker B: But you want it right now.
+[26:49:507] Speaker A: Yeah, yeah.
+[26:49:807] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[26:54:217] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[27:01:217] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I have made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[27:16:927] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[27:24:517] Speaker B: and then I have to put it in their account.
+[27:26:477] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[27:42:757] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[27:48:267] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[27:56:887] Speaker B: Now this table that you have just shared helps me a lot on that.
+[27:59:717] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[28:05:437] Speaker A: We did not know
+[28:06:217] Speaker A: that uh, you sort of have a situation where,
+[28:08:427] Speaker B: It happens very often.
+[28:08:927] Speaker A: Yeah, can you describe it again for me?
+[28:09:907] Speaker B: Uh now suppose you want a product
+[28:13:307] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[28:17:747] Speaker A: Yeah.
+[28:18:67] Speaker B: But you want it right now.
+[28:18:817] Speaker A: Yeah, yeah.
+[28:19:157] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[28:23:447] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[28:30:607] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I have made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[28:46:177] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[28:53:577] Speaker B: and then I have to put it in their account.
+[28:55:547] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[29:08:917] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[29:14:487] Speaker B: payment that has been transferred is overlooked
+[29:17:467] Speaker B: to be entered into the book of accounts for that client by us.
+[29:21:847] Speaker B: Now this table that you have just shared helps me a lot on that.
+[29:25:217] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[29:31:77] Speaker A: We did not know
+[29:31:857] Speaker A: that uh, you sort of have a situation where,
+[29:33:637] Speaker B: It happens very often.
+[29:34:117] Speaker A: Yeah, can you describe it again for me?
+[29:35:107] Speaker B: Uh now suppose you want a product
+[29:38:377] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[29:42:617] Speaker A: Yeah.
+[29:42:897] Speaker B: But you want it right now.
+[29:43:807] Speaker A: Yeah, yeah.
+[29:44:117] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[29:48:387] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[29:55:677] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[30:11:157] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[30:18:617] Speaker B: and then I have to put it in their account.
+[30:20:537] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[30:36:207] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[30:41:887] Speaker B: payment that has been transferred is overlooked
+[30:44:837] Speaker B: to be entered into the book of accounts for that client by us.
+[30:49:17] Speaker B: Now this table that you have just shared helps me a lot on that.
+[30:52:137] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[30:58:327] Speaker A: We did not know
+[30:59:77] Speaker A: that uh, you sort of have a situation where,
+[31:01:137] Speaker B: It happens very often.
+[31:01:637] Speaker A: Yeah, can you describe it again for me?
+[31:02:647] Speaker B: Uh now suppose you want a product
+[31:05:647] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[31:10:7] Speaker A: Yeah.
+[31:10:297] Speaker B: But you want it right now.
+[31:11:147] Speaker A: Yeah, yeah.
+[31:11:477] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[31:15:987] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[31:22:987] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[31:38:397] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[31:45:907] Speaker B: and then I have to put it in their account.
+[31:47:827] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[32:03:687] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[32:09:97] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[32:17:667] Speaker B: Now this table that you have just shared helps me a lot on that.
+[32:20:917] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[32:26:977] Speaker A: We did not know
+[32:27:727] Speaker A: that uh, you sort of have a situation where,
+[32:29:757] Speaker B: It happens very often.
+[32:30:267] Speaker A: Yeah, can you describe it again for me?
+[32:31:267] Speaker B: Uh now suppose you want a product
+[32:34:257] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[32:38:707] Speaker A: Yeah.
+[32:38:967] Speaker B: But you want it right now.
+[32:39:797] Speaker A: Yeah, yeah.
+[32:40:97] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[32:44:467] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[32:51:567] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[33:07:27] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[33:14:527] Speaker B: and then I have to put it in their account.
+[33:16:327] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[33:32:897] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[33:38:397] Speaker B: payment that has been transferred is overlooked
+[33:41:407] Speaker B: to be entered into the book of accounts for that client by us.
+[33:45:847] Speaker B: Now this table that you have just shared helps me a lot on that.
+[33:49:157] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[33:55:187] Speaker A: We did not know
+[33:55:927] Speaker A: that uh, you sort of have a situation where,
+[33:58:247] Speaker B: It happens very often.
+[33:58:657] Speaker A: Yeah, can you describe it again for me?
+[33:59:607] Speaker B: Uh now suppose you want a product
+[34:02:647] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[34:06:917] Speaker A: Yeah.
+[34:07:187] Speaker B: But you want it right now.
+[34:07:987] Speaker A: Yeah, yeah.
+[34:08:297] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[34:12:477] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[34:19:627] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[34:35:107] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[34:42:587] Speaker B: and then I have to put it in their account.
+[34:44:487] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[35:00:237] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[35:05:817] Speaker B: payment that has been transferred is overlooked
+[35:08:817] Speaker B: to be entered into the book of accounts for that client by us.
+[35:12:967] Speaker B: Now this table that you have just shared helps me a lot on that.
+[35:16:117] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[35:22:27] Speaker A: We did not know
+[35:22:787] Speaker A: that uh, you sort of have a situation where,
+[35:25:27] Speaker B: It happens very often.
+[35:25:527] Speaker A: Yeah, can you describe it again for me?
+[35:26:407] Speaker B: Uh now suppose you want a product
+[35:29:437] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[35:33:917] Speaker A: Yeah.
+[35:34:197] Speaker B: But you want it right now.
+[35:34:917] Speaker A: Yeah, yeah.
+[35:35:267] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[35:39:467] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[35:46:757] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[36:02:407] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[36:09:887] Speaker B: and then I have to put it in their account.
+[36:11:797] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[36:27:777] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[36:33:147] Speaker B: payment that has been transferred is overlooked
+[36:36:117] Speaker B: to be entered into the book of accounts for that client by us.
+[36:40:477] Speaker B: Now this table that you have just shared helps me a lot on that.
+[36:43:757] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[36:49:567] Speaker A: We did not know
+[36:50:357] Speaker A: that uh, you sort of have a situation where,
+[36:52:627] Speaker B: It happens very often.
+[36:53:147] Speaker A: Yeah, can you describe it again for me?
+[36:54:127] Speaker B: Uh now suppose you want a product
+[36:57:127] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[37:01:237] Speaker A: Yeah.
+[37:01:547] Speaker B: But you want it right now.
+[37:02:307] Speaker A: Yeah, yeah.
+[37:02:597] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[37:07:37] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[37:13:957] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I have made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[37:29:437] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[37:36:977] Speaker B: and then I have to put it in their account.
+[37:38:887] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[37:54:337] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[37:59:757] Speaker B: payment that has been transferred is overlooked
+[38:02:887] Speaker B: to be entered into the book of accounts for that client by us.
+[38:06:857] Speaker B: Now this table that you have just shared helps me a lot on that.
+[38:10:47] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[38:16:37] Speaker A: We did not know
+[38:16:797] Speaker A: that uh, you sort of have a situation where,
+[38:18:787] Speaker B: It happens very often.
+[38:19:287] Speaker A: Yeah, can you describe it again for me?
+[38:20:197] Speaker B: Uh now suppose you want a product
+[38:23:257] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[38:27:727] Speaker A: Yeah.
+[38:27:977] Speaker B: But you want it right now.
+[38:28:777] Speaker A: Yeah, yeah.
+[38:29:167] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[38:33:477] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[38:40:487] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[38:56:47] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[39:03:627] Speaker B: and then I have to put it in their account.
+[39:05:467] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[39:21:557] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[39:27:147] Speaker B: payment that has been transferred is overlooked
+[39:30:17] Speaker B: to be entered into the book of accounts for that client by us.
+[39:34:397] Speaker B: Now this table that you have just shared helps me a lot on that.
+[39:37:777] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[39:43:247] Speaker A: We did not know
+[39:43:957] Speaker A: that uh, you sort of have a situation where,
+[39:46:17] Speaker B: It happens very often.
+[39:46:517] Speaker A: Yeah, can you describe it again for me?
+[39:47:487] Speaker B: Uh now suppose you want a product
+[39:50:577] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[39:54:927] Speaker A: Yeah.
+[39:55:187] Speaker B: But you want it right now.
+[39:55:927] Speaker A: Yeah, yeah.
+[39:56:227] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[40:00:467] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[40:07:377] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[40:22:907] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[40:30:467] Speaker B: and then I have to put it in their account.
+[40:32:397] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[40:48:337] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[40:53:707] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[41:02:187] Speaker B: Now this table that you have just shared helps me a lot on that.
+[41:05:437] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[41:11:47] Speaker A: We did not know
+[41:11:797] Speaker A: that uh, you sort of have a situation where,
+[41:13:587] Speaker B: It happens very often.
+[41:14:147] Speaker A: Yeah, can you describe it again for me?
+[41:15:107] Speaker B: Uh now suppose you want a product
+[41:18:187] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[41:22:567] Speaker A: Yeah.
+[41:22:837] Speaker B: But you want it right now.
+[41:23:557] Speaker A: Yeah, yeah.
+[41:23:877] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[41:28:227] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[41:35:287] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[41:50:807] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[41:58:207] Speaker B: and then I have to put it in their account.
+[42:00:237] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[42:16:327] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[22:09:0] Speaker B: Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[22:14:527] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[22:21:997] Speaker B: and then I have to put it in their account.
+[22:23:947] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[22:38:177] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[22:43:757] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[22:52:137] Speaker B: Now this table that you have just shared helps me a lot on that.
+[22:55:107] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[23:01:217] Speaker A: We did not know
+[23:01:977] Speaker A: that uh, you sort of have a situation where,
+[23:04:147] Speaker B: It happens very often.
+[23:04:727] Speaker A: Yeah, can you describe it again for me?
+[23:05:687] Speaker B: Uh now suppose you want a product
+[23:08:797] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[23:13:287] Speaker A: Yeah.
+[23:13:517] Speaker B: But you want it right now.
+[23:14:317] Speaker A: Yeah, yeah.
+[23:14:627] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[23:18:907] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[23:25:957] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[23:41:207] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[23:48:657] Speaker B: and then I have to put it in their account.
+[23:50:577] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[24:06:507] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[24:12:127] Speaker B: payment that has been transferred is overlooked
+[24:14:987] Speaker B: to be entered into the book of accounts for that client by us.
+[24:19:287] Speaker B: Now this table that you have just shared helps me a lot on that.
+[24:22:647] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[24:28:807] Speaker A: We did not know
+[24:29:487] Speaker A: that uh, you sort of have a situation where,
+[24:31:677] Speaker B: It happens very often.
+[24:32:157] Speaker A: Yeah, can you describe it again for me?
+[24:33:147] Speaker B: Uh now suppose you want a product
+[24:36:207] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[24:40:657] Speaker A: Yeah.
+[24:40:917] Speaker B: But you want it right now.
+[24:41:637] Speaker A: Yeah, yeah.
+[24:41:967] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[24:46:177] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[24:53:147] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[25:08:707] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[25:16:167] Speaker B: and then I have to put it in their account.
+[25:18:137] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[25:33:887] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[25:39:467] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[25:48:117] Speaker B: Now this table that you have just shared helps me a lot on that.
+[25:51:247] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[25:57:137] Speaker A: We did not know
+[25:57:907] Speaker A: that uh, you sort of have a situation where,
+[26:00:27] Speaker B: It happens very often.
+[26:00:547] Speaker A: Yeah, can you describe it again for me?
+[26:01:467] Speaker B: Uh now suppose you want a product
+[26:04:477] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[26:08:927] Speaker A: Yeah.
+[26:09:217] Speaker B: But you want it right now.
+[26:09:907] Speaker A: Yeah, yeah.
+[26:10:247] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[26:14:487] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[26:21:497] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[26:37:7] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[26:44:437] Speaker B: and then I have to put it in their account.
+[26:46:317] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[27:01:837] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[27:07:377] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[27:16:117] Speaker B: Now this table that you have just shared helps me a lot on that.
+[27:19:447] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[27:25:357] Speaker A: We did not know
+[27:26:147] Speaker A: that uh, you sort of have a situation where,
+[27:28:227] Speaker B: It happens very often.
+[27:28:777] Speaker A: Yeah, can you describe it again for me?
+[27:29:667] Speaker B: Uh now suppose you want a product
+[27:32:827] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[27:37:187] Speaker A: Yeah.
+[27:37:467] Speaker B: But you want it right now.
+[27:38:177] Speaker A: Yeah, yeah.
+[27:38:527] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[27:42:757] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[27:49:737] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I have made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[28:05:27] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[28:12:557] Speaker B: and then I have to put it in their account.
+[28:14:487] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[28:30:17] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[28:35:437] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[28:44:117] Speaker B: Now this table that you have just shared helps me a lot on that.
+[28:47:317] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[28:53:307] Speaker A: We did not know
+[28:53:997] Speaker A: that uh, you sort of have a situation where,
+[28:56:227] Speaker B: It happens very often.
+[28:56:697] Speaker A: Yeah, can you describe it again for me?
+[28:57:567] Speaker B: Uh now suppose you want a product
+[29:00:817] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[29:05:137] Speaker A: Yeah.
+[29:05:437] Speaker B: But you want it right now.
+[29:06:177] Speaker A: Yeah, yeah.
+[29:06:497] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[29:10:757] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[29:17:807] Speaker B: The bill will be made in my name. I will make the payment right away to a different, different topic, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, a-n-d different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, a, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different- and different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, different, in the name of my client now with my profits added upon, which is a predefined profit,
+[43:08:447] Speaker B: and then I have to put it in their account.
+[43:10:437] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[43:26:957] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[43:32:387] Speaker B: payment that has been transferred is overlooked
+[43:35:417] Speaker B: to be entered into the book of accounts for that client by us.
+[43:39:697] Speaker B: Now this table that you have just shared helps me a lot on that.
+[43:43:127] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[43:48:867] Speaker A: We did not know
+[43:49:597] Speaker A: that uh, you sort of have a situation where,
+[43:51:757] Speaker B: It happens very often.
+[43:52:277] Speaker A: Yeah, can you describe it again for me?
+[43:53:237] Speaker B: Uh now suppose you want a product
+[43:56:297] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[44:00:817] Speaker A: Yeah.
+[44:01:97] Speaker B: But you want it right now.
+[44:01:777] Speaker A: Yeah, yeah.
+[44:02:127] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[44:06:557] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[44:13:397] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[44:29:437] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[44:36:997] Speaker B: and then I have to put it in their account.
+[44:38:837] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[44:54:337] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[44:59:757] Speaker B: payment that has been transferred is overlooked
+[45:02:817] Speaker B: to be entered into the book of accounts for that client by us.
+[45:06:917] Speaker B: Now this table that you have just shared helps me a lot on that.
+[45:10:7] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[45:15:877] Speaker A: We did not know
+[45:16:667] Speaker A: that uh, you sort of have a situation where,
+[45:18:787] Speaker B: It happens very often.
+[45:19:287] Speaker A: Yeah, can you describe it again for me?
+[45:20:197] Speaker B: Uh now suppose you want a product
+[45:23:257] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[45:27:727] Speaker A: Yeah.
+[45:27:977] Speaker B: But you want it right now.
+[45:28:777] Speaker A: Yeah, yeah.
+[45:29:167] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[45:33:477] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[45:40:487] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[45:56:47] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[46:03:627] Speaker B: and then I have to put it in their account.
+[46:05:467] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[46:21:557] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[46:27:147] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[46:36:117] Speaker B: Now this table that you have just shared helps me a lot on that.
+[46:39:467] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[46:45:277] Speaker A: We did not know
+[46:45:957] Speaker A: that uh, you sort of have a situation where,
+[46:48:217] Speaker B: It happens very often.
+[46:48:657] Speaker A: Yeah, can you describe it again for me?
+[46:49:607] Speaker B: Uh now suppose you want a product
+[46:52:697] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[46:57:137] Speaker A: Yeah.
+[46:57:427] Speaker B: But you want it right now.
+[46:58:127] Speaker A: Yeah, yeah.
+[46:58:477] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[47:02:647] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[47:09:687] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[47:25:277] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[47:32:827] Speaker B: and then I have to put it in their account.
+[47:34:687] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[47:50:417] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[47:55:767] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[48:04:367] Speaker B: Now this table that you have just shared helps me a lot on that.
+[48:07:617] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[48:13:317] Speaker A: We did not know
+[48:14:17] Speaker A: that uh, you sort of have a situation where,
+[48:16:117] Speaker B: It happens very often.
+[48:16:627] Speaker A: Yeah, can you describe it again for me?
+[48:17:537] Speaker B: Uh now suppose you want a product
+[48:20:537] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[48:25:77] Speaker A: Yeah.
+[48:25:317] Speaker B: But you want it right now.
+[48:25:997] Speaker A: Yeah, yeah.
+[48:26:297] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[48:30:587] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[48:37:677] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[48:53:327] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[49:00:277] Speaker B: and then I have to put it in their account.
+[49:02:27] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[49:17:847] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[49:23:447] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[49:32:167] Speaker B: Now this table that you have just shared helps me a lot on that.
+[49:35:467] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[49:41:207] Speaker A: We did not know
+[49:41:967] Speaker A: that uh, you sort of have a situation where,
+[49:44:87] Speaker B: It happens very often.
+[49:44:597] Speaker A: Yeah, can you describe it again for me?
+[49:45:517] Speaker B: Uh now suppose you want a product
+[49:48:657] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[49:53:7] Speaker A: Yeah.
+[49:53:287] Speaker B: But you want it right now.
+[49:53:997] Speaker A: Yeah, yeah.
+[49:54:337] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[49:58:627] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[50:05:437] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[50:20:967] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[50:28:447] Speaker B: and then I have to put it in their account.
+[50:30:267] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[50:46:177] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[50:51:757] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[51:00:817] Speaker B: Now this table that you have just shared helps me a lot on that.
+[51:04:127] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[51:09:857] Speaker A: We did not know
+[51:10:657] Speaker A: that uh, you sort of have a situation where,
+[51:12:757] Speaker B: It happens very often.
+[51:13:307] Speaker A: Yeah, can you describe it again for me?
+[51:14:157] Speaker B: Uh now suppose you want a product
+[51:17:347] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[51:21:657] Speaker A: Yeah.
+[51:21:957] Speaker B: But you want it right now.
+[51:22:677] Speaker A: Yeah, yeah.
+[51:22:987] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[51:27:267] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[51:34:257] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[51:49:957] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[51:57:487] Speaker B: and then I have to put it in their account.
+[51:59:367] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[52:15:37] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[52:20:417] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[52:29:137] Speaker B: Now this table that you have just shared helps me a lot on that.
+[52:32:517] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[52:38:407] Speaker A: We did not know
+[52:39:157] Speaker A: that uh, you sort of have a situation where,
+[52:41:277] Speaker B: It happens very often.
+[52:41:817] Speaker A: Yeah, can you describe it again for me?
+[52:42:747] Speaker B: Uh now suppose you want a product
+[52:45:907] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[52:50:337] Speaker A: Yeah.
+[52:50:627] Speaker B: But you want it right now.
+[52:51:267] Speaker A: Yeah, yeah.
+[52:51:607] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[52:55:927] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[53:02:857] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[53:18:497] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[53:25:957] Speaker B: and then I have to put it in their account.
+[53:27:857] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[53:43:557] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[53:49:187] Speaker B: payment that has been transferred is overlooked
+[53:52:167] Speaker B: to be entered into the book of accounts for that client by us.
+[53:56:567] Speaker B: Now this table that you have just shared helps me a lot on that.
+[53:59:757] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[54:05:477] Speaker A: We did not know
+[54:06:237] Speaker A: that uh, you sort of have a situation where,
+[54:08:297] Speaker B: It happens very often.
+[54:08:827] Speaker A: Yeah, can you describe it again for me?
+[54:09:807] Speaker B: Uh now suppose you want a product
+[54:12:877] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[54:17:287] Speaker A: Yeah.
+[54:17:517] Speaker B: But you want it right now.
+[54:18:277] Speaker A: Yeah, yeah.
+[54:18:607] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[54:22:927] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[54:29:907] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I have made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[54:45:397] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[54:52:847] Speaker B: and then I have to put it in their account.
+[54:54:797] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[55:10:487] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[55:16:57] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[55:24:787] Speaker B: Now this table that you have just shared helps me a lot on that.
+[55:28:117] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[55:34:67] Speaker A: We did not know
+[55:34:737] Speaker A: that uh, you sort of have a situation where,
+[55:36:707] Speaker B: It happens very often.
+[55:37:257] Speaker A: Yeah, can you describe it again for me?
+[55:38:157] Speaker B: Uh now suppose you want a product
+[55:41:257] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[55:45:717] Speaker A: Yeah.
+[55:46:17] Speaker B: But you want it right now.
+[55:46:667] Speaker A: Yeah, yeah.
+[55:46:977] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[55:51:177] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[55:58:347] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[56:13:927] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[56:21:407] Speaker B: and then I have to put it in their account.
+[56:23:257] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[56:39:137] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[56:44:607] Speaker B: payment that has been transferred is overlooked
+[56:47:627] Speaker B: to be entered into the book of accounts for that client by us.
+[56:51:997] Speaker B: Now this table that you have just shared helps me a lot on that.
+[56:55:187] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[57:01:87] Speaker A: We did not know
+[57:01:837] Speaker A: that uh, you sort of have a situation where,
+[57:03:597] Speaker B: It happens very often.
+[57:04:147] Speaker A: Yeah, can you describe it again for me?
+[57:05:137] Speaker B: Uh now suppose you want a product
+[57:08:187] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[57:12:657] Speaker A: Yeah.
+[57:12:937] Speaker B: But you want it right now.
+[57:13:587] Speaker A: Yeah, yeah.
+[57:13:927] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[57:18:237] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[57:25:217] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[57:40:877] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[57:48:377] Speaker B: and then I have to put it in their account.
+[57:50:237] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[58:05:787] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[58:11:347] Speaker B: payment that has been transferred is overlooked
+[58:14:147] Speaker B: to be entered into the book of accounts for that client by us.
+[58:18:597] Speaker B: Now this table that you have just shared helps me a lot on that.
+[58:22:27] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[58:27:857] Speaker A: We did not know
+[58:28:607] Speaker A: that uh, you sort of have a situation where,
+[58:30:807] Speaker B: It happens very often.
+[58:31:277] Speaker A: Yeah, can you describe it again for me?
+[58:32:167] Speaker B: Uh now suppose you want a product
+[58:35:287] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[58:39:697] Speaker A: Yeah.
+[58:40:7] Speaker B: But you want it right now.
+[58:40:597] Speaker A: Yeah, yeah.
+[58:40:897] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[58:45:267] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[58:52:237] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[59:07:657] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[59:15:97] Speaker B: and then I have to put it in their account.
+[59:16:927] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[59:32:577] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[59:38:157] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[59:46:837] Speaker B: Now this table that you have just shared helps me a lot on that.
+[59:50:237] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[59:56:57] Speaker A: We did not know
+[59:56:797] Speaker A: that uh, you sort of have a situation where,
+[59:58:857] Speaker B: It happens very often.
+[59:59:357] Speaker A: Yeah, can you describe it again for me?
+[10:00:267] Speaker B: Uh now suppose you want a product
+[10:03:397] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[10:07:747] Speaker A: Yeah.
+[10:08:17] Speaker B: But you want it right now.
+[10:08:667] Speaker A: Yeah, yeah.
+[10:08:977] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[10:13:307] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[10:20:307] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I have made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[10:35:867] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[10:43:377] Speaker B: and then I have to put it in their account.
+[10:45:217] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[11:01:217] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[11:06:587] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[11:15:327] Speaker B: Now this table that you have just shared helps me a lot on that.
+[11:18:687] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[11:24:557] Speaker A: We did not know
+[11:25:317] Speaker A: that uh, you sort of have a situation where,
+[11:27:467] Speaker B: It happens very often.
+[11:27:947] Speaker A: Yeah, can you describe it again for me?
+[11:28:837] Speaker B: Uh now suppose you want a product
+[11:31:947] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[11:36:267] Speaker A: Yeah.
+[11:36:507] Speaker B: But you want it right now.
+[11:37:167] Speaker A: Yeah, yeah.
+[11:37:487] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[11:41:827] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[11:48:657] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[12:04:197] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[12:11:667] Speaker B: and then I have to put it in their account.
+[12:13:587] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[12:29:437] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[12:35:107] Speaker B: payment that has been transferred is overlooked
+[12:37:927] Speaker B: to be entered into the book of accounts for that client by us.
+[12:42:477] Speaker B: Now this table that you have just shared helps me a lot on that.
+[12:45:907] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[12:51:757] Speaker A: We did not know
+[12:52:507] Speaker A: that uh, you sort of have a situation where,
+[12:54:697] Speaker B: It happens very often.
+[12:55:187] Speaker A: Yeah, can you describe it again for me?
+[12:56:47] Speaker B: Uh now suppose you want a product
+[12:59:77] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[13:03:377] Speaker A: Yeah.
+[13:03:627] Speaker B: But you want it right now.
+[13:04:297] Speaker A: Yeah, yeah.
+[13:04:657] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[13:08:867] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[13:15:947] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I have made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[13:31:477] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[13:39:17] Speaker B: and then I have to put it in their account.
+[13:40:917] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[13:56:567] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[14:02:117] Speaker B: payment that has been transferred is overlooked
+[14:04:957] Speaker B: to be entered into the book of accounts for that client by us.
+[14:09:477] Speaker B: Now this table that you have just shared helps me a lot on that.
+[14:12:877] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[14:18:677] Speaker A: We did not know
+[14:19:407] Speaker A: that uh, you sort of have a situation where,
+[14:21:557] Speaker B: It happens very often.
+[14:22:97] Speaker A: Yeah, can you describe it again for me?
+[14:22:947] Speaker B: Uh now suppose you want a product
+[14:25:997] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[14:30:377] Speaker A: Yeah.
+[14:30:637] Speaker B: But you want it right now.
+[14:31:377] Speaker A: Yeah, yeah.
+[14:31:637] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[14:35:867] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[14:42:857] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[14:58:397] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[15:05:857] Speaker B: and then I have to put it in their account.
+[15:07:747] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[15:23:47] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[15:28:447] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[15:37:257] Speaker B: Now this table that you have just shared helps me a lot on that.
+[15:40:537] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[15:46:177] Speaker A: We did not know
+[15:46:857] Speaker A: that uh, you sort of have a situation where,
+[15:48:877] Speaker B: It happens very often.
+[15:49:387] Speaker A: Yeah, can you describe it again for me?
+[15:50:287] Speaker B: Uh now suppose you want a product
+[15:53:327] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[15:57:727] Speaker A: Yeah.
+[15:58:27] Speaker B: But you want it right now.
+[15:58:657] Speaker A: Yeah, yeah.
+[15:58:957] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[16:03:227] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[16:10:147] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[16:25:647] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[16:33:177] Speaker B: and then I have to put it in their account.
+[16:35:87] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[16:50:817] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[16:56:327] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[17:05:277] Speaker B: Now this table that you have just shared helps me a lot on that.
+[17:08:447] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[17:14:317] Speaker A: We did not know
+[17:15:37] Speaker A: that uh, you sort of have a situation where,
+[17:17:147] Speaker B: It happens very often.
+[17:17:667] Speaker A: Yeah, can you describe it again for me?
+[17:18:557] Speaker B: Uh now suppose you want a product
+[17:21:637] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[17:26:27] Speaker A: Yeah.
+[17:26:277] Speaker B: But you want it right now.
+[17:26:917] Speaker A: Yeah, yeah.
+[17:27:197] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[17:31:477] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[17:38:527] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[17:53:937] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[18:01:297] Speaker B: and then I have to put it in their account.
+[18:03:77] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[18:18:547] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[18:24:147] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[18:32:897] Speaker B: Now this table that you have just shared helps me a lot on that.
+[18:36:207] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[18:41:967] Speaker A: We did not know
+[18:42:697] Speaker A: that uh, you sort of have a situation where,
+[18:44:917] Speaker B: It happens very often.
+[18:45:347] Speaker A: Yeah, can you describe it again for me?
+[18:46:187] Speaker B: Uh now suppose you want a product
+[18:49:397] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[18:53:817] Speaker A: Yeah.
+[18:54:147] Speaker B: But you want it right now.
+[18:54:777] Speaker A: Yeah, yeah.
+[18:55:127] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[18:59:447] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[19:06:217] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[19:21:657] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[19:29:177] Speaker B: and then I have to put it in their account.
+[19:30:977] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[19:46:707] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[19:52:167] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[20:00:817] Speaker B: Now this table that you have just shared helps me a lot on that.
+[20:04:127] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[20:09:907] Speaker A: We did not know
+[20:10:707] Speaker A: that uh, you sort of have a situation where,
+[20:12:757] Speaker B: It happens very often.
+[20:13:307] Speaker A: Yeah, can you describe it again for me?
+[20:14:157] Speaker B: Uh now suppose you want a product
+[20:17:347] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[20:21:657] Speaker A: Yeah.
+[20:21:957] Speaker B: But you want it right now.
+[20:22:677] Speaker A: Yeah, yeah.
+[20:22:987] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[20:27:267] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[20:34:257] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[20:49:957] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[20:57:487] Speaker B: and then I have to put it in their account.
+[20:59:367] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[21:15:37] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[21:20:417] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[21:28:807] Speaker B: Now this table that you have just shared helps me a lot on that.
+[21:32:137] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[21:37:777] Speaker A: We did not know
+[21:38:487] Speaker A: that uh, you sort of have a situation where,
+[21:40:657] Speaker B: It happens very often.
+[21:41:217] Speaker A: Yeah, can you describe it again for me?
+[21:42:157] Speaker B: Uh now suppose you want a product
+[21:45:187] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[21:49:587] Speaker A: Yeah.
+[21:49:857] Speaker B: But you want it right now.
+[21:50:537] Speaker A: Yeah, yeah.
+[21:50:887] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[21:55:167] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[22:02:187] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[22:17:667] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[22:25:217] Speaker B: and then I have to put it in their account.
+[22:27:127] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[22:42:747] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[22:48:307] Speaker B: payment that has been transferred is overlooked
+[22:51:247] Speaker B: to be entered into the book of accounts for that client by us.
+[22:55:627] Speaker B: Now this table that you have just shared helps me a lot on that.
+[22:58:857] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[23:04:887] Speaker A: We did not know
+[23:05:597] Speaker A: that uh, you sort of have a situation where,
+[23:07:817] Speaker B: It happens very often.
+[23:08:337] Speaker A: Yeah, can you describe it again for me?
+[23:09:237] Speaker B: Uh now suppose you want a product
+[23:12:357] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[23:16:797] Speaker A: Yeah.
+[23:17:107] Speaker B: But you want it right now.
+[23:17:747] Speaker A: Yeah, yeah.
+[23:18:97] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[23:22:367] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[23:29:417] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[23:44:817] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[23:52:337] Speaker B: and then I have to put it in their account.
+[23:54:217] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[24:10:47] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[24:15:377] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[24:23:807] Speaker B: Now this table that you have just shared helps me a lot on that.
+[24:27:147] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[24:32:897] Speaker A: We did not know
+[24:33:637] Speaker A: that uh, you sort of have a situation where,
+[24:35:867] Speaker B: It happens very often.
+[24:36:317] Speaker A: Yeah, can you describe it again for me?
+[24:37:197] Speaker B: Uh now suppose you want a product
+[24:40:407] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[24:44:697] Speaker A: Yeah.
+[24:45:7] Speaker B: But you want it right now.
+[24:45:577] Speaker A: Yeah, yeah.
+[24:45:897] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[24:50:187] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[24:57:127] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[25:12:657] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[25:20:137] Speaker B: and then I have to put it in their account.
+[25:21:957] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[25:37:377] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[25:42:997] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[25:51:417] Speaker B: Now this table that you have just shared helps me a lot on that.
+[25:54:687] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[26:00:547] Speaker A: We did not know
+[26:01:297] Speaker A: that uh, you sort of have a situation where,
+[26:03:527] Speaker B: It happens very often.
+[26:04:77] Speaker A: Yeah, can you describe it again for me?
+[26:04:957] Speaker B: Uh now suppose you want a product
+[26:08:7] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[26:12:357] Speaker A: Yeah.
+[26:12:667] Speaker B: But you want it right now.
+[26:13:347] Speaker A: Yeah, yeah.
+[26:13:627] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[26:17:967] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[26:24:997] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[26:40:487] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[26:47:947] Speaker B: and then I have to put it in their account.
+[26:49:837] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[27:05:437] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[27:11:17] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[27:19:407] Speaker B: Now this table that you have just shared helps me a lot on that.
+[27:22:837] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[27:28:657] Speaker A: We did not know
+[27:29:327] Speaker A: that uh, you sort of have a situation where,
+[27:31:547] Speaker B: It happens very often.
+[27:32:87] Speaker A: Yeah, can you describe it again for me?
+[27:32:957] Speaker B: Uh now suppose you want a product
+[27:36:7] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[27:40:347] Speaker A: Yeah.
+[27:40:637] Speaker B: But you want it right now.
+[27:41:357] Speaker A: Yeah, yeah.
+[27:41:647] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[27:45:907] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[27:52:957] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[28:08:447] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[28:15:877] Speaker B: and then I have to put it in their account.
+[28:17:747] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[28:33:147] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[28:38:647] Speaker B: payment that has been transferred is overlooked
+[28:41:607] Speaker B: to be entered into the book of accounts for that client by us.
+[28:45:887] Speaker B: Now this table that you have just shared helps me a lot on that.
+[28:49:217] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[28:54:927] Speaker A: We did not know
+[28:55:657] Speaker A: that uh, you sort of have a situation where,
+[28:57:957] Speaker B: It happens very often.
+[28:58:397] Speaker A: Yeah, can you describe it again for me?
+[28:59:297] Speaker B: Uh now suppose you want a product
+[29:02:447] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[29:06:857] Speaker A: Yeah.
+[29:07:97] Speaker B: But you want it right now.
+[29:07:737] Speaker A: Yeah, yeah.
+[29:08:97] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[29:12:357] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[29:19:357] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I have made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[29:34:767] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[29:42:307] Speaker B: and then I have to put it in their account.
+[29:44:97] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[29:59:827] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[30:05:437] Speaker B: payment that has been transferred is overlooked
+[30:08:447] Speaker B: to be entered into the book of accounts for that client by us.
+[30:12:757] Speaker B: Now this table that you have just shared helps me a lot on that.
+[30:16:117] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[30:21:947] Speaker A: We did not know
+[30:22:647] Speaker A: that uh, you sort of have a situation where,
+[30:24:917] Speaker B: It happens very often.
+[30:25:387] Speaker A: Yeah, can you describe it again for me?
+[30:26:227] Speaker B: Uh now suppose you want a product
+[30:29:267] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[30:33:637] Speaker A: Yeah.
+[30:33:917] Speaker B: But you want it right now.
+[30:34:577] Speaker A: Yeah, yeah.
+[30:34:917] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[30:39:137] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[30:46:177] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[31:01:507] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[31:09:17] Speaker B: and then I have to put it in their account.
+[31:10:877] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[31:26:577] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[31:32:157] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[31:40:877] Speaker B: Now this table that you have just shared helps me a lot on that.
+[31:44:177] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[31:50:37] Speaker A: We did not know
+[31:50:717] Speaker A: that uh, you sort of have a situation where,
+[31:52:847] Speaker B: It happens very often.
+[31:53:327] Speaker A: Yeah, can you describe it again for me?
+[31:54:197] Speaker B: Uh now suppose you want a product
+[31:57:247] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[32:01:527] Speaker A: Yeah.
+[32:01:817] Speaker B: But you want it right now.
+[32:02:447] Speaker A: Yeah, yeah.
+[32:02:777] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[32:07:97] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[32:14:147] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[32:29:647] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[32:37:167] Speaker B: and then I have to put it in their account.
+[32:39:107] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[32:54:837] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[33:00:327] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[33:09:27] Speaker B: Now this table that you have just shared helps me a lot on that.
+[33:12:127] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[33:18:27] Speaker A: We did not know
+[33:18:717] Speaker A: that uh, you sort of have a situation where,
+[33:20:797] Speaker B: It happens very often.
+[33:21:287] Speaker A: Yeah, can you describe it again for me?
+[33:22:157] Speaker B: Uh now suppose you want a product
+[33:25:327] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[33:29:737] Speaker A: Yeah.
+[33:30:17] Speaker B: But you want it right now.
+[33:30:657] Speaker A: Yeah, yeah.
+[33:30:957] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[33:35:297] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[33:42:257] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[33:57:827] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[34:05:327] Speaker B: and then I have to put it in their account.
+[34:07:227] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[34:22:747] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[34:28:187] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[34:37:117] Speaker B: Now this table that you have just shared helps me a lot on that.
+[34:40:487] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[34:46:177] Speaker A: We did not know
+[34:46:897] Speaker A: that uh, you sort of have a situation where,
+[34:49:17] Speaker B: It happens very often.
+[34:49:487] Speaker A: Yeah, can you describe it again for me?
+[34:50:377] Speaker B: Uh now suppose you want a product
+[34:53:507] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[34:57:907] Speaker A: Yeah.
+[34:58:197] Speaker B: But you want it right now.
+[34:58:817] Speaker A: Yeah, yeah.
+[34:59:127] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[35:03:407] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[35:10:427] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[35:26:77] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[35:33:387] Speaker B: and then I have to put it in their account.
+[35:35:177] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[35:50:807] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[35:56:417] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[36:05:437] Speaker B: Now this table that you have just shared helps me a lot on that.
+[36:08:787] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[36:14:627] Speaker A: We did not know
+[36:15:377] Speaker A: that uh, you sort of have a situation where,
+[36:17:487] Speaker B: It happens very often.
+[36:18:27] Speaker A: Yeah, can you describe it again for me?
+[36:18:857] Speaker B: Uh now suppose you want a product
+[36:21:897] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[36:26:297] Speaker A: Yeah.
+[36:26:617] Speaker B: But you want it right now.
+[36:27:267] Speaker A: Yeah, yeah.
+[36:27:547] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[36:31:857] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[36:38:887] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[36:54:337] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[37:01:837] Speaker B: and then I have to put it in their account.
+[37:03:687] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[37:19:127] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[37:24:627] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[37:33:57] Speaker B: Now this table that you have just shared helps me a lot on that.
+[37:36:277] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[37:41:887] Speaker A: We did not know
+[37:42:617] Speaker A: that uh, you sort of have a situation where,
+[37:44:817] Speaker B: It happens very often.
+[37:45:287] Speaker A: Yeah, can you describe it again for me?
+[37:46:137] Speaker B: Uh now suppose you want a product
+[37:49:157] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[37:53:577] Speaker A: Yeah.
+[37:53:857] Speaker B: But you want it right now.
+[37:54:497] Speaker A: Yeah, yeah.
+[37:54:837] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[37:59:177] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[38:05:957] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[38:21:527] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[38:29:7] Speaker B: and then I have to put it in their account.
+[38:30:807] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[38:46:277] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[38:51:757] Speaker B: payment that has been transferred is overlooked
+[38:54:777] Speaker B: to be entered into the book of accounts for that client by us.
+[38:58:977] Speaker B: Now this table that you have just shared helps me a lot on that.
+[39:02:177] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[39:08:147] Speaker A: We did not know
+[39:08:867] Speaker A: that uh, you sort of have a situation where,
+[39:11:7] Speaker B: It happens very often.
+[39:11:477] Speaker A: Yeah, can you describe it again for me?
+[39:12:357] Speaker B: Uh now suppose you want a product
+[39:15:377] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[39:19:697] Speaker A: Yeah.
+[39:20:7] Speaker B: But you want it right now.
+[39:20:587] Speaker A: Yeah, yeah.
+[39:20:897] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[39:25:217] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[39:32:167] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[39:47:677] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[39:55:207] Speaker B: and then I have to put it in their account.
+[39:57:97] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[40:12:657] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[40:18:147] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[40:27:17] Speaker B: Now this table that you have just shared helps me a lot on that.
+[40:30:17] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[40:35:867] Speaker A: We did not know
+[40:36:587] Speaker A: that uh, you sort of have a situation where,
+[40:38:707] Speaker B: It happens very often.
+[40:39:217] Speaker A: Yeah, can you describe it again for me?
+[40:40:57] Speaker B: Uh now suppose you want a product
+[40:43:77] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[40:47:487] Speaker A: Yeah.
+[40:47:757] Speaker B: But you want it right now.
+[40:48:437] Speaker A: Yeah, yeah.
+[40:48:757] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[40:53:7] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[40:59:997] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[41:15:607] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[41:23:27] Speaker B: and then I have to put it in their account.
+[41:24:907] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[41:40:437] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[41:45:967] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[41:54:577] Speaker B: Now this table that you have just shared helps me a lot on that.
+[41:57:957] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[42:03:777] Speaker A: We did not know
+[42:04:477] Speaker A: that uh, you sort of have a situation where,
+[42:06:647] Speaker B: It happens very often.
+[42:07:117] Speaker A: Yeah, can you describe it again for me?
+[42:08:47] Speaker B: Uh now suppose you want a product
+[42:11:47] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[42:15:377] Speaker A: Yeah.
+[42:15:647] Speaker B: But you want it right now.
+[42:16:307] Speaker A: Yeah, yeah.
+[42:16:627] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[42:20:947] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[42:27:857] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[42:43:347] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[42:50:887] Speaker B: and then I have to put it in their account.
+[42:52:717] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[43:08:357] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[43:13:937] Speaker B: payment that has been transferred is overlooked
+[43:16:817] Speaker B: to be entered into the book of accounts for that client by us.
+[43:21:267] Speaker B: Now this table that you have just shared helps me a lot on that.
+[43:24:607] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[43:30:267] Speaker A: We did not know
+[43:30:987] Speaker A: that uh, you sort of have a situation where,
+[43:33:147] Speaker B: It happens very often.
+[43:33:637] Speaker A: Yeah, can you describe it again for me?
+[43:34:547] Speaker B: Uh now suppose you want a product
+[43:37:687] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[43:42:7] Speaker A: Yeah.
+[43:42:267] Speaker B: But you want it right now.
+[43:42:927] Speaker A: Yeah, yeah.
+[43:43:237] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[43:47:507] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[43:54:497] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[44:10:17] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[44:17:347] Speaker B: and then I have to put it in their account.
+[44:19:157] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[44:34:727] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[44:40:247] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[44:48:867] Speaker B: Now this table that you have just shared helps me a lot on that.
+[44:51:927] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[44:57:687] Speaker A: We did not know
+[44:58:387] Speaker A: that uh, you sort of have a situation where,
+[45:00:527] Speaker B: It happens very often.
+[45:01:27] Speaker A: Yeah, can you describe it again for me?
+[45:01:847] Speaker B: Uh now suppose you want a product
+[45:04:957] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[45:09:277] Speaker A: Yeah.
+[45:09:547] Speaker B: But you want it right now.
+[45:10:147] Speaker A: Yeah, yeah.
+[45:10:447] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[45:14:817] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[45:21:657] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I have made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[45:37:167] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[45:44:637] Speaker B: and then I have to put it in their account.
+[45:46:507] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[46:02:187] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[46:07:657] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[46:16:327] Speaker B: Now this table that you have just shared helps me a lot on that.
+[46:19:727] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[46:25:527] Speaker A: We did not know
+[46:26:247] Speaker A: that uh, you sort of have a situation where,
+[46:28:447] Speaker B: It happens very often.
+[46:28:887] Speaker A: Yeah, can you describe it again for me?
+[46:29:787] Speaker B: Uh now suppose you want a product
+[46:32:897] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[46:37:377] Speaker A: Yeah.
+[46:37:617] Speaker B: But you want it right now.
+[46:38:227] Speaker A: Yeah, yeah.
+[46:38:527] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[46:42:857] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[46:49:807] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[47:05:327] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[47:12:877] Speaker B: and then I have to put it in their account.
+[47:14:737] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[47:30:467] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[47:35:977] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[47:44:637] Speaker B: Now this table that you have just shared helps me a lot on that.
+[47:47:947] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[47:53:727] Speaker A: We did not know
+[47:54:397] Speaker A: that uh, you sort of have a situation where,
+[47:56:607] Speaker B: It happens very often.
+[47:57:137] Speaker A: Yeah, can you describe it again for me?
+[47:58:67] Speaker B: Uh now suppose you want a product
+[48:01:27] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[48:05:437] Speaker A: Yeah.
+[48:05:747] Speaker B: But you want it right now.
+[48:06:337] Speaker A: Yeah, yeah.
+[48:06:657] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[48:10:977] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[48:17:967] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I have made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[48:33:557] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[48:41:47] Speaker B: and then I have to put it in their account.
+[48:42:857] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[48:58:567] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[49:04:127] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[49:12:877] Speaker B: Now this table that you have just shared helps me a lot on that.
+[49:16:127] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[49:21:847] Speaker A: We did not know
+[49:22:587] Speaker A: that uh, you sort of have a situation where,
+[49:24:817] Speaker B: It happens very often.
+[49:25:297] Speaker A: Yeah, can you describe it again for me?
+[49:26:167] Speaker B: Uh now suppose you want a product
+[49:29:217] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[49:33:637] Speaker A: Yeah.
+[49:33:897] Speaker B: But you want it right now.
+[49:34:557] Speaker A: Yeah, yeah.
+[49:34:867] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[49:39:187] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[49:46:117] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[50:01:547] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[50:09:127] Speaker B: and then I have to put it in their account.
+[50:10:937] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[50:26:547] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[50:32:17] Speaker B: payment that has been transferred is overlooked
+[50:34:887] Speaker B: to be entered into the book of accounts for that client by us.
+[50:39:277] Speaker B: Now this table that you have just shared helps me a lot on that.
+[50:42:477] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[50:48:337] Speaker A: We did not know
+[50:49:7] Speaker A: that uh, you sort of have a situation where,
+[50:51:77] Speaker B: It happens very often.
+[50:51:577] Speaker A: Yeah, can you describe it again for me?
+[50:52:437] Speaker B: Uh now suppose you want a product
+[50:55:547] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[50:59:907] Speaker A: Yeah.
+[51:00:207] Speaker B: But you want it right now.
+[51:00:847] Speaker A: Yeah, yeah.
+[51:01:147] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[51:05:437] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[51:12:477] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I have made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[51:27:857] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[51:35:467] Speaker B: and then I have to put it in their account.
+[51:37:377] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[51:52:957] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[51:58:617] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[52:07:337] Speaker B: Now this table that you have just shared helps me a lot on that.
+[52:10:767] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[52:16:717] Speaker A: We did not know
+[52:17:427] Speaker A: that uh, you sort of have a situation where,
+[52:19:547] Speaker B: It happens very often.
+[52:20:47] Speaker A: Yeah, can you describe it again for me?
+[52:20:947] Speaker B: Uh now suppose you want a product
+[52:23:897] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[52:28:447] Speaker A: Yeah.
+[52:28:697] Speaker B: But you want it right now.
+[52:29:337] Speaker A: Yeah, yeah.
+[52:29:677] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[52:33:957] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[52:40:997] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[52:56:497] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[53:03:977] Speaker B: and then I have to put it in their account.
+[53:05:817] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[53:21:407] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[53:26:957] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[53:35:637] Speaker B: Now this table that you have just shared helps me a lot on that.
+[53:38:907] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[53:44:667] Speaker A: We did not know
+[53:45:397] Speaker A: that uh, you sort of have a situation where,
+[53:47:577] Speaker B: It happens very often.
+[53:48:37] Speaker A: Yeah, can you describe it again for me?
+[53:48:907] Speaker B: Uh now suppose you want a product
+[53:51:997] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[53:56:397] Speaker A: Yeah.
+[53:56:657] Speaker B: But you want it right now.
+[53:57:337] Speaker A: Yeah, yeah.
+[53:57:627] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[54:01:897] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[54:08:927] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I have made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[54:24:397] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[54:31:857] Speaker B: and then I have to put it in their account.
+[54:33:687] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[54:49:337] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[54:54:877] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[55:03:627] Speaker B: Now this table that you have just shared helps me a lot on that.
+[55:06:857] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[55:12:757] Speaker A: We did not know
+[55:13:517] Speaker A: that uh, you sort of have a situation where,
+[55:15:687] Speaker B: It happens very often.
+[55:16:117] Speaker A: Yeah, can you describe it again for me?
+[55:17:87] Speaker B: Uh now suppose you want a product
+[55:20:67] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[55:24:437] Speaker A: Yeah.
+[55:24:737] Speaker B: But you want it right now.
+[55:25:357] Speaker A: Yeah, yeah.
+[55:25:677] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[55:29:947] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[55:36:977] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[55:52:457] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[55:59:967] Speaker B: and then I have to put it in their account.
+[56:01:797] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[56:17:417] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[56:23:47] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[56:31:627] Speaker B: Now this table that you have just shared helps me a lot on that.
+[56:34:887] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[56:40:717] Speaker A: We did not know
+[56:41:437] Speaker A: that uh, you sort of have a situation where,
+[56:43:587] Speaker B: It happens very often.
+[56:44:87] Speaker A: Yeah, can you describe it again for me?
+[56:44:937] Speaker B: Uh now suppose you want a product
+[56:48:7] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[56:52:417] Speaker A: Yeah.
+[56:52:727] Speaker B: But you want it right now.
+[56:53:337] Speaker A: Yeah, yeah.
+[56:53:647] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[56:57:957] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[57:04:847] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[57:20:397] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[57:28:7] Speaker B: and then I have to put it in their account.
+[57:29:847] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[57:45:517] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[57:51:7] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[57:59:757] Speaker B: Now this table that you have just shared helps me a lot on that.
+[58:02:867] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[58:08:707] Speaker A: We did not know
+[58:09:407] Speaker A: that uh, you sort of have a situation where,
+[58:11:587] Speaker B: It happens very often.
+[58:12:117] Speaker A: Yeah, can you describe it again for me?
+[58:13:7] Speaker B: Uh now suppose you want a product
+[58:15:987] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[58:20:397] Speaker A: Yeah.
+[58:20:697] Speaker B: But you want it right now.
+[58:21:327] Speaker A: Yeah, yeah.
+[58:21:637] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[58:25:957] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[58:32:897] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[58:48:427] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[58:55:927] Speaker B: and then I have to put it in their account.
+[58:57:827] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[59:13:417] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[59:18:857] Speaker B: payment that has been transferred is overlooked
+[59:21:797] Speaker B: to be entered into the book of accounts for that client by us.
+[59:26:227] Speaker B: Now this table that you have just shared helps me a lot on that.
+[59:29:507] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[59:35:197] Speaker A: We did not know
+[59:35:897] Speaker A: that uh, you sort of have a situation where,
+[59:38:157] Speaker B: It happens very often.
+[59:38:607] Speaker A: Yeah, can you describe it again for me?
+[59:39:507] Speaker B: Uh now suppose you want a product
+[59:42:617] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[59:47:37] Speaker A: Yeah.
+[59:47:287] Speaker B: But you want it right now.
+[59:47:897] Speaker A: Yeah, yeah.
+[59:48:207] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[59:52:507] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[59:59:517] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I have made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[10:15:77] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[10:19:407] Speaker B: and then I have to put it in their account.
+[10:20:967] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[10:30:17] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[10:30:147] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[10:35:607] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[10:44:607] Speaker B: Now this table that you have just shared helps me a lot on that.
+[10:47:647] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[10:53:367] Speaker A: We did not know
+[10:54:147] Speaker A: that uh, you sort of have a situation where,
+[10:56:197] Speaker B: It happens very often.
+[10:56:697] Speaker A: Yeah, can you describe it again for me?
+[10:57:567] Speaker B: Uh now suppose you want a product
+[11:00:547] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[11:04:957] Speaker A: Yeah.
+[11:05:227] Speaker B: But you want it right now.
+[11:05:917] Speaker A: Yeah, yeah.
+[11:06:217] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[11:10:487] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[11:17:417] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I have made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[11:32:987] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[11:40:487] Speaker B: and then I have to put it in their account.
+[11:42:337] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[11:58:37] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[12:03:527] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[12:12:127] Speaker B: Now this table that you have just shared helps me a lot on that.
+[12:15:377] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[12:21:197] Speaker A: We did not know
+[12:21:947] Speaker A: that uh, you sort of have a situation where,
+[12:24:97] Speaker B: It happens very often.
+[12:24:517] Speaker A: Yeah, can you describe it again for me?
+[12:25:347] Speaker B: Uh now suppose you want a product
+[12:28:477] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[12:32:897] Speaker A: Yeah.
+[12:33:177] Speaker B: But you want it right now.
+[12:33:807] Speaker A: Yeah, yeah.
+[12:34:157] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[12:38:437] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[12:45:477] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I have made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[13:00:847] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[13:08:357] Speaker B: and then I have to put it in their account.
+[13:10:217] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[13:25:957] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[13:31:397] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[13:40:117] Speaker B: Now this table that you have just shared helps me a lot on that.
+[13:43:247] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[13:48:927] Speaker A: We did not know
+[13:49:607] Speaker A: that uh, you sort of have a situation where,
+[13:51:777] Speaker B: It happens very often.
+[13:52:267] Speaker A: Yeah, can you describe it again for me?
+[13:53:147] Speaker B: Uh now suppose you want a product
+[13:56:227] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[14:00:617] Speaker A: Yeah.
+[14:00:897] Speaker B: But you want it right now.
+[14:01:527] Speaker A: Yeah, yeah.
+[14:01:847] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[14:06:147] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[14:13:157] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[14:28:657] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[14:36:207] Speaker B: and then I have to put it in their account.
+[14:38:67] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[14:53:777] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[14:59:357] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[15:07:957] Speaker B: Now this table that you have just shared helps me a lot on that.
+[15:11:157] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[15:16:927] Speaker A: We did not know
+[15:17:667] Speaker A: that uh, you sort of have a situation where,
+[15:19:757] Speaker B: It happens very often.
+[15:20:257] Speaker A: Yeah, can you describe it again for me?
+[15:21:127] Speaker B: Uh now suppose you want a product
+[15:24:207] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[15:28:577] Speaker A: Yeah.
+[15:28:837] Speaker B: But you want it right now.
+[15:29:487] Speaker A: Yeah, yeah.
+[15:29:837] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[15:34:147] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[15:41:97] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[15:56:567] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[16:03:977] Speaker B: and then I have to put it in their account.
+[16:05:837] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[16:21:497] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[16:26:977] Speaker B: payment that has been transferred is overlooked
+[16:30:17] Speaker B: to be entered into the book of accounts for that client by us.
+[16:34:157] Speaker B: Now this table that you have just shared helps me a lot on that.
+[16:37:377] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[16:43:107] Speaker A: We did not know
+[16:43:807] Speaker A: that uh, you sort of have a situation where,
+[16:45:937] Speaker B: It happens very often.
+[16:46:427] Speaker A: Yeah, can you describe it again for me?
+[16:47:337] Speaker B: Uh now suppose you want a product
+[16:50:417] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[16:54:727] Speaker A: Yeah.
+[16:55:7] Speaker B: But you want it right now.
+[16:55:587] Speaker A: Yeah, yeah.
+[16:55:927] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[17:00:237] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[17:07:117] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to the office. Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred
+[17:22:647] Speaker B: from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit,
+[17:30:167] Speaker B: and then I have to put it in their account.
+[17:31:977] Speaker B: Now, how this happens? When they ask me to make a payment, I will share a screenshot because think about it, how why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper. They collect the material and go and get the job completed.
+[17:47:487] Speaker B: The hardship at times what happens is, because we were also in a rush and chaos, this
+[17:53:7] Speaker B: payment that has been transferred is overlooked to be entered into the book of accounts for that client by us.
+[18:01:727] Speaker B: Now this table that you have just shared helps me a lot on that.
+[18:05:47] Speaker A: Okay. So this is one critical new information which I didn't have. Uh sorry, one second, I'll just go back to uh the screen.
+[18:10:737] Speaker A: We did not know
+[18:11:467] Speaker A: that uh, you sort of have a situation where,
+[18:13:627] Speaker B: It happens very often.
+[18:14:87] Speaker A: Yeah, can you describe it again for me?
+[18:14:987] Speaker B: Uh now suppose you want a product
+[18:18:27] Speaker B: and you are located in a very remote location. All my army camps are like that.
+[18:22:367] Speaker A: Yeah.
+[18:22:657] Speaker B: But you want it right now.
+[18:23:287] Speaker A: Yeah, yeah.
+[18:23:617] Speaker B: So what is the solution? You don't worry too much about the cost involved.
+[18:27:907] Speaker B: You just need the product. So what you're going to ask me because they don't have the money to buy it. They will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[18:34:917] Speaker B: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the stuff, go to

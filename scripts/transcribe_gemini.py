@@ -27,9 +27,15 @@ NOTES:
 
 import argparse
 import os
+import subprocess
 import sys
 import time
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv(Path(__file__).parent.parent / ".env")
+
+INTERVIEWS_DIR = Path(__file__).parent.parent / "interviews"
 
 
 PROMPT = """\
@@ -66,8 +72,21 @@ def transcribe(video_path: Path, out_path: Path) -> None:
 
     client = genai.Client(api_key=api_key)
 
-    print(f"Uploading {video_path.name} ({video_path.stat().st_size / 1e6:.0f} MB) ...")
-    uploaded = client.files.upload(file=str(video_path), config={"mime_type": "video/mp4"})
+    # Extract audio only — video token count (~258/s) exceeds 1M limit for long recordings.
+    # Audio tokens (~32/s) are ~8× cheaper and fit comfortably within limits.
+    audio_dir = INTERVIEWS_DIR / "audio"
+    audio_dir.mkdir(exist_ok=True)
+    audio_path = audio_dir / (video_path.stem + "_audio.mp3")
+    print(f"Extracting audio from {video_path.name} ...")
+    subprocess.run(
+        ["ffmpeg", "-y", "-i", str(video_path), "-vn", "-ar", "16000", "-ac", "1",
+         "-b:a", "64k", str(audio_path)],
+        check=True, capture_output=True,
+    )
+    print(f"Audio saved: {audio_path} ({audio_path.stat().st_size / 1e6:.1f} MB)")
+
+    print(f"Uploading audio ...")
+    uploaded = client.files.upload(file=str(audio_path), config={"mime_type": "audio/mpeg"})
 
     # Wait for processing
     print("Waiting for Gemini to process the file...")
@@ -89,7 +108,7 @@ def transcribe(video_path: Path, out_path: Path) -> None:
     out_path.write_text(response.text, encoding="utf-8")
     print(f"Transcript saved: {out_path}")
 
-    # Clean up uploaded file
+    # Clean up remote file only — keep local audio for reuse
     client.files.delete(name=uploaded.name)
     print("Cleaned up uploaded file from Gemini servers.")
 
@@ -115,7 +134,8 @@ if __name__ == "__main__":
     if args.out:
         out_path = Path(args.out)
     else:
-        interviews_dir = Path(__file__).parent.parent / "interviews"
-        out_path = interviews_dir / (video_path.stem + "_gemini.txt")
+        gemini_dir = INTERVIEWS_DIR / "gemini"
+        gemini_dir.mkdir(exist_ok=True)
+        out_path = gemini_dir / (video_path.stem + "_gemini.txt")
 
     transcribe(video_path, out_path)
