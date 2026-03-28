@@ -127,20 +127,20 @@ def transcribe(input_path: Path, out_path: Path, mode: str, language: str) -> No
             lines = []
             for jf in sorted(json_files):
                 data = json.loads(jf.read_text(encoding="utf-8"))
-                diarised = data.get("diarized_transcript", data.get("diarised_transcript", []))
+                diarised_block = data.get("diarized_transcript") or {}
+                entries = diarised_block.get("entries", []) if isinstance(diarised_block, dict) else []
                 transcript = data.get("transcript", "")
 
-                if diarised:
-                    for segment in diarised:
-                        speaker = segment.get("speaker_id", "Speaker ?")
-                        start = format_timestamp(segment.get("start", 0))
-                        end = format_timestamp(segment.get("end", 0))
+                if entries:
+                    for segment in entries:
+                        speaker = f"Speaker {segment.get('speaker_id', '?')}"
+                        start = format_timestamp(segment.get("start_time_seconds", 0))
+                        end = format_timestamp(segment.get("end_time_seconds", 0))
                         text = segment.get("transcript", "").strip()
                         lines.append(f"[{start} --> {end}]  {speaker}: {text}")
                 elif transcript:
                     lines.append(transcript)
                 else:
-                    # Dump raw so we can inspect
                     lines.append(json.dumps(data, ensure_ascii=False, indent=2))
 
         out_path.write_text("\n".join(lines), encoding="utf-8")

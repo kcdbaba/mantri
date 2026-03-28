@@ -1,0 +1,720 @@
+[00:00:03 --> 00:00:04]  Speaker 2: Okay
+[00:00:05 --> 00:00:20]  Speaker 1: Okay, okay Ashish. this is user interview session to determine all the future design choices that are right now open questions for us which may require your expert guidance on.
+[00:00:18 --> 00:00:18]  Speaker 0: Very.
+[00:00:21 --> 00:00:21]  Speaker 0: Okay.
+[00:00:21 --> 00:00:31]  Speaker 1: Also, obviously walk through the early prototype things. You've already seen it before, but we'll walk through for the purpose of recording and analysis in our workflow.
+[00:00:32 --> 00:00:32]  Speaker 2: Okay.
+[00:00:33 --> 00:00:34]  Speaker 1: Okay.
+[00:00:36 --> 00:00:40]  Speaker 1: So let's get started immediately. Uh, let's open up the
+[00:00:38 --> 00:00:39]  Speaker 2: Hmm hmm.
+[00:00:43 --> 00:00:45]  Speaker 1: SATA output.
+[00:00:45 --> 00:00:46]  Speaker 2: Okay
+[00:00:46 --> 00:00:48]  Speaker 1: You should be able to see it on the screen.
+[00:00:49 --> 00:00:49]  Speaker 2: Yes.
+[00:00:49 --> 00:00:51]  Speaker 1: Is it too small? Can you read it?
+[00:00:51 --> 00:00:56]  Speaker 2: Yes, I can read it. Which one do you want? Part one, full agent, output, walkthrough, SATA case?
+[00:00:59 --> 00:01:04]  Speaker 1: Uh, part one, full output, nahi, on the screen. I haven't shared my screen, yeah, sorry, sorry.
+[00:01:05 --> 00:01:07]  Speaker 1: Let me share my screen as well.
+[00:01:07 --> 00:01:07]  Speaker 0: That's stupid.
+[00:01:09 --> 00:01:10]  Speaker 0: Hmm
+[00:01:14 --> 00:01:14]  Speaker 1: Okay, dikh raha hai?
+[00:01:16 --> 00:01:17]  Speaker 2: Not yet. Okay.
+[00:01:18 --> 00:01:19]  Speaker 1: Dekh raha hai na?
+[00:01:19 --> 00:01:19]  Speaker 2: Yep.
+[00:01:20 --> 00:01:26]  Speaker 1: I'll put this conversation guide aside, and this output aside.
+[00:01:24 --> 00:01:24]  Speaker 2: Hello
+[00:01:26 --> 00:01:27]  Speaker 0: Okay.
+[00:01:28 --> 00:01:29]  Speaker 1: Okay.
+[00:01:30 --> 00:01:34]  Speaker 1: So, this is that SATA battery case.
+[00:01:31 --> 00:01:31]  Speaker 0: Yeah.
+[00:01:34 --> 00:01:37]  Speaker 1: Okay, we have WhatsApp group threads.
+[00:01:34 --> 00:01:35]  Speaker 0: Okay.
+[00:01:38 --> 00:01:43]  Speaker 1: One from the client group, one from the internal group, and two supplier groups.
+[00:01:38 --> 00:01:38]  Speaker 0: from
+[00:01:43 --> 00:01:44]  Speaker 0: Okay.
+[00:01:43 --> 00:01:46]  Speaker 1: Okay, first one is Voltas, second one is I think LG.
+[00:01:46 --> 00:01:47]  Speaker 0: Yes
+[00:01:47 --> 00:01:54]  Speaker 1: Right? Um, we've got the early prototype output here from the agent that we had created.
+[00:01:55 --> 00:01:55]  Speaker 0: Okay.
+[00:01:55 --> 00:01:59]  Speaker 1: And it has made a few mistakes which we have identified earlier also.
+[00:01:59 --> 00:02:00]  Speaker 0: Okay.
+[00:01:59 --> 00:02:13]  Speaker 1: Okay. For example, it didn't know at that time that your firm's name is Uttam Enterprise, so it kind of guessed Uttam Enterprise must be a supplier since it's not a client. And because obviously you are also discussing that Uttam will supply or something in the chat somewhere.
+[00:02:09 --> 00:02:10]  Speaker 0: Because
+[00:02:14 --> 00:02:23]  Speaker 1: It inferred that Uttayam is also a supplier, which is okay because we have fixed that in the current state. It's not a problem. We are only looking back for recording this session properly.
+[00:02:14 --> 00:02:14]  Speaker 2: Okay.
+[00:02:20 --> 00:02:20]  Speaker 2: Hello.
+[00:02:25 --> 00:02:29]  Speaker 1: Okay. So let's see what, uh, what it came up with.
+[00:02:29 --> 00:02:30]  Speaker 0: Okay
+[00:02:30 --> 00:02:36]  Speaker 1: It has identified the primary client, which is the SATA battery battalion, it says, but whatever.
+[00:02:37 --> 00:02:37]  Speaker 0: Okay.
+[00:02:37 --> 00:02:44]  Speaker 1: It has identified the army client unit. It has also identified a personal key personnel who is interacting in the group and that becomes like an alias.
+[00:02:40 --> 00:02:40]  Speaker 0: Also.
+[00:02:45 --> 00:02:50]  Speaker 1: So both can be used as a reference to say ki this is that particular client, yes?
+[00:02:50 --> 00:02:50]  Speaker 2: Understood.
+[00:02:51 --> 00:02:58]  Speaker 1: Yeah, and it has applied, it has inferred the supplier. Suppliers also may not be correct, but if that's okay, we'll move on.
+[00:02:55 --> 00:02:55]  Speaker 2: Okay.
+[00:02:58 --> 00:03:01]  Speaker 1: It has detected what is the item.
+[00:02:58 --> 00:02:59]  Speaker 2: has.
+[00:03:01 --> 00:03:04]  Speaker 1: One of the items, at least it's listed in the first task over here.
+[00:03:04 --> 00:03:05]  Speaker 2: Yes.
+[00:03:05 --> 00:03:09]  Speaker 1: So essentially you can also see here that each item is becoming its own task.
+[00:03:10 --> 00:03:10]  Speaker 2: Yes
+[00:03:10 --> 00:03:18]  Speaker 1: We have changed that also in the current design. Every order is its own thing, okay? There may be multiple items and quantities in that.
+[00:03:13 --> 00:03:13]  Speaker 2: Every.
+[00:03:15 --> 00:03:16]  Speaker 2: Maybe.
+[00:03:17 --> 00:03:18]  Speaker 2: Yes.
+[00:03:18 --> 00:03:23]  Speaker 1: And then you can also have more than one supplier supplying to that particular order.
+[00:03:23 --> 00:03:24]  Speaker 2: 100%
+[00:03:23 --> 00:03:24]  Speaker 1: 100%
+[00:03:24 --> 00:03:27]  Speaker 1: So the backing supplier order also will be its own thing.
+[00:03:27 --> 00:03:28]  Speaker 2: Yes
+[00:03:28 --> 00:03:37]  Speaker 1: And then we match according to the chat logs, we will see you have made two supply orders, right? Or maybe three client orders.
+[00:03:36 --> 00:03:36]  Speaker 0: Yes.
+[00:03:38 --> 00:03:40]  Speaker 1: And items from supplier A order.
+[00:03:38 --> 00:03:38]  Speaker 0: Yes.
+[00:03:41 --> 00:03:44]  Speaker 1: will be distributed in this particular way. There's a mapping to the client orders.
+[00:03:44 --> 00:03:45]  Speaker 0: Yes
+[00:03:45 --> 00:03:49]  Speaker 1: And also for the second order from the other supplier, right? So we'll maintain all of that from the
+[00:03:48 --> 00:03:48]  Speaker 0: So we made
+[00:03:50 --> 00:04:02]  Speaker 1: Uh, chat log scraping that we do, that we do, when we ingest it, yeah, from WhatsApp. Right now this is a very simplified case where every item is being treated as one specific order you can think of, right, one task.
+[00:03:58 --> 00:03:59]  Speaker 2: Hmm hmm.
+[00:04:02 --> 00:04:03]  Speaker 2: Yes. Yes.
+[00:04:03 --> 00:04:17]  Speaker 1: Right. So given all that, um, you can see that it's looking at the status and it's also understanding status has changed over time and the current status, right? Yes. Is in progress, order has been confirmed and delivery is pending.
+[00:04:12 --> 00:04:13]  Speaker 0: Yes, yes.
+[00:04:15 --> 00:04:15]  Speaker 0: Yes.
+[00:04:17 --> 00:04:18]  Speaker 0: Yes.
+[00:04:18 --> 00:04:25]  Speaker 1: So it understands this even without any explicit, we have not explicitly trained it that there is a process in the business.
+[00:04:23 --> 00:04:23]  Speaker 2: Yes.
+[00:04:25 --> 00:04:29]  Speaker 1: Which means that, you know, order comes in, then it is confirmed, then its delivery is pending, etcetera.
+[00:04:25 --> 00:04:25]  Speaker 2: Yes.
+[00:04:30 --> 00:04:30]  Speaker 2: Yes.
+[00:04:30 --> 00:04:32]  Speaker 1: Yes, knows this naturally.
+[00:04:32 --> 00:04:33]  Speaker 2: Yes.
+[00:04:33 --> 00:04:40]  Speaker 1: Okay, from its organic training to be an AI, it already knows that this is how probably orders are made.
+[00:04:41 --> 00:04:41]  Speaker 2: Yes.
+[00:04:42 --> 00:04:44]  Speaker 1: Right, so naturally it is able to see this.
+[00:04:44 --> 00:04:45]  Speaker 2: Yes.
+[00:04:45 --> 00:04:49]  Speaker 1: The current state is that we are actually explicitly defining processes also.
+[00:04:49 --> 00:04:50]  Speaker 2: Mm-hmm.
+[00:04:50 --> 00:04:53]  Speaker 1: Okay, so it will not naturally take whatever it wants.
+[00:04:54 --> 00:04:57]  Speaker 1: It will try and map to the process that we design.
+[00:04:57 --> 00:04:58]  Speaker 2: Yes
+[00:04:58 --> 00:05:00]  Speaker 1: Okay, so we'll design stage by stage what should happen.
+[00:05:01 --> 00:05:01]  Speaker 2: Okay
+[00:05:01 --> 00:05:03]  Speaker 1: What is expected to happen?
+[00:05:03 --> 00:05:04]  Speaker 2: Okay.
+[00:05:04 --> 00:05:11]  Speaker 1: What is optional, how it can be like a split decision, either this or that, right? We'll map out all of this as a graph.
+[00:05:12 --> 00:05:12]  Speaker 2: Okay
+[00:05:13 --> 00:05:22]  Speaker 1: And then it will try to fill in from the updates that it sees at where we are right now, instead of, you know, using its natural common sense. Right now, this is common sense that we are seeing.
+[00:05:22 --> 00:05:23]  Speaker 2: Hmm hmm hmm hmm.
+[00:05:24 --> 00:05:24]  Speaker 1: Hmm
+[00:05:25 --> 00:05:26]  Speaker 1: Okay.
+[00:05:26 --> 00:05:26]  Speaker 2: Understood.
+[00:05:27 --> 00:05:31]  Speaker 1: Right, so it is a kind of identifying the next tasks because it will be requested.
+[00:05:30 --> 00:05:30]  Speaker 2: Yes.
+[00:05:31 --> 00:05:34]  Speaker 1: Um, and the date is mentioned on 23rd March.
+[00:05:35 --> 00:05:35]  Speaker 2: Yes
+[00:05:35 --> 00:05:41]  Speaker 1: It is assigning a priority which is fine. Also, this is based on its natural logic, okay?
+[00:05:37 --> 00:05:38]  Speaker 2: Yes.
+[00:05:41 --> 00:05:43]  Speaker 2: Yes, I have not given any input about it.
+[00:05:43 --> 00:05:53]  Speaker 1: That's right. And we have, we have, we have given some input in the prompt engineering. We had given some input inputs to say if the date is nearby, then the priority should be high and all that.
+[00:05:48 --> 00:05:48]  Speaker 2: Given.
+[00:05:54 --> 00:05:54]  Speaker 2: Right?
+[00:05:54 --> 00:05:59]  Speaker 1: Right? So using our words as a kind of instruction.
+[00:05:59 --> 00:05:59]  Speaker 2: Mm-hmm.
+[00:05:59 --> 00:06:03]  Speaker 1: It kind of uses its intelligence also and decides the priority.
+[00:06:03 --> 00:06:04]  Speaker 2: Understood.
+[00:06:04 --> 00:06:10]  Speaker 1: Okay, and we test for this. So we build test cases in our pipeline.
+[00:06:10 --> 00:06:10]  Speaker 2: Yeah.
+[00:06:10 --> 00:06:18]  Speaker 1: Make sure that, you know, we are defining the words, but then is it resulting in the correct priorities as per our current expectation?
+[00:06:13 --> 00:06:14]  Speaker 2: Then is it?
+[00:06:18 --> 00:06:20]  Speaker 1: We are testing all this also.
+[00:06:20 --> 00:06:20]  Speaker 2: Yes.
+[00:06:20 --> 00:06:24]  Speaker 1: Okay, this is basically, this is called prompt engineering when you're using a
+[00:06:23 --> 00:06:24]  Speaker 0: Music.
+[00:06:25 --> 00:06:36]  Speaker 1: Uh, large language model as an agent or even as a AI, normal AI, you basically do the initial prompt, see how it behaves, and then you tweak it as to, you know, how you want it to behave.
+[00:06:37 --> 00:06:37]  Speaker 2: Okay
+[00:06:38 --> 00:06:42]  Speaker 1: Okay, and then it will basically try and fit your needs. So we are doing that.
+[00:06:41 --> 00:06:42]  Speaker 2: We are doing that.
+[00:06:42 --> 00:06:43]  Speaker 2: Yes.
+[00:06:43 --> 00:06:49]  Speaker 1: Okay. Then it's giving some meta information, where did it get the information from, which WhatsApp groups and all that.
+[00:06:49 --> 00:06:50]  Speaker 2: Okay.
+[00:06:50 --> 00:06:54]  Speaker 1: Okay? It tries to identify subtasks in a particular order.
+[00:06:54 --> 00:06:55]  Speaker 2: And then.
+[00:06:54 --> 00:06:58]  Speaker 1: And then all the details about it, you can see on the screen, okay?
+[00:06:58 --> 00:06:59]  Speaker 2: Yes, yes.
+[00:06:58 --> 00:07:02]  Speaker 1: Kind of says that it has been assigned to particular staff also.
+[00:07:02 --> 00:07:10]  Speaker 2: Yeah, this was nice. This actually was nice because it could catch that from the messaging or make a sense out of it. That was interesting.
+[00:07:10 --> 00:07:15]  Speaker 1: We have not explicitly defined assignment right now in our
+[00:07:14 --> 00:07:14]  Speaker 2: Yes.
+[00:07:15 --> 00:07:21]  Speaker 1: In our flow, okay? Yes. It will come in naturally like this, okay? We can explicitly add it also.
+[00:07:15 --> 00:07:16]  Speaker 2: Yes.
+[00:07:16 --> 00:07:16]  Speaker 2: Okay.
+[00:07:16 --> 00:07:17]  Speaker 0: Yes.
+[00:07:19 --> 00:07:19]  Speaker 0: Okay.
+[00:07:22 --> 00:07:24]  Speaker 1: So if you want, okay?
+[00:07:25 --> 00:07:38]  Speaker 1: I can add it as an open item right now that we will implement that every task needs needs to be either so we have a kind of instruction in natural words right now to the prompt. We say that every staff has a particular responsibility.
+[00:07:39 --> 00:07:41]  Speaker 1: Okay. Hello.
+[00:07:44 --> 00:07:44]  Speaker 1: Okay.
+[00:07:44 --> 00:07:44]  Speaker 2: Okay.
+[00:07:45 --> 00:07:47]  Speaker 2: Particular person, Hello, Can you hear me?
+[00:07:47 --> 00:07:49]  Speaker 1: Yeah yeah, uh, what I am trying to say is,
+[00:07:48 --> 00:07:50]  Speaker 2: What I am trying to say.
+[00:07:50 --> 00:07:50]  Speaker 1: Yeah
+[00:07:50 --> 00:08:08]  Speaker 2: is look, there are three people here, they all look after quite similar stuff. Suddenly somebody is not on the bench, so it is the other person's job. Yes, if it is a repair exclusive job, then I can identify, okay, you are particularly assigned for this. But when this kind of delivery is happening, anyone
+[00:08:09 --> 00:08:28]  Speaker 2: Whoever is there up front, like whoever has the lesser load on the hand has to be passed it on. So you cannot say that this is exclusively Samita ji's job or my job. So it will be we can assign that this task will be looked after by Mr. A or Mr. B. But practically speaking, we cannot predefine it like or
+[00:08:28 --> 00:08:33]  Speaker 2: Every task cannot be predefined. It will be on the go, it will be defined, okay, this is your headache.
+[00:08:34 --> 00:08:39]  Speaker 1: Yeah, yeah, I understand that. So I have opened up, one second, let me just let my doggy out.
+[00:08:40 --> 00:08:40]  Speaker 2: Okay.
+[00:08:42 --> 00:08:50]  Speaker 1: Right, right. She doesn't want to go out, she wants my attention. I'm not going to give her attention right now, let her bark. It's okay, we'll ignore it.
+[00:08:51 --> 00:08:55]  Speaker 1: Okay, so what I've opened up on the left side here, okay.
+[00:08:54 --> 00:08:55]  Speaker 2: Okay.
+[00:08:55 --> 00:08:58]  Speaker 1: Is the actual full prompt that we give the AI right now?
+[00:08:58 --> 00:08:59]  Speaker 2: Mm-hmm.
+[00:09:00 --> 00:09:03]  Speaker 1: Okay, it's actually still in testing stage, so it's called the testing prompt.
+[00:09:03 --> 00:09:04]  Speaker 2: Mm-hmm.
+[00:09:04 --> 00:09:06]  Speaker 1: This will be refined again and again, okay, going forward.
+[00:09:06 --> 00:09:08]  Speaker 2: going forward.
+[00:09:08 --> 00:09:13]  Speaker 1: So you can see all these details are there here in word instruction, verb in written instructions to it.
+[00:09:13 --> 00:09:14]  Speaker 2: Hmm hmm hmm hmm.
+[00:09:14 --> 00:09:16]  Speaker 1: Okay, you can see it's a very long prompt.
+[00:09:17 --> 00:09:17]  Speaker 2: Yes.
+[00:09:17 --> 00:09:19]  Speaker 1: It has a lot of information.
+[00:09:19 --> 00:09:19]  Speaker 2: Mm-hmm.
+[00:09:20 --> 00:09:23]  Speaker 1: Okay, so now if I here, if I start a search for staff,
+[00:09:25 --> 00:09:25]  Speaker 2: Hmm.
+[00:09:25 --> 00:09:34]  Speaker 1: Assignment or responsibility or something like that. Let's see. Staff assignment doesn't have responsibility. Responsible.
+[00:09:35 --> 00:09:40]  Speaker 1: I'm searching for the word responsible. It's not turning up. Okay, maybe it is.
+[00:09:40 --> 00:09:41]  Speaker 0: Mm-hmm.
+[00:09:41 --> 00:09:45]  Speaker 1: One second, one second. Let's just go through all the bits.
+[00:09:47 --> 00:09:47]  Speaker 0: Hmm.
+[00:09:51 --> 00:09:57]  Speaker 1: No, I think we didn't put it in explicitly in this particular time at least.
+[00:09:57 --> 00:09:58]  Speaker 2: Yes
+[00:09:58 --> 00:10:00]  Speaker 1: We have discussed with the AI, okay?
+[00:10:00 --> 00:10:01]  Speaker 2: Hmm hmm.
+[00:10:00 --> 00:10:04]  Speaker 1: Uh, that we can have multiple staff responsible for multiple roles.
+[00:10:05 --> 00:10:05]  Speaker 2: Yes.
+[00:10:05 --> 00:10:15]  Speaker 1: Right? Some senior staff may be responsible overall for particular roles only. Okay, all this is not clear. We need to discuss with Ashish and confirm. We've said all this to the AI.
+[00:10:14 --> 00:10:15]  Speaker 2: Almost.
+[00:10:15 --> 00:10:16]  Speaker 2: Yes.
+[00:10:16 --> 00:10:34]  Speaker 1: Alright? And obviously if you want to explicitly implement some sort of responsibility flow where you want to also, you know, cater to multiple staff having multiple roles, etcetera. And then covering for each other when they're absent or, you know, temporarily not working.
+[00:10:29 --> 00:10:30]  Speaker 0: covering.
+[00:10:35 --> 00:10:42]  Speaker 1: Right? Then we can do that, but that will be an engineering process, okay? And we can leave it as an open item for now at least.
+[00:10:36 --> 00:10:36]  Speaker 0: Yes.
+[00:10:42 --> 00:10:43]  Speaker 0: Yes.
+[00:10:43 --> 00:10:48]  Speaker 1: Okay, so I'll skip going through the entire prompt for now.
+[00:10:49 --> 00:10:49]  Speaker 0: Mm-hmm.
+[00:10:49 --> 00:10:52]  Speaker 1: Just coming back to the example output.
+[00:10:52 --> 00:10:53]  Speaker 0: Mm-hmm.
+[00:10:55 --> 00:11:04]  Speaker 1: Um, obviously you've gone through this before, so I'll be very quick about it. You can see the subcasts, you can see what staff it has picked up as having been assigned to the task.
+[00:10:58 --> 00:10:58]  Speaker 0: Any quick
+[00:10:59 --> 00:10:59]  Speaker 0: Yes.
+[00:11:04 --> 00:11:05]  Speaker 1: Right?
+[00:11:04 --> 00:11:05]  Speaker 0: Yes.
+[00:11:05 --> 00:11:15]  Speaker 1: Uh, then again you have the detailed status. So each subtask will have its own status. All these together form the overall task status, right?
+[00:11:15 --> 00:11:16]  Speaker 2: Yes
+[00:11:16 --> 00:11:19]  Speaker 1: Yeah, and then what is the next step for each subtask, etcetera?
+[00:11:20 --> 00:11:21]  Speaker 2: Understood.
+[00:11:21 --> 00:11:26]  Speaker 1: Yeah, how does this feel to you? Does it feel like good progress? You see promise in it?
+[00:11:26 --> 00:11:45]  Speaker 2: It is a very good progress because this is what exactly we are looking for. Only thing is that instead of like what we discussed in the beginning only, instead of one order being broken down into couple of tasks, it should be part of a one parent head like the SATA job. Five orders are there, in one list there are five items to be delivered, so it should be.
+[00:11:45 --> 00:12:01]  Speaker 2: There should be a kind of a flowchart kind of a thing. Okay, AC, click on the right side, then you see the details. Uh, then the refrigerator 45 liter, this is the detail happening. So kind of a chart kind of a thing will be much easier in the future, but to get started and that they have identified everything, that is good enough.
+[00:12:03 --> 00:12:10]  Speaker 1: Yeah, I understand what you're saying. So I'm not showing you the current state of what we are building, which has advanced far ahead of this state.
+[00:12:11 --> 00:12:21]  Speaker 1: Okay, where, you know, things that you're describing right now in very shallow terms and at a high level, right? They've explored very deeply.
+[00:12:18 --> 00:12:18]  Speaker 0: Hmm hmm.
+[00:12:19 --> 00:12:20]  Speaker 0: Hmm.
+[00:12:21 --> 00:12:25]  Speaker 1: Okay, broken it down into as clean and organic pieces as possible.
+[00:12:21 --> 00:12:22]  Speaker 0: Okay
+[00:12:26 --> 00:12:26]  Speaker 0: Hmm
+[00:12:26 --> 00:12:31]  Speaker 1: Uh, not just in terms of how it is visualized to you, but also how it is going to be ingested.
+[00:12:29 --> 00:12:30]  Speaker 0: Also,
+[00:12:31 --> 00:12:45]  Speaker 1: by our system, then handled by the agent, then stored in the database, then after that basically how is it going to be progressed for the next iteration, right? Next message comes, how is it going to progress for that?
+[00:12:37 --> 00:12:38]  Speaker 0: Mm-hmm.
+[00:12:45 --> 00:12:52]  Speaker 1: All of that we have done a deep amount of work in it and I'm sure in the future we'll take you through that.
+[00:12:45 --> 00:12:46]  Speaker 0: All.
+[00:12:49 --> 00:12:49]  Speaker 2: And.
+[00:12:52 --> 00:12:56]  Speaker 1: And there are some open questions coming about that within this interview also.
+[00:12:55 --> 00:12:56]  Speaker 2: Okay.
+[00:12:57 --> 00:13:07]  Speaker 1: Okay. Okay, but yeah, your points are absolutely taken. We had anticipated that you will go along these lines. So that's why we assumed and made some progress and whatever open questions we have, we will ask you.
+[00:13:03 --> 00:13:04]  Speaker 2: Hmm.
+[00:13:07 --> 00:13:08]  Speaker 2: Sure thing.
+[00:13:08 --> 00:13:11]  Speaker 1: in that direction, and it matches exactly what you want, right?
+[00:13:11 --> 00:13:12]  Speaker 2: Your thing.
+[00:13:12 --> 00:13:18]  Speaker 1: Okay. So, similar thing you can see for like you said, all the other items are here as separate tasks.
+[00:13:18 --> 00:13:19]  Speaker 2: Yes
+[00:13:19 --> 00:13:20]  Speaker 1: we won't have in the future.
+[00:13:21 --> 00:13:21]  Speaker 2: Yes.
+[00:13:21 --> 00:13:27]  Speaker 1: Okay, and once you go through all the individual items as separate tasks, you also come to the next section.
+[00:13:26 --> 00:13:27]  Speaker 2: Hello.
+[00:13:28 --> 00:13:28]  Speaker 0: Mm-hmm.
+[00:13:31 --> 00:13:35]  Speaker 1: Sorry, we are looking at the bare, yes, yeah. You will.
+[00:13:37 --> 00:13:43]  Speaker 1: Oh yeah. So one thing that I need to note that at this point already we were ingesting the images.
+[00:13:44 --> 00:13:44]  Speaker 2: Hmm.
+[00:13:44 --> 00:13:53]  Speaker 1: Right? You see that the images have been basically scraped or some OCR has done on it and all the textual information has been pulled out.
+[00:13:50 --> 00:13:51]  Speaker 2: All the
+[00:13:53 --> 00:13:53]  Speaker 2: Yes
+[00:13:54 --> 00:14:00]  Speaker 1: Yeah, so this table that you see right now on the screen for one particular order maybe, right?
+[00:14:00 --> 00:14:17]  Speaker 2: These are a couple of things that they copied, that these are the payments or the amounts transferred, the screenshots were there. So the AI agent has translated them into a table. So that's a wonderful thing because this gives us a reminder, this most of the time happens.
+[00:14:17 --> 00:14:28]  Speaker 2: Suppose in 1 week you have asked me to transfer, even the buyers asked me that Ashish, instead of you sending it to me, I am picking it up from a neighborhood shop, so you make the payment to him directly.
+[00:14:29 --> 00:14:32]  Speaker 2: What happens is, I have made the payment down the line, I forget.
+[00:14:32 --> 00:14:37]  Speaker 2: And then I lose the money because they will never remind me that Ashish you made this payment. Now,
+[00:14:37 --> 00:14:37]  Speaker 1: Now.
+[00:14:37 --> 00:14:48]  Speaker 2: Because of this table, I can have a recheck quickly done. Okay, these are the payments that were recently done. Have a recheck that whether I have made bills for the same also or not. So, a wonderful thing again.
+[00:14:49 --> 00:14:58]  Speaker 1: Okay, so this is one critical new information which I didn't have. Sorry, one second, I'll just go back to the screen. We did not know.
+[00:14:58 --> 00:14:59]  Speaker 2: Hmm.
+[00:14:59 --> 00:15:03]  Speaker 1: that you sort of have a situation where
+[00:15:03 --> 00:15:04]  Speaker 2: It happens very often.
+[00:15:05 --> 00:15:06]  Speaker 1: Yeah, can you describe it again for me?
+[00:15:07 --> 00:15:14]  Speaker 2: Now suppose you want a product and you are located in a very remote location, all my army camps are like that.
+[00:15:14 --> 00:15:14]  Speaker 0: Yeah.
+[00:15:14 --> 00:15:16]  Speaker 2: But you want it right now.
+[00:15:16 --> 00:15:17]  Speaker 0: Yeah, yeah.
+[00:15:17 --> 00:15:21]  Speaker 2: So what is the solution? You don't worry too much about the cost involved.
+[00:15:22 --> 00:15:22]  Speaker 0: Yeah.
+[00:15:22 --> 00:15:30]  Speaker 2: You just need the product. So what you are going to ask me because they don't have the money to buy it, they will just ask me, Ashish, we are going to pick it up from the neighborhood shop.
+[00:15:31 --> 00:15:38]  Speaker 2: The bill will be made in my name. I will make the payment right away to that neighborhood shop. They will collect the store, go to the office.
+[00:15:31 --> 00:15:32]  Speaker 0: Okay.
+[00:15:38 --> 00:15:55]  Speaker 2: Now my job is because I've made the payment. Now the bill that the shopkeeper has issued in my name, it has to be transferred from there. I have to make a bill of my own in the name of my client now with my profits added upon, which is a predefined profit, and then I have to put it in their account.
+[00:15:56 --> 00:16:16]  Speaker 2: Now, how this happens, when they ask me to make a payment, I will share a screenshot because think about it, why will the shopkeeper let them carry the goods out? He has to see the proof of the payment. So my screenshot of the payment is shown to the shopkeeper, they collect the material and go and get that job completed. The hardship at times what happens is,
+[00:16:16 --> 00:16:23]  Speaker 2: Because we were also in a rush and chaos, this payment that has been transferred is overlooked.
+[00:16:24 --> 00:16:31]  Speaker 2: to be entered into the book of accounts for that client by us. Now this table that you have just shared helps me a lot on that.
+[00:16:32 --> 00:16:37]  Speaker 1: Okay, so I'm going to break it down like this. Essentially what they do is they ask you to maintain a wallet for them.
+[00:16:38 --> 00:16:38]  Speaker 2: Hmm.
+[00:16:38 --> 00:16:50]  Speaker 1: Right? So it's not like they provide some balance to the wallet beforehand. Instead, what happens is the client has ongoing payables.
+[00:16:51 --> 00:16:51]  Speaker 2: Hmm.
+[00:16:51 --> 00:16:52]  Speaker 1: Wallet, right?
+[00:16:53 --> 00:16:53]  Speaker 2: Yes
+[00:16:53 --> 00:16:57]  Speaker 1: Ashish, which is like, uh, you can think of it like as a credit account.
+[00:16:57 --> 00:17:00]  Speaker 2: It's a pure debit and credit account. It's a simple ledger.
+[00:16:59 --> 00:17:03]  Speaker 1: Debit toh, Debit toh hoga hi nahi. This is most likely just a credit account, right?
+[00:17:04 --> 00:17:04]  Speaker 2: Yes
+[00:17:05 --> 00:17:14]  Speaker 1: Right? Uh, then for any for ad hoc purchases uh at client's location.
+[00:17:14 --> 00:17:16]  Speaker 2: Emergency purchases also.
+[00:17:16 --> 00:17:22]  Speaker 1: Yeah, yeah, but ad hoc and emergency purchase a client's location.
+[00:17:22 --> 00:17:23]  Speaker 2: Mm-hmm.
+[00:17:22 --> 00:17:25]  Speaker 1: They will ask.
+[00:17:26 --> 00:17:27]  Speaker 1: Ashish.
+[00:17:28 --> 00:17:38]  Speaker 1: to first pay the seller and settle later with them.
+[00:17:38 --> 00:17:39]  Speaker 2: Mm-hmm.
+[00:17:39 --> 00:17:42]  Speaker 1: his own billing. Yeah.
+[00:17:42 --> 00:17:43]  Speaker 2: Yeah, very true.
+[00:17:43 --> 00:17:45]  Speaker 1: This is essentially what happens, right?
+[00:17:45 --> 00:17:45]  Speaker 2: Yes
+[00:17:45 --> 00:17:47]  Speaker 1: Um, records.
+[00:17:48 --> 00:17:53]  Speaker 1: for this are not kept.
+[00:17:54 --> 00:17:55]  Speaker 1: regularly.
+[00:17:57 --> 00:18:04]  Speaker 2: They are kept, but at times there are mistakes there. They are kept very regularly, but there are mistakes here and there.
+[00:18:02 --> 00:18:03]  Speaker 1: But they are.
+[00:18:05 --> 00:18:08]  Speaker 1: Okay, records are kept regularly.
+[00:18:08 --> 00:18:08]  Speaker 2: Hmm.
+[00:18:08 --> 00:18:15]  Speaker 1: But sometimes some items get missed.
+[00:18:15 --> 00:18:15]  Speaker 0: Hmm.
+[00:18:16 --> 00:18:22]  Speaker 1: cause the requests are made in images.
+[00:18:23 --> 00:18:26]  Speaker 1: Not noted down.
+[00:18:26 --> 00:18:27]  Speaker 0: Hmm.
+[00:18:27 --> 00:18:29]  Speaker 0: in the WhatsApp group.
+[00:18:32 --> 00:18:32]  Speaker 0: Right?
+[00:18:33 --> 00:18:33]  Speaker 0: Hello?
+[00:18:36 --> 00:18:37]  Speaker 0: or in.
+[00:18:38 --> 00:18:39]  Speaker 0: Okay.
+[00:18:40 --> 00:18:41]  Speaker 0: Okay, this is essential.
+[00:18:41 --> 00:18:44]  Speaker 1: So what we are saying is, um
+[00:18:46 --> 00:18:55]  Speaker 1: We can have a case. So what this is essentially is that the supplier order has happened, the client order.
+[00:18:55 --> 00:19:04]  Speaker 1: Uh, has also happened. So the way we are modeling right now for you is, client order comes in, then a supplier order goes out.
+[00:19:03 --> 00:19:04]  Speaker 2: Hmm.
+[00:19:04 --> 00:19:09]  Speaker 1: And then you pay the supplier order and client payment will come much later. Client collection will come much later.
+[00:19:08 --> 00:19:09]  Speaker 2: Yes.
+[00:19:10 --> 00:19:10]  Speaker 2: Yes
+[00:19:10 --> 00:19:11]  Speaker 1: રાઈટ?
+[00:19:11 --> 00:19:12]  Speaker 2: Yes.
+[00:19:11 --> 00:19:19]  Speaker 1: Yes. So, um, so in this case also we will follow the same logic, right? The only thing is delivery will be skipped.
+[00:19:19 --> 00:19:20]  Speaker 2: Yes.
+[00:19:20 --> 00:19:21]  Speaker 1: because you're not going to deliver anything.
+[00:19:21 --> 00:19:22]  Speaker 2: Yes.
+[00:19:22 --> 00:19:23]  Speaker 1: He is picking up by himself.
+[00:19:23 --> 00:19:24]  Speaker 2: Yes
+[00:19:24 --> 00:19:26]  Speaker 1: So, new pattern.
+[00:19:30 --> 00:19:31]  Speaker 1: is observed.
+[00:19:31 --> 00:19:32]  Speaker 0: Mm-hmm.
+[00:19:32 --> 00:19:42]  Speaker 1: where where no delivery is required. Okay, so this will be a new thing for us, right? And also the accounting.
+[00:19:42 --> 00:19:43]  Speaker 0: Hmm hmm.
+[00:19:43 --> 00:19:45]  Speaker 1: Accounting also sees a new pattern.
+[00:19:47 --> 00:19:47]  Speaker 0: Mm-hmm.
+[00:19:48 --> 00:19:52]  Speaker 1: Accounts proceeds additional.
+[00:19:53 --> 00:19:54]  Speaker 1: Operational
+[00:19:56 --> 00:19:57]  Speaker 0: Details.
+[00:19:57 --> 00:19:57]  Speaker 1: Okay.
+[00:19:57 --> 00:19:58]  Speaker 0: Okay
+[00:20:00 --> 00:20:01]  Speaker 0: Dos.
+[00:20:02 --> 00:20:03]  Speaker 0: Okay, Bye.
+[00:20:03 --> 00:20:05]  Speaker 1: So this is a good note for me to keep.
+[00:20:05 --> 00:20:05]  Speaker 2: Yep.
+[00:20:09 --> 00:20:10]  Speaker 0: I'll call this, uh,
+[00:20:11 --> 00:20:12]  Speaker 0: Client wallet.
+[00:20:15 --> 00:20:16]  Speaker 0: Mm-hmm.
+[00:20:16 --> 00:20:16]  Speaker 1: Okay.
+[00:20:22 --> 00:20:31]  Speaker 1: Thank you, that's excellent. This is not, I mean, we didn't have a section for open issues or something that you want to add on, but we should basically track this as well.
+[00:20:31 --> 00:20:32]  Speaker 2: Okay.
+[00:20:33 --> 00:20:45]  Speaker 1: Okay. So, so yeah, images, we were talking about how images are being processed well and it is useful. Clearly you've given even new things that we didn't know in in ways in which you know the image processing is very useful to you.
+[00:20:46 --> 00:20:46]  Speaker 2: Yes
+[00:20:47 --> 00:20:56]  Speaker 1: Okay. We are also basically planning or rather we have just implemented voice notes also. Voice note aata hai, it will get transcribed and stored as.
+[00:20:56 --> 00:20:59]  Speaker 1: You know, details in text.
+[00:21:00 --> 00:21:09]  Speaker 1: Okay. Okay, so all these tasks are handled, um, and also you remember we have basically, um.
+[00:21:11 --> 00:21:15]  Speaker 1: Overall views, right? So you have a breakdown of each activity, each task.
+[00:21:15 --> 00:21:16]  Speaker 2: Yes.
+[00:21:15 --> 00:21:23]  Speaker 1: Each order, supplier or client or each other activity also, we are trying to capture all activities. Account keeping, stock taking, everything we'll try and capture.
+[00:21:24 --> 00:21:24]  Speaker 2: Yes.
+[00:21:25 --> 00:21:32]  Speaker 1: Okay, and finally we have the warnings, right? Right? If we find that, you know, there's something missing.
+[00:21:28 --> 00:21:28]  Speaker 2: Right?
+[00:21:32 --> 00:21:33]  Speaker 2: Mm-hmm.
+[00:21:33 --> 00:21:37]  Speaker 1: Right, somebody has forgotten to do something or something.
+[00:21:36 --> 00:21:38]  Speaker 2: Can I, can I interrupt in between?
+[00:21:38 --> 00:21:39]  Speaker 1: Yeah, yeah, yeah.
+[00:21:39 --> 00:21:46]  Speaker 2: Today, just few minutes back this issue happened. There's a small supplier of mine who supplies me files and folders.
+[00:21:47 --> 00:21:57]  Speaker 2: He had as per us only one bill outstanding for the 31st of March closing, 6600, but he came up with another bill of hardly ₹495 which is from January month.
+[00:21:58 --> 00:22:07]  Speaker 2: First of all, the situation got to mind, bhai nobody keeps it pending for 3 months, number 1 point. Number 2 chalo, below it is such a small amount so you left it behind.
+[00:22:03 --> 00:22:04]  Speaker 0: Hello
+[00:22:08 --> 00:22:20]  Speaker 2: But suddenly it struck my mind that when my new rep had gone there, he didn't identify him, so he asked him to make the payment upfront and then only he was going to hand over the item. So I recalled that I have made the payment.
+[00:22:21 --> 00:22:38]  Speaker 2: Now because it was just an image and it wasn't made, I was under a lot of pressure at that point of time and the staff was standing there. So I made the payment and the image was shared and the client was, the supplier knew about it and he handed over the item, but it didn't go to the respective WhatsApp group we have called payments.
+[00:22:39 --> 00:22:41]  Speaker 2: Okay, the entry was not made.
+[00:22:39 --> 00:22:39]  Speaker 0: Okay.
+[00:22:41 --> 00:23:00]  Speaker 2: So they created a problem, but since I had a recollection about it, I just randomly searched in my WhatsApp the whole, uh, the whole log that exponential payments. Then I could identify in a different group, in a task group, I have made that payment wala entry which is not reflected there.
+[00:23:01 --> 00:23:17]  Speaker 2: So I shared the screenshot with the client and I scolded him also with the supplier that you received the payment, it was closed case on that day, why have you cunningly started it again? So these images, this is one in a blue moon case, but it does happen.
+[00:23:17 --> 00:23:33]  Speaker 2: It does happen. When I go to army camps, they also remind me, Ashish ji, you had made this payment. Some of them are very, very nice guys. They remind me, Ashish ji, you had made this payment. I don't see it in any of your statements. So I think you have forgotten to convert it into one of the challan or the billing vouchers.
+[00:23:34 --> 00:23:51]  Speaker 2: So then I just thank them and move forward. So these mistakes will happen and the good thing is when you have all the logs from different chats, maybe then the AI agent will be able to catch up that this payment is reflected in a wrong chat group whereas it should have gone here also.
+[00:23:52 --> 00:23:54]  Speaker 2: You understand what I'm trying to say?
+[00:23:54 --> 00:23:59]  Speaker 1: I understand. So what I want to understand is when you have the payments group, right?
+[00:24:00 --> 00:24:03]  Speaker 1: Are all basically payments logged as images?
+[00:24:05 --> 00:24:21]  Speaker 2: There are two things. We always log an image, but then the problem is how will I ever find that because the image has no word to be, you know, traced upon. So what we do, we put up a screenshot of the payment and on the bottom we write, suppose Kunal is paid ₹10,000 on this date.
+[00:24:22 --> 00:24:40]  Speaker 2: On account, to clear the account, a small narration is also punched in there. So that down the line whenever we need to trace down, we are settling the account, if we just click Kunal, so all the relevant messages will be highlighted and it is easier to identify any mistakes or any leftovers.
+[00:24:41 --> 00:24:42]  Speaker 2: So that is how we do it.
+[00:24:42 --> 00:24:48]  Speaker 1: Right. So in my processing, what I can see that will happen.
+[00:24:45 --> 00:24:46]  Speaker 2: Hmm.
+[00:24:53 --> 00:24:55]  Speaker 1: One second, yeah. I don't know why it's doing.
+[00:24:56 --> 00:25:02]  Speaker 1: Uh, what I see will happen, uh, number one is.
+[00:25:01 --> 00:25:10]  Speaker 2: See this, I have just shared a thing on your WhatsApp that will tell you what I am trying to say. I will share you the whole log also, the exported log.
+[00:25:10 --> 00:25:19]  Speaker 1: No need to share, no need to share. I understand the process now. I'm just going to write down what I see as an implementation detail for me, okay? I'm going to save the process first, okay?
+[00:25:10 --> 00:25:10]  Speaker 2: But.
+[00:25:12 --> 00:25:13]  Speaker 2: Yeah.
+[00:25:17 --> 00:25:18]  Speaker 0: Hmm hmm.
+[00:25:20 --> 00:25:28]  Speaker 1: Uh, payments are made to clients and uh, screenshot.
+[00:25:30 --> 00:25:33]  Speaker 1: or photo.
+[00:25:34 --> 00:25:34]  Speaker 1: 1 bar
+[00:25:34 --> 00:25:36]  Speaker 2: Ek baar mera WhatsApp dekhiyena, just ek baar.
+[00:25:36 --> 00:25:42]  Speaker 1: Any, WhatsApp baad mein dekhenge, it's not important. You just follow what I'm saying now and correct me if I'm going wrong.
+[00:25:42 --> 00:25:43]  Speaker 2: Yes, yes, yes.
+[00:25:43 --> 00:25:45]  Speaker 1: Okay, so what I'm saying is,
+[00:25:47 --> 00:25:51]  Speaker 1: The issue name I'm giving is Payments WhatsApp group, okay? Ignore that for now.
+[00:25:50 --> 00:25:50]  Speaker 0: No that.
+[00:25:51 --> 00:25:55]  Speaker 1: What I'm saying is number one, payments are made to the clients, not clients, sorry, suppliers.
+[00:25:51 --> 00:25:52]  Speaker 0: What I'm saying is,
+[00:25:59 --> 00:26:06]  Speaker 1: And screenshot, screenshot or photo is shared in the supplier group immediately, right?
+[00:26:05 --> 00:26:05]  Speaker 2: Immediately.
+[00:26:06 --> 00:26:06]  Speaker 2: Super
+[00:26:07 --> 00:26:08]  Speaker 1: Wo to immediately ho jata hai.
+[00:26:08 --> 00:26:09]  Speaker 2: Bilkul
+[00:26:10 --> 00:26:14]  Speaker 1: Whether you then share it in the WhatsApp, in the payments group or not, this happens.
+[00:26:14 --> 00:26:16]  Speaker 2: This mistake at times happens.
+[00:26:18 --> 00:26:20]  Speaker 1: It is not also shared in the payments group, right?
+[00:26:20 --> 00:26:21]  Speaker 2: Mm-hmm.
+[00:26:21 --> 00:26:24]  Speaker 1: Same screenshot or photo.
+[00:26:29 --> 00:26:41]  Speaker 1: along with additional details and or what should we call it? Additional narration, right? Additional narration.
+[00:26:40 --> 00:26:40]  Speaker 0: Hello
+[00:26:41 --> 00:26:41]  Speaker 0: Hmm.
+[00:26:45 --> 00:26:46]  Speaker 1: is a
+[00:26:46 --> 00:26:48]  Speaker 0: Shared is updated.
+[00:26:51 --> 00:26:53]  Speaker 0: to another group.
+[00:26:55 --> 00:26:59]  Speaker 0: meant only for payments.
+[00:27:00 --> 00:27:01]  Speaker 0: Yes.
+[00:27:01 --> 00:27:02]  Speaker 2: Bilkul
+[00:27:02 --> 00:27:02]  Speaker 0: Okay.
+[00:27:04 --> 00:27:04]  Speaker 0: However,
+[00:27:08 --> 00:27:09]  Speaker 0: Sometimes,
+[00:27:10 --> 00:27:11]  Speaker 0: This second.
+[00:27:12 --> 00:27:13]  Speaker 1: Step A B.
+[00:27:13 --> 00:27:14]  Speaker 1: Next
+[00:27:15 --> 00:27:16]  Speaker 1: Okay.
+[00:27:16 --> 00:27:18]  Speaker 1: Three at the end of
+[00:27:20 --> 00:27:21]  Speaker 1: Accounting period.
+[00:27:21 --> 00:27:21]  Speaker 2: Okay.
+[00:27:23 --> 00:27:24]  Speaker 1: All payments.
+[00:27:25 --> 00:27:25]  Speaker 2: Mm-hmm.
+[00:27:25 --> 00:27:26]  Speaker 1: are reconciled.
+[00:27:27 --> 00:27:27]  Speaker 2: Yes
+[00:27:27 --> 00:27:29]  Speaker 1: Okay, this is all that happens.
+[00:27:29 --> 00:27:29]  Speaker 2: Yes.
+[00:27:30 --> 00:27:34]  Speaker 1: Okay, so now from our ingestion perspective, I'll say what I'm saying, okay?
+[00:27:35 --> 00:27:35]  Speaker 2: Mm-hmm.
+[00:27:35 --> 00:27:38]  Speaker 1: Um, as we ingest.
+[00:27:39 --> 00:27:40]  Speaker 1: Um, yeah.
+[00:27:41 --> 00:27:44]  Speaker 1: These updates.
+[00:27:44 --> 00:27:44]  Speaker 0: Mm-hmm.
+[00:27:46 --> 00:27:47]  Speaker 1: There is.
+[00:27:49 --> 00:27:58]  Speaker 1: A need to capture a new task type for payments, first of all, right?
+[00:27:57 --> 00:27:58]  Speaker 0: Okay.
+[00:27:58 --> 00:27:59]  Speaker 0: Yes.
+[00:27:59 --> 00:28:02]  Speaker 1: and, uh, deduplicate.
+[00:28:02 --> 00:28:03]  Speaker 0: Hmm hmm.
+[00:28:03 --> 00:28:03]  Speaker 0: Okay?
+[00:28:06 --> 00:28:11]  Speaker 1: We duplicate the double image.
+[00:28:13 --> 00:28:15]  Speaker 1: updates or the double updates.
+[00:28:15 --> 00:28:16]  Speaker 2: Mm-hmm.
+[00:28:16 --> 00:28:18]  Speaker 1: in the two groups, correct?
+[00:28:18 --> 00:28:19]  Speaker 2: Correct? Very true.
+[00:28:19 --> 00:28:23]  Speaker 1: Now, once I do this, whether you share it in the payments WhatsApp group or not,
+[00:28:23 --> 00:28:24]  Speaker 2: Mm-hmm.
+[00:28:24 --> 00:28:26]  Speaker 1: Humare system mein to capture ho jayega.
+[00:28:27 --> 00:28:27]  Speaker 2: Bilkul.
+[00:28:28 --> 00:28:35]  Speaker 1: Haan, idhar se karo ya udhar se karo doesn't matter. It will have both copies if both are there and it will basically say yeh toh same hai.
+[00:28:30 --> 00:28:31]  Speaker 2: It will happen.
+[00:28:35 --> 00:28:36]  Speaker 2: Exactly.
+[00:28:36 --> 00:28:39]  Speaker 1: Correct? Par humare paas aa jayega ye information.
+[00:28:39 --> 00:28:40]  Speaker 2: Hmm.
+[00:28:40 --> 00:28:44]  Speaker 1: Right? That's all I need to worry about ki vo de-duplicate ho jaye, aapko confuse na kare.
+[00:28:42 --> 00:28:43]  Speaker 2: Yeah.
+[00:28:44 --> 00:28:45]  Speaker 2: Yes.
+[00:28:46 --> 00:28:55]  Speaker 1: Okay? But yeh maine ek open kar liya, yeh important point hai ki yeh do jagah aayega aur main de-duplicate karunga. So I will implement this for you, Okay?
+[00:28:51 --> 00:28:51]  Speaker 2: Yeah.
+[00:28:55 --> 00:28:56]  Speaker 2: Okay.
+[00:28:57 --> 00:28:59]  Speaker 1: Yeh samajh mein aa raha hai na aapko, main kya bol raha hoon?
+[00:28:58 --> 00:29:01]  Speaker 2: Bilkul, bilkul, bilkul, bilkul.
+[00:29:01 --> 00:29:08]  Speaker 1: Okay, so this is an interesting new discovery. We are adding new discoveries. I think we'll add lots of new discoveries if we keep, uh, matlab walking through.
+[00:29:09 --> 00:29:09]  Speaker 2: Hmm.
+[00:29:09 --> 00:29:13]  Speaker 1: Okay, but because we have already spent a lot of time on this walkthrough itself,
+[00:29:13 --> 00:29:14]  Speaker 2: Okay.
+[00:29:14 --> 00:29:15]  Speaker 1: I'm going to move on from here.
+[00:29:16 --> 00:29:16]  Speaker 2: Okay
+[00:29:16 --> 00:29:26]  Speaker 1: Okay, you know what we have discussed so far. I'm just going to quickly summarize that we are capturing all the orders, all the items, all the tasks.
+[00:29:19 --> 00:29:19]  Speaker 2: Good.
+[00:29:26 --> 00:29:46]  Speaker 1: We are capturing the current status of everything and all this is looking good. We are looking at the images also that's being processed, also looking good and very useful. And then we are finally highlighting all the potential gaps. Some of which may not be gaps, which the AI is not aware of because some information doesn't come through.
+[00:29:46 --> 00:29:55]  Speaker 1: But we are capturing anyway and we have the option for the human to say that this is not a gap, so it's not an issue. And then we also have another section which is meant only for you.
+[00:29:52 --> 00:29:52]  Speaker 0: And then.
+[00:29:56 --> 00:29:58]  Speaker 1: where there is some sort of um
+[00:29:56 --> 00:29:56]  Speaker 0: Rate
+[00:29:58 --> 00:30:07]  Speaker 1: A confusion for the agent, okay? Or there is genuinely some sort of escalation. Like staff are doing two different things which are colliding.
+[00:30:05 --> 00:30:05]  Speaker 0: Hello
+[00:30:08 --> 00:30:08]  Speaker 0: Mm-hmm.
+[00:30:08 --> 00:30:13]  Speaker 1: Okay, then what we should do is we should block that situation and escalate to you.
+[00:30:13 --> 00:30:14]  Speaker 2: For you.
+[00:30:13 --> 00:30:16]  Speaker 1: For you to immediately take action.
+[00:30:16 --> 00:30:17]  Speaker 2: Okay
+[00:30:17 --> 00:30:29]  Speaker 1: Ambiguity which is a confusion you can probably take even slower action, but that will be probably more immediate, right? So both the escalations of that sort and any ambiguities which the agent is not able to handle.
+[00:30:23 --> 00:30:24]  Speaker 2: Both.
+[00:30:29 --> 00:30:31]  Speaker 1: Okay, both will be also highlighted to you.
+[00:30:29 --> 00:30:29]  Speaker 2: Okay.
+[00:30:32 --> 00:30:32]  Speaker 1: Makes sense, right?
+[00:30:33 --> 00:30:33]  Speaker 2: Yes
+[00:30:34 --> 00:30:37]  Speaker 1: Excellent. Okay, so I'm going to close this output thing now.
+[00:30:37 --> 00:30:38]  Speaker 2: Okay
+[00:30:39 --> 00:30:43]  Speaker 1: And we're going to go back to purely the guide.
+[00:30:44 --> 00:30:44]  Speaker 0: Yeah
+[00:30:50 --> 00:30:52]  Speaker 0: So this is the guide, we are back at the guide.
+[00:30:53 --> 00:30:53]  Speaker 0: Okay.
+[00:30:56 --> 00:30:58]  Speaker 0: So now that we have um
+[00:31:00 --> 00:31:01]  Speaker 0: Hello there.
+[00:31:06 --> 00:31:10]  Speaker 0: We walked through, which was supposed to take 20 minutes, has taken more than 20 minutes.
+[00:31:10 --> 00:31:10]  Speaker 1: Navar
+[00:31:11 --> 00:31:12]  Speaker 1: We have to move on.
+[00:31:11 --> 00:31:12]  Speaker 0: Okay.
+[00:31:13 --> 00:31:13]  Speaker 0: Hmm.
+[00:31:14 --> 00:31:16]  Speaker 1: Uh, second part which is, uh,
+[00:31:15 --> 00:31:16]  Speaker 0: Okay.
+[00:31:17 --> 00:31:19]  Speaker 1: Trying to basically understand.
+[00:31:19 --> 00:31:20]  Speaker 0: Hello
+[00:31:22 --> 00:31:23]  Speaker 1: Um,
+[00:31:24 --> 00:31:29]  Speaker 1: How we can basically ensure that the UX or the user experience.
+[00:31:29 --> 00:31:30]  Speaker 0: Mm-hmm.
+[00:31:30 --> 00:31:35]  Speaker 1: Uh, should be tailored for you and for the staff. Okay.
+[00:31:35 --> 00:31:36]  Speaker 0: Okay.
+[00:31:36 --> 00:31:38]  Speaker 1: So that, you know, we can build the trust in the system.
+[00:31:39 --> 00:31:39]  Speaker 0: Hmm hmm.
+[00:31:40 --> 00:31:43]  Speaker 1: Okay, so I mean there's a lot of suggested questions here.
+[00:31:44 --> 00:31:44]  Speaker 2: Hmm hmm.
+[00:31:44 --> 00:31:47]  Speaker 1: I want to keep asking them, you tell me what you think about each.
+[00:31:47 --> 00:31:48]  Speaker 2: Sure thing.
+[00:31:49 --> 00:31:56]  Speaker 1: At what point would you be comfortable with the agent flagging a supplier as unresponsive without you approving it?
+[00:31:56 --> 00:31:57]  Speaker 2: Mm-hmm.
+[00:31:57 --> 00:31:59]  Speaker 1: 24 hours, 48 hours.
+[00:31:59 --> 00:32:00]  Speaker 2: 24 hours.
+[00:32:01 --> 00:32:04]  Speaker 1: So if the supplier has not responded, you can wait up to 24 hours.
+[00:32:05 --> 00:32:11]  Speaker 2: Actually, not even 24 hours because most of the clients want the answer within today's working period.
+[00:32:12 --> 00:32:16]  Speaker 1: Okay, so when you basically, um,
+[00:32:17 --> 00:32:29]  Speaker 1: When you are working with a supplier, it is always directed based on what client is asking immediately, or is it also based on your understanding that the supplier will need to be chased, whether the client is asking or not?
+[00:32:29 --> 00:32:30]  Speaker 2: Okay.
+[00:32:31 --> 00:32:32]  Speaker 2: Yes.
+[00:32:33 --> 00:32:34]  Speaker 1: Which is it? Both?
+[00:32:36 --> 00:32:44]  Speaker 2: Even if the client is not asking me to chase the order, the inquiry has to be closed today. We can't keep it pending for tomorrow.
+[00:32:45 --> 00:32:53]  Speaker 1: So you're only thinking of supplier inquiries. Okay. What about for like other things? You've already given an order to a supplier and you're waiting for delivery.
+[00:32:53 --> 00:33:12]  Speaker 2: Then also 24 hours is maximum that we can hold up for an update. If the updates are not there then we are in trouble because like just now I have received an inquiry from one of my clients. His item was placed order on Amazon. It will take at least a week to reach. So he is already asking me when is it reaching?
+[00:33:12 --> 00:33:24]  Speaker 2: So I have to give him a tracking that it has been dispatched, it is in transit. If I don't have such updates from my supplier, then how will I update my client? Because everyone gets restless very fast.
+[00:33:24 --> 00:33:31]  Speaker 1: Okay, so I'm going to assume that whatever reason you have, contact a supplier.
+[00:33:30 --> 00:33:30]  Speaker 2: Contractor.
+[00:33:31 --> 00:33:31]  Speaker 2: Hmm.
+[00:33:31 --> 00:33:34]  Speaker 1: Either it needs to be done immediately.
+[00:33:34 --> 00:33:35]  Speaker 2: Hmm.
+[00:33:35 --> 00:33:38]  Speaker 1: Or it has to be done within that day itself.
+[00:33:38 --> 00:33:40]  Speaker 2: All the proper updates have to be there.
+[00:33:41 --> 00:33:44]  Speaker 1: Oh, so basically unless proper updates are already there,
+[00:33:45 --> 00:33:46]  Speaker 1: To chase the supplier.
+[00:33:47 --> 00:33:51]  Speaker 2: 100%. If he has updated me that it is in transit Ashish 3 more days,
+[00:33:48 --> 00:33:48]  Speaker 1: If you
+[00:33:51 --> 00:33:52]  Speaker 2: I am fine with that answer.
+[00:33:54 --> 00:33:59]  Speaker 1: Okay, so in that case you will not basically ask the supplier at all, right? Because you have the information.
+[00:33:59 --> 00:34:02]  Speaker 2: Yes, then I have the information, I will not be bugging him.
+[00:34:02 --> 00:34:06]  Speaker 1: But if you have bugged the supplier, then it has to happen immediately or within that day.
+[00:34:07 --> 00:34:08]  Speaker 2: Hmm.
+[00:34:08 --> 00:34:11]  Speaker 1: What if it's like towards the end of the day that you ask supplier a question?
+[00:34:14 --> 00:34:29]  Speaker 2: Then I am by default like if right now if I'll put a question to any of my this thing WhatsApp group, I'm bound not to get any answers. Not everyone is working all the time like me. So I'm bound to get a response only 10:30 after 10:30 in the morning tomorrow. So.
+[00:34:29 --> 00:34:29]  Speaker 0: Hello
+[00:34:30 --> 00:34:43]  Speaker 2: There's no other option, that is why I kept a window of 24 hours. And if the inquiry is made today itself within a decent working time good enough, anything post 7:00 in the evening, you can't expect any answers coming your way. If it comes up,
+[00:34:43 --> 00:34:50]  Speaker 1: If it comes to 7, up to 7 they respond. Matlab if I ask at around 6:30, you can expect a response by 7.
+[00:34:48 --> 00:34:49]  Speaker 2: Okay.
+[00:34:50 --> 00:34:51]  Speaker 2: Yes, Yes.
+[00:34:50 --> 00:34:51]  Speaker 1: Yes, usually.
+[00:34:51 --> 00:34:52]  Speaker 2: Yes.
+[00:34:52 --> 00:35:00]  Speaker 1: Okay, well that's very good information because I was also trying to get to what is that time in the day at which point I can say that okay, I can expect the response only tomorrow.
+[00:35:00 --> 00:35:10]  Speaker 2: Basically, you can count when my team is also off, that is the time when most of the offices, couple of them closed on at 6:00, but usual trend is by 7:00, most of the offices stop responding.
+[00:35:12 --> 00:35:22]  Speaker 1: Okay, so yeah, okay, I understand what you're saying, but if they don't respond, that's what I'm, you know, exploring. Okay, fine, I get it. Fine. I won't, I mean, drag this point. Next is...
+[00:35:24 --> 00:35:25]  Speaker 1: Are there task types?
+[00:35:26 --> 00:35:29]  Speaker 1: where you'd want the agent to never act automatically.
+[00:35:26 --> 00:35:26]  Speaker 0: Very
+[00:35:30 --> 00:35:31]  Speaker 1: And always ask you first.
+[00:35:32 --> 00:35:32]  Speaker 2: Mm-hmm.
+[00:35:33 --> 00:35:36]  Speaker 1: What task types are there like that?
+[00:35:36 --> 00:35:40]  Speaker 2: That I don't want the agent to ask me and act automatically, right?
+[00:35:41 --> 00:35:48]  Speaker 1: That that you want the agent to never act automatically. Currently, we don't expect the agent to do any actions, but in the future, maybe.
+[00:35:45 --> 00:35:45]  Speaker 2: Right
+[00:35:47 --> 00:35:48]  Speaker 2: Future.
+[00:35:50 --> 00:35:54]  Speaker 2: Not to give any rate codes to the client ever.
+[00:35:54 --> 00:35:54]  Speaker 1: Okay.
+[00:35:55 --> 00:36:01]  Speaker 2: Number one, number two, not to comment anything on a disputed message.
+[00:36:03 --> 00:36:04]  Speaker 0: Okay.
+[00:36:06 --> 00:36:06]  Speaker 2: And.
+[00:36:08 --> 00:36:09]  Speaker 2: Yes.
+[00:36:09 --> 00:36:09]  Speaker 0: Attack ya
+[00:36:09 --> 00:36:09]  Speaker 2: Okay.
+[00:36:10 --> 00:36:11]  Speaker 2: Those two basically.
+[00:36:13 --> 00:36:14]  Speaker 0: Okay.
+[00:36:15 --> 00:36:18]  Speaker 0: Never to do actions for agent.
+[00:36:20 --> 00:36:23]  Speaker 1: One was, uh, no rate codes.
+[00:36:25 --> 00:36:25]  Speaker 1: to client.
+[00:36:26 --> 00:36:26]  Speaker 2: Hello
+[00:36:27 --> 00:36:32]  Speaker 1: And, uh, two was no, um,
+[00:36:32 --> 00:36:35]  Speaker 2: Updates aur replies on a dispute.
+[00:36:33 --> 00:36:34]  Speaker 0: Bye
+[00:36:36 --> 00:36:39]  Speaker 0: Uh, to a dispute.
+[00:36:41 --> 00:36:41]  Speaker 0: Okay
+[00:36:43 --> 00:36:43]  Speaker 1: That's it.
+[00:36:44 --> 00:36:44]  Speaker 2: Yes.
+[00:36:44 --> 00:36:54]  Speaker 1: Okay. Next question. What would a false positive look like? When, you know, for example, the agent is alerting you about something, okay?
+[00:36:55 --> 00:37:01]  Speaker 1: And it turned out that it was a fake, matlab, alert. There was no issue at all for it to alert.
+[00:37:00 --> 00:37:00]  Speaker 2: Okay.
+[00:37:01 --> 00:37:09]  Speaker 1: So what would that situation look like? What would such a situation where there's a false alert, what would it look like? And how much tolerance do you have for those?
+[00:37:10 --> 00:37:28]  Speaker 2: I have full tolerance. It's a simple thing that you have reminded. Reminders are always appreciated. I will just, it is a done task. I will put a tick and move on, rather than not being reminded of something the AI agent thinks that maybe and maybe not. Wherever there is a maybe question, just remind me. Let me.
+[00:37:29 --> 00:37:32]  Speaker 2: Pick it out whether it is required or it is done and not.
+[00:37:33 --> 00:37:36]  Speaker 0: Okay, that's that's okay. Understand.
+[00:37:41 --> 00:37:43]  Speaker 0: Okay, then, um,
+[00:37:45 --> 00:37:48]  Speaker 1: If the agent associated a message with the wrong order,
+[00:37:49 --> 00:37:50]  Speaker 2: Mm-hmm.
+[00:37:50 --> 00:37:55]  Speaker 1: Right? For example, SATA, SATA order ke bare mein koi message tha.
+[00:37:56 --> 00:37:56]  Speaker 0: And.
+[00:37:56 --> 00:37:59]  Speaker 1: And it thought that actually no, it is not about the SATA order, it was about some other order.
+[00:38:00 --> 00:38:00]  Speaker 2: Hmm.
+[00:38:01 --> 00:38:09]  Speaker 1: Okay. Um, so agent, agent has made that mistake, but how quickly would you catch that?
+[00:38:10 --> 00:38:28]  Speaker 2: See, if I say my expertise is very good, I have a very good memory, I don't usually forget things, so I will be able to identify it right away. But then again, there are possibility that I might also not know because among a list of 20 item, one or two item I might also mess up. But then again, such mistakes are acceptable.
+[00:38:28 --> 00:38:32]  Speaker 2: If it is less than 5% of the whole deal, I'm okay with that.
+[00:38:33 --> 00:38:40]  Speaker 1: less than 5% of the whole deal. Okay. Next question. Similar follow up to the previous question, right?
+[00:38:40 --> 00:38:40]  Speaker 2: Hello
+[00:38:41 --> 00:38:46]  Speaker 1: So if it is unsure about which order it belongs to, etcetera.
+[00:38:43 --> 00:38:43]  Speaker 2: about.
+[00:38:46 --> 00:38:47]  Speaker 2: Let it ask me.
+[00:38:47 --> 00:38:51]  Speaker 1: So it should always ask you or is there like a let it out.
+[00:38:51 --> 00:38:56]  Speaker 2: Let it ask me. Just a prompt to me and I will update. Prompt to me or senior most member of the team, Samita Ma'am.
+[00:38:52 --> 00:38:52]  Speaker 1: Just.
+[00:38:57 --> 00:39:15]  Speaker 2: Any one of us should be asked if it is a high priority or a high risk is involved, everything which is above medium or medium and above higher risk rating must be directly prompted to me. Otherwise anything low and up to medium might be just asked by the senior staff member. That role I will assign, there's not an issue.
+[00:39:15 --> 00:39:18]  Speaker 1: is not an issue. More higher ambiguity.
+[00:39:19 --> 00:39:19]  Speaker 2: Mm-hmm.
+[00:39:19 --> 00:39:24]  Speaker 1: To always be clarified.
+[00:39:24 --> 00:39:25]  Speaker 0: Bye.
+[00:39:25 --> 00:39:27]  Speaker 0: by Ashish.
+[00:39:30 --> 00:39:34]  Speaker 0: Uh, no restrictions on frequency.
+[00:39:37 --> 00:39:42]  Speaker 1: Okay, and then you're saying, uh, low low ambiguity.
+[00:39:43 --> 00:39:45]  Speaker 1: Should be.
+[00:39:46 --> 00:39:47]  Speaker 1: Highlighted.
+[00:39:47 --> 00:39:50]  Speaker 2: Yeah, can we refer to the senior staff member?
+[00:39:52 --> 00:39:55]  Speaker 1: Yeah, highlighted to senior.
+[00:39:56 --> 00:40:00]  Speaker 1: Staff or both to you and senior staff or only to senior staff?
+[00:40:01 --> 00:40:05]  Speaker 2: Both to us, both to me and the senior staff, one of us will respond right away.
+[00:40:03 --> 00:40:04]  Speaker 1: Okay.
+[00:40:05 --> 00:40:10]  Speaker 1: Okay, so low ambiguity also and never silently.
+[00:40:12 --> 00:40:18]  Speaker 1: Hide ambiguity. That is the main point.
+[00:40:17 --> 00:40:17]  Speaker 2: is the main.
+[00:40:18 --> 00:40:19]  Speaker 2: It has to be highlighted.
+[00:40:20 --> 00:40:20]  Speaker 1: Okay
+[00:40:22 --> 00:40:39]  Speaker 1: Okay, because I had actually made a wrong assumption in that case. So far, I had decided that let us try and limit a little bit of it, and if there is an ambiguity also, wait and see, maybe in the future some message will come in, and that will resolve the ambiguity. So take both the directions that are there.
+[00:40:38 --> 00:40:39]  Speaker 0: Okay
+[00:40:40 --> 00:40:50]  Speaker 1: and mark it as, you know, a potential issue, and later if a message comes which resolves the ambiguity for you, then you update. That's what I was trying to design for. But in this case, I am going to remove that.
+[00:40:49 --> 00:40:51]  Speaker 2: Make it faster. Make it faster.
+[00:40:51 --> 00:40:53]  Speaker 1: Yeah, I will update it. Okay.
+[00:40:53 --> 00:40:53]  Speaker 2: Yeah.
+[00:40:55 --> 00:40:57]  Speaker 1: Right.
+[00:40:58 --> 00:41:02]  Speaker 1: When the agent isn't sure which order a vague message belongs to.
+[00:41:02 --> 00:41:03]  Speaker 0: Mm-hmm.
+[00:41:03 --> 00:41:14]  Speaker 1: Right, this is related. Would you prefer it makes best guess and flags the uncertainty to you or ask you to confirm before doing anything? Should it block and wait or should it make a best guess and then resolve later?
+[00:41:16 --> 00:41:17]  Speaker 2: Has been
+[00:41:18 --> 00:41:19]  Speaker 2: Why waste time?
+[00:41:18 --> 00:41:20]  Speaker 1: Why we should not do anything more.
+[00:41:21 --> 00:41:25]  Speaker 2: It should just ask me right away that my update is required on this.
+[00:41:26 --> 00:41:34]  Speaker 1: But then you might not respond immediately. In that case, any messages that are coming about it later, those are not being processed. No updates are being taken, it's blocked.
+[00:41:35 --> 00:41:46]  Speaker 2: But if it guesses it wrong, suppose the order is for Mrs. Samita and it punches it in the name of Mr. Kunal, then all the subsequential messages will also be getting wrongly placed, right?
+[00:41:47 --> 00:41:51]  Speaker 1: Yes, but we can undo it until it comes to the point where it makes some serious decision.
+[00:41:52 --> 00:41:52]  Speaker 2: Okay.
+[00:41:53 --> 00:41:58]  Speaker 1: Right? See, in any case, it is not taking any actions. It is only tracking updates.
+[00:41:57 --> 00:41:57]  Speaker 2: Okay.
+[00:41:58 --> 00:41:59]  Speaker 2: Mm-hmm.
+[00:41:59 --> 00:42:05]  Speaker 1: Correct, right now at least. Even in that, what I am trying to design right now is, if it comes to a critical point,
+[00:42:01 --> 00:42:01]  Speaker 0: Okay.
+[00:42:06 --> 00:42:06]  Speaker 0: Hello?
+[00:42:06 --> 00:42:12]  Speaker 1: Yeah, where something like a real life thing is involved, like a payment or a delivery.
+[00:42:11 --> 00:42:11]  Speaker 0: Okay.
+[00:42:13 --> 00:42:13]  Speaker 1: or an order.
+[00:42:14 --> 00:42:14]  Speaker 0: Mm-hmm.
+[00:42:15 --> 00:42:18]  Speaker 1: Right? Like an order to a supplier. If it has not come to that point,
+[00:42:20 --> 00:42:24]  Speaker 1: Then you can continue making the assumption and wait for somebody to clarify.
+[00:42:24 --> 00:42:25]  Speaker 2: Mm-hmm.
+[00:42:25 --> 00:42:29]  Speaker 1: That's my current design philosophy right now, the work that we're doing.
+[00:42:29 --> 00:42:30]  Speaker 2: Yep.
+[00:42:30 --> 00:42:34]  Speaker 1: Okay, without blocking, you continue processing and later we will change the.
+[00:42:30 --> 00:42:31]  Speaker 2: That goes.
+[00:42:34 --> 00:42:35]  Speaker 1: Uh, thing.
+[00:42:36 --> 00:42:36]  Speaker 2: Hmm.
+[00:42:36 --> 00:42:38]  Speaker 1: We will undo it and redo the correct one.
+[00:42:39 --> 00:42:40]  Speaker 2: Yes, can.
+[00:42:41 --> 00:42:42]  Speaker 1: Okay, so that is better. Don't block them.
+[00:42:43 --> 00:42:44]  Speaker 2: Yes, that is better.
+[00:42:44 --> 00:42:47]  Speaker 1: When we come to a point where, you know, you should really not go further.
+[00:42:48 --> 00:42:48]  Speaker 2: Mm-hmm.
+[00:42:49 --> 00:43:05]  Speaker 1: Okay, so in that case basically we will have, initially we will say there is an ambiguity, please look at it. And if it comes to a point and you have not yet, you know, said anything, it comes to a point where it has to block, then it will be like alarm, alarm, alarm, look immediately, look immediately, something like that.
+[00:43:05 --> 00:43:06]  Speaker 2: Hmm hmm hmm.
+[00:43:06 --> 00:43:07]  Speaker 1: Okay?
+[00:43:07 --> 00:43:08]  Speaker 2: Then.
+[00:43:09 --> 00:43:09]  Speaker 1: All right.
+[00:43:11 --> 00:43:19]  Speaker 1: Uh, and then related question, at what point does being asked to clarify, right? At what point does it become more annoying than helpful?
+[00:43:21 --> 00:43:23]  Speaker 2: It doesn't. It is my work, so it never gets annoying for me.
+[00:43:24 --> 00:43:26]  Speaker 1: Perfect. Perfect.
+[00:43:27 --> 00:43:32]  Speaker 1: Now we are coming to design questions. So, so far we had only talked about like the trust and things like that.
+[00:43:32 --> 00:43:32]  Speaker 2: Hmm.
+[00:43:33 --> 00:43:35]  Speaker 1: Okay, this is going to take a long time.
+[00:43:36 --> 00:43:36]  Speaker 2: Mm-hmm.
+[00:43:37 --> 00:43:43]  Speaker 1: And it feels like to me maybe we should do this tomorrow because it's already 8:30 now.
+[00:43:44 --> 00:43:44]  Speaker 2: Okay.
+[00:43:45 --> 00:43:49]  Speaker 1: Okay, so what do you feel? Should we continue now or should we?
+[00:43:49 --> 00:43:56]  Speaker 2: If there's a smaller topic then that can be done now, otherwise let's do it tomorrow because it will take at least good enough good.
+[00:43:58 --> 00:44:01]  Speaker 2: Half an hour for me to get home, so it will be too late otherwise.
+[00:44:01 --> 00:44:08]  Speaker 1: Let's let's do it tomorrow because what I'm seeing is this these follow on sections from this point will take another hour or so.
+[00:44:04 --> 00:44:04]  Speaker 2: These.
+[00:44:06 --> 00:44:07]  Speaker 2: Okay.
+[00:44:08 --> 00:44:09]  Speaker 1: More than an R effect.
+[00:44:10 --> 00:44:12]  Speaker 2: Lovely. So let's do it tomorrow then.
+[00:44:13 --> 00:44:14]  Speaker 1: Yeah, okay. So I'm going to stop recording now.
+[00:44:15 --> 00:44:15]  Speaker 2: Okay
+[00:44:16 --> 00:44:17]  Speaker 1: Okay, and I will join the two records.

@@ -1,0 +1,776 @@
+[00:00:00 --> 00:00:00]  Speaker 1: And I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I am I Main
+[00:00:05 --> 00:00:06]  Speaker 1: Okay.
+[00:00:08 --> 00:00:10]  Speaker 1: And I'm gonna start the presentation as well.
+[00:00:11 --> 00:00:13]  Speaker 1: Aapko dikh raha hoga slide.
+[00:00:13 --> 00:00:14]  Speaker 0: Haan ji.
+[00:00:15 --> 00:00:18]  Speaker 1: Ji, so uska ek script hai, main padh raha hun.
+[00:00:20 --> 00:00:26]  Speaker 1: And I will keep talking, I will interrupt and ask you to ask questions etcetera whenever the chance comes, okay?
+[00:00:28 --> 00:00:47]  Speaker 1: Okay, I am beginning. Namaste everyone, My name is Kunal, I am working with Aishwary on a software project called Ministery. Which means assistant aur advisor. Jo bhi aap le lo matlab. I am joining you for this meeting from Kolkata, we are far away, so we are doing this on JHOHO.
+[00:00:48 --> 00:01:08]  Speaker 1: Thank you for taking the time anyway. This session is gonna be about 45 minutes. I am gonna show you what we been building and then I will try to walk you through a very early prototype example of the output. And you whatever option opinions you have about it, whatever feedback you have, I id really like to hear about that.
+[00:01:08 --> 00:01:21]  Speaker 1: And whatever concerns you have also you should share, ideas also you should share. And most importantly nothing here is fixed yet. Okay so whatever you provide today will directly shape what we eventually build.
+[00:01:23 --> 00:01:26]  Speaker 1: Right, okay, so I am gonna move to the next slide now.
+[00:01:31 --> 00:01:38]  Speaker 1: So let's first understand what we have conceived as the problem which we can work on.
+[00:01:39 --> 00:01:52]  Speaker 1: You obviously know how the business works. Orders keep coming in from clients and then you follow up with suppliers and you coordinate deliveries then you have to track payments etc etc right?
+[00:01:53 --> 00:02:06]  Speaker 1: And you also know that all this is happening through offline communication but also you are trying to do S much as possible some sort of coordination on WhatsApp groups right and status updates.
+[00:02:07 --> 00:02:07]  Speaker 0: Very true.
+[00:02:08 --> 00:02:14]  Speaker 1: And obviously Aisha is sometimes remote so he may be using that to coordinate so well. Yes.
+[00:02:14 --> 00:02:15]  Speaker 0: Yeah that is true.
+[00:02:17 --> 00:02:32]  Speaker 1: And probably something which is difficult pill to swallow and to accept is that since the volume is so high lots of things are happening things will eventually write mistakes will happen.
+[00:02:33 --> 00:02:33]  Speaker 0: Yes.
+[00:02:34 --> 00:02:45]  Speaker 1: Right, it's not necessarily because someone is not doing their job, it's just because you know you have so much workload and everybody needs to work together so there can always be slip slip ups.
+[00:02:47 --> 00:02:53]  Speaker 1: Right, and nobody can really track all of it by themselves. So obviously you communication gaps also etc.
+[00:02:51 --> 00:02:51]  Speaker 0: Haan.
+[00:02:54 --> 00:03:05]  Speaker 1: Ye trying to essentially solve that. Okay, to keep somebody in the middle who is able to sense that something is about to go wrong and intervene a little bit. Okay.
+[00:03:09 --> 00:03:10]  Speaker 0: Understood.
+[00:03:12 --> 00:03:32]  Speaker 1: And this someone is our minister AI agent. It’s an AI agent. It is going to read the WhatsApp groups that you have created. Ya end which you have given permissions for it to read. Okay that's all it does. It reads. Of course it gives alerts also in some ways or the other but mostly what it does is reads. Okay.
+[00:03:33 --> 00:03:52]  Speaker 1: And from what it reads, from those messages, it builds a list of all the tasks which are currently being worked on. For example what orders are being processed, what payments are pending, right? And then from there it tries to determine what is being what is being missed.
+[00:03:53 --> 00:03:58]  Speaker 1: And what is at risk of being missed, what the next logical step is, right?
+[00:03:59 --> 00:04:12]  Speaker 1: It does not send any messages to anybody, okay? It does not make any decisions, okay? It in fact it only reads and summarises at this point, eventually may be it will do some alerts.
+[00:04:13 --> 00:04:26]  Speaker 1: Right? So you can think of this s somebody who is very attentively sitting there in the background, okay? Who does not lose track of things and always has the full picture. Understand?
+[00:04:28 --> 00:04:46]  Speaker 0: Interrupting here, but the point is what Kunal is trying to put across, only end only the conversation relating to the business is shared with the AI and AI reads that conversation that we have shared. Suppose we are talking about one of the army client or one of the supplier client.
+[00:04:46 --> 00:05:03]  Speaker 0: That conversation chat is shared with the AI. That will be read by the AI and interpreted and they are not going to send message to anyone. They are just going to collect the messages and then update you that what is pending, what is to be done and what is in progress. Write kunal?
+[00:05:03 --> 00:05:08]  Speaker 1: Right, update will come later, we will think of how to do the updates also.
+[00:05:08 --> 00:05:09]  Speaker 0: Okay.
+[00:05:08 --> 00:05:16]  Speaker 1: Right now what I need you to understand is that it is only reading and it is trying to track everything in its head, okay?
+[00:05:16 --> 00:05:17]  Speaker 0: Okay.
+[00:05:17 --> 00:05:23]  Speaker 1: As long as we have this picture, from that we can build whatever we want, right?
+[00:05:24 --> 00:05:40]  Speaker 1: As long as there is somebody, okay? Who is trying to make sure that all the information is being captured from everybody, okay? In their head. Okay? In a very privacy aware, very careful manner. Okay?
+[00:05:41 --> 00:05:44]  Speaker 1: Then we can decide later what we do with that person, right?
+[00:05:45 --> 00:05:46]  Speaker 0: Very true.
+[00:05:47 --> 00:05:47]  Speaker 1: Okay.
+[00:05:48 --> 00:06:08]  Speaker 1: So moving on. While we are doing this, while we are building this, we want to clarify what are our principles are, what are values are. First of all privacy like I said. It only reads the groups that you explicitly give permissions.
+[00:06:09 --> 00:06:25]  Speaker 1: It does not read anything except that you have listed. So we will create a system for you to specify k only read these groups. And it will only read those groups. It will not read anything else. Second it wants to be like this. "
+[00:06:26 --> 00:06:43]  Speaker 1: You know easy going quite and out of the way as possible. Matlab aapko koi pareshan karne wala nahi hona chahie ye. Okay. Itna matlab vo kya kehte hain Hindi men samyam hona hona chahie usko ki aapko pata hi nahi chale ki koi aap aapko help kar raha hai.
+[00:06:44 --> 00:06:49]  Speaker 1: Jab aapki matlab ekdam vo point aayegi jab aapko bachana hai tabhi aake help karegi.
+[00:06:44 --> 00:06:44]  Speaker 0: Jab aap
+[00:06:52 --> 00:07:03]  Speaker 1: So we are building something that will send you very few alerts. Atmost for everybody combined we maybe we want a limit. If we set a limit maximum 50 alerts maximum.
+[00:07:04 --> 00:07:04]  Speaker 0: Hmm hmm.
+[00:07:05 --> 00:07:22]  Speaker 1: And only if they are genuine and very very useful and pertinent. Agar aapko really uski zaroorat hai tabhi. Aise nahi ki alert kar dete hain, aisa nahi hai. Okay. And finally, aapko control dena chahie. We want you to be in control of things.
+[00:07:22 --> 00:07:23]  Speaker 2: Hmm hmm.
+[00:07:23 --> 00:07:37]  Speaker 1: Right? Because ye to AI agent hai. Ye matlab detail mein kaam karega, bahut zyada kaam karega. Par aapke jaisa vo intelligent toh hai nahi, artificially intelligent hai. Right? So first of all you should be in control.
+[00:07:38 --> 00:07:48]  Speaker 1: You don’t want some you know little bit of a robot making decisions for anybody. You want everybody who is a real person to take responsibility and make their own judgements. Yes?
+[00:07:50 --> 00:07:57]  Speaker 1: anything that it thinks, okay? You can always tell it no. Ye aisa nahi hai, vaisa hai.
+[00:07:58 --> 00:07:58]  Speaker 0: Hmm.
+[00:07:59 --> 00:08:01]  Speaker 1: Okay, whatever you say, that is what is final.
+[00:08:04 --> 00:08:05]  Speaker 1: Okay.
+[00:08:05 --> 00:08:06]  Speaker 0: Understood.
+[00:08:07 --> 00:08:10]  Speaker 1: All right, so now what I'm gonna do is um.
+[00:08:12 --> 00:08:16]  Speaker 1: Let's just look at a little bit of a technical thing.
+[00:08:18 --> 00:08:22]  Speaker 1: How we could approach this what we are describing, okay.
+[00:08:18 --> 00:08:18]  Speaker 2: Hmm hmm.
+[00:08:22 --> 00:08:22]  Speaker 2: Hmm hmm.
+[00:08:22 --> 00:08:24]  Speaker 1: You know that it’s going to read the WhatsApp groups.
+[00:08:24 --> 00:08:25]  Speaker 2: Hmm hmm.
+[00:08:25 --> 00:08:26]  Speaker 1: Voh hai permitted.
+[00:08:26 --> 00:08:27]  Speaker 2: Hmm hmm.
+[00:08:27 --> 00:08:33]  Speaker 1: But then I don’t know how much everybody here is aware that AI is taking off.
+[00:08:35 --> 00:08:39]  Speaker 1: And yeah I don't mean in a general sense, I mean this year in January.
+[00:08:35 --> 00:08:35]  Speaker 2: Hmm.
+[00:08:40 --> 00:08:46]  Speaker 1: A few things happened which change the AI landscape completely. So there is something called Agentic AI now.
+[00:08:44 --> 00:08:44]  Speaker 0: Hmm.
+[00:08:47 --> 00:08:47]  Speaker 0: Hmm hmm.
+[00:08:48 --> 00:08:50]  Speaker 1: And it is literally taking over the world.
+[00:08:51 --> 00:08:51]  Speaker 0: Okay.
+[00:08:52 --> 00:08:58]  Speaker 1: There are many high end computer techie companies which do computer programming, okay? Which have.
+[00:08:58 --> 00:08:58]  Speaker 0: Vichar.
+[00:08:59 --> 00:09:03]  Speaker 1: In which no person has written a single line of code since December.
+[00:09:04 --> 00:09:05]  Speaker 0: Hmm hmm.
+[00:09:05 --> 00:09:10]  Speaker 1: It is only machines which are taking instructions from people and writing the code themselves.
+[00:09:11 --> 00:09:12]  Speaker 0: Bahut achha.
+[00:09:12 --> 00:09:19]  Speaker 1: Okay, I will give you an example, only 2 weeks ago the friend of mine who had an urgent need to build an app.
+[00:09:21 --> 00:09:21]  Speaker 0: Hmm hmm.
+[00:09:22 --> 00:09:29]  Speaker 1: I think I can I don’t want to disclose everything but it was for a particular political campaign because elections announce hue the.
+[00:09:29 --> 00:09:30]  Speaker 0: Okay.
+[00:09:29 --> 00:09:37]  Speaker 1: Okay, Sab logs wanted to create app for their own campaign management and that person wanted to use AI to do it. Okay.
+[00:09:39 --> 00:09:46]  Speaker 1: In a traditional form of development, it used to take months to develop something like this. That person did it in 4 hours.
+[00:09:47 --> 00:09:47]  Speaker 0: Ha ha ha.
+[00:09:48 --> 00:09:49]  Speaker 1: Without a programming background.
+[00:09:51 --> 00:09:51]  Speaker 0: Very nice.
+[00:09:52 --> 00:09:54]  Speaker 1: Okay, ap sun rahe ho mousami end you are in ka video?
+[00:09:55 --> 00:09:55]  Speaker 0: Smita ji.
+[00:09:55 --> 00:09:56]  Speaker 1: Savita ji.
+[00:09:56 --> 00:09:57]  Speaker 0: Yes sir.
+[00:09:58 --> 00:10:03]  Speaker 1: "Toh abhi January se jo explosion ho raha hai agentic AI ka, uska advantage hum leke"
+[00:10:04 --> 00:10:08]  Speaker 1: We want to build minister in such a way that it is able to understand what you are saying.
+[00:10:10 --> 00:10:11]  Speaker 1: Okay.
+[00:10:12 --> 00:10:13]  Speaker 1: Just like.
+[00:10:12 --> 00:10:13]  Speaker 0: Just like.
+[00:10:13 --> 00:10:13]  Speaker 0: Okay.
+[00:10:13 --> 00:10:20]  Speaker 1: Programmers are able to describe what they want, okay? It will be able to understand what is going on in the WhatsApp chats.
+[00:10:21 --> 00:10:21]  Speaker 0: Theek hai.
+[00:10:22 --> 00:10:31]  Speaker 1: From that it will try and identify ki ismen insaan kaun hai, company kaun hai, client kaun hai, supplier kaun hai, staff kaun hai.
+[00:10:32 --> 00:10:47]  Speaker 1: Right? End jaise language men hum bolte hain na ki subject kaun hai, object kaun hai. So things like that. And then it will try to find Ki existing kaun se orders hain, tasks hain. Right?
+[00:10:47 --> 00:10:56]  Speaker 1: Issmen ye jo aap bola ja raha hai WhatsApp group men, how does it apply? Is it an update in the status of that task? Right?
+[00:10:58 --> 00:11:00]  Speaker 1: So it try kar sare chizen check kar raha hai.
+[00:11:01 --> 00:11:01]  Speaker 0: Te.
+[00:11:01 --> 00:11:08]  Speaker 1: Okay? I will give you a like a very stupid example. Ye to matlab bahut hi synthetic example hai. But
+[00:11:10 --> 00:11:11]  Speaker 1: Write.
+[00:11:12 --> 00:11:31]  Speaker 1: This slide it kind of says that there is a task which is running, there is a tandoor which needs to be delivered, order has gone, still delivery should be happening, right? So the task details that you want to capture at any point of time, ye delivery kahan tak pahuncha hai, right? Iska deadline kya hai?
+[00:11:32 --> 00:11:39]  Speaker 1: Aur ye kitna important hai? High priority hai, low priority hai? Isko pehle karna hai, koi aur kaam pehle karna hai, right?
+[00:11:39 --> 00:11:40]  Speaker 0: Hmm hmm.
+[00:11:41 --> 00:11:54]  Speaker 1: So, ishte basically ye jo task dekh rahe ho, humne kuch identify kie hain machine se, right? Usmen ek hoga ki date abhi tak pata nahi hai. We should confirm that exact date what will be supplier se.
+[00:11:55 --> 00:11:58]  Speaker 0: Mam, have you shared any screen about that?
+[00:11:58 --> 00:12:02]  Speaker 1: I will, I will, I am just giving a very baby exam.
+[00:11:59 --> 00:12:00]  Speaker 0: Okay.
+[00:12:01 --> 00:12:02]  Speaker 0: Okay.
+[00:12:02 --> 00:12:04]  Speaker 1: Ye ekdam achha example hai.
+[00:12:02 --> 00:12:03]  Speaker 0: Ekdam.
+[00:12:05 --> 00:12:11]  Speaker 1: Okay, then it will also may be identify ki client ko bata hi nahi ki delivery kab hona hai.
+[00:12:12 --> 00:12:12]  Speaker 0: Hmm.
+[00:12:12 --> 00:12:19]  Speaker 1: Okay? And it it may be wants to coordinate ki ye staff ko idhar bhejna hai collect karne ke liye. So those kind of task, okay?
+[00:12:22 --> 00:12:22]  Speaker 1: Is that clear?
+[00:12:23 --> 00:12:24]  Speaker 0: Understand.
+[00:12:24 --> 00:12:41]  Speaker 1: Okay? So these kind of gaps, like I was saying, it it kind of identify where gap rah gaya, koi doubt hai ki nahi. Han. Abhi isme ek problem hai ki sab kuchh toh hum WhatsApp group mein nahi daalte. Toh isko bhi sab kuchh nahi pata chalega agar vo WhatsApp group mein nahi hai.
+[00:12:42 --> 00:12:51]  Speaker 1: Hmm hmm. "Toh usko kabhi kabhi lage ki gap hai" par hum is aise design kar rahe hain ki agar usko lagegi lage bhi agar ki gap hai it should not start jumping.
+[00:12:52 --> 00:12:54]  Speaker 1: Right? Gap hai, gap hai, mujhe gap mil gaya.
+[00:12:55 --> 00:13:01]  Speaker 1: Thoda wait karo, dekhte raho, Mantri wait karega, shaayad aage ke message mein pata chal jaaye, right?
+[00:13:02 --> 00:13:08]  Speaker 1: Jab tak vo gap important nahi hai, tab tak vo matlab wait karke assume karta rahega ki aa jaayega information.
+[00:13:09 --> 00:13:10]  Speaker 0: Hmm.
+[00:13:10 --> 00:13:18]  Speaker 1: Agar koi assumption bahut critical hai, usse kuchh matlab change ho sakta hai, business mein effect ho sakta hai, tab vo puchhega ki ye please confirm karo ye kya hai.
+[00:13:20 --> 00:13:21]  Speaker 1: Okay.
+[00:13:22 --> 00:13:23]  Speaker 0: Just it.
+[00:13:23 --> 00:13:23]  Speaker 1: Okay sir.
+[00:13:25 --> 00:13:25]  Speaker 1: Okay.
+[00:13:26 --> 00:13:45]  Speaker 0: Basically if I will put it in our office terminology, we have received a order, inquiry not an order, we have received an inquiry. Now wherever whatever progress is there, delivery ka updating, Sarah kuch order confirmation, beach mein jo bhi cheez humne miss out kiya hai, that s humans we will have to feed the system.
+[00:13:45 --> 00:13:58]  Speaker 0: Baaki ye hamari official chat mein se data leke humko hi reminders dega taki humse human error na ho ki ye kaam aaya tha and we have missed upon that. It will guide us upon it and it will help us streamline and make it more smoother.
+[00:14:01 --> 00:14:03]  Speaker 0: Bhai koi okay bol diya karo.
+[00:14:01 --> 00:14:02]  Speaker 1: Toh.
+[00:14:05 --> 00:14:06]  Speaker 2: Right sir, okay sir, okay sir.
+[00:14:07 --> 00:14:24]  Speaker 1: ""Toh end of course at any point of time vo kuchh bhi agar matlab status update rakh raha hai ya bol raha hai ok use ko agar correct karna ho toh aapko correct karne ka hum interface de denge ki jao use correct karo"
+[00:14:24 --> 00:14:32]  Speaker 1: Hmm hmm. Kya aap natural language men hi kar sakte hain ya phir hum vo click vala koi interface de denge ki usko change kar do click karke eighteen. Theek hai?
+[00:14:32 --> 00:14:33]  Speaker 0: Hmm hmm hmm hmm hmm.
+[00:14:34 --> 00:14:40]  Speaker 1: Natural language matlab just matlab type karke usko bol sakte hain ki ye tumne galat kiya in words.
+[00:14:42 --> 00:14:42]  Speaker 0: Sir.
+[00:14:43 --> 00:14:51]  Speaker 1: Okay, toh ab maine baby ko example walk through kar liya. Ab humne ek bahut chhota sa prototype banaya, Kunal prototype.
+[00:14:49 --> 00:14:50]  Speaker 0: Chhota sa board tha.
+[00:14:50 --> 00:14:53]  Speaker 0: Kunal Kunjal one second I think.
+[00:14:52 --> 00:14:53]  Speaker 1: I think.
+[00:14:53 --> 00:14:58]  Speaker 0: The rest of Mosumi is no she is not disconnected she is connected mam.
+[00:14:59 --> 00:15:00]  Speaker 0: Okay.
+[00:15:01 --> 00:15:03]  Speaker 0: They network keeps on coming and going, mosemi can you hear?
+[00:15:04 --> 00:15:05]  Speaker 2: Haan ji sir.
+[00:15:05 --> 00:15:06]  Speaker 0: Okay.
+[00:15:07 --> 00:15:07]  Speaker 2: G.
+[00:15:11 --> 00:15:13]  Speaker 1: Ek minute haan.
+[00:15:18 --> 00:15:22]  Speaker 1: One second, I'm just gonna check ki hamara recording chal raha hai ki nahi Zovo men.
+[00:15:29 --> 00:15:31]  Speaker 1: Recording chal raha hai. Okay. So I will continue.
+[00:15:32 --> 00:15:33]  Speaker 0: Okay.
+[00:15:35 --> 00:15:38]  Speaker 1: Okay, toh now we can walk through a more concrete example.
+[00:15:39 --> 00:15:39]  Speaker 0: Jo
+[00:15:39 --> 00:15:48]  Speaker 1: Jo humein dikhaega ki iske capabilities kaise hain, okay? Kuchh din pehle aai think aap logon ne ye saata artillery battery ka koi order handle kiya tha, right?
+[00:15:50 --> 00:15:50]  Speaker 0: G.
+[00:15:52 --> 00:15:58]  Speaker 0: The same order ma'am who ki hum logon ne about the AC & everything who abhi deliver kiya hai SATA ko, he is talking about the same order.
+[00:16:00 --> 00:16:02]  Speaker 1: Han ji, aapko request kiya tha.
+[00:16:00 --> 00:16:00]  Speaker 0: Haan ji.
+[00:16:02 --> 00:16:08]  Speaker 1: Ki usse related jo WhatsApp group hai aur jo suppliers ka group hai.
+[00:16:06 --> 00:16:07]  Speaker 2: Haan ji.
+[00:16:09 --> 00:16:12]  Speaker 1: Uska chat block bhi mujhe de deta hai, toh usne diya mujhe.
+[00:16:10 --> 00:16:10]  Speaker 2: Haan ji.
+[00:16:14 --> 00:16:32]  Speaker 1: Aur maine iss AI tool ko bola ki isme se jo maine abhi describe kiya ki matlab status check karo aur bolo ki kya-kya chal raha hai, right? Toh usne usko un files ko dekh ke ye pura ek list banaya hai. Okay, it's a very long list as you can see.
+[00:16:33 --> 00:16:37]  Speaker 1: Identified 12 task that are going on, okay.
+[00:16:36 --> 00:16:37]  Speaker 2: Okay.
+[00:16:38 --> 00:16:43]  Speaker 1: You can see a task ete dekha ye window AC teen 1.5 tons ke.
+[00:16:46 --> 00:16:47]  Speaker 1: Aap aapko dikh raha hai?
+[00:16:49 --> 00:16:51]  Speaker 2: Ji sir, ji sir.
+[00:16:51 --> 00:16:53]  Speaker 1: Aap padh pa rahe ho kya ismen kya aa raha hai, text?
+[00:16:55 --> 00:16:58]  Speaker 0: Aap log uske upar zoom ka button plus dabaoge toh it will start zooming in.
+[00:16:59 --> 00:17:00]  Speaker 2: Hmm hmm.
+[00:17:02 --> 00:17:12]  Speaker 1: Toh usmen basically usne identify ki entity kaun hai? Toh issne dekha idhar ki Client Sabata battalion hai. Han, usne also ye dekha ki uska matlab jo.
+[00:17:09 --> 00:17:10]  Speaker 2: Aur bhi.
+[00:17:12 --> 00:17:20]  Speaker 1: Ek Aravind Subedar Aravind kareke hain which is also part of that same client interaction.
+[00:17:17 --> 00:17:18]  Speaker 2: Haan ji.
+[00:17:20 --> 00:17:21]  Speaker 1: Toh agar agli baar ji
+[00:17:21 --> 00:17:22]  Speaker 2: Ji sir.
+[00:17:22 --> 00:17:28]  Speaker 1: Chat men Sata battalion ki jagah Subedar Arvind ka naam aaya, usko pata chalega ki same same cheez hai. You understand?
+[00:17:29 --> 00:17:30]  Speaker 2: Okay, achha, okay.
+[00:17:29 --> 00:17:29]  Speaker 1: Haan.
+[00:17:29 --> 00:17:30]  Speaker 0: Achha.
+[00:17:30 --> 00:17:37]  Speaker 1: Haan, phir usne items items dekha kya kya hai, status hai in progress, order confirm, delivery pending, haan.
+[00:17:31 --> 00:17:32]  Speaker 2: Phir usmen.
+[00:17:38 --> 00:17:43]  Speaker 1: Phir delivery requested by client ye sab usne 23 March priority ye date wait bahar nikalne ki koshish ki hai usne, right?
+[00:17:44 --> 00:17:44]  Speaker 0: G.
+[00:17:45 --> 00:17:45]  Speaker 2: Okay.
+[00:17:45 --> 00:17:45]  Speaker 1: Hmm.
+[00:17:45 --> 00:17:49]  Speaker 1: Isne ye bhi bola ki kaun-kaun se threat se usne nikala ye information.
+[00:17:50 --> 00:17:56]  Speaker 1: Han, rate bhi nikal hai, right? Phir uske baad usne thoda sa attempt kiya hai.
+[00:17:54 --> 00:17:55]  Speaker 0: Thoda sa.
+[00:17:56 --> 00:18:01]  Speaker 1: Ki ismen sab task kya-kya hain aur matlab iske andar kaun se kaam karne honge?
+[00:18:03 --> 00:18:03]  Speaker 2: Hmm.
+[00:18:04 --> 00:18:20]  Speaker 1: So you can see it kind of yeah thoda matlab finicky hai, ye hum change karenge, update karenge aur ekdam matlab aapke process ko follow karne wale steps daalenge ismein. Abhi ye kar raha hai ki confirm the physical delivery. Usko confirm karo task hai.
+[00:18:20 --> 00:18:21]  Speaker 2: G.
+[00:18:20 --> 00:18:28]  Speaker 1: Gi ji. Vehicle vo ek task hai. Ho sakta hai ki aisa task aapko matlab track karna pade. Toh hum add karenge aise task. Okay?
+[00:18:29 --> 00:18:30]  Speaker 0: Gi Sir.
+[00:18:31 --> 00:18:34]  Speaker 1: Phir usne basically ye check kiya ki ismein koi problem hai ki nahi.
+[00:18:37 --> 00:18:37]  Speaker 0: Okay.
+[00:18:38 --> 00:18:50]  Speaker 1: Hmm aur isme basically ye bol raha hai ki supplier ka dispatch confirmation nahi hai. So this is potentially a problem.
+[00:18:54 --> 00:18:54]  Speaker 2: G.
+[00:18:55 --> 00:19:01]  Speaker 1: Ya end at some point of time kisi discussion mein
+[00:18:56 --> 00:18:56]  Speaker 2: G.
+[00:19:01 --> 00:19:05]  Speaker 1: Koi confusion tha, ye bhi ise note kiya. Split AC hai ki Window AC hai?
+[00:19:07 --> 00:19:07]  Speaker 1: Theek hai.
+[00:19:07 --> 00:19:08]  Speaker 0: G.
+[00:19:08 --> 00:19:09]  Speaker 0: Haan.
+[00:19:09 --> 00:19:17]  Speaker 1: "Toh aise" matlab issues ko vo matlab notice karta hai ki koi confusion chal raha hai ki nahi kahin pe. Okay?
+[00:19:17 --> 00:19:17]  Speaker 0: Okay.
+[00:19:18 --> 00:19:20]  Speaker 1: Aur kya tasks hain, vo estimate karta hai.
+[00:19:22 --> 00:19:22]  Speaker 0: Te.
+[00:19:22 --> 00:19:23]  Speaker 1: Okay.
+[00:19:23 --> 00:19:39]  Speaker 1: Toh basically aisa hi hai, isme next vala agar aap dekhoge, okay? Issmen order aai thik hai aaya tha kisi aur model ka ya kuch, nahi, ye teesra wala. Issmen 242 liters ka order aaya tha par gaya tha chhota ya something like that, right?
+[00:19:39 --> 00:19:40]  Speaker 0: Hmm hmm hmm.
+[00:19:40 --> 00:19:41]  Speaker 2: Gi Sir.
+[00:19:41 --> 00:19:49]  Speaker 0: Apna ko do order thehe, there was one order jismein unhone 75 to 100 litre ka ek refrigerator mini maainga tha, but we offered 25 litre.
+[00:19:48 --> 00:19:48]  Speaker 1: Haan ji.
+[00:19:50 --> 00:19:56]  Speaker 0: So even if you doom into it, the app could identify, the AI agent could identify that's right.
+[00:19:51 --> 00:19:51]  Speaker 1: Hmm hmm.
+[00:19:54 --> 00:19:55]  Speaker 2: Haan.
+[00:19:55 --> 00:19:56]  Speaker 1: Bhai that hai.
+[00:19:56 --> 00:20:03]  Speaker 0: Gone smaller in the size plus we have taken rate from two different vendors LG distributor S well as Konni G Voltas.
+[00:19:59 --> 00:19:59]  Speaker 1: Hmm.
+[00:20:03 --> 00:20:12]  Speaker 0: Their rates comparative was also taken and finally whom we had placed the order. It identifies everything and points it out very clearly to that thing.
+[00:20:14 --> 00:20:14]  Speaker 0: G.
+[00:20:15 --> 00:20:15]  Speaker 2: Okay.
+[00:20:16 --> 00:20:23]  Speaker 1: Toh ismen basically ete neeksha hai idhar. It looked at this end and it said that client had originally requested 75 or 100 litre.
+[00:20:23 --> 00:20:24]  Speaker 1: Right?
+[00:20:24 --> 00:20:28]  Speaker 1: But aapne matlab 45 liters ka coat le rakha hai, isko confirm karo ki unko theek hai ki nahi.
+[00:20:25 --> 00:20:25]  Speaker 2: Matlab.
+[00:20:29 --> 00:20:32]  Speaker 1: Okay, ish par that over here you can see that.
+[00:20:30 --> 00:20:31]  Speaker 2: G.
+[00:20:34 --> 00:20:48]  Speaker 1: Okay? So this is the kind of stuff that can be caught by national natural language without any special treatment. Maine ismen tab kuchh nahi banaya tha, bahut simple sa ek experiment kiya tha, uska ye output hai. Okay?
+[00:20:49 --> 00:20:51]  Speaker 1: Isse much better output aage hum nikalenge.
+[00:20:52 --> 00:20:53]  Speaker 0: Achha. Okay.
+[00:20:54 --> 00:21:09]  Speaker 1: Okay. And its bottom in you should see it is going to tell you that the list of all the things that it is discovered right which are possible mistakes or slip ups or gaps.
+[00:21:09 --> 00:21:10]  Speaker 1: Haan.
+[00:21:13 --> 00:21:13]  Speaker 0: Understood.
+[00:21:14 --> 00:21:22]  Speaker 1: Haan, and then jahan pe usko thoda samajh mein nahi aa raha hai, ambiguity hai usko, vo bhi isne list kar diya ki mujhe bata do main galat toh nahi ho raha.
+[00:21:25 --> 00:21:26]  Speaker 2: Okay sir.
+[00:21:27 --> 00:21:27]  Speaker 1: Okay.
+[00:21:28 --> 00:21:33]  Speaker 1: Toh basically hum aise hi matlab chalayenge isko, but much more improved than this.
+[00:21:35 --> 00:21:35]  Speaker 0: Underspade boss.
+[00:21:37 --> 00:21:40]  Speaker 1: Then that case I will return to presentation, I can close this right.
+[00:21:42 --> 00:21:45]  Speaker 1: Koi questions hain aapko iss point pe?
+[00:21:46 --> 00:21:48]  Speaker 2: Nahi, clear hai sir, clear hai sir.
+[00:21:51 --> 00:22:01]  Speaker 1: Toh main isko skip karta hun kyonki humne dekh liya. Haan, so ish mein basically ye ek thoda sa summary tha ki humne kya-kya pakda tha uss mein.
+[00:22:03 --> 00:22:20]  Speaker 1: Right? So this is these are some of the things. Ek Amazon order tha jahan 21 days later there was no communication. So it was saying that ye ye kaafi strange hai. Why is there no discussion? 21 21 days ho gaye hain uske baad bhi koi discussion nahi ho raha hai kahin WhatsApp men. Right?
+[00:22:19 --> 00:22:20]  Speaker 2: Hmm.
+[00:22:21 --> 00:22:23]  Speaker 1: Aur phir aur cheezen aise.
+[00:22:25 --> 00:22:25]  Speaker 1: Okay.
+[00:22:26 --> 00:22:27]  Speaker 2: Without mech.
+[00:22:26 --> 00:22:27]  Speaker 1: Haan.
+[00:22:28 --> 00:22:29]  Speaker 1: Ha, sorry.
+[00:22:33 --> 00:22:34]  Speaker 0: You were saying something?
+[00:22:36 --> 00:22:37]  Speaker 0: No sir.
+[00:22:37 --> 00:22:37]  Speaker 2: Hmm.
+[00:22:38 --> 00:22:38]  Speaker 0: Okay.
+[00:22:39 --> 00:22:44]  Speaker 1: To at any point of time want me to pause and you want to read it further, please let me know.
+[00:22:46 --> 00:22:46]  Speaker 2: Okay sir.
+[00:22:47 --> 00:22:47]  Speaker 1: Haan.
+[00:22:50 --> 00:22:55]  Speaker 1: Okay, then I will skip the questions because abhi to aapko koi questions nahi hai na.
+[00:22:57 --> 00:22:59]  Speaker 2: Nahi, abhi nahi sakta, abhi nahi.
+[00:22:58 --> 00:22:58]  Speaker 0: Nahi sir.
+[00:23:01 --> 00:23:20]  Speaker 1: Okay okay then I will move on. So I am I am just going to reiterate now, okay. You will always know more than the software, right? You are sitting together in your room. A lot of communication is happening on offline, okay? And some communication also is happening on phone calls.
+[00:23:20 --> 00:23:21]  Speaker 0: Hmm hmm.
+[00:23:21 --> 00:23:24]  Speaker 1: And plus you know what the client is like, you know the client situations.
+[00:23:24 --> 00:23:25]  Speaker 0: Hmm hmm.
+[00:23:25 --> 00:23:27]  Speaker 1: Right? so,
+[00:23:28 --> 00:23:47]  Speaker 1: It's very important that it's not like you know the software is AI tool it will learn over time it nothing like that. Okay it never intended to be such a pervasive thing ki vo matlab room mein hi baith jaaye aapke saath aisa nahi hai. Toh usko jitna limited dikhta hai usi mein usko kaam karne do.
+[00:23:47 --> 00:23:51]  Speaker 1: Aur aap nahi bahut chizen samajh rahe hain, it's fine.
+[00:23:51 --> 00:23:59]  Speaker 1: Aap ya toh agar usko ignore karna hai, ignore kar do. Ya’a it’s not important, aapka judgment hai. Ya phir usko update kar do.
+[00:24:00 --> 00:24:03]  Speaker 1: Right? Okay. Jo bhi bol raha hai usko update kar do.
+[00:24:03 --> 00:24:09]  Speaker 1: Us update mein shaayad vo kuch seekhega over time, but it's not like we want to you know make it learn everything.
+[00:24:10 --> 00:24:10]  Speaker 2: Hmm hmm.
+[00:24:11 --> 00:24:12]  Speaker 1: Ko limit hei karna hai.
+[00:24:13 --> 00:24:19]  Speaker 1: Okay, toh aap jo corrections karoge, chhote-mote corrections, usse vo over time thoda bahut hum sikhaenge usko.
+[00:24:20 --> 00:24:21]  Speaker 1: Right, okay.
+[00:24:21 --> 00:24:33]  Speaker 1: Especially agar vo thoda kabhi agar usko lage ki ye bahut urgent important kaam hai. Aur aap usko bolo ki nahi hai. Then you know it will be like oh. It will try to rebalance thoda bahut.
+[00:24:35 --> 00:24:35]  Speaker 0: Hmm.
+[00:24:35 --> 00:24:50]  Speaker 1: Hmm. Okay. Okay. So you are basically in control. This is just a tool which is there to detect when you know bahut zyada overload ho gaya hai, you are about to miss something only at that time. Okay.
+[00:24:50 --> 00:25:00]  Speaker 0: But Kunal, I will interrupt, This is the exact line that in every Hollywood movie they say when AI thing backfires and then it takes over and then the humanity goes to do.
+[00:25:03 --> 00:25:05]  Speaker 1: Itne movies mat dekha karo.
+[00:25:07 --> 00:25:17]  Speaker 0: Malam chala AI computer men se nikla hum sabko bola bhai ab se tum labour ho tum slave ho we’re only taking over now at the end of the day hamara business vahi karne baith gaye.
+[00:25:18 --> 00:25:23]  Speaker 1: Hum sab robot hi hain, kya problem hai? Ek aur robot se dosti karne men kya problem hai?
+[00:25:23 --> 00:25:42]  Speaker 0: Nahi but the good thing is again to put confidence back into everyone this is only going to help us with the reminders because ours is a very cut throat service industry the only edge we command over and above every other AI or an app or an vendor.
+[00:25:42 --> 00:25:53]  Speaker 0: Is our service end this agent AI agent is going to help us deliver better workout better and may be that reflects in the balance sheet at the end of the year.
+[00:25:54 --> 00:26:03]  Speaker 1: Absolutely, I want to highlight another thing, just because you brought out this you know, it can be a little bit off a concern, right?
+[00:26:04 --> 00:26:04]  Speaker 0: Haan.
+[00:26:04 --> 00:26:06]  Speaker 1: Ki AI is taking over the whole world.
+[00:26:07 --> 00:26:07]  Speaker 0: Yes.
+[00:26:07 --> 00:26:14]  Speaker 1: Right? So there are classic examples of the opposite of what we expect to be the reality.
+[00:26:15 --> 00:26:17]  Speaker 1: The old example that everybody quotes.
+[00:26:18 --> 00:26:18]  Speaker 0: Jab.
+[00:26:18 --> 00:26:25]  Speaker 1: Jab software aa gaya tha, uske baad logon ne ATM banaya, invent kiya.
+[00:26:23 --> 00:26:24]  Speaker 2: Hmm.
+[00:26:26 --> 00:26:29]  Speaker 1: Toh jitne banks men etne sare vo bank tellers hote the na.
+[00:26:31 --> 00:26:41]  Speaker 1: Unka sabse bada ye tension tha ki humare jobs to gaye. Banking men jo career hota tha vo teller se shuru karte karte the log. Vo to gaya. Right?
+[00:26:41 --> 00:26:41]  Speaker 0: Hmm.
+[00:26:41 --> 00:26:52]  Speaker 1: But it just so happened, right? The introduction of the ATMs actually exponentially increase the number of bank branches.
+[00:26:53 --> 00:27:01]  Speaker 1: Because jahan logon ko itna time lagta tha bank mein jaake kaam karne ko, kaam karwane ko apna kaam, right?
+[00:26:59 --> 00:27:00]  Speaker 0: Hmm.
+[00:27:02 --> 00:27:05]  Speaker 1: Vo instantly hota tha. Uske vajah se time badh gaya.
+[00:27:04 --> 00:27:04]  Speaker 0: Hmm.
+[00:27:06 --> 00:27:14]  Speaker 1: Aur banking men matlab teller ka kaam hamesha rahega. Voh nahi jaayega kabhi. Because bahut sare kaam hote hain. Sirf matlab cash dene ka kaam nahi hota.
+[00:27:14 --> 00:27:16]  Speaker 1: ATM to sirf simple kaam nikalta hai na.
+[00:27:18 --> 00:27:21]  Speaker 1: Usko thodi na pata hai tumhare bare mein kuch, vo toh tailor ko pata hai.
+[00:27:19 --> 00:27:19]  Speaker 2: Pata hai.
+[00:27:21 --> 00:27:22]  Speaker 2: Hmm.
+[00:27:22 --> 00:27:26]  Speaker 1: Ab tumhara aaj ka mood kya hai? Tumhare family mein koi tragedy hua ki nahi? Vo to ATM ko nahi pata na.
+[00:27:26 --> 00:27:27]  Speaker 2: Hmm.
+[00:27:27 --> 00:27:28]  Speaker 1: Haan.
+[00:27:28 --> 00:27:28]  Speaker 2: Hmm.
+[00:27:28 --> 00:27:35]  Speaker 1: He actually the number of banking teller jobs went up atleast for a while it went up then after that it stabilize but that's the truth.
+[00:27:33 --> 00:27:34]  Speaker 2: Haan.
+[00:27:36 --> 00:27:46]  Speaker 1: Abhi for example, abhi main bol raha tha na January se bahut zyada AI scale hua hai. Bahut zyada incredible, matlab programming jobs are like disappearing.
+[00:27:46 --> 00:28:02]  Speaker 1: They're just vaporizing everywhere. Every company even the leading companies in every you know computer science sector gaming se leke finance se leke her jaga mass firings and le le offs are going on. Nothing to do with company performance. Nothing to do with economic outlook.
+[00:28:01 --> 00:28:01]  Speaker 2: Hmm hmm.
+[00:28:03 --> 00:28:06]  Speaker 1: Is just because AI is replacing everybody in the programming world.
+[00:28:07 --> 00:28:25]  Speaker 1: Right? But this is a temporary blip. If the cost of making software goes down, okay? Actually the number of people who will want to build software will exponentially increase. Okay? They will not be in very large companies with thousands of developers.
+[00:28:26 --> 00:28:30]  Speaker 1: The kind of job will only change. Now they will all have jobs with very small groups.
+[00:28:28 --> 00:28:28]  Speaker 0: Aur kya hai?
+[00:28:31 --> 00:28:48]  Speaker 1: Hmm hmm. But the number of jobs will actually go up. It will take some time to transition, that's all. That transition has already happened in another sector. Kuchh saal pehle tak vo jo medical sector mein jab koi test hota tha, report hota tha, right for example x-ray leke ya MRI leke.
+[00:28:48 --> 00:28:48]  Speaker 0: Theek hai.
+[00:28:49 --> 00:29:02]  Speaker 1: Han, uss report ko likhne wala xray ko dekh ke, MRI ko dekh ke, koi report likhta tha na text mein ki maine ye ye dikha hai idhar. Right? Us us ko replace kar raha tha almost.
+[00:28:59 --> 00:29:00]  Speaker 0: Us jo hai.
+[00:29:03 --> 00:29:12]  Speaker 1: So I was very good at you know looking at the image of the xray and coming up with the details of what is there in the xray, right? So every radiologist ka job to gaya.
+[00:29:10 --> 00:29:11]  Speaker 0: Hmm.
+[00:29:14 --> 00:29:22]  Speaker 1: But it just so happens that their number of radiologist jobs are actually gone up in all the advanced countries where the AIs are being deployed.
+[00:29:23 --> 00:29:33]  Speaker 1: It's actually going up because what is happening is the cost of radiology is coming down so people are actually doing more radiography getting more tests done.
+[00:29:35 --> 00:29:48]  Speaker 1: Number of radiologist jobs are actually going up. Anyway that's beside the point. It was a very long diatribe I just shared. And I don’t want to digress anymore. But why why did we start talking about this I completely forgot.
+[00:29:49 --> 00:29:57]  Speaker 0: You started talking about it because Smita ji and Mossney are scared that AI will kill one of them on the sitting table and then finally they will be dead.
+[00:29:56 --> 00:30:01]  Speaker 1: You were scared, you were scared ki you know what am I gonna do for.
+[00:30:01 --> 00:30:08]  Speaker 0: I’m being there team leader, I can you know sense there feeling. He was just communicating there emotions to you.
+[00:30:08 --> 00:30:14]  Speaker 1: Was it was your emotions, I am sure the AI will replace the business owner only after few years.
+[00:30:14 --> 00:30:21]  Speaker 0: Imagine unke liye ek main hi kaafi bahut zyada ho gaya hun. Ab ek aur bhi baagal mein hoga jo unhen batayega ye kaam baaki hai.
+[00:30:22 --> 00:30:34]  Speaker 1: Vo toh batata nahi hai na, voh toh suggest karta hai, maar kha ke chup ho jata hai. Vo batane wala nahi hai. Okay anyway, so so that was just a digression, I don't want to continue that.
+[00:30:34 --> 00:30:45]  Speaker 1: I just want to again come back to Joe maine pehle bola tha humare values, right? So of course privacy, but we want to enforce that you know.
+[00:30:47 --> 00:31:04]  Speaker 1: That there are many things you know we will not minister let we will not let minister do okay we want to basically avoid situations and we want to make sure that minister doesn't do some specific things right this is enforced in R code base okay so it will never send any messages.
+[00:31:05 --> 00:31:09]  Speaker 1: On on your behalf or any messages for that matter to any external party, okay.
+[00:31:11 --> 00:31:16]  Speaker 1: It will never read anything which you know is not its not allowed for it to read.
+[00:31:16 --> 00:31:17]  Speaker 2: Hmm.
+[00:31:17 --> 00:31:20]  Speaker 1: It will never share anything it reads with anybody else.
+[00:31:21 --> 00:31:22]  Speaker 2: Okay.
+[00:31:21 --> 00:31:22]  Speaker 1: Phir.
+[00:31:22 --> 00:31:42]  Speaker 1: It actually will not make any decisions ever. It will never make any decisions. Okay. This human approval thing that I have said without human approval, it will not make any decisions at all. Whatever decisions are made only are made by humans, it will only track key what decisions were made. And if some decisions is still pending, that's all it can do.
+[00:31:42 --> 00:31:43]  Speaker 1: Okay.
+[00:31:44 --> 00:31:45]  Speaker 1: End of body.
+[00:31:44 --> 00:31:44]  Speaker 2: End of body.
+[00:31:45 --> 00:31:57]  Speaker 1: It is not Aisha is friend. It will not tell, it will not try to you know play games saying ye khushi hai vo ye buri hai and all that nonsense. It will not try to gain, it will not try to score and rank performance and all that.
+[00:31:59 --> 00:32:02]  Speaker 1: Okay, it will be through I am not I am not.
+[00:32:00 --> 00:32:11]  Speaker 0: Because I have not told him anything that this staff member is good or this staff member is bad. I have just told him Everyone is bad, I am the best one in the office. It's only me. I am so self centric. Okay?
+[00:32:11 --> 00:32:24]  Speaker 1: But the reason why I put that point in is because I come from computer science background, there is something in computer science field which which was a black mark in R industry. It was called stack ranking.
+[00:32:25 --> 00:32:35]  Speaker 1: And it existed until only a few may be 10 years up till 10 years ago it was there. It was very bad. It was called stack ranking. You should read up about it some time. Another digression I will avoid. I will just move on.
+[00:32:36 --> 00:32:38]  Speaker 0: Yes, we have 11 minutes left only, let’s.
+[00:32:38 --> 00:32:43]  Speaker 1: Yes, so these 11 minutes are critical, okay? So I am going to ask all of you.
+[00:32:42 --> 00:32:42]  Speaker 0: Haan.
+[00:32:44 --> 00:32:45]  Speaker 1: Aur answer some questions.
+[00:32:44 --> 00:32:44]  Speaker 0: Okay.
+[00:32:46 --> 00:32:47]  Speaker 0: Okay.
+[00:32:47 --> 00:32:59]  Speaker 1: Okay? You have to answer these questions, I have to get answers from you, okay? And please do not hesitate to say whatever you want, if you require, I will ask Aishwarya to please leave the room and not listen to this.
+[00:33:01 --> 00:33:01]  Speaker 1: Okay.
+[00:33:03 --> 00:33:04]  Speaker 1: Okay, so.
+[00:33:04 --> 00:33:06]  Speaker 0: Okay okay sir okay okay sir.
+[00:33:06 --> 00:33:10]  Speaker 1: Question number one, ok? When archae gives you the task.
+[00:33:11 --> 00:33:16]  Speaker 1: Okay, whatever the task is, right? How do you keep track of it?
+[00:33:18 --> 00:33:27]  Speaker 1: How do you keep track? You write it down somewhere or you just keep it in your head or is there like some rectangular?
+[00:33:26 --> 00:33:30]  Speaker 2: Hum humare diary aur notebooks mein likh rahe hain.
+[00:33:28 --> 00:33:29]  Speaker 1: Diaries ur.
+[00:33:31 --> 00:33:35]  Speaker 1: Aur kya aap repeat kar sakte hain ki clearly aap dono log in turn answer kar sakte hain ek baad ek?
+[00:33:31 --> 00:33:32]  Speaker 2: Aur tum bhi.
+[00:33:37 --> 00:33:41]  Speaker 2: We write it down in our notebooks or diaries.
+[00:33:42 --> 00:33:45]  Speaker 2: Written down in notebook and diaries.
+[00:33:47 --> 00:33:49]  Speaker 2: Main sir remember kar rahi hun.
+[00:33:51 --> 00:34:01]  Speaker 1: Okay, and next question onwards before you answer because you know it's not recording who speaking, please say this is Moushmi and this is Smita and then say they answer, okay?
+[00:34:02 --> 00:34:04]  Speaker 2: O okay achha okay sir.
+[00:34:05 --> 00:34:09]  Speaker 1: So I got it basically it’s hand written.
+[00:34:10 --> 00:34:11]  Speaker 2: Haan ji sir.
+[00:34:11 --> 00:34:19]  Speaker 1: Okay, and so what happens? Another followup question is, what happens when there are many tasks at the same time?
+[00:34:23 --> 00:34:35]  Speaker 2: Ah we we we keep it in an Excel sheet and which ever is done we mark it with some colours and like that only sir.
+[00:34:38 --> 00:34:42]  Speaker 1: So you write it down and then you follow up by adding it to Excel sheet.
+[00:34:43 --> 00:34:49]  Speaker 0: Right Sir. What we have done Kunal, we have made a task, daily task kind of a reminder Excel sheet.
+[00:34:43 --> 00:34:43]  Speaker 1: Right Sir.
+[00:34:49 --> 00:35:08]  Speaker 0: Which is visible to all the members in the organization, again that file is shared with everyone. So whenever task is given they quickly write it down in their notebook, from there they transfer it to that excel sheet which is the right way to do it, but again when the load is too high this transfer gets messed up.
+[00:35:08 --> 00:35:22]  Speaker 0: I will not lie about it, it does get messed up, but again the system is in place, when a task is given they will punch it there end then we have very clear markers, green that it is done, that it is I visible that okay this task is done we don’t need to look.
+[00:35:12 --> 00:35:13]  Speaker 1: Han sir.
+[00:35:22 --> 00:35:37]  Speaker 0: Orange, red, and if there is a end the next day whatever is left behind is copied and brought forward to the next day as pending task from yesterday and then we move add the new which has come and join together there. And all of them mostly Aisha Smita add up.
+[00:35:35 --> 00:35:36]  Speaker 1: Mauasami abhi.
+[00:35:38 --> 00:35:48]  Speaker 1: Ashish, I don't want you to answer the question fully. If there is something that they are not you know you want to remind them about something in the answer, just give a small reminder and let them speak.
+[00:35:49 --> 00:35:51]  Speaker 0: Haan, ok.
+[00:35:51 --> 00:35:58]  Speaker 1: Sorry, I mean I’m not trying to be rude, I’m just saying because I have to follow the process because my analysis will depend on that.
+[00:35:58 --> 00:36:00]  Speaker 0: Okay, sorry guys, please carry on.
+[00:36:01 --> 00:36:07]  Speaker 1: remind they okay but just keep it very short and let they complete it.
+[00:36:07 --> 00:36:07]  Speaker 0: Okay.
+[00:36:08 --> 00:36:19]  Speaker 1: Okay. So, so basically we know that you write it out on the notebook and then after that after a while and you have free time you add it to the Excel sheet. Yes?
+[00:36:19 --> 00:36:20]  Speaker 2: G yeah sir.
+[00:36:22 --> 00:36:23]  Speaker 1: I will move to the next question.
+[00:36:25 --> 00:36:25]  Speaker 1: Okay.
+[00:36:26 --> 00:36:28]  Speaker 1: Kya aap mujhe bata sakte hain ki
+[00:36:29 --> 00:36:35]  Speaker 1: an occasion where some task got missed.
+[00:36:38 --> 00:36:40]  Speaker 2: Neeche ne width.
+[00:36:44 --> 00:36:55]  Speaker 1: Ya ya ai am not it ai am so everybody i just want us you know ask can you tell me a specific time give me an example.
+[00:36:57 --> 00:36:59]  Speaker 2: Exam per.
+[00:37:01 --> 00:37:01]  Speaker 2: Kaun hai ji?
+[00:37:04 --> 00:37:22]  Speaker 2: Sir jaise matlab kabhi dekhte nahi kabhi mobile saamne nahi hote, kabhi matlab urdu urdu main mausmi bol rahi hun, toh kabhi saamne nahi hote mobile ya phir kabhi kuchh aur cheez kar rahe the vo dekh nahi paate, dekha nahi hota toh iss hisab se.
+[00:37:24 --> 00:37:27]  Speaker 1: Matlab agar matlab koi update aaya hai mobile pe,
+[00:37:29 --> 00:37:29]  Speaker 2: Hmm.
+[00:37:29 --> 00:37:30]  Speaker 1: Usmen delay ho gaya.
+[00:37:31 --> 00:37:32]  Speaker 2: G.
+[00:37:32 --> 00:37:40]  Speaker 1: Haan, nahi, I'm saying that who means miss hee ho gaya kaam, vo karna tha but hua hi nahi.
+[00:37:41 --> 00:37:43]  Speaker 2: Kabhi mein gend mein phir nahi.
+[00:37:46 --> 00:37:46]  Speaker 2: Hmm.
+[00:37:56 --> 00:37:56]  Speaker 2: Nahi nahi.
+[00:37:58 --> 00:38:00]  Speaker 2: Aur phir hum forwards se.
+[00:38:02 --> 00:38:03]  Speaker 1: Achha, okay.
+[00:38:03 --> 00:38:07]  Speaker 2: Sir ye aashish sir bata payenge? Sir ek baar reminder dijiye.
+[00:38:07 --> 00:38:12]  Speaker 1: Usko usko mat bolne do. Aap aap hi bolo if you forgot it's okay.
+[00:38:11 --> 00:38:14]  Speaker 2: Nahi, haan, vo forget sir.
+[00:38:15 --> 00:38:21]  Speaker 1: Okay, fine. Ek specific example nahi hai. But aap kah rahe the ki daily kuch na kuch miss hota hai.
+[00:38:23 --> 00:38:24]  Speaker 2: Ha ha.
+[00:38:23 --> 00:38:23]  Speaker 0: Haan.
+[00:38:24 --> 00:38:26]  Speaker 1: How often? Matlab din mein kitne baar hoga?
+[00:38:29 --> 00:38:34]  Speaker 2: Sir like ek do miss ho jaate hain jaise bahut sare har bahut sare WhatsApp group hain Sir.
+[00:38:31 --> 00:38:32]  Speaker 1: Haan.
+[00:38:35 --> 00:38:50]  Speaker 2: Samita bol rahi hun, bahut sare WhatsApp group hote hain aur har group mein lagbhag non stop ek na ek message kabhi ye rate ke liye bole jaate hain, kabhi photo de do, kabhi ye payment karwa do, toh aise har group mein ek na ek message hote hain.
+[00:38:50 --> 00:39:05]  Speaker 2: Toh hum ye second group check karte karte first mein aisa koi message aa gaya jo hum miss kar jaate hain. "Toh vo overtake ho jata hai phir uske baad back to back bahut sare aa jaate hain toh kabhi hum vo bhul jaate hain aur vahi jaake baad men humein hit karta hai."
+[00:39:00 --> 00:39:01]  Speaker 1: Bahut sare.
+[00:39:06 --> 00:39:08]  Speaker 2: Ki like ye aapse miss ho gaya.
+[00:39:06 --> 00:39:07]  Speaker 1: Like ye aapse mil raha hai.
+[00:39:08 --> 00:39:10]  Speaker 1: Han, vo classic overload vala situation hai.
+[00:39:12 --> 00:39:13]  Speaker 2: Right sir.
+[00:39:12 --> 00:39:12]  Speaker 1: Achha.
+[00:39:13 --> 00:39:32]  Speaker 2: Matlab kaafi saare groups hain, har ek unit mein alag-alag queries hote hain. Toh kabhi humein rates ke liye lena hota hai, kabhi photos arrange karne hote hain, kabhi phir delivery ke liye dekhna hota hai. "Toh over the period hum vo ek message miss ho jata hai, baad men vo leke phir humein vo web fire karta hai sir."
+[00:39:33 --> 00:39:37]  Speaker 1: But ye to matlab aap dekh hi nahi pa rahe itne sare aa rahe hain isliye. But kya paani
+[00:39:37 --> 00:39:44]  Speaker 2: Haan nahi matlab main mausami bol rahi hun sir jaise matlab ek message aaya hai ki refrigerator ka rate lena hai.
+[00:39:44 --> 00:40:14]  Speaker 2: "Toh uske baad back to back niche mein aa gaya" matlab aur bhi messages aa jaate hain toh us vo jo refrigerator ka rate lena tha" vo itna matlab kabhi ek line mein hota hai toh vo show nahi hota toh baaki ka jo niche mein aa jata hai messages vo hum dekhte hain jab bhi dekhte hain toh hum uska process kar dete hain. Ek aapne part mein Samita bol rahe hain sir ek aapne part mein aur problem hai ki matlab aise hote hain ki group mein kaafi saare participants hote hain. "Toh hum agar ek miss kar gaye toh dusra banda dekh sakta hai toh ye sab mein ho jata hai ki
+[00:40:14 --> 00:40:17]  Speaker 2: Haan, vo bhi toh dekh sakta tha ya dekh sakti thi, like exactly.
+[00:40:02 --> 00:40:02]  Speaker 0: Ek.
+[00:40:16 --> 00:40:17]  Speaker 1: Dekh sakti thi.
+[00:40:18 --> 00:40:18]  Speaker 1: Achha.
+[00:40:18 --> 00:40:21]  Speaker 2: Tohaan pe bhi ek problem create hota hai sir.
+[00:40:19 --> 00:40:20]  Speaker 1: Problem create hoti hai.
+[00:40:21 --> 00:40:28]  Speaker 1: Overload plus coordination problem ki aapne socha vo dekh raha hai, usne socha ki aap achchhe ho.
+[00:40:24 --> 00:40:25]  Speaker 2: Aur abhi dusra question hai.
+[00:40:27 --> 00:40:27]  Speaker 2: Haan.
+[00:40:29 --> 00:40:36]  Speaker 2: Matlab aap prior ek engage ho kisi kaam mein, aap ismein kaam kar rahe ho already, toh dusre group mein aur message aa gaya.
+[00:40:32 --> 00:40:33]  Speaker 1: Haan.
+[00:40:34 --> 00:40:35]  Speaker 1: Aur.
+[00:40:37 --> 00:40:39]  Speaker 2: Toh ye problem to aati hai sir.
+[00:40:38 --> 00:40:38]  Speaker 1: Problem to aati hai.
+[00:40:39 --> 00:40:48]  Speaker 1: Han correct, because dono ka assumption rahata hai ki ki uske paas thoda time hoga toh vo dekh lega. But dono ke paas hi time nahi hai.
+[00:40:46 --> 00:40:47]  Speaker 2: Right ji.
+[00:40:49 --> 00:40:50]  Speaker 1: Aur donon aur kabhi aisa hota hai.
+[00:40:49 --> 00:40:50]  Speaker 2: Aur kabhi aisa hota hai.
+[00:40:50 --> 00:40:51]  Speaker 1: Shayad usne dekha hai.
+[00:40:51 --> 00:40:57]  Speaker 2: Dekha hai toh remind kar liya, aapne dekh liya hai toh bata diya karo atleast humein ya phir hum kar len.
+[00:40:53 --> 00:40:54]  Speaker 1: Haan, aapne dekh liya.
+[00:40:58 --> 00:40:59]  Speaker 2: Toh ye bhi ek issue rehta hai.
+[00:41:00 --> 00:41:09]  Speaker 1: Okay, okay. "Toh ye bhi hai ki aap uss pe depend kar rahe ho" ki matlab agar kuchh aapse slip up ho raha hai toh usko bhi catch kar lo.
+[00:41:09 --> 00:41:10]  Speaker 2: Right sir.
+[00:41:10 --> 00:41:19]  Speaker 1: Okay, aur kya kya aisa kabhi hua ki ekdam aapne task likh ke rakha, vo aapko karna tha uss din par aap bhul hi gaye?
+[00:41:20 --> 00:41:22]  Speaker 2: Haan right sir hota hai sir hota hai.
+[00:41:21 --> 00:41:24]  Speaker 1: Esa hota hai, aisa hota hai. Excel men likhne ke baad bhi bhul jaate ho, aisa hota hai.
+[00:41:22 --> 00:41:24]  Speaker 2: Men likhne ke baad bhi bhul jaate ho.
+[00:41:25 --> 00:41:28]  Speaker 2: Haan, hota hai sab bhul jaate hain matlab.
+[00:41:25 --> 00:41:27]  Speaker 1: Haan, hota hai sab bhul jaate hain matlab.
+[00:41:28 --> 00:41:44]  Speaker 2: Ek sir matlab chhote chhote bahut sare hote hain sir jo yahan vahan karte karte vo bhul jata hun main vo yaad aata hai baad mein o haan sir jab bolte hain Aashish sir jab tokte hain ki ye ye ho gaya tab yaad aa o nahi sir sorry bhul gayi toh vo hota hai sir.
+[00:41:45 --> 00:41:53]  Speaker 1: Okay, okay, thank you. That was very detailed answers, bahut kuchh information mila hai ismen. Ok, I will go to the next question.
+[00:41:53 --> 00:41:54]  Speaker 2: Hmm hmm.
+[00:41:54 --> 00:42:05]  Speaker 1: Okay. Iss ye basically hum usko determine karna chahte hain ki aapke liye kya useful hoga. Ya aur end also aapko kya pasand hai?
+[00:42:03 --> 00:42:03]  Speaker 2: Hmm.
+[00:42:06 --> 00:42:07]  Speaker 2: Right Sir.
+[00:42:07 --> 00:42:07]  Speaker 1: Achha.
+[00:42:08 --> 00:42:12]  Speaker 1: So the question is if Minister sent you a reminder about a task.
+[00:42:13 --> 00:42:13]  Speaker 2: Hmm hmm hmm.
+[00:42:14 --> 00:42:25]  Speaker 1: What would make you like it? That you would actually follow through on it. What end and conversely, what would make you hate it and you ignore it?
+[00:42:29 --> 00:42:39]  Speaker 2: Nahi sir, ek reminder agar rahata hai, humein matlab kabhi hum bhul jaate hain, toh it's better na hum dont khane se pehle humein vo kaam yaad aa jaaye aur hum vo kar lein.
+[00:42:37 --> 00:42:38]  Speaker 1: Kya kaam yaad aa gaya?
+[00:42:40 --> 00:42:45]  Speaker 2: "Toh yeah reminder hone se toh better hai sir, life will be easy, much easier than."
+[00:42:47 --> 00:42:52]  Speaker 1: Okay, but ye agar constantly aapko sara din reminder karta rahe toh aapke liye toh aur bhi noise aa gaya na.
+[00:42:53 --> 00:43:04]  Speaker 2: Nahi sir, din mein do baarik kar den ya phir teen baarik kar den. Matlab morning jaise hum aate hain, toh morning mein ek voh khol ke hum agar dekh len ki haan ye mere pending kaam hai.
+[00:42:53 --> 00:42:55]  Speaker 1: Nahi sir, like din mein.
+[00:43:04 --> 00:43:06]  Speaker 2: Ke baad shaam ko ek baar reminder denge.
+[00:43:05 --> 00:43:06]  Speaker 1: Ek baar reminder de.
+[00:43:07 --> 00:43:09]  Speaker 2: Ho gaya hai hum, hum update kar sakte hain.
+[00:43:07 --> 00:43:07]  Speaker 1: Hogi.
+[00:43:11 --> 00:43:16]  Speaker 1: But aap jaise kaam kar rahe ho, WhatsApp group mein messages aa rahe hain. Ek aapse matlab miss ho gaya kyonki etne sare aa rahe hain.
+[00:43:17 --> 00:43:18]  Speaker 2: Hmm hmm.
+[00:43:18 --> 00:43:21]  Speaker 1: Right? Ab agar vo remind immediately kare to?
+[00:43:19 --> 00:43:20]  Speaker 2: Ji sir.
+[00:43:25 --> 00:43:30]  Speaker 2: Nahin tab vo overtake ho sakta hai aisa ki haan theek hai chalo ye khatam kar leti hun phir vo karungi.
+[00:43:27 --> 00:43:27]  Speaker 1: Ho sakta hai aisa ki.
+[00:43:30 --> 00:43:32]  Speaker 2: Aise aa jaate hain, matlab ye ho sakta hai.
+[00:43:31 --> 00:43:32]  Speaker 1: Ye ho sakta hai.
+[00:43:34 --> 00:43:53]  Speaker 2: "Esa nahi main mausmi bol rahi hun sir, aisa nahi hai ki matlab hum matlab ye chhod den ya phir ignore kiya ye aisa nahi hai." Hum matlab haan ye baad men karenge vo bol ke matlab jab ye wala khatam karke vo usmen process men liye jaate hain toh haan phir aur ek ye aa jata hai kaam aa jata hai jo uske liye important ho jata hai.
+[00:43:54 --> 00:44:09]  Speaker 2: "Toh vo kaam important hai toh vo wala kaam pehle karna hota hai toh aise karte karte ye ho sakta hai ye miss ho jata hai toh baad men jab sir bolte hain ki ye wala kya kiya tha ba kya hua tha toh tab vo achha haan main karungi soch ke toh vo kiya hi nahi tha matlab aisa bhi hota hai matlab
+[00:44:10 --> 00:44:18]  Speaker 1: Haan, but agar ek kaam koi aata hai, vo usi din usi din karna hota hai ki usko basically next day bhi kiya ja sakta hai.
+[00:44:19 --> 00:44:32]  Speaker 2: Nahi, jo kaam aate hain jaise abhi iske rates vagairah kisi ko quote dena vo toh usi din hota hai. Jaise kuchh shaam ko messages aa gaye jo haan hum kal subah aake kar lenge.
+[00:44:24 --> 00:44:25]  Speaker 1: Vagairah kisi ko.
+[00:44:27 --> 00:44:27]  Speaker 1: Haan.
+[00:44:28 --> 00:44:29]  Speaker 1: Kuch.
+[00:44:32 --> 00:44:45]  Speaker 2: "Toh vo hum karte hain ki shaam ko jo bhi kaam hum aate hain vo kuchh matlab bahut urgent ho toh hum karke hi jaate hain" agar nahi ho toh hum agle din aake karte hain toh vo hum kisi excel mein ya phir diary mein note karke rakh dete hain jaise.
+[00:44:46 --> 00:44:51]  Speaker 1: Samajh gaya. Toh aise kuch kaam ho sakte hain, right? Kuchh cheese ho gaye ya.
+[00:44:50 --> 00:44:59]  Speaker 2: Kuchh cheez ho gaye ya phir kuchh rates vagairah jo urgent nahi hai, kal hone se bhi chalega, toh hum agle din ke liye aake karenge, uske baad vo jo uss time mein jo.
+[00:45:02 --> 00:45:02]  Speaker 1: Halo.
+[00:45:05 --> 00:45:05]  Speaker 1: Halo.
+[00:45:08 --> 00:45:09]  Speaker 1: Hello Aashish.
+[00:45:09 --> 00:45:14]  Speaker 2: Toh messages aa jaate hain, tab ye nahi hota ki raat ko actually sir.
+[00:45:11 --> 00:45:11]  Speaker 1: Tab ye.
+[00:45:15 --> 00:45:15]  Speaker 1: Halo.
+[00:45:19 --> 00:45:20]  Speaker 1: Halo.
+[00:45:19 --> 00:45:22]  Speaker 2: Ke messages hain, Hello, Hello.
+[00:45:21 --> 00:45:24]  Speaker 1: Hello, aapki aawaz kat rahi hai, aapki aawaz kat rahi hai.
+[00:45:22 --> 00:45:25]  Speaker 0: Aapki aawaz kat gayi, aapki aawaz kat gayi.
+[00:45:25 --> 00:45:27]  Speaker 1: Ek minute pura kat gaya audio.
+[00:45:26 --> 00:45:27]  Speaker 2: Hello.
+[00:45:29 --> 00:45:30]  Speaker 2: network.
+[00:45:31 --> 00:45:33]  Speaker 0: Aap thoda sa darwaze ke paas aake baithe honge.
+[00:45:32 --> 00:45:32]  Speaker 2: Hello.
+[00:45:39 --> 00:45:50]  Speaker 0: Ya. Now can you repeat jaise aap logon ka jo task miss ho jata hai jaise jo kaam aaj ke aaye hain kal ke liye aap logon ne chhode matlab which all task you need to be done today that is what he was asking.
+[00:45:45 --> 00:45:45]  Speaker 1: G.
+[00:45:50 --> 00:46:04]  Speaker 1: Because aapko agar main reminder karun, haan, vaisa reminder karun jo aapko pasand aaye, vo kaisa hoga? Aur aapko usi din ka jo kaam hota hai, uske bare mein boliye. Jo agle din kar sakte hain, vo toh kal subah aap dekh lenge ki ye ye baaki tha.
+[00:45:57 --> 00:45:57]  Speaker 2: Hmm.
+[00:46:04 --> 00:46:05]  Speaker 2: Hmm hmm.
+[00:46:05 --> 00:46:10]  Speaker 1: But jis din pe vo karna matlab lazmi tha aur vo miss ho raha hai.
+[00:46:08 --> 00:46:09]  Speaker 2: Urgent.
+[00:46:09 --> 00:46:10]  Speaker 2: Miss ho raha hai.
+[00:46:10 --> 00:46:11]  Speaker 2: Haan.
+[00:46:10 --> 00:46:13]  Speaker 1: Usko kaise remind karen?
+[00:46:15 --> 00:46:19]  Speaker 2: Har ek matlab.
+[00:46:20 --> 00:46:27]  Speaker 0: Kunal basically the priority of the task will have to be assigned, this is what I understand out of it.
+[00:46:26 --> 00:46:26]  Speaker 1: Achha.
+[00:46:27 --> 00:46:32]  Speaker 1: Ya ya that I understand. Matlab priority determines ki iss din ke andar karna hai etc. , right?
+[00:46:31 --> 00:46:33]  Speaker 0: Ye ekdam kuchh din mein.
+[00:46:32 --> 00:46:35]  Speaker 1: Us din mein bhi.
+[00:46:34 --> 00:46:39]  Speaker 0: Un din mein bhi kaun sa pehle hona hai vo bhi ek priority mein hai ki ek hai ki jisko abhi ke abhi batana hai.
+[00:46:41 --> 00:46:42]  Speaker 2: Right Sir.
+[00:46:43 --> 00:46:50]  Speaker 1: Haan, but usko kaise alert karen, right? Kyonki vo bhi aapke noise mein aa jaayega agar aap aap bahut busy hain, right?
+[00:46:52 --> 00:47:00]  Speaker 0: Vo aane se bhi bura nahi hai sir, usko bhulna matlab itna bada pain hai aur uske baad usko rectify karne ke liye jitni conversation hai, jitne haath pair jodne hain.
+[00:46:59 --> 00:47:10]  Speaker 1: One second, one second. Aap aap log boliye na kya is it true? Aapko yah achha lagega agar vah matlab jo problem ho jata hai.
+[00:47:09 --> 00:47:17]  Speaker 2: Nahi, vo vo problem nahi hai, toh phir hum hamesha deck pe rehte hain, toh vo dekh ke hum back to back kar sakte hain, usko update kar sakte hain sir. Haan.
+[00:47:15 --> 00:47:16]  Speaker 1: Achha.
+[00:47:18 --> 00:47:22]  Speaker 1: Toh bata sakte hain, but aap thoda apna apna matlab imagination karke dekhiye.
+[00:47:19 --> 00:47:20]  Speaker 2: Haan, ji sir.
+[00:47:23 --> 00:47:31]  Speaker 1: Jis situation mein aapko matlab vo miss ho jata hai naturally WhatsApp mein, kyonki itne sare messages aa rahe hain. Usmen aapko main kaise alert karun, vo bhi toh miss ho jaayega na.
+[00:47:28 --> 00:47:28]  Speaker 2: Hmm.
+[00:47:35 --> 00:47:42]  Speaker 1: "Toh uska kuchh matlab aap sochiye ki aap aisa kaun sa alert ho sakta hai jo aapko vo achha lagega."
+[00:47:43 --> 00:47:48]  Speaker 1: Aur vo aap follow up karenge jo aapko dikhega, aap ignore nahi karenge.
+[00:47:51 --> 00:47:51]  Speaker 2: Hmm.
+[00:47:52 --> 00:47:54]  Speaker 2: Yah to bataana main.
+[00:47:57 --> 00:48:04]  Speaker 2: "Vehi sir" matlab kaam jo zyada urgent hai vo agar matlab kya kaise.
+[00:48:06 --> 00:48:06]  Speaker 2: Hmm.
+[00:48:09 --> 00:48:10]  Speaker 0: Aao batao.
+[00:48:11 --> 00:48:18]  Speaker 1: Kya hum koi dashboard bana sakte hain samne room mein ek TV mein aur something jispe flash karen ya kuch?
+[00:48:17 --> 00:48:18]  Speaker 0: Bana sakte hain.
+[00:48:23 --> 00:48:32]  Speaker 2: Vo kar sakte hain lekin sir voh humare yahan pe matlab regular customer way toh vaise hi aate hi rehte hain toh kya ye problem ho sakta hai?
+[00:48:28 --> 00:48:29]  Speaker 0: Lagta hai.
+[00:48:32 --> 00:48:35]  Speaker 0: Lekin Kunal usko padho hai. Achha kya soch raha hun?
+[00:48:32 --> 00:48:33]  Speaker 2: Haan.
+[00:48:33 --> 00:48:35]  Speaker 2: Scope pad raha hai, kya soch raha hun?
+[00:48:35 --> 00:48:42]  Speaker 0: Use paadega koi nahi. Vahan pe agar aapko ek inki apni screen se hattke ek aur screen pe dekhna hai, will not be very feasible.
+[00:48:35 --> 00:48:35]  Speaker 2: Bole.
+[00:48:42 --> 00:48:50]  Speaker 0: They should be an interface dashboard of the AI agent on their screens or on their phones which buzzes ki ye hain.
+[00:48:43 --> 00:48:43]  Speaker 1: They should be A.
+[00:48:50 --> 00:48:55]  Speaker 0: Aur vo priority mein colour combination mein like red once are scariest one, they need to be done.
+[00:48:55 --> 00:48:59]  Speaker 1: Red once toh vo chhod do, main sirf red once ki hi baat kar raha hun.
+[00:49:00 --> 00:49:05]  Speaker 1: Par vo retons vo uss screen men dekhenge kyon? Vo toh WhatsApp men busy hain ya kuch kaam karne men busy hain.
+[00:49:00 --> 00:49:00]  Speaker 0: Vo red.
+[00:49:05 --> 00:49:08]  Speaker 1: Toh isi liye main soch raha tha. Okay, bas karen.
+[00:49:07 --> 00:49:08]  Speaker 0: Bas karen.
+[00:49:08 --> 00:49:11]  Speaker 1: Let it be obvious answer nahi hai idhar, is the conclusion.
+[00:49:10 --> 00:49:11]  Speaker 2: Hmm.
+[00:49:11 --> 00:49:13]  Speaker 2: Hmm hmm aap aap se kisi
+[00:49:12 --> 00:49:15]  Speaker 1: Aap men se kisi ne koi reminder tool use kiya hai pehle?
+[00:49:17 --> 00:49:23]  Speaker 2: Reminder tool rakhte hain sir, lekin vaise nahi, vaise nahi rakhte hain hum sab.
+[00:49:22 --> 00:49:22]  Speaker 1: Nahi.
+[00:49:24 --> 00:49:30]  Speaker 1: Aapne kabhi koi try nahi kiya jaise koi alarm buzzer type ya kuch?
+[00:49:31 --> 00:49:45]  Speaker 2: Haan, alarm ke alawa aur koi nahi kiya sir vaise. Alarm hai. Haan, notification ke liye ki hum kabhi diary notes rakh dete hain jaise kisi ka birthday ho gaya, anniversary ho gayi uss type ka inke matlab vaise task ke liye humne vaise use nahi kiya hai sir.
+[00:49:32 --> 00:49:32]  Speaker 1: Elam.
+[00:49:33 --> 00:49:34]  Speaker 1: Koi nahi kiya Sir vaise.
+[00:49:34 --> 00:49:35]  Speaker 0: Alam hai.
+[00:49:45 --> 00:49:54]  Speaker 1: Achchha, okay. Okay, fine. Toh humein basically koi clear achha idea nahi mila. That is also mean conclusion to this question. I will move on to the next question.
+[00:49:54 --> 00:49:54]  Speaker 2: Write.
+[00:49:55 --> 00:49:55]  Speaker 1: Okay.
+[00:49:59 --> 00:50:13]  Speaker 1: Hmm, toh vo basically ek pointed question hai, right? Am, basically obviously kaam men toh WhatsApp aati hi hai, but usse zyada toh hamara matlab outside WhatsApp communication bhi hota hai, right?
+[00:50:14 --> 00:50:15]  Speaker 2: Hmm hmm hmm.
+[00:50:15 --> 00:50:28]  Speaker 1: Right, so aise kaun se situations hain jahan coordination ya kaam hi karna ya phir kuch aur WhatsApp ke bahar hua aur group mein nahi dikha?
+[00:50:30 --> 00:50:34]  Speaker 2: Nahi nahi samajh mein aaya kya kya bol rahe hain sir sorry.
+[00:50:34 --> 00:50:46]  Speaker 1: Koi aapne solution solve kar bhi diya problem par WhatsApp ke bahar kiya phone call pe kiya ya Facebook pe kiya right aur WhatsApp mein koi update nahi hai kuch pata hi nahi chala
+[00:50:38 --> 00:50:39]  Speaker 2: Whatsapp ke.
+[00:50:41 --> 00:50:41]  Speaker 2: Haan.
+[00:50:43 --> 00:50:44]  Speaker 2: Haan ji, haan ji.
+[00:50:47 --> 00:50:48]  Speaker 2: Han, right.
+[00:50:51 --> 00:50:52]  Speaker 1: Esa toh hota hai.
+[00:50:52 --> 00:50:52]  Speaker 2: Toh matlab.
+[00:50:53 --> 00:51:00]  Speaker 2: Han, ye toh hota hai jaise humein koi messages aa gaye hain jo task mein hain toh unko over phone humne kar liya.
+[00:51:00 --> 00:51:12]  Speaker 2: Haan ho gaya, vo note karke humne sir ko bata diya toh vo done hai. "Toh uske liye hum again WhatsApp men jaake usko kuch alag se likh ke nahi dete ki haan ye we have done this aur that iss tareeke se."
+[00:51:07 --> 00:51:08]  Speaker 1: Ki nahi dete ki haan.
+[00:51:13 --> 00:51:22]  Speaker 1: Okay, okay. Ye matlab kitna ye basically gap hai for the agent kyunki vo dekh nahi payega. Toh isko matlab thoda sa study karne ke liye main puchh raha hun.
+[00:51:19 --> 00:51:20]  Speaker 2: Hmm hmm.
+[00:51:22 --> 00:51:25]  Speaker 1: Yah kitna often hai? How often does this happen?
+[00:51:25 --> 00:51:44]  Speaker 2: Ye hamesha hi hota hai sir, ye hamesha hi lagbhag regularly hota hai. Whatsapp men jaise humein kaam aa gaya hai, lekin hum kabhi iska phone pe de dete hain. Whatsapp pe bhi maximum sare jaate hain, lekin completion report maximally nahi hota. Bas hum delivery jab karte hain, tab hum completion report dete hain ki ye this has been delivered.
+[00:51:45 --> 00:51:55]  Speaker 2: "Toh otherwise toh koi phone aa gaya toh hum toh phone men hi bata diye ki sir ye ye hai toh unka kaam bhi ho gaya haan chalo bhej do haan humne bhej diya."
+[00:51:49 --> 00:51:50]  Speaker 1: Toh phone men hi.
+[00:51:50 --> 00:51:51]  Speaker 1: Bata de.
+[00:51:56 --> 00:52:02]  Speaker 2: "Toh ye phone men bhi hota hai, toh isko hum wapas like phir humein WhatsApp men daalna hoga kya sir?"
+[00:52:03 --> 00:52:19]  Speaker 1: Main puch raha hun matlab ye jata hai ki nahi jata hai? Agar nahi jata hai toh vo kitna bada gap hai vo humein measure karna padega. Agar gap bahut zyada hua phir humein sochna padega ki WhatsApp men daalna padega ki nahi ya kisi aur vajah se CI ko pahuncha sakte hain ki nahi. Abhi toh hum sirf question puch rahe hain.
+[00:52:12 --> 00:52:13]  Speaker 2: Men sochna pade.
+[00:52:15 --> 00:52:16]  Speaker 2: Aur vaise bhi aai thi.
+[00:52:20 --> 00:52:21]  Speaker 2: Hmm hmm.
+[00:52:22 --> 00:52:28]  Speaker 1: Abhi toh matlab question gap identify karne ki koshish kar rahe hain, uske baad gap ko measure karenge ki kitna bada gap hai.
+[00:52:22 --> 00:52:23]  Speaker 2: Matlab.
+[00:52:29 --> 00:52:29]  Speaker 2: Hmm hmm.
+[00:52:30 --> 00:52:37]  Speaker 1: Right? Toh ye gap hai basically, ye confirm ho gaya aur kaafi regular hai. Toh thoda idea mil gaya ki ye gap bhi kaafi bada ho sakta hai.
+[00:52:38 --> 00:52:38]  Speaker 2: Okay.
+[00:52:39 --> 00:52:43]  Speaker 1: Issmen humein nazar rakhna padega. Ye ye basically hamara conclusion hai, right? Ye bol sakta hun.
+[00:52:43 --> 00:52:45]  Speaker 2: Haan ji sir.
+[00:52:45 --> 00:52:48]  Speaker 1: Okay okay I will move on to last question.
+[00:52:50 --> 00:53:07]  Speaker 1: Okay. Issmen do hissa hain. Okay. Aapne abhi mantri ke bare mein kaafi kuch suna, questions bhi answer kiye, kuch ideas bhi mile, kuch gaps dikhe, kuch inconclusive hua. Sab kuch mila ke iss sab mein, ok, what do you think?
+[00:53:08 --> 00:53:12]  Speaker 1: Will you know be most useful to you from this AI agent Minister.
+[00:53:16 --> 00:53:24]  Speaker 2: "Sir useful" agar yah ekdam se kaam karna start ho jaaye sir toh useful toh bahut hoga sir kyonki
+[00:53:24 --> 00:53:24]  Speaker 1: Kyonki.
+[00:53:24 --> 00:53:40]  Speaker 2: Hamara jo main problem hai vahi hai ki hum miss karte hain. Hum bhul jaate hain ya phir hum pressure zyada hota hai toh hum achha chalo ye dekhenge vo kar lenge vo pehle kar do. Toh ek toh vo prioritize karke dega ki humein kaun se pehle karke unko dena hai.
+[00:53:41 --> 00:53:53]  Speaker 2: Usse humein kya humein bhi mentally peace rahega ki haan chalo ye kaam ho gaya aur ya phir humein remind karne wala koi toh hai jo kuch toh humein remind kar dega aur jisko hum bhulenge nahi jiski vajah se humein aage problem nahi aayegi.
+[00:53:44 --> 00:53:46]  Speaker 0: Ho gaya aur ya phir humein remind kar dena.
+[00:53:52 --> 00:53:53]  Speaker 0: Nahi aayegi.
+[00:53:53 --> 00:54:09]  Speaker 2: Hmm aur genuinely agar hum bhi matlab as a staff member bhi hum bhi yah nahi chahte ki company humare vajah se kuch problem mein aaye toh hamesha vah yah hamesha kehte hain ki haan chalo mere liye yah miss ho gaya chalo maine yah galat kar diya toh yah kar diya toh yah ho jata.
+[00:54:10 --> 00:54:15]  Speaker 2: "Toh ye miss karne ka problem solve ho jaaye toh ye toh isse better news toh kuch ho hi nahi sakta sir."
+[00:54:16 --> 00:54:19]  Speaker 1: "Yah samita bol rahi thi, Moushmi."
+[00:54:18 --> 00:54:24]  Speaker 2: Right ji, han sir, vahi matlab baat hai ki miss na ho toh.
+[00:54:26 --> 00:54:46]  Speaker 2: Jaise over matlab kaam ki vajah se ye baad men karenge ya phir ye haan ye pehle karna hai aise toh baad men jaake ye matlab farm ko bhi nuksan na ho toh iski vajah se rah gaya tha ye ye answer nahi hua toh hum bhi nahi chahte sir vahi.
+[00:54:47 --> 00:54:52]  Speaker 2: "Toh chaos bhi nahi bachega sir, haan vo vo problems bhi kam ho jayenge sir."
+[00:54:49 --> 00:54:49]  Speaker 1: Haan, voh.
+[00:54:50 --> 00:54:50]  Speaker 1: Bahut.
+[00:54:53 --> 00:54:58]  Speaker 1: Okay, aur abhi iska second part dono ko hi answer karna hai.
+[00:54:58 --> 00:54:58]  Speaker 2: hai ji.
+[00:54:59 --> 00:55:08]  Speaker 1: Aapke aapke abhi jo aapne dekha is sab se aapko sabse kharab kya laga ya jo aapko zyada chinta de raha hai vo kya hai? What worries you?
+[00:55:09 --> 00:55:10]  Speaker 2: Bol.
+[00:55:11 --> 00:55:13]  Speaker 2: Main to kya problem main face kar rahi hun ki main yah kar rahi hun.
+[00:55:20 --> 00:55:21]  Speaker 2: Theek ho.
+[00:55:24 --> 00:55:35]  Speaker 2: Sir hum yah use karne ke use karte rahe hain, uske baad matlab aap bata sakte hain matlab toh ismein kya problem humein face kar sakte hain? Matlab humein face karna hoga ya phir.
+[00:55:36 --> 00:55:37]  Speaker 2: Problems honge aage jaake.
+[00:55:38 --> 00:55:42]  Speaker 1: Problem ke alawa aapke future problems ho sakte hain. Iske alawa aapka koi worries hai?
+[00:55:44 --> 00:55:45]  Speaker 1: Jaise hamara.
+[00:55:44 --> 00:55:48]  Speaker 2: Jaise hamara matlab personal message jaise matlab vo sab.
+[00:55:49 --> 00:56:09]  Speaker 2: Jaise AI toh create hai already toh phone pe sare phone pe toh AI create hota hi hai, toh ye toh normally abhi sabke isme aa jata hai, aaya hai per hai, but iski vajah se koi dusra koi message kya phir koi hamara personal message ya koi photos vagairah ye matlab koi problem toh na aayega aayega nahi.
+[00:56:11 --> 00:56:14]  Speaker 1: Yah vaali hai hmm aur mausami aapka.
+[00:56:15 --> 00:56:17]  Speaker 2: Main mausami bol rahi thi sir.
+[00:56:17 --> 00:56:18]  Speaker 1: O sorry, sorry, Swami Tapa.
+[00:56:19 --> 00:56:30]  Speaker 2: Haan sir vahi hai matlab WhatsApp jaise hum ye jo contact number hai ye hamara personal hai ye personal mobile hum toh personal mobile hai
+[00:56:27 --> 00:56:28]  Speaker 1: Ye personal mobile hai.
+[00:56:30 --> 00:56:40]  Speaker 2: "Toh hum kabhi ye apne family members ka bhi message rehta hai, apne friends ke bhi messages aur aapko pata hai friends circle mein messages to rehte hi hain."
+[00:56:41 --> 00:56:55]  Speaker 2: "Toh like isi vajah se" matlab ye officially aur jo apna personal message ye mix ho ke koi issue na aa jaaye toh vo vo sabse zyada concern vali baat hai sir otherwise vaise kuch problem toh hai nahi.
+[00:56:51 --> 00:56:52]  Speaker 1: Concern vali.
+[00:56:56 --> 00:57:08]  Speaker 1: Okay. Okay, thank you. Ye bahut last question tha mere. Abhi main aapse puchhna chahta hun aapka koi agar QA karna chahte hain, aapke koi questions ho, I am here to.
+[00:57:02 --> 00:57:02]  Speaker 2: G.
+[00:57:08 --> 00:57:09]  Speaker 1: Answer.
+[00:57:10 --> 00:57:19]  Speaker 2: Nahi sir, vaise koi humein problem toh nahi face hua, vaise bhi aur matlab jab se sir ne bataya hai ya phir us din aapne bataya hai.
+[00:57:19 --> 00:57:40]  Speaker 2: "Toh ismen humein koi issue nahi hai sir, sara kuch agar sab kuch jaise aap log plan kar rahe ho agar vaise hi ho toh yah toh bahut achha kaam hoga lekin matlab vahi ek hamara concern vahi hai bas hamara personal messages jo hain jo humare matlab personal phone mein hain toh vah otherwise koi humein problem nahi hai issues nahi hai aur yah rather hamare liye bahut helpful hoga".
+[00:57:25 --> 00:57:26]  Speaker 0: Vaise hi ho.
+[00:57:27 --> 00:57:27]  Speaker 1: Toh.
+[00:57:41 --> 00:57:52]  Speaker 1: Haa humne apne apne pehle matlab setup mein hi yahi discuss kiya tha ki matlab sabse bada concern kya hoga privacy hoga toh tab se hamara yahi chal raha hai ab ye main bahut pehle ki baat kar raha hun.
+[00:57:46 --> 00:57:46]  Speaker 2: Hmm.
+[00:57:52 --> 00:57:53]  Speaker 1: Tab se mera ye chal raha hai ki
+[00:57:52 --> 00:57:53]  Speaker 2: Mera ye.
+[00:57:54 --> 00:57:58]  Speaker 1: We have to enforce privacy come what may. Toh.
+[00:57:58 --> 00:58:07]  Speaker 1: Toh jo bhi hum create kar rahe hain, usmen sabse pehle yahi aata hai ki limit the permissions. Hum permissions denge ki nahi?
+[00:58:06 --> 00:58:06]  Speaker 0: Okay.
+[00:58:07 --> 00:58:10]  Speaker 1: Sabse kam permission de ke kaam karne ka koshish kar rahe hain.
+[00:58:07 --> 00:58:08]  Speaker 0: Sabse kam.
+[00:58:11 --> 00:58:17]  Speaker 1: Usmen number one ehi hai ki sirf hum groups ko dekhenge. Usi group ko dekhenge toh aap select karke doge.
+[00:58:15 --> 00:58:15]  Speaker 0: Hmm.
+[00:58:18 --> 00:58:20]  Speaker 1: Jis group ke already Aishaish hai.
+[00:58:20 --> 00:58:21]  Speaker 1: Right? Okay.
+[00:58:21 --> 00:58:26]  Speaker 1: Usmen toh aapko share karne ki jarurat hi nahi hai kyunki uske permission se hi hum dekh lenge ki uss group mein kya chal raha hai.
+[00:58:21 --> 00:58:22]  Speaker 2: Toh aapko.
+[00:58:27 --> 00:58:34]  Speaker 1: Uske alawa agar aapka koi chat chal raha hai with a client aur with a supplier, usi ko sirf aapko share karna hai.
+[00:58:27 --> 00:58:28]  Speaker 2: Uske alawa.
+[00:58:35 --> 00:58:44]  Speaker 2: Done sir, agar aisa hota hai toh phir hum agar matlab choose select karte hain ki jaise hum status update WhatsApp men jab hum status daalte hain toh hum we can select.
+[00:58:35 --> 00:58:37]  Speaker 1: Vaise toh agar aisa ho.
+[00:58:38 --> 00:58:38]  Speaker 1: Haan.
+[00:58:43 --> 00:58:44]  Speaker 1: Hum log ise select kar sakte hain.
+[00:58:44 --> 00:58:53]  Speaker 2: "Toh hum select karke haan ye mera status de sakta hai ye dusra banda nahi de sakta toh agar vaise kuchh hota hai toh hum well end good hai usmen toh koi issue hi nahi hai phir sir."
+[00:58:53 --> 00:59:12]  Speaker 1: Hah, that's that is what we're aiming for. We're also considering I think Aisha was at some points of time considering ki aapko second sim dekhe usmen usse bhi hard limit kar sakte hain. Ekdam matlab hard limit right? Uss WhatsApp mein toh aapka aur koi communication hoga hi nahi. Toh chance hi nahi ho sakta aapko, koi worry hi nahi ho sakta ussme.
+[00:59:10 --> 00:59:10]  Speaker 0: Nahi ho sakta.
+[00:59:12 --> 00:59:16]  Speaker 1: Right? But usatema vahi hai aapka jo contact already hai.
+[00:59:13 --> 00:59:14]  Speaker 0: Hmm hmm but uss mein vahi
+[00:59:16 --> 00:59:22]  Speaker 1: Vo purana vala nahi hoga toh matlab purana vala agar voh nahi dikh raha hai chat toh use hum kaise nikalenge?
+[00:59:16 --> 00:59:17]  Speaker 0: Hmm.
+[00:59:22 --> 00:59:22]  Speaker 0: Kaise nikal rahe hain?
+[00:59:23 --> 00:59:33]  Speaker 1: Write. So agar aap toh karte bhi toh kaafi dinon ke baad uss AI ko basically ek stable state milega ki kyon uske paas pura background hoga tab tak ke liye.
+[00:59:24 --> 00:59:24]  Speaker 0: So agar aap.
+[00:59:24 --> 00:59:25]  Speaker 2: Hai.
+[00:59:33 --> 00:59:38]  Speaker 1: Right? Agar day one se main shuru karun toh usko kuchh nahi pata ki uss tat mein kya chal raha hai.
+[00:59:38 --> 00:59:40]  Speaker 2: Ji sir, ji sir.
+[00:59:39 --> 00:59:39]  Speaker 1: Ji sir.
+[00:59:40 --> 00:59:44]  Speaker 1: Chahie right, thoda sa usko matlab pichhle ka view chahie taki usko samajh mein aaye ki.
+[00:59:45 --> 00:59:49]  Speaker 1: Vo jo bol raha hai vo do din pehle iss context mein apply hota hai.
+[00:59:49 --> 00:59:57]  Speaker 2: Okay nahi vo then it's okay sir humare ye see mein bhi koi issue nahi hai ki haan chalo ismein toh maximum humare official messages hote hain.
+[00:59:50 --> 00:59:50]  Speaker 1: Nahi vo.
+[00:59:58 --> 01:00:04]  Speaker 2: Bas ye ek matlab ho jaaye ki haan hum choose kar sakte hain, toh koi issue nahi hoga.
+[01:00:02 --> 01:00:03]  Speaker 1: Toh.
+[01:00:03 --> 01:00:04]  Speaker 1: Nahi chahiye.
+[01:00:05 --> 01:00:21]  Speaker 1: Vo toh hum already design kar chuke hain isi solution mein. Isse bhi zyada agar aapko chahie usko bhi hum attempt karna hi padega humein basically. Your privacy is very important to us. So we are going with whatever you think is okay. Usse zyada hi karenge. Upar tak karenge usse zyada bhi karenge agar aap chahte hain toh.
+[01:00:17 --> 01:00:18]  Speaker 2: Aur kisi se.
+[01:00:21 --> 01:00:22]  Speaker 1: Write.
+[01:00:22 --> 01:00:23]  Speaker 2: Right sir, theek hai sir.
+[01:00:24 --> 01:00:24]  Speaker 1: Aur koi question?
+[01:00:24 --> 01:00:24]  Speaker 2: Haan.
+[01:00:26 --> 01:00:28]  Speaker 2: Nahi bas. Nahi sir.
+[01:00:26 --> 01:00:27]  Speaker 1: Nahi, bas.
+[01:00:28 --> 01:00:39]  Speaker 1: Okay, mera ek conclusion slide tha, main soch raha tha ki while we talk I will update it, but I think it's okay, right? So I will just hand over to Aishwarya now if he has something to say.
+[01:00:41 --> 01:00:46]  Speaker 0: Okay, I have nothing to say, bahut beijati key hai meri iss conversation ke beech mein, I will remember that.
+[01:00:47 --> 01:00:50]  Speaker 1: Mereku samajh mein aa raha hai, bahut busy log ho, abhi kaam pe jaana hai, ok ok.
+[01:00:47 --> 01:00:48]  Speaker 0: Mereku samajh mein aa raha hai.
+[01:00:51 --> 01:00:54]  Speaker 0: I have been asked to shit up couple of times, I will remember that.
+[01:00:57 --> 01:00:59]  Speaker 1: I don’t think you have that longer memory, you won’t remember.
+[01:01:00 --> 01:01:18]  Speaker 0: Nahi nahi, I have a very cunning memory. Okay, anyways, coming back to it. Again Smita ji and Moushumi ji, this is a trial run. Okay, try and understand like today also the mawsami is concern which I observed was when she had to download the app, she was concerned ki kya yah mera koi privacy mein again se kuchh isme copy toh nahi aayega?
+[01:01:18 --> 01:01:33]  Speaker 0: The point try and understand nobody is getting to that your own data above because practically even I don’t wish you to ever get into any trouble. It is only and only an attempt that our mistakes are minimized.
+[01:01:33 --> 01:01:47]  Speaker 0: Abb Conflict the boss and the staff is minimized and dependency upon one person or two person is minimized. It is a team effort that humen deliver karna hai, sabko deliver karna hai. Kisi ka kaam hai tracking off the information karna.
+[01:01:48 --> 01:02:07]  Speaker 0: Kisi ka kaam hai delivery manage karna, kisi ka kaam hai purchases manage karna. Ab agar ye talmel agar hamara kanoon se chale toh life is very good, agar ye nahi chalega we are in trouble. So this is where I need help and support. Try karte hain, God bless sab achchhe se ho jaaye and kuch toh help milegi, we will be able to deliver.
+[01:02:06 --> 01:02:07]  Speaker 2: Theek hai.
+[01:02:08 --> 01:02:14]  Speaker 2: Gi kuchh matlab ishnmen agar ho jaaye toh dekhte hain sir kuchh toh help hoga jaise miss.
+[01:02:12 --> 01:02:13]  Speaker 0: Billkul.
+[01:02:14 --> 01:02:25]  Speaker 0: Exactly who our biggest yet drawback is a task has come it has not been responded like everyday when I come to the office the first thing I ask is brother why are not checked?
+[01:02:26 --> 01:02:41]  Speaker 0: The point is ye mere ko remind karne ke bajaaye if the AI agent is able to do it for you, summarize it and point it to you. But again it comes down to the human that AI has subbed you and served you food, now you have to at least check if the aaya has arrived.
+[01:02:30 --> 01:02:30]  Speaker 1: You sub.
+[01:02:41 --> 01:02:43]  Speaker 0: Ye agar hum kar lenge then our life
+[01:02:43 --> 01:02:56]  Speaker 0: Hopefully will be very positive from here on and again trial hai let’s try it out how it works out. Issmen bhi kuch changes aayenge kuch complaints aayengi but they will be solutions to it. Kunal sir is helping us out.
+[01:02:51 --> 01:02:51]  Speaker 1: G.
+[01:02:54 --> 01:02:54]  Speaker 1: Ji sir.
+[01:02:57 --> 01:03:16]  Speaker 0: He is one of the finest techie person I have ever met in my life. So you can count on it if he is putting in this many hours and sleepless nights into our effort and our work. Count on it something nice is going to come out of it and let’s be hopeful. Aur agar apne ko koi office ka number ya kuch aur aise pe convert karna padega.
+[01:03:17 --> 01:03:24]  Speaker 0: These are remedial steps which shall be taken and will be helped out upon, but the prime one idea is at least start to do.
+[01:03:26 --> 01:03:29]  Speaker 2: Hmm right. Gi Sir. Ji sir. Ji sir.
+[01:03:29 --> 01:03:30]  Speaker 1: That’s a very good.
+[01:03:29 --> 01:03:40]  Speaker 0: Na sir, I hope we should be okay with this and if you want any data or information or something like exporting of the chats voh toh main aapko karke de hee raha hun.
+[01:03:30 --> 01:03:30]  Speaker 1: Haan.
+[01:03:40 --> 01:04:00]  Speaker 0: Most of the groups that are in common wo toh main aapko share kar hi dunga. From their perspective if some of these have one on one they will also share with you. Baki let’s see how we can make more examples make the agent learn more out of our daily experience and our mistakes and our achievements that we achieve in a day. And let’s see how things unfold man.
+[01:04:01 --> 01:04:15]  Speaker 1: Its excellent summary S well of the future. Main aapko aapke saath bhi mujhe ek aur zyada lamba interview karna hai which you know which we probably do in two parts of something uske liye bhi connect karna aaj hi karna hai shuru write.
+[01:04:14 --> 01:04:14]  Speaker 0: Okay.
+[01:04:15 --> 01:04:20]  Speaker 1: Aur just to give three aur four points just to conclude.
+[01:04:20 --> 01:04:20]  Speaker 0: Hei.
+[01:04:21 --> 01:04:30]  Speaker 1: Success for this entire thing, right? It depends on, first of all, it depends on two things. Phir hai usko main kitna benefit de raha hun.
+[01:04:32 --> 01:04:32]  Speaker 1: Right?
+[01:04:33 --> 01:04:49]  Speaker 1: Aur usko vo benefit achha lag raha hai ki nahi? Main benefit de sakta hun usko agar achha na lage toh faad mein jaayega, right? "Toh benefit toh hum nikal lenge idhar se urvar se" matlab ye extra kar do, ye kar do, "but aapko agar pasand nahi aaye toh".
+[01:04:50 --> 01:04:56]  Speaker 1: Toh pasand men kya-kya aata hai? Pasand men aata hai aapka trust. Right? Toh humein aapka trust ekdam top mein rakhna hai.
+[01:04:56 --> 01:05:04]  Speaker 1: Okay, number two hai ki irritation na ho. Okay, number three hai ki aapko bachaye.
+[01:05:05 --> 01:05:10]  Speaker 1: Aapko relief de, right? Aapko kuch galat hone wala hai, aapko bacha le vaisa kuch.
+[01:05:10 --> 01:05:11]  Speaker 1: Write.
+[01:05:11 --> 01:05:12]  Speaker 2: Gi right sir.
+[01:05:12 --> 01:05:26]  Speaker 1: Toh hum ekdam apne saare strategy mein central rakh ke kaam karenge kyonki humein adoption karana hai. Agar hum adoption na karain itna kaam ka koi use nahi hoga pura waste ho jaayega. Jitna bhi benefit hum add kar den iske andar.
+[01:05:27 --> 01:05:44]  Speaker 1: Right? Benefit toh main hazaar kar sakta hun. Actually main aapko bataun aap agar AI ke levels upar-upar jaayen jahan pe abhi AI chal raha hai, it is so addictive, it is so amazing to work with an AI. Especially a well calibrated AI. Right? Main I can start
+[01:05:45 --> 01:05:47]  Speaker 1: Matlab the moment I wake up.
+[01:05:48 --> 01:06:03]  Speaker 1: From there I go to 36 hours I don’t feel like stopping. Ek AI ke saath kaam karte karte karte karte karte. But ya we are not we are not talking about that kind of thing right. I’m just saying that it’s an accelerating thing when an AI works really well. Okay.
+[01:06:03 --> 01:06:03]  Speaker 2: Hmm.
+[01:06:03 --> 01:06:20]  Speaker 1: "'T'O know say to in the first step of this journey end hopefully in the future you get more advanced AI use some of this work you can start giving the AI instead of what right now we're conjecturing is that you have to do everything AI will just try to catch some things for you but in the future may be you should be able to say that AI to yeah see karan'
+[01:06:21 --> 01:06:21]  Speaker 1: Okay.
+[01:06:24 --> 01:06:25]  Speaker 2: Okay sir. Gi Sir.
+[01:06:26 --> 01:06:32]  Speaker 1: Okay, all right. Thank you very much, thank you, thank you very much, thank you very much. Thank you, thank you sir.
+[01:06:31 --> 01:06:32]  Speaker 2: Thank you, thank you sir, thank you.
+[01:06:32 --> 01:06:51]  Speaker 1: Aapko bolta hun main bol raha hun ki main iska kya hoga iss recording ka main sirf transcript nikalunga sirf text aur iska main jo follow kar raha hun process usmen ek analysis tool hai usmen se sare points ke matlab vo summaries and all nikalenge jo maine questions add kie the slides men end all uske answers vo nikaal ke phir mujhe batayega kuch.
+[01:06:51 --> 01:06:56]  Speaker 1: Uske agar uska agar result kuchh share karna hai aapke saath, aap mujhe bol sakte hain, main share karunga. Okay?
+[01:06:56 --> 01:06:58]  Speaker 2: Nahi sir, ji sir.
+[01:06:58 --> 01:07:01]  Speaker 1: Okay, thank you, thank you.
+[01:06:59 --> 01:07:03]  Speaker 2: Okay okay thank you thank you so much sir thank you so much sir."
+[01:07:03 --> 01:07:07]  Speaker 1: Thank you so much, okay? Thank you so very much you to share your time.
+[01:07:05 --> 01:07:05]  Speaker 2: Thank you.
+[01:07:09 --> 01:07:12]  Speaker 1: Okay, I’m gonna drop off now, okay? Bye bye.
+[01:07:11 --> 01:07:12]  Speaker 2: Theek hai.
+[01:07:12 --> 01:07:12]  Speaker 0: Bye bye.
+[01:07:12 --> 01:07:14]  Speaker 2: Bye Sir, Thank you.

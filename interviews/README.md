@@ -61,13 +61,15 @@ interviews/
 
 ### Sarvam (`sarvam/`) — model: `saaras:v3`, batch API, with diarisation
 
-*Transcription in progress — see files when complete.*
+**Ashish Part 1** (`Part 1 Ashish interview_Mar_27_2026-07_41-PM_sarvam_roman.txt`):
+- ✅ 720 segments, full 44 min, no hallucination. Roman/Latin script throughout.
+- Auto-detect chose `en-IN` (Kunal speaks English), so output is already Roman.
+- **Definitive transcript for Ashish Part 1.** Supersedes Whisper + Gemini.
 
-Expected advantages over Gemini/Whisper:
-- Native Assamese (`as-IN`) support
-- Code-mixing mode: Hindi in Devanagari + English in Latin in same output
-- Professional speaker diarisation trained on Indian recordings
-- No hallucination loop issue (batch API processes audio natively)
+**Staff session** (`Mantri project User interview_Mar_27_2026-11_17-AM_sarvam_roman.txt`):
+- ✅ 776 segments, full 67 min, no hallucination. Roman/Latin script throughout.
+- Originally output in Devanagari (`_sarvam_transcribe.txt`) because Hindi content dominated auto-detect → converted to Roman using `scripts/transliterate_sarvam.py` (Sarvam transliteration API, `hi-IN → en-IN`).
+- **Definitive transcript for Staff session.** Supersedes Whisper + Gemini.
 
 ---
 
