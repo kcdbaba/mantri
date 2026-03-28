@@ -351,9 +351,7 @@ The ad-hoc shopkeeper payment scenario from Part 1 (Ashish described losing mone
 - "Do you have any way of knowing how often this happens — even a rough guess of how many times a month?"
 - "You mentioned a ₹495 January payment you found by searching WhatsApp months later. Do you think there are other payments from the last year that are still unrecovered?"
 
-**For the agent design — confirm the detection rule:**
-- "If the agent noticed a payment screenshot posted in a supplier/task group but found no matching narration in the Payments group within a couple of hours, should it alert you? Or is there a reason you'd sometimes deliberately post to the task group only?"
-- "The narration in the Payments group is the key — it's what enables WhatsApp search. If the agent could auto-detect when step 2 is missing and send you a reminder, would that be valuable?"
+*(Cross-group deduplication already confirmed in Part 1 — agent will treat the same screenshot in two groups as one event. No need to revisit.)*
 
 **Listen for:** the exact step sequence (how many steps, who owns each), failure patterns by step, whether the client is always Army or sometimes commercial
 
