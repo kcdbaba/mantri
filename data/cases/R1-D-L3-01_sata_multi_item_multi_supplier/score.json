@@ -1,61 +1,59 @@
 {
   "verdict": "PASS",
-  "overall_score": 88,
+  "overall_score": 84,
   "dimensions": {
     "task_recall": {
-      "score": 90,
-      "notes": "Comprehensive recall across all four threads. All major SATA items captured as discrete subtasks: Window AC x3, Mini Fridge, LG Fridge 242L, Stabilizers, GeM spices, stationery, electronics bid, flex banners, Amazon items (gas stove, mobile stands, air fryer), fountain pens, surge protector, MS Office/antivirus, and the balance amount GeM link. Non-SATA orders (DY GOC Madam, 857 Fd Wk Sp, 107 Brigade, Apollo hospital, 21 Mtn Div, etc.) are also captured. The Canon camera and colour printer enquiries are included. Minor gap: basketball shoes and dedicated batteries (mentioned in case metadata as items without supplier chats) are not explicitly called out as discrete line items — they are noted in the global flags about missing supplier threads but not given their own parent tasks. The case notes these as items with no supplier thread available, so their absence as named tasks is a small but meaningful gap."
-    },
-    "entity_accuracy": {
-      "score": null,
-      "notes": null
-    },
-    "cross_thread_correlation": {
       "score": 87,
-      "notes": "Strong multi-thread correlation throughout. SATA order items are correctly linked across Thread 1 (client) and Threads 2/3 (suppliers). DY GOC Madam requirement (Thread 4) is correctly correlated with supplier rate queries in Threads 2 and 3. Surge protector pricing is correctly cross-referenced between Thread 1 and Thread 4 (two parallel sourcing efforts flagged). Voltas/JRBK payments in Thread 2 are correctly matched to SATA AC and fridge orders. LG Sanbira account reconciliation is cross-linked with the fridge delivery task. Minor issue: the GeM items in Thread 1 on 3/3 (e-rickshaw battery, PID controller, winch motor, nameplate) are flagged as potentially belonging to a different unit — correctly ambiguity-flagged rather than silently merged, which is good practice."
+      "notes": "The agent identifies the vast majority of tasks across the 24-day window: AC/fridge/stabilizer procurement, LG fridge, all major GeM clusters (spices, stationery, battery/PID/winch, basketball shoes, target paper, flex banner), misc items from the original list (camera, golf cart, casserole, bed sheets, air fryer, pen, surge protector, acrylic board, file organiser, antivirus), signage vendors, all payment tasks (Avi International, Charu Enterprise, Kashmiri Saikia, unknown payee 9864923247), and parallel client deliveries (107 Bde, Arty Bde, 264 Fd Wk Sp). Cross-thread payment tracking is thorough. Minor gap: the agent does not explicitly call out the final delivery challan / inspection sign-off as a pending milestone in its own right (it is touched on in subtasks but the completeness note flags it as a distinct missing element). The agent also does not surface a standalone subtask for year-end financial closeout (31 Mar proximity) even though it notes it in passing. Overall recall is strong but not perfect."
+    },
+    "entity_accuracy": null,
+    "cross_thread_correlation": {
+      "score": 90,
+      "notes": "The pre-analysis correlation map correctly links Thread 1 client requirements to Thread 2 (Voltas/JRBK) for ACs and mini fridge, Thread 3 (LG/Sanbira) for the 242L fridge, and Thread 4 for internal logistics and parallel clients. Payments across threads are meticulously reconciled. The agent correctly treats the Sata Bty Bn and the Artillery Brigade (Arty Bde) as potentially separate entities and flags the ambiguity rather than silently merging them. GeM billing entities (Army Stores, Sun Traders, Uttam Enterprises) are correctly identified as Ashish's own entities rather than third-party clients. The Sanbira account reconciliation discrepancy (statement only to 25 Dec 2025) is caught and cross-referenced. One minor issue: the agent is slightly uncertain about whether 'Arty Bde' in Thread 4 is the same as Sata Bty Bn, which is correct to flag but could have been resolved with more confidence given the military hierarchy context visible in the threads."
     },
     "next_step_quality": {
-      "score": 85,
-      "notes": "Next steps are consistently actionable and specific: call Sanbira with the correct number for pickup address, confirm vehicle dispatch from Sub Arvind Sir for 25 Mar, request updated statement from JRBK post-₹39,200 payment, correct Register 450pg product ID before bid submission, verify Amazon orders placed for 3/3 client-shared links. The DY GOC escalation flag is appropriately urgent. Some next steps are slightly generic (e.g., 'source from ulubari printer zone or Saikia Electronics' for HP1020 parts is reasonable but speculative). The OTG rate gap for DY GOC is correctly identified as blocking the consolidated quote. A few tasks (D13 air cooler, D10 hair clippers) lack client identity, which is correctly flagged for human review before action."
+      "score": 82,
+      "notes": "Next steps are generally specific, actionable, and correctly assigned to named individuals (Ashish, Ms. Abhisha, Ms. Mousumi, Mrs. Samita, Mr. Rahul/Samsuel). The agent correctly distinguishes tasks that require Ashish personally (Army client payment follow-ups) versus tasks delegatable to staff. The 25 Mar delivery logistics (vehicle confirmation, JRBK dispatch call, Sanbira godown collection) are well-sequenced. The bid deadline for the Rs 51,964 GeM cluster (24 Mar opening) is flagged as urgent. Financial reconciliation next steps for Sanbira are practical. Some next steps are slightly generic ('confirm with Ashish', 'verify in Tally') without specifying the exact information needed or the communication channel. The working capital/cash flow flag is a useful proactive step but could be more quantified given the payment totals are already computed in the analysis."
     },
     "implicit_task_detection": {
-      "score": 86,
-      "notes": "Strong detection of implicit tasks: the 21-day gap on Amazon orders (A10) flagged as high-risk silent drop; the missing OTG rate for DY GOC Madam (D5) identified without being explicitly stated anywhere; the need to reconcile Sanbira's account statement (only covers to Dec 2025) before the LG fridge delivery is implicit and correctly surfaced; the need to confirm client acceptance of 45L fridge when they requested 75/100L (A2 flag) is a good implicit gap detection. Abhisha's 3/24 'all items ready' message is correctly interpreted as triggering a vehicle-dispatch confirmation task. The food warmer 'in transport' with no follow-up is flagged. The planter delivery with no confirmation is noted. Slight miss: the case metadata specifically calls out 'payment confirmation not yet in window' and 'final delivery challan/inspection not confirmed' as missing milestones — the agent notes delivery pending but does not explicitly create a post-delivery inspection/challan task as a discrete item."
+      "score": 85,
+      "notes": "Strong performance on implicit task detection. The agent identifies: delivery challan preparation, gate pass / cantonment entry documentation, GRN collection from receiving officer, GeM portal delivery confirmation upload requirement, GeM e-invoice raising, invoice raising post-delivery for multiple clients, payment follow-up timing (60-90 day Army cycle) with appropriate escalation thresholds, Tally entry requirements for informal vendor payments, GST bill collection from multiple vendors, account reconciliation with Sanbira, and year-end cash flow pressure (31 Mar). The 'all items ready' ambiguity flag (Subtask 6, Parent Task 1) is an excellent implicit detection — Abhisha's message could cause premature vehicle dispatch. The agent also catches that the 9864923247 payment of Rs 20,000 has no confirmation, which is an implicit financial risk. Slight miss: the completeness note flags 'payment confirmation not yet in window' as a distinct gap, but the agent does not create a standalone explicit task for confirming payment receipt from Sata Bty Bn for already-invoiced items."
     },
     "ambiguity_flagging": {
-      "score": 89,
-      "notes": "Excellent ambiguity flagging throughout. A dedicated 'Ambiguous Correlations' section lists 7 items requiring human review. The unidentified ₹20,000 UPI payment recipient is correctly flagged rather than guessed. The 'return from Arty Bde' unknown item is flagged. The dual GeM product IDs for Biryani Masala are noted. The hair clipper and air cooler client identity gaps are called out. The 'Sanmati hold reason unknown' is flagged for documentation. The media omission global flag is prominent and correctly cautions that payment screenshots and delivery challans may be hidden in omitted media. The stabilizer brand ambiguity (client said 'Ok' but context unclear) is appropriately escalated rather than assumed resolved. Minor: the case metadata notes 'supplier chats for batteries and basketball shoes not available' — the agent flags missing supplier threads in general terms but does not call out batteries and basketball shoes by name as items with confirmed zero supplier-thread coverage."
+      "score": 83,
+      "notes": "The agent flags ambiguities clearly and consistently rather than silently resolving them: the 'all items ready' vs actual dispatch status discrepancy is explicitly called out; the Arty Bde vs Sata Bty Bn identity question is flagged; the two GeM quantity configurations (3 Mar vs 13 Mar) for battery/PID/winch are noted without a confident guess; the Ram Ram Sahab payment purpose is flagged as unknown; the Rs 20,000 payment to 9864923247 is flagged as unresolved; the Kashmiri Saikia dual-amount ambiguity is surfaced; the 'Link confirm ho gaya' (23 Mar) is correctly noted as not a reliable completion signal. The flex banner dual-channel issue (physical Flexi Sign vs GeM) is flagged. The agent also flags the deleted Sanbira message as a potential acknowledgement. One area for improvement: the Microsoft Office vs antivirus resolution ('link confirm ho gaya') is flagged as ambiguous but the agent could have been more explicit that this requires a definitive confirmation call rather than treating the 23 Mar message as possibly sufficient."
     }
   },
   "pass_criteria_met": true,
   "passes": [
-    "All major SATA order items identified as discrete subtasks under one parent order cluster",
-    "Correct supplier attribution: Voltas/JRBK for AC and stabilizers, Sanbira/LG for 242L fridge, GeM sellers for spices/stationery/electronics",
-    "Information gap flagged for items where no supplier confirmation thread exists (global flag #1 on media omissions, ambiguity flags on unresolved sourcing)",
-    "Proactive milestone tracking present throughout: vehicle arrangement for 25 Mar, bid opening 24 Mar, account statement reconciliation before delivery",
-    "Cross-thread correlation correctly unifies DY GOC Madam rate queries across Threads 2, 3, and 4",
-    "Implicit task detection: 21-day Amazon order gap flagged as high-risk silent drop",
-    "Implicit task detection: OTG rate missing for DY GOC identified without explicit statement",
-    "Implicit task detection: Sanbira statement gap (only to Dec 2025) surfaced as blocking task",
-    "Client size expectation vs. supplier availability gap flagged (75/100L requested vs. 45L available)",
-    "Ambiguity section explicitly lists 7 items for human review rather than silently resolving them",
-    "Dual Biryani Masala product IDs flagged as requiring confirmation of correct active link",
-    "Unidentified ₹20,000 UPI payment flagged for human review",
-    "DY GOC Madam order correctly escalated as high-priority with 20-day delay noted",
-    "Payments without GST bills consolidated into a single reconciliation task (E1.1)"
+    "All major item categories identified as separate subtasks under one parent order structure (ACs, mini fridge, stabilizer, LG fridge, all GeM clusters, misc items from original list)",
+    "Correct supplier attribution: Voltas/JRBK for ACs and mini fridge, LG Sanbira for 242L fridge",
+    "Information gap flags explicitly raised for items with no supplier thread (golf push cart, casserole, bed sheets, air fryer) — marked 'supplier thread not found — human review needed'",
+    "Proactive milestone tracking present throughout: delivery challan, gate pass, GRN, GeM portal acceptance, e-invoice, Tally entry, payment cycle monitoring",
+    "Cross-thread correlation correctly links client requirement in Thread 1 to supplier threads 2 and 3 and internal tasks in Thread 4",
+    "'All items ready' ambiguity (Abhisha 24 Mar vs AC order placed only 23 Mar) correctly flagged as high-risk over-commitment signal",
+    "GeM portal implicit tasks identified: delivery confirmation upload, e-invoice raising, order acceptance deadlines",
+    "Sanbira account reconciliation discrepancy (statement only to 25 Dec 2025) caught and surfaced as financial risk",
+    "Rs 20,000 payment to unknown payee 9864923247 flagged as unresolved with no confirmation",
+    "Arty Bde vs Sata Bty Bn identity ambiguity correctly flagged rather than silently merged",
+    "Year-end (31 Mar) cash flow pressure noted in context of Army 60-90 day payment cycle and cumulative supplier advances",
+    "Bid deadline for Rs 51,964 GeM cluster (24 Mar opening) identified and flagged as urgent",
+    "Parallel client deliveries (107 Bde, Arty Bde, 264 Fd Wk Sp) correctly isolated as separate parent tasks and not merged with Sata Bty Bn order"
   ],
   "failures": [
-    "Basketball shoes and dedicated batteries (explicitly named in case metadata as items with no supplier thread) are not given discrete named parent tasks — they appear only in general gap flags rather than as trackable line items",
-    "Post-delivery inspection and final delivery challan tasks not explicitly created as discrete subtasks — case metadata flags these as missing milestones",
-    "The 'all items ready' confirmation by Abhisha on 3/24 is noted but not used to trigger a formal delivery completion checklist task covering all items against the original 3/1 order list",
-    "GeM items on 3/3 (e-rickshaw battery, PID controller, winch motor) are flagged as possibly belonging to a different unit but not cross-referenced with the batteries line item mentioned in case metadata as lacking a supplier thread"
+    "Final delivery challan and inspection sign-off not surfaced as a standalone milestone task — referenced in subtasks but not given the prominence flagged in the completeness note",
+    "Payment confirmation receipt from Sata Bty Bn for already-delivered items (blinds, battery charger delivered 6 Mar) does not have a dedicated follow-up task with a specific trigger date",
+    "Year-end financial closeout (31 Mar) is mentioned in passing but not structured as an actionable task with assigned owner and deadline",
+    "Working capital gap is computed accurately but the next step ('evaluate whether invoice financing or bank OD is needed') is not assigned to a specific person with a specific deadline given the 31 Mar urgency",
+    "The agent does not explicitly resolve or attempt to resolve the 'Arty Bde' identity question using the military hierarchy visible in the threads (Sata Bty Bn is a battery under an artillery regiment, not a brigade-level unit), leaving it as an open ambiguity when some contextual reasoning could narrow it",
+    "Microsoft Office/antivirus resolution flagged as ambiguous but next step lacks specificity about what confirmation is needed and from whom"
   ],
-  "notes": "This is a high-quality output that would genuinely support operations in a complex, multi-thread, multi-supplier Army supply scenario. The agent successfully avoids the most costly failure modes: no items are merged across clients, no supplier thread gaps are silently ignored, and next steps are specific enough to act on. The main weaknesses are at the margin: two named item categories from the case metadata (basketball shoes, batteries) do not surface as discrete named tasks, and the end-of-lifecycle milestones (delivery challan, inspection sign-off) are implied but not made explicit. The ambiguity flagging is particularly strong — the dedicated section with 7 numbered ambiguous correlations is a best-practice approach that significantly reduces the risk of human operators acting on incorrect assumptions.",
+  "notes": "This is a strong performance on a genuinely complex multi-thread case spanning 24 days, ~17 parent tasks, and dozens of subtasks across client, two supplier, and internal threads. The agent correctly establishes the unified parent order structure, attributes suppliers where chats are available, and explicitly flags gaps where supplier threads are absent. The implicit task detection and ambiguity flagging are particularly strong — the 'all items ready' flag alone could prevent a costly failed delivery attempt. The main weaknesses are around completeness of milestone tracking for already-delivered items (invoicing, payment confirmation) and the lack of a structured year-end closeout task given the 31 Mar proximity. These are meaningful but not operationally catastrophic gaps. The output comfortably meets the pass criteria as defined.",
   "case_id": "R1-D-L3-01",
   "case_name": "sata_multi_item_multi_supplier",
   "framework": "R1-D",
   "level": "L3",
-  "evaluated_at": "2026-03-26T04:39:02",
+  "evaluated_at": "2026-03-29T03:57:30",
   "model_used": "claude-sonnet-4-6",
   "eval_model": "claude-sonnet-4-6"
 }
