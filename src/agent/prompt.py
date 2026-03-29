@@ -79,6 +79,7 @@ Respond with valid JSON only. No prose, no markdown fences.
 - Only include nodes whose status should change based on the messages.
 - Use "provisional" if a status change is implied but not confirmed.
 - confidence < 0.75 → use "provisional" status.
+- Node states include a confidence value from the previous call. A node with status "provisional" and confidence < 0.70 is weakly held — if this message provides clarifying evidence, prefer committing it to a definitive status over leaving it provisional.
 - Do not invent node_ids not in the template.
 - ambiguity_flags: raise one per distinct ambiguity detected. Never silently skip ambiguity.
   severity: high = could cause wrong delivery or payment; medium = affects task progression;
@@ -217,11 +218,12 @@ based on incoming WhatsApp messages.
 
 
 def build_user_section(node_states: list[dict], recent_messages: list[dict],
-                       new_message: dict, current_items: list[dict] | None = None) -> str:
+                       new_message: dict, current_items: list[dict] | None = None,
+                       routing_confidence: float = 1.0) -> str:
     """Build the variable user section for a single update call."""
     nodes_summary = [
         {"node_id": n["id"][len(n["task_id"]) + 1:] if n.get("task_id") else n["id"],
-         "name": n["name"], "status": n["status"]}
+         "name": n["name"], "status": n["status"], "confidence": n.get("confidence")}
         for n in node_states
     ]
 
@@ -260,6 +262,12 @@ def build_user_section(node_states: list[dict], recent_messages: list[dict],
 ## New message
 
 {new_msg_line}
+
+## Routing signal
+
+routing_confidence: {routing_confidence:.2f} — how confident the router is that this message belongs to this task.
+If routing_confidence < 0.85, the message may partially or fully concern a different task.
+Be conservative: prefer "provisional" status and raise an ambiguity_flag (category="linkage") if the message content seems inconsistent with this task.
 
 Update the task nodes based on the above. Remember to activate auto_trigger nodes
 when their predecessor conditions are met, even if no message explicitly mentions them."""
