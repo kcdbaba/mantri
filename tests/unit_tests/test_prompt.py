@@ -5,8 +5,10 @@ No LLM, no DB.
 
 import json
 import pytest
+import allure
+from unittest.mock import patch
 
-from src.agent.prompt import build_user_section
+from src.agent.prompt import build_user_section, build_system_prompt
 
 
 def _make_node(task_id, node_id, status="pending"):
@@ -22,6 +24,8 @@ def _make_node(task_id, node_id, status="pending"):
 # build_user_section — node_id derivation
 # ---------------------------------------------------------------------------
 
+@allure.feature("Prompt Building")
+@allure.story("Node ID Derivation")
 class TestNodeIdDerivation:
 
     def test_simple_node_id_extracted(self):
@@ -53,6 +57,8 @@ class TestNodeIdDerivation:
 # build_user_section — items block
 # ---------------------------------------------------------------------------
 
+@allure.feature("Prompt Building")
+@allure.story("Items Block")
 class TestItemsBlock:
 
     def test_no_items_omits_section(self):
@@ -79,6 +85,8 @@ class TestItemsBlock:
 # build_user_section — image flag
 # ---------------------------------------------------------------------------
 
+@allure.feature("Prompt Building")
+@allure.story("Image Flag")
 class TestImageFlag:
 
     def test_image_path_adds_note(self):
@@ -106,6 +114,8 @@ class TestImageFlag:
 # build_user_section — messages
 # ---------------------------------------------------------------------------
 
+@allure.feature("Prompt Building")
+@allure.story("Messages Section")
 class TestMessagesSection:
 
     def test_no_recent_messages_shows_none(self):
@@ -118,3 +128,40 @@ class TestMessagesSection:
         section = build_user_section([], msgs, {"body": "x", "timestamp": 1})
         assert "kapoor aayenge" in section
         assert "ashish@s.whatsapp.net" in section
+
+
+# ---------------------------------------------------------------------------
+# build_system_prompt
+# ---------------------------------------------------------------------------
+
+_MOCK_TEMPLATE = {"nodes": [{"id": "order_confirmation", "type": "real_world_milestone"}]}
+
+
+@allure.feature("Prompt Building")
+@allure.story("System Prompt")
+class TestBuildSystemPrompt:
+
+    def test_raises_for_missing_task(self):
+        with patch("src.store.task_store.get_task", return_value=None):
+            with pytest.raises(ValueError, match="Task not found"):
+                build_system_prompt("no_such_task")
+
+    def test_accepts_task_dict_directly(self):
+        task = {"id": "t1", "order_type": "standard_procurement"}
+        with patch("src.agent.prompt.get_template", return_value=_MOCK_TEMPLATE):
+            result = build_system_prompt("t1", task=task)
+        assert isinstance(result, str)
+        assert len(result) > 0
+
+    def test_returns_order_type_in_prompt(self):
+        task = {"id": "t1", "order_type": "supplier_order"}
+        with patch("src.agent.prompt.get_template", return_value=_MOCK_TEMPLATE):
+            result = build_system_prompt("t1", task=task)
+        assert "supplier_order" in result
+
+    def test_skips_db_lookup_when_task_provided(self):
+        task = {"id": "t1", "order_type": "standard_procurement"}
+        with patch("src.store.task_store.get_task") as mock_get_task, \
+             patch("src.agent.prompt.get_template", return_value=_MOCK_TEMPLATE):
+            build_system_prompt("t1", task=task)
+        mock_get_task.assert_not_called()

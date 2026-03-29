@@ -18,9 +18,10 @@ import shutil
 import subprocess
 from pathlib import Path
 
-RESULTS_DIR = Path("tests/allure/results")
-REPORT_DIR  = Path("static/developer/tests")
-HISTORY_DIR = Path("tests/allure/history")
+RESULTS_DIR    = Path("tests/allure/results")
+REPORT_DIR     = Path("static/developer/tests")
+HISTORY_DIR    = Path("tests/allure/history")
+CATEGORIES_SRC = Path("tests/allure/categories.json")
 
 
 def main():
@@ -31,13 +32,15 @@ def main():
         print("No allure results found — run tests first (pytest / run_incremental_test.py)")
         return
 
-    # Inject previous history so Allure renders trend charts
+    # Inject previous history and categories into each results subdir
     for src in source_dirs:
         history_target = src / "history"
         if history_target.exists():
             shutil.rmtree(history_target)
         if HISTORY_DIR.exists() and any(f for f in HISTORY_DIR.iterdir() if f.name != ".gitkeep"):
             shutil.copytree(HISTORY_DIR, history_target)
+        if CATEGORIES_SRC.exists():
+            shutil.copy(CATEGORIES_SRC, src / "categories.json")
 
     # Generate static report — pass each subdir explicitly
     subprocess.run(

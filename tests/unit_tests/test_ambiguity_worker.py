@@ -5,6 +5,7 @@ No DB writes — patches transaction() and update_node.
 
 import time
 import pytest
+import allure
 from unittest.mock import patch, MagicMock, call
 
 from src.alerts.ambiguity_worker import _process_entry, _auto_resolve
@@ -46,6 +47,8 @@ def _make_entry(status="pending", severity="high", blocking=1,
 # pending → first escalation
 # ---------------------------------------------------------------------------
 
+@allure.feature("Ambiguity Handling")
+@allure.story("First Escalation")
 class TestFirstEscalation:
 
     def test_pending_entry_sends_escalation(self):
@@ -74,6 +77,8 @@ class TestFirstEscalation:
 # escalated + timeout → re-escalation
 # ---------------------------------------------------------------------------
 
+@allure.feature("Ambiguity Handling")
+@allure.story("Re-Escalation")
 class TestReEscalation:
 
     def test_high_severity_re_escalates_after_timeout(self):
@@ -114,6 +119,8 @@ class TestReEscalation:
 # low severity → auto-resolve after timeout
 # ---------------------------------------------------------------------------
 
+@allure.feature("Ambiguity Handling")
+@allure.story("Auto Resolve")
 class TestAutoResolve:
 
     def test_low_severity_auto_resolves_after_timeout(self):

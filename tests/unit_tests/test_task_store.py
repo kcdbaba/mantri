@@ -11,6 +11,7 @@ import json
 import time
 import uuid
 import pytest
+import allure
 from unittest.mock import patch
 from pathlib import Path
 
@@ -76,6 +77,8 @@ def _seed_client_item(db_path, task_id, description, quantity, unit="bags"):
 # apply_item_extractions
 # ---------------------------------------------------------------------------
 
+@allure.feature("Item Management")
+@allure.story("Apply Item Extractions")
 class TestApplyItemExtractions:
 
     def test_add_new_item(self, db_path):
@@ -144,6 +147,8 @@ class TestApplyItemExtractions:
 # apply_node_data_extractions
 # ---------------------------------------------------------------------------
 
+@allure.feature("Node Data")
+@allure.story("Apply Node Data Extractions")
 class TestApplyNodeDataExtractions:
 
     def test_writes_new_data(self, db_path):
@@ -198,6 +203,8 @@ class TestApplyNodeDataExtractions:
 # upsert_fulfillment_link — auto-confirm threshold
 # ---------------------------------------------------------------------------
 
+@allure.feature("Fulfillment Links")
+@allure.story("Upsert Fulfillment Link")
 class TestUpsertFulfillmentLink:
 
     def test_auto_confirms_at_high_confidence(self, db_path):
@@ -253,6 +260,8 @@ class TestUpsertFulfillmentLink:
 # reconcile_order_ready
 # ---------------------------------------------------------------------------
 
+@allure.feature("Fulfillment Links")
+@allure.story("Reconcile Order Ready")
 class TestReconcileOrderReady:
 
     def _setup(self, db_path, task_id):
@@ -310,3 +319,94 @@ class TestReconcileOrderReady:
             from src.store.task_store import reconcile_order_ready
             result = reconcile_order_ready("c1")
         assert result is None
+
+
+# ---------------------------------------------------------------------------
+# prune_links_for_supplier_order / prune_links_for_client_order
+# ---------------------------------------------------------------------------
+
+@allure.feature("Fulfillment Links")
+@allure.story("Prune Links")
+class TestPruneLinks:
+
+    def _seed_link(self, db_path, client_order_id, supplier_order_id, status, link_id=None):
+        with patch("src.store.db.DB_PATH", db_path):
+            from src.store.db import transaction
+            now = int(time.time())
+            with transaction() as conn:
+                conn.execute(
+                    """INSERT INTO fulfillment_links
+                       (id, client_order_id, client_item_description,
+                        supplier_order_id, supplier_item_description,
+                        quantity_allocated, match_confidence, match_reasoning, status, created_at)
+                       VALUES (?,?,?,?,?,?,?,?,?,?)""",
+                    (link_id or str(uuid.uuid4()), client_order_id, "item",
+                     supplier_order_id, "item", 10, 0.95, "test", status, now),
+                )
+
+    # --- prune_links_for_supplier_order ---
+
+    def test_supplier_all_terminal_returns_true(self, db_path):
+        with patch("src.store.db.DB_PATH", db_path):
+            _seed_task(db_path, "c1", "client_order")
+            _seed_task(db_path, "s1", "supplier_order")
+            self._seed_link(db_path, "c1", "s1", "fulfilled")
+            from src.store.task_store import prune_links_for_supplier_order
+            result = prune_links_for_supplier_order("s1")
+        assert result is True
+
+    def test_supplier_partial_terminal_returns_false(self, db_path):
+        with patch("src.store.db.DB_PATH", db_path):
+            _seed_task(db_path, "c1", "client_order")
+            _seed_task(db_path, "s1", "supplier_order")
+            self._seed_link(db_path, "c1", "s1", "fulfilled", "lnk1")
+            self._seed_link(db_path, "c1", "s1", "candidate", "lnk2")
+            from src.store.task_store import prune_links_for_supplier_order
+            result = prune_links_for_supplier_order("s1")
+        assert result is False
+
+    def test_supplier_no_links_returns_false(self, db_path):
+        with patch("src.store.db.DB_PATH", db_path):
+            _seed_task(db_path, "s1", "supplier_order")
+            from src.store.task_store import prune_links_for_supplier_order
+            result = prune_links_for_supplier_order("s1")
+        assert result is False
+
+    def test_supplier_all_terminal_statuses_accepted(self, db_path):
+        with patch("src.store.db.DB_PATH", db_path):
+            _seed_task(db_path, "c1", "client_order")
+            _seed_task(db_path, "s1", "supplier_order")
+            self._seed_link(db_path, "c1", "s1", "fulfilled",   "l1")
+            self._seed_link(db_path, "c1", "s1", "failed",      "l2")
+            self._seed_link(db_path, "c1", "s1", "invalidated", "l3")
+            from src.store.task_store import prune_links_for_supplier_order
+            result = prune_links_for_supplier_order("s1")
+        assert result is True
+
+    # --- prune_links_for_client_order ---
+
+    def test_client_all_completed_returns_true(self, db_path):
+        with patch("src.store.db.DB_PATH", db_path):
+            _seed_task(db_path, "c1", "client_order")
+            _seed_task(db_path, "s1", "supplier_order")
+            self._seed_link(db_path, "c1", "s1", "completed")
+            from src.store.task_store import prune_links_for_client_order
+            result = prune_links_for_client_order("c1")
+        assert result is True
+
+    def test_client_partial_completed_returns_false(self, db_path):
+        with patch("src.store.db.DB_PATH", db_path):
+            _seed_task(db_path, "c1", "client_order")
+            _seed_task(db_path, "s1", "supplier_order")
+            self._seed_link(db_path, "c1", "s1", "completed", "l1")
+            self._seed_link(db_path, "c1", "s1", "confirmed", "l2")
+            from src.store.task_store import prune_links_for_client_order
+            result = prune_links_for_client_order("c1")
+        assert result is False
+
+    def test_client_no_links_returns_false(self, db_path):
+        with patch("src.store.db.DB_PATH", db_path):
+            _seed_task(db_path, "c1", "client_order")
+            from src.store.task_store import prune_links_for_client_order
+            result = prune_links_for_client_order("c1")
+        assert result is False

@@ -1,0 +1,21 @@
+[
+  {
+    "name": "DB / Schema failures",
+    "matchedStatuses": ["broken"],
+    "messageRegex": ".*OperationalError.*|.*IntegrityError.*|.*sqlite3.*"
+  },
+  {
+    "name": "Ambiguity logic failures",
+    "matchedStatuses": ["failed"],
+    "traceRegex": ".*_handle_ambiguity.*|.*ambiguity_worker.*"
+  },
+  {
+    "name": "Routing failures",
+    "matchedStatuses": ["failed"],
+    "traceRegex": ".*router.*|.*route.*"
+  },
+  {
+    "name": "Unexpected test errors",
+    "matchedStatuses": ["broken"]
+  }
+]

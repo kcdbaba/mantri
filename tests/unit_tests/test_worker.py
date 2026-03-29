@@ -5,8 +5,10 @@ Unit tests for router/worker:
 No LLM, no real Redis, no DB writes.
 """
 
+import json
 import time
 import pytest
+import allure
 from unittest.mock import patch, MagicMock
 
 from src.agent.update_agent import ItemExtraction
@@ -39,6 +41,8 @@ def _run_check(task_id, order_type, node_statuses, extractions=None):
 # Client order gate: order_confirmation
 # ---------------------------------------------------------------------------
 
+@allure.feature("Message Routing")
+@allure.story("Client Order Gate")
 class TestClientOrderGate:
 
     def test_escalates_when_order_confirmed(self):
@@ -72,6 +76,8 @@ class TestClientOrderGate:
 # Supplier order gate: supplier_collection
 # ---------------------------------------------------------------------------
 
+@allure.feature("Message Routing")
+@allure.story("Supplier Order Gate")
 class TestSupplierOrderGate:
 
     def test_escalates_when_collection_completed(self):
@@ -92,6 +98,8 @@ class TestSupplierOrderGate:
 # Description content
 # ---------------------------------------------------------------------------
 
+@allure.feature("Message Routing")
+@allure.story("Escalation Description")
 class TestEscalationDescription:
 
     def test_description_includes_operation(self):
@@ -146,6 +154,8 @@ def _run_process_message(message, task, agent_output):
     return mock_update_node, mock_ambiguity, mock_r
 
 
+@allure.feature("Message Routing")
+@allure.story("Process Message")
 class TestProcessMessage:
 
     def test_node_update_written(self):
@@ -213,3 +223,74 @@ class TestProcessMessage:
         _, mock_ambiguity, _ = _run_process_message(msg, task, output)
         mock_ambiguity.assert_called_once()
         assert mock_ambiguity.call_args[0][0].severity == "high"
+
+
+# ---------------------------------------------------------------------------
+# _handle_ambiguity — gate blocking, queue write, target routing
+# ---------------------------------------------------------------------------
+
+def _run_handle_ambiguity(flag, task_id="t1", message=None):
+    from src.router.worker import _handle_ambiguity
+    message = message or {"message_id": "m1", "group_id": "grp@g.us", "body": "test"}
+    mock_conn = MagicMock()
+    mock_cm = MagicMock()
+    mock_cm.__enter__ = MagicMock(return_value=mock_conn)
+    mock_cm.__exit__ = MagicMock(return_value=False)
+    with patch("src.router.worker.transaction", return_value=mock_cm), \
+         patch("src.router.worker.update_node") as mock_update_node:
+        _handle_ambiguity(flag, task_id, message)
+    return mock_conn, mock_update_node
+
+
+@allure.feature("Ambiguity Handling")
+@allure.story("Handle Ambiguity")
+class TestHandleAmbiguity:
+
+    def test_gate_node_blocked(self):
+        from src.agent.update_agent import AmbiguityFlag
+        flag = AmbiguityFlag(description="test", severity="high",
+                             category="quantity", blocking_node_id="dispatched")
+        _, mock_update_node = _run_handle_ambiguity(flag)
+        mock_update_node.assert_called_once()
+        assert mock_update_node.call_args[1]["new_status"] == "blocked"
+        assert mock_update_node.call_args[1]["node_id"] == "dispatched"
+
+    def test_non_gate_node_not_blocked(self):
+        from src.agent.update_agent import AmbiguityFlag
+        flag = AmbiguityFlag(description="test", severity="high",
+                             category="quantity", blocking_node_id="supplier_indent")
+        _, mock_update_node = _run_handle_ambiguity(flag)
+        mock_update_node.assert_not_called()
+
+    def test_none_blocking_node_not_blocked(self):
+        from src.agent.update_agent import AmbiguityFlag
+        flag = AmbiguityFlag(description="test", severity="high",
+                             category="quantity", blocking_node_id=None)
+        _, mock_update_node = _run_handle_ambiguity(flag)
+        mock_update_node.assert_not_called()
+
+    def test_always_writes_to_queue(self):
+        from src.agent.update_agent import AmbiguityFlag
+        flag = AmbiguityFlag(description="test", severity="low",
+                             category="entity", blocking_node_id=None)
+        mock_conn, _ = _run_handle_ambiguity(flag)
+        mock_conn.execute.assert_called_once()
+        assert "INSERT INTO ambiguity_queue" in mock_conn.execute.call_args[0][0]
+
+    def test_high_severity_targets_ashish(self):
+        from src.agent.update_agent import AmbiguityFlag
+        flag = AmbiguityFlag(description="test", severity="high",
+                             category="quantity", blocking_node_id="dispatched")
+        mock_conn, _ = _run_handle_ambiguity(flag)
+        params = mock_conn.execute.call_args[0][1]
+        target = json.loads(params[9])   # escalation_target is index 9
+        assert "ashish" in target
+
+    def test_low_severity_targets_senior_staff(self):
+        from src.agent.update_agent import AmbiguityFlag
+        flag = AmbiguityFlag(description="test", severity="low",
+                             category="entity", blocking_node_id=None)
+        mock_conn, _ = _run_handle_ambiguity(flag)
+        params = mock_conn.execute.call_args[0][1]
+        target = json.loads(params[9])
+        assert "senior_staff" in target
