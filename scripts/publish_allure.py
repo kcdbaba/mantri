@@ -24,20 +24,24 @@ HISTORY_DIR = Path("tests/allure/history")
 
 
 def main():
-    if not RESULTS_DIR.exists() or not any(RESULTS_DIR.rglob("*-result.json")):
+    # Collect subdirs that contain result files (allure generate doesn't recurse)
+    source_dirs = [d for d in RESULTS_DIR.iterdir() if d.is_dir() and d.name != "history"
+                   and any(d.glob("*-result.json"))] if RESULTS_DIR.exists() else []
+    if not source_dirs:
         print("No allure results found — run tests first (pytest / run_incremental_test.py)")
         return
 
     # Inject previous history so Allure renders trend charts
-    history_target = RESULTS_DIR / "history"
-    if history_target.exists():
-        shutil.rmtree(history_target)
-    if HISTORY_DIR.exists() and any(f for f in HISTORY_DIR.iterdir() if f.name != ".gitkeep"):
-        shutil.copytree(HISTORY_DIR, history_target)
+    for src in source_dirs:
+        history_target = src / "history"
+        if history_target.exists():
+            shutil.rmtree(history_target)
+        if HISTORY_DIR.exists() and any(f for f in HISTORY_DIR.iterdir() if f.name != ".gitkeep"):
+            shutil.copytree(HISTORY_DIR, history_target)
 
-    # Generate static report
+    # Generate static report — pass each subdir explicitly
     subprocess.run(
-        ["allure", "generate", str(RESULTS_DIR), "-o", str(REPORT_DIR), "--clean"],
+        ["allure", "generate", *[str(d) for d in source_dirs], "-o", str(REPORT_DIR), "--clean"],
         check=True,
     )
 
