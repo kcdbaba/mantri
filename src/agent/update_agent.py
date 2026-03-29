@@ -68,6 +68,7 @@ def run_update_agent(
     recent_messages_override: list[dict] | None = None,
     items_override: list[dict] | None = None,
     task_override: dict | None = None,
+    routing_confidence: float = 1.0,
 ) -> AgentOutput | None:
     """
     Run the update agent for a single (task_id, message) pair.
@@ -81,7 +82,8 @@ def run_update_agent(
     current_items = items_override if items_override is not None else get_order_items(task_id)
 
     system_prompt = build_system_prompt(task_id, task=task_override)
-    user_section = build_user_section(node_states, recent_messages, message, current_items)
+    user_section = build_user_section(node_states, recent_messages, message, current_items,
+                                       routing_confidence=routing_confidence)
 
     # Load image if message carries one (vision path)
     image_bytes, image_media_type = _load_image(message)

@@ -45,7 +45,8 @@ def process_message(message: dict, r: redis.Redis):
         append_message(task_id, message, routing_confidence=confidence)
 
         # Run update agent
-        output = run_update_agent(task_id, message, task_override=task)
+        output = run_update_agent(task_id, message, task_override=task,
+                                   routing_confidence=confidence)
         if output is None:
             log.error("Update agent failed for task=%s message=%s",
                       task_id, message.get("message_id"))
