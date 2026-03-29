@@ -3,9 +3,9 @@
 Run the eval agent on a real case, then optionally judge the output and push scores to Phoenix.
 
 Usage:
-  /eval-real --case data/cases/<case_dir>
-  /eval-real --case data/cases/<case_dir> --evaluate
-  /eval-real --case data/cases/<case_dir> --evaluate --skip-run
+  /eval-real --case tests/evals/<case_dir>
+  /eval-real --case tests/evals/<case_dir> --evaluate
+  /eval-real --case tests/evals/<case_dir> --evaluate --skip-run
 
 Arguments: $ARGUMENTS
 

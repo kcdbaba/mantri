@@ -1,6 +1,6 @@
 # Implementation Test Results
 **Date:** 2026-03-29
-**Cases run:** 29 / 31 in `data/cases/` (2 pending — from evaluations_data.csv rows not yet scaffolded)
+**Cases run:** 29 / 31 in `tests/evals/` (2 pending — from evaluations_data.csv rows not yet scaffolded)
 **Model:** claude-sonnet-4-6
 **Evaluator:** claude-sonnet-4-6 (LLM-as-judge)
 
@@ -97,6 +97,6 @@ No FAIL verdicts. Recurring score deductions (not blocking):
 
 ## Cases Not Yet Run
 
-2 cases from `evaluations_data.csv` do not have scaffolded `data/cases/` directories:
+2 cases from `evaluations_data.csv` do not have scaffolded `tests/evals/` directories:
 - Run `python scripts/run_synthetic_batch.py` to scaffold remaining rows
 - Then run `python scripts/run_test.py --case <dir> --evaluate` for each

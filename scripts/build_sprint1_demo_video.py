@@ -503,7 +503,7 @@ def slide_10():
     draw.text((1030, 315), "Defines case ID, window, threads,", font=f_xs, fill=MID_GRAY)
     draw.text((1030, 343), "expected output, pass criteria", font=f_xs, fill=MID_GRAY)
     pill(draw, 1030, 370, 800, 52, (30, 42, 58), radius=8)
-    draw.text((1044, 383), "python scripts/case_extractor.py --case data/cases/R3-C-L3-02/", font=font(19), fill=LIGHT_GRAY)
+    draw.text((1044, 383), "python scripts/case_extractor.py --case tests/evals/R3-C-L3-02/", font=font(19), fill=LIGHT_GRAY)
 
     draw.line([(1030, 440), (1820, 440)], fill=DIM_GRAY, width=1)
 

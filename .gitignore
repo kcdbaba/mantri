@@ -21,6 +21,6 @@ allure-results/
 
 # Test artifacts — regenerated on every run; history tracked in runs/
 tests/functional_tests/results/*.json
-data/cases/**/agent_output*.txt
-data/cases/**/score*.json
-data/cases/synthetic_batch_summary.json
+tests/evals/**/agent_output*.txt
+tests/evals/**/score*.json
+tests/evals/synthetic_batch_summary.json

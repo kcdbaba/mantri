@@ -10,7 +10,7 @@ multi-thread formatted log ready for evaluation against the testing prompt.
 
 1. Case mode (recommended) — driven by a metadata.json file:
 
-    python scripts/case_extractor.py --case data/cases/R3-C-L3-02_concurrent_flag_orders_same_supplier/
+    python scripts/case_extractor.py --case tests/evals/R3-C-L3-02_concurrent_flag_orders_same_supplier/
 
     Reads metadata.json from the case directory, writes threads.txt to the same directory.
 
@@ -19,7 +19,7 @@ multi-thread formatted log ready for evaluation against the testing prompt.
     python scripts/case_extractor.py \\
         --start "8/12/23, 18:00" --end "8/13/23, 23:59" \\
         --chats "data/raw_chats/dir1" "data/raw_chats/dir2" \\
-        --output data/cases/some_case/threads.txt
+        --output tests/evals/some_case/threads.txt
 
 ── metadata.json schema ───────────────────────────────────────────────────────
 
@@ -337,7 +337,7 @@ def run_case_mode(case_dir: Path, client: anthropic.Anthropic) -> None:
 def run_adhoc_mode(start: str, end: str, chat_paths: list[str],
                    output: str, client: anthropic.Anthropic) -> None:
     chats = [ChatInput(path=Path(p), label=Path(p).name) for p in chat_paths]
-    out   = Path(output) if output else Path('data/cases/adhoc/threads.txt')
+    out   = Path(output) if output else Path('tests/evals/adhoc/threads.txt')
     print("Ad-hoc extraction")
     run_extraction(start, end, chats, out, client)
 

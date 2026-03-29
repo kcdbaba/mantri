@@ -4,9 +4,9 @@ Extract a time-windowed snippet from WhatsApp chat exports, annotate images/PDFs
 and write a formatted `threads.txt` ready for eval.
 
 Usage:
-  /extract-case --case data/cases/<case_dir>
-  /extract-case --new data/cases/<case_dir>
-  /extract-case --start "3/2/2026, 20:00" --end "3/18/2026, 23:59" --chats data/raw_chats/dir1 data/raw_chats/dir2 --output data/cases/adhoc/threads.txt
+  /extract-case --case tests/evals/<case_dir>
+  /extract-case --new tests/evals/<case_dir>
+  /extract-case --start "3/2/2026, 20:00" --end "3/18/2026, 23:59" --chats data/raw_chats/dir1 data/raw_chats/dir2 --output tests/evals/adhoc/threads.txt
 
 Arguments: $ARGUMENTS
 
@@ -63,7 +63,7 @@ Create a blank case:
 ### Mode C — `--start`, `--end`, `--chats`, `[--output]` (ad-hoc mode)
 
 Use the provided start datetime, end datetime, and chat directory paths.
-Output path defaults to `data/cases/adhoc/threads.txt` if `--output` not given.
+Output path defaults to `tests/evals/adhoc/threads.txt` if `--output` not given.
 Labels default to the directory name.
 
 ---

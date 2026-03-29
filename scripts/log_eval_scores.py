@@ -7,13 +7,13 @@ Run after /eval-real or /eval-synth to make results visible in the Phoenix UI.
 
 Usage:
     # Single case (after /eval-real --case ...)
-    python scripts/log_eval_scores.py --case data/cases/R4-A-L1-01_... --suite eval-real
+    python scripts/log_eval_scores.py --case tests/evals/R4-A-L1-01_... --suite eval-real
 
     # All cases in a directory
-    python scripts/log_eval_scores.py --dir data/cases --suite eval-real
+    python scripts/log_eval_scores.py --dir tests/evals --suite eval-real
 
     # All cases from a batch summary (after /eval-synth)
-    python scripts/log_eval_scores.py --batch data/cases/synthetic_batch_summary.json --suite eval-synth
+    python scripts/log_eval_scores.py --batch tests/evals/synthetic_batch_summary.json --suite eval-synth
 """
 
 import argparse
@@ -147,7 +147,7 @@ def main():
     group.add_argument("--case",  metavar="DIR",  help="Single case directory")
     group.add_argument("--dir",   metavar="DIR",  help="Scan directory for score.json files")
     group.add_argument("--batch", metavar="FILE",
-                       help="Batch summary JSON (data/cases/synthetic_batch_summary.json)")
+                       help="Batch summary JSON (tests/evals/synthetic_batch_summary.json)")
     parser.add_argument("--suite", default="eval-real",
                         choices=["eval-real", "eval-synth"],
                         help="Suite name (default: eval-real)")

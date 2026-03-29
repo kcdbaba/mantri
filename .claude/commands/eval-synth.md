@@ -31,7 +31,7 @@ Filter rows by `--ids` if provided. If no rows match, report and stop.
 - `level`: third dash-separated part (e.g. `L1`)
 - `slug`: lowercase `scenario`, spaces → underscores, strip special chars, max 50 chars
 - `case_dir_name`: `<id>_<slug>` (e.g. `R4-A-L1-01_single_item_single_supplier`)
-- `case_dir`: `data/cases/<case_dir_name>/`
+- `case_dir`: `tests/evals/<case_dir_name>/`
 
 **Skip check:** if `--skip-existing` and `<case_dir>/score.json` exists, skip this case and record its existing score.
 
@@ -65,7 +65,7 @@ Print per-case: verdict, overall score, pass/fail list.
 
 ### Step 3 — Batch summary
 
-After all cases, print and write `data/cases/synthetic_batch_summary.json`:
+After all cases, print and write `tests/evals/synthetic_batch_summary.json`:
 
 ```json
 {
@@ -83,7 +83,7 @@ After all cases, print and write `data/cases/synthetic_batch_summary.json`:
 }
 ```
 
-Write `data/cases/synthetic_batch_summary.json` (current run, overwritten each time) and also write a timestamped copy to `runs/eval/<YYYYMMDDTHHMMSS>_summary.json` (permanent history, committed to git).
+Write `tests/evals/synthetic_batch_summary.json` (current run, overwritten each time) and also write a timestamped copy to `runs/eval/<YYYYMMDDTHHMMSS>_summary.json` (permanent history, committed to git).
 
 Print table:
 ```
@@ -107,7 +107,7 @@ Run summary: runs/eval/<timestamp>_summary.json
 After writing all score.json files, run:
 
 ```
-python scripts/log_eval_scores.py --batch data/cases/synthetic_batch_summary.json --suite eval-synth
+python scripts/log_eval_scores.py --batch tests/evals/synthetic_batch_summary.json --suite eval-synth
 ```
 
 This pushes all scores to the Phoenix experiments UI at http://localhost:6006.
