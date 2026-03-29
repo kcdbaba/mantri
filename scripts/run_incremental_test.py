@@ -429,21 +429,13 @@ def _publish_results():
         print(f"  publish_runs failed (non-fatal): {e}")
 
 
-def _ensure_phoenix():
-    import subprocess
-    pid_file = os.path.expanduser("~/.phoenix.pid")
-    running = False
-    if os.path.exists(pid_file):
-        try:
-            pid = int(open(pid_file).read().strip())
-            os.kill(pid, 0)
-            running = True
-        except (ProcessLookupError, ValueError):
-            os.remove(pid_file)
-    if not running:
-        script = str(Path(__file__).parent / "phoenix_bg.sh")
-        subprocess.run(["bash", script], check=True)
-        time.sleep(2)
+def _phoenix_client():
+    import phoenix as px
+    endpoint = os.environ.get("PHOENIX_ENDPOINT", "http://localhost:6006")
+    headers = {}
+    if auth := os.environ.get("PHOENIX_AUTH_HEADER"):
+        headers["Authorization"] = auth
+    return px.Client(endpoint=endpoint, headers=headers)
 
 
 def push_to_phoenix(results: list[dict]) -> None:
@@ -456,8 +448,7 @@ def push_to_phoenix(results: list[dict]) -> None:
         return
 
     try:
-        _ensure_phoenix()
-        client = px.Client()
+        client = _phoenix_client()
 
         try:
             dataset = client.upload_dataset(
@@ -493,7 +484,8 @@ def push_to_phoenix(results: list[dict]) -> None:
             experiment_name=exp_name,
             print_summary=False,
         )
-        print(f"  Phoenix: http://localhost:6006  (experiment: {exp_name})")
+        endpoint = os.environ.get("PHOENIX_ENDPOINT", "http://localhost:6006")
+        print(f"  Phoenix: {endpoint}  (experiment: {exp_name})")
     except Exception as e:
         print(f"  Phoenix upload failed (non-fatal): {e}")
 

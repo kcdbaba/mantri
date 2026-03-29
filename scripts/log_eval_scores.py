@@ -19,28 +19,19 @@ Usage:
 import argparse
 import json
 import os
-import subprocess
-import time
 from datetime import datetime
 from pathlib import Path
 
 
-# ── Phoenix auto-start ─────────────────────────────────────────────────────────
+# ── Phoenix client ─────────────────────────────────────────────────────────────
 
-def _ensure_phoenix():
-    pid_file = os.path.expanduser("~/.phoenix.pid")
-    running = False
-    if os.path.exists(pid_file):
-        try:
-            pid = int(open(pid_file).read().strip())
-            os.kill(pid, 0)
-            running = True
-        except (ProcessLookupError, ValueError):
-            os.remove(pid_file)
-    if not running:
-        script = Path(__file__).parent / "phoenix_bg.sh"
-        subprocess.run(["bash", str(script)], check=True)
-        time.sleep(2)
+def _phoenix_client():
+    import phoenix as px
+    endpoint = os.environ.get("PHOENIX_ENDPOINT", "http://localhost:6006")
+    headers = {}
+    if auth := os.environ.get("PHOENIX_AUTH_HEADER"):
+        headers["Authorization"] = auth
+    return px.Client(endpoint=endpoint, headers=headers)
 
 
 # ── Score loading ──────────────────────────────────────────────────────────────
@@ -79,8 +70,7 @@ def push_to_phoenix(scores: list[dict], suite_name: str) -> None:
     from phoenix.experiments import run_experiment
     from phoenix.experiments.types import EvaluationResult
 
-    _ensure_phoenix()
-    client = px.Client()
+    client = _phoenix_client()
 
     dataset_name = f"mantri-{suite_name}"
     try:
@@ -144,7 +134,8 @@ def push_to_phoenix(scores: list[dict], suite_name: str) -> None:
         experiment_name=exp_name,
         print_summary=False,
     )
-    print(f"  Phoenix: http://localhost:6006  (dataset: mantri-{suite_name}, experiment: {exp_name})")
+    endpoint = os.environ.get("PHOENIX_ENDPOINT", "http://localhost:6006")
+    print(f"  Phoenix: {endpoint}  (dataset: mantri-{suite_name}, experiment: {exp_name})")
 
 
 # ── Entry point ────────────────────────────────────────────────────────────────
