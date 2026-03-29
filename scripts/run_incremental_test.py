@@ -499,7 +499,7 @@ def _emit_allure_results(results: list[dict]) -> None:
     import hashlib
     import uuid as uuid_mod
 
-    out_dir = Path("allure-results/inc")
+    out_dir = Path("allure/results/inc")
     out_dir.mkdir(parents=True, exist_ok=True)
 
     now_ms = int(time.time() * 1000)

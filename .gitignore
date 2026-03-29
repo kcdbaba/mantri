@@ -16,8 +16,8 @@ data/raw_chats/
 data/mantri.db
 deploy/vars/secrets.yml
 
-# Allure raw results — regenerated each run; history tracked in allure-history/
-allure-results/
+# Allure raw results — regenerated each run; history tracked in allure/history/
+allure/results/
 
 # Test artifacts — regenerated on every run; history tracked in runs/
 tests/functional_tests/results/*.json

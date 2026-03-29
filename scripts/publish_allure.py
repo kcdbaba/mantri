@@ -2,25 +2,25 @@
 """
 publish_allure.py
 
-Generates the Allure report from allure-results/ and saves it to
+Generates the Allure report from allure/results/ and saves it to
 static/developer/tests/.  Preserves history across runs by committing
-the allure-history/ directory to git.
+the allure/history/ directory to git.
 
 Usage:
     python scripts/publish_allure.py
 
 Run after:
-    pytest                          (populates allure-results/unit/)
-    python scripts/run_incremental_test.py   (populates allure-results/inc/)
+    pytest                          (populates allure/results/unit/)
+    python scripts/run_incremental_test.py   (populates allure/results/inc/)
 """
 
 import shutil
 import subprocess
 from pathlib import Path
 
-RESULTS_DIR = Path("allure-results")
+RESULTS_DIR = Path("allure/results")
 REPORT_DIR  = Path("static/developer/tests")
-HISTORY_DIR = Path("allure-history")
+HISTORY_DIR = Path("allure/history")
 
 
 def main():
