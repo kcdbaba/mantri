@@ -18,6 +18,7 @@ from pathlib import Path
 
 RUNS_INC  = Path("runs/incremental")
 RUNS_EVAL = Path("runs/eval")
+RUNS_UNIT = Path("runs/unit")
 OUT_PATH  = Path("static/developer/runs/index.html")
 
 # ── Data loading ───────────────────────────────────────────────────────────────
@@ -162,6 +163,39 @@ def _eval_section(runs: list[dict], suite: str) -> str:
     )
 
 
+# ── Unit tests section ─────────────────────────────────────────────────────────
+
+def _unit_section(runs: list[dict]) -> str:
+    if not runs:
+        return "<p class='empty'>No unit test runs recorded yet.</p>"
+    rows = []
+    for r in runs:
+        rows.append(
+            f"<tr>"
+            f"<td>{_fmt_dt(r.get('run_at', ''))}</td>"
+            f"<td>{r.get('total', 0)}</td>"
+            f"<td>{_pct_bar(r.get('passed', 0), r.get('total', 0))}</td>"
+            f"<td class='{'fail' if r.get('failed', 0) else ''}'>{r.get('failed', 0)}</td>"
+            f"<td>{r.get('skipped', 0)}</td>"
+            f"</tr>"
+        )
+    latest = runs[0]
+    summary = (
+        f"Latest: {_fmt_dt(latest.get('run_at', ''))} &nbsp;·&nbsp; "
+        f"{latest.get('passed', 0)}/{latest.get('total', 0)} passed"
+        + (f" &nbsp;·&nbsp; <span class='fail'>{latest.get('failed', 0)} failed</span>"
+           if latest.get('failed') else "")
+    )
+    return (
+        f"<p class='summary'>{summary} &nbsp;·&nbsp; "
+        f"<a href='/developer/tests/'>Full Allure report →</a></p>"
+        "<table>"
+        "<thead><tr><th>Run</th><th>Total</th><th>Pass rate</th><th>Failed</th><th>Skipped</th></tr></thead>"
+        "<tbody>" + "".join(rows) + "</tbody>"
+        "</table>"
+    )
+
+
 # ── Load eval runs by suite ────────────────────────────────────────────────────
 
 def _load_eval_runs() -> tuple[list[dict], list[dict]]:
@@ -227,6 +261,7 @@ nav { margin-bottom: 2rem; font-size: 0.82rem; }
 
 def generate() -> str:
     inc_runs   = _load_runs(RUNS_INC)
+    unit_runs  = _load_runs(RUNS_UNIT)
     synth_runs, real_runs = _load_eval_runs()
 
     generated = datetime.now().strftime("%Y-%m-%d %H:%M")
@@ -247,10 +282,14 @@ def generate() -> str:
   </p>
 
   <nav>
+    <a href="#unit">Unit Tests</a> &nbsp;·&nbsp;
     <a href="#inc">Incremental Tests</a> &nbsp;·&nbsp;
     <a href="#synth">Eval Synth</a> &nbsp;·&nbsp;
     <a href="#real">Eval Real</a>
   </nav>
+
+  <h2 id="unit">Unit Tests</h2>
+  {_unit_section(unit_runs)}
 
   <h2 id="inc">Incremental Tests (INC)</h2>
   {_inc_section(inc_runs)}

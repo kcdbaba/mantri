@@ -30,4 +30,4 @@ httpx
 
 # Dev / testing
 pytest
-pytest-html
+allure-pytest

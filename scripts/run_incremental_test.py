@@ -326,6 +326,8 @@ def score_multi_message_case(case_dir: Path) -> dict:
             all_correct = False
 
     result["verdict"] = "PASS" if all_correct else "FAIL"
+    result["quality_risk_dimension"] = meta.get("quality_risk_dimension", "unknown")
+    result["case_name"] = meta.get("name", "")
     return result
 
 
@@ -364,6 +366,8 @@ def run_case(case_dir: Path) -> dict:
 
     result = score_single_message_case(case_dir, output)
     result["elapsed_s"] = round(elapsed, 2)
+    result["quality_risk_dimension"] = meta.get("quality_risk_dimension", "unknown")
+    result["case_name"] = meta.get("name", "")
 
     if output:
         result["raw_updates"] = [
@@ -490,6 +494,45 @@ def push_to_phoenix(results: list[dict]) -> None:
         print(f"  Phoenix upload failed (non-fatal): {e}")
 
 
+def _emit_allure_results(results: list[dict]) -> None:
+    """Write one Allure result JSON per INC case into allure-results/inc/."""
+    import hashlib
+    import uuid as uuid_mod
+
+    out_dir = Path("allure-results/inc")
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    now_ms = int(time.time() * 1000)
+    for r in results:
+        case_id = r["case_id"]
+        verdict = r["verdict"]
+        elapsed_ms = int(r.get("elapsed_s", 0) * 1000)
+        status = "passed" if verdict == "PASS" else ("broken" if verdict == "PARTIAL" else "failed")
+        history_id = hashlib.md5(f"incremental.{case_id}".encode()).hexdigest()
+        details = r.get("details", [])
+        result_json = {
+            "uuid": str(uuid_mod.uuid4()),
+            "historyId": history_id,
+            "name": f"{case_id}: {r.get('case_name', '')}",
+            "fullName": f"incremental.{case_id}",
+            "status": status,
+            "start": now_ms - elapsed_ms,
+            "stop": now_ms,
+            "labels": [
+                {"name": "suite",    "value": "Incremental Tests"},
+                {"name": "feature",  "value": r.get("quality_risk_dimension", "unknown")},
+            ],
+            "statusDetails": {"message": "; ".join(details), "trace": ""} if details else {},
+            "parameters": [],
+            "steps": [],
+            "attachments": [],
+        }
+        (out_dir / f"{result_json['uuid']}-result.json").write_text(
+            json.dumps(result_json, indent=2)
+        )
+    print(f"  Allure results written: allure-results/inc/ ({len(results)} cases)")
+
+
 def save_run_summary(results: list[dict]):
     RUNS_DIR.mkdir(parents=True, exist_ok=True)
     ts = datetime.now().strftime("%Y%m%dT%H%M%S")
@@ -563,5 +606,6 @@ if __name__ == "__main__":
         print_summary(results)
     if not args.case_id:  # only save run history and push to Phoenix for full runs
         save_run_summary(results)
+        _emit_allure_results(results)
         push_to_phoenix(results)
         _publish_results()
