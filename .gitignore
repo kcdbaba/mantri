@@ -24,3 +24,6 @@ tests/functional_tests/results/*.json
 tests/evals/**/agent_output*.txt
 tests/evals/**/score*.json
 tests/evals/synthetic_batch_summary.json
+tests/runs/unit/*.json
+tests/runs/incremental/*.json
+tests/runs/eval/*.json
