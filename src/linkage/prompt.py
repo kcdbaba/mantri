@@ -43,7 +43,7 @@ Respond with valid JSON only. No prose, no markdown fences.
       "quantity_allocated": <number>,
       "match_confidence": <0.0 to 1.0>,
       "match_reasoning": "<brief explanation of why these items match>",
-      "status": "<confirmed|candidate|failed>"
+      "status": "<confirmed|candidate|failed|fulfilled|completed|invalidated>"
     }
   ],
   "client_order_updates": [
@@ -65,6 +65,20 @@ Respond with valid JSON only. No prose, no markdown fences.
     }
   ]
 }
+
+## Linkage rules
+
+## Linkage status lifecycle
+
+- candidate   : allocated but not yet confirmed (match_confidence < 0.92)
+- confirmed   : high-confidence allocation (match_confidence >= 0.92)
+- failed      : QC failure on collection, or delivery failure to client
+- fulfilled   : QC passed — supplier has met their commitment for these items.
+                Emit when supplier_QC=completed is observed for the linked supplier_order.
+- completed   : Delivery confirmed by client — goods received.
+                Emit when delivery_confirmed=completed is observed for the linked client_order.
+- invalidated : Client order cancelled or truncated — requirement no longer exists.
+                Emit for all undelivered links when an order is cancelled or truncated.
 
 ## Linkage rules
 

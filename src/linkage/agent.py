@@ -30,7 +30,7 @@ class LinkageUpdate(BaseModel):
     quantity_allocated: float
     match_confidence: float
     match_reasoning: str
-    status: Literal["confirmed", "candidate", "failed"]
+    status: Literal["confirmed", "candidate", "failed", "fulfilled", "completed", "invalidated"]
 
 
 class ClientOrderUpdate(BaseModel):
