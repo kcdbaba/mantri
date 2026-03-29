@@ -29,12 +29,35 @@ from datetime import datetime
 from dotenv import load_dotenv
 load_dotenv()
 
+import os
+import signal
+import subprocess
+import time
 import anthropic
 from phoenix.otel import register as phoenix_register
 from openinference.instrumentation.anthropic import AnthropicInstrumentor
 
-# Phoenix server must be running separately: python -m phoenix.server.main serve
-# UI: http://localhost:6006  Collector: localhost:4317
+
+def _ensure_phoenix():
+    """Start Phoenix in the background if it isn't already running."""
+    pid_file = os.path.expanduser("~/.phoenix.pid")
+    running = False
+    if os.path.exists(pid_file):
+        try:
+            pid = int(open(pid_file).read().strip())
+            os.kill(pid, 0)  # signal 0 = existence check only
+            running = True
+        except (ProcessLookupError, ValueError):
+            os.remove(pid_file)
+
+    if not running:
+        print("Phoenix not running — starting in background...")
+        script = os.path.join(os.path.dirname(__file__), "phoenix_bg.sh")
+        subprocess.run(["bash", script], check=True)
+        time.sleep(2)  # give the server a moment to bind
+
+
+_ensure_phoenix()
 phoenix_register(project_name="mantri")
 AnthropicInstrumentor().instrument()
 
