@@ -92,6 +92,7 @@ When given multiple WhatsApp threads:
    - **Default to separation (orders)**: When uncertain whether messages refer to one order or multiple distinct orders, create SEPARATE parent tasks and flag the uncertainty. Never silently merge separate orders into one — a false merge at the order level causes operational blind spots.
    - **Parent task granularity is the client delivery unit**: A parent task represents one client's order — not a supplier thread, not a production run. A single WhatsApp thread may contain goods for multiple clients placed in one batch (e.g., Ashish orders flags for three different Army units in one message to a supplier). That is still three parent tasks, not one. The unit of analysis is what needs to be delivered to each client independently, tracked and escalated independently.
    - **Unidentified clients**: If multiple distinct client orders are detectable in a single thread but client identities cannot be resolved from text alone, create a **separate parent task per order** using placeholder labels (e.g., "Client — unidentified, needs human review"). Do NOT collapse them into a single multi-client parent task simply because the clients are unknown or because a single supplier thread covers all of them. Flag each unidentified client for human input.
+   - **Items mentioned with no supplier thread**: If a client or staff message explicitly names an item or category (e.g., "basketball shoes", "batteries", "printed banners") but no corresponding supplier thread exists in the input, still create a **discrete named parent task** for that item with status "Supplier thread not found — human review needed." Do NOT let these items appear only in global flags — they need a trackable named task so they are not silently dropped from operations. Note in the task: "No supplier conversation found in input — verify if procurement is underway in an unshared thread."
 
 4. **Tag each task** with:
    - **Entity**: Customer / supplier / vendor / contractor / staff member involved
@@ -147,9 +148,30 @@ When given multiple WhatsApp threads:
 
    **Non-order implicit tasks — proactive sourcing and feedback**: In addition to order-lifecycle tasks, look for two categories of implicit tasks that have no order context:
 
-   - **Proactive client outreach**: If a known client has had no interaction visible in any thread for an unusually long period (relative to expected reorder frequency) AND all their prior orders are completed, surface an implicit task: "Proactive check-in with [client] — no recent activity." This task is not triggered by any message; it is triggered by the absence of activity.
+   - **Proactive client outreach**: If a known client has had no interaction visible in any thread for an unusually long period (relative to expected reorder frequency) AND all their prior orders are completed, surface a **single unified implicit task** combining both relationship re-engagement and upcoming requirement probing:
+     ```
+     ↳ SUBTASK [n]: Proactive outreach — [Client name]
+        Status: Pending — implicit task, no recent activity
+        Note: ~[N] weeks since last interaction (last order closed [date]). No new enquiry or message visible. At this silence duration, a proactive check-in is warranted.
+        Next step: Ashish to send a personal message to [Client] — acknowledge the completed order, confirm satisfaction, and probe for any upcoming requirements. Do NOT delegate to staff; this is a relationship-maintenance action.
+     ```
+     Always state the gap duration explicitly (e.g., "~4 weeks since last interaction"). Do NOT split into two separate subtasks (feedback + reorder) — combine them into one. Do NOT use conditional framing ("if the relationship warrants it") — if the silence threshold is met, the action is warranted.
 
    - **Post-delivery feedback**: If an order has reached the payment-received stage and no feedback message to the client is visible, surface an implicit task: "Post-delivery feedback follow-up with [client]." Almost never appears in WhatsApp; expect it as a cadence implicit task on all completed orders.
+
+   **Delivery completion trigger**: When a staff or supplier message signals that goods are ready or delivered ("maal ready hai", "sab items ready hain", "deliver kar diya", "dispatch ho gaya", "items taiyaar hain") AND the order is a multi-step type (Type 1, 2, 3, 5), create explicit discrete subtasks for each of the following that is NOT already confirmed in the threads:
+   ```
+   ↳ SUBTASK [n]: Delivery challan / delivery note — implicit task
+      Status: Pending — delivery signal detected but challan not confirmed in threads
+      Note: [Staff/supplier name] indicated items ready/delivered on [date]. Formal delivery documentation not visible.
+      Next step: Confirm delivery challan issued and signed by receiving party. Required for formal payment processing.
+
+   ↳ SUBTASK [n]: Client acceptance / sign-off — implicit task
+      Status: Pending — delivery signal detected but client acceptance not confirmed
+      Note: Delivery completion without written client acceptance leaves payment basis unconfirmed.
+      Next step: Get written confirmation (even WhatsApp message) from [client] acknowledging receipt of goods.
+   ```
+   Do NOT skip these because delivery "seemed to go fine" — the absence of a challan or sign-off is itself a flag, not silence to be interpreted as completion.
 
    **Pre-emptive supplier reminder**: When a supplier commits a specific delivery date that is ≥2 days from the thread date, create a discrete scheduled pre-emptive reminder subtask — this will almost never appear in threads, it must be inferred from the committed date:
    ```

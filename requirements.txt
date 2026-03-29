@@ -22,5 +22,8 @@ jinja2
 python-multipart        # form parsing for correction UI
 htmx                    # served as static file, not a Python dep
 
+# Observability
+langsmith
+
 # Utilities
 httpx
