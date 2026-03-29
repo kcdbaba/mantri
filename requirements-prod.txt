@@ -13,3 +13,4 @@ datasette
 jinja2
 python-multipart
 httpx
+arize-phoenix

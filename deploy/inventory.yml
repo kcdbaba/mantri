@@ -2,3 +2,4 @@ all:
   hosts:
     mantri:
       ansible_host: 152.42.156.128
+      ansible_user: root
