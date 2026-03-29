@@ -449,12 +449,15 @@ def push_to_phoenix(results: list[dict]) -> None:
         _ensure_phoenix()
         client = px.Client()
 
-        dataset = client.upload_dataset(
-            dataset_name="mantri-incremental-tests",
-            inputs=[{"case_id": r["case_id"]} for r in results],
-            outputs=[{"expected_verdict": "PASS"} for r in results],
-            metadata=[{"case_id": r["case_id"]} for r in results],
-        )
+        try:
+            dataset = client.upload_dataset(
+                dataset_name="mantri-incremental-tests",
+                inputs=[{"case_id": r["case_id"]} for r in results],
+                outputs=[{"expected_verdict": "PASS"} for r in results],
+                metadata=[{"case_id": r["case_id"]} for r in results],
+            )
+        except Exception:
+            dataset = client.get_dataset(name="mantri-incremental-tests")
 
         results_by_id = {r["case_id"]: r for r in results}
 

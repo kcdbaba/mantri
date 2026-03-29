@@ -77,30 +77,36 @@ ALL_DIMENSIONS = [
 def push_to_phoenix(scores: list[dict], suite_name: str) -> None:
     import phoenix as px
     from phoenix.experiments import run_experiment
+    from phoenix.experiments.types import EvaluationResult
 
     _ensure_phoenix()
     client = px.Client()
 
-    dataset = client.upload_dataset(
-        dataset_name=f"mantri-{suite_name}",
-        inputs=[
-            {
-                "case_id":          s.get("case_id", "?"),
-                "framework":        s.get("framework", ""),
-                "description":      s.get("_description", ""),
-                "threads_preview":  s.get("_threads_preview", ""),
-            }
-            for s in scores
-        ],
-        outputs=[
-            {
-                "expected_output": s.get("_expected_output", ""),
-                "pass_criteria":   s.get("_pass_criteria", ""),
-            }
-            for s in scores
-        ],
-        metadata=[{"case_id": s.get("case_id")} for s in scores],
-    )
+    dataset_name = f"mantri-{suite_name}"
+    try:
+        dataset = client.upload_dataset(
+            dataset_name=dataset_name,
+            inputs=[
+                {
+                    "case_id":         s.get("case_id", "?"),
+                    "framework":       s.get("framework", ""),
+                    "description":     s.get("_description", ""),
+                    "threads_preview": s.get("_threads_preview", ""),
+                }
+                for s in scores
+            ],
+            outputs=[
+                {
+                    "expected_output": s.get("_expected_output", ""),
+                    "pass_criteria":   s.get("_pass_criteria", ""),
+                }
+                for s in scores
+            ],
+            metadata=[{"case_id": s.get("case_id")} for s in scores],
+        )
+    except Exception:
+        # Dataset already exists — retrieve it
+        dataset = client.get_dataset(name=dataset_name)
 
     scores_by_id = {s.get("case_id"): s for s in scores}
 
@@ -116,10 +122,12 @@ def push_to_phoenix(scores: list[dict], suite_name: str) -> None:
         return output.get("verdict", "ERROR")
 
     def _make_dim_eval(dim: str):
-        def evaluator(output) -> float | None:
+        def evaluator(output) -> EvaluationResult:
             d = (output.get("dimensions") or {}).get(dim, {})
             score = d.get("score") if d else None
-            return score / 100.0 if score is not None else None
+            if score is None:
+                return EvaluationResult(score=None, label="N/A")
+            return EvaluationResult(score=score / 100.0)
         evaluator.__name__ = dim
         return evaluator
 
