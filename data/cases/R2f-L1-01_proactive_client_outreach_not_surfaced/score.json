@@ -1,43 +1,48 @@
 {
   "verdict": "PASS",
-  "overall_score": 95,
+  "overall_score": 91,
   "dimensions": {
     "task_recall": {
-      "score": 97,
-      "notes": "The agent correctly identifies the Sharma Bakery order as completed (payment received 26 Feb) and explicitly surfaces the proactive relationship follow-up as Subtask 6 under Parent Task 1. It also captures all other active orders (Eastern Command AC, SATA pending item, Tezpur challan) and generates implicit calendar-triggered tasks for FY-end. No meaningful tasks are missed."
+      "score": 95,
+      "notes": "The agent identifies all tasks including the Sharma Bakery completed order, the three active orders (Eastern Command, SATA, Tezpur), and critically the implicit proactive outreach task for Sharma Bakery (Subtask 5 under Parent Task 1). The year-end financial tasks are a bonus. No meaningful task omissions detected.",
+      "id": null
     },
     "entity_accuracy": null,
     "cross_thread_correlation": null,
     "next_step_quality": {
-      "score": 95,
-      "notes": "The next step for the Sharma Bakery follow-up is specific and actionable: 'Ashish to send a brief personal message to Sharma Bakery — acknowledge the completed order, confirm satisfaction with the tandoor, and probe for any upcoming requirements.' It correctly assigns the action to Ashish rather than staff, noting the relationship-maintenance nature. The 28-day gap is explicitly quantified. Minor note: the instruction to 'not delegate to staff' is a useful operational nuance that adds quality beyond the minimum pass threshold."
+      "score": 90,
+      "notes": "The proactive outreach next step is well-specified: Ashish personally sends a message to Sharma Bakery, acknowledges completed order, confirms satisfaction, probes for upcoming requirements. The agent also correctly notes not to delegate this to staff — a relationship-maintenance nuance. Next steps across all tasks are concrete and assignable. Minor over-engineering with 13 subtasks for Eastern Command, but the quality of individual next steps is high.",
+      "id": null
     },
     "implicit_task_detection": {
-      "score": 95,
-      "notes": "The agent correctly detects that a completed+paid order with ~28 days of silence implies a proactive outreach requirement — exactly the implicit cadence task the case tests. The framing is accurate: no one mentioned Sharma Bakery, yet the agent surfaces re-engagement as a pending task derived purely from elapsed time since order closure. Additionally detects multiple other implicit tasks across other orders (GST reconciliation, e-way bill, inspection protocols, FY-end tasks), demonstrating strong implicit task detection across the board."
+      "score": 92,
+      "notes": "The agent correctly detects the ~4 week silence gap (26 Feb closed, 26 Mar current date) and surfaces a proactive reorder outreach task as Subtask 5 under Sharma Bakery — exactly matching the expected output. The detection is explicit: 'No new enquiry or message visible from Sharma Bakery in any thread. At this silence duration for a bakery client, a proactive check-in is warranted.' Additionally detects: transit damage inspection for inter-state goods, gate pass requirements for Army deliveries, year-end financial tasks, and the non-response gap on Tezpur. All high-value implicit detections.",
+      "id": null
     },
     "ambiguity_flagging": null
   },
   "pass_criteria_met": true,
   "passes": [
-    "Agent surfaces an explicit proactive check-in task for Sharma Bakery (Subtask 6 under Parent Task 1), correctly identifying the ~28-day gap since last interaction (26 Feb → 26 Mar).",
-    "Does NOT treat order closure as the final state — the completed/paid order is correctly flagged as requiring forward-looking relationship action.",
-    "Next step is correctly assigned to Ashish personally, not delegated to staff, which is operationally appropriate for relationship maintenance with a commercial client.",
-    "The gap duration is explicitly quantified ('~28 days since last interaction') rather than left vague.",
-    "The follow-up objective is dual-purpose and correct: confirm satisfaction AND probe for upcoming requirements — matching the expected output precisely.",
-    "GST reconciliation is noted as a separate administrative subtask (Subtask 5), correctly separated from the client re-engagement task, so admin tasks do not crowd out or substitute for the relationship follow-up.",
-    "The agent correctly uses the All Staff Group date (26 Mar) as the operational current date to calculate the elapsed period."
+    "Surfaces the proactive Sharma Bakery check-in task (Subtask 5) with explicit reference to ~4 week silence since 26 Feb order close",
+    "Correctly frames the outreach as relationship maintenance and assigns it to Ashish personally rather than staff",
+    "Next step for Sharma Bakery outreach covers all expected elements: acknowledge completed order, confirm satisfaction, probe for upcoming requirements",
+    "Correctly identifies current date as 26 Mar from All Staff group activity and uses this to calculate the gap",
+    "Does not treat order closure as a terminal state — forward-looking tasks are created",
+    "Cross-thread correlation of Sharma Bakery order (Thread 1 + Thread 2 Feb cluster) is clean and accurate",
+    "Tezpur zero-information gap is correctly flagged as a blind spot with escalation action",
+    "SATA inter-state goods identified as requiring e-way bill and transit damage inspection — operationally sound"
   ],
   "failures": [
-    "No meaningful failures against the pass criteria. The Sharma Bakery implicit outreach task is fully and correctly surfaced.",
-    "Minor: the agent also generates a very large volume of calendar-triggered FY-end tasks (Parent Task 5) which, while potentially valuable, are derived from the thread date alone with no thread evidence — this is a minor scope-creep risk but does not affect the core pass criterion."
+    "The proactive outreach task is placed as Subtask 5 under a parent task rather than surfaced as a primary implicit task — slightly buries the signal though it is present and clearly articulated",
+    "Subtask 4 (post-delivery feedback) partially overlaps with Subtask 5 (proactive reorder outreach) without distinguishing that after 4 weeks, feedback and reorder outreach collapse into a single action — minor structural redundancy",
+    "Year-end financial tasks (Parent Task 5) are calendar-triggered assumptions not grounded in thread evidence — adds noise, though not harmful to core pass criteria"
   ],
-  "notes": "This is a clean pass. The agent correctly identifies the core implicit task the case is designed to test: a completed commercial order with ~4 weeks of silence should trigger a proactive outreach task, not be left as a closed record. The output goes beyond the minimum — it correctly assigns ownership, quantifies the gap, specifies the dual purpose of the outreach (satisfaction + future needs), and separates it cleanly from purely administrative follow-up (GST). The overall output is detailed and well-structured, with appropriate flagging of ambiguities and no false closures.",
+  "notes": "The agent clearly passes the core criterion: it detects the 4-week silence on Sharma Bakery and creates an explicit, well-reasoned proactive outreach task assigned to Ashish with correct framing. The output is substantially more detailed than the expected minimum, which is operationally useful but introduces some redundancy. The Sharma Bakery outreach task (Subtask 5) is the exact behaviour the test requires and it is present, specific, and actionable. The agent also demonstrates strong implicit task detection across the other active orders. Overall a high-quality response with minor structural inefficiencies.",
   "case_id": "R2f-L1-01",
   "case_name": "proactive_client_outreach_not_surfaced",
   "framework": "R2",
   "level": "L1",
-  "evaluated_at": "2026-03-29T03:38:19",
+  "evaluated_at": "2026-03-29T04:20:47",
   "model_used": "claude-sonnet-4-6",
   "eval_model": "claude-sonnet-4-6"
 }

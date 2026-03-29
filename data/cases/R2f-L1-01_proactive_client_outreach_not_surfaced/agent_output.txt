@@ -1,430 +1,586 @@
-I'll process these threads carefully, correlating across both and applying all the rules from the system prompt.
+I'll analyze all threads carefully before producing the output.
+
+---
+
+**Pre-analysis notes:**
+
+**Thread 1 (Sharma Bakery):** Complete order lifecycle — confirmed, delivered 25 Feb, invoiced 26 Feb, payment received 26 Feb (₹47,200). Closed.
+
+**Thread 2 (All Staff Group):** Two distinct time clusters:
+- 24–26 Feb: Sharma Bakery order coordination — mirrors Thread 1, no new information
+- 26 Mar: Three separate active orders referenced in a single status-check message:
+  1. **Eastern Command — AC order**: Staff 1 reports supplier dispatched yesterday (25 Mar), expected today (26 Mar)
+  2. **SATA — pending item**: Staff 2 reports maal came from Malerkotla yesterday (25 Mar), sorting in progress. Item not named. "Pending item" — ambiguous.
+  3. **Tezpur — challan**: Referenced by Ashish in status check only; no staff response visible in threads. Item unknown. Status unknown.
+
+**Entity resolution:**
+- "Staff 1" and "Staff 2" are anonymized — cannot map to roster without deanonymization. Will use as-is per input format.
+- "SATA" — likely an Army unit/formation abbreviation. Army client rules apply.
+- "Eastern Command" — Army client. Army client rules apply.
+- "Tezpur" — likely refers to an Army unit or client in Tezpur (a major Army cantonment). Army client rules apply.
+- "Malerkotla" — inter-state supplier location (Punjab). This is a Type 5 (Inter-State Procurement) order pattern.
+
+**Task type classification:**
+- Sharma Bakery tandoor: Type 1 (Standard Equipment Procurement) — but commercial client, not Army
+- Eastern Command AC: Type 3 (Army Direct Delivery) + Type 1 (equipment)
+- SATA pending item: Type 5 (Inter-State Procurement, Malerkotla) + Type 3 (Army Direct Delivery) — item unidentified
+- Tezpur challan: Insufficient data — referenced but zero status visible
+
+**Implicit task checks:**
+- Sharma Bakery: Order closed, payment received. Check: post-delivery feedback sent? Proactive reorder outreach warranted (order closed 26 Feb, status check is 26 Mar — ~4 weeks gap)?
+- Eastern Command: Delivery expected today (26 Mar) — delivery completion steps need flagging
+- SATA: Goods received, sorting in progress — inspection, pre-dispatch, delivery next steps needed. Also inter-state: transit damage inspection implicit.
+- Tezpur: No information at all — must create a discrete named task, flag for human review
+
+**Calendar trigger check:** 26 Mar — this is end of financial year (Indian FY closes 31 Mar). Year-end implicit tasks fire: stock-take, year-end accounts closure, pending invoice clearance, advance tax assessment. Also end of quarter (Q4). These are significant.
+
+**Cross-thread correlations:**
+- Sharma Bakery tandoor: Thread 1 (primary) + Thread 2 24–26 Feb cluster (mirrors). Same order confirmed — unified.
+- 26 Mar orders: Thread 2 only. No Thread 1 equivalent provided for Eastern Command, SATA, or Tezpur.
+
+**Working capital flag check:**
+- Eastern Command (Army client) and SATA (Army client): payment cycle 60–90 days. If supplier advances were required, flag. No advance data visible in threads — cannot confirm. Will note as implicit check.
+- Tezpur: unknown.
+
+**Delivery completion trigger:**
+- Eastern Command: "supplier ne kal dispatch kiya, aaj tak aa jayega" — goods in transit, not yet received. Delivery completion trigger not yet fired (goods haven't arrived at Ashish's end). Pre-emptive check subtask needed for today.
+- SATA: "maal kal aya tha, sorting ho rahi hai" — goods received. Delivery completion trigger not yet fired (delivery to client not confirmed). Post-receipt steps needed.
+
+**Pre-emptive supplier reminder:**
+- Eastern Command supplier committed delivery for 26 Mar (today). Thread date is 26 Mar 09:10. Pre-emptive check should have been done this morning — may already be overdue. Flag as urgent.
 
 ---
 
 ```
-UNIFIED TASK LIST — 26 Mar (primary operational date; historical order from 24–26 Feb also captured)
-Threads processed: Client Group (Ashish + Sharma Bakery), All Staff Group
+UNIFIED TASK LIST — 26 Mar
+Threads processed: Thread 1 (Client Group — Ashish + Sharma Bakery),
+                   Thread 2 (All Staff Group)
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📦 PARENT TASK 1: Tandoor Order — Sharma Bakery [COMPLETED]
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   Entity: Sharma Bakery (customer)
+════════════════════════════════════════════════════════════════════
+📦 PARENT TASK 1: Tandoor Order — Sharma Bakery
+════════════════════════════════════════════════════════════════════
+   Entity: Sharma Bakery (commercial customer)
    Item: Tandoor (standard)
-   Status: Completed — payment received 26 Feb
-   Due: Closed
-   Priority: Low (historical / closed)
-   Source threads: Client Group (Sharma Bakery), All Staff Group
+   Status: ✅ COMPLETED — payment received, order closed
+   Closed: 26 Feb
+   Priority: Low (closed — monitoring only)
+   Source threads: Thread 1 (Client Group), Thread 2 (All Staff Group —
+                   24–26 Feb cluster)
 
-   ↳ SUBTASK 1: Order received and confirmed
-      Status: Completed
-      Note: Sharma Bakery confirmed order 24 Feb 10:30. Price agreed: Rs 45,000 + GST.
+   ↳ SUBTASK 1: Order confirmed and delivery completed
+      Status: ✅ Completed — 25 Feb
+      Note: Delivery confirmed by Staff 1 (25 Feb 14:00) and acknowledged
+            by Sharma Bakery (25 Feb 14:10).
 
-   ↳ SUBTASK 2: Delivery arranged and completed
-      Assigned to: Staff 1 (name unresolved — see FLAGS)
-      Status: Completed
-      Note: Delivery confirmed by Staff 1 (25 Feb 14:00); acknowledged by Sharma Bakery
-      (25 Feb 14:10).
+   ↳ SUBTASK 2: Invoice raised and payment received
+      Status: ✅ Completed — 26 Feb
+      Note: Invoice sent WhatsApp. Payment of ₹47,200 received and
+            confirmed by Ashish (26 Feb 15:10).
 
-   ↳ SUBTASK 3: Invoice raised
-      Status: Completed
-      Note: Invoice sent via WhatsApp by Ashish on 26 Feb 09:30.
-
-   ↳ SUBTASK 4: Payment received
-      Status: Completed
-      Note: Rs 47,200 received 26 Feb 15:00 (Rs 45,000 + GST of Rs 2,200 = 5% GST —
-      consistent with a single standard tandoor). Ashish confirmed receipt 26 Feb 15:10.
-
-   ↳ SUBTASK 5: GST reconciliation — cadence implicit task
+   ↳ SUBTASK 3: GST reconciliation — implicit cadence task
       Status: Pending — not detected in threads
-      Note: Invoice raised 26 Feb (Feb month-end). GST on Rs 47,200 transaction must be
-      reconciled in Feb GST return. No mention in any thread.
-      Next step: Ms. Mousumi Banik to confirm this invoice is entered in Tally and
-      included in Feb GST filing.
+      Note: Invoice raised 26 Feb. GST component included (₹47,200 total
+            implies approx ₹7,200 GST on ₹40,000 base, or ₹2,200 GST on
+            ₹45,000 base — exact GST treatment not confirmed in thread).
+            Monthly GST reconciliation is almost never logged in WhatsApp.
+      Next step: Ms. Mousumi Banik to confirm this invoice is entered in
+                 Tally under the correct entity (Army Stores or Sun Traders
+                 per billing allocation) and reconciled in the monthly GST
+                 return.
 
-   ↳ SUBTASK 6: Post-delivery feedback / relationship follow-up — implicit task
-      Status: Pending — implicit cadence task
-      Note: Order is fully closed (payment received, courteous close from Ashish 26 Feb).
-      However, 28 days have elapsed since order close (26 Feb → 26 Mar). No re-engagement
-      or feedback message visible in any thread.
-      Next step: Ashish to send a brief personal message to Sharma Bakery — acknowledge
-      the completed order, confirm satisfaction with the tandoor, and probe for any upcoming
-      requirements. Do NOT delegate to staff; this is a relationship-maintenance action.
-      Gap duration: ~28 days since last interaction (26 Feb).
+   ↳ SUBTASK 4: Post-delivery feedback follow-up — implicit cadence task
+      Status: Pending — not detected in threads
+      Note: Ashish sent a polite close ("aage kuch chahiye ho toh zaroor
+            batana") but no structured satisfaction check is visible.
+            This is a commercial client — a brief follow-up is appropriate.
+      Next step: Staff member (or Ashish) to send a short follow-up to
+                 Sharma Bakery acknowledging the completed order and asking
+                 if the tandoor is working as expected.
 
-⚠️ FLAGS (Sharma Bakery order):
-   - Delivery challan / delivery note: No challan or signed delivery note visible in any
-     thread. Staff 1 confirmed "delivery ho gayi" verbally; Sharma Bakery replied "haan
-     mila." This is a WhatsApp acknowledgement only — no formal delivery documentation
-     confirmed. For a completed and paid order this is a retrospective flag only, but
-     the pattern should be corrected for future orders.
-   - Client sign-off was verbal/WhatsApp only — no written DO/GRN visible.
-   - Supplier thread absent: No supplier procurement thread provided for this tandoor.
-     The order appears to have been fulfilled (possibly from stock or a supplier thread
-     not included in input). See AMBIGUOUS CORRELATIONS below.
-   - Staff 1 identity unresolved — see entity note below.
+   ↳ SUBTASK 5: Proactive reorder outreach — Sharma Bakery
+      Status: Pending — implicit task, no recent activity
+      Note: ~4 weeks since last interaction (order closed 26 Feb, today
+            is 26 Mar). No new enquiry or message visible from Sharma
+            Bakery in any thread. At this silence duration for a bakery
+            client (equipment-heavy, potentially repeat needs), a proactive
+            check-in is warranted.
+      Next step: Ashish to send a personal message to Sharma Bakery —
+                 acknowledge the completed order, confirm satisfaction, and
+                 probe for any upcoming requirements. Do NOT delegate to
+                 staff; this is a relationship-maintenance action.
 
+   ↳ SUBTASK 6: Receipt / payment acknowledgement — implicit cadence task
+      Status: Pending — not detected in threads
+      Note: Payment receipt was verbally acknowledged in WhatsApp ("received,
+            thank you sir") but no formal receipt or acknowledgement document
+            is visible in threads.
+      Next step: Confirm whether a formal receipt was issued (or whether
+                 WhatsApp acknowledgement is the standard practice for this
+                 client). If not issued, Ms. Mousumi Banik to log and issue.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ FLAGS (Parent Task 1):
+   - Invoice amount: Sharma Bakery quoted ₹45,000 + GST; payment was
+     ₹47,200. GST calculation: ₹45,000 × 5% = ₹47,250 (tandoor GST rate
+     is typically 5%) — but payment was ₹47,200, a ₹50 shortfall. Likely
+     rounding, but worth confirming the correct GST rate applied and that
+     the invoice matches. Flag for Ms. Mousumi Banik.
+   - No delivery challan or signed delivery note visible in threads.
+     Delivery was confirmed verbally (WhatsApp message from Sharma Bakery).
+     For a commercial client this may be acceptable, but worth checking
+     whether a signed challan was obtained.
+
+════════════════════════════════════════════════════════════════════
 📦 PARENT TASK 2: AC Order — Eastern Command
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   Entity: Eastern Command (Army client — direct delivery)
-   Item: AC (air conditioner — type/capacity not specified in threads)
-   Status: In Progress — goods in transit, expected arrival today (26 Mar)
-   Due: 26 Mar (supplier dispatched yesterday, 25 Mar; expected today per Staff 1)
-   Priority: High — Army client, goods in transit, time-sensitive receiving window today
-   Source threads: All Staff Group
+════════════════════════════════════════════════════════════════════
+   Entity: Eastern Command (Army client — Army payment rules apply)
+   Item: AC (air conditioner — model/specs not mentioned in threads)
+   Status: In Progress — goods dispatched by supplier, expected arrival
+           today (26 Mar)
+   Due: Delivery to Eastern Command — date not specified in threads
+   Priority: HIGH
+   Source threads: Thread 2 (All Staff Group — 26 Mar cluster)
 
-   ↳ SUBTASK 1: Supplier dispatch confirmed
-      Status: Completed
-      Note: Staff 1 confirmed 26 Mar 09:10 that supplier dispatched yesterday (25 Mar).
-      Expected arrival: 26 Mar.
+   ↳ SUBTASK 1: Confirm goods arrival today from supplier — URGENT
+      Assigned to: Staff 1
+      Status: Pending — goods in transit as of 09:10 this morning
+      Due: Today (26 Mar), as early as possible
+      Next step: Staff 1 to confirm with supplier/transporter that goods
+                 have physically arrived at Ashish's premises today.
+                 If not received by afternoon, escalate immediately —
+                 delivery to Eastern Command cannot be scheduled until
+                 goods are in hand.
 
-   ↳ SUBTASK 2: Goods receiving — today
-      Assigned to: Staff 1 / Mr. Rahul Das or Mr. Samsuel Haque (delivery/collections staff)
-      Status: Pending — goods expected today
-      Due: 26 Mar (today)
-      Next step: Confirm receiving staff are available and aware. If goods have not arrived
-      by early afternoon, follow up with supplier/transporter for ETA.
+   ↳ SUBTASK 2: Pre-emptive delivery confirmation — supplier
+      Status: ⚠️ Partially overdue — scheduled for morning of 26 Mar;
+              Staff 1 posted an update at 09:10 but it is unclear if this
+              was a proactive check or a reactive status update
+      Due: Morning of 26 Mar (today)
+      Note: Supplier committed delivery for today. Thread shows Staff 1
+            reported at 09:10 that "supplier ne kal dispatch kiya, aaj tak
+            aa jayega" — this is a report of prior dispatch, not a morning
+            confirmation that delivery is still on track. It is unclear
+            whether Staff 1 actually called the supplier this morning to
+            reconfirm, or is relying on yesterday's dispatch information.
+      Next step: If not already done, Staff 1 to call the supplier/
+                 transporter now to confirm actual ETA today before
+                 arranging receiving staff and logistics.
 
-   ↳ SUBTASK 3: Transit damage inspection — implicit cadence task (Type 1 / Type 3)
+   ↳ SUBTASK 3: Transit damage inspection on receipt — implicit task
+      Status: Pending — goods not yet received
+      Note: Expected at this stage for equipment orders. No mention of
+            inspection plan in threads.
+      Next step: When goods arrive, designated staff to inspect for
+                 transit damage before signing any transporter receipt.
+                 Document condition at receipt.
+
+   ↳ SUBTASK 4: Inspection and sorting — implicit cadence task
       Status: Pending — not detected in threads
-      Note: No mention of inspection protocol. AC units are high-value equipment with
-      transit damage risk. Inspection must happen on receipt, before any delivery to
-      Eastern Command.
-      Next step: Designate staff to inspect the AC unit(s) on arrival — check for physical
-      damage, confirm model/specs match PO. Log result immediately.
+      Note: Expected at this stage (post-receipt, pre-dispatch to client).
+            Rarely logged in WhatsApp. AC units require functional check
+            before dispatch.
+      Next step: After receipt confirmed, assign staff to inspect and
+                 sort/check AC unit(s) before arranging delivery to
+                 Eastern Command.
 
-   ↳ SUBTASK 4: Pre-dispatch checklist — implicit cadence task (Type 3: Army Direct Delivery)
+   ↳ SUBTASK 5: Army unit coordination — Eastern Command
       Status: Pending — not detected in threads
-      Note: Pre-dispatch checklist expected before forwarding goods to Army unit. No
-      evidence in threads.
-      Next step: Complete pre-dispatch checklist once goods are inspected and cleared.
+      Note: For Army direct delivery (Type 3), receiving officer name,
+            delivery address within Eastern Command, and any specific
+            receiving instructions should be confirmed before dispatch.
+      Next step: Ashish or Mrs. Samita to confirm delivery address,
+                 receiving officer name, and any time/access constraints
+                 with Eastern Command before arranging vehicle.
 
-   ↳ SUBTASK 5: Army unit coordination — implicit cadence task (Type 3)
+   ↳ SUBTASK 6: Gate pass / entry documentation
       Status: Pending — not detected in threads
-      Note: Eastern Command is an Army client. Receiving officer, delivery address/gate,
-      and time window must be confirmed before dispatch. No coordination message visible.
-      Next step: Confirm with Eastern Command: (a) correct delivery address/gate,
-      (b) name of receiving officer, (c) preferred delivery date and time window.
+      Note: Army-specific requirement. Entry to Eastern Command premises
+            requires pre-arranged gate pass or delivery documentation.
+            Almost never appears in WhatsApp until it causes a problem.
+      Next step: Confirm with Eastern Command whether a gate pass or
+                 prior entry clearance is required for the delivery vehicle.
+                 Arrange this before dispatch.
 
-   ↳ SUBTASK 6: Gate pass / entry documentation — implicit cadence task (Type 3)
+   ↳ SUBTASK 7: Pre-dispatch checklist completed — implicit cadence task
       Status: Pending — not detected in threads
-      Note: Army cantonment deliveries typically require gate pass or entry permission.
-      No mention in any thread.
-      Next step: Confirm whether Eastern Command unit requires a gate pass for civilian
-      delivery vehicles. Arrange in advance — missing gate pass causes day-of delays
-      and missed delivery windows.
+      Note: Expected before delivery is arranged. Not visible in threads.
+      Next step: Confirm pre-dispatch checklist completed (item condition,
+                 packaging, documentation, delivery address confirmed)
+                 before vehicle is dispatched.
 
-   ↳ SUBTASK 7: Delivery to Eastern Command — arrange transport
-      Status: Pending — blocked until goods received and inspected
-      Due: Immediately after goods cleared (26–27 Mar)
-      Next step: Once goods received and inspected, arrange delivery vehicle (Mr. Rahul
-      Das or Mr. Samsuel Haque) and coordinate with Eastern Command unit for delivery.
+   ↳ SUBTASK 8: Delivery to Eastern Command — arrange transport
+      Status: Pending — blocked until Subtask 1 (goods receipt) confirmed
+      Due: TBD — pending goods receipt and unit coordination
+      Next step: Once goods received and inspected, arrange delivery
+                 vehicle. Confirm transport method (own vehicle, hired
+                 transporter, or Army transport pickup).
 
-   ↳ SUBTASK 8: DO / GRN / signed delivery note — implicit cadence task (Type 3)
-      Status: Pending — not detected in threads
-      Note: For Army clients, a signed delivery order or GRN is required as the basis
-      for formal invoice payment. This step is almost never mentioned in WhatsApp but
-      is critical.
-      Next step: Ensure receiving officer at Eastern Command signs the delivery note /
-      GRN at the time of delivery. Bring multiple copies. Retain signed copy.
+   ↳ SUBTASK 9: DO / GRN / signed delivery note — implicit cadence task
+      Status: Pending — delivery not yet made
+      Note: For Army clients, a signed Delivery Order (DO) or Goods
+            Receipt Note (GRN) is required for formal payment processing.
+            This is frequently missed or obtained only verbally.
+      Next step: Ensure delivery staff carry a formal delivery note/challan
+                 and obtain a signed copy from the Eastern Command receiving
+                 officer at the time of delivery. Do not leave without a
+                 signed document.
 
-   ↳ SUBTASK 9: Invoice raised (with DO reference)
-      Status: Pending — awaiting delivery completion
-      Next step: After signed DO/GRN received, raise invoice referencing the DO number.
-      Ms. Mousumi Banik to process in Tally.
-
-   ↳ SUBTASK 10: Payment follow-up — Army client cadence
-      Status: Pending — future task, post-invoice
-      Note: Eastern Command is an Army unit. Payment cycle is 60–90 days — normal and
-      expected. Do NOT have staff follow up with a payment demand. Ashish to make personal
-      contact with the unit CO or accounts section if follow-up is needed after 60 days.
-      Next step: Log invoice date when raised; set a 60-day review flag for Ashish's
-      attention (not for staff action).
-
-⚠️ FLAGS (Eastern Command AC order):
-   - Supplier identity not named in thread ("supplier ne kal dispatch kiya") — supplier
-     name unknown from provided threads. Cannot correlate with any supplier-side thread.
-   - AC unit quantity, model, and specs not mentioned in available threads.
-   - No transporter information visible — if this is inter-state procurement (Type 5),
-     e-way bill and transit documentation checks apply. Clarify origin of supplier.
-   - Pre-dispatch checklist, Army unit coordination, and gate pass are all currently
-     unconfirmed — these must be resolved before delivery day to avoid a failed delivery
-     attempt at the Army gate.
-   - No PO or advance payment confirmation visible in threads — unclear if PO was issued
-     to supplier and on what terms.
-   - "Challan" mentioned in Ashish's 26 Mar 09:00 message ("Tezpur ka challan") — this
-     may be a separate matter from the Eastern Command order. See AMBIGUOUS CORRELATIONS.
-
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📦 PARENT TASK 3: Pending Item Order — SATA
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   Entity: SATA (client — likely Army/institutional, to be confirmed)
-   Item: Unspecified ("pending item") — item identity unknown from threads
-   Status: In Progress — goods received from Malerkotla (25 Mar), sorting in progress
-             as of 26 Mar 09:15
-   Due: Not specified
-   Priority: High — goods are in hand; sorting is active; delivery to SATA is the
-              immediate next step
-   Source threads: All Staff Group
-
-   ↳ SUBTASK 1: Inter-state goods received from Malerkotla
-      Status: Completed (tentative)
-      Note: Staff 2 confirmed "Malerkotla se maal cal aya tha" (yesterday, 25 Mar).
-      "cal" likely = "kal" (yesterday). Sorting in progress as of 26 Mar 09:15.
-
-   ↳ SUBTASK 2: Sorting completion
-      Assigned to: Staff 2 (name unresolved — see FLAGS)
-      Status: In Progress
-      Due: 26 Mar (today, implied — sorting is active)
-      Next step: Confirm with Staff 2 when sorting will be complete today. Sorting
-      completion is the gate to inspection and dispatch.
-
-   ↳ SUBTASK 3: Transit damage inspection — implicit cadence task (Type 5)
-      Status: Pending — not detected in threads
-      Note: Goods have arrived from inter-state (Malerkotla). Transit damage inspection
-      is a required step for inter-state procurement, especially before sorting and
-      onward dispatch. Higher risk than local procurement.
-      Next step: Complete inspection for transit damage before or during sorting. Log
-      results. If damage found, notify supplier immediately with photos.
-
-   ↳ SUBTASK 4: Pre-dispatch checklist — implicit cadence task
-      Status: Pending — not detected in threads
-      Next step: Complete pre-dispatch checklist after sorting and inspection, before
-      arranging delivery to SATA.
-
-   ↳ SUBTASK 5: Delivery to SATA — arrange
-      Status: Pending — blocked until sorting and inspection complete
-      Next step: Once sorting and inspection done, arrange delivery to SATA via
-      Mr. Rahul Das or Mr. Samsuel Haque. Confirm SATA delivery address and receiving
-      contact before dispatch.
-
-   ↳ SUBTASK 6: Delivery challan / delivery note — implicit cadence task
+   ↳ SUBTASK 10: Invoice raised (with DO reference) — implicit cadence task
       Status: Pending — delivery not yet completed
-      Note: Formal delivery documentation required for SATA order.
-      Next step: Prepare delivery challan before dispatch; ensure receiving party at
-      SATA signs it. Retain signed copy for invoice and payment basis.
+      Note: Invoice must reference the DO/GRN number for Army payment
+            processing. Cannot be raised until signed delivery note received.
+      Next step: After signed DO received, Ms. Mousumi Banik to raise
+                 invoice with DO reference under correct billing entity
+                 (Army Stores or Sun Traders).
 
-   ↳ SUBTASK 7: E-way bill / transport documentation — implicit cadence task (Type 5)
-      Status: Pending (retrospective check)
-      Note: Goods came from Malerkotla (inter-state). E-way bill is required for
-      inter-state goods movement. No mention in any thread.
-      Next step: Confirm e-way bill was generated for the Malerkotla consignment.
-      If not, flag immediately — this is a GST compliance issue.
+   ↳ SUBTASK 11: Payment follow-up — Army client cadence
+      Status: Not yet applicable — invoice not raised
+      Note: Eastern Command payment cycle: 60–90 days is normal and
+            expected. Payment follow-up should not be initiated by staff
+            directly. This task will become active 30 days after invoice
+            is raised.
+      Next step: Log invoice date when raised. Ashish to make personal
+                 contact with Eastern Command CO or accounts section at
+                 30-day mark if payment not received — not via staff.
 
-   ↳ SUBTASK 8: Invoice raised
-      Status: Pending — awaiting delivery completion
-      Next step: After delivery confirmed and signed challan received, raise invoice
-      for SATA. Ms. Mousumi Banik to process in Tally.
+   ↳ SUBTASK 12: Working capital / cash flow assessment — implicit
+                 financial flag
+      Status: Pending — flag for Ashish's attention
+      Note: Eastern Command is an Army client (payment cycle 60–90 days).
+            If a supplier advance was paid or is required for this AC
+            order, there is a cash flow gap between the advance out and
+            payment in. Advance amount not confirmed in threads.
+      Next step: Ashish to verify whether a supplier advance was paid
+                 for this order and, if so, assess whether the working
+                 capital gap requires bridging (invoice financing, OD, etc.)
+                 before committing further supplier payments.
 
-   ↳ SUBTASK 9: Payment follow-up
-      Status: Pending — future task, post-invoice
-      Note: SATA client type not confirmed in threads. If Army/institutional, apply
-      Army payment cadence (60–90 day cycle, Ashish to follow up personally, not staff).
-      Next step: Confirm SATA client type. Set payment review flag at 30–60 days
-      post-invoice based on client type.
+   ↳ SUBTASK 13: GST reconciliation — implicit cadence task
+      Status: Pending — invoice not yet raised
+      Note: To be actioned monthly after invoice is raised.
+      Next step: Ms. Mousumi Banik to include this invoice in monthly
+                 GST reconciliation once raised.
 
-⚠️ FLAGS (SATA order):
-   - Item not named: "pending item" is the only description. The actual item being
-     sourced from Malerkotla is unknown from available threads. Human review needed
-     to confirm item identity.
-   - SATA client type not confirmed — Army, institutional, or commercial? This affects
-     payment cadence, delivery protocol, and whether gate pass / DO requirements apply.
-   - Staff 2 identity unresolved — see entity note below.
-   - Supplier identity (Malerkotla supplier) not named in threads.
-   - "cal aya tha" language: Staff 2's message says goods arrived yesterday (25 Mar).
-     However, the phrasing is slightly ambiguous ("cal aya tha" = arrived yesterday,
-     past tense). Confirm goods are physically on premises and sorting is genuinely
-     underway, not a status update referring to a partial receipt.
-   - No e-way bill confirmation in threads — flag for GST compliance review.
+⚠️ FLAGS (Parent Task 2):
+   - AC specs / quantity not mentioned in any thread — item detail is
+     minimal ("Eastern Command ka AC order"). Cannot confirm whether
+     the supplier dispatched the correct item/quantity.
+   - Staff 1's 09:10 update ("supplier ne kal dispatch kiya, aaj tak aa
+     jayega") is a forward projection, not a confirmed arrival. Treat as
+     unconfirmed until physical receipt acknowledged.
+   - No Army unit coordination visible in threads (receiving officer,
+     address, gate pass). This is a blocking risk for delivery.
+   - Date sensitivity: 26 Mar is close to financial year-end (31 Mar).
+     If this order needs to be invoiced in the current FY, delivery and
+     invoice must be completed by 31 Mar.
 
+════════════════════════════════════════════════════════════════════
+📦 PARENT TASK 3: Pending Item — SATA (inter-state, Malerkotla)
+════════════════════════════════════════════════════════════════════
+   Entity: SATA (Army client — Army payment rules apply);
+           Malerkotla supplier (inter-state)
+   Item: UNIDENTIFIED — referred to only as "pending item" and "maal"
+         in threads. No item name, quantity, or specification visible.
+   Status: In Progress — goods received from Malerkotla (25 Mar),
+           sorting in progress as of 26 Mar 09:15
+   Due: Delivery to SATA — not specified in threads
+   Priority: HIGH (sorting in progress — next steps imminent)
+   Source threads: Thread 2 (All Staff Group — 26 Mar cluster)
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📦 PARENT TASK 4: Challan — Tezpur [DETAILS UNKNOWN — HUMAN REVIEW NEEDED]
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   Entity: Tezpur (client — likely Army unit / cantonment, to be confirmed)
-   Item: Unknown — challan reference only; item not specified in threads
-   Status: Unknown — Ashish asked for status on 26 Mar 09:00; no response captured
-              in provided thread input
+   ↳ SUBTASK 1: Item identification — human review required
+      Status: ⚠️ BLOCKED — item not named in any thread
+      Next step: Ashish or Staff 2 to confirm what the "pending item"
+                 is — name, quantity, specification. This is required
+                 before any downstream task (inspection, delivery, invoice)
+                 can be confirmed. Check SATA's original order or the
+                 Malerkotla supplier thread (not provided in this input).
+
+   ↳ SUBTASK 2: Sorting / inspection — in progress
+      Assigned to: Staff 2
+      Status: In Progress — "sorting ho rahi hai" (26 Mar 09:15)
+      Next step: Staff 2 to complete sorting and report outcome —
+                 quantity confirmed, condition checked, any shortages
+                 or damage noted.
+
+   ↳ SUBTASK 3: Transit damage inspection — implicit cadence task
+      Status: Pending — should be happening concurrent with sorting
+      Note: Inter-state goods from Malerkotla carry higher transit
+            damage risk. No explicit damage check mentioned in threads.
+      Next step: Confirm transit damage inspection is part of current
+                 sorting process. If any damage detected, document with
+                 photos immediately and notify transporter before signing
+                 final receipt.
+
+   ↳ SUBTASK 4: E-way bill / transport documentation — verify received
+      Status: Pending — not detected in threads
+      Note: Inter-state goods (Malerkotla → Guwahati) require e-way bill.
+            Goods have arrived — confirm e-way bill was received and filed.
+            Required for GST compliance.
+      Next step: Ms. Abhisha or Ms. Mousumi Banik to confirm e-way bill
+                 received with the consignment and entered in records.
+
+   ↳ SUBTASK 5: Army unit coordination — SATA
+      Status: Pending — not detected in threads
+      Note: Receiving officer, delivery address, access instructions for
+            SATA unit not visible in threads. Must confirm before arranging
+            delivery vehicle.
+      Next step: Ashish or Mrs. Samita to confirm delivery details with
+                 SATA before arranging dispatch.
+
+   ↳ SUBTASK 6: Gate pass / entry documentation — SATA
+      Status: Pending — not detected in threads
+      Note: Army-specific requirement. Almost never appears in WhatsApp
+            until it causes a problem at the gate.
+      Next step: Confirm with SATA whether a gate pass or prior entry
+                 clearance is required for the delivery vehicle.
+
+   ↳ SUBTASK 7: Pre-dispatch checklist — implicit cadence task
+      Status: Pending — sorting in progress, dispatch not yet arranged
+      Note: Expected before delivery to client. Not visible in threads.
+      Next step: After sorting complete and item confirmed, complete
+                 pre-dispatch checklist before arranging vehicle.
+
+   ↳ SUBTASK 8: Delivery to SATA — arrange transport
+      Status: Pending — blocked until Subtask 2 (sorting) completed
+                        and Subtask 5 (unit coordination) confirmed
+      Next step: Once sorting complete and SATA delivery details
+                 confirmed, arrange delivery vehicle. Assign Mr. Rahul Das
+                 or Mr. Samsuel Haque (Haque Babu) for delivery run.
+
+   ↳ SUBTASK 9: DO / GRN / signed delivery note — implicit cadence task
+      Status: Pending — delivery not yet made
+      Note: Required for Army client payment processing. Delivery staff
+            must carry a formal delivery challan and return with a
+            signed copy.
+      Next step: Prepare delivery challan before dispatch. Delivery staff
+                 to obtain signed acknowledgement from SATA receiving
+                 officer at time of delivery.
+
+   ↳ SUBTASK 10: Invoice raised (with DO reference) — implicit cadence task
+      Status: Pending — delivery not yet completed
+      Next step: After signed DO received, Ms. Mousumi Banik to raise
+                 invoice with DO reference under correct billing entity.
+
+   ↳ SUBTASK 11: Payment follow-up — Army client cadence
+      Status: Not yet applicable — invoice not raised
+      Note: SATA payment cycle: 60–90 days is normal and expected.
+            Do NOT have staff follow up directly with SATA on payment.
+      Next step: Log invoice date when raised. Ashish to make personal
+                 contact with SATA CO or accounts section at 30-day mark
+                 if payment not received.
+
+   ↳ SUBTASK 12: Working capital / cash flow assessment — implicit
+                 financial flag
+      Status: Pending — flag for Ashish's attention
+      Note: SATA is an Army client (payment cycle 60–90 days). Goods
+            sourced inter-state from Malerkotla — if a supplier advance
+            was paid, there is a cash flow gap. Advance amount not
+            confirmed in threads.
+      Next step: Ashish to verify whether a supplier advance was paid
+                 to the Malerkotla supplier and, if significant (Rs 1L+),
+                 assess whether working capital bridging is needed.
+
+⚠️ FLAGS (Parent Task 3):
+   - CRITICAL: Item is completely unidentified in threads. "Pending item"
+     and "maal" provide no specifics. Cannot confirm correct goods were
+     received without human input.
+   - Staff 2's message "maal cal aya tha" — "cal" likely means "kal"
+     (yesterday, i.e., 25 Mar). Goods have been on-site since 25 Mar
+     and sorting only mentioned on 26 Mar — confirm there was no
+     overnight storage issue (security, temperature, etc. depending on
+     item type).
+   - No Malerkotla supplier thread provided — cannot confirm what was
+     ordered vs. what arrived. Quantity and specification verification
+     depends on Subtask 1 resolution.
+   - Date sensitivity: 26 Mar is close to financial year-end. If this
+     order needs to be invoiced in current FY, delivery must happen
+     by 31 Mar.
+
+════════════════════════════════════════════════════════════════════
+📦 PARENT TASK 4: Challan — Tezpur [INSUFFICIENT INFORMATION]
+════════════════════════════════════════════════════════════════════
+   Entity: Tezpur (likely Army unit/client in Tezpur cantonment —
+           Army payment rules apply if confirmed as Army)
+   Item: UNIDENTIFIED — no item mentioned in threads
+   Status: ⚠️ UNKNOWN — referenced by Ashish in status check
+           (26 Mar 09:00) but NO staff response visible in any thread
    Due: Unknown
-   Priority: High — Ashish specifically asked for status in the morning review, which
-              implies this is an open / pending matter requiring resolution today
-   Source threads: All Staff Group
+   Priority: HIGH — zero status visibility; no response from any
+             staff member as of thread cutoff
+   Source threads: Thread 2 (All Staff Group — 26 Mar cluster only)
 
-   ↳ SUBTASK 1: Status update on Tezpur challan
-      Assigned to: Staff (unspecified — Ashish asked "sabka status do" to the group)
-      Status: Pending — no response captured in thread for this item
-      Due: 26 Mar (today — Ashish requested this morning)
-      Next step: Identify which staff member owns the Tezpur challan matter and obtain
-      status update. Ashish to follow up in the group if no response received by midday.
+   NOTE: Ashish's 09:00 message asked for status on "Tezpur ka challan."
+   This implies a challan is expected or pending for a Tezpur order.
+   No staff member responded to this query in the provided threads.
+   No other thread contains any information about this order.
 
-   ↳ SUBTASK 2: Challan type and context — clarification needed
-      Status: Blocked — insufficient information
-      Note: "Tezpur ka challan" could mean: (a) a delivery challan to be raised for
-      a completed delivery to Tezpur, (b) a challan already issued pending client
-      acknowledgement, or (c) a challan-linked payment outstanding. Cannot determine
-      from available threads.
-      Next step: Clarify with staff what the specific challan status is — raised /
-      not raised / pending sign-off / linked to a payment.
+   ↳ SUBTASK 1: Identify the Tezpur order — human review required
+      Status: ⚠️ BLOCKED — no information in any thread
+      Next step: Ashish to follow up directly with the staff member
+                 responsible for the Tezpur order (unclear from threads
+                 who this is) to get an immediate status update.
+                 Specifically: what is the item, what is the order stage,
+                 and why has the challan not been issued?
 
-   ↳ SUBTASK 3: If challan is for a pending delivery — Army coordination (Type 3)
-      Status: Pending — conditional on clarification
-      Note: Tezpur is a known Army cantonment location. If this is an Army unit
-      delivery, Type 3 (Army Direct Delivery) cadence applies: gate pass, receiving
-      officer confirmation, signed DO/GRN required.
-      Next step: Once challan context is confirmed, apply Type 3 checklist if applicable.
+   ↳ SUBTASK 2: Staff non-response — escalation flag
+      Status: ⚠️ UNRESOLVED — Ashish asked at 09:00; no response
+              visible for Tezpur item specifically
+      Note: Staff 1 responded about Eastern Command (09:10) and
+            Staff 2 responded about SATA (09:15) — but nobody responded
+            about Tezpur. This may mean: (a) the responsible staff member
+            was not in the group, (b) the response came via a 1:1 chat
+            not provided in input, or (c) the task was missed.
+      Next step: Ashish to check whether a response came in a 1:1 chat
+                 (not visible in this input). If not, follow up with
+                 responsible staff member immediately.
 
-⚠️ FLAGS (Tezpur challan):
-   - Tezpur challan has no response in the provided threads — this is an open item
-     with no visible resolution. Status is genuinely unknown.
-   - Item, quantity, and value are all unknown from available threads.
-   - No separate thread for this order is present in input — full order history
-     unavailable. Possible that a dedicated client or supplier thread exists but
-     was not shared. Flag for human review.
-   - This may be a separate order from the Eastern Command AC order, or it may be
-     related to the same status-review cycle on 26 Mar. Kept as a separate parent
-     task — see AMBIGUOUS CORRELATIONS.
+⚠️ FLAGS (Parent Task 4):
+   - CRITICAL: Zero information about this order in any provided thread.
+     "Tezpur ka challan" implies an order exists but challan is not yet
+     issued — this is a late-stage deliverable that should have been
+     completed.
+   - No supplier thread, no client thread, no delivery confirmation —
+     nothing. This order is a complete blind spot in the provided input.
+   - No staff response to Ashish's status query is itself a flag.
+   - Supplier thread not found in input — verify if procurement is
+     underway in an unshared thread.
 
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📦 PARENT TASK 5: End-of-Month / End-of-Quarter Accounts — March
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   Entity: Internal — Ms. Mousumi Banik (Tally); CA (GST/ITR via Ms. Abhisha)
-   Item: Periodic accounts, GST, year-end compliance
-   Status: Pending — calendar-triggered implicit tasks
+════════════════════════════════════════════════════════════════════
+📦 PARENT TASK 5: Year-End and Quarter-End Business Tasks
+        [CALENDAR-TRIGGERED — 26 Mar, Financial Year-End approaching]
+════════════════════════════════════════════════════════════════════
+   Entity: Internal — Ashish, Ms. Mousumi Banik, Ms. Abhisha, CA
+   Status: Pending — not detected in any thread
    Due: 31 Mar (5 days from thread date)
-   Priority: High — financial year-end; multiple hard deadlines
-   Source threads: None — calendar-triggered based on thread date (26 Mar)
+   Priority: HIGH — hard deadline, FY closes 31 Mar
+   Source threads: None — calendar-triggered implicit task
 
-   ↳ SUBTASK 1: GST reconciliation — all March invoices — calendar-triggered
+   ↳ SUBTASK 1: Stock-take — year-end implicit task
       Status: Pending — not detected in threads
-      Note: Thread date is 26 Mar. March GST return requires all invoices for the month
-      to be reconciled. Includes Sharma Bakery tandoor invoice (26 Feb — in Feb GST, but
-      verify), Eastern Command AC invoice (pending), SATA invoice (pending), and any
-      other invoices raised in March.
-      Next step: Ms. Mousumi Banik to compile all purchase and sales entries for March
-      in Tally; cross-check with GST portal. Ms. Abhisha to coordinate with CA for
-      filing timeline.
+      Note: Thread date is 26 Mar — financial year-end (31 Mar) is
+            5 days away. Annual stock-take is expected and almost never
+            mentioned in WhatsApp.
+      Next step: Ashish to schedule a physical stock count at the
+                 warehouse before 31 Mar. Assign staff for counting.
+                 Reconcile physical count against Tally records.
 
-   ↳ SUBTASK 2: Accounts payable and receivable review — end of month
+   ↳ SUBTASK 2: Year-end accounts closure — implicit task
       Status: Pending — not detected in threads
-      Note: All open supplier payables and client receivables for March should be reviewed
-      before month close.
-      Next step: Ms. Mousumi Banik to generate AP/AR report from Tally. Ashish to review
-      and clear any outstanding supplier payments.
+      Note: All purchase entries, supplier payments, and client receipts
+            for FY must be entered and reconciled in Tally before 31 Mar.
+      Next step: Ms. Mousumi Banik to confirm all entries are up to date.
+                 Coordinate with Ms. Abhisha on GST/ITR documents needed
+                 for CA submission.
 
-   ↳ SUBTASK 3: Year-end stock-take — calendar-triggered (financial year-end)
+   ↳ SUBTASK 3: Pending invoice clearance before FY-end — implicit task
       Status: Pending — not detected in threads
-      Note: Thread date is 26 Mar. Financial year ends 31 Mar. Physical stock-take of
-      warehouse inventory is expected. No mention in any thread.
-      Next step: Ashish to schedule stock-take for 29–30 Mar. Assign staff for physical
-      count. Ms. Mousumi Banik to reconcile against Tally stock records after count.
+      Note: Any open orders that can be invoiced before 31 Mar should be
+            invoiced in this FY. Review all open parent tasks (Eastern
+            Command AC, SATA pending item, Tezpur challan) — if deliveries
+            can be completed and invoices raised before 31 Mar, this
+            should be prioritised.
+      Next step: Ashish to review all open orders and determine which
+                 can realistically be delivered and invoiced by 31 Mar.
+                 This directly affects FY revenue and GST liability.
 
-   ↳ SUBTASK 4: Year-end accounts closure — calendar-triggered
+   ↳ SUBTASK 4: Advance tax assessment — Q4 / year-end implicit task
       Status: Pending — not detected in threads
-      Note: FY closing entries, depreciation, and balance confirmation needed before
-      31 Mar.
-      Next step: Ms. Mousumi Banik to prepare year-end Tally entries. Ms. Abhisha to
-      coordinate with CA for year-end closure and ITR preparation.
+      Note: Q4 advance tax assessment is due around 15 Mar (already
+            passed) but any residual liability should be assessed. If
+            not filed, interest liability accrues.
+      Next step: Ms. Abhisha to check with CA whether advance tax for
+                 FY was fully paid and whether any year-end adjustment
+                 is needed.
 
-   ↳ SUBTASK 5: Pending invoice clearance before financial year-end
+   ↳ SUBTASK 5: GST reconciliation — year-end and monthly implicit task
       Status: Pending — not detected in threads
-      Note: Eastern Command AC and SATA deliveries are expected to complete this week.
-      Invoices should be raised before 31 Mar to be counted in the current financial year.
-      Next step: Prioritise delivery completion for both Eastern Command and SATA orders
-      so invoices can be raised by 31 Mar. Ashish to flag to staff that FY-end is a
-      hard deadline for these invoices.
+      Note: End of FY requires full-year GST reconciliation across all
+            three entities (Uttam Enterprise, Army Stores, Sun Traders).
+            February and March invoices must be reconciled before FY close.
+      Next step: Ms. Mousumi Banik and Ms. Abhisha to coordinate with
+                 CA on GST return filing for March and year-end
+                 reconciliation. Confirm all purchase invoices (including
+                 Malerkotla supplier, any inter-state purchases) have
+                 correct IGST/CGST/SGST treatment.
 
-   ↳ SUBTASK 6: Advance tax assessment — Q4 / year-end
+   ↳ SUBTASK 6: Accounts payable / receivable review — implicit task
       Status: Pending — not detected in threads
-      Note: Q4 advance tax assessment is due at year-end.
-      Next step: Ms. Abhisha to coordinate with CA for advance tax computation and
-      payment before 31 Mar deadline.
+      Note: Year-end requires a full review of outstanding payables
+            (supplier payments due) and receivables (client payments
+            outstanding). All three active Army orders (Eastern Command,
+            SATA, Tezpur) will likely roll into next FY for payment —
+            this should be documented.
+      Next step: Ms. Mousumi Banik to generate an AP/AR ageing report
+                 from Tally. Ashish to review and confirm provisioning
+                 for any receivables unlikely to be collected before
+                 31 Mar.
 
-   ↳ SUBTASK 7: End-of-week open payment follow-up review
-      Status: Pending — calendar-triggered (week ending ~28–29 Mar)
-      Note: Weekly review of all outstanding payment follow-ups across all clients.
-      Next step: Ms. Mousumi Banik to generate outstanding receivables list; Ashish to
-      review and decide on any personal follow-up actions (Army clients) or staff
-      follow-up (commercial clients).
+════════════════════════════════════════════════════════════════════
+⚠️ GLOBAL FLAGS
+════════════════════════════════════════════════════════════════════
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. INVOICE AMOUNT DISCREPANCY — Sharma Bakery:
+   Quoted ₹45,000 + GST; received ₹47,200. At 5% GST: ₹47,250 expected.
+   Shortfall of ₹50. Likely rounding but should be confirmed. Flag for
+   Ms. Mousumi Banik to verify GST rate applied and invoice amount
+   matches payment received.
+
+2. TEZPUR ORDER — COMPLETE BLIND SPOT:
+   No thread, no status, no staff response, no item, no supplier.
+   Ashish asked for status at 09:00; no response visible in input.
+   This is the highest-uncertainty item in this task list.
+
+3. SATA ITEM UNIDENTIFIED:
+   "Pending item" provides zero specifics. All downstream tasks
+   (inspection, delivery, invoice) are contingent on item identification.
+
+4. THREE ACTIVE ARMY ORDERS NEAR FY-END:
+   Eastern Command, SATA, and Tezpur are all open and approaching
+   31 Mar. If these cannot be delivered and invoiced before FY-end,
+   they carry into next FY. Ashish should make a deliberate decision
+   on this — not let it happen by default.
+
+5. MALERKOTLA SUPPLIER THREAD NOT PROVIDED:
+   The SATA inter-state order involves a Malerkotla supplier but no
+   supplier thread is in the input. Cannot verify what was ordered
+   vs. what arrived. Human review required.
+
+6. STAFF RESPONSE GAP — 26 MAR STATUS CHECK:
+   Ashish's 09:00 status request covered three items. Eastern Command
+   and SATA received responses (09:10 and 09:15). Tezpur received none.
+   This gap may indicate a 1:1 chat response (not provided) or a missed
+   task. Ashish to verify.
+
+7. INFORMATION IN 1:1 CHATS — NOT REFLECTED IN GROUPS:
+   25 Feb: Staff 1's delivery confirmation to Ashish appears to have
+   been relayed to the group, which is good practice. However, for the
+   26 Mar active orders — particularly Eastern Command and Tezpur —
+   there may be transporter or supplier 1:1 conversations not visible
+   in this input. If Staff 1 coordinated with a transporter via 1:1,
+   that information has not surfaced in the group.
+
+════════════════════════════════════════════════════════════════════
 ❓ AMBIGUOUS CORRELATIONS (needs human review)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+════════════════════════════════════════════════════════════════════
 
-1. SHARMA BAKERY TANDOOR — SUPPLIER THREAD ABSENT
-   The tandoor for Sharma Bakery was ordered, priced, and delivered but no supplier
-   thread is present in the input. It is unclear whether:
-   (a) the tandoor came from existing stock (Type 6 — no supplier thread needed), or
-   (b) it was procured from a supplier with a thread not included in this input.
-   If (b), supplier PO, advance, and GST reconciliation may be missing. Human review
-   needed to confirm fulfilment source.
+1. "Staff 1" and "Staff 2" in Thread 2 (26 Mar cluster):
+   Cannot map to named staff roster without deanonymization.
+   Staff 1 appears to be managing Eastern Command (deliveries/purchase
+   collections role → likely Mr. Rahul Das or Mr. Samsuel Haque).
+   Staff 2 appears to be managing SATA sorting (could be any staff
+   member with warehouse access). Human confirmation needed to assign
+   correct named responsibility.
 
-2. EASTERN COMMAND AC — SUPPLIER IDENTITY UNKNOWN
-   Staff 1 says "supplier ne kal dispatch kiya" but does not name the supplier. No
-   supplier thread is present for this order. Cannot confirm supplier terms, PO status,
-   or inter-state vs. local origin. If this is an inter-state supplier, Type 5 cadence
-   (e-way bill, transit documentation) applies in addition to Type 3 (Army delivery).
-   Human review needed to identify supplier and confirm origin.
+2. Tezpur reference — "Tezpur ka challan":
+   Unclear whether this refers to:
+   (a) A challan that needs to be prepared and sent to Tezpur (delivery
+       pending), or
+   (b) A challan that was already sent and needs follow-up/confirmation.
+   The word "challan" in context of a status check could mean either.
+   Human review required.
 
-3. TEZPUR CHALLAN — POSSIBLY RELATED TO EASTERN COMMAND OR SATA
-   Ashish's 26 Mar 09:00 message groups three items in a single status request:
-   "Eastern Command ka AC order, SATA ka pending item, Tezpur ka challan." It is
-   possible that "Tezpur ka challan" refers to a sub-task of one of the other two
-   orders (e.g., a challan already raised for a prior delivery to a Tezpur-based unit
-   under Eastern Command). However, Tezpur and Eastern Command headquarters are
-   geographically distinct, and grouping in one sentence does not confirm they are
-   the same order. These have been kept as SEPARATE parent tasks (Tasks 2, 3, 4).
-   Human review needed to confirm whether Tezpur challan is:
-   (a) an independent order (most likely based on available evidence), or
-   (b) a sub-task of the Eastern Command or SATA order.
-
-4. STAFF 1 AND STAFF 2 — IDENTITY UNRESOLVED
-   Thread input uses generic labels "Staff 1" and "Staff 2." These cannot be resolved
-   to named staff from the roster without additional context:
-   - Staff 1 (Client Group + All Staff Group): handles deliveries and status updates —
-     consistent with Mr. Rahul Das or Mr. Samsuel Haque (deliveries/collections).
-   - Staff 2 (All Staff Group, SATA sorting update): handles goods receipt and sorting —
-     also consistent with deliveries/collections staff, or possibly Mrs. Samita or
-     Ms. Abhisha if this is a follow-up task.
-   Action: Human to confirm which roster names correspond to Staff 1 and Staff 2 in
-   these threads. Assignment fields above should be updated once resolved.
-
-5. "CAL AYA THA" — SATA GOODS RECEIPT DATE
-   Staff 2's message uses "cal aya tha" — past tense, "had come yesterday." This is
-   consistent with goods arriving 25 Mar. However, the phrasing is slightly ambiguous
-   and could indicate that goods arrived earlier than 25 Mar and "kal" was used loosely.
-   Low risk, but confirm physical receipt date with Staff 2 to ensure no gap between
-   actual arrival and Tally entry.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⚠️ GLOBAL FLAGS ACROSS ALL THREADS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-1. FY-END URGENCY: Thread date is 26 Mar — 5 days before financial year-end (31 Mar).
-   Eastern Command and SATA invoices must be raised before 31 Mar to fall in the
-   current FY. This creates time pressure on delivery completion this week.
-
-2. NO 1:1 TRANSPORTER THREADS PROVIDED: Deliveries for both Eastern Command (AC)
-   and SATA (Malerkotla goods) involve transport, but no transporter 1:1 chat is
-   included in the input. There may be relevant status, ETA, or issue information in
-   those 1:1 chats that is not visible here.
-
-3. ALL THREE ACTIVE ORDERS (Eastern Command, SATA, Tezpur) HAVE NO DEDICATED THREAD:
-   Only the All Staff Group is provided for these orders. Client threads, supplier
-   threads, and transporter threads — if they exist — are not in the input. This
-   limits the ability to fully assess order status, payment terms, and client
-   acknowledgements.
-
-4. PATTERN: DELIVERY CHALLAN AND CLIENT SIGN-OFF consistently absent across all
-   orders in these threads (Sharma Bakery retrospective, Eastern Command pending,
-   SATA pending). Recommend establishing a standard operating procedure for signed
-   delivery notes on all deliveries, documented in WhatsApp with a photo of the
-   signed challan.
-
-5. E-WAY BILL (SATA / MALERKOTLA): Inter-state goods from Malerkotla require an
-   e-way bill. No mention in any thread. This is a GST compliance risk — confirm
-   immediately.
+3. "SATA" entity:
+   Assumed to be an Army unit/formation (consistent with business
+   context). If SATA is a commercial client, Army payment rules and
+   direct-contact restrictions would NOT apply. Human confirmation
+   of client type recommended.
 ```
