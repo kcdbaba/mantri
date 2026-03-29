@@ -307,6 +307,19 @@ CLIENT_ORDER_TEMPLATE = {
             "activates_when": "delivery_confirmed.status=completed AND days_since(delivery_confirmed.completed_at) >= 30",
             "description": "Payment follow-up alert if outstanding 30 days after delivery confirmed.",
         },
+
+        # ── Terminal node ──────────────────────────────────────────────────
+        {
+            "id": "task_closed",
+            "type": "real_world_milestone",
+            "name": "Task closed",
+            "stage": "closed",
+            "description": (
+                "Terminal node. Set to completed by linkage_worker when all fulfilment "
+                "links for this client order are completed (delivery confirmed), or "
+                "manually when the order is cancelled or truncated."
+            ),
+        },
     ],
 }
 
@@ -376,6 +389,19 @@ SUPPLIER_ORDER_TEMPLATE = {
             "activates_when": "supplier_indent.status=completed AND task.metadata.expected_delivery_date IS SET",
             "alert_days_before": [7, 3, 1],
             "description": "Repeated enquiry to supplier before expected delivery. Fires at T-7, T-3, T-1 days.",
+        },
+
+        # ── Terminal node ──────────────────────────────────────────────────
+        {
+            "id": "task_closed",
+            "type": "real_world_milestone",
+            "name": "Task closed",
+            "stage": "closed",
+            "description": (
+                "Terminal node. Set to completed by linkage_worker when all fulfilment "
+                "links for this supplier order reach terminal state (fulfilled/failed/invalidated), "
+                "or manually when the order is cancelled."
+            ),
         },
     ],
 }

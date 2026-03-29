@@ -39,6 +39,8 @@ from src.store.task_store import (
     upsert_fulfillment_link,
     update_node,
     reconcile_order_ready,
+    prune_links_for_supplier_order,
+    prune_links_for_client_order,
 )
 from src.store.db import transaction
 
@@ -190,6 +192,19 @@ def process_event(event_id: str, fields: dict, r: redis.Redis):
         if result:
             log.info("reconcile_order_ready: task=%s → order_ready=%s",
                      client_task_id, result)
+
+    # Two-level pruning: check terminal states after all upserts
+    affected_suppliers = {upd.supplier_order_id for upd in output.linkage_updates
+                          if upd.status in ("fulfilled", "failed", "invalidated")}
+    for supplier_id in affected_suppliers:
+        if prune_links_for_supplier_order(supplier_id):
+            log.info("Pruned supplier order: task=%s — all links terminal", supplier_id)
+
+    completed_clients = {upd.client_order_id for upd in output.linkage_updates
+                         if upd.status == "completed"}
+    for client_id in completed_clients:
+        if prune_links_for_client_order(client_id):
+            log.info("Pruned client order: task=%s — all links completed", client_id)
 
     # Log new task candidates
     for candidate in output.new_task_candidates:

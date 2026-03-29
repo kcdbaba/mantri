@@ -175,6 +175,84 @@ def get_fulfillment_links(client_order_id: str) -> list[dict]:
     return [dict(r) for r in rows]
 
 
+def get_fulfillment_links_by_supplier(supplier_order_id: str) -> list[dict]:
+    conn = get_connection()
+    rows = conn.execute(
+        "SELECT * FROM fulfillment_links WHERE supplier_order_id = ? ORDER BY created_at",
+        (supplier_order_id,),
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+def close_task(task_id: str) -> None:
+    """Mark a task as completed — removes it from all open-order queries."""
+    now = int(time.time())
+    with transaction() as conn:
+        conn.execute(
+            "UPDATE task_instances SET stage='completed', last_updated=? WHERE id=?",
+            (now, task_id),
+        )
+
+
+_SUPPLIER_TERMINAL = {"fulfilled", "failed", "invalidated"}
+
+
+def prune_links_for_supplier_order(supplier_order_id: str) -> bool:
+    """
+    If all links for supplier_order_id are in terminal states
+    {fulfilled, failed, invalidated}, delete them and close the supplier task.
+    Returns True if pruned.
+    """
+    links = get_fulfillment_links_by_supplier(supplier_order_id)
+    if not links:
+        return False
+    if all(lnk["status"] in _SUPPLIER_TERMINAL for lnk in links):
+        with transaction() as conn:
+            conn.execute(
+                "DELETE FROM fulfillment_links WHERE supplier_order_id=?",
+                (supplier_order_id,),
+            )
+        update_node(
+            task_id=supplier_order_id,
+            node_id="task_closed",
+            new_status="completed",
+            confidence=1.0,
+            message_id=None,
+            updated_by="linkage_worker",
+        )
+        close_task(supplier_order_id)
+        return True
+    return False
+
+
+def prune_links_for_client_order(client_order_id: str) -> bool:
+    """
+    If all links for client_order_id are completed, delete them and close the client task.
+    Returns True if pruned.
+    """
+    links = get_fulfillment_links(client_order_id)
+    if not links:
+        return False
+    if all(lnk["status"] == "completed" for lnk in links):
+        with transaction() as conn:
+            conn.execute(
+                "DELETE FROM fulfillment_links WHERE client_order_id=?",
+                (client_order_id,),
+            )
+        update_node(
+            task_id=client_order_id,
+            node_id="task_closed",
+            new_status="completed",
+            confidence=1.0,
+            message_id=None,
+            updated_by="linkage_worker",
+        )
+        close_task(client_order_id)
+        return True
+    return False
+
+
 def upsert_fulfillment_link(link: dict):
     """
     Insert or update a fulfillment link.
