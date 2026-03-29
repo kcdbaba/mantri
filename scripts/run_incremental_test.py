@@ -20,6 +20,7 @@ Usage:
 
 import argparse
 import json
+import os
 import sys
 import time
 from datetime import datetime
@@ -418,6 +419,72 @@ def run_all(case_filter: str | None = None) -> list[dict]:
     return results
 
 
+def _ensure_phoenix():
+    import subprocess
+    pid_file = os.path.expanduser("~/.phoenix.pid")
+    running = False
+    if os.path.exists(pid_file):
+        try:
+            pid = int(open(pid_file).read().strip())
+            os.kill(pid, 0)
+            running = True
+        except (ProcessLookupError, ValueError):
+            os.remove(pid_file)
+    if not running:
+        script = str(Path(__file__).parent / "phoenix_bg.sh")
+        subprocess.run(["bash", script], check=True)
+        time.sleep(2)
+
+
+def push_to_phoenix(results: list[dict]) -> None:
+    """Push INC test results to Phoenix as a named experiment."""
+    try:
+        import phoenix as px
+        from phoenix.experiments import run_experiment
+    except ImportError:
+        print("Phoenix not installed — skipping experiment upload")
+        return
+
+    try:
+        _ensure_phoenix()
+        client = px.Client()
+
+        dataset = client.upload_dataset(
+            dataset_name="mantri-incremental-tests",
+            inputs=[{"case_id": r["case_id"]} for r in results],
+            outputs=[{"expected_verdict": "PASS"} for r in results],
+            metadata=[{"case_id": r["case_id"]} for r in results],
+        )
+
+        results_by_id = {r["case_id"]: r for r in results}
+
+        def passthrough(input):  # noqa: A002
+            return results_by_id.get(input["case_id"], {"verdict": "ERROR"})
+
+        def verdict_label(output) -> str:
+            return output.get("verdict", "FAIL")
+
+        def pass_rate(output) -> float:
+            total = output.get("required_total", 0)
+            passed = output.get("required_passed", 0)
+            if output.get("verdict") == "PASS":
+                return 1.0
+            return round(passed / total, 2) if total > 0 else 0.0
+
+        ts = datetime.now().strftime("%Y%m%dT%H%M%S")
+        exp_name = f"inc-{ts}"
+        run_experiment(
+            dataset,
+            task=passthrough,
+            evaluators={"verdict": verdict_label, "pass_rate": pass_rate},
+            experiment_name=exp_name,
+            print_summary=False,
+        )
+        print(f"  Phoenix: http://localhost:6006  (experiment: {exp_name})")
+    except Exception as e:
+        print(f"  Phoenix upload failed (non-fatal): {e}")
+
+
 def save_run_summary(results: list[dict]):
     RUNS_DIR.mkdir(parents=True, exist_ok=True)
     ts = datetime.now().strftime("%Y%m%dT%H%M%S")
@@ -489,5 +556,6 @@ if __name__ == "__main__":
     results = run_all(case_filter=args.case_id)
     if not args.summary_only:
         print_summary(results)
-    if not args.case_id:  # only save run history for full runs
+    if not args.case_id:  # only save run history and push to Phoenix for full runs
         save_run_summary(results)
+        push_to_phoenix(results)

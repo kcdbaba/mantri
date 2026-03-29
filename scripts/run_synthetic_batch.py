@@ -6,6 +6,9 @@ Reads evaluations_data.csv, creates a case directory for each row,
 runs the testing prompt, and evaluates results. All outputs land in
 data/cases/ alongside real cases.
 
+Superseded by the /eval-synth slash command for day-to-day use.
+This script is retained for programmatic/CI invocation.
+
 Usage:
     python scripts/run_synthetic_batch.py
     python scripts/run_synthetic_batch.py --ids R4-A-L1-01 R4-B-L1-01   # subset

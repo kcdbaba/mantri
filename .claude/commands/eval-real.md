@@ -1,11 +1,11 @@
-# run-test
+# eval-real
 
-Run the eval agent on a test case, then optionally judge the output.
+Run the eval agent on a real case, then optionally judge the output and push scores to Phoenix.
 
 Usage:
-  /run-test --case data/cases/<case_dir>
-  /run-test --case data/cases/<case_dir> --evaluate
-  /run-test --case data/cases/<case_dir> --evaluate --skip-run
+  /eval-real --case data/cases/<case_dir>
+  /eval-real --case data/cases/<case_dir> --evaluate
+  /eval-real --case data/cases/<case_dir> --evaluate --skip-run
 
 Arguments: $ARGUMENTS
 
@@ -82,3 +82,13 @@ Write the JSON to `<case_dir>/score.json`, then print a summary:
 - Bar chart for each active dimension (e.g. `████████░░ 80`)
 - Whether pass criteria were met
 - List of passes and failures
+
+### Step 3 — Push to Phoenix (if --evaluate)
+
+After writing `score.json`, run:
+
+```
+python scripts/log_eval_scores.py --case <case_dir> --suite eval-real
+```
+
+This pushes the score to the Phoenix experiments UI at http://localhost:6006.

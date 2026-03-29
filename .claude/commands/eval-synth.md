@@ -1,11 +1,11 @@
-# synthetic-batch
+# eval-synth
 
-Run the eval agent and judge on all (or a subset of) synthetic test cases from `data/evaluations_data.csv`.
+Run the eval agent and judge on all (or a subset of) synthetic eval cases from `data/evaluations_data.csv`.
 
 Usage:
-  /synthetic-batch
-  /synthetic-batch --ids R4-A-L1-01 R4-B-L1-01
-  /synthetic-batch --skip-existing
+  /eval-synth
+  /eval-synth --ids R4-A-L1-01 R4-B-L1-01
+  /eval-synth --skip-existing
 
 Arguments: $ARGUMENTS
 
@@ -59,7 +59,7 @@ Filter rows by `--ids` if provided. If no rows match, report and stop.
 
 **Run test:** Read `prompts/testing_prompt.txt` and `<case_dir>/threads.txt`. Act as the eval agent following the testing prompt. Write output to `<case_dir>/agent_output.txt`.
 
-**Evaluate:** Read `<case_dir>/metadata.json` and `<case_dir>/agent_output.txt`. Determine active dimensions from framework prefix (same rules as `/run-test`). Judge the output. Write `<case_dir>/score.json`.
+**Evaluate:** Read `<case_dir>/metadata.json` and `<case_dir>/agent_output.txt`. Determine active dimensions from framework prefix (same rules as `/eval-real`). Judge the output. Write `<case_dir>/score.json`.
 
 Print per-case: verdict, overall score, pass/fail list.
 
@@ -101,3 +101,13 @@ By framework:
 
 Run summary: runs/eval/<timestamp>_summary.json
 ```
+
+### Step 4 — Push to Phoenix
+
+After writing all score.json files, run:
+
+```
+python scripts/log_eval_scores.py --batch data/cases/synthetic_batch_summary.json --suite eval-synth
+```
+
+This pushes all scores to the Phoenix experiments UI at http://localhost:6006.
