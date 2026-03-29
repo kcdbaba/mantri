@@ -33,7 +33,7 @@ from src.router.router import route
 
 CASES_DIR = Path("tests/functional_tests")
 RESULTS_DIR = Path("tests/functional_tests/results")
-RUNS_DIR = Path("runs/incremental")
+RUNS_DIR = Path("tests/runs/incremental")
 
 
 # ---------------------------------------------------------------------------
@@ -499,7 +499,7 @@ def _emit_allure_results(results: list[dict]) -> None:
     import hashlib
     import uuid as uuid_mod
 
-    out_dir = Path("allure/results/inc")
+    out_dir = Path("tests/allure/results/inc")
     out_dir.mkdir(parents=True, exist_ok=True)
 
     now_ms = int(time.time() * 1000)

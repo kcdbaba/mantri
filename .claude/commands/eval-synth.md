@@ -83,7 +83,7 @@ After all cases, print and write `tests/evals/synthetic_batch_summary.json`:
 }
 ```
 
-Write `tests/evals/synthetic_batch_summary.json` (current run, overwritten each time) and also write a timestamped copy to `runs/eval/<YYYYMMDDTHHMMSS>_summary.json` (permanent history, committed to git).
+Write `tests/evals/synthetic_batch_summary.json` (current run, overwritten each time) and also write a timestamped copy to `tests/runs/eval/<YYYYMMDDTHHMMSS>_summary.json` (permanent history, committed to git).
 
 Print table:
 ```
@@ -99,7 +99,7 @@ By framework:
   R4-A    avg= 85.0  [P P F P]
   R1-D    avg= 72.5  [P P]
 
-Run summary: runs/eval/<timestamp>_summary.json
+Run summary: tests/runs/eval/<timestamp>_summary.json
 ```
 
 ### Step 4 — Push to Phoenix

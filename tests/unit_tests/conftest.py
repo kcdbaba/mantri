@@ -1,5 +1,5 @@
 """
-pytest session hook — saves a small run summary JSON to runs/unit/ after each session.
+pytest session hook — saves a small run summary JSON to tests/runs/unit/ after each session.
 These summaries feed the Test Results history page.
 """
 
@@ -7,7 +7,7 @@ import json
 from datetime import datetime
 from pathlib import Path
 
-RUNS_DIR = Path("runs/unit")
+RUNS_DIR = Path("tests/runs/unit")
 
 
 def pytest_sessionfinish(session, exitstatus):

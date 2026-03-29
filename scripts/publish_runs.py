@@ -2,7 +2,7 @@
 """
 publish_runs.py
 
-Reads runs/incremental/*.json and runs/eval/*.json, generates a self-contained
+Reads tests/runs/incremental/*.json and tests/runs/eval/*.json, generates a self-contained
 static HTML page at static/developer/runs/index.html.
 
 Run after any test suite to update the published results.
@@ -16,9 +16,9 @@ import json
 from datetime import datetime
 from pathlib import Path
 
-RUNS_INC  = Path("runs/incremental")
-RUNS_EVAL = Path("runs/eval")
-RUNS_UNIT = Path("runs/unit")
+RUNS_INC  = Path("tests/runs/incremental")
+RUNS_EVAL = Path("tests/runs/eval")
+RUNS_UNIT = Path("tests/runs/unit")
 OUT_PATH  = Path("static/developer/runs/index.html")
 
 # ── Data loading ───────────────────────────────────────────────────────────────
