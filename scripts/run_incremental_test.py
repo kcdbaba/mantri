@@ -419,6 +419,16 @@ def run_all(case_filter: str | None = None) -> list[dict]:
     return results
 
 
+def _publish_results():
+    """Regenerate static/developer/runs/index.html after a full run."""
+    try:
+        import subprocess
+        script = Path(__file__).parent / "publish_runs.py"
+        subprocess.run([sys.executable, str(script)], check=True)
+    except Exception as e:
+        print(f"  publish_runs failed (non-fatal): {e}")
+
+
 def _ensure_phoenix():
     import subprocess
     pid_file = os.path.expanduser("~/.phoenix.pid")
@@ -562,3 +572,4 @@ if __name__ == "__main__":
     if not args.case_id:  # only save run history and push to Phoenix for full runs
         save_run_summary(results)
         push_to_phoenix(results)
+        _publish_results()

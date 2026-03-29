@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mantri — Developer Portal</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .logo {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #4a5568;
+      margin-bottom: 0.5rem;
+    }
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: #f7fafc;
+      margin-bottom: 0.25rem;
+    }
+    .subtitle {
+      font-size: 0.85rem;
+      color: #4a5568;
+      margin-bottom: 3rem;
+    }
+    .tools {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      width: 100%;
+      max-width: 420px;
+    }
+    .tool {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: #1a1f2e;
+      border: 1px solid #2d3748;
+      border-radius: 8px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .tool:hover {
+      border-color: #4a90d9;
+      background: #1e2536;
+    }
+    .tool-icon {
+      font-size: 1.5rem;
+      width: 2rem;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .tool-name {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #e2e8f0;
+    }
+    .tool-desc {
+      font-size: 0.78rem;
+      color: #4a5568;
+      margin-top: 0.1rem;
+    }
+    .tool-arrow {
+      margin-left: auto;
+      color: #2d3748;
+      font-size: 1rem;
+    }
+    .tool:hover .tool-arrow {
+      color: #4a90d9;
+    }
+    footer {
+      margin-top: 3rem;
+      font-size: 0.72rem;
+      color: #2d3748;
+    }
+  </style>
+</head>
+<body>
+  <p class="logo">Mantri</p>
+  <h1>Developer Portal</h1>
+  <p class="subtitle">Internal tooling — authorised access only</p>
+
+  <nav class="tools">
+    <a href="/developer/phoenix/" class="tool">
+      <span class="tool-icon">🔭</span>
+      <div>
+        <div class="tool-name">Phoenix</div>
+        <div class="tool-desc">LLM traces · experiments · datasets</div>
+      </div>
+      <span class="tool-arrow">›</span>
+    </a>
+
+    <a href="/developer/runs/" class="tool">
+      <span class="tool-icon">📊</span>
+      <div>
+        <div class="tool-name">Test Results</div>
+        <div class="tool-desc">INC · eval-synth · eval-real run history</div>
+      </div>
+      <span class="tool-arrow">›</span>
+    </a>
+  </nav>
+
+  <footer>Mantri · Army Supply Operations Agent</footer>
+</body>
+</html>

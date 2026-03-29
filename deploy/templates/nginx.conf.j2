@@ -1,0 +1,51 @@
+server {
+    listen 80;
+    listen [::]:80;
+    server_name _;
+
+    # ── Main interface — placeholder until Ashish's UI is built ─────────────
+    location / {
+        return 503 "Coming soon.";
+        add_header Content-Type text/plain;
+    }
+
+    # ── Admin portal — placeholder ───────────────────────────────────────────
+    location /admin/ {
+        auth_basic "Admin Portal";
+        auth_basic_user_file /etc/nginx/.htpasswd_admin;
+        return 503 "Admin portal coming soon.";
+        add_header Content-Type text/plain;
+    }
+
+    # ── Developer portal — static files ─────────────────────────────────────
+    location /developer/ {
+        auth_basic "Developer Portal";
+        auth_basic_user_file /etc/nginx/.htpasswd_developer;
+        alias {{ app_dir }}/static/developer/;
+        index index.html;
+        try_files $uri $uri/index.html =404;
+    }
+
+    # ── Phoenix — proxied under /developer/phoenix/ ──────────────────────────
+    # Phoenix is started with PHOENIX_HOST_ROOT_PATH=/developer/phoenix
+    # nginx strips the prefix when forwarding to port 6006
+    location /developer/phoenix/ {
+        auth_basic "Developer Portal";
+        auth_basic_user_file /etc/nginx/.htpasswd_developer;
+
+        proxy_pass http://127.0.0.1:{{ phoenix_port }}/;
+        proxy_http_version 1.1;
+
+        proxy_set_header Host              $host;
+        proxy_set_header X-Real-IP         $remote_addr;
+        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # WebSocket support (Phoenix uses WS for live updates)
+        proxy_set_header Upgrade    $http_upgrade;
+        proxy_set_header Connection "upgrade";
+
+        proxy_read_timeout 120s;
+        proxy_buffering off;
+    }
+}

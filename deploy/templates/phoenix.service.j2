@@ -1,0 +1,21 @@
+[Unit]
+Description=Mantri Phoenix Observability Server
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory={{ app_dir }}
+Environment=PHOENIX_PORT={{ phoenix_port }}
+Environment=PHOENIX_HOST=127.0.0.1
+Environment=PHOENIX_HOST_ROOT_PATH=/developer/phoenix
+Environment=PHOENIX_WORKING_DIR={{ app_dir }}/data/phoenix
+ExecStart={{ venv_dir }}/bin/python -m phoenix.server.main serve
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=mantri-phoenix
+
+[Install]
+WantedBy=multi-user.target

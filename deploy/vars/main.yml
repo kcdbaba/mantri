@@ -12,3 +12,6 @@ ingest_queue_key: "ingest_queue"
 task_events_stream: "task_events"
 cron_interval_seconds: 900
 claude_model: "claude-sonnet-4-6"
+
+phoenix_port: 6006
+static_dir: "{{ app_dir }}/static"
