@@ -22,6 +22,7 @@ import argparse
 import json
 import sys
 import time
+from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -31,6 +32,7 @@ from src.router.router import route
 
 CASES_DIR = Path("tests/functional_tests")
 RESULTS_DIR = Path("tests/functional_tests/results")
+RUNS_DIR = Path("runs/incremental")
 
 
 # ---------------------------------------------------------------------------
@@ -416,6 +418,29 @@ def run_all(case_filter: str | None = None) -> list[dict]:
     return results
 
 
+def save_run_summary(results: list[dict]):
+    RUNS_DIR.mkdir(parents=True, exist_ok=True)
+    ts = datetime.now().strftime("%Y%m%dT%H%M%S")
+    passed  = sum(1 for r in results if r["verdict"] == "PASS")
+    partial = sum(1 for r in results if r["verdict"] == "PARTIAL")
+    failed  = sum(1 for r in results if r["verdict"] == "FAIL")
+    summary = {
+        "run_at": datetime.now().isoformat(timespec="seconds"),
+        "total":   len(results),
+        "passed":  passed,
+        "partial": partial,
+        "failed":  failed,
+        "results": [
+            {"case_id": r["case_id"], "verdict": r["verdict"],
+             "required_passed": r.get("required_passed"), "required_total": r.get("required_total")}
+            for r in results
+        ],
+    }
+    path = RUNS_DIR / f"{ts}_summary.json"
+    path.write_text(json.dumps(summary, indent=2))
+    print(f"\nRun summary: {path}")
+
+
 def print_summary(results: list[dict]):
     print(f"\n{'='*60}")
     print("SUMMARY")
@@ -464,3 +489,5 @@ if __name__ == "__main__":
     results = run_all(case_filter=args.case_id)
     if not args.summary_only:
         print_summary(results)
+    if not args.case_id:  # only save run history for full runs
+        save_run_summary(results)

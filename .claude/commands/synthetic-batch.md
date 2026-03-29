@@ -83,6 +83,8 @@ After all cases, print and write `data/cases/synthetic_batch_summary.json`:
 }
 ```
 
+Write `data/cases/synthetic_batch_summary.json` (current run, overwritten each time) and also write a timestamped copy to `runs/eval/<YYYYMMDDTHHMMSS>_summary.json` (permanent history, committed to git).
+
 Print table:
 ```
 BATCH SUMMARY
@@ -96,4 +98,6 @@ Avg     : XX.X/100
 By framework:
   R4-A    avg= 85.0  [P P F P]
   R1-D    avg= 72.5  [P P]
+
+Run summary: runs/eval/<timestamp>_summary.json
 ```

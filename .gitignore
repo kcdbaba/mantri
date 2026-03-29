@@ -15,3 +15,9 @@ data/enriched/
 data/raw_chats/
 data/mantri.db
 deploy/vars/secrets.yml
+
+# Test artifacts — regenerated on every run; history tracked in runs/
+tests/functional_tests/results/*.json
+data/cases/**/agent_output*.txt
+data/cases/**/score*.json
+data/cases/synthetic_batch_summary.json
