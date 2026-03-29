@@ -27,3 +27,7 @@ langsmith
 
 # Utilities
 httpx
+
+# Dev / testing
+pytest
+pytest-html
