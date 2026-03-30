@@ -410,3 +410,251 @@ class TestPruneLinks:
             from src.store.task_store import prune_links_for_client_order
             result = prune_links_for_client_order("c1")
         assert result is False
+
+
+# ---------------------------------------------------------------------------
+# close_task
+# ---------------------------------------------------------------------------
+
+@allure.feature("Task Lifecycle")
+@allure.story("Close Task")
+class TestCloseTask:
+
+    def test_close_sets_stage_completed(self, db_path):
+        with patch("src.store.db.DB_PATH", db_path):
+            _seed_task(db_path, "t1")
+            from src.store.task_store import close_task, get_task
+            close_task("t1")
+            task = get_task("t1")
+        assert task["stage"] == "completed"
+
+    def test_close_updates_last_updated(self, db_path):
+        with patch("src.store.db.DB_PATH", db_path):
+            _seed_task(db_path, "t1")
+            from src.store.task_store import close_task, get_task
+            before = get_task("t1")["last_updated"]
+            import time; time.sleep(0.01)
+            close_task("t1")
+            after = get_task("t1")["last_updated"]
+        assert after >= before
+
+    def test_closed_task_excluded_from_active(self, db_path):
+        with patch("src.store.db.DB_PATH", db_path):
+            _seed_task(db_path, "t1")
+            _seed_task(db_path, "t2")
+            from src.store.task_store import close_task, get_active_tasks
+            close_task("t1")
+            active = get_active_tasks()
+        active_ids = [t["id"] for t in active]
+        assert "t1" not in active_ids
+        assert "t2" in active_ids
+
+
+# ---------------------------------------------------------------------------
+# get_recent_messages
+# ---------------------------------------------------------------------------
+
+@allure.feature("Message Store")
+@allure.story("Get Recent Messages")
+class TestGetRecentMessages:
+
+    def _seed_message(self, db_path, task_id, message_id, body, timestamp):
+        with patch("src.store.db.DB_PATH", db_path):
+            from src.store.task_store import append_message
+            append_message(task_id, {
+                "message_id": message_id, "group_id": "grp",
+                "sender_jid": "sender", "body": body, "timestamp": timestamp,
+            }, routing_confidence=0.9)
+
+    def test_returns_messages_in_chronological_order(self, db_path):
+        with patch("src.store.db.DB_PATH", db_path):
+            _seed_task(db_path, "t1")
+            self._seed_message(db_path, "t1", "m1", "first", 1000)
+            self._seed_message(db_path, "t1", "m2", "second", 2000)
+            self._seed_message(db_path, "t1", "m3", "third", 3000)
+            from src.store.task_store import get_recent_messages
+            msgs = get_recent_messages("t1")
+        assert [m["body"] for m in msgs] == ["first", "second", "third"]
+
+    def test_respects_limit(self, db_path):
+        with patch("src.store.db.DB_PATH", db_path):
+            _seed_task(db_path, "t1")
+            for i in range(10):
+                self._seed_message(db_path, "t1", f"m{i}", f"msg {i}", 1000 + i)
+            from src.store.task_store import get_recent_messages
+            msgs = get_recent_messages("t1", limit=3)
+        assert len(msgs) == 3
+        # Should be the 3 most recent
+        assert msgs[-1]["body"] == "msg 9"
+
+    def test_empty_task_returns_empty(self, db_path):
+        with patch("src.store.db.DB_PATH", db_path):
+            _seed_task(db_path, "t1")
+            from src.store.task_store import get_recent_messages
+            msgs = get_recent_messages("t1")
+        assert msgs == []
+
+
+# ---------------------------------------------------------------------------
+# get_order_items — dispatches to client or supplier table
+# ---------------------------------------------------------------------------
+
+@allure.feature("Item Management")
+@allure.story("Get Order Items")
+class TestGetOrderItems:
+
+    def _seed_supplier_item(self, db_path, task_id, description, quantity):
+        with patch("src.store.db.DB_PATH", db_path):
+            from src.store.db import transaction
+            now = int(time.time())
+            with transaction() as conn:
+                conn.execute(
+                    "INSERT INTO supplier_order_items (id, task_id, description, unit, quantity, specs, created_at) "
+                    "VALUES (?,?,?,?,?,?,?)",
+                    (str(uuid.uuid4()), task_id, description, "pcs", quantity, None, now),
+                )
+
+    def test_client_order_returns_client_items(self, db_path):
+        with patch("src.store.db.DB_PATH", db_path):
+            _seed_task(db_path, "c1", "standard_procurement")
+            _seed_client_item(db_path, "c1", "atta 50kg", 50)
+            from src.store.task_store import get_order_items
+            items = get_order_items("c1")
+        assert len(items) == 1
+        assert items[0]["description"] == "atta 50kg"
+
+    def test_supplier_order_returns_supplier_items(self, db_path):
+        with patch("src.store.db.DB_PATH", db_path):
+            _seed_task(db_path, "s1", "supplier_order")
+            self._seed_supplier_item(db_path, "s1", "steel rods", 100)
+            from src.store.task_store import get_order_items
+            items = get_order_items("s1")
+        assert len(items) == 1
+        assert items[0]["description"] == "steel rods"
+
+    def test_missing_task_returns_empty(self, db_path):
+        with patch("src.store.db.DB_PATH", db_path):
+            from src.store.task_store import get_order_items
+            items = get_order_items("nonexistent")
+        assert items == []
+
+
+# ---------------------------------------------------------------------------
+# get_fulfillment_links_by_supplier
+# ---------------------------------------------------------------------------
+
+@allure.feature("Fulfillment Links")
+@allure.story("Get Links By Supplier")
+class TestGetFulfillmentLinksBySupplier(TestPruneLinks):
+
+    def test_returns_links_for_supplier(self, db_path):
+        with patch("src.store.db.DB_PATH", db_path):
+            _seed_task(db_path, "c1", "client_order")
+            _seed_task(db_path, "s1", "supplier_order")
+            self._seed_link(db_path, "c1", "s1", "confirmed", "l1")
+            self._seed_link(db_path, "c1", "s1", "candidate", "l2")
+            from src.store.task_store import get_fulfillment_links_by_supplier
+            links = get_fulfillment_links_by_supplier("s1")
+        assert len(links) == 2
+
+    def test_other_supplier_not_returned(self, db_path):
+        with patch("src.store.db.DB_PATH", db_path):
+            _seed_task(db_path, "c1", "client_order")
+            _seed_task(db_path, "s1", "supplier_order")
+            _seed_task(db_path, "s2", "supplier_order")
+            self._seed_link(db_path, "c1", "s1", "confirmed", "l1")
+            self._seed_link(db_path, "c1", "s2", "confirmed", "l2")
+            from src.store.task_store import get_fulfillment_links_by_supplier
+            links = get_fulfillment_links_by_supplier("s1")
+        assert len(links) == 1
+        assert links[0]["supplier_order_id"] == "s1"
+
+    def test_no_links_returns_empty(self, db_path):
+        with patch("src.store.db.DB_PATH", db_path):
+            _seed_task(db_path, "s1", "supplier_order")
+            from src.store.task_store import get_fulfillment_links_by_supplier
+            links = get_fulfillment_links_by_supplier("s1")
+        assert links == []
+
+
+# ---------------------------------------------------------------------------
+# compute_cost — including cache pricing
+# ---------------------------------------------------------------------------
+
+@allure.feature("Cost Tracking")
+@allure.story("Compute Cost")
+class TestComputeCost:
+
+    def test_sonnet_basic_cost(self):
+        from src.store.db import compute_cost
+        # 1000 input * 3/1M + 500 output * 15/1M = 0.003 + 0.0075 = 0.0105
+        cost = compute_cost("claude-sonnet-4-6", 1000, 500)
+        assert abs(cost - 0.0105) < 1e-8
+
+    def test_haiku_cheaper_than_sonnet(self):
+        from src.store.db import compute_cost
+        sonnet = compute_cost("claude-sonnet-4-6", 1000, 500)
+        haiku = compute_cost("claude-haiku-4-5-20251001", 1000, 500)
+        assert haiku < sonnet
+
+    def test_cache_read_cheaper_than_uncached(self):
+        from src.store.db import compute_cost
+        uncached = compute_cost("claude-sonnet-4-6", 4000, 200)
+        cached = compute_cost("claude-sonnet-4-6", 200, 200, cache_read_tokens=3800)
+        assert cached < uncached
+
+    def test_cache_write_more_expensive(self):
+        from src.store.db import compute_cost
+        uncached = compute_cost("claude-sonnet-4-6", 4000, 200)
+        first_write = compute_cost("claude-sonnet-4-6", 200, 200, cache_creation_tokens=3800)
+        assert first_write > uncached  # 1.25x on cached portion
+
+    def test_unknown_model_returns_zero(self):
+        from src.store.db import compute_cost
+        assert compute_cost("unknown-model", 1000, 500) == 0.0
+
+    def test_zero_tokens(self):
+        from src.store.db import compute_cost
+        assert compute_cost("claude-sonnet-4-6", 0, 0) == 0.0
+
+
+# ---------------------------------------------------------------------------
+# Template query helpers
+# ---------------------------------------------------------------------------
+
+@allure.feature("Templates")
+@allure.story("Template Queries")
+class TestTemplateQueries:
+
+    def test_get_trigger_nodes_returns_triggers_only(self):
+        from src.agent.templates import get_trigger_nodes
+        nodes = get_trigger_nodes("standard_procurement")
+        assert all(n["type"] in ("auto_trigger", "time_trigger") for n in nodes)
+        assert len(nodes) > 0
+
+    def test_get_time_trigger_nodes(self):
+        from src.agent.templates import get_time_trigger_nodes
+        nodes = get_time_trigger_nodes("standard_procurement")
+        assert all(n["type"] == "time_trigger" for n in nodes)
+        ids = {n["id"] for n in nodes}
+        assert "quote_followup_48h" in ids
+        assert "payment_followup_30d" in ids
+
+    def test_get_auto_trigger_nodes(self):
+        from src.agent.templates import get_auto_trigger_nodes
+        nodes = get_auto_trigger_nodes("standard_procurement")
+        assert all(n["type"] == "auto_trigger" for n in nodes)
+        ids = {n["id"] for n in nodes}
+        assert "order_confirmation" in ids
+        assert "order_ready" in ids
+
+    def test_get_trigger_nodes_supplier_order(self):
+        from src.agent.templates import get_trigger_nodes
+        nodes = get_trigger_nodes("supplier_order")
+        ids = {n["id"] for n in nodes}
+        assert "supplier_predelivery_enquiry" in ids
+
+    def test_get_template_invalid_raises(self):
+        from src.agent.templates import get_template
+        with pytest.raises(ValueError, match="Unknown order type"):
+            get_template("nonexistent")
