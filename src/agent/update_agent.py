@@ -132,6 +132,10 @@ def run_update_agent(
     *_override params: used by the eval framework to inject test state
     instead of reading from the DB.
     """
+    # Normalise single message dict to list
+    if isinstance(messages, dict):
+        messages = [messages]
+
     node_states = node_states_override if node_states_override is not None else get_node_states(task_id)
     recent_messages = recent_messages_override if recent_messages_override is not None else get_recent_messages(task_id, limit=MAX_CONTEXT_MESSAGES)
     current_items = items_override if items_override is not None else get_order_items(task_id)

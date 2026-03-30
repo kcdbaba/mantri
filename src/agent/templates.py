@@ -130,8 +130,9 @@ STANDARD_PROCUREMENT_TEMPLATE = {
             "name": "Order ready",
             "stage": "fulfillment",
             "owner": "linkage_agent",
+            "co_owner": "router_worker",
             "activates_when": "supplier_QC.status=completed OR filled_from_stock.status=completed",
-            "description": "Merge node: order is ready for dispatch from either the supplier path or the stock path. Can be 'partial' if supplier_QC passed for some items only.",
+            "description": "Merge node: order is ready for dispatch from either the supplier path or the stock path. Supplier path: set by linkage_agent via reconcile_order_ready. Stock path: set by router_worker deterministic check when filled_from_stock is active and supplier subgraph is skipped. Can be 'partial' if supplier_QC passed for some items only.",
         },
 
         # ── Delivery subgraph ──────────────────────────────────────────────

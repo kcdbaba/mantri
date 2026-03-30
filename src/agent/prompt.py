@@ -84,6 +84,10 @@ Respond with valid JSON only. No prose, no markdown fences.
 - ambiguity_flags: raise one per distinct ambiguity detected. Never silently skip ambiguity.
   severity: high = could cause wrong delivery or payment; medium = affects task progression;
             low = minor uncertainty about timing or detail.
+  Entity ambiguity (unclear which client or supplier) is ALWAYS at least medium —
+    wrong entity = wrong order, wrong delivery, wrong payment. Use high if a gate node
+    is active (order_confirmation, order_ready, dispatched, supplier_QC).
+  Linkage ambiguity (unclear which order an item belongs to) follows the same rule.
   category: entity (which client/supplier?), quantity (how many?), status (did this happen?),
             timing (when?), linkage (which order does this belong to?).
   blocking_node_id: set to the gate node that should be blocked until resolved
@@ -176,6 +180,7 @@ This signals that items are being changed after the order has been locked.
 **auto_trigger nodes** (order_confirmation, order_ready, predispatch_checklist, delivery_photo_check):
   Activate automatically when their predecessor condition is met in the current node states.
   Do NOT wait for a message to mention them.
+  Exception: order_ready is managed by the linkage agent, not this agent. Do NOT set it.
 
 **time_trigger nodes** (quote_followup_48h, supplier_predelivery_enquiry, payment_followup_30d):
   DO NOT activate these — they are managed by the cron worker based on elapsed time.
@@ -184,7 +189,9 @@ This signals that items are being changed after the order has been locked.
 **Optional nodes** (entire supplier subgraph, filled_from_stock, supplier_predelivery_enquiry):
   Default status is "skipped". Activate the full supplier subgraph (set supplier_indent to "pending")
   the moment any message discusses a supplier in the context of this order.
-  Set filled_from_stock to "active" if a message indicates stock is being used to fulfil the order.
+  Set filled_from_stock to "active" or "completed" if a message indicates stock is being
+  used to fulfil the order. Use "completed" if stock availability is confirmed; "active" if
+  the decision is made but fulfilment is not yet confirmed.
 
 ## Cross-task candidates
 If a QC failure (supplier_QC=failed), dispatch, or client-facing update is detected,

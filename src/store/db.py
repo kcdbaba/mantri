@@ -104,7 +104,8 @@ CREATE TABLE IF NOT EXISTS node_owner_registry (
     node_id         TEXT NOT NULL,
     order_type      TEXT NOT NULL,
     owner_agent     TEXT NOT NULL,   -- 'update_agent' | 'linkage_agent'
-    ownership_type  TEXT NOT NULL,   -- 'exclusive_write' | 'read_only'
+    co_owner        TEXT,            -- 'router_worker' if deterministic co-ownership
+    ownership_type  TEXT NOT NULL,   -- 'exclusive_write' | 'read_only' | 'co_write'
     PRIMARY KEY (node_id, order_type)
 );
 
@@ -266,11 +267,13 @@ def init_schema():
     from src.agent.templates import TEMPLATES
     for order_type, tmpl in TEMPLATES.items():
         for node in tmpl["nodes"]:
+            co_owner = node.get("co_owner")
+            ownership = "co_write" if co_owner else "exclusive_write"
             conn.execute(
-                """INSERT OR IGNORE INTO node_owner_registry
-                   (node_id, order_type, owner_agent, ownership_type)
-                   VALUES (?, ?, ?, ?)""",
-                (node["id"], order_type, node["owner"], "exclusive_write"),
+                """INSERT OR REPLACE INTO node_owner_registry
+                   (node_id, order_type, owner_agent, co_owner, ownership_type)
+                   VALUES (?, ?, ?, ?, ?)""",
+                (node["id"], order_type, node["owner"], co_owner, ownership),
             )
     conn.commit()
     conn.close()

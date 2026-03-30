@@ -298,6 +298,12 @@ def score_multi_message_case(case_dir: Path) -> dict:
             result["details"].append(f"AGENT FAILURE on message seq={msg['seq']}")
             return result
 
+        # Simulate deterministic stock path → order_ready auto-trigger
+        _simulate_stock_path_trigger(output, {
+            "task_id": initial_state["task_id"],
+            "nodes": [{"node_id": k, "status": v} for k, v in current_nodes.items()],
+        })
+
         message_history.append(msg)
         msg_result = {"seq": msg["seq"], "updates": []}
         for upd in output.node_updates:
@@ -335,6 +341,55 @@ def score_multi_message_case(case_dir: Path) -> dict:
 # Runner
 # ---------------------------------------------------------------------------
 
+def _simulate_stock_path_trigger(output, task_state: dict):
+    """
+    Simulate the deterministic order_ready auto-trigger that runs in the
+    router worker / linkage worker after update_agent. Covers:
+    - Stock path: filled_from_stock active/completed + supplier skipped
+    - Supplier path: supplier_QC completed
+
+    In production, the supplier path is handled by linkage_agent via
+    reconcile_order_ready(). Here we simulate both for test scoring.
+    """
+    from src.agent.update_agent import NodeUpdate
+
+    # Already has an order_ready update from the agent
+    if any(u.node_id == "order_ready" for u in output.node_updates):
+        return
+
+    # Build current node map (initial state + this output's updates)
+    node_map = {n["node_id"]: n["status"] for n in task_state.get("nodes", [])}
+    for u in output.node_updates:
+        node_map[u.node_id] = u.new_status
+
+    # Already set
+    if node_map.get("order_ready") in ("active", "completed"):
+        return
+
+    # Stock path trigger
+    stock_status = node_map.get("filled_from_stock")
+    supplier_skipped = node_map.get("supplier_indent", "skipped") in ("skipped", "pending")
+    if stock_status in ("active", "completed") and supplier_skipped:
+        new_status = "completed" if stock_status == "completed" else "active"
+        output.node_updates.append(NodeUpdate(
+            node_id="order_ready",
+            new_status=new_status,
+            confidence=0.95,
+            evidence="Auto-trigger: filled_from_stock active, supplier path skipped",
+        ))
+        return
+
+    # Supplier path trigger
+    if node_map.get("supplier_QC") == "completed":
+        output.node_updates.append(NodeUpdate(
+            node_id="order_ready",
+            new_status="completed",
+            confidence=0.95,
+            evidence="Auto-trigger: supplier_QC completed",
+        ))
+        return
+
+
 def run_case(case_dir: Path) -> dict:
     meta = json.loads((case_dir / "metadata.json").read_text())
     print(f"\n{'='*60}")
@@ -363,6 +418,11 @@ def run_case(case_dir: Path) -> dict:
         task_override=task_override,
     )
     elapsed = time.time() - t0
+
+    # Simulate deterministic stock path → order_ready auto-trigger
+    # (in production this runs in the router worker after update_agent)
+    if output:
+        _simulate_stock_path_trigger(output, task_state)
 
     result = score_single_message_case(case_dir, output)
     result["elapsed_s"] = round(elapsed, 2)

@@ -400,6 +400,47 @@ def reconcile_order_ready(client_task_id: str) -> str | None:
     return new_status
 
 
+def check_stock_path_order_ready(task_id: str) -> str | None:
+    """
+    Check if the stock path (filled_from_stock) makes the order ready.
+    Called after update_agent sets filled_from_stock to active/completed.
+
+    If filled_from_stock is active or completed and the supplier subgraph is
+    skipped (no supplier involvement), sets order_ready to the same status.
+
+    Returns the new status set, or None if no change needed.
+    Idempotent — safe to call multiple times.
+    """
+    nodes = {
+        n["id"][len(task_id) + 1:]: n["status"]
+        for n in get_node_states(task_id)
+    }
+
+    stock_status = nodes.get("filled_from_stock")
+    if stock_status not in ("active", "completed"):
+        return None
+
+    # Only trigger if supplier path is not active
+    supplier_active = nodes.get("supplier_indent", "skipped") not in ("skipped", "pending")
+    if supplier_active:
+        return None  # supplier path is in play — let linkage agent handle order_ready
+
+    current_ready = nodes.get("order_ready")
+    if current_ready in ("completed", "active"):
+        return None  # already set
+
+    new_status = "completed" if stock_status == "completed" else "active"
+    update_node(
+        task_id=task_id,
+        node_id="order_ready",
+        new_status=new_status,
+        confidence=0.95,
+        message_id=None,
+        updated_by="linkage_worker",
+    )
+    return new_status
+
+
 def get_open_orders_summary() -> dict:
     """
     Return a compact summary of all open client and supplier orders for
