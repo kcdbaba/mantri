@@ -1,0 +1,52 @@
+{
+  "_comment": "Seed data for R1-D-L3-01 integration test. Tasks and entities that must exist in DB before replay.",
+
+  "monitored_groups": {
+    "sata_jobs": "task_sata_client",
+    "Tasks": null,
+    "Voltas_supplier": "task_voltas_supplier",
+    "LG_supplier": "task_lg_supplier"
+  },
+
+  "entities": [
+    {
+      "id": "entity_sata",
+      "name": "SATA Artillery Regiment",
+      "aliases": ["sata", "sata bty", "arvind sir", "51 sub area"]
+    },
+    {
+      "id": "entity_voltas_uttam",
+      "name": "Voltas / Uttam Enterprise / JRBK",
+      "aliases": ["voltas", "uttam", "uttam enterprise", "jrbk", "charu enterprise"]
+    },
+    {
+      "id": "entity_lg_sanbira",
+      "name": "LG / Sanbira",
+      "aliases": ["lg", "sanbira"]
+    }
+  ],
+
+  "tasks": [
+    {
+      "id": "task_sata_client",
+      "order_type": "standard_procurement",
+      "client_id": "entity_sata",
+      "supplier_ids": ["entity_voltas_uttam", "entity_lg_sanbira"],
+      "stage": "active"
+    },
+    {
+      "id": "task_voltas_supplier",
+      "order_type": "supplier_order",
+      "client_id": "entity_sata",
+      "supplier_ids": ["entity_voltas_uttam"],
+      "stage": "active"
+    },
+    {
+      "id": "task_lg_supplier",
+      "order_type": "supplier_order",
+      "client_id": "entity_sata",
+      "supplier_ids": ["entity_lg_sanbira"],
+      "stage": "active"
+    }
+  ]
+}

@@ -36,6 +36,10 @@ def match_entities(body: str) -> list[tuple[str, float]]:
             score = 100.0
         else:
             score = fuzz.partial_ratio(alias_norm, normalised)
+            # Short aliases produce noisy fuzzy matches — require higher score
+            min_score = 90 if len(alias_norm) < 8 else ENTITY_MATCH_THRESHOLD
+            if score < min_score:
+                continue
 
         if score >= ENTITY_MATCH_THRESHOLD:
             confidence = score / 100.0 * 0.9  # scale to 0–0.90 range

@@ -16,10 +16,11 @@ import json
 from datetime import datetime
 from pathlib import Path
 
-RUNS_INC  = Path("tests/runs/incremental")
-RUNS_EVAL = Path("tests/runs/eval")
-RUNS_UNIT = Path("tests/runs/unit")
-OUT_PATH  = Path("static/developer/runs/index.html")
+RUNS_INC   = Path("tests/runs/incremental")
+RUNS_EVAL  = Path("tests/runs/eval")
+RUNS_UNIT  = Path("tests/runs/unit")
+RUNS_INT   = Path("tests/runs/integration")
+OUT_PATH   = Path("static/developer/runs/index.html")
 
 # ── Data loading ───────────────────────────────────────────────────────────────
 
@@ -196,6 +197,86 @@ def _unit_section(runs: list[dict]) -> str:
     )
 
 
+# ── Integration section ───────────────────────────────────────────────────────
+
+def _integration_section(runs: list[dict]) -> str:
+    if not runs:
+        return "<p class='empty'>No integration test runs recorded yet.</p>"
+
+    # Split into dry and live
+    dry_runs = [r for r in runs if r.get("test_type") == "dry"]
+    live_runs = [r for r in runs if r.get("test_type") == "live"]
+
+    sections = []
+
+    # Dry replay table
+    if dry_runs:
+        rows = []
+        for r in dry_runs:
+            rate = r.get("routing_rate", 0)
+            rate_pct = f"{rate:.1%}"
+            per_group = r.get("per_group", {})
+            group_detail = " · ".join(
+                f"{g}: {v.get('routed', 0)}/{v.get('routed', 0) + v.get('unrouted', 0)}"
+                for g, v in sorted(per_group.items())
+            )
+            rows.append(
+                f"<tr>"
+                f"<td>{_fmt_dt(r.get('run_at', ''))}</td>"
+                f"<td>{r.get('case_id', '?')}</td>"
+                f"<td>{r.get('total', 0)}</td>"
+                f"<td>{rate_pct}</td>"
+                f"<td class='case-id'>{group_detail}</td>"
+                f"</tr>"
+            )
+        sections.append(
+            "<h3>Dry Replay (routing only)</h3>"
+            "<table>"
+            "<thead><tr><th>Run</th><th>Case</th><th>Messages</th>"
+            "<th>Route rate</th><th>Per group</th></tr></thead>"
+            "<tbody>" + "".join(rows) + "</tbody>"
+            "</table>"
+        )
+
+    # Live replay table
+    if live_runs:
+        rows = []
+        for r in live_runs:
+            node_summary = r.get("node_summary", {})
+            total_completed = sum(v.get("completed", 0) for v in node_summary.values())
+            total_nodes = sum(v.get("total", 0) for v in node_summary.values())
+            flags = r.get("ambiguity_flag_count", 0)
+            links = r.get("fulfillment_link_count", 0)
+            errors = r.get("error_count", 0)
+            mode = "update only" if r.get("skip_linkage") else "full"
+            if r.get("max_messages"):
+                mode += f" (first {r['max_messages']})"
+
+            rows.append(
+                f"<tr>"
+                f"<td>{_fmt_dt(r.get('run_at', ''))}</td>"
+                f"<td>{r.get('case_id', '?')}</td>"
+                f"<td>{mode}</td>"
+                f"<td>{r.get('messages_routed', 0)}/{r.get('messages_total', 0)}</td>"
+                f"<td>{_pct_bar(total_completed, total_nodes)}</td>"
+                f"<td>{links}</td>"
+                f"<td>{flags}</td>"
+                f"<td class='{'fail' if errors else ''}'>{errors}</td>"
+                f"</tr>"
+            )
+        sections.append(
+            "<h3>Live Replay (full pipeline)</h3>"
+            "<table>"
+            "<thead><tr><th>Run</th><th>Case</th><th>Mode</th>"
+            "<th>Routed</th><th>Nodes completed</th><th>Links</th>"
+            "<th>Ambiguity</th><th>Errors</th></tr></thead>"
+            "<tbody>" + "".join(rows) + "</tbody>"
+            "</table>"
+        )
+
+    return "".join(sections)
+
+
 # ── Load eval runs by suite ────────────────────────────────────────────────────
 
 def _load_eval_runs() -> tuple[list[dict], list[dict]]:
@@ -262,6 +343,7 @@ nav { margin-bottom: 2rem; font-size: 0.82rem; }
 def generate() -> str:
     inc_runs   = _load_runs(RUNS_INC)
     unit_runs  = _load_runs(RUNS_UNIT)
+    int_runs   = _load_runs(RUNS_INT)
     synth_runs, real_runs = _load_eval_runs()
 
     generated = datetime.now().strftime("%Y-%m-%d %H:%M")
@@ -284,6 +366,7 @@ def generate() -> str:
   <nav>
     <a href="#unit">Unit Tests</a> &nbsp;·&nbsp;
     <a href="#inc">Incremental Tests</a> &nbsp;·&nbsp;
+    <a href="#int">Integration Tests</a> &nbsp;·&nbsp;
     <a href="#synth">Eval Synth</a> &nbsp;·&nbsp;
     <a href="#real">Eval Real</a>
   </nav>
@@ -293,6 +376,9 @@ def generate() -> str:
 
   <h2 id="inc">Incremental Tests (INC)</h2>
   {_inc_section(inc_runs)}
+
+  <h2 id="int">Integration Tests (Replay)</h2>
+  {_integration_section(int_runs)}
 
   <h2 id="synth">Synthetic Evals</h2>
   {_eval_section(synth_runs, "synth")}
