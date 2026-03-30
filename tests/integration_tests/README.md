@@ -85,29 +85,41 @@ python scripts/build_expected_routing.py \
     --seed tests/integration_tests/R1-D-L3-01_sata_multi_item_multi_supplier/seed_tasks.json
 ```
 
+### `scripts/build_integration_case.py`
+
+One-command pipeline that generates all artifacts from raw chat paths:
+
+```bash
+PYTHONPATH=. python scripts/build_integration_case.py \
+    --id R1-D-L3-01 \
+    --name sata_multi_item_multi_supplier \
+    --start "3/1/26, 13:35" --end "3/24/26, 18:54" \
+    --chats data/raw_chats/full_chat_logs/sata_jobs "SATA Client Group" \
+            data/raw_chats/full_chat_logs/Voltas_supplier "Voltas Supplier" \
+            data/raw_chats/full_chat_logs/LG_supplier "LG Supplier" \
+            data/raw_chats/full_chat_logs/Tasks "Internal Tasks Group"
+```
+
+Generates in order:
+1. `tests/evals/<id>_<name>/metadata.json` — case definition
+2. `tests/integration_tests/<id>_<name>/seed_tasks.json` — task/entity scaffold
+3. `tests/integration_tests/<id>_<name>/replay_trace.json` — message sequence
+4. `tests/integration_tests/<id>_<name>/expected_routing.json` — routing ground truth
+
+The `--chats` arg takes pairs of `<path> [label]`. Labels are optional —
+derived from directory names if omitted. Review `seed_tasks.json` after
+generation and regenerate routing if you make changes.
+
 ### `scripts/build_seed_tasks.py`
 
-Generates a `seed_tasks.json` scaffold by analyzing the eval case's
-`metadata.json` and sampling raw chat messages. Infers task types from chat
-labels, extracts entity names and aliases from sender patterns.
+Generates `seed_tasks.json` standalone (called internally by
+`build_integration_case.py`). Infers task types from chat labels, extracts
+entity names and aliases from sender patterns.
 
-```bash
-python scripts/build_seed_tasks.py --case tests/evals/R1-D-L3-01_sata_multi_item_multi_supplier/
-```
+### `scripts/build_expected_routing.py`
 
-The output is a best-effort scaffold — **review and adjust before use**.
-
-### `scripts/build_integration_case.sh`
-
-One-command pipeline that chains all 3 generators:
-
-```bash
-./scripts/build_integration_case.sh tests/evals/<case_dir>
-```
-
-Generates `seed_tasks.json` (scaffold), `replay_trace.json`, and
-`expected_routing.json` in `tests/integration_tests/<case_name>/`. Review
-the seed file and regenerate routing if you make changes.
+Generates `expected_routing.json` standalone. Useful for regenerating after
+seed edits.
 
 ### `scripts/case_extractor.py` (existing)
 
@@ -136,30 +148,29 @@ Live replay outputs:
 
 ## Test methodology
 
-### Quick start — new case from eval
+### Quick start — new case from raw chats
 
 ```bash
-# One command generates all 3 files
-./scripts/build_integration_case.sh tests/evals/<case_dir>
+# One command — generates metadata, seed, trace, and routing
+PYTHONPATH=. python scripts/build_integration_case.py \
+    --id R1-D-L3-01 --name sata_multi_item \
+    --start "3/1/26, 13:35" --end "3/24/26, 18:54" \
+    --chats data/raw_chats/full_chat_logs/sata_jobs "SATA Client" \
+            data/raw_chats/full_chat_logs/Voltas_supplier
 
-# Review seed_tasks.json, then run dry replay
+# Review seed, run tests
+vim tests/integration_tests/R1-D-L3-01_sata_multi_item/seed_tasks.json
 PYTHONPATH=. pytest tests/integration_tests/test_dry_replay.py -v
 ```
 
 ### Detailed steps
 
-1. **Create eval case** — write `metadata.json` with case ID, chat paths, time window
-2. **Generate seed** — `build_seed_tasks.py` scaffolds tasks/entities from chat
-   labels and sender patterns. **Review and adjust** aliases, client linkages,
-   group mappings.
-3. **Build replay trace** — `build_replay_trace.py` parses raw chats into
-   ingest-format messages with image paths
-4. **Generate expected routing** — `build_expected_routing.py` runs `route()`
-   on each trace message; review for false positives
-5. **Run dry replay** — feed trace through router, assert against
-   `expected_routing.json`
-6. **Run live replay** — feed trace through full pipeline (router → update_agent
-   → linkage_agent), snapshot final state, compare against eval `expected_output`
+1. **Run `build_integration_case.py`** with chat paths + time window — generates
+   all 4 files (metadata, seed, trace, routing)
+2. **Review seed_tasks.json** — check aliases, client_id linkages, group mappings
+3. **Regenerate routing if seed changed** — `build_expected_routing.py`
+4. **Run dry replay** — assert routing against ground truth
+5. **Run live replay** — full pipeline with LLM, snapshot final state
 
 ## Cases
 
