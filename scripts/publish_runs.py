@@ -20,6 +20,7 @@ RUNS_INC   = Path("tests/runs/incremental")
 RUNS_EVAL  = Path("tests/runs/eval")
 RUNS_UNIT  = Path("tests/runs/unit")
 RUNS_INT   = Path("tests/runs/integration")
+COVERAGE   = Path("tests/runs/coverage.json")
 OUT_PATH   = Path("static/developer/runs/index.html")
 
 # ── Data loading ───────────────────────────────────────────────────────────────
@@ -139,26 +140,97 @@ def _inc_section(runs: list[dict]) -> str:
 # ── Eval section ───────────────────────────────────────────────────────────────
 
 def _eval_section(runs: list[dict], suite: str) -> str:
-    suite_runs = [r for r in runs if suite in r.get("_suite", "") or
-                  any(suite in str(r) for _ in [1])]
-    # Eval runs don't store suite name — infer from filename handled in load
     if not runs:
-        return "<p class='empty'>No runs recorded yet.</p>"
+        return "<p class='empty'>No eval runs recorded yet.</p>"
 
+    latest = runs[0]
+    passed = latest.get("passed", 0)
+    total = latest.get("total", 0)
+    avg = latest.get("avg_score", "—")
+
+    summary = (
+        f"<p class='summary'>Latest: {_fmt_dt(latest.get('run_at',''))} &nbsp;·&nbsp; "
+        f"{passed}/{total} PASS &nbsp;·&nbsp; avg score: {avg}</p>"
+    )
+
+    # Per-case detail from latest run
+    results = latest.get("results", [])
+    if results:
+        case_rows = []
+        for c in results:
+            v = c.get("verdict", "?")
+            cls = "pass" if v == "PASS" else "fail"
+            score = c.get("overall_score", "—")
+            fw = c.get("framework", "")
+            lvl = c.get("level", "")
+            case_rows.append(
+                f"<tr>"
+                f"<td class='case-id'>{c.get('case_id', '?')}</td>"
+                f"<td>{fw}</td><td>{lvl}</td>"
+                f"<td class='{cls}'>{v}</td>"
+                f"<td>{score}</td>"
+                f"</tr>"
+            )
+        case_table = (
+            "<table>"
+            "<thead><tr><th>Case</th><th>Framework</th><th>Level</th>"
+            "<th>Verdict</th><th>Score</th></tr></thead>"
+            "<tbody>" + "".join(case_rows) + "</tbody>"
+            "</table>"
+        )
+    else:
+        case_table = ""
+
+    return summary + case_table
+
+
+# ── Coverage section ──────────────────────────────────────────────────────────
+
+def _load_coverage() -> dict | None:
+    if not COVERAGE.exists():
+        return None
+    try:
+        return json.loads(COVERAGE.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+
+
+def _coverage_section(cov: dict | None) -> str:
+    if not cov:
+        return "<p class='dim'>No coverage data. Run: pytest --cov=src --cov-report=json:tests/runs/coverage.json</p>"
+
+    totals = cov.get("totals", {})
+    pct = totals.get("percent_covered", 0)
+    stmts = totals.get("num_statements", 0)
+    miss = totals.get("missing_lines", 0)
+
+    # Per-file breakdown
+    files = cov.get("files", {})
     rows = []
-    for r in runs:
+    for fpath in sorted(files.keys()):
+        f = files[fpath]
+        s = f.get("summary", {})
+        fpct = s.get("percent_covered", 0)
+        fstmts = s.get("num_statements", 0)
+        fmiss = s.get("missing_lines", 0)
+        if fstmts == 0:
+            continue
+        # Color by coverage level
+        cls = "pass" if fpct >= 90 else ("partial" if fpct >= 70 else ("fail" if fpct < 50 else ""))
+        short = fpath.replace("src/", "")
         rows.append(
-            f"<tr>"
-            f"<td>{_fmt_dt(r.get('run_at',''))}</td>"
-            f"<td>{r.get('total', 0)}</td>"
-            f"<td>{_pct_bar(r.get('passed', 0), r.get('total', 0))}</td>"
-            f"<td>{r.get('avg_score', '—')}</td>"
-            f"</tr>"
+            f"<tr><td class='case-id'>{short}</td>"
+            f"<td>{fstmts}</td><td>{fmiss}</td>"
+            f"<td class='{cls}'>{fpct:.0f}%</td></tr>"
         )
 
+    colour = "#48bb78" if pct >= 80 else "#ed8936" if pct >= 60 else "#fc8181"
+
     return (
+        f"<p class='summary'>Overall: <strong style='color:{colour}'>{pct:.0f}%</strong> "
+        f"({stmts - miss}/{stmts} statements covered)</p>"
         "<table>"
-        "<thead><tr><th>Run</th><th>Cases</th><th>Pass rate</th><th>Avg score</th></tr></thead>"
+        "<thead><tr><th>Module</th><th>Stmts</th><th>Miss</th><th>Cover</th></tr></thead>"
         "<tbody>" + "".join(rows) + "</tbody>"
         "</table>"
     )
@@ -345,6 +417,7 @@ def generate() -> str:
     unit_runs  = _load_runs(RUNS_UNIT)
     int_runs   = _load_runs(RUNS_INT)
     synth_runs, real_runs = _load_eval_runs()
+    cov        = _load_coverage()
 
     generated = datetime.now().strftime("%Y-%m-%d %H:%M")
 
@@ -364,15 +437,19 @@ def generate() -> str:
   </p>
 
   <nav>
-    <a href="#unit">Unit Tests</a> &nbsp;·&nbsp;
-    <a href="#inc">Incremental Tests</a> &nbsp;·&nbsp;
-    <a href="#int">Integration Tests</a> &nbsp;·&nbsp;
-    <a href="#synth">Eval Synth</a> &nbsp;·&nbsp;
-    <a href="#real">Eval Real</a>
+    <a href="#unit">Unit</a> &nbsp;·&nbsp;
+    <a href="#coverage">Coverage</a> &nbsp;·&nbsp;
+    <a href="#inc">Incremental</a> &nbsp;·&nbsp;
+    <a href="#int">Integration</a> &nbsp;·&nbsp;
+    <a href="#synth">Eval (Synthetic)</a> &nbsp;·&nbsp;
+    <a href="#real">Eval (Real Cases)</a>
   </nav>
 
   <h2 id="unit">Unit Tests</h2>
   {_unit_section(unit_runs)}
+
+  <h2 id="coverage">Code Coverage</h2>
+  {_coverage_section(cov)}
 
   <h2 id="inc">Incremental Tests (INC)</h2>
   {_inc_section(inc_runs)}
@@ -381,10 +458,10 @@ def generate() -> str:
   <p class="summary"><a href="/developer/integration/">Full detail view →</a></p>
   {_integration_section(int_runs)}
 
-  <h2 id="synth">Synthetic Evals</h2>
+  <h2 id="synth">Eval — Synthetic Cases</h2>
   {_eval_section(synth_runs, "synth")}
 
-  <h2 id="real">Real Case Evals</h2>
+  <h2 id="real">Eval — Real Cases</h2>
   {_eval_section(real_runs, "real")}
 
 </body>

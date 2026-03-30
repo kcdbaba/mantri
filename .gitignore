@@ -34,3 +34,4 @@ tests/integration_tests/*/replay_trace.json
 tests/integration_tests/*/replay_result.json
 tests/integration_tests/*/replay_result.db
 tests/integration_tests/*/routing_mismatches.json
+.coverage
