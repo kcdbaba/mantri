@@ -231,16 +231,26 @@ CREATE TABLE IF NOT EXISTS usage_log (
 """
 
 PRICING = {
-    "claude-sonnet-4-6":   {"input": 3.00,   "output": 15.00},  # per 1M tokens
+    "claude-sonnet-4-6":   {"input": 3.00, "output": 15.00,
+                             "cache_write": 3.75, "cache_read": 0.30},  # per 1M tokens
     "gemini-1.5-flash-8b": {"input": 0.0375, "output": 0.15},
 }
 
 
-def compute_cost(model: str, tokens_in: int, tokens_out: int) -> float:
+def compute_cost(model: str, tokens_in: int, tokens_out: int,
+                 cache_creation_tokens: int = 0, cache_read_tokens: int = 0) -> float:
     if model not in PRICING:
         return 0.0
     p = PRICING[model]
-    return (tokens_in * p["input"] + tokens_out * p["output"]) / 1_000_000
+    # input_tokens from the API excludes cached tokens — it's already uncached only.
+    # Cache tokens are billed separately at write (1.25×) or read (0.1×) rates.
+    cost = (
+        tokens_in * p["input"]
+        + tokens_out * p["output"]
+        + cache_creation_tokens * p.get("cache_write", p["input"])
+        + cache_read_tokens * p.get("cache_read", p["input"])
+    ) / 1_000_000
+    return cost
 
 
 def init_schema():

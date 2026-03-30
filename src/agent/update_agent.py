@@ -106,6 +106,8 @@ def run_update_agent(
         duration_ms=duration_ms,
         message_id=message.get("message_id"),
         task_id=task_id,
+        cache_creation_tokens=getattr(response.usage, "cache_creation_input_tokens", 0) or 0,
+        cache_read_tokens=getattr(response.usage, "cache_read_input_tokens", 0) or 0,
     )
 
     raw = response.content[0].text
@@ -172,13 +174,16 @@ def _call_with_retry(system_prompt: str, user_section: str,
                      image_media_type: str = "",
                      max_retries: int = 3) -> anthropic.types.Message | None:
     content = _build_user_content(user_section, image_bytes, image_media_type)
+    system_with_cache = [
+        {"type": "text", "text": system_prompt, "cache_control": {"type": "ephemeral"}},
+    ]
     delay = 1
     for attempt in range(max_retries):
         try:
             return client.messages.create(
                 model=CLAUDE_MODEL,
                 max_tokens=AGENT_MAX_TOKENS,
-                system=system_prompt,
+                system=system_with_cache,
                 messages=[{"role": "user", "content": content}],
             )
         except anthropic.APIStatusError as e:

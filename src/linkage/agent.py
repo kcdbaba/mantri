@@ -83,6 +83,8 @@ def run_linkage_agent(
         duration_ms=duration_ms,
         message_id=message.get("message_id"),
         task_id="linkage",
+        cache_creation_tokens=getattr(response.usage, "cache_creation_input_tokens", 0) or 0,
+        cache_read_tokens=getattr(response.usage, "cache_read_input_tokens", 0) or 0,
     )
 
     raw = response.content[0].text
@@ -106,13 +108,16 @@ def _call_with_retry(
     message_id: str | None,
     max_retries: int = 3,
 ) -> anthropic.types.Message | None:
+    system_with_cache = [
+        {"type": "text", "text": system_prompt, "cache_control": {"type": "ephemeral"}},
+    ]
     delay = 1
     for attempt in range(max_retries):
         try:
             return client.messages.create(
                 model=CLAUDE_MODEL,
                 max_tokens=AGENT_MAX_TOKENS,
-                system=system_prompt,
+                system=system_with_cache,
                 messages=[{"role": "user", "content": user_section}],
             )
         except anthropic.APIStatusError as e:

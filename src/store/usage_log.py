@@ -16,8 +16,11 @@ def log_llm_call(
     duration_ms: int,
     message_id: str | None = None,
     task_id: str | None = None,
+    cache_creation_tokens: int = 0,
+    cache_read_tokens: int = 0,
 ):
-    cost = compute_cost(model, tokens_in, tokens_out)
+    cost = compute_cost(model, tokens_in, tokens_out,
+                        cache_creation_tokens, cache_read_tokens)
     with transaction() as conn:
         conn.execute(
             """INSERT INTO usage_log
