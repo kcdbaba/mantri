@@ -10,7 +10,7 @@ WorkingDirectory={{ app_dir }}
 EnvironmentFile=/etc/mantri/secrets.env
 Environment=REDIS_URL={{ redis_url }}
 Environment=DB_PATH={{ db_path }}
-Environment=INGEST_QUEUE_KEY={{ ingest_queue_key }}
+Environment=INGEST_STREAM={{ ingest_stream }}
 Environment=TASK_EVENTS_STREAM={{ task_events_stream }}
 Environment=CLAUDE_MODEL={{ claude_model }}
 ExecStart={{ venv_dir }}/bin/python -m src.router.worker

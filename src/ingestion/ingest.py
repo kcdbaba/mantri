@@ -13,7 +13,7 @@ import redis
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
-from src.config import REDIS_URL, INGEST_QUEUE_KEY
+from src.config import REDIS_URL, INGEST_STREAM
 
 log = logging.getLogger(__name__)
 app = FastAPI()
@@ -50,7 +50,12 @@ def ingest(msg: IncomingMessage):
         pass
 
     try:
-        redis_client.lpush(INGEST_QUEUE_KEY, json.dumps(enriched))
+        redis_client.xadd(
+            INGEST_STREAM,
+            {"message_json": json.dumps(enriched)},
+            maxlen=50_000,
+            approximate=True,
+        )
     except redis.RedisError as e:
         log.error("Redis unavailable: %s", e)
         raise HTTPException(status_code=503, detail="Queue unavailable")

@@ -455,3 +455,112 @@ class TestLinkageAmbiguityFlag:
         }
         flag = LinkageAmbiguityFlag.model_validate(data)
         assert flag.affected_task_ids == []
+
+
+# ---------------------------------------------------------------------------
+# _is_empty_message — determines if LLM call should be skipped
+# ---------------------------------------------------------------------------
+
+@allure.feature("Message Routing")
+@allure.story("Empty Message Detection")
+class TestIsEmptyMessage:
+
+    def test_empty_body_no_image(self):
+        from src.router.worker import _is_empty_message
+        assert _is_empty_message({"body": "", "message_id": "m1"}) is True
+
+    def test_none_body_no_image(self):
+        from src.router.worker import _is_empty_message
+        assert _is_empty_message({"body": None, "message_id": "m1"}) is True
+
+    def test_whitespace_only(self):
+        from src.router.worker import _is_empty_message
+        assert _is_empty_message({"body": "   ", "message_id": "m1"}) is True
+
+    def test_body_with_text(self):
+        from src.router.worker import _is_empty_message
+        assert _is_empty_message({"body": "hello", "message_id": "m1"}) is False
+
+    def test_empty_body_with_image_path(self):
+        from src.router.worker import _is_empty_message
+        assert _is_empty_message({"body": "", "image_path": "/tmp/photo.jpg"}) is False
+
+    def test_empty_body_with_image_bytes(self):
+        from src.router.worker import _is_empty_message
+        assert _is_empty_message({"body": "", "image_bytes": b"data"}) is False
+
+
+# ---------------------------------------------------------------------------
+# _select_model — model tiering logic
+# ---------------------------------------------------------------------------
+
+@allure.feature("Cost Optimisation")
+@allure.story("Model Tiering")
+class TestSelectModel:
+
+    def test_short_simple_message_uses_haiku(self):
+        from src.agent.update_agent import _select_model
+        assert _select_model({"body": "ok"}) == "claude-haiku-4-5-20251001"
+
+    def test_long_message_uses_sonnet(self):
+        from src.agent.update_agent import _select_model
+        msg = {"body": "Sir kindly reshare the rate for 1.5 ton Split Ac and others"}
+        assert _select_model(msg) == "claude-sonnet-4-6"
+
+    def test_message_with_numbers_uses_sonnet(self):
+        from src.agent.update_agent import _select_model
+        assert _select_model({"body": "50 bags atta"}) == "claude-sonnet-4-6"
+
+    def test_message_with_image_uses_sonnet(self):
+        from src.agent.update_agent import _select_model
+        assert _select_model({"body": "hi", "image_path": "/tmp/x.jpg"}) == "claude-sonnet-4-6"
+
+    def test_message_with_order_keyword_uses_sonnet(self):
+        from src.agent.update_agent import _select_model
+        assert _select_model({"body": "order confirm ho gaya"}) == "claude-sonnet-4-6"
+
+    def test_message_with_hindi_quantity_uses_sonnet(self):
+        from src.agent.update_agent import _select_model
+        assert _select_model({"body": "do battery chahiye"}) == "claude-sonnet-4-6"
+
+    def test_acknowledgement_uses_haiku(self):
+        from src.agent.update_agent import _select_model
+        for body in ["thanks sir", "Increased", "..", "Sir kindly share", "Welcome"]:
+            assert _select_model({"body": body}) == "claude-haiku-4-5-20251001", \
+                f"'{body}' should use Haiku"
+
+    def test_payment_keyword_uses_sonnet(self):
+        from src.agent.update_agent import _select_model
+        assert _select_model({"body": "payment done"}) == "claude-sonnet-4-6"
+
+
+# ---------------------------------------------------------------------------
+# Router worker stream processing
+# ---------------------------------------------------------------------------
+
+@allure.feature("Message Routing")
+@allure.story("Stream Processing")
+class TestRouterStreamProcessing:
+
+    def test_malformed_json_acks_and_dead_letters(self):
+        from src.router.worker import _process_with_retry
+        mock_r = MagicMock()
+        with patch("src.router.worker._write_ingest_dead_letter") as mock_dl:
+            _process_with_retry("evt-1", {"message_json": "not{json"}, mock_r)
+        mock_dl.assert_called_once()
+        mock_r.xack.assert_called_once()
+
+    def test_missing_message_json_acks_silently(self):
+        from src.router.worker import _process_with_retry
+        mock_r = MagicMock()
+        _process_with_retry("evt-1", {}, mock_r)
+        mock_r.xack.assert_called_once()
+
+    def test_successful_processing_acks(self):
+        from src.router.worker import _process_with_retry
+        mock_r = MagicMock()
+        msg = {"body": "test", "message_id": "m1"}
+        fields = {"message_json": json.dumps(msg)}
+        with patch("src.router.worker.process_message"):
+            _process_with_retry("evt-1", fields, mock_r)
+        mock_r.xack.assert_called_once()

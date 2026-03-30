@@ -166,8 +166,9 @@ NEW_TASK_LOG_PATH = "logs/new_task_candidates.log"
 # ---------------------------------------------------------------------------
 
 REDIS_URL = "redis://localhost:6379"
-INGEST_QUEUE_KEY = "ingest_queue"
-TASK_EVENTS_STREAM = "task_events"   # Redis stream; linkage_worker reads from this
+INGEST_QUEUE_KEY = "ingest_queue"       # Legacy list key (deprecated — use INGEST_STREAM)
+INGEST_STREAM = "ingest_stream"         # Redis stream; router_worker reads from this
+TASK_EVENTS_STREAM = "task_events"      # Redis stream; linkage_worker reads from this
 
 # ---------------------------------------------------------------------------
 # SQLite

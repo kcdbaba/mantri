@@ -12,7 +12,7 @@ from pathlib import Path
 import redis
 
 from src.config import (
-    REDIS_URL, INGEST_QUEUE_KEY,
+    REDIS_URL, INGEST_STREAM,
     UNROUTED_LOG_PATH,
     PROVISIONAL_THRESHOLD,
     ESCALATION_PROFILES, ACTIVE_ESCALATION_PROFILE,
@@ -112,23 +112,102 @@ def process_message(message: dict, r: redis.Redis):
         _publish_task_event(task_id, message, r)
 
 
+CONSUMER_GROUP = "router_worker_group"
+CONSUMER_NAME = "router_worker_1"
+MAX_RETRY_ATTEMPTS = 3
+
+
+def _ensure_consumer_group(r: redis.Redis):
+    try:
+        r.xgroup_create(INGEST_STREAM, CONSUMER_GROUP, id="0", mkstream=True)
+    except redis.exceptions.ResponseError as e:
+        if "BUSYGROUP" not in str(e):
+            raise
+
+
+def _process_with_retry(event_id: str, fields: dict, r: redis.Redis):
+    raw = fields.get("message_json")
+    if not raw:
+        r.xack(INGEST_STREAM, CONSUMER_GROUP, event_id)
+        return
+
+    try:
+        message = json.loads(raw)
+    except json.JSONDecodeError:
+        log.error("Malformed message_json in event %s — dead-lettering", event_id)
+        _write_ingest_dead_letter(event_id, fields, "malformed JSON")
+        r.xack(INGEST_STREAM, CONSUMER_GROUP, event_id)
+        return
+
+    last_exc = None
+    for attempt in range(1, MAX_RETRY_ATTEMPTS + 1):
+        try:
+            process_message(message, r)
+            r.xack(INGEST_STREAM, CONSUMER_GROUP, event_id)
+            return
+        except Exception as e:
+            last_exc = e
+            if attempt < MAX_RETRY_ATTEMPTS:
+                log.warning(
+                    "Router worker: event=%s attempt=%d/%d failed (%s) — retrying in %ds",
+                    event_id, attempt, MAX_RETRY_ATTEMPTS, e, attempt,
+                )
+                time.sleep(attempt)
+
+    # All attempts exhausted
+    _write_ingest_dead_letter(event_id, fields, str(last_exc))
+    r.xack(INGEST_STREAM, CONSUMER_GROUP, event_id)
+    log.critical(
+        "DEAD LETTER: router event=%s after %d attempts — %s",
+        event_id, MAX_RETRY_ATTEMPTS, last_exc,
+    )
+
+
+def _write_ingest_dead_letter(event_id: str, fields: dict, failure_reason: str):
+    now = int(time.time())
+    with transaction() as conn:
+        conn.execute(
+            """INSERT INTO dead_letter_events
+               (id, stream_key, event_id, fields_json, failure_reason,
+                attempts, first_failed_at, last_failed_at)
+               VALUES (?,?,?,?,?,?,?,?)""",
+            (
+                str(uuid.uuid4()),
+                INGEST_STREAM,
+                event_id,
+                json.dumps(fields),
+                failure_reason,
+                MAX_RETRY_ATTEMPTS,
+                now,
+                now,
+            ),
+        )
+
+
 def run():
-    log.info("Router worker started — listening on %s", INGEST_QUEUE_KEY)
+    log.info("Router worker started — consuming stream %s", INGEST_STREAM)
     r = redis.from_url(REDIS_URL, decode_responses=True)
+    _ensure_consumer_group(r)
+
     while True:
         try:
-            result = r.brpop(INGEST_QUEUE_KEY, timeout=5)
-            if result is None:
+            results = r.xreadgroup(
+                CONSUMER_GROUP, CONSUMER_NAME,
+                {INGEST_STREAM: ">"},
+                count=10,
+                block=5000,
+            )
+            if not results:
                 continue
-            _, raw = result
-            message = json.loads(raw)
-            process_message(message, r)
+            for stream_name, entries in results:
+                for event_id, fields in entries:
+                    _process_with_retry(event_id, fields, r)
         except redis.RedisError as e:
-            log.error("Redis error: %s — retrying in 5s", e)
+            log.error("Router worker Redis error: %s — retrying in 5s", e)
             time.sleep(5)
         except Exception as e:
-            log.exception("Unhandled error processing message: %s", e)
-            time.sleep(1)  # brief pause, then continue
+            log.exception("Router worker unhandled error: %s", e)
+            time.sleep(1)
 
 
 def _log_unrouted(message: dict):

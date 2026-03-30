@@ -8,7 +8,7 @@ repo_branch: main
 requirements_file: requirements-prod.txt
 
 redis_url: "redis://localhost:6379"
-ingest_queue_key: "ingest_queue"
+ingest_stream: "ingest_stream"
 task_events_stream: "task_events"
 cron_interval_seconds: 900
 claude_model: "claude-sonnet-4-6"
