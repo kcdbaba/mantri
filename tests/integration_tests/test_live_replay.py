@@ -28,10 +28,20 @@ import pytest
 from src.agent.templates import get_template
 from tests.integration_tests.conftest import save_run_record
 
-CASE_DIR = Path(__file__).parent / "R1-D-L3-01_sata_multi_item_multi_supplier"
-CASE_ID = "R1-D-L3-01"
+CASES_DIR = Path(__file__).parent
 
 log = logging.getLogger(__name__)
+
+
+def _discover_cases() -> list[Path]:
+    """Find all case directories with required files for live replay."""
+    cases = []
+    for d in sorted(CASES_DIR.iterdir()):
+        if not d.is_dir():
+            continue
+        if (d / "replay_trace.json").exists() and (d / "seed_tasks.json").exists():
+            cases.append(d)
+    return cases
 
 
 # ---------------------------------------------------------------------------
@@ -65,10 +75,10 @@ class StreamCapture:
 # DB seeding
 # ---------------------------------------------------------------------------
 
-def _load_json(filename: str):
-    path = CASE_DIR / filename
+def _load_json(case_dir: Path, filename: str):
+    path = case_dir / filename
     if not path.exists():
-        pytest.skip(f"{filename} not found")
+        pytest.skip(f"{filename} not found in {case_dir.name}")
     return json.loads(path.read_text(encoding="utf-8"))
 
 
@@ -208,8 +218,8 @@ def _snapshot_state(db_path: str) -> dict:
 # Replay runner
 # ---------------------------------------------------------------------------
 
-def run_live_replay(trace: list[dict], seed: dict, run_linkage: bool = True,
-                    max_messages: int | None = None) -> dict:
+def run_live_replay(case_dir: Path, trace: list[dict], seed: dict,
+                    run_linkage: bool = True, max_messages: int | None = None) -> dict:
     """
     Run the full pipeline on a trace. Returns final state snapshot + run stats.
     """
@@ -324,7 +334,7 @@ def run_live_replay(trace: list[dict], seed: dict, run_linkage: bool = True,
     snapshot = _snapshot_state(db_path)
 
     # Keep the DB for manual inspection
-    result_db = CASE_DIR / "replay_result.db"
+    result_db = case_dir / "replay_result.db"
     Path(db_path).rename(result_db)
     log.info("Result DB saved to: %s", result_db)
 
@@ -339,17 +349,23 @@ def run_live_replay(trace: list[dict], seed: dict, run_linkage: bool = True,
 # Test
 # ---------------------------------------------------------------------------
 
+LIVE_CASES = _discover_cases()
+LIVE_CASE_IDS = [d.name for d in LIVE_CASES]
+
+
+@pytest.mark.parametrize("case_dir", LIVE_CASES, ids=LIVE_CASE_IDS)
 class TestLiveReplay:
 
-    def test_full_replay(self, request):
+    def test_full_replay(self, case_dir, request):
         if not request.config.getoption("--run-live"):
             pytest.skip("Live replay requires --run-live flag")
 
         skip_linkage = request.config.getoption("--skip-linkage")
         max_messages = request.config.getoption("--max-messages")
+        case_id = case_dir.name.split("_")[0]
 
-        trace = _load_json("replay_trace.json")
-        seed = _load_json("seed_tasks.json")
+        trace = _load_json(case_dir, "replay_trace.json")
+        seed = _load_json(case_dir, "seed_tasks.json")
 
         logging.basicConfig(
             level=logging.INFO,
@@ -357,13 +373,13 @@ class TestLiveReplay:
         )
 
         result = run_live_replay(
-            trace, seed,
+            case_dir, trace, seed,
             run_linkage=not skip_linkage,
             max_messages=max_messages,
         )
 
         # Write full results to case dir
-        output_path = CASE_DIR / "replay_result.json"
+        output_path = case_dir / "replay_result.json"
         output_path.write_text(
             json.dumps(result, indent=2, ensure_ascii=False, default=str),
             encoding="utf-8",
@@ -373,7 +389,7 @@ class TestLiveReplay:
         # Save publishable run record
         stats = result["stats"]
         state = result["state"]
-        save_run_record("live", CASE_ID, {
+        save_run_record("live", case_id, {
             "messages_total": stats["messages_total"],
             "messages_routed": stats["messages_routed"],
             "messages_unrouted": stats["messages_unrouted"],
@@ -403,21 +419,13 @@ class TestLiveReplay:
         })
 
         # Basic sanity assertions
-        stats = result["stats"]
-        state = result["state"]
-
-        # At least some messages should route
         assert stats["messages_routed"] > 0, "No messages routed"
-
-        # Node states should exist for seeded tasks
         assert len(state["node_states"]) > 0, "No node states in DB"
-
-        # Messages should be stored
         assert sum(state["message_counts"].values()) > 0, "No messages stored"
 
         # Print summary
         print(f"\n{'='*60}")
-        print(f"LIVE REPLAY COMPLETE")
+        print(f"LIVE REPLAY COMPLETE — {case_dir.name}")
         print(f"{'='*60}")
         print(f"Messages: {stats['messages_total']} total, "
               f"{stats['messages_routed']} routed, "
@@ -448,4 +456,4 @@ class TestLiveReplay:
             for err in stats["errors"][:5]:
                 print(f"  [{err['phase']}] {err['message_id']}: {err['error'][:80]}")
         print(f"\nResult DB: {result['db_path']}")
-        print(f"Full results: {CASE_DIR / 'replay_result.json'}")
+        print(f"Full results: {case_dir / 'replay_result.json'}")
