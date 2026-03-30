@@ -85,6 +85,30 @@ python scripts/build_expected_routing.py \
     --seed tests/integration_tests/R1-D-L3-01_sata_multi_item_multi_supplier/seed_tasks.json
 ```
 
+### `scripts/build_seed_tasks.py`
+
+Generates a `seed_tasks.json` scaffold by analyzing the eval case's
+`metadata.json` and sampling raw chat messages. Infers task types from chat
+labels, extracts entity names and aliases from sender patterns.
+
+```bash
+python scripts/build_seed_tasks.py --case tests/evals/R1-D-L3-01_sata_multi_item_multi_supplier/
+```
+
+The output is a best-effort scaffold — **review and adjust before use**.
+
+### `scripts/build_integration_case.sh`
+
+One-command pipeline that chains all 3 generators:
+
+```bash
+./scripts/build_integration_case.sh tests/evals/<case_dir>
+```
+
+Generates `seed_tasks.json` (scaffold), `replay_trace.json`, and
+`expected_routing.json` in `tests/integration_tests/<case_name>/`. Review
+the seed file and regenerate routing if you make changes.
+
 ### `scripts/case_extractor.py` (existing)
 
 Generates `threads.txt` for eval cases from raw chat logs. Used upstream of the
@@ -112,20 +136,30 @@ Live replay outputs:
 
 ## Test methodology
 
-1. **Select eval case** — pick a case with `metadata.json` (e.g. R1-D-L3-01)
-2. **Build replay trace** — `build_replay_trace.py` parses raw chats into
+### Quick start — new case from eval
+
+```bash
+# One command generates all 3 files
+./scripts/build_integration_case.sh tests/evals/<case_dir>
+
+# Review seed_tasks.json, then run dry replay
+PYTHONPATH=. pytest tests/integration_tests/test_dry_replay.py -v
+```
+
+### Detailed steps
+
+1. **Create eval case** — write `metadata.json` with case ID, chat paths, time window
+2. **Generate seed** — `build_seed_tasks.py` scaffolds tasks/entities from chat
+   labels and sender patterns. **Review and adjust** aliases, client linkages,
+   group mappings.
+3. **Build replay trace** — `build_replay_trace.py` parses raw chats into
    ingest-format messages with image paths
-3. **Curate seed data** — create `seed_tasks.json` with the tasks/entities that
-   should exist in the DB before replay starts (the router needs active tasks
-   to match against)
 4. **Generate expected routing** — `build_expected_routing.py` runs `route()`
-   on each trace message and writes results; **manually review** to fix any
-   routing errors before freezing as ground truth
+   on each trace message; review for false positives
 5. **Run dry replay** — feed trace through router, assert against
    `expected_routing.json`
 6. **Run live replay** — feed trace through full pipeline (router → update_agent
-   → linkage_agent), snapshot final state (node_states, items, fulfillment_links,
-   ambiguity_flags), compare against eval case `expected_output`
+   → linkage_agent), snapshot final state, compare against eval `expected_output`
 
 ## Cases
 
