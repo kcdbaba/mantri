@@ -378,6 +378,7 @@ def generate() -> str:
   {_inc_section(inc_runs)}
 
   <h2 id="int">Integration Tests (Replay)</h2>
+  <p class="summary"><a href="/developer/integration/">Full detail view →</a></p>
   {_integration_section(int_runs)}
 
   <h2 id="synth">Synthetic Evals</h2>
