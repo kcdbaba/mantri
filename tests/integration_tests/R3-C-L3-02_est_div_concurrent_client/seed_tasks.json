@@ -1,0 +1,40 @@
+{
+  "_comment": "Seed data for R3-C-L3-02-INT integration test. Est Div concurrent client with shared supplier.",
+
+  "monitored_groups": {
+    "est_div_jobs": "task_est_div_client",
+    "est_div_jobs_26-27": "task_est_div_client",
+    "Voltas_supplier": "task_voltas_supplier",
+    "Tasks": null
+  },
+
+  "entities": [
+    {
+      "id": "entity_est_div",
+      "name": "Est Div / Establishment Division",
+      "aliases": ["est div", "chanamalla", "chanamalla sir", "nk chanamalla"]
+    },
+    {
+      "id": "entity_voltas_uttam",
+      "name": "Voltas / Uttam Enterprise / JRBK",
+      "aliases": ["voltas", "uttam", "uttam enterprise", "jrbk", "charu enterprise"]
+    }
+  ],
+
+  "tasks": [
+    {
+      "id": "task_est_div_client",
+      "order_type": "standard_procurement",
+      "client_id": "entity_est_div",
+      "supplier_ids": ["entity_voltas_uttam"],
+      "stage": "active"
+    },
+    {
+      "id": "task_voltas_supplier",
+      "order_type": "supplier_order",
+      "client_id": "entity_est_div",
+      "supplier_ids": ["entity_voltas_uttam"],
+      "stage": "active"
+    }
+  ]
+}

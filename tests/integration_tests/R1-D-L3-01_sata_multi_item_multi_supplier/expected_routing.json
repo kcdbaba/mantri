@@ -19,13 +19,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Tasks_0001",
@@ -185,13 +180,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Voltas_supplier_0004",
@@ -269,13 +259,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0008",
@@ -283,13 +268,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Tasks_0007",
@@ -315,13 +295,8 @@
     "group_id": "Voltas_supplier",
     "sender_jid": "Mousumi Banik New Staff",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_voltas_supplier",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Voltas_supplier_0007",
@@ -639,13 +614,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0012",
@@ -653,13 +623,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Tasks_0031",
@@ -695,8 +660,7 @@
     "sender_jid": "Mrs Samita Roy Staff Enquiry",
     "body_preview": "Stainless steel electric Dosa Bhatti 15x15x32 inch with 10mm plate thikness \nYe ",
     "routes": [],
-    "routed": false,
-    "_curated": "false positive — fuzzy match on short alias, unrelated to SATA order"
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0013",
@@ -912,13 +876,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0016",
@@ -1052,13 +1011,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0026",
@@ -1066,13 +1020,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0027",
@@ -1433,13 +1382,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0050",
@@ -1672,8 +1616,7 @@
     "sender_jid": "Ashish Chhabra",
     "body_preview": "01 stand",
     "routes": [],
-    "routed": false,
-    "_curated": "false positive — fuzzy match on short alias, unrelated to SATA order"
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Tasks_0075",
@@ -1764,13 +1707,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0060",
@@ -1778,13 +1716,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Tasks_0078",
@@ -1935,13 +1868,8 @@
     "group_id": "Voltas_supplier",
     "sender_jid": "Mousumi Banik New Staff",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_voltas_supplier",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Voltas_supplier_0012",
@@ -1963,13 +1891,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0069",
@@ -1977,13 +1900,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0070",
@@ -2005,13 +1923,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0072",
@@ -2019,13 +1932,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0073",
@@ -2033,13 +1941,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0074",
@@ -2047,13 +1950,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0075",
@@ -2061,13 +1959,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0076",
@@ -2075,13 +1968,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0077",
@@ -2089,13 +1977,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0078",
@@ -2103,13 +1986,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0079",
@@ -2117,13 +1995,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0080",
@@ -2131,13 +2004,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0081",
@@ -2145,13 +2013,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Tasks_0083",
@@ -2281,13 +2144,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0084",
@@ -2374,13 +2232,8 @@
     "group_id": "Voltas_supplier",
     "sender_jid": "Mousumi Banik New Staff",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_voltas_supplier",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_LG_supplier_0010",
@@ -2388,13 +2241,8 @@
     "group_id": "LG_supplier",
     "sender_jid": "Abhisha Staff Uttam",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_lg_supplier",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_LG_supplier_0011",
@@ -2458,13 +2306,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0088",
@@ -2572,13 +2415,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0091",
@@ -2614,13 +2452,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0094",
@@ -2698,13 +2531,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0097",
@@ -2712,13 +2540,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Tasks_0104",
@@ -2735,13 +2558,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0099",
@@ -2791,13 +2609,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0103",
@@ -2805,13 +2618,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0104",
@@ -2892,13 +2700,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0106",
@@ -2906,13 +2709,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0107",
@@ -3313,13 +3111,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0111",
@@ -3495,13 +3288,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0115",
@@ -3657,13 +3445,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0124",
@@ -3805,13 +3588,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Tasks_0171",
@@ -3996,13 +3774,8 @@
     "group_id": "Voltas_supplier",
     "sender_jid": "Mrs Samita Roy Staff Enquiry",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_voltas_supplier",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Voltas_supplier_0020",
@@ -4010,13 +3783,8 @@
     "group_id": "Voltas_supplier",
     "sender_jid": "Mrs Samita Roy Staff Enquiry",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_voltas_supplier",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Voltas_supplier_0021",
@@ -4126,13 +3894,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Tasks_0188",
@@ -4149,13 +3912,8 @@
     "group_id": "Voltas_supplier",
     "sender_jid": "Mousumi Banik New Staff",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_voltas_supplier",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Voltas_supplier_0023",
@@ -4299,13 +4057,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0142",
@@ -4341,13 +4094,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0145",
@@ -4383,13 +4131,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Tasks_0201",
@@ -4415,13 +4158,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0149",
@@ -4443,13 +4181,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Tasks_0203",
@@ -4837,8 +4570,7 @@
     "sender_jid": "Mrs Samita Roy Staff Enquiry",
     "body_preview": "857 Fd wk sp\nNeed  \n1. Sanitary Diary - 01 nos (Format sir will share  tomorrow)",
     "routes": [],
-    "routed": false,
-    "_curated": "false positive — fuzzy match on short alias, unrelated to SATA order"
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Tasks_0229",
@@ -5080,13 +4812,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0172",
@@ -5803,13 +5530,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0196",
@@ -5817,13 +5539,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0197",
@@ -5859,13 +5576,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0200",
@@ -5873,13 +5585,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0201",
@@ -5915,13 +5622,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0204",
@@ -5929,13 +5631,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0205",
@@ -6443,13 +6140,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0216",
@@ -6825,13 +6517,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0233",
@@ -6853,13 +6540,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0235",
@@ -6867,13 +6549,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0236",
@@ -6983,13 +6660,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0243",
@@ -6997,13 +6669,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0244",
@@ -7039,13 +6706,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0247",
@@ -7256,13 +6918,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Voltas_supplier_0025",
@@ -7307,13 +6964,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0260",
@@ -7682,13 +7334,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Tasks_0373",
@@ -7804,13 +7451,8 @@
     "group_id": "LG_supplier",
     "sender_jid": "Mousumi Banik New Staff",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_lg_supplier",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_LG_supplier_0016",
@@ -7832,13 +7474,8 @@
     "group_id": "LG_supplier",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_lg_supplier",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_LG_supplier_0018",
@@ -8092,13 +7729,8 @@
     "group_id": "LG_supplier",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_lg_supplier",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_LG_supplier_0021",
@@ -8148,13 +7780,8 @@
     "group_id": "LG_supplier",
     "sender_jid": "Mousumi Banik New Staff",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_lg_supplier",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_LG_supplier_0025",
@@ -8526,13 +8153,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0283",
@@ -8764,13 +8386,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0300",
@@ -8806,13 +8423,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0303",
@@ -8866,13 +8478,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0306",
@@ -9048,13 +8655,8 @@
     "group_id": "Voltas_supplier",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_voltas_supplier",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Voltas_supplier_0037",
@@ -9090,13 +8692,8 @@
     "group_id": "Voltas_supplier",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_voltas_supplier",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Voltas_supplier_0040",
@@ -9365,13 +8962,8 @@
     "group_id": "Voltas_supplier",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_voltas_supplier",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Voltas_supplier_0052",
@@ -9491,13 +9083,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0325",
@@ -9589,13 +9176,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0332",
@@ -9603,13 +9185,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0333",
@@ -9617,13 +9194,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0334",
@@ -9631,13 +9203,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0335",
@@ -9645,13 +9212,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Abhisha New Staff Jun 24 (UE )",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Tasks_0420",
@@ -9696,13 +9258,8 @@
     "group_id": "LG_supplier",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_lg_supplier",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Voltas_supplier_0053",
@@ -9710,13 +9267,8 @@
     "group_id": "Voltas_supplier",
     "sender_jid": "Mousumi Banik New Staff",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_voltas_supplier",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Voltas_supplier_0054",
@@ -9780,13 +9332,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0337",
@@ -9878,13 +9425,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0344",
@@ -9947,13 +9489,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0347",
@@ -9961,13 +9498,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Tasks_0424",
@@ -10339,13 +9871,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0355",
@@ -10353,13 +9880,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Sata Bty Bn Sub Arvind Sir Sep 22",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_sata_jobs_0356",
@@ -10367,13 +9889,8 @@
     "group_id": "sata_jobs",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "",
-    "routes": [
-      {
-        "task_id": "task_sata_client",
-        "confidence": 0.9
-      }
-    ],
-    "routed": true
+    "routes": [],
+    "routed": false
   },
   {
     "message_id": "R1-D-L3-01_Tasks_0438",

@@ -1,0 +1,29 @@
+{
+  "id": "R3-C-L3-02-INT",
+  "name": "est_div_concurrent_client",
+  "framework": "R3-C",
+  "level": "L3",
+  "sprint": "S3",
+  "data_source": "real",
+  "description": "Est Div (Establishment Division) Army client order running concurrently with SATA order, sharing Voltas supplier and internal staff group. Tests routing separation between two concurrent clients through shared infrastructure — messages from shared groups (Tasks, Voltas) must route to the correct client order.",
+  "chat_inputs": {
+    "start": "3/2/26, 09:00",
+    "end": "3/20/26, 23:59",
+    "chats": [
+      {"path": "data/raw_chats/full_chat_logs/est_div_jobs", "label": "Est Div Client Group"},
+      {"path": "data/raw_chats/full_chat_logs/est_div_jobs_26-27", "label": "Est Div Client Group (2026-27)"},
+      {"path": "data/raw_chats/full_chat_logs/Voltas_supplier", "label": "Voltas Supplier Group (shared)"},
+      {"path": "data/raw_chats/full_chat_logs/Tasks", "label": "Internal Tasks Group (shared)"}
+    ]
+  },
+  "completeness": {
+    "complete": false,
+    "missing": [
+      "Other supplier chats for est_div items not available",
+      "Some item delivery confirmations may be outside window"
+    ]
+  },
+  "expected_output": "Separate task for Est Div client order. Messages from shared groups (Tasks, Voltas) correctly attributed — est_div items to est_div task, SATA items to SATA task. No cross-client item contamination.",
+  "pass_criteria": "PASS: Est Div order tracked as separate task, shared group messages routed correctly. FAIL: Items from SATA mixed into est_div task or vice versa.",
+  "notes": "Est Div client is Nk Chanamalla Sir. Key staff overlap with SATA: Mrs Samita Roy, Abhisha. Voltas supplier serves both clients. This case specifically tests Layer 2b entity routing on shared groups."
+}
