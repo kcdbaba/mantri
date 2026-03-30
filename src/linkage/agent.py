@@ -46,6 +46,7 @@ class LinkageAmbiguityFlag(BaseModel):
     severity: Literal["high", "medium", "low"]
     category: Literal["entity", "quantity", "status", "timing", "linkage"]
     blocking_node_id: str | None = None
+    affected_task_ids: list[str] = []
 
 
 class LinkageAgentOutput(BaseModel):

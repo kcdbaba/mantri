@@ -13,6 +13,7 @@ Node fields:
   type                  — see above
   name                  — human-readable label
   stage                 — logical grouping for display
+  owner                 — 'update_agent' | 'linkage_agent' — which agent writes this node
   optional              — if True, defaults to 'skipped' unless subgraph is activated
   requires_all          — list of node IDs that must be 'completed' before this node;
                           violation → failure alert
@@ -32,6 +33,7 @@ STANDARD_PROCUREMENT_TEMPLATE = {
             "type": "real_world_milestone",
             "name": "Client enquiry",
             "stage": "enquiry",
+            "owner": "update_agent",
             "description": "Initial order discussion; accumulates items, quantities, delivery requirements until quotation is generated.",
         },
         {
@@ -39,6 +41,7 @@ STANDARD_PROCUREMENT_TEMPLATE = {
             "type": "agent_action",
             "name": "Client quotation",
             "stage": "quotation",
+            "owner": "update_agent",
             "description": "Quotation sent to client; may iterate multiple times. Status: pending → in_progress (first quote sent). Completes only when order_confirmation completes.",
         },
         {
@@ -46,6 +49,7 @@ STANDARD_PROCUREMENT_TEMPLATE = {
             "type": "auto_trigger",
             "name": "Order confirmation",
             "stage": "confirmation",
+            "owner": "update_agent",
             "activates_when": "client_quotation.status=in_progress",
             "description": "Activated when quotation is sent. Completes on client confirmation message or staff/Ashish update stating order is confirmed or to be delivered.",
         },
@@ -56,6 +60,7 @@ STANDARD_PROCUREMENT_TEMPLATE = {
             "type": "real_world_milestone",
             "name": "Supplier indent",
             "stage": "supplier",
+            "owner": "update_agent",
             "optional": True,
             "description": "Initial supplier discussion or enquiry; captures supplier name, items discussed, lead times mentioned. Activates entire supplier subgraph.",
         },
@@ -64,6 +69,7 @@ STANDARD_PROCUREMENT_TEMPLATE = {
             "type": "real_world_milestone",
             "name": "Supplier invoice",
             "stage": "supplier",
+            "owner": "update_agent",
             "optional": True,
             "description": "Invoice received from supplier. May arrive before collection (advance billing is common).",
         },
@@ -72,6 +78,7 @@ STANDARD_PROCUREMENT_TEMPLATE = {
             "type": "real_world_milestone",
             "name": "Supplier collection",
             "stage": "supplier",
+            "owner": "update_agent",
             "optional": True,
             "description": "Goods received from supplier — via supplier delivery, self-collection, or transporter. Transporter handoff detail captured in node_data.",
         },
@@ -80,6 +87,7 @@ STANDARD_PROCUREMENT_TEMPLATE = {
             "type": "agent_action",
             "name": "Supplier PO",
             "stage": "supplier",
+            "owner": "update_agent",
             "optional": True,
             "description": "Purchase order raised. May be done after collection in informal procurement.",
         },
@@ -88,6 +96,7 @@ STANDARD_PROCUREMENT_TEMPLATE = {
             "type": "real_world_milestone",
             "name": "Supplier payment",
             "stage": "supplier",
+            "owner": "update_agent",
             "optional": True,
             "requires_all": ["supplier_invoice"],
             "description": "Payment made to supplier. Advance payment before collection is normal.",
@@ -97,6 +106,7 @@ STANDARD_PROCUREMENT_TEMPLATE = {
             "type": "agent_action",
             "name": "Supplier QC",
             "stage": "supplier",
+            "owner": "update_agent",
             "optional": True,
             "requires_all": ["supplier_collection"],
             "description": "Quality check of received items. 'failed' status blocks order_ready and triggers client_notification task. Resolution paths: replace (creates supplier_QC_replace subgraph), proceed with available (order_ready=completed), or split delivery (order_ready=partial).",
@@ -108,6 +118,7 @@ STANDARD_PROCUREMENT_TEMPLATE = {
             "type": "real_world_milestone",
             "name": "Filled from stock",
             "stage": "stock",
+            "owner": "update_agent",
             "optional": True,
             "description": "Order fulfilled from existing stock without a supplier. Activates on message in internal or client group. Emits new_task_candidates update to current pending stock_taking task.",
         },
@@ -118,6 +129,7 @@ STANDARD_PROCUREMENT_TEMPLATE = {
             "type": "auto_trigger",
             "name": "Order ready",
             "stage": "fulfillment",
+            "owner": "linkage_agent",
             "activates_when": "supplier_QC.status=completed OR filled_from_stock.status=completed",
             "description": "Merge node: order is ready for dispatch from either the supplier path or the stock path. Can be 'partial' if supplier_QC passed for some items only.",
         },
@@ -128,6 +140,7 @@ STANDARD_PROCUREMENT_TEMPLATE = {
             "type": "real_world_milestone",
             "name": "Dispatched",
             "stage": "delivery",
+            "owner": "update_agent",
             "requires_all": ["order_confirmation", "order_ready"],
             "warns_if_incomplete": ["predispatch_checklist"],
             "description": "Goods dispatched to client. If order_ready=partial, dispatch covers available items only.",
@@ -137,6 +150,7 @@ STANDARD_PROCUREMENT_TEMPLATE = {
             "type": "real_world_milestone",
             "name": "Delivery confirmed",
             "stage": "delivery",
+            "owner": "update_agent",
             "requires_all": ["dispatched"],
             "warns_if_incomplete": ["delivery_photo_check"],
             "description": "Client confirms receipt of goods.",
@@ -148,6 +162,7 @@ STANDARD_PROCUREMENT_TEMPLATE = {
             "type": "time_trigger",
             "name": "Quote follow-up (48h)",
             "stage": "quotation",
+            "owner": "update_agent",
             "activates_when": "client_quotation.status=in_progress AND hours_since(client_quotation.updated_at) >= 48",
             "description": "Follow up with client if no order confirmation 48 hours after quotation sent.",
         },
@@ -156,6 +171,7 @@ STANDARD_PROCUREMENT_TEMPLATE = {
             "type": "time_trigger",
             "name": "Supplier pre-delivery enquiry",
             "stage": "supplier",
+            "owner": "update_agent",
             "optional": True,
             "activates_when": "supplier_indent.status=completed AND task.metadata.expected_delivery_date IS SET",
             "alert_days_before": [7, 3, 1],
@@ -166,6 +182,7 @@ STANDARD_PROCUREMENT_TEMPLATE = {
             "type": "auto_trigger",
             "name": "Pre-dispatch checklist",
             "stage": "fulfillment",
+            "owner": "update_agent",
             "activates_when": "order_ready.status=completed OR order_ready.status=partial",
             "description": "Quality, quantity, and packaging check before dispatch to client.",
         },
@@ -174,6 +191,7 @@ STANDARD_PROCUREMENT_TEMPLATE = {
             "type": "auto_trigger",
             "name": "Delivery photo check",
             "stage": "delivery",
+            "owner": "update_agent",
             "activates_when": "dispatched.status=completed",
             "description": "Confirm delivery photo or proof of receipt from client site.",
         },
@@ -182,6 +200,7 @@ STANDARD_PROCUREMENT_TEMPLATE = {
             "type": "time_trigger",
             "name": "Payment follow-up (30d)",
             "stage": "payment",
+            "owner": "update_agent",
             "activates_when": "delivery_confirmed.status=completed AND days_since(delivery_confirmed.completed_at) >= 30",
             "description": "Payment follow-up alert if outstanding 30 days after delivery confirmed. Note: Army clients have 60-90 day normal cycles — this threshold should be overridden for Army orders.",
         },
@@ -209,6 +228,7 @@ CLIENT_ORDER_TEMPLATE = {
             "type": "real_world_milestone",
             "name": "Client enquiry",
             "stage": "enquiry",
+            "owner": "update_agent",
             "description": "Initial order discussion; accumulates items, quantities, delivery requirements until quotation is generated.",
         },
         {
@@ -216,6 +236,7 @@ CLIENT_ORDER_TEMPLATE = {
             "type": "agent_action",
             "name": "Client quotation",
             "stage": "quotation",
+            "owner": "update_agent",
             "description": "Quotation sent to client; may iterate multiple times. Status: pending → in_progress (first quote sent).",
         },
         {
@@ -223,6 +244,7 @@ CLIENT_ORDER_TEMPLATE = {
             "type": "auto_trigger",
             "name": "Order confirmation",
             "stage": "confirmation",
+            "owner": "update_agent",
             "activates_when": "client_quotation.status=in_progress",
             "description": "Activated when quotation is sent. Completes on client confirmation.",
         },
@@ -233,6 +255,7 @@ CLIENT_ORDER_TEMPLATE = {
             "type": "real_world_milestone",
             "name": "Filled from stock",
             "stage": "stock",
+            "owner": "update_agent",
             "optional": True,
             "description": "Order fulfilled from existing stock without a supplier. Activates order_ready directly.",
         },
@@ -243,6 +266,7 @@ CLIENT_ORDER_TEMPLATE = {
             "type": "auto_trigger",
             "name": "Order ready",
             "stage": "fulfillment",
+            "owner": "linkage_agent",
             "activates_when": "filled_from_stock.status=completed",
             "description": (
                 "Order is ready for dispatch. "
@@ -258,6 +282,7 @@ CLIENT_ORDER_TEMPLATE = {
             "type": "real_world_milestone",
             "name": "Dispatched",
             "stage": "delivery",
+            "owner": "update_agent",
             "requires_all": ["order_confirmation", "order_ready"],
             "warns_if_incomplete": ["predispatch_checklist"],
             "description": "Goods dispatched to client.",
@@ -267,6 +292,7 @@ CLIENT_ORDER_TEMPLATE = {
             "type": "real_world_milestone",
             "name": "Delivery confirmed",
             "stage": "delivery",
+            "owner": "update_agent",
             "requires_all": ["dispatched"],
             "warns_if_incomplete": ["delivery_photo_check"],
             "description": "Client confirms receipt of goods.",
@@ -278,6 +304,7 @@ CLIENT_ORDER_TEMPLATE = {
             "type": "auto_trigger",
             "name": "Pre-dispatch checklist",
             "stage": "fulfillment",
+            "owner": "update_agent",
             "activates_when": "order_ready.status=completed OR order_ready.status=partial",
             "description": "Quality, quantity, and packaging check before dispatch.",
         },
@@ -286,6 +313,7 @@ CLIENT_ORDER_TEMPLATE = {
             "type": "auto_trigger",
             "name": "Delivery photo check",
             "stage": "delivery",
+            "owner": "update_agent",
             "activates_when": "dispatched.status=completed",
             "description": "Confirm delivery photo or proof of receipt from client site.",
         },
@@ -296,6 +324,7 @@ CLIENT_ORDER_TEMPLATE = {
             "type": "time_trigger",
             "name": "Quote follow-up (48h)",
             "stage": "quotation",
+            "owner": "update_agent",
             "activates_when": "client_quotation.status=in_progress AND hours_since(client_quotation.updated_at) >= 48",
             "description": "Follow up with client if no order confirmation 48 hours after quotation sent.",
         },
@@ -304,6 +333,7 @@ CLIENT_ORDER_TEMPLATE = {
             "type": "time_trigger",
             "name": "Payment follow-up (30d)",
             "stage": "payment",
+            "owner": "update_agent",
             "activates_when": "delivery_confirmed.status=completed AND days_since(delivery_confirmed.completed_at) >= 30",
             "description": "Payment follow-up alert if outstanding 30 days after delivery confirmed.",
         },
@@ -314,6 +344,7 @@ CLIENT_ORDER_TEMPLATE = {
             "type": "real_world_milestone",
             "name": "Task closed",
             "stage": "closed",
+            "owner": "linkage_agent",
             "description": (
                 "Terminal node. Set to completed by linkage_worker when all fulfilment "
                 "links for this client order are completed (delivery confirmed), or "
@@ -334,6 +365,7 @@ SUPPLIER_ORDER_TEMPLATE = {
             "type": "real_world_milestone",
             "name": "Supplier indent",
             "stage": "supplier",
+            "owner": "update_agent",
             "description": "Initial supplier discussion; captures supplier name, items, lead times. Entry point for this task.",
         },
         {
@@ -341,6 +373,7 @@ SUPPLIER_ORDER_TEMPLATE = {
             "type": "real_world_milestone",
             "name": "Supplier invoice",
             "stage": "supplier",
+            "owner": "update_agent",
             "description": "Invoice received from supplier. May arrive before collection (advance billing is common).",
         },
         {
@@ -348,6 +381,7 @@ SUPPLIER_ORDER_TEMPLATE = {
             "type": "real_world_milestone",
             "name": "Supplier collection",
             "stage": "supplier",
+            "owner": "update_agent",
             "description": "Goods received from supplier — via delivery, self-collection, or transporter.",
         },
         {
@@ -355,6 +389,7 @@ SUPPLIER_ORDER_TEMPLATE = {
             "type": "agent_action",
             "name": "Supplier QC",
             "stage": "supplier",
+            "owner": "update_agent",
             "requires_all": ["supplier_collection"],
             "description": (
                 "Quality check of received items. "
@@ -368,6 +403,7 @@ SUPPLIER_ORDER_TEMPLATE = {
             "type": "agent_action",
             "name": "Supplier PO",
             "stage": "supplier",
+            "owner": "update_agent",
             "description": "Purchase order raised. May be done after collection in informal procurement.",
         },
         {
@@ -375,6 +411,7 @@ SUPPLIER_ORDER_TEMPLATE = {
             "type": "real_world_milestone",
             "name": "Supplier payment",
             "stage": "supplier",
+            "owner": "update_agent",
             "requires_all": ["supplier_invoice"],
             "description": "Payment made to supplier.",
         },
@@ -385,6 +422,7 @@ SUPPLIER_ORDER_TEMPLATE = {
             "type": "time_trigger",
             "name": "Supplier pre-delivery enquiry",
             "stage": "supplier",
+            "owner": "update_agent",
             "optional": True,
             "activates_when": "supplier_indent.status=completed AND task.metadata.expected_delivery_date IS SET",
             "alert_days_before": [7, 3, 1],
@@ -397,6 +435,7 @@ SUPPLIER_ORDER_TEMPLATE = {
             "type": "real_world_milestone",
             "name": "Task closed",
             "stage": "closed",
+            "owner": "linkage_agent",
             "description": (
                 "Terminal node. Set to completed by linkage_worker when all fulfilment "
                 "links for this supplier order reach terminal state (fulfilled/failed/invalidated), "
@@ -418,6 +457,7 @@ LINKAGE_TASK_TEMPLATE = {
             "type": "agent_action",
             "name": "Linkage active",
             "stage": "linkage",
+            "owner": "update_agent",
             "description": (
                 "Singleton node tracking linkage task lifecycle. "
                 "Set to active on creation, completed only when all open orders are closed."

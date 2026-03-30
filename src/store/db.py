@@ -99,6 +99,15 @@ CREATE TABLE IF NOT EXISTS task_routing_context (
     context_embedding BLOB          -- serialised numpy float32 array
 );
 
+-- Node ownership registry — makes agent→node ownership explicit and queryable
+CREATE TABLE IF NOT EXISTS node_owner_registry (
+    node_id         TEXT NOT NULL,
+    order_type      TEXT NOT NULL,
+    owner_agent     TEXT NOT NULL,   -- 'update_agent' | 'linkage_agent'
+    ownership_type  TEXT NOT NULL,   -- 'exclusive_write' | 'read_only'
+    PRIMARY KEY (node_id, order_type)
+);
+
 -- Audit + improvement
 
 CREATE TABLE IF NOT EXISTS audit_log (
@@ -239,6 +248,18 @@ def init_schema():
     Path(DB_PATH).parent.mkdir(parents=True, exist_ok=True)
     conn = get_connection()
     conn.executescript(SCHEMA)
+    conn.commit()
+
+    # Populate node_owner_registry from templates (idempotent)
+    from src.agent.templates import TEMPLATES
+    for order_type, tmpl in TEMPLATES.items():
+        for node in tmpl["nodes"]:
+            conn.execute(
+                """INSERT OR IGNORE INTO node_owner_registry
+                   (node_id, order_type, owner_agent, ownership_type)
+                   VALUES (?, ?, ?, ?)""",
+                (node["id"], order_type, node["owner"], "exclusive_write"),
+            )
     conn.commit()
     conn.close()
     print(f"Schema initialised at {DB_PATH}")

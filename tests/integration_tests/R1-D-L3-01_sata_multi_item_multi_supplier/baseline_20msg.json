@@ -1,24 +1,19 @@
 {
-  "_description": "Frozen baseline from 20-message live replay (2026-03-30). Compare future runs against this.",
+  "_description": "Frozen baseline from 20-message live replay (2026-03-30). POST-REFACTORING: includes linkage ambiguity escalation and dead-letter logging.",
   "_messages_processed": 20,
   "node_statuses": {
     "task_lg_supplier": [
       {
         "node": "Supplier indent",
-        "status": "in_progress",
-        "confidence": 0.85
+        "status": "active",
+        "confidence": 0.9
       }
     ],
     "task_sata_client": [
       {
         "node": "Client enquiry",
         "status": "in_progress",
-        "confidence": 0.85
-      },
-      {
-        "node": "Order confirmation",
-        "status": "blocked",
-        "confidence": 0.0
+        "confidence": 0.82
       }
     ],
     "task_voltas_supplier": [
@@ -30,19 +25,13 @@
     ]
   },
   "items_per_task": {
-    "task_sata_client": [
-      {
-        "description": "parts (unspecified) \u2014 extra order",
-        "quantity": 2.0
-      },
-      {
-        "description": "battery",
-        "quantity": null
-      }
-    ],
     "task_lg_supplier": [
       {
         "description": "LG Refrigerator 242 ltr with handle",
+        "quantity": null
+      },
+      {
+        "description": "Mini Refrigerator 75/100 ltr",
         "quantity": null
       }
     ],
@@ -75,19 +64,19 @@
   },
   "ambiguity_count_per_task": {
     "task_sata_client": {
-      "high": 2,
-      "medium": 4,
-      "low": 1
-    },
-    "task_lg_supplier": {
-      "high": 0,
-      "medium": 2,
-      "low": 4
+      "high": 3,
+      "medium": 5,
+      "low": 2
     },
     "task_voltas_supplier": {
-      "high": 0,
-      "medium": 4,
-      "low": 3
+      "high": 6,
+      "medium": 7,
+      "low": 2
+    },
+    "task_lg_supplier": {
+      "high": 5,
+      "medium": 8,
+      "low": 5
     }
   },
   "message_counts": {
@@ -96,5 +85,5 @@
     "task_voltas_supplier": 5
   },
   "fulfillment_link_count": 0,
-  "dead_letter_count": 0
+  "dead_letter_count": 1
 }

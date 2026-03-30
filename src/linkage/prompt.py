@@ -61,7 +61,8 @@ Respond with valid JSON only. No prose, no markdown fences.
       "description": "<plain English description>",
       "severity": "<high|medium|low>",
       "category": "<entity|quantity|status|timing|linkage>",
-      "blocking_node_id": "<node_id or null>"
+      "blocking_node_id": "<node_id or null>",
+      "affected_task_ids": ["<task_id>", ...]
     }
   ]
 }
@@ -99,6 +100,9 @@ Respond with valid JSON only. No prose, no markdown fences.
 - ambiguity_flags: raise one per distinct ambiguity. Never silently skip.
   Linkage ambiguity (which supplier order supplies which client order) has
   category "linkage". Quantity disputes → "quantity".
+  affected_task_ids: list the task_ids affected by this ambiguity. Required
+  for blocking flags (blocking_node_id is not null) — must include at least
+  one task_id. For non-blocking flags, include task_ids if known.
 """
 
 

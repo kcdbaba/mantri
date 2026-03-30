@@ -11,7 +11,7 @@ import pytest
 import allure
 from unittest.mock import patch, MagicMock
 
-from src.agent.update_agent import ItemExtraction
+from src.agent.update_agent import ItemExtraction, AmbiguityFlag
 
 
 def _make_node_states(task_id, overrides: dict) -> list[dict]:
@@ -145,7 +145,7 @@ def _run_process_message(message, task, agent_output):
          patch("src.router.worker.get_task", return_value=task), \
          patch("src.router.worker.append_message"), \
          patch("src.router.worker.run_update_agent", return_value=agent_output), \
-         patch("src.router.worker.update_node") as mock_update_node, \
+         patch("src.router.worker.update_node_as_update_agent") as mock_update_node, \
          patch("src.router.worker.apply_item_extractions"), \
          patch("src.router.worker.apply_node_data_extractions"), \
          patch("src.router.worker._check_post_confirmation_item_changes"), \
@@ -294,3 +294,164 @@ class TestHandleAmbiguity:
         params = mock_conn.execute.call_args[0][1]
         target = json.loads(params[9])
         assert "senior_staff" in target
+
+
+# ---------------------------------------------------------------------------
+# _log_dead_letter — writes failed update_agent calls to dead_letter_events
+# ---------------------------------------------------------------------------
+
+@allure.feature("Message Routing")
+@allure.story("Dead Letter Logging")
+class TestDeadLetterLogging:
+
+    def test_dead_letter_written_on_agent_failure(self):
+        from src.router.worker import _log_dead_letter
+        mock_conn = MagicMock()
+        mock_cm = MagicMock()
+        mock_cm.__enter__ = MagicMock(return_value=mock_conn)
+        mock_cm.__exit__ = MagicMock(return_value=False)
+        with patch("src.router.worker.transaction", return_value=mock_cm):
+            _log_dead_letter("task_001", {"message_id": "m1", "body": "test"})
+        mock_conn.execute.assert_called_once()
+        sql = mock_conn.execute.call_args[0][0]
+        assert "INSERT INTO dead_letter_events" in sql
+
+    def test_dead_letter_contains_task_id(self):
+        from src.router.worker import _log_dead_letter
+        mock_conn = MagicMock()
+        mock_cm = MagicMock()
+        mock_cm.__enter__ = MagicMock(return_value=mock_conn)
+        mock_cm.__exit__ = MagicMock(return_value=False)
+        with patch("src.router.worker.transaction", return_value=mock_cm):
+            _log_dead_letter("task_xyz", {"message_id": "m2", "body": "hello"})
+        params = mock_conn.execute.call_args[0][1]
+        fields_json = params[3]  # fields_json is index 3
+        assert "task_xyz" in fields_json
+
+    def test_process_message_logs_dead_letter_on_agent_none(self):
+        msg = {"body": "test", "message_id": "m99"}
+        task = {"id": "t1", "order_type": "standard_procurement"}
+        from src.router.worker import process_message
+        mock_r = MagicMock()
+        with patch("src.router.worker.route", return_value=[("t1", 0.9)]), \
+             patch("src.router.worker.get_task", return_value=task), \
+             patch("src.router.worker.append_message"), \
+             patch("src.router.worker.run_update_agent", return_value=None), \
+             patch("src.router.worker._log_dead_letter") as mock_dl:
+            process_message(msg, mock_r)
+        mock_dl.assert_called_once_with("t1", msg)
+
+
+# ---------------------------------------------------------------------------
+# update_node wrappers — verify updated_by is set correctly
+# ---------------------------------------------------------------------------
+
+@allure.feature("Node Ownership")
+@allure.story("Update Node Wrappers")
+class TestUpdateNodeWrappers:
+
+    def test_update_agent_wrapper_sets_updated_by(self):
+        from src.store.task_store import update_node_as_update_agent
+        with patch("src.store.task_store.update_node") as mock:
+            update_node_as_update_agent("t1", "order_confirmation", "completed", 0.95, "m1")
+        mock.assert_called_once_with("t1", "order_confirmation", "completed", 0.95, "m1",
+                                     updated_by="update_agent")
+
+    def test_linkage_agent_wrapper_sets_updated_by(self):
+        from src.store.task_store import update_node_as_linkage_agent
+        with patch("src.store.task_store.update_node") as mock:
+            update_node_as_linkage_agent("t1", "order_ready", "completed", 0.98, "m2")
+        mock.assert_called_once_with("t1", "order_ready", "completed", 0.98, "m2",
+                                     updated_by="linkage_agent")
+
+
+# ---------------------------------------------------------------------------
+# Template ownership — all nodes have owner field
+# ---------------------------------------------------------------------------
+
+@allure.feature("Node Ownership")
+@allure.story("Template Owner Field")
+class TestTemplateOwnership:
+
+    def test_all_nodes_have_owner(self):
+        from src.agent.templates import TEMPLATES
+        for order_type, tmpl in TEMPLATES.items():
+            for node in tmpl["nodes"]:
+                assert "owner" in node, f"{order_type}/{node['id']} missing owner"
+
+    def test_owner_values_are_valid(self):
+        from src.agent.templates import TEMPLATES
+        valid = {"update_agent", "linkage_agent"}
+        for order_type, tmpl in TEMPLATES.items():
+            for node in tmpl["nodes"]:
+                assert node["owner"] in valid, \
+                    f"{order_type}/{node['id']} has invalid owner: {node['owner']}"
+
+    def test_order_ready_owned_by_linkage(self):
+        from src.agent.templates import TEMPLATES
+        for order_type, tmpl in TEMPLATES.items():
+            for node in tmpl["nodes"]:
+                if node["id"] == "order_ready":
+                    assert node["owner"] == "linkage_agent"
+
+    def test_task_closed_owned_by_linkage(self):
+        from src.agent.templates import TEMPLATES
+        for order_type, tmpl in TEMPLATES.items():
+            for node in tmpl["nodes"]:
+                if node["id"] == "task_closed":
+                    assert node["owner"] == "linkage_agent"
+
+    def test_message_driven_nodes_owned_by_update_agent(self):
+        from src.agent.templates import TEMPLATES
+        linkage_nodes = {"order_ready", "task_closed"}
+        for order_type, tmpl in TEMPLATES.items():
+            for node in tmpl["nodes"]:
+                if node["id"] not in linkage_nodes:
+                    assert node["owner"] == "update_agent", \
+                        f"{order_type}/{node['id']} should be update_agent"
+
+
+# ---------------------------------------------------------------------------
+# LinkageAmbiguityFlag — affected_task_ids field
+# ---------------------------------------------------------------------------
+
+@allure.feature("Linkage Agent")
+@allure.story("Linkage Ambiguity Flag")
+class TestLinkageAmbiguityFlag:
+
+    def test_default_affected_task_ids_empty(self):
+        from src.linkage.agent import LinkageAmbiguityFlag
+        flag = LinkageAmbiguityFlag(description="test", severity="high",
+                                     category="entity")
+        assert flag.affected_task_ids == []
+
+    def test_affected_task_ids_set(self):
+        from src.linkage.agent import LinkageAmbiguityFlag
+        flag = LinkageAmbiguityFlag(
+            description="test", severity="high", category="linkage",
+            blocking_node_id="order_ready",
+            affected_task_ids=["task_001", "task_002"],
+        )
+        assert flag.affected_task_ids == ["task_001", "task_002"]
+
+    def test_parses_from_json(self):
+        from src.linkage.agent import LinkageAmbiguityFlag
+        data = {
+            "description": "qty mismatch",
+            "severity": "medium",
+            "category": "quantity",
+            "blocking_node_id": None,
+            "affected_task_ids": ["task_abc"],
+        }
+        flag = LinkageAmbiguityFlag.model_validate(data)
+        assert flag.affected_task_ids == ["task_abc"]
+
+    def test_parses_without_affected_task_ids(self):
+        from src.linkage.agent import LinkageAmbiguityFlag
+        data = {
+            "description": "test",
+            "severity": "low",
+            "category": "status",
+        }
+        flag = LinkageAmbiguityFlag.model_validate(data)
+        assert flag.affected_task_ids == []

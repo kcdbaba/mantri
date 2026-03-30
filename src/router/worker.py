@@ -21,7 +21,8 @@ from src.config import (
 from src.router.router import route
 from src.agent.update_agent import run_update_agent, AmbiguityFlag
 from src.store.task_store import (
-    update_node, append_message, get_task, get_node_states,
+    update_node, update_node_as_update_agent,
+    append_message, get_task, get_node_states,
     apply_item_extractions, apply_node_data_extractions,
 )
 from src.store.db import transaction
@@ -50,6 +51,7 @@ def process_message(message: dict, r: redis.Redis):
         if output is None:
             log.error("Update agent failed for task=%s message=%s",
                       task_id, message.get("message_id"))
+            _log_dead_letter(task_id, message)
             continue
 
         # Write node updates
@@ -61,7 +63,7 @@ def process_message(message: dict, r: redis.Redis):
                 log.debug("Downgraded node %s to provisional (confidence=%.2f)",
                           update.node_id, update.confidence)
 
-            update_node(
+            update_node_as_update_agent(
                 task_id=task_id,
                 node_id=update.node_id,
                 new_status=status,
@@ -252,6 +254,33 @@ def _publish_task_event(task_id: str, message: dict, r: redis.Redis):
         )
     except redis.RedisError as e:
         log.warning("Failed to publish task_event for task=%s: %s", task_id, e)
+
+
+def _log_dead_letter(task_id: str, message: dict):
+    """Record a failed update_agent call to dead_letter_events for review."""
+    now = int(time.time())
+    with transaction() as conn:
+        conn.execute(
+            """INSERT INTO dead_letter_events
+               (id, stream_key, event_id, fields_json, failure_reason,
+                attempts, first_failed_at, last_failed_at)
+               VALUES (?,?,?,?,?,?,?,?)""",
+            (
+                str(uuid.uuid4()),
+                "update_agent",
+                message.get("message_id", ""),
+                json.dumps({"task_id": task_id, "message": message}),
+                "update_agent returned None (API failure or parse error)",
+                1,
+                now,
+                now,
+            ),
+        )
+    log.critical(
+        "DEAD LETTER: update_agent failed for task=%s message=%s. "
+        "Inspect dead_letter_events table.",
+        task_id, message.get("message_id"),
+    )
 
 
 def _log_new_task_candidate(candidate: dict, message: dict, task_id: str):

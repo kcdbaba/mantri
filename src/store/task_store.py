@@ -57,6 +57,20 @@ def update_node(task_id: str, node_id: str, new_status: str,
         )
 
 
+def update_node_as_update_agent(task_id: str, node_id: str, new_status: str,
+                                confidence: float, message_id: str | None):
+    """Wrapper — makes update_agent ownership visible at call site."""
+    update_node(task_id, node_id, new_status, confidence, message_id,
+                updated_by="update_agent")
+
+
+def update_node_as_linkage_agent(task_id: str, node_id: str, new_status: str,
+                                 confidence: float, message_id: str | None):
+    """Wrapper — makes linkage_agent ownership visible at call site."""
+    update_node(task_id, node_id, new_status, confidence, message_id,
+                updated_by="linkage_agent")
+
+
 def append_message(task_id: str, message: dict, routing_confidence: float):
     with transaction() as conn:
         conn.execute(

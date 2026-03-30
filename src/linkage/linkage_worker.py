@@ -33,11 +33,12 @@ import redis
 
 from src.config import REDIS_URL, CRON_INTERVAL_SECONDS, TASK_EVENTS_STREAM
 from src.linkage.agent import run_linkage_agent
+from src.router.worker import _handle_ambiguity
 from src.store.task_store import (
     get_open_orders_summary,
     get_fulfillment_links,
     upsert_fulfillment_link,
-    update_node,
+    update_node_as_linkage_agent,
     reconcile_order_ready,
     prune_links_for_supplier_order,
     prune_links_for_client_order,
@@ -172,13 +173,12 @@ def process_event(event_id: str, fields: dict, r: redis.Redis):
 
     # Apply client_order_updates as direct DB writes (no agent call)
     for cu in output.client_order_updates:
-        update_node(
+        update_node_as_linkage_agent(
             task_id=cu.order_id,
             node_id=cu.node_id,
             new_status=cu.new_status,
             confidence=cu.confidence,
             message_id=message.get("message_id"),
-            updated_by="linkage_worker",
         )
         log.info("Client order update: task=%s node=%s → %s (conf=%.2f)",
                  cu.order_id, cu.node_id, cu.new_status, cu.confidence)
@@ -210,12 +210,21 @@ def process_event(event_id: str, fields: dict, r: redis.Redis):
     for candidate in output.new_task_candidates:
         _log_new_task_candidate(candidate, message, fields.get("task_id", ""))
 
-    # Log ambiguity flags
+    # Escalate ambiguity flags via same path as update_agent
+    from src.agent.update_agent import AmbiguityFlag
     for flag in output.ambiguity_flags:
-        log.warning(
-            "LINKAGE AMBIGUITY [%s/%s] blocking=%s | %s",
-            flag.severity, flag.category, flag.blocking_node_id, flag.description,
+        amb = AmbiguityFlag(
+            description=flag.description,
+            severity=flag.severity,
+            category=flag.category,
+            blocking_node_id=flag.blocking_node_id,
         )
+        if flag.affected_task_ids:
+            for task_id in flag.affected_task_ids:
+                _handle_ambiguity(amb, task_id, message)
+        else:
+            # Non-blocking flag with no task attribution — use event's source task_id
+            _handle_ambiguity(amb, fields.get("task_id", ""), message)
 
     # Log event to audit table
     with transaction() as conn:
