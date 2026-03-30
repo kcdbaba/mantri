@@ -1,1 +1,0 @@
-ERROR    src.router.worker:worker.py:137 Malformed message_json in event evt-1 — dead-lettering

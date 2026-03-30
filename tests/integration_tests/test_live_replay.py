@@ -239,50 +239,87 @@ def run_live_replay(trace: list[dict], seed: dict, run_linkage: bool = True,
          patch("src.config.DB_PATH", db_path), \
          patch("src.router.router.MONITORED_GROUPS", monitored):
 
-        from src.router.worker import process_message
+        from src.router.router import route
+        from src.router.worker import process_message_batch
         from src.linkage.linkage_worker import process_event
 
+        # Build batches: group by task_id with 60s window
+        BATCH_WINDOW = 60
+        # {task_id: {"messages": [...], "last_ts": int}}
+        batch_buf: dict[str, dict] = {}
+        batches_to_flush: list[tuple[str, list[dict]]] = []
+
+        def _flush_all():
+            for tid, buf in batch_buf.items():
+                if buf["messages"]:
+                    batches_to_flush.append((tid, list(buf["messages"])))
+            batch_buf.clear()
+
         for i, msg in enumerate(messages_to_process):
-            # Progress logging every 50 messages
             if (i + 1) % 50 == 0:
                 log.info("Processing message %d/%d: %s",
                          i + 1, len(messages_to_process), msg["message_id"])
 
+            routes = route(msg)
+            if not routes:
+                stats["messages_unrouted"] += 1
+                continue
+
+            stats["messages_routed"] += 1
+            msg_ts = msg.get("timestamp", 0)
+
+            for task_id, confidence in routes:
+                # Check if existing batch for this task should flush (window expired)
+                if task_id in batch_buf:
+                    elapsed = msg_ts - batch_buf[task_id]["last_ts"]
+                    if elapsed > BATCH_WINDOW or len(batch_buf[task_id]["messages"]) >= 10:
+                        batches_to_flush.append(
+                            (task_id, list(batch_buf[task_id]["messages"]))
+                        )
+                        del batch_buf[task_id]
+
+                if task_id not in batch_buf:
+                    batch_buf[task_id] = {"messages": [], "last_ts": 0}
+
+                batch_buf[task_id]["messages"].append(msg)
+                batch_buf[task_id]["last_ts"] = msg_ts
+
+        # Flush remaining
+        _flush_all()
+
+        # Process all batches
+        for batch_idx, (task_id, batch_msgs) in enumerate(batches_to_flush):
+            if (batch_idx + 1) % 20 == 0:
+                log.info("Processing batch %d/%d: task=%s size=%d",
+                         batch_idx + 1, len(batches_to_flush), task_id, len(batch_msgs))
+
+            stats["update_agent_calls"] += 1
             try:
-                process_message(msg, mock_redis)
+                process_message_batch(task_id, batch_msgs, mock_redis)
             except Exception as e:
                 stats["errors"].append({
                     "phase": "update_agent",
-                    "message_id": msg["message_id"],
+                    "message_id": batch_msgs[-1]["message_id"],
                     "error": str(e),
                 })
-                log.error("process_message failed for %s: %s", msg["message_id"], e)
+                log.error("Batch failed for task=%s: %s", task_id, e)
                 continue
 
-            # Check if message was routed (by looking at captured stream events)
-            new_events = mock_redis.drain_events()
-            if new_events:
-                stats["messages_routed"] += 1
-                stats["update_agent_calls"] += len(new_events)
-            else:
-                stats["messages_unrouted"] += 1
-
             # Feed stream events to linkage worker
+            new_events = mock_redis.drain_events()
             if run_linkage:
                 for stream_key, fields in new_events:
                     try:
-                        process_event(f"replay-{i}", fields, mock_redis)
+                        process_event(f"replay-batch-{batch_idx}", fields, mock_redis)
                         stats["linkage_events_processed"] += 1
                     except Exception as e:
                         stats["linkage_agent_failures"] += 1
                         stats["errors"].append({
                             "phase": "linkage_agent",
-                            "message_id": msg["message_id"],
-                            "event_fields": {k: v[:100] if isinstance(v, str) else v
-                                             for k, v in fields.items()},
+                            "message_id": batch_msgs[-1]["message_id"],
                             "error": str(e),
                         })
-                        log.error("process_event failed for %s: %s", msg["message_id"], e)
+                        log.error("Linkage failed for batch %d: %s", batch_idx, e)
 
     snapshot = _snapshot_state(db_path)
 

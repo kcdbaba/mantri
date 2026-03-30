@@ -45,7 +45,12 @@ def route(message: dict) -> list[tuple[str, float]]:
         log.debug("Dropped noise message %s (%s)", message.get("message_id"), message.get("media_type"))
         return []
 
+    # Drop empty messages (no text, no image) — zero information for the pipeline
     body = message.get("body") or ""
+    has_image = bool(message.get("image_path") or message.get("image_bytes"))
+    if not body.strip() and not has_image:
+        log.debug("Dropped empty message %s", message.get("message_id"))
+        return []
     group_id = message.get("group_id", "")
 
     # --- Layer 2a: direct group → task map ---

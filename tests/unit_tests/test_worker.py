@@ -458,80 +458,83 @@ class TestLinkageAmbiguityFlag:
 
 
 # ---------------------------------------------------------------------------
-# _is_empty_message — determines if LLM call should be skipped
+# Empty message filter — dropped at router level
 # ---------------------------------------------------------------------------
 
 @allure.feature("Message Routing")
-@allure.story("Empty Message Detection")
-class TestIsEmptyMessage:
+@allure.story("Empty Message Filter")
+class TestEmptyMessageFilter:
 
-    def test_empty_body_no_image(self):
-        from src.router.worker import _is_empty_message
-        assert _is_empty_message({"body": "", "message_id": "m1"}) is True
+    def test_empty_body_no_image_returns_no_routes(self):
+        from src.router.router import route
+        assert route({"body": "", "message_id": "m1", "group_id": "sata_jobs"}) == []
 
-    def test_none_body_no_image(self):
-        from src.router.worker import _is_empty_message
-        assert _is_empty_message({"body": None, "message_id": "m1"}) is True
+    def test_whitespace_only_returns_no_routes(self):
+        from src.router.router import route
+        assert route({"body": "   ", "message_id": "m1", "group_id": "sata_jobs"}) == []
 
-    def test_whitespace_only(self):
-        from src.router.worker import _is_empty_message
-        assert _is_empty_message({"body": "   ", "message_id": "m1"}) is True
+    def test_body_with_text_routes(self):
+        from src.router.router import route
+        with patch("src.router.router.MONITORED_GROUPS", {"grp": "t1"}):
+            result = route({"body": "hello", "message_id": "m1", "group_id": "grp"})
+        assert len(result) == 1
 
-    def test_body_with_text(self):
-        from src.router.worker import _is_empty_message
-        assert _is_empty_message({"body": "hello", "message_id": "m1"}) is False
-
-    def test_empty_body_with_image_path(self):
-        from src.router.worker import _is_empty_message
-        assert _is_empty_message({"body": "", "image_path": "/tmp/photo.jpg"}) is False
-
-    def test_empty_body_with_image_bytes(self):
-        from src.router.worker import _is_empty_message
-        assert _is_empty_message({"body": "", "image_bytes": b"data"}) is False
+    def test_empty_body_with_image_routes(self):
+        from src.router.router import route
+        with patch("src.router.router.MONITORED_GROUPS", {"grp": "t1"}):
+            result = route({"body": "", "image_path": "/tmp/x.jpg",
+                           "message_id": "m1", "group_id": "grp"})
+        assert len(result) == 1
 
 
 # ---------------------------------------------------------------------------
-# _select_model — model tiering logic
+# _select_model — batch-level model tiering
 # ---------------------------------------------------------------------------
 
 @allure.feature("Cost Optimisation")
 @allure.story("Model Tiering")
 class TestSelectModel:
 
-    def test_short_simple_message_uses_haiku(self):
+    def test_all_simple_uses_haiku(self):
         from src.agent.update_agent import _select_model
-        assert _select_model({"body": "ok"}) == "claude-haiku-4-5-20251001"
+        msgs = [{"body": "ok"}, {"body": "thanks sir"}]
+        assert _select_model(msgs) == "claude-haiku-4-5-20251001"
 
-    def test_long_message_uses_sonnet(self):
+    def test_any_complex_uses_sonnet(self):
         from src.agent.update_agent import _select_model
-        msg = {"body": "Sir kindly reshare the rate for 1.5 ton Split Ac and others"}
-        assert _select_model(msg) == "claude-sonnet-4-6"
+        msgs = [{"body": "ok"}, {"body": "50 bags atta 28500/-"}]
+        assert _select_model(msgs) == "claude-sonnet-4-6"
 
-    def test_message_with_numbers_uses_sonnet(self):
+    def test_single_complex_message(self):
         from src.agent.update_agent import _select_model
-        assert _select_model({"body": "50 bags atta"}) == "claude-sonnet-4-6"
+        assert _select_model([{"body": "Sir kindly reshare the rate for 1.5 ton Split Ac and others"}]) == "claude-sonnet-4-6"
 
-    def test_message_with_image_uses_sonnet(self):
+    def test_image_in_batch_uses_sonnet(self):
         from src.agent.update_agent import _select_model
-        assert _select_model({"body": "hi", "image_path": "/tmp/x.jpg"}) == "claude-sonnet-4-6"
+        msgs = [{"body": "ok"}, {"body": "hi", "image_path": "/tmp/x.jpg"}]
+        assert _select_model(msgs) == "claude-sonnet-4-6"
 
-    def test_message_with_order_keyword_uses_sonnet(self):
+    def test_numbers_trigger_sonnet(self):
         from src.agent.update_agent import _select_model
-        assert _select_model({"body": "order confirm ho gaya"}) == "claude-sonnet-4-6"
+        assert _select_model([{"body": "50 bags atta"}]) == "claude-sonnet-4-6"
 
-    def test_message_with_hindi_quantity_uses_sonnet(self):
+    def test_order_keyword_triggers_sonnet(self):
         from src.agent.update_agent import _select_model
-        assert _select_model({"body": "do battery chahiye"}) == "claude-sonnet-4-6"
+        assert _select_model([{"body": "order confirm ho gaya"}]) == "claude-sonnet-4-6"
 
-    def test_acknowledgement_uses_haiku(self):
+    def test_hindi_quantity_triggers_sonnet(self):
+        from src.agent.update_agent import _select_model
+        assert _select_model([{"body": "do battery chahiye"}]) == "claude-sonnet-4-6"
+
+    def test_pure_acknowledgements_use_haiku(self):
         from src.agent.update_agent import _select_model
         for body in ["thanks sir", "Increased", "..", "Sir kindly share", "Welcome"]:
-            assert _select_model({"body": body}) == "claude-haiku-4-5-20251001", \
+            assert _select_model([{"body": body}]) == "claude-haiku-4-5-20251001", \
                 f"'{body}' should use Haiku"
 
-    def test_payment_keyword_uses_sonnet(self):
+    def test_payment_keyword_triggers_sonnet(self):
         from src.agent.update_agent import _select_model
-        assert _select_model({"body": "payment done"}) == "claude-sonnet-4-6"
+        assert _select_model([{"body": "payment done"}]) == "claude-sonnet-4-6"
 
 
 # ---------------------------------------------------------------------------

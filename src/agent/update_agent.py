@@ -73,29 +73,31 @@ _QUANTITY_WORDS = re.compile(
 _SIMPLE_MESSAGE_MAX_LEN = 40
 
 
-def _select_model(message: dict) -> str:
-    """Choose Sonnet for complex messages, Haiku for trivial ones.
-
-    Trivial: short body (≤40 chars), no numbers, no quantity/business keywords,
-    no image. Everything else gets Sonnet to avoid missing state changes.
-    """
+def _is_complex_message(message: dict) -> bool:
+    """Return True if a message needs Sonnet-level reasoning."""
     body = (message.get("body") or "").strip()
     has_image = bool(message.get("image_path") or message.get("image_bytes"))
-
     if has_image:
-        return CLAUDE_MODEL  # vision messages need full reasoning
+        return True
     if len(body) > _SIMPLE_MESSAGE_MAX_LEN:
-        return CLAUDE_MODEL  # longer messages may contain items/quantities
+        return True
     if _HAS_NUMBERS.search(body):
-        return CLAUDE_MODEL  # numbers often mean quantities, prices, dates
+        return True
     if _QUANTITY_WORDS.search(body):
-        return CLAUDE_MODEL  # business-relevant keywords need full reasoning
+        return True
+    return False
+
+
+def _select_model(messages: list[dict]) -> str:
+    """Choose Sonnet if any message in the batch is complex, Haiku if all trivial."""
+    if any(_is_complex_message(m) for m in messages):
+        return CLAUDE_MODEL
     return CLAUDE_MODEL_FAST
 
 
 def run_update_agent(
     task_id: str,
-    message: dict,
+    messages: list[dict],
     node_states_override: list[dict] | None = None,
     recent_messages_override: list[dict] | None = None,
     items_override: list[dict] | None = None,
@@ -103,8 +105,8 @@ def run_update_agent(
     routing_confidence: float = 1.0,
 ) -> AgentOutput | None:
     """
-    Run the update agent for a single (task_id, message) pair.
-    Returns AgentOutput on success, None on unrecoverable failure.
+    Run the update agent for a batch of messages for a single task_id.
+    One LLM call per batch. Returns AgentOutput on success, None on failure.
 
     *_override params: used by the eval framework to inject test state
     instead of reading from the DB.
@@ -114,17 +116,23 @@ def run_update_agent(
     current_items = items_override if items_override is not None else get_order_items(task_id)
 
     system_prompt = build_system_prompt(task_id, task=task_override)
-    user_section = build_user_section(node_states, recent_messages, message, current_items,
+    user_section = build_user_section(node_states, recent_messages, messages, current_items,
                                        routing_confidence=routing_confidence)
 
-    # Load image if message carries one (vision path)
-    image_bytes, image_media_type = _load_image(message)
+    # Load image from the last message that has one (vision path)
+    image_bytes, image_media_type = None, ""
+    for msg in messages:
+        ib, imt = _load_image(msg)
+        if ib:
+            image_bytes, image_media_type = ib, imt
 
-    model = _select_model(message)
+    model = _select_model(messages)
+
+    last_message_id = messages[-1].get("message_id")
 
     t0 = time.time()
     response = _call_with_retry(
-        system_prompt, user_section, message.get("message_id"), task_id,
+        system_prompt, user_section, last_message_id, task_id,
         image_bytes=image_bytes, image_media_type=image_media_type,
         model=model,
     )
@@ -139,7 +147,7 @@ def run_update_agent(
         tokens_in=response.usage.input_tokens,
         tokens_out=response.usage.output_tokens,
         duration_ms=duration_ms,
-        message_id=message.get("message_id"),
+        message_id=last_message_id,
         task_id=task_id,
         cache_creation_tokens=getattr(response.usage, "cache_creation_input_tokens", 0) or 0,
         cache_read_tokens=getattr(response.usage, "cache_read_input_tokens", 0) or 0,
@@ -156,8 +164,8 @@ def run_update_agent(
         return parsed
     except (json.JSONDecodeError, ValidationError) as e:
         log.error("Agent output validation failed for task=%s message=%s: %s",
-                  task_id, message.get("message_id"), e)
-        _log_error(raw, task_id, message.get("message_id"))
+                  task_id, last_message_id, e)
+        _log_error(raw, task_id, last_message_id)
         return None
 
 

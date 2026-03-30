@@ -30,14 +30,9 @@ from src.store.db import transaction
 log = logging.getLogger(__name__)
 
 
-def _is_empty_message(message: dict) -> bool:
-    """Return True if message has no text and no image — LLM call would be wasted."""
-    body = (message.get("body") or "").strip()
-    has_image = bool(message.get("image_path") or message.get("image_bytes"))
-    return not body and not has_image
-
-
 def process_message(message: dict, r: redis.Redis):
+    """Process a single message — route, store, run update agent, publish event.
+    For batched processing, use process_message_batch instead."""
     routes = route(message)
 
     if not routes:
@@ -45,22 +40,13 @@ def process_message(message: dict, r: redis.Redis):
         return
 
     for task_id, confidence in routes:
-        # Fetch task once — used for order_type and agent context
         task = get_task(task_id)
         order_type = task["order_type"] if task else "standard_procurement"
 
-        # Store message against this task (even empty — preserves conversation continuity)
         append_message(task_id, message, routing_confidence=confidence)
 
-        # Skip LLM call for empty messages (no text, no image)
-        if _is_empty_message(message):
-            log.debug("Skipping update agent for empty message=%s task=%s",
-                      message.get("message_id"), task_id)
-            _publish_task_event(task_id, message, r)
-            continue
-
         # Run update agent
-        output = run_update_agent(task_id, message, task_override=task,
+        output = run_update_agent(task_id, [message], task_override=task,
                                    routing_confidence=confidence)
         if output is None:
             log.error("Update agent failed for task=%s message=%s",
@@ -112,9 +98,64 @@ def process_message(message: dict, r: redis.Redis):
         _publish_task_event(task_id, message, r)
 
 
+def process_message_batch(task_id: str, messages: list[dict], r: redis.Redis):
+    """Process a batch of messages for a single task_id — one LLM call for the batch."""
+    task = get_task(task_id)
+    order_type = task["order_type"] if task else "standard_procurement"
+
+    # Store all messages
+    for msg in messages:
+        routes = route(msg)
+        confidence = next((c for tid, c in routes if tid == task_id), 0.9)
+        append_message(task_id, msg, routing_confidence=confidence)
+
+    # Single LLM call for the batch
+    output = run_update_agent(task_id, messages, task_override=task,
+                               routing_confidence=0.9)
+    last_msg = messages[-1]
+
+    if output is None:
+        log.error("Update agent failed for task=%s batch of %d messages",
+                  task_id, len(messages))
+        _log_dead_letter(task_id, last_msg)
+        _publish_task_event(task_id, last_msg, r)
+        return
+
+    for update in output.node_updates:
+        status = update.new_status
+        if update.confidence < PROVISIONAL_THRESHOLD and status not in ("pending", "provisional"):
+            status = "provisional"
+        update_node_as_update_agent(
+            task_id=task_id, node_id=update.node_id,
+            new_status=status, confidence=update.confidence,
+            message_id=last_msg.get("message_id"),
+        )
+        log.info("Node update: task=%s node=%s → %s (conf=%.2f) | %s",
+                 task_id, update.node_id, status, update.confidence, update.evidence)
+
+    for candidate in output.new_task_candidates:
+        _log_new_task_candidate(candidate, last_msg, task_id)
+
+    for flag in output.ambiguity_flags:
+        _handle_ambiguity(flag, task_id, last_msg)
+
+    if output.node_data_extractions:
+        apply_node_data_extractions(task_id, output.node_data_extractions)
+
+    if output.item_extractions:
+        apply_item_extractions(task_id, order_type, output.item_extractions)
+        _check_post_confirmation_item_changes(
+            task_id, order_type, output.item_extractions, last_msg
+        )
+
+    _publish_task_event(task_id, last_msg, r)
+
+
 CONSUMER_GROUP = "router_worker_group"
 CONSUMER_NAME = "router_worker_1"
 MAX_RETRY_ATTEMPTS = 3
+BATCH_WINDOW_S = 60
+BATCH_MAX_SIZE = 10
 
 
 def _ensure_consumer_group(r: redis.Redis):
@@ -184,24 +225,81 @@ def _write_ingest_dead_letter(event_id: str, fields: dict, failure_reason: str):
         )
 
 
+def _flush_batch(task_id: str, batch: list[dict], event_ids: list[str], r: redis.Redis):
+    """Flush a batch of messages for a single task_id — one LLM call."""
+    try:
+        process_message_batch(task_id, batch, r)
+    except Exception as e:
+        log.error("Batch processing failed for task=%s batch_size=%d: %s",
+                  task_id, len(batch), e)
+    # ACK all events in the batch regardless (messages are stored in DB already)
+    for eid in event_ids:
+        r.xack(INGEST_STREAM, CONSUMER_GROUP, eid)
+
+
 def run():
-    log.info("Router worker started — consuming stream %s", INGEST_STREAM)
+    log.info("Router worker started — consuming stream %s (batch_window=%ds)",
+             INGEST_STREAM, BATCH_WINDOW_S)
     r = redis.from_url(REDIS_URL, decode_responses=True)
     _ensure_consumer_group(r)
 
+    # Batch buffer: {task_id: {"messages": [...], "event_ids": [...], "last_at": timestamp}}
+    batch_buffer: dict[str, dict] = {}
+
     while True:
         try:
+            # Short block time to check batch timeouts frequently
             results = r.xreadgroup(
                 CONSUMER_GROUP, CONSUMER_NAME,
                 {INGEST_STREAM: ">"},
                 count=10,
-                block=5000,
+                block=2000,
             )
-            if not results:
-                continue
-            for stream_name, entries in results:
-                for event_id, fields in entries:
-                    _process_with_retry(event_id, fields, r)
+
+            # Route incoming messages into batch buffer
+            if results:
+                for stream_name, entries in results:
+                    for event_id, fields in entries:
+                        raw = fields.get("message_json")
+                        if not raw:
+                            r.xack(INGEST_STREAM, CONSUMER_GROUP, event_id)
+                            continue
+                        try:
+                            message = json.loads(raw)
+                        except json.JSONDecodeError:
+                            _write_ingest_dead_letter(event_id, fields, "malformed JSON")
+                            r.xack(INGEST_STREAM, CONSUMER_GROUP, event_id)
+                            continue
+
+                        routes = route(message)
+                        if not routes:
+                            _log_unrouted(message)
+                            r.xack(INGEST_STREAM, CONSUMER_GROUP, event_id)
+                            continue
+
+                        # Add to batch buffer for each routed task
+                        for task_id, confidence in routes:
+                            if task_id not in batch_buffer:
+                                batch_buffer[task_id] = {
+                                    "messages": [], "event_ids": [], "last_at": 0,
+                                }
+                            buf = batch_buffer[task_id]
+                            buf["messages"].append(message)
+                            buf["event_ids"].append(event_id)
+                            buf["last_at"] = time.time()
+
+            # Flush batches that have timed out or hit max size
+            now = time.time()
+            flushed = []
+            for task_id, buf in batch_buffer.items():
+                elapsed = now - buf["last_at"]
+                if elapsed >= BATCH_WINDOW_S or len(buf["messages"]) >= BATCH_MAX_SIZE:
+                    _flush_batch(task_id, buf["messages"], buf["event_ids"], r)
+                    flushed.append(task_id)
+
+            for task_id in flushed:
+                del batch_buffer[task_id]
+
         except redis.RedisError as e:
             log.error("Router worker Redis error: %s — retrying in 5s", e)
             time.sleep(5)

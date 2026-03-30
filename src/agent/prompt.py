@@ -218,14 +218,25 @@ based on incoming WhatsApp messages.
 
 
 def build_user_section(node_states: list[dict], recent_messages: list[dict],
-                       new_message: dict, current_items: list[dict] | None = None,
+                       new_messages, current_items: list[dict] | None = None,
                        routing_confidence: float = 1.0) -> str:
-    """Build the variable user section for a single update call."""
-    nodes_summary = [
-        {"node_id": n["id"][len(n["task_id"]) + 1:] if n.get("task_id") else n["id"],
-         "name": n["name"], "status": n["status"], "confidence": n.get("confidence")}
-        for n in node_states
-    ]
+    """Build the variable user section for a single update call.
+    new_messages: a single message dict or a list of message dicts (batch)."""
+    # Normalise to list
+    if isinstance(new_messages, dict):
+        new_messages = [new_messages]
+    # Omit skipped nodes — model doesn't act on them. Omit null confidence to save tokens.
+    nodes_summary = []
+    for n in node_states:
+        if n["status"] == "skipped":
+            continue
+        entry = {
+            "node_id": n["id"][len(n["task_id"]) + 1:] if n.get("task_id") else n["id"],
+            "status": n["status"],
+        }
+        if n.get("confidence") is not None:
+            entry["confidence"] = n["confidence"]
+        nodes_summary.append(entry)
 
     messages_summary = [
         f"[{m['timestamp']}] {m.get('sender_jid', 'unknown')} "
@@ -233,14 +244,17 @@ def build_user_section(node_states: list[dict], recent_messages: list[dict],
         for m in recent_messages
     ]
 
-    has_image = bool(new_message.get("image_path") or new_message.get("image_bytes"))
-    image_note = " [IMAGE ATTACHED — extract data from image above]" if has_image else ""
-    new_msg_line = (
-        f"[{new_message.get('timestamp', '?')}] "
-        f"{new_message.get('sender_jid', 'unknown')} "
-        f"(group: {new_message.get('group_id', '?')}): "
-        f"{new_message.get('body', '') or '(no text)'}{image_note}"
-    )
+    new_msg_lines = []
+    for msg in new_messages:
+        has_image = bool(msg.get("image_path") or msg.get("image_bytes"))
+        image_note = " [IMAGE ATTACHED — extract data from image above]" if has_image else ""
+        new_msg_lines.append(
+            f"[{msg.get('timestamp', '?')}] "
+            f"{msg.get('sender_jid', 'unknown')} "
+            f"(group: {msg.get('group_id', '?')}): "
+            f"{msg.get('body', '') or '(no text)'}{image_note}"
+        )
+    new_msg_block = chr(10).join(new_msg_lines)
 
     items_block = ""
     if current_items:
@@ -249,25 +263,21 @@ def build_user_section(node_states: list[dict], recent_messages: list[dict],
              "quantity": it.get("quantity"), "specs": it.get("specs")}
             for it in current_items
         ]
-        items_block = f"\n## Current order items\n\n{json.dumps(compact, indent=2, ensure_ascii=False)}\n"
+        items_block = f"\n## Current order items\n\n{json.dumps(compact, ensure_ascii=False)}\n"
 
     return f"""## Current node states
 
-{json.dumps(nodes_summary, indent=2, ensure_ascii=False)}
+{json.dumps(nodes_summary, ensure_ascii=False)}
 {items_block}
 ## Recent messages (last {len(recent_messages)})
 
 {chr(10).join(messages_summary) if messages_summary else "(none)"}
 
-## New message
+## New message{"s (" + str(len(new_messages)) + ")" if len(new_messages) > 1 else ""}
 
-{new_msg_line}
+{new_msg_block}
 
-## Routing signal
+## Routing confidence: {routing_confidence:.2f}
+{"(Low — be conservative, prefer provisional, flag ambiguity if inconsistent with this task.)" if routing_confidence < 0.85 else ""}
 
-routing_confidence: {routing_confidence:.2f} — how confident the router is that this message belongs to this task.
-If routing_confidence < 0.85, the message may partially or fully concern a different task.
-Be conservative: prefer "provisional" status and raise an ambiguity_flag (category="linkage") if the message content seems inconsistent with this task.
-
-Update the task nodes based on the above. Remember to activate auto_trigger nodes
-when their predecessor conditions are met, even if no message explicitly mentions them."""
+Update the task nodes based on the above."""
