@@ -1,0 +1,2 @@
+ERROR    src.router.worker:worker.py:66 Update agent failed for task=t1 message=m4
+CRITICAL src.router.worker:worker.py:372 DEAD LETTER: update_agent failed for task=t1 message=m4. Inspect dead_letter_events table.

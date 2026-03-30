@@ -1,0 +1,1 @@
+CRITICAL src.router.worker:worker.py:372 DEAD LETTER: update_agent failed for task=task_001 message=m1. Inspect dead_letter_events table.
