@@ -30,6 +30,13 @@ from src.store.db import transaction
 log = logging.getLogger(__name__)
 
 
+def _is_empty_message(message: dict) -> bool:
+    """Return True if message has no text and no image — LLM call would be wasted."""
+    body = (message.get("body") or "").strip()
+    has_image = bool(message.get("image_path") or message.get("image_bytes"))
+    return not body and not has_image
+
+
 def process_message(message: dict, r: redis.Redis):
     routes = route(message)
 
@@ -42,8 +49,15 @@ def process_message(message: dict, r: redis.Redis):
         task = get_task(task_id)
         order_type = task["order_type"] if task else "standard_procurement"
 
-        # Store message against this task
+        # Store message against this task (even empty — preserves conversation continuity)
         append_message(task_id, message, routing_confidence=confidence)
+
+        # Skip LLM call for empty messages (no text, no image)
+        if _is_empty_message(message):
+            log.debug("Skipping update agent for empty message=%s task=%s",
+                      message.get("message_id"), task_id)
+            _publish_task_event(task_id, message, r)
+            continue
 
         # Run update agent
         output = run_update_agent(task_id, message, task_override=task,

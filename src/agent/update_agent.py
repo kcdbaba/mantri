@@ -15,7 +15,9 @@ from typing import Literal
 import anthropic
 from pydantic import BaseModel, ValidationError
 
-from src.config import CLAUDE_MODEL, AGENT_MAX_TOKENS, MAX_CONTEXT_MESSAGES, AGENT_ERROR_LOG_PATH
+import re
+
+from src.config import CLAUDE_MODEL, CLAUDE_MODEL_FAST, AGENT_MAX_TOKENS, MAX_CONTEXT_MESSAGES, AGENT_ERROR_LOG_PATH
 from src.store.task_store import get_node_states, get_recent_messages, get_order_items
 from src.store.usage_log import log_llm_call
 from src.agent.prompt import build_system_prompt, build_user_section
@@ -61,6 +63,36 @@ class AgentOutput(BaseModel):
     node_data_extractions: list[NodeDataExtraction] = []
 
 
+_HAS_NUMBERS = re.compile(r'\d')
+_QUANTITY_WORDS = re.compile(
+    r'\b(one|two|three|four|five|six|seven|eight|nine|ten|'
+    r'ek|do|teen|char|panch|che|saat|aath|nau|das|'
+    r'order|cancel|confirm|deliver|dispatch|payment|paid|rate|price|'
+    r'kitna|kitne|kितna)\b', re.IGNORECASE
+)
+_SIMPLE_MESSAGE_MAX_LEN = 40
+
+
+def _select_model(message: dict) -> str:
+    """Choose Sonnet for complex messages, Haiku for trivial ones.
+
+    Trivial: short body (≤40 chars), no numbers, no quantity/business keywords,
+    no image. Everything else gets Sonnet to avoid missing state changes.
+    """
+    body = (message.get("body") or "").strip()
+    has_image = bool(message.get("image_path") or message.get("image_bytes"))
+
+    if has_image:
+        return CLAUDE_MODEL  # vision messages need full reasoning
+    if len(body) > _SIMPLE_MESSAGE_MAX_LEN:
+        return CLAUDE_MODEL  # longer messages may contain items/quantities
+    if _HAS_NUMBERS.search(body):
+        return CLAUDE_MODEL  # numbers often mean quantities, prices, dates
+    if _QUANTITY_WORDS.search(body):
+        return CLAUDE_MODEL  # business-relevant keywords need full reasoning
+    return CLAUDE_MODEL_FAST
+
+
 def run_update_agent(
     task_id: str,
     message: dict,
@@ -88,10 +120,13 @@ def run_update_agent(
     # Load image if message carries one (vision path)
     image_bytes, image_media_type = _load_image(message)
 
+    model = _select_model(message)
+
     t0 = time.time()
     response = _call_with_retry(
         system_prompt, user_section, message.get("message_id"), task_id,
         image_bytes=image_bytes, image_media_type=image_media_type,
+        model=model,
     )
     duration_ms = int((time.time() - t0) * 1000)
 
@@ -100,7 +135,7 @@ def run_update_agent(
 
     log_llm_call(
         call_type="update_agent",
-        model=CLAUDE_MODEL,
+        model=model,
         tokens_in=response.usage.input_tokens,
         tokens_out=response.usage.output_tokens,
         duration_ms=duration_ms,
@@ -172,6 +207,7 @@ def _call_with_retry(system_prompt: str, user_section: str,
                      message_id: str | None, task_id: str,
                      image_bytes: bytes | None = None,
                      image_media_type: str = "",
+                     model: str = CLAUDE_MODEL,
                      max_retries: int = 3) -> anthropic.types.Message | None:
     content = _build_user_content(user_section, image_bytes, image_media_type)
     system_with_cache = [
@@ -181,7 +217,7 @@ def _call_with_retry(system_prompt: str, user_section: str,
     for attempt in range(max_retries):
         try:
             return client.messages.create(
-                model=CLAUDE_MODEL,
+                model=model,
                 max_tokens=AGENT_MAX_TOKENS,
                 system=system_with_cache,
                 messages=[{"role": "user", "content": content}],

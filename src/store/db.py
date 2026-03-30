@@ -231,10 +231,12 @@ CREATE TABLE IF NOT EXISTS usage_log (
 """
 
 PRICING = {
-    "claude-sonnet-4-6":   {"input": 3.00, "output": 15.00,
-                             "cache_write": 3.75, "cache_read": 0.30},  # per 1M tokens
-    "gemini-1.5-flash-8b": {"input": 0.0375, "output": 0.15},
-}
+    "claude-sonnet-4-6":          {"input": 3.00, "output": 15.00,
+                                    "cache_write": 3.75, "cache_read": 0.30},
+    "claude-haiku-4-5-20251001":  {"input": 0.80, "output": 4.00,
+                                    "cache_write": 1.00, "cache_read": 0.08},
+    "gemini-1.5-flash-8b":        {"input": 0.0375, "output": 0.15},
+}  # per 1M tokens
 
 
 def compute_cost(model: str, tokens_in: int, tokens_out: int,

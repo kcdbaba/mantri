@@ -138,8 +138,10 @@ def process_event(event_id: str, fields: dict, r: redis.Redis):
         return
 
     open_orders = get_open_orders_summary()
-    # Skip if no M:N work to do (no client_order or supplier_order tasks open)
-    if not open_orders["client_orders"] and not open_orders["supplier_orders"]:
+    # Skip if no M:N work to do — linkage requires at least one client order
+    # to create links against. Supplier-only state produces only "no client orders"
+    # ambiguity flags which are a constant observation, not per-message.
+    if not open_orders["client_orders"]:
         r.xack(TASK_EVENTS_STREAM, CONSUMER_GROUP, event_id)
         return
 
