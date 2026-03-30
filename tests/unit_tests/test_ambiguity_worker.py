@@ -51,8 +51,8 @@ def _make_entry(status="pending", severity="high", blocking=1,
 @allure.story("First Escalation")
 class TestFirstEscalation:
 
-    def test_pending_entry_sends_escalation(self):
-        entry = _make_entry(status="pending")
+    def test_pending_high_escalates_immediately(self):
+        entry = _make_entry(status="pending", severity="high")
         with patch("src.alerts.ambiguity_worker._send_escalation") as mock_send, \
              patch("src.alerts.ambiguity_worker.transaction") as mock_tx:
             mock_tx.return_value.__enter__ = MagicMock(return_value=MagicMock())
@@ -62,15 +62,35 @@ class TestFirstEscalation:
         args = mock_send.call_args
         assert args[1]["is_re_escalation"] is False
 
-    def test_pending_entry_not_re_escalation(self):
-        entry = _make_entry(status="pending")
+    def test_pending_medium_held_within_digest_window(self):
+        """Medium flags within digest window (15 min) should NOT escalate yet."""
+        now = int(time.time())
+        entry = _make_entry(status="pending", severity="medium", created_at=now - 60)
+        with patch("src.alerts.ambiguity_worker._send_escalation") as mock_send, \
+             patch("src.alerts.ambiguity_worker.transaction"):
+            _process_entry(entry, _make_profile(), now)
+        mock_send.assert_not_called()
+
+    def test_pending_medium_escalates_after_digest_window(self):
+        """Medium flags past digest window (15 min) should escalate."""
+        now = int(time.time())
+        entry = _make_entry(status="pending", severity="medium", created_at=now - 1000)
+        with patch("src.alerts.ambiguity_worker._send_escalation") as mock_send, \
+             patch("src.alerts.ambiguity_worker.transaction") as mock_tx:
+            mock_tx.return_value.__enter__ = MagicMock(return_value=MagicMock())
+            mock_tx.return_value.__exit__ = MagicMock(return_value=False)
+            _process_entry(entry, _make_profile(), now)
+        mock_send.assert_called_once()
+
+    def test_pending_low_blocking_escalates_immediately(self):
+        """Low blocking flags still escalate immediately."""
+        entry = _make_entry(status="pending", severity="low", blocking=1)
         with patch("src.alerts.ambiguity_worker._send_escalation") as mock_send, \
              patch("src.alerts.ambiguity_worker.transaction") as mock_tx:
             mock_tx.return_value.__enter__ = MagicMock(return_value=MagicMock())
             mock_tx.return_value.__exit__ = MagicMock(return_value=False)
             _process_entry(entry, _make_profile(), int(time.time()))
-        _, kwargs = mock_send.call_args
-        assert kwargs["is_re_escalation"] is False
+        mock_send.assert_called_once()
 
 
 # ---------------------------------------------------------------------------
@@ -103,9 +123,10 @@ class TestReEscalation:
             _process_entry(entry, _make_profile(), now)
         mock_send.assert_not_called()
 
-    def test_medium_severity_re_escalates_after_timeout(self):
+    def test_medium_severity_re_escalates_after_double_timeout(self):
+        """Medium re-escalates at 2x timeout_high (3600s for default 1800s)."""
         now = int(time.time())
-        escalated_at = now - 1900
+        escalated_at = now - 3700  # past 2 * 1800 = 3600s
         entry = _make_entry(status="escalated", severity="medium", escalated_at=escalated_at)
         with patch("src.alerts.ambiguity_worker._send_escalation") as mock_send, \
              patch("src.alerts.ambiguity_worker.transaction") as mock_tx:
@@ -113,6 +134,16 @@ class TestReEscalation:
             mock_tx.return_value.__exit__ = MagicMock(return_value=False)
             _process_entry(entry, _make_profile(), now)
         mock_send.assert_called_once()
+
+    def test_medium_severity_no_re_escalation_before_double_timeout(self):
+        """Medium should NOT re-escalate before 2x timeout."""
+        now = int(time.time())
+        escalated_at = now - 1900  # 31 min, under 2 * 30 min = 60 min
+        entry = _make_entry(status="escalated", severity="medium", escalated_at=escalated_at)
+        with patch("src.alerts.ambiguity_worker._send_escalation") as mock_send, \
+             patch("src.alerts.ambiguity_worker.transaction"):
+            _process_entry(entry, _make_profile(), now)
+        mock_send.assert_not_called()
 
 
 # ---------------------------------------------------------------------------

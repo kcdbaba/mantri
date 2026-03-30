@@ -25,7 +25,7 @@ from src.store.task_store import (
     append_message, get_task, get_node_states,
     apply_item_extractions, apply_node_data_extractions,
 )
-from src.store.db import transaction
+from src.store.db import get_connection, transaction
 
 log = logging.getLogger(__name__)
 
@@ -315,9 +315,48 @@ def _log_unrouted(message: dict):
     log.debug("Unrouted: %s", message.get("message_id"))
 
 
+DEDUP_WINDOW_S = 3600  # 1 hour — same (task, category, node) within this window is a duplicate
+
+
+def _is_duplicate_flag(task_id: str, category: str, node_id: str | None, now: int) -> bool:
+    """Check if the same (task_id, category, node_id) was already raised within DEDUP_WINDOW_S."""
+    conn = get_connection()
+    cutoff = now - DEDUP_WINDOW_S
+    row = conn.execute(
+        """SELECT id FROM ambiguity_queue
+           WHERE task_id=? AND category=? AND node_id IS ?
+             AND created_at >= ? AND status IN ('pending', 'escalated')
+           LIMIT 1""",
+        (task_id, category, node_id, cutoff),
+    ).fetchone()
+    conn.close()
+    return row is not None
+
+
+def _check_rate_limit(task_id: str, profile: dict, now: int) -> bool:
+    """Return True if the task has hit the per-task per-hour escalation rate limit."""
+    limit = profile.get("escalation_rate_limit")
+    if limit is None:
+        return False
+    conn = get_connection()
+    cutoff = now - 3600
+    count = conn.execute(
+        "SELECT COUNT(*) FROM ambiguity_queue WHERE task_id=? AND created_at >= ?",
+        (task_id, cutoff),
+    ).fetchone()[0]
+    conn.close()
+    return count >= limit
+
+
 def _handle_ambiguity(flag: AmbiguityFlag, task_id: str, message: dict):
-    """Enqueue ambiguity, block gate node if warranted, log alert."""
+    """Enqueue ambiguity, block gate node if warranted, log alert.
+
+    Deduplication: same (task_id, category, node_id) within 1 hour is skipped.
+    Rate limiting: respects profile escalation_rate_limit per task per hour.
+    Low non-blocking flags: auto-resolved immediately (never enqueued as pending).
+    """
     profile = ESCALATION_PROFILES[ACTIVE_ESCALATION_PROFILE]
+    now = int(time.time())
 
     # Per-category threshold override
     cat_override = ESCALATION_CATEGORY_OVERRIDES.get(flag.category, {})
@@ -337,10 +376,51 @@ def _handle_ambiguity(flag: AmbiguityFlag, task_id: str, message: dict):
         and not profile["silent_resolution_allowed"]
     )
 
-    now = int(time.time())
+    # --- Dedup: skip if same (task, category, node) raised within window ---
+    if _is_duplicate_flag(task_id, flag.category, flag.blocking_node_id, now):
+        log.debug("DEDUP skip [%s/%s] task=%s node=%s | %s",
+                  flag.severity, flag.category, task_id,
+                  flag.blocking_node_id, flag.description)
+        return
 
-    # Write to ambiguity_queue — no deduplication at DB level; a single message
-    # may legitimately raise multiple distinct flags (e.g. entity + quantity).
+    # --- Rate limit: skip non-blocking flags if task hit hourly limit ---
+    if not should_block and _check_rate_limit(task_id, profile, now):
+        log.debug("RATE-LIMITED [%s/%s] task=%s | %s",
+                  flag.severity, flag.category, task_id, flag.description)
+        return
+
+    # --- Low non-blocking: auto-resolve immediately, don't escalate ---
+    if flag.severity == "low" and not should_block:
+        with transaction() as conn:
+            conn.execute(
+                """INSERT INTO ambiguity_queue
+                   (id, message_id, task_id, node_id, group_id, body, description,
+                    severity, category, escalation_target, blocking, status,
+                    created_at, resolved_at, resolution_note)
+                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                (
+                    str(uuid.uuid4()),
+                    message.get("message_id"),
+                    task_id,
+                    flag.blocking_node_id,
+                    message.get("group_id"),
+                    message.get("body", "")[:500],
+                    flag.description,
+                    flag.severity,
+                    flag.category,
+                    json.dumps(target),
+                    0,
+                    "expired",
+                    now,
+                    now,
+                    "auto-resolved: low non-blocking",
+                ),
+            )
+        log.debug("AUTO-RESOLVED low non-blocking [%s] task=%s | %s",
+                  flag.category, task_id, flag.description)
+        return
+
+    # --- Enqueue as pending ---
     with transaction() as conn:
         conn.execute(
             """INSERT INTO ambiguity_queue
@@ -447,8 +527,9 @@ def _publish_task_event(task_id: str, message: dict, r: redis.Redis):
         log.warning("Failed to publish task_event for task=%s: %s", task_id, e)
 
 
-def _log_dead_letter(task_id: str, message: dict):
+def _log_dead_letter(task_id: str, message: dict, failure_reason: str = ""):
     """Record a failed update_agent call to dead_letter_events for review."""
+    reason = failure_reason or "update_agent returned None (API failure or parse error after retry)"
     now = int(time.time())
     with transaction() as conn:
         conn.execute(
@@ -461,16 +542,15 @@ def _log_dead_letter(task_id: str, message: dict):
                 "update_agent",
                 message.get("message_id", ""),
                 json.dumps({"task_id": task_id, "message": message}),
-                "update_agent returned None (API failure or parse error)",
+                reason,
                 1,
                 now,
                 now,
             ),
         )
     log.critical(
-        "DEAD LETTER: update_agent failed for task=%s message=%s. "
-        "Inspect dead_letter_events table.",
-        task_id, message.get("message_id"),
+        "DEAD LETTER: update_agent failed for task=%s message=%s reason=%s",
+        task_id, message.get("message_id"), reason,
     )
 
 

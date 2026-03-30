@@ -1,0 +1,245 @@
+{
+  "timestamp": "20260331T033901",
+  "n_samples": 20,
+  "models": [
+    "gemini-pro"
+  ],
+  "summary": {
+    "gemini-pro": {
+      "parse_rate": "0/20",
+      "parse_pct": 0.0,
+      "avg_latency_s": 0.47,
+      "avg_tokens_in": 0,
+      "avg_tokens_out": 0,
+      "total_cost": 0.0,
+      "cost_per_call": 0.0,
+      "node_match_rate": "baseline",
+      "item_match_rate": "baseline",
+      "full_match_rate": "baseline"
+    }
+  },
+  "details": {
+    "gemini-pro": [
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0082",
+        "body": "paid",
+        "parsed_ok": false,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "duration_s": 0.73,
+        "cost_usd": 0.0,
+        "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Budget 0 is invalid. This model only works in thinking mode.', 'status': 'INVALID_ARGUMENT'}}",
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0010",
+        "body": "Ok",
+        "parsed_ok": false,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "duration_s": 0.48,
+        "cost_usd": 0.0,
+        "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Budget 0 is invalid. This model only works in thinking mode.', 'status': 'INVALID_ARGUMENT'}}",
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0249",
+        "body": "Brand Coldwave",
+        "parsed_ok": false,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "duration_s": 0.46,
+        "cost_usd": 0.0,
+        "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Budget 0 is invalid. This model only works in thinking mode.', 'status': 'INVALID_ARGUMENT'}}",
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0215",
+        "body": "unique make",
+        "parsed_ok": false,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "duration_s": 0.47,
+        "cost_usd": 0.0,
+        "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Budget 0 is invalid. This model only works in thinking mode.', 'status': 'INVALID_ARGUMENT'}}",
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0194",
+        "body": "4+2",
+        "parsed_ok": false,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "duration_s": 0.46,
+        "cost_usd": 0.0,
+        "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Budget 0 is invalid. This model only works in thinking mode.', 'status': 'INVALID_ARGUMENT'}}",
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0130",
+        "body": "oswal mai",
+        "parsed_ok": false,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "duration_s": 0.42,
+        "cost_usd": 0.0,
+        "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Budget 0 is invalid. This model only works in thinking mode.', 'status': 'INVALID_ARGUMENT'}}",
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0067",
+        "body": "17760/-",
+        "parsed_ok": false,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "duration_s": 0.48,
+        "cost_usd": 0.0,
+        "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Budget 0 is invalid. This model only works in thinking mode.', 'status': 'INVALID_ARGUMENT'}}",
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_LG_supplier_0041",
+        "body": "01 nos sir",
+        "parsed_ok": false,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "duration_s": 0.46,
+        "cost_usd": 0.0,
+        "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Budget 0 is invalid. This model only works in thinking mode.', 'status': 'INVALID_ARGUMENT'}}",
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Voltas_supplier_0010",
+        "body": "Ok",
+        "parsed_ok": false,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "duration_s": 0.47,
+        "cost_usd": 0.0,
+        "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Budget 0 is invalid. This model only works in thinking mode.', 'status': 'INVALID_ARGUMENT'}}",
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0364",
+        "body": "ok",
+        "parsed_ok": false,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "duration_s": 0.46,
+        "cost_usd": 0.0,
+        "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Budget 0 is invalid. This model only works in thinking mode.', 'status': 'INVALID_ARGUMENT'}}",
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0033",
+        "body": "Price 14,500+18%\nWooden packing 2000rs extra\nTransport Extra",
+        "parsed_ok": false,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "duration_s": 0.57,
+        "cost_usd": 0.0,
+        "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Budget 0 is invalid. This model only works in thinking mode.', 'status': 'INVALID_ARGUMENT'}}",
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Voltas_supplier_0008",
+        "body": "bill no= 3078 cleared",
+        "parsed_ok": false,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "duration_s": 0.46,
+        "cost_usd": 0.0,
+        "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Budget 0 is invalid. This model only works in thinking mode.', 'status': 'INVALID_ARGUMENT'}}",
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0033",
+        "body": "Bata dijiye kiska kiska mil jayega",
+        "parsed_ok": false,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "duration_s": 0.5,
+        "cost_usd": 0.0,
+        "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Budget 0 is invalid. This model only works in thinking mode.', 'status': 'INVALID_ARGUMENT'}}",
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0094",
+        "body": "Sent in todays convoy",
+        "parsed_ok": false,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "duration_s": 0.44,
+        "cost_usd": 0.0,
+        "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Budget 0 is invalid. This model only works in thinking mode.', 'status': 'INVALID_ARGUMENT'}}",
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0101",
+        "body": "This message was deleted",
+        "parsed_ok": false,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "duration_s": 0.44,
+        "cost_usd": 0.0,
+        "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Budget 0 is invalid. This model only works in thinking mode.', 'status': 'INVALID_ARGUMENT'}}",
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0281",
+        "body": "air chef bill but items to be sent when prev all dues are cleared",
+        "parsed_ok": false,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "duration_s": 0.43,
+        "cost_usd": 0.0,
+        "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Budget 0 is invalid. This model only works in thinking mode.', 'status': 'INVALID_ARGUMENT'}}",
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0237",
+        "body": "Ye GST Bill eska hai",
+        "parsed_ok": false,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "duration_s": 0.45,
+        "cost_usd": 0.0,
+        "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Budget 0 is invalid. This model only works in thinking mode.', 'status': 'INVALID_ARGUMENT'}}",
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Voltas_supplier_0007",
+        "body": "To\nJiwan Ram \nRs 35,500/- paid \n02-03-2026",
+        "parsed_ok": false,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "duration_s": 0.43,
+        "cost_usd": 0.0,
+        "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Budget 0 is invalid. This model only works in thinking mode.', 'status': 'INVALID_ARGUMENT'}}",
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0138",
+        "body": "Money Sent \u2705\nPaytm has improved so much lately! Also, they have started giving r",
+        "parsed_ok": false,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "duration_s": 0.43,
+        "cost_usd": 0.0,
+        "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Budget 0 is invalid. This model only works in thinking mode.', 'status': 'INVALID_ARGUMENT'}}",
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0262",
+        "body": "sirr item ka koi idea nahi hai \nyehi pic online mila jispe shop ne yeh rate diya",
+        "parsed_ok": false,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "duration_s": 0.45,
+        "cost_usd": 0.0,
+        "error": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Budget 0 is invalid. This model only works in thinking mode.', 'status': 'INVALID_ARGUMENT'}}",
+        "output": null
+      }
+    ]
+  }
+}

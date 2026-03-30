@@ -1,0 +1,245 @@
+{
+  "timestamp": "20260331T034325",
+  "n_samples": 20,
+  "models": [
+    "gemini-pro"
+  ],
+  "summary": {
+    "gemini-pro": {
+      "parse_rate": "20/20",
+      "parse_pct": 100.0,
+      "avg_latency_s": 11.51,
+      "avg_tokens_in": 4305,
+      "avg_tokens_out": 274,
+      "total_cost": 0.1625,
+      "cost_per_call": 0.00813,
+      "node_match_rate": "baseline",
+      "item_match_rate": "baseline",
+      "full_match_rate": "baseline"
+    }
+  },
+  "details": {
+    "gemini-pro": [
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0082",
+        "body": "paid",
+        "parsed_ok": true,
+        "tokens_in": 4295,
+        "tokens_out": 243,
+        "duration_s": 11.63,
+        "cost_usd": 0.007799,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0010",
+        "body": "Ok",
+        "parsed_ok": true,
+        "tokens_in": 4302,
+        "tokens_out": 328,
+        "duration_s": 11.05,
+        "cost_usd": 0.008658,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0249",
+        "body": "Brand Coldwave",
+        "parsed_ok": true,
+        "tokens_in": 4296,
+        "tokens_out": 223,
+        "duration_s": 11.6,
+        "cost_usd": 0.0076,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0215",
+        "body": "unique make",
+        "parsed_ok": true,
+        "tokens_in": 4300,
+        "tokens_out": 197,
+        "duration_s": 10.8,
+        "cost_usd": 0.007345,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0194",
+        "body": "4+2",
+        "parsed_ok": true,
+        "tokens_in": 4297,
+        "tokens_out": 120,
+        "duration_s": 9.43,
+        "cost_usd": 0.006571,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0130",
+        "body": "oswal mai",
+        "parsed_ok": true,
+        "tokens_in": 4296,
+        "tokens_out": 223,
+        "duration_s": 12.05,
+        "cost_usd": 0.0076,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0067",
+        "body": "17760/-",
+        "parsed_ok": true,
+        "tokens_in": 4301,
+        "tokens_out": 341,
+        "duration_s": 14.5,
+        "cost_usd": 0.008786,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_LG_supplier_0041",
+        "body": "01 nos sir",
+        "parsed_ok": true,
+        "tokens_in": 4299,
+        "tokens_out": 230,
+        "duration_s": 14.04,
+        "cost_usd": 0.007674,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Voltas_supplier_0010",
+        "body": "Ok",
+        "parsed_ok": true,
+        "tokens_in": 4299,
+        "tokens_out": 214,
+        "duration_s": 9.75,
+        "cost_usd": 0.007514,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0364",
+        "body": "ok",
+        "parsed_ok": true,
+        "tokens_in": 4293,
+        "tokens_out": 128,
+        "duration_s": 8.72,
+        "cost_usd": 0.006646,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0033",
+        "body": "Price 14,500+18%\nWooden packing 2000rs extra\nTransport Extra",
+        "parsed_ok": true,
+        "tokens_in": 4318,
+        "tokens_out": 240,
+        "duration_s": 12.83,
+        "cost_usd": 0.007797,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Voltas_supplier_0008",
+        "body": "bill no= 3078 cleared",
+        "parsed_ok": true,
+        "tokens_in": 4305,
+        "tokens_out": 447,
+        "duration_s": 11.68,
+        "cost_usd": 0.009851,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0033",
+        "body": "Bata dijiye kiska kiska mil jayega",
+        "parsed_ok": true,
+        "tokens_in": 4312,
+        "tokens_out": 303,
+        "duration_s": 11.61,
+        "cost_usd": 0.00842,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0094",
+        "body": "Sent in todays convoy",
+        "parsed_ok": true,
+        "tokens_in": 4304,
+        "tokens_out": 574,
+        "duration_s": 15.97,
+        "cost_usd": 0.01112,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0101",
+        "body": "This message was deleted",
+        "parsed_ok": true,
+        "tokens_in": 4299,
+        "tokens_out": 50,
+        "duration_s": 4.28,
+        "cost_usd": 0.005874,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0281",
+        "body": "air chef bill but items to be sent when prev all dues are cleared",
+        "parsed_ok": true,
+        "tokens_in": 4306,
+        "tokens_out": 423,
+        "duration_s": 12.44,
+        "cost_usd": 0.009612,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0237",
+        "body": "Ye GST Bill eska hai",
+        "parsed_ok": true,
+        "tokens_in": 4307,
+        "tokens_out": 412,
+        "duration_s": 13.03,
+        "cost_usd": 0.009504,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Voltas_supplier_0007",
+        "body": "To\nJiwan Ram \nRs 35,500/- paid \n02-03-2026",
+        "parsed_ok": true,
+        "tokens_in": 4325,
+        "tokens_out": 330,
+        "duration_s": 10.86,
+        "cost_usd": 0.008706,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0138",
+        "body": "Money Sent \u2705\nPaytm has improved so much lately! Also, they have started giving r",
+        "parsed_ok": true,
+        "tokens_in": 4329,
+        "tokens_out": 213,
+        "duration_s": 12.62,
+        "cost_usd": 0.007541,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0262",
+        "body": "sirr item ka koi idea nahi hai \nyehi pic online mila jispe shop ne yeh rate diya",
+        "parsed_ok": true,
+        "tokens_in": 4316,
+        "tokens_out": 250,
+        "duration_s": 11.3,
+        "cost_usd": 0.007895,
+        "error": null,
+        "output": null
+      }
+    ]
+  }
+}

@@ -37,6 +37,9 @@ def check_ambiguity_queue():
         _process_entry(row, profile, now)
 
 
+DIGEST_WINDOW_S = 900  # 15 min — batch medium-severity flags into digest windows
+
+
 def _process_entry(entry: dict, profile: dict, now: int):
     severity = entry["severity"]
     status = entry["status"]
@@ -47,24 +50,66 @@ def _process_entry(entry: dict, profile: dict, now: int):
     timeout_high = profile["resolution_timeout_high_s"]
     timeout_low = profile["resolution_timeout_low_s"]
 
-    # --- New entry: send first escalation ---
+    # --- New entry: escalate based on severity ---
     if status == "pending":
-        _send_escalation(entry, is_re_escalation=False)
-        with transaction() as conn:
-            conn.execute(
-                """UPDATE ambiguity_queue
-                   SET status='escalated', escalated_at=?
-                   WHERE id=?""",
-                (now, entry["id"]),
-            )
+        if severity == "high":
+            # High: escalate immediately
+            _send_escalation(entry, is_re_escalation=False)
+            with transaction() as conn:
+                conn.execute(
+                    """UPDATE ambiguity_queue
+                       SET status='escalated', escalated_at=?
+                       WHERE id=?""",
+                    (now, entry["id"]),
+                )
+        elif severity == "medium":
+            # Medium: hold for digest window before escalating
+            age = now - created_at
+            if age >= DIGEST_WINDOW_S:
+                _send_escalation(entry, is_re_escalation=False)
+                with transaction() as conn:
+                    conn.execute(
+                        """UPDATE ambiguity_queue
+                           SET status='escalated', escalated_at=?
+                           WHERE id=?""",
+                        (now, entry["id"]),
+                    )
+            # else: still within digest window, leave as pending
+        else:
+            # Low: auto-resolve after timeout_low (handled below in escalated branch)
+            # Low blocking flags still escalate immediately
+            if entry["blocking"]:
+                _send_escalation(entry, is_re_escalation=False)
+                with transaction() as conn:
+                    conn.execute(
+                        """UPDATE ambiguity_queue
+                           SET status='escalated', escalated_at=?
+                           WHERE id=?""",
+                        (now, entry["id"]),
+                    )
+            else:
+                # Non-blocking low should already be auto-resolved at creation
+                # (by _handle_ambiguity). If one slips through, resolve it now.
+                _auto_resolve(entry)
         return
 
     # --- Already escalated: check for re-escalation or auto-resolution ---
     time_since_escalation = now - (escalated_at or created_at)
 
-    if severity in ("high", "medium"):
+    if severity == "high":
         # Re-escalate if unresolved past timeout_high
         if time_since_escalation >= timeout_high:
+            _send_escalation(entry, is_re_escalation=True)
+            with transaction() as conn:
+                conn.execute(
+                    """UPDATE ambiguity_queue
+                       SET escalated_at=?, re_escalation_count=?
+                       WHERE id=?""",
+                    (now, re_escalations + 1, entry["id"]),
+                )
+    elif severity == "medium":
+        # Medium: re-escalate at 2x timeout_high (less aggressive)
+        if time_since_escalation >= timeout_high * 2:
             _send_escalation(entry, is_re_escalation=True)
             with transaction() as conn:
                 conn.execute(

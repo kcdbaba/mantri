@@ -229,7 +229,8 @@ class TestProcessMessage:
 # _handle_ambiguity — gate blocking, queue write, target routing
 # ---------------------------------------------------------------------------
 
-def _run_handle_ambiguity(flag, task_id="t1", message=None):
+def _run_handle_ambiguity(flag, task_id="t1", message=None,
+                          is_duplicate=False, rate_limited=False):
     from src.router.worker import _handle_ambiguity
     message = message or {"message_id": "m1", "group_id": "grp@g.us", "body": "test"}
     mock_conn = MagicMock()
@@ -237,7 +238,9 @@ def _run_handle_ambiguity(flag, task_id="t1", message=None):
     mock_cm.__enter__ = MagicMock(return_value=mock_conn)
     mock_cm.__exit__ = MagicMock(return_value=False)
     with patch("src.router.worker.transaction", return_value=mock_cm), \
-         patch("src.router.worker.update_node") as mock_update_node:
+         patch("src.router.worker.update_node") as mock_update_node, \
+         patch("src.router.worker._is_duplicate_flag", return_value=is_duplicate), \
+         patch("src.router.worker._check_rate_limit", return_value=rate_limited):
         _handle_ambiguity(flag, task_id, message)
     return mock_conn, mock_update_node
 
@@ -269,13 +272,18 @@ class TestHandleAmbiguity:
         _, mock_update_node = _run_handle_ambiguity(flag)
         mock_update_node.assert_not_called()
 
-    def test_always_writes_to_queue(self):
+    def test_low_non_blocking_auto_resolved(self):
+        """Low non-blocking flags are auto-resolved immediately (status='expired')."""
         from src.agent.update_agent import AmbiguityFlag
         flag = AmbiguityFlag(description="test", severity="low",
                              category="entity", blocking_node_id=None)
         mock_conn, _ = _run_handle_ambiguity(flag)
         mock_conn.execute.assert_called_once()
-        assert "INSERT INTO ambiguity_queue" in mock_conn.execute.call_args[0][0]
+        sql = mock_conn.execute.call_args[0][0]
+        assert "INSERT INTO ambiguity_queue" in sql
+        params = mock_conn.execute.call_args[0][1]
+        # status field (index 11) should be 'expired' for auto-resolved
+        assert params[11] == "expired"
 
     def test_high_severity_targets_ashish(self):
         from src.agent.update_agent import AmbiguityFlag
@@ -287,13 +295,101 @@ class TestHandleAmbiguity:
         assert "ashish" in target
 
     def test_low_severity_targets_senior_staff(self):
+        """Low blocking flags still target senior_staff + ashish."""
         from src.agent.update_agent import AmbiguityFlag
+        # Use a blocking low flag (on a gate node) — non-blocking are auto-resolved
         flag = AmbiguityFlag(description="test", severity="low",
-                             category="entity", blocking_node_id=None)
+                             category="entity", blocking_node_id="dispatched")
         mock_conn, _ = _run_handle_ambiguity(flag)
         params = mock_conn.execute.call_args[0][1]
         target = json.loads(params[9])
         assert "senior_staff" in target
+
+
+# ---------------------------------------------------------------------------
+# Dedup, rate limiting, severity filtering
+# ---------------------------------------------------------------------------
+
+@allure.feature("Ambiguity Handling")
+@allure.story("Deduplication")
+class TestAmbiguityDedup:
+
+    def test_duplicate_flag_skipped(self):
+        from src.agent.update_agent import AmbiguityFlag
+        flag = AmbiguityFlag(description="test", severity="high",
+                             category="entity", blocking_node_id="dispatched")
+        mock_conn, mock_update_node = _run_handle_ambiguity(flag, is_duplicate=True)
+        mock_conn.execute.assert_not_called()
+        mock_update_node.assert_not_called()
+
+    def test_non_duplicate_flag_enqueued(self):
+        from src.agent.update_agent import AmbiguityFlag
+        flag = AmbiguityFlag(description="test", severity="high",
+                             category="entity", blocking_node_id="dispatched")
+        mock_conn, _ = _run_handle_ambiguity(flag, is_duplicate=False)
+        mock_conn.execute.assert_called_once()
+
+
+@allure.feature("Ambiguity Handling")
+@allure.story("Rate Limiting")
+class TestAmbiguityRateLimit:
+
+    def test_rate_limited_non_blocking_skipped(self):
+        from src.agent.update_agent import AmbiguityFlag
+        flag = AmbiguityFlag(description="test", severity="medium",
+                             category="quantity", blocking_node_id=None)
+        mock_conn, _ = _run_handle_ambiguity(flag, rate_limited=True)
+        mock_conn.execute.assert_not_called()
+
+    def test_rate_limited_blocking_still_enqueued(self):
+        """Blocking flags bypass rate limit — safety over noise reduction."""
+        from src.agent.update_agent import AmbiguityFlag
+        flag = AmbiguityFlag(description="test", severity="high",
+                             category="entity", blocking_node_id="dispatched")
+        mock_conn, mock_update_node = _run_handle_ambiguity(flag, rate_limited=True)
+        # Blocking flags are not rate-limited (should_block=True skips rate check)
+        mock_conn.execute.assert_called_once()
+        mock_update_node.assert_called_once()
+
+
+@allure.feature("Ambiguity Handling")
+@allure.story("Severity Filtering")
+class TestAmbiguitySeverityFiltering:
+
+    def test_high_blocking_enqueued_as_pending(self):
+        from src.agent.update_agent import AmbiguityFlag
+        flag = AmbiguityFlag(description="test", severity="high",
+                             category="entity", blocking_node_id="dispatched")
+        mock_conn, _ = _run_handle_ambiguity(flag)
+        params = mock_conn.execute.call_args[0][1]
+        assert params[11] == "pending"  # status
+
+    def test_medium_non_blocking_enqueued_as_pending(self):
+        from src.agent.update_agent import AmbiguityFlag
+        flag = AmbiguityFlag(description="test", severity="medium",
+                             category="quantity", blocking_node_id=None)
+        mock_conn, _ = _run_handle_ambiguity(flag)
+        params = mock_conn.execute.call_args[0][1]
+        assert params[11] == "pending"
+
+    def test_low_non_blocking_auto_resolved_immediately(self):
+        from src.agent.update_agent import AmbiguityFlag
+        flag = AmbiguityFlag(description="test", severity="low",
+                             category="timing", blocking_node_id=None)
+        mock_conn, mock_update_node = _run_handle_ambiguity(flag)
+        params = mock_conn.execute.call_args[0][1]
+        assert params[11] == "expired"  # auto-resolved
+        mock_update_node.assert_not_called()  # not blocking
+
+    def test_low_blocking_enqueued_as_pending(self):
+        """Low blocking on gate node still enqueues as pending for escalation."""
+        from src.agent.update_agent import AmbiguityFlag
+        flag = AmbiguityFlag(description="test", severity="low",
+                             category="entity", blocking_node_id="dispatched")
+        mock_conn, mock_update_node = _run_handle_ambiguity(flag)
+        params = mock_conn.execute.call_args[0][1]
+        assert params[11] == "pending"
+        mock_update_node.assert_called_once()  # gate blocked
 
 
 # ---------------------------------------------------------------------------
@@ -495,10 +591,10 @@ class TestEmptyMessageFilter:
 @allure.story("Model Tiering")
 class TestSelectModel:
 
-    def test_all_simple_uses_haiku(self):
+    def test_all_simple_uses_gemini(self):
         from src.agent.update_agent import _select_model
         msgs = [{"body": "ok"}, {"body": "thanks sir"}]
-        assert _select_model(msgs) == "claude-haiku-4-5-20251001"
+        assert _select_model(msgs) == "gemini-2.5-flash"
 
     def test_any_complex_uses_sonnet(self):
         from src.agent.update_agent import _select_model
@@ -526,11 +622,11 @@ class TestSelectModel:
         from src.agent.update_agent import _select_model
         assert _select_model([{"body": "do battery chahiye"}]) == "claude-sonnet-4-6"
 
-    def test_pure_acknowledgements_use_haiku(self):
+    def test_pure_acknowledgements_use_gemini(self):
         from src.agent.update_agent import _select_model
         for body in ["thanks sir", "Increased", "..", "Sir kindly share", "Welcome"]:
-            assert _select_model([{"body": body}]) == "claude-haiku-4-5-20251001", \
-                f"'{body}' should use Haiku"
+            assert _select_model([{"body": body}]) == "gemini-2.5-flash", \
+                f"'{body}' should use Gemini Flash"
 
     def test_payment_keyword_triggers_sonnet(self):
         from src.agent.update_agent import _select_model

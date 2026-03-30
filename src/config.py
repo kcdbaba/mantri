@@ -148,6 +148,7 @@ GATE_NODES = {
 
 CLAUDE_MODEL = "claude-sonnet-4-6"
 CLAUDE_MODEL_FAST = "claude-haiku-4-5-20251001"
+GEMINI_MODEL = "gemini-2.5-flash"
 MAX_CONTEXT_MESSAGES = 20          # last N messages per task passed to update agent
 AGENT_MAX_TOKENS = 1024
 

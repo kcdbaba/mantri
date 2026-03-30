@@ -1,0 +1,385 @@
+{
+  "timestamp": "20260331T021021",
+  "n_samples": 10,
+  "models": [
+    "sonnet",
+    "haiku",
+    "gemini"
+  ],
+  "summary": {
+    "sonnet": {
+      "parse_rate": "10/10",
+      "parse_pct": 100.0,
+      "avg_latency_s": 7.64,
+      "avg_tokens_in": 274,
+      "avg_tokens_out": 368,
+      "total_cost": 0.0635,
+      "cost_per_call": 0.00635,
+      "node_match_rate": "baseline",
+      "item_match_rate": "baseline",
+      "full_match_rate": "baseline"
+    },
+    "haiku": {
+      "parse_rate": "8/10",
+      "parse_pct": 80.0,
+      "avg_latency_s": 4.25,
+      "avg_tokens_in": 274,
+      "avg_tokens_out": 365,
+      "total_cost": 0.0168,
+      "cost_per_call": 0.00168,
+      "node_match_rate": 40.0,
+      "item_match_rate": 60.0,
+      "full_match_rate": 10.0
+    },
+    "gemini": {
+      "parse_rate": "4/10",
+      "parse_pct": 40.0,
+      "avg_latency_s": 5.3,
+      "avg_tokens_in": 4317,
+      "avg_tokens_out": 70,
+      "total_cost": 0.0069,
+      "cost_per_call": 0.00069,
+      "node_match_rate": 30.0,
+      "item_match_rate": 30.0,
+      "full_match_rate": 0.0
+    }
+  },
+  "details": {
+    "sonnet": [
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0082",
+        "body": "paid",
+        "parsed_ok": true,
+        "tokens_in": 255,
+        "tokens_out": 385,
+        "duration_s": 7.55,
+        "cost_usd": 0.00654,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0010",
+        "body": "Ok",
+        "parsed_ok": true,
+        "tokens_in": 265,
+        "tokens_out": 171,
+        "duration_s": 5.89,
+        "cost_usd": 0.00336,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0249",
+        "body": "Brand Coldwave",
+        "parsed_ok": true,
+        "tokens_in": 257,
+        "tokens_out": 424,
+        "duration_s": 7.55,
+        "cost_usd": 0.007131,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0215",
+        "body": "unique make",
+        "parsed_ok": true,
+        "tokens_in": 259,
+        "tokens_out": 149,
+        "duration_s": 4.14,
+        "cost_usd": 0.003012,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0194",
+        "body": "4+2",
+        "parsed_ok": true,
+        "tokens_in": 256,
+        "tokens_out": 169,
+        "duration_s": 4.39,
+        "cost_usd": 0.003303,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0055",
+        "body": "9864923247\nEs number per 20000/- payment karna hai",
+        "parsed_ok": true,
+        "tokens_in": 282,
+        "tokens_out": 628,
+        "duration_s": 11.45,
+        "cost_usd": 0.010266,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0274",
+        "body": "Es bid me participate ho gaya hai",
+        "parsed_ok": true,
+        "tokens_in": 272,
+        "tokens_out": 495,
+        "duration_s": 10.56,
+        "cost_usd": 0.008241,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0037",
+        "body": "PTT-20260303-WA0016.opus (file attached)",
+        "parsed_ok": true,
+        "tokens_in": 271,
+        "tokens_out": 156,
+        "duration_s": 4.14,
+        "cost_usd": 0.003153,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0393",
+        "body": "Money Sent \u2705\nPaytm has improved so much recently! Seen their new app?",
+        "parsed_ok": true,
+        "tokens_in": 285,
+        "tokens_out": 264,
+        "duration_s": 6.59,
+        "cost_usd": 0.004815,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0023",
+        "body": "https://mkp.gem.gov.in/pid-controller/epc3004-p10-vh-d1-xx-xx-xx-xx/p-5116877-35",
+        "parsed_ok": true,
+        "tokens_in": 335,
+        "tokens_out": 842,
+        "duration_s": 14.1,
+        "cost_usd": 0.013635,
+        "error": null,
+        "output": null
+      }
+    ],
+    "haiku": [
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0082",
+        "body": "paid",
+        "parsed_ok": true,
+        "tokens_in": 255,
+        "tokens_out": 436,
+        "duration_s": 5.74,
+        "cost_usd": 0.001948,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0010",
+        "body": "Ok",
+        "parsed_ok": false,
+        "tokens_in": 265,
+        "tokens_out": 458,
+        "duration_s": 6.2,
+        "cost_usd": 0.002044,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0249",
+        "body": "Brand Coldwave",
+        "parsed_ok": true,
+        "tokens_in": 257,
+        "tokens_out": 268,
+        "duration_s": 2.99,
+        "cost_usd": 0.001278,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0215",
+        "body": "unique make",
+        "parsed_ok": true,
+        "tokens_in": 259,
+        "tokens_out": 142,
+        "duration_s": 2.38,
+        "cost_usd": 0.000775,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0194",
+        "body": "4+2",
+        "parsed_ok": true,
+        "tokens_in": 256,
+        "tokens_out": 156,
+        "duration_s": 2.25,
+        "cost_usd": 0.000829,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0055",
+        "body": "9864923247\nEs number per 20000/- payment karna hai",
+        "parsed_ok": false,
+        "tokens_in": 282,
+        "tokens_out": 506,
+        "duration_s": 5.55,
+        "cost_usd": 0.00225,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0274",
+        "body": "Es bid me participate ho gaya hai",
+        "parsed_ok": true,
+        "tokens_in": 272,
+        "tokens_out": 440,
+        "duration_s": 4.26,
+        "cost_usd": 0.001978,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0037",
+        "body": "PTT-20260303-WA0016.opus (file attached)",
+        "parsed_ok": true,
+        "tokens_in": 271,
+        "tokens_out": 140,
+        "duration_s": 2.21,
+        "cost_usd": 0.000777,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0393",
+        "body": "Money Sent \u2705\nPaytm has improved so much recently! Seen their new app?",
+        "parsed_ok": true,
+        "tokens_in": 285,
+        "tokens_out": 225,
+        "duration_s": 3.04,
+        "cost_usd": 0.001128,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0023",
+        "body": "https://mkp.gem.gov.in/pid-controller/epc3004-p10-vh-d1-xx-xx-xx-xx/p-5116877-35",
+        "parsed_ok": true,
+        "tokens_in": 335,
+        "tokens_out": 877,
+        "duration_s": 7.86,
+        "cost_usd": 0.003776,
+        "error": null,
+        "output": null
+      }
+    ],
+    "gemini": [
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0082",
+        "body": "paid",
+        "parsed_ok": false,
+        "tokens_in": 4295,
+        "tokens_out": 38,
+        "duration_s": 6.65,
+        "cost_usd": 0.000667,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0010",
+        "body": "Ok",
+        "parsed_ok": false,
+        "tokens_in": 4302,
+        "tokens_out": 39,
+        "duration_s": 8.52,
+        "cost_usd": 0.000669,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0249",
+        "body": "Brand Coldwave",
+        "parsed_ok": true,
+        "tokens_in": 4296,
+        "tokens_out": 114,
+        "duration_s": 2.87,
+        "cost_usd": 0.000713,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0215",
+        "body": "unique make",
+        "parsed_ok": false,
+        "tokens_in": 4300,
+        "tokens_out": 40,
+        "duration_s": 5.65,
+        "cost_usd": 0.000669,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0194",
+        "body": "4+2",
+        "parsed_ok": true,
+        "tokens_in": 4297,
+        "tokens_out": 120,
+        "duration_s": 4.16,
+        "cost_usd": 0.000717,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0055",
+        "body": "9864923247\nEs number per 20000/- payment karna hai",
+        "parsed_ok": false,
+        "tokens_in": 4326,
+        "tokens_out": 41,
+        "duration_s": 6.55,
+        "cost_usd": 0.000674,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0274",
+        "body": "Es bid me participate ho gaya hai",
+        "parsed_ok": true,
+        "tokens_in": 4308,
+        "tokens_out": 173,
+        "duration_s": 4.54,
+        "cost_usd": 0.00075,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0037",
+        "body": "PTT-20260303-WA0016.opus (file attached)",
+        "parsed_ok": true,
+        "tokens_in": 4317,
+        "tokens_out": 50,
+        "duration_s": 2.77,
+        "cost_usd": 0.000678,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_Tasks_0393",
+        "body": "Money Sent \u2705\nPaytm has improved so much recently! Seen their new app?",
+        "parsed_ok": false,
+        "tokens_in": 4322,
+        "tokens_out": 41,
+        "duration_s": 5.27,
+        "cost_usd": 0.000673,
+        "error": null,
+        "output": null
+      },
+      {
+        "message_id": "R1-D-L3-01_sata_jobs_0023",
+        "body": "https://mkp.gem.gov.in/pid-controller/epc3004-p10-vh-d1-xx-xx-xx-xx/p-5116877-35",
+        "parsed_ok": false,
+        "tokens_in": 4403,
+        "tokens_out": 40,
+        "duration_s": 6.05,
+        "cost_usd": 0.000684,
+        "error": null,
+        "output": null
+      }
+    ]
+  }
+}
