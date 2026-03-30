@@ -442,7 +442,7 @@ flowchart TD
 
 ### Ingestion: dual-source design
 
-- **WhatsApp Platform API** (primary): group messages via Ashish's number. Official Meta API — no ban risk. Requires Meta Business verification (backlog item #6, deadline Apr 18).
+- **WhatsApp Platform API** (primary): group messages via Ashish's number (must be a member of each monitored group). Official Meta API — no ban risk. Requires Meta Business verification (backlog item #6, deadline Apr 18).
 - **Baileys** (secondary): 1:1 chats from whitelisted staff accounts. Unofficial library — ban risk on individual numbers. Limited to specific accounts opted in by Ashish and staff.
 
 Both sources produce the same message format into `INGEST_QUEUE_KEY`. The router is source-agnostic.
