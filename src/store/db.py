@@ -263,6 +263,12 @@ def init_schema():
     conn.executescript(SCHEMA)
     conn.commit()
 
+    # Migrate: add co_owner column if missing (existing DBs predate this column)
+    cols = [row[1] for row in conn.execute("PRAGMA table_info(node_owner_registry)").fetchall()]
+    if "co_owner" not in cols:
+        conn.execute("ALTER TABLE node_owner_registry ADD COLUMN co_owner TEXT")
+        conn.commit()
+
     # Populate node_owner_registry from templates (idempotent)
     from src.agent.templates import TEMPLATES
     for order_type, tmpl in TEMPLATES.items():
