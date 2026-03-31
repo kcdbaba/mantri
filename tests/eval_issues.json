@@ -1,0 +1,160 @@
+{
+  "issues": {
+    "LINKAGE-01:link_002:node_update:task_client_01:order_confirmation": {
+      "id": "LINKAGE-01:link_002:node_update:task_client_01:order_confirmation",
+      "status": "open",
+      "severity": "medium",
+      "dimension": "node_update",
+      "case_id": "LINKAGE-01",
+      "message_id": "link_002",
+      "target": "task_client_01:order_confirmation",
+      "description": "node_update: task_client_01:order_confirmation — expected status in ['active', 'provisional', 'completed'], got status=pending, conf=None",
+      "github_issue": "",
+      "github_pr": "",
+      "history": [
+        {
+          "event": "detected",
+          "run_id": "test_run_LINKAGE-01",
+          "timestamp": "2026-04-01T02:43:00",
+          "git_commit": "9022bb55f",
+          "evidence": {
+            "message_body": "Ashish confirms order will be delivered tomorrow",
+            "expected": "status in ['active', 'provisional', 'completed']",
+            "actual": "status=pending, conf=None",
+            "assertion_notes": "expected ['active', 'provisional', 'completed'], got pending",
+            "task_state": {
+              "task_id": "task_client_01",
+              "node_summary": {
+                "completed": 0,
+                "active": 1,
+                "pending": 9,
+                "blocked": 1,
+                "provisional": 0
+              },
+              "non_pending_nodes": [
+                {
+                  "node_id": "task_client_01_client_enquiry",
+                  "status": "active",
+                  "confidence": 0.92
+                },
+                {
+                  "node_id": "task_client_01_dispatched",
+                  "status": "blocked",
+                  "confidence": 0.0
+                },
+                {
+                  "node_id": "task_client_01_filled_from_stock",
+                  "status": "skipped",
+                  "confidence": null
+                }
+              ],
+              "items": [
+                {
+                  "description": "atta",
+                  "quantity": 50.0
+                },
+                {
+                  "description": "daal",
+                  "quantity": 20.0
+                }
+              ],
+              "messages_stored": 6,
+              "ambiguity_flags": [
+                {
+                  "severity": "low",
+                  "category": "timing",
+                  "description": "Delivery deadline 'kal tak' (by tomorrow) is relative to message timestamp [1743230000]. Exact calen",
+                  "status": "expired"
+                },
+                {
+                  "severity": "high",
+                  "category": "status",
+                  "description": "Dispatch announced ('dispatch kar rahe hain aaj') but order_confirmation node is still pending — no ",
+                  "status": "pending"
+                }
+              ]
+            },
+            "dead_letter_count": 0,
+            "total_tasks": 2,
+            "total_ambiguity_flags": 2,
+            "total_fulfillment_links": 0
+          }
+        }
+      ]
+    },
+    "LINKAGE-01:link_004:node_update:task_supplier_01:supplier_confirmation": {
+      "id": "LINKAGE-01:link_004:node_update:task_supplier_01:supplier_confirmation",
+      "status": "open",
+      "severity": "medium",
+      "dimension": "node_update",
+      "case_id": "LINKAGE-01",
+      "message_id": "link_004",
+      "target": "task_supplier_01:supplier_confirmation",
+      "description": "node_update: task_supplier_01:supplier_confirmation — expected status in ['active', 'provisional', 'completed'], got status=pending, conf=None",
+      "github_issue": "",
+      "github_pr": "",
+      "history": [
+        {
+          "event": "detected",
+          "run_id": "test_run_LINKAGE-01",
+          "timestamp": "2026-04-01T02:43:00",
+          "git_commit": "9022bb55f",
+          "evidence": {
+            "message_body": "Kapoor confirms atta ready, daal will be ready by morning",
+            "expected": "status in ['active', 'provisional', 'completed']",
+            "actual": "status=pending, conf=None",
+            "assertion_notes": "expected ['active', 'provisional', 'completed'], got pending",
+            "task_state": {
+              "task_id": "task_supplier_01",
+              "node_summary": {
+                "completed": 3,
+                "active": 0,
+                "pending": 5,
+                "blocked": 0,
+                "provisional": 0
+              },
+              "non_pending_nodes": [
+                {
+                  "node_id": "task_supplier_01_supplier_QC",
+                  "status": "completed",
+                  "confidence": 0.9
+                },
+                {
+                  "node_id": "task_supplier_01_supplier_collection",
+                  "status": "completed",
+                  "confidence": 0.9
+                },
+                {
+                  "node_id": "task_supplier_01_supplier_indent",
+                  "status": "completed",
+                  "confidence": 0.88
+                },
+                {
+                  "node_id": "task_supplier_01_supplier_predelivery_enquiry",
+                  "status": "skipped",
+                  "confidence": null
+                }
+              ],
+              "items": [
+                {
+                  "description": "atta",
+                  "quantity": 50.0
+                },
+                {
+                  "description": "daal",
+                  "quantity": 20.0
+                }
+              ],
+              "messages_stored": 3
+            },
+            "dead_letter_count": 0,
+            "total_tasks": 2,
+            "total_ambiguity_flags": 2,
+            "total_fulfillment_links": 0
+          }
+        }
+      ]
+    }
+  },
+  "updated_at": "2026-04-01T02:43:00"
+}

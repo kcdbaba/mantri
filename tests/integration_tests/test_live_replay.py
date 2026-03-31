@@ -7,8 +7,11 @@ state for comparison against expected output.
 
 This test is non-deterministic and costs API calls — run deliberately, not in CI.
 
-Run:
+Run (legacy batch mode):
     PYTHONPATH=. pytest tests/integration_tests/test_live_replay.py -v -s --run-live
+
+Run (entity-first with Phoenix tracing):
+    PYTHONPATH=. pytest tests/integration_tests/test_live_replay.py -v -s --run-live --traced
 
 Skip linkage (update_agent only):
     PYTHONPATH=. pytest tests/integration_tests/test_live_replay.py -v -s --run-live --skip-linkage
@@ -572,6 +575,60 @@ def _compute_pipeline_score(stats: dict, state: dict, skip_linkage: bool) -> dic
     }
 
 
+def _run_traced_replay(case_dir: Path, trace_data: list[dict], seed: dict,
+                       run_linkage: bool = True, max_messages: int | None = None,
+                       run_note: str = "", phoenix_endpoint: str | None = None) -> dict:
+    """
+    Run replay using the instrumented entity-first pipeline with Phoenix tracing.
+    Returns result dict in the same format as run_live_replay().
+    """
+    import uuid
+    from src.tracing.tracer import RunContext
+    from src.tracing.instrumented_replay import run_instrumented_replay
+
+    tmp = tempfile.NamedTemporaryFile(suffix=".db", delete=False)
+    tmp.close()
+    db_path = tmp.name
+
+    _seed_db(db_path, seed)
+    mock_redis = StreamCapture()
+
+    metadata = _get_run_metadata()
+    run_ctx = RunContext(
+        run_id=f"run_{uuid.uuid4().hex[:8]}",
+        case_id=case_dir.name.split("_")[0],
+        run_type="live_replay",
+        git_commit=metadata.get("git_commit", ""),
+        config_flags=metadata.get("models", {}),
+        run_notes=run_note,
+    )
+
+    stats = run_instrumented_replay(
+        case_dir=case_dir,
+        trace_messages=trace_data,
+        seed=seed,
+        db_path=db_path,
+        mock_redis=mock_redis,
+        run_ctx=run_ctx,
+        run_linkage=run_linkage,
+        max_messages=max_messages,
+        phoenix_endpoint=phoenix_endpoint,
+    )
+
+    snapshot = _snapshot_state(db_path)
+
+    # Keep the DB for manual inspection
+    result_db = case_dir / "replay_result.db"
+    Path(db_path).rename(result_db)
+    log.info("Result DB saved to: %s", result_db)
+
+    return {
+        "stats": stats,
+        "state": snapshot,
+        "db_path": str(result_db),
+    }
+
+
 LIVE_CASES = _discover_cases()
 LIVE_CASE_IDS = [d.name for d in LIVE_CASES]
 
@@ -586,6 +643,8 @@ class TestLiveReplay:
         skip_linkage = request.config.getoption("--skip-linkage")
         max_messages = request.config.getoption("--max-messages")
         run_note = request.config.getoption("--run-note")
+        use_traced = request.config.getoption("--traced")
+        phoenix_endpoint = request.config.getoption("--phoenix-endpoint")
         case_id = case_dir.name.split("_")[0]
 
         trace = _load_json(case_dir, "replay_trace.json")
@@ -596,11 +655,28 @@ class TestLiveReplay:
             format="%(asctime)s %(levelname)s %(name)s: %(message)s",
         )
 
-        result = run_live_replay(
-            case_dir, trace, seed,
-            run_linkage=not skip_linkage,
-            max_messages=max_messages,
-        )
+        # Check baseline staleness before running
+        if use_traced:
+            from src.tracing.staleness import check_staleness
+            for bl_file in case_dir.glob("eval_baselines*.json"):
+                report = check_staleness(bl_file)
+                print(f"\n  Staleness check: {bl_file.name}")
+                report.print_report()
+
+        if use_traced:
+            result = _run_traced_replay(
+                case_dir, trace, seed,
+                run_linkage=not skip_linkage,
+                max_messages=max_messages,
+                run_note=run_note,
+                phoenix_endpoint=phoenix_endpoint,
+            )
+        else:
+            result = run_live_replay(
+                case_dir, trace, seed,
+                run_linkage=not skip_linkage,
+                max_messages=max_messages,
+            )
 
         # Write full results to case dir
         output_path = case_dir / "replay_result.json"
@@ -628,6 +704,7 @@ class TestLiveReplay:
             "messages_total": stats["messages_total"],
             "messages_routed": stats["messages_routed"],
             "messages_unrouted": stats["messages_unrouted"],
+            "messages_noise": stats.get("messages_noise", 0),
             "update_agent_calls": stats["update_agent_calls"],
             "update_agent_failures": stats["update_agent_failures"],
             "linkage_events_processed": stats["linkage_events_processed"],
@@ -657,6 +734,9 @@ class TestLiveReplay:
             "pipeline_score": score.get("overall_score") if score else None,
             "run_metadata": _get_run_metadata(),
             "run_notes": run_note or "",
+            "traced": use_traced,
+            "phoenix_endpoint": phoenix_endpoint or ("http://localhost:6006" if use_traced else None),
+            "routing_mode": "entity_first" if use_traced else "legacy_batch",
         })
 
         # Basic sanity assertions

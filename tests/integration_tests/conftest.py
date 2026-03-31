@@ -16,6 +16,10 @@ def pytest_addoption(parser):
                      help="Process only the first N messages (for quick iteration)")
     parser.addoption("--run-note", type=str, default="",
                      help="Note to attach to the run record (e.g. 'testing new prompt rules')")
+    parser.addoption("--traced", action="store_true", default=False,
+                     help="Enable Phoenix tracing (entity-first pipeline, per-message processing)")
+    parser.addoption("--phoenix-endpoint", type=str, default=None,
+                     help="Phoenix OTEL endpoint (default: http://localhost:6006/v1/traces)")
 
 
 def save_run_record(test_type: str, case_id: str, results: dict):

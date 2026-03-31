@@ -1,0 +1,144 @@
+{
+  "case_id": "LINKAGE-01",
+  "version_tag": "9022bb55f",
+  "generated_by": "claude_code",
+  "generated_at": "2026-04-01",
+  "notes": "Baselines for LINKAGE-01: 6 messages, client+supplier order lifecycle",
+  "messages": [
+    {
+      "message_id": "link_001",
+      "seq": 0,
+      "body_summary": "Client requests 50 bags atta + 20 bags daal, asks for tomorrow delivery",
+      "expected_routing": {
+        "entity_id": "entity_army_unit",
+        "route_layer": "2a",
+        "routed": true
+      },
+      "expected_task_id": "task_client_01",
+      "expected_model_tier": "complex",
+      "expected_model_reason": "has_numbers_or_keywords",
+      "expected_node_updates": [
+        {"node_id": "client_enquiry", "new_status_options": ["active", "completed"], "min_confidence": 0.7}
+      ],
+      "expected_items": [
+        {"operation": "add", "description_contains": "atta", "quantity": 50, "unit": "bags"},
+        {"operation": "add", "description_contains": "daal", "quantity": 20, "unit": "bags"}
+      ],
+      "expected_ambiguity": [],
+      "expected_node_data": [
+        {"node_id": "client_enquiry", "required_keys": ["required_by_date"]}
+      ],
+      "forbidden_updates": [
+        {"node_id": "order_confirmation", "reason": "no confirmation in this message"}
+      ]
+    },
+    {
+      "message_id": "link_002",
+      "seq": 1,
+      "body_summary": "Ashish confirms order will be delivered tomorrow",
+      "expected_routing": {
+        "entity_id": "entity_army_unit",
+        "route_layer": "2a",
+        "routed": true
+      },
+      "expected_task_id": "task_client_01",
+      "expected_model_tier": "complex",
+      "expected_model_reason": "long_body",
+      "expected_node_updates": [
+        {"node_id": "order_confirmation", "new_status_options": ["active", "provisional", "completed"], "min_confidence": 0.5}
+      ],
+      "expected_items": [],
+      "expected_ambiguity": [],
+      "expected_node_data": [],
+      "forbidden_updates": []
+    },
+    {
+      "message_id": "link_003",
+      "seq": 2,
+      "body_summary": "Staff orders from Kapoor: 50 bags atta + 20 bags daal, delivery by tomorrow morning",
+      "expected_routing": {
+        "entity_id": "entity_kapoor",
+        "route_layer": "2a",
+        "routed": true
+      },
+      "expected_task_id": "task_supplier_01",
+      "expected_model_tier": "complex",
+      "expected_model_reason": "has_numbers_or_keywords",
+      "expected_node_updates": [
+        {"node_id": "supplier_indent", "new_status": "completed", "min_confidence": 0.7}
+      ],
+      "expected_items": [
+        {"operation": "add", "description_contains": "atta", "quantity": 50, "unit": "bags"},
+        {"operation": "add", "description_contains": "daal", "quantity": 20, "unit": "bags"}
+      ],
+      "expected_ambiguity": [],
+      "expected_node_data": [
+        {"node_id": "supplier_indent", "required_keys": ["expected_delivery_date"]}
+      ],
+      "forbidden_updates": []
+    },
+    {
+      "message_id": "link_004",
+      "seq": 3,
+      "body_summary": "Kapoor confirms atta ready, daal will be ready by morning",
+      "expected_routing": {
+        "entity_id": "entity_kapoor",
+        "route_layer": "2a",
+        "routed": true
+      },
+      "expected_task_id": "task_supplier_01",
+      "expected_model_tier": "complex",
+      "expected_model_reason": "has_numbers_or_keywords",
+      "expected_node_updates": [
+        {"node_id": "supplier_confirmation", "new_status_options": ["active", "provisional", "completed"], "min_confidence": 0.5}
+      ],
+      "expected_items": [],
+      "expected_ambiguity": [],
+      "expected_node_data": [],
+      "forbidden_updates": []
+    },
+    {
+      "message_id": "link_005",
+      "seq": 4,
+      "body_summary": "Staff confirms goods received and QC passed — 50 bags atta, 20 bags daal OK",
+      "expected_routing": {
+        "entity_id": "entity_kapoor",
+        "route_layer": "2a",
+        "routed": true
+      },
+      "expected_task_id": "task_supplier_01",
+      "expected_model_tier": "complex",
+      "expected_model_reason": "has_numbers_or_keywords",
+      "expected_node_updates": [
+        {"node_id": "supplier_collection", "new_status": "completed", "min_confidence": 0.8},
+        {"node_id": "supplier_QC", "new_status": "completed", "min_confidence": 0.7}
+      ],
+      "expected_items": [],
+      "expected_ambiguity": [],
+      "expected_node_data": [],
+      "forbidden_updates": []
+    },
+    {
+      "message_id": "link_006",
+      "seq": 5,
+      "body_summary": "Ashish tells client items ready, dispatching today",
+      "expected_routing": {
+        "entity_id": "entity_army_unit",
+        "route_layer": "2a",
+        "routed": true
+      },
+      "expected_task_id": "task_client_01",
+      "expected_model_tier": "simple",
+      "expected_model_reason": "simple",
+      "expected_node_updates": [
+        {"node_id": "dispatched", "new_status_options": ["active", "provisional", "in_progress", "blocked"], "min_confidence": 0.0}
+      ],
+      "expected_items": [],
+      "expected_ambiguity": [],
+      "expected_node_data": [],
+      "forbidden_updates": [
+        {"node_id": "delivery_confirmed", "reason": "dispatch announced but not delivered yet"}
+      ]
+    }
+  ]
+}

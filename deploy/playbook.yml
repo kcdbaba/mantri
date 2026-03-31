@@ -245,14 +245,14 @@
         dest: /etc/systemd/system/mantri-phoenix.service
         mode: "0644"
       notify: Reload systemd
-      tags: [provision]
+      tags: [provision, phoenix]
 
     - name: Enable and start Phoenix
       ansible.builtin.systemd:
         name: mantri-phoenix
         enabled: yes
         state: started
-      tags: [provision]
+      tags: [provision, phoenix]
 
   handlers:
     - name: Reload systemd
