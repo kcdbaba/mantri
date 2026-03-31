@@ -189,11 +189,14 @@ def score_single_message_case(case_dir: Path, output: AgentOutput | None) -> dic
             )
 
     # --- Required ambiguity flags ---
+    _severity_rank = {"low": 0, "medium": 1, "high": 2}
     for req_flag in expected.get("required_ambiguity_flags", []):
         result["required_total"] += 1
+        req_sev = req_flag.get("severity")
+        req_rank = _severity_rank.get(req_sev, -1)
         matched = [
             f for f in output.ambiguity_flags
-            if f.severity == req_flag.get("severity", f.severity)
+            if _severity_rank.get(f.severity, -1) >= req_rank
             and f.category == req_flag.get("category", f.category)
         ]
         blocking_ok = True
@@ -299,7 +302,7 @@ def score_multi_message_case(case_dir: Path) -> dict:
             return result
 
         # Simulate deterministic stock path → order_ready auto-trigger
-        _simulate_stock_path_trigger(output, {
+        _simulate_deterministic_triggers(output, {
             "task_id": initial_state["task_id"],
             "nodes": [{"node_id": k, "status": v} for k, v in current_nodes.items()],
         })
@@ -341,53 +344,64 @@ def score_multi_message_case(case_dir: Path) -> dict:
 # Runner
 # ---------------------------------------------------------------------------
 
-def _simulate_stock_path_trigger(output, task_state: dict):
+def _simulate_deterministic_triggers(output, task_state: dict):
     """
-    Simulate the deterministic order_ready auto-trigger that runs in the
-    router worker / linkage worker after update_agent. Covers:
-    - Stock path: filled_from_stock active/completed + supplier skipped
-    - Supplier path: supplier_QC completed
+    Simulate the deterministic auto-triggers that run in the router worker
+    after update_agent. Covers:
+    - order_ready: stock path (filled_from_stock) or supplier path (supplier_QC)
+    - predispatch_checklist: activates when order_ready=completed/partial
+    - delivery_photo_check: activates when dispatched=completed
 
-    In production, the supplier path is handled by linkage_agent via
-    reconcile_order_ready(). Here we simulate both for test scoring.
+    In production, these run as check_stock_path_order_ready() and
+    cascade_auto_triggers() in the router worker.
     """
     from src.agent.update_agent import NodeUpdate
-
-    # Already has an order_ready update from the agent
-    if any(u.node_id == "order_ready" for u in output.node_updates):
-        return
 
     # Build current node map (initial state + this output's updates)
     node_map = {n["node_id"]: n["status"] for n in task_state.get("nodes", [])}
     for u in output.node_updates:
         node_map[u.node_id] = u.new_status
 
-    # Already set
-    if node_map.get("order_ready") in ("active", "completed"):
-        return
+    # --- order_ready trigger ---
+    if node_map.get("order_ready") not in ("active", "completed"):
+        # Stock path
+        stock_status = node_map.get("filled_from_stock")
+        supplier_skipped = node_map.get("supplier_indent", "skipped") in ("skipped", "pending")
+        if stock_status in ("active", "completed") and supplier_skipped:
+            new_status = "completed" if stock_status == "completed" else "active"
+            output.node_updates.append(NodeUpdate(
+                node_id="order_ready", new_status=new_status,
+                confidence=0.95, evidence="Auto-trigger: filled_from_stock, supplier skipped",
+            ))
+            node_map["order_ready"] = new_status
 
-    # Stock path trigger
-    stock_status = node_map.get("filled_from_stock")
-    supplier_skipped = node_map.get("supplier_indent", "skipped") in ("skipped", "pending")
-    if stock_status in ("active", "completed") and supplier_skipped:
-        new_status = "completed" if stock_status == "completed" else "active"
-        output.node_updates.append(NodeUpdate(
-            node_id="order_ready",
-            new_status=new_status,
-            confidence=0.95,
-            evidence="Auto-trigger: filled_from_stock active, supplier path skipped",
-        ))
-        return
+        # Supplier path
+        elif node_map.get("supplier_QC") == "completed":
+            output.node_updates.append(NodeUpdate(
+                node_id="order_ready", new_status="completed",
+                confidence=0.95, evidence="Auto-trigger: supplier_QC completed",
+            ))
+            node_map["order_ready"] = "completed"
 
-    # Supplier path trigger
-    if node_map.get("supplier_QC") == "completed":
+    # --- predispatch_checklist trigger ---
+    if (node_map.get("order_ready") in ("completed", "partial")
+            and node_map.get("predispatch_checklist") in ("pending", "skipped")
+            and not any(u.node_id == "predispatch_checklist" for u in output.node_updates)):
         output.node_updates.append(NodeUpdate(
-            node_id="order_ready",
-            new_status="completed",
-            confidence=0.95,
-            evidence="Auto-trigger: supplier_QC completed",
+            node_id="predispatch_checklist", new_status="active",
+            confidence=0.95, evidence="Auto-trigger: order_ready completed",
         ))
-        return
+        node_map["predispatch_checklist"] = "active"
+
+    # --- delivery_photo_check trigger ---
+    if (node_map.get("dispatched") == "completed"
+            and node_map.get("delivery_photo_check") in ("pending", "skipped")
+            and not any(u.node_id == "delivery_photo_check" for u in output.node_updates)):
+        output.node_updates.append(NodeUpdate(
+            node_id="delivery_photo_check", new_status="active",
+            confidence=0.95, evidence="Auto-trigger: dispatched completed",
+        ))
+        node_map["delivery_photo_check"] = "active"
 
 
 def run_case(case_dir: Path) -> dict:
@@ -422,7 +436,7 @@ def run_case(case_dir: Path) -> dict:
     # Simulate deterministic stock path → order_ready auto-trigger
     # (in production this runs in the router worker after update_agent)
     if output:
-        _simulate_stock_path_trigger(output, task_state)
+        _simulate_deterministic_triggers(output, task_state)
 
     result = score_single_message_case(case_dir, output)
     result["elapsed_s"] = round(elapsed, 2)

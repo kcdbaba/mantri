@@ -1,12 +1,18 @@
 """
-Unit tests for cron_worker._evaluate_time_trigger.
-No DB, no LLM, no Redis — all state is passed as arguments.
+Unit tests for cron_worker._evaluate_time_trigger + check_time_trigger_alerts.
+No DB, no LLM, no Redis — all state is passed as arguments or mocked.
 """
 
 import time
+import json
 import pytest
+import allure
+from unittest.mock import patch, MagicMock, mock_open
 
-from src.alerts.cron_worker import _evaluate_time_trigger, _node_status, _node_completed_at
+from src.alerts.cron_worker import (
+    _evaluate_time_trigger, _node_status, _node_completed_at,
+    check_time_trigger_alerts, _fire_alert,
+)
 
 
 def _make_node_states(task_id, overrides: dict) -> list[dict]:
@@ -167,3 +173,95 @@ def test_predelivery_fires_multiple_windows():
     assert "days_before_7" in keys
     assert "days_before_3" in keys
     assert "days_before_1" in keys
+
+
+# ---------------------------------------------------------------------------
+# _fire_alert — writes to log file
+# ---------------------------------------------------------------------------
+
+@allure.feature("Time Triggers")
+@allure.story("Fire Alert")
+class TestFireAlert:
+
+    def test_writes_to_alert_log(self, tmp_path):
+        log_path = tmp_path / "alerts.log"
+        task = {"id": "t1", "order_type": "standard_procurement", "client_id": "e_sata"}
+        node = {"id": "payment_followup_30d", "name": "Payment Follow-up"}
+        with patch("src.alerts.cron_worker.ALERT_LOG_PATH", str(log_path)):
+            _fire_alert(task, node, alert_key="elapsed_30d")
+        content = log_path.read_text()
+        alert = json.loads(content.strip())
+        assert alert["type"] == "time_trigger_alert"
+        assert alert["task_id"] == "t1"
+        assert alert["node_id"] == "payment_followup_30d"
+        assert alert["alert_key"] == "elapsed_30d"
+
+    def test_creates_parent_directory(self, tmp_path):
+        log_path = tmp_path / "subdir" / "alerts.log"
+        task = {"id": "t1", "order_type": "standard_procurement", "client_id": "e_sata"}
+        node = {"id": "quote_followup_48h", "name": "Quote Follow-up"}
+        with patch("src.alerts.cron_worker.ALERT_LOG_PATH", str(log_path)):
+            _fire_alert(task, node)
+        assert log_path.exists()
+
+
+# ---------------------------------------------------------------------------
+# check_time_trigger_alerts — integration with mocks
+# ---------------------------------------------------------------------------
+
+@allure.feature("Time Triggers")
+@allure.story("Check Alerts")
+class TestCheckTimeTrigggerAlerts:
+
+    def test_skips_completed_nodes(self):
+        task = {"id": "t1", "order_type": "standard_procurement", "client_id": "e_sata"}
+        nodes = [{"id": "t1_payment_followup_30d", "task_id": "t1",
+                  "status": "completed", "updated_at": int(time.time())}]
+        trigger_nodes = [{"id": "payment_followup_30d", "name": "Payment Follow-up",
+                          "type": "time_trigger", "trigger_rule": {"type": "elapsed_since_node"}}]
+        with patch("src.alerts.cron_worker.get_active_tasks", return_value=[task]), \
+             patch("src.alerts.cron_worker.get_node_states", return_value=nodes), \
+             patch("src.alerts.cron_worker.get_time_trigger_nodes", return_value=trigger_nodes), \
+             patch("src.alerts.cron_worker._fire_alert") as mock_fire:
+            check_time_trigger_alerts()
+        mock_fire.assert_not_called()
+
+    def test_fires_for_triggered_node(self):
+        now = int(time.time())
+        task = {"id": "t1", "order_type": "standard_procurement", "client_id": "e_sata"}
+        nodes = [
+            {"id": "t1_payment_followup_30d", "task_id": "t1",
+             "status": "pending", "updated_at": now},
+            {"id": "t1_delivery_confirmed", "task_id": "t1",
+             "status": "completed", "updated_at": now - 40 * 86400},
+        ]
+        trigger_nodes = [{"id": "payment_followup_30d", "name": "Payment Follow-up",
+                          "type": "time_trigger",
+                          "trigger_rule": {"type": "elapsed_since_node",
+                                          "reference_node": "delivery_confirmed",
+                                          "days": 30}}]
+        with patch("src.alerts.cron_worker.get_active_tasks", return_value=[task]), \
+             patch("src.alerts.cron_worker.get_node_states", return_value=nodes), \
+             patch("src.alerts.cron_worker.get_time_trigger_nodes", return_value=trigger_nodes), \
+             patch("src.alerts.cron_worker._evaluate_time_trigger", return_value=["elapsed_30d"]), \
+             patch("src.alerts.cron_worker._alert_already_fired", return_value=False), \
+             patch("src.alerts.cron_worker._fire_alert") as mock_fire, \
+             patch("src.alerts.cron_worker._record_alert_fired"):
+            check_time_trigger_alerts()
+        mock_fire.assert_called_once()
+
+    def test_dedup_prevents_double_fire(self):
+        task = {"id": "t1", "order_type": "standard_procurement", "client_id": "e_sata"}
+        nodes = [{"id": "t1_quote_followup_48h", "task_id": "t1",
+                  "status": "pending", "updated_at": int(time.time())}]
+        trigger_nodes = [{"id": "quote_followup_48h", "name": "Quote Follow-up",
+                          "type": "time_trigger",
+                          "trigger_rule": {"type": "elapsed_since_node"}}]
+        with patch("src.alerts.cron_worker.get_active_tasks", return_value=[task]), \
+             patch("src.alerts.cron_worker.get_node_states", return_value=nodes), \
+             patch("src.alerts.cron_worker.get_time_trigger_nodes", return_value=trigger_nodes), \
+             patch("src.alerts.cron_worker._evaluate_time_trigger", return_value=["elapsed_48h"]), \
+             patch("src.alerts.cron_worker._alert_already_fired", return_value=True), \
+             patch("src.alerts.cron_worker._fire_alert") as mock_fire:
+            check_time_trigger_alerts()
+        mock_fire.assert_not_called()

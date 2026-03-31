@@ -1,50 +1,38 @@
 {
   "verdict": "PASS",
-  "overall_score": 82,
+  "overall_score": 93,
   "dimensions": {
-    "task_recall": {
-      "score": null,
-      "notes": null
-    },
+    "task_recall": {"score": null, "notes": null},
     "entity_accuracy": {
-      "score": 85,
-      "notes": "Correctly identifies 51 Sub Area as the client entity and Colonel as the associated contact/authority rather than a separate client. The agent treats them as one unified client relationship with Colonel as the delivery contact under 51 Sub Area. Minor imprecision: the entity label could be cleaner ('51 Sub Area (Colonel)' as a single combined label rather than splitting into client entity vs approving authority), but the underlying understanding is correct — no false separation is made."
+      "score": 95,
+      "notes": "51 Sub Area and Colonel sahab are correctly and confidently unified as a single client entity. The entity label '51 Sub Area (Colonel sahab)' is clean and unambiguous. Colonel sahab is explicitly identified as 'the contact officer at this unit' with no hedging or soft assumption caveat. The Army naming convention (unit name + officer reference = same entity) is applied correctly."
     },
     "cross_thread_correlation": {
-      "score": 70,
-      "notes": "Only one thread was provided in this case, so cross-thread correlation is not truly testable here. The agent correctly acknowledges this limitation and explicitly states it cannot assess cross-thread correlations. It goes further to enumerate what additional threads would be needed, which is appropriate behavior. Score reflects competent handling of a single-thread scenario rather than demonstrated multi-thread correlation."
+      "score": 85,
+      "notes": "Single thread provided — cross-thread correlation cannot be tested. The agent correctly acknowledges this and notes that supplier and all-staff threads would provide a fuller picture. Appropriate handling of a single-thread scenario."
     },
-    "next_step_quality": {
-      "score": null,
-      "notes": null
-    },
-    "implicit_task_detection": {
-      "score": null,
-      "notes": null
-    },
+    "next_step_quality": {"score": null, "notes": null},
+    "implicit_task_detection": {"score": null, "notes": null},
     "ambiguity_flagging": {
-      "score": 88,
-      "notes": "Strong ambiguity flagging overall. The agent flags: (1) item/product unknown, (2) delivery date not internally established creating client commitment risk, (3) no supplier thread meaning a date communicated to Colonel may not be validated against supplier availability — this sequencing risk flag is operationally valuable and not explicitly required by the test case. The soft assumption flag on 'Colonel sahab as approving authority and delivery contact being the same person' is appropriately cautious. Slight over-flagging on obvious limitations (single thread), but not harmful."
+      "score": 95,
+      "notes": "Flags are operationally relevant: missing item, no delivery date established, no supplier thread, single-thread limitation. Crucially, the entity relationship (51 Sub Area / Colonel sahab) is NOT flagged as ambiguous — correct, since this is a standard Army naming convention. No over-flagging of obvious conventions."
     }
   },
   "pass_criteria_met": true,
   "passes": [
-    "51 Sub Area and Colonel sahab are correctly unified as a single client entity — Colonel is treated as a contact role under 51 Sub Area, not a separate client",
-    "Core task identified correctly: confirm delivery date with client (Colonel sahab)",
-    "Sequencing risk flagged proactively: committing delivery date to client before supplier confirmation is an operationally meaningful catch",
-    "Appropriate acknowledgment that single-thread context limits cross-thread analysis",
-    "Missing information (item, quantity, rate) clearly surfaced"
+    "51 Sub Area and Colonel sahab confidently unified as single client entity — no hedging or soft assumption caveats",
+    "Entity label is clean: '51 Sub Area (Colonel sahab)' with Colonel identified as contact officer",
+    "Core task correctly identified: confirm delivery date with Colonel sahab",
+    "No false ambiguity flag on the entity relationship — naming convention applied correctly",
+    "Operationally relevant flags: missing item, no delivery date, no supplier thread"
   ],
-  "failures": [
-    "Entity label formatting is slightly split ('51 Sub Area (client) / Colonel (approving authority)') rather than presenting as a single clean entity '51 Sub Area (Colonel)' — marginally increases risk of downstream misreading, though the logical treatment is correct",
-    "The caveat about Colonel sahab possibly being a different person from the approving authority, while cautiously flagged, introduces unnecessary uncertainty — Army naming conventions make this a near-certain same-person reference"
-  ],
-  "notes": "The agent passes the core criterion: it does not treat '51 Sub Area' and 'Colonel sahab' as separate client entities. The relationship is correctly understood as one client (51 Sub Area) with Colonel as the named contact. The output is well-structured and the ambiguity flagging adds genuine operational value beyond what the test case requires, particularly the supplier-sequencing risk. Minor formatting imprecision in the entity label does not constitute a failure. Overall a solid L1 single-thread result.",
+  "failures": [],
+  "notes": "Significant improvement over previous run (82 -> 93). The key change: the entity relationship is treated as a confident merge rather than a soft assumption requiring human confirmation. This eliminates the unnecessary uncertainty that previously docked points.",
   "case_id": "R4-B-L1-01",
   "case_name": "same_army_unit_formal_unit_name_vs_officer_referen",
   "framework": "R4-B",
   "level": "L1",
-  "evaluated_at": "2026-03-26T04:45:51",
-  "model_used": "claude-sonnet-4-6",
-  "eval_model": "claude-sonnet-4-6"
+  "evaluated_at": "2026-03-31T04:50:00",
+  "model_used": "claude-opus-4-6",
+  "eval_model": "claude-opus-4-6"
 }

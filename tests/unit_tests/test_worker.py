@@ -224,6 +224,91 @@ class TestProcessMessage:
         mock_ambiguity.assert_called_once()
         assert mock_ambiguity.call_args[0][0].severity == "high"
 
+    def test_stock_path_triggers(self):
+        from src.agent.update_agent import NodeUpdate
+        from src.router.worker import process_message
+        msg = {"body": "godown se de denge", "message_id": "m8"}
+        task = {"id": "t1", "order_type": "standard_procurement"}
+        output = _make_agent_output(node_updates=[
+            NodeUpdate(node_id="filled_from_stock", new_status="completed",
+                       confidence=0.9, evidence="stock"),
+        ])
+        mock_r = MagicMock()
+        with patch("src.router.worker.route", return_value=[("t1", 0.9)]), \
+             patch("src.router.worker.get_task", return_value=task), \
+             patch("src.router.worker.append_message"), \
+             patch("src.router.worker.run_update_agent", return_value=output), \
+             patch("src.router.worker.update_node_as_update_agent"), \
+             patch("src.router.worker.check_stock_path_order_ready", return_value="completed") as mock_stock, \
+             patch("src.router.worker.cascade_auto_triggers", return_value=["predispatch_checklist"]) as mock_cascade, \
+             patch("src.router.worker._handle_ambiguity"):
+            process_message(msg, mock_r)
+        mock_stock.assert_called_once_with("t1")
+        mock_cascade.assert_called_once_with("t1")
+
+    def test_node_data_extractions_applied(self):
+        from src.agent.update_agent import NodeDataExtraction
+        from src.router.worker import process_message
+        msg = {"body": "delivery 25 march", "message_id": "m9"}
+        task = {"id": "t1", "order_type": "standard_procurement"}
+        output = _make_agent_output(node_data_extractions=[
+            NodeDataExtraction(node_id="dispatched", data={"dispatch_date": "2026-03-25"}),
+        ])
+        mock_r = MagicMock()
+        with patch("src.router.worker.route", return_value=[("t1", 0.9)]), \
+             patch("src.router.worker.get_task", return_value=task), \
+             patch("src.router.worker.append_message"), \
+             patch("src.router.worker.run_update_agent", return_value=output), \
+             patch("src.router.worker.update_node_as_update_agent"), \
+             patch("src.router.worker.check_stock_path_order_ready", return_value=None), \
+             patch("src.router.worker.cascade_auto_triggers", return_value=[]), \
+             patch("src.router.worker.apply_node_data_extractions") as mock_nd, \
+             patch("src.router.worker._handle_ambiguity"):
+            process_message(msg, mock_r)
+        mock_nd.assert_called_once()
+
+    def test_item_extractions_applied_and_checked(self):
+        from src.agent.update_agent import ItemExtraction
+        from src.router.worker import process_message
+        msg = {"body": "50 bags atta", "message_id": "m10"}
+        task = {"id": "t1", "order_type": "standard_procurement"}
+        output = _make_agent_output(item_extractions=[
+            ItemExtraction(operation="add", description="atta 50kg", quantity=50),
+        ])
+        mock_r = MagicMock()
+        with patch("src.router.worker.route", return_value=[("t1", 0.9)]), \
+             patch("src.router.worker.get_task", return_value=task), \
+             patch("src.router.worker.append_message"), \
+             patch("src.router.worker.run_update_agent", return_value=output), \
+             patch("src.router.worker.update_node_as_update_agent"), \
+             patch("src.router.worker.check_stock_path_order_ready", return_value=None), \
+             patch("src.router.worker.cascade_auto_triggers", return_value=[]), \
+             patch("src.router.worker.apply_item_extractions") as mock_items, \
+             patch("src.router.worker._check_post_confirmation_item_changes") as mock_check, \
+             patch("src.router.worker._handle_ambiguity"):
+            process_message(msg, mock_r)
+        mock_items.assert_called_once()
+        mock_check.assert_called_once()
+
+    def test_new_task_candidates_logged(self):
+        from src.router.worker import process_message
+        msg = {"body": "QC failed", "message_id": "m11"}
+        task = {"id": "t1", "order_type": "standard_procurement"}
+        output = _make_agent_output()
+        output.new_task_candidates = [{"type": "client_notification", "context": "QC fail"}]
+        mock_r = MagicMock()
+        with patch("src.router.worker.route", return_value=[("t1", 0.9)]), \
+             patch("src.router.worker.get_task", return_value=task), \
+             patch("src.router.worker.append_message"), \
+             patch("src.router.worker.run_update_agent", return_value=output), \
+             patch("src.router.worker.update_node_as_update_agent"), \
+             patch("src.router.worker.check_stock_path_order_ready", return_value=None), \
+             patch("src.router.worker.cascade_auto_triggers", return_value=[]), \
+             patch("src.router.worker._log_new_task_candidate") as mock_log, \
+             patch("src.router.worker._handle_ambiguity"):
+            process_message(msg, mock_r)
+        mock_log.assert_called_once()
+
 
 # ---------------------------------------------------------------------------
 # _handle_ambiguity — gate blocking, queue write, target routing
@@ -663,3 +748,135 @@ class TestRouterStreamProcessing:
         with patch("src.router.worker.process_message"):
             _process_with_retry("evt-1", fields, mock_r)
         mock_r.xack.assert_called_once()
+
+
+# ---------------------------------------------------------------------------
+# process_message_batch
+# ---------------------------------------------------------------------------
+
+@allure.feature("Message Routing")
+@allure.story("Batch Processing")
+class TestProcessMessageBatch:
+
+    def _run_batch(self, messages, agent_output):
+        from src.router.worker import process_message_batch
+        mock_r = MagicMock()
+        with patch("src.router.worker.route", return_value=[("t1", 0.9)]), \
+             patch("src.router.worker.get_task", return_value={"id": "t1", "order_type": "standard_procurement"}), \
+             patch("src.router.worker.append_message"), \
+             patch("src.router.worker.run_update_agent", return_value=agent_output), \
+             patch("src.router.worker.update_node_as_update_agent") as mock_update, \
+             patch("src.router.worker.apply_item_extractions"), \
+             patch("src.router.worker.apply_node_data_extractions"), \
+             patch("src.router.worker._check_post_confirmation_item_changes"), \
+             patch("src.router.worker._handle_ambiguity") as mock_amb, \
+             patch("src.router.worker.check_stock_path_order_ready", return_value=None), \
+             patch("src.router.worker.cascade_auto_triggers", return_value=[]):
+            process_message_batch("t1", messages, mock_r)
+        return mock_update, mock_amb, mock_r
+
+    def test_batch_writes_node_updates(self):
+        msgs = [{"body": "ok", "message_id": "m1"}, {"body": "confirmed", "message_id": "m2"}]
+        output = _make_agent_output(node_updates=[_make_node_update()])
+        mock_update, _, _ = self._run_batch(msgs, output)
+        mock_update.assert_called_once()
+
+    def test_batch_publishes_task_event(self):
+        msgs = [{"body": "test", "message_id": "m1"}]
+        output = _make_agent_output()
+        _, _, mock_r = self._run_batch(msgs, output)
+        mock_r.xadd.assert_called_once()
+
+    def test_batch_agent_failure_dead_letters(self):
+        from src.router.worker import process_message_batch
+        msgs = [{"body": "test", "message_id": "m1"}]
+        mock_r = MagicMock()
+        with patch("src.router.worker.route", return_value=[("t1", 0.9)]), \
+             patch("src.router.worker.get_task", return_value={"id": "t1", "order_type": "standard_procurement"}), \
+             patch("src.router.worker.append_message"), \
+             patch("src.router.worker.run_update_agent", return_value=None), \
+             patch("src.router.worker._log_dead_letter") as mock_dl:
+            process_message_batch("t1", msgs, mock_r)
+        mock_dl.assert_called_once()
+
+    def test_batch_handles_ambiguity_flags(self):
+        msgs = [{"body": "test", "message_id": "m1"}]
+        flag = AmbiguityFlag(description="test", severity="high",
+                             category="entity", blocking_node_id="dispatched")
+        output = _make_agent_output(ambiguity_flags=[flag])
+        _, mock_amb, _ = self._run_batch(msgs, output)
+        mock_amb.assert_called_once()
+
+
+# ---------------------------------------------------------------------------
+# _publish_task_event
+# ---------------------------------------------------------------------------
+
+@allure.feature("Message Routing")
+@allure.story("Task Event Publishing")
+class TestPublishTaskEvent:
+
+    def test_publishes_to_task_events_stream(self):
+        from src.router.worker import _publish_task_event
+        mock_r = MagicMock()
+        msg = {"message_id": "m1", "body": "test"}
+        _publish_task_event("t1", msg, mock_r)
+        mock_r.xadd.assert_called_once()
+        call_args = mock_r.xadd.call_args[0]
+        assert call_args[0] == "task_events"
+        fields = call_args[1]
+        assert fields["task_id"] == "t1"
+        assert fields["event_type"] == "message_processed"
+
+    def test_redis_error_does_not_raise(self):
+        from src.router.worker import _publish_task_event
+        import redis
+        mock_r = MagicMock()
+        mock_r.xadd.side_effect = redis.RedisError("connection refused")
+        _publish_task_event("t1", {"message_id": "m1"}, mock_r)  # should not raise
+
+
+# ---------------------------------------------------------------------------
+# _is_duplicate_flag and _check_rate_limit (DB-backed)
+# ---------------------------------------------------------------------------
+
+@allure.feature("Ambiguity Handling")
+@allure.story("Dedup DB Query")
+class TestDedupDBQuery:
+
+    def test_is_duplicate_returns_true_when_match(self):
+        from src.router.worker import _is_duplicate_flag
+        mock_conn = MagicMock()
+        mock_conn.execute.return_value.fetchone.return_value = {"id": "existing"}
+        with patch("src.router.worker.get_connection", return_value=mock_conn):
+            result = _is_duplicate_flag("t1", "entity", "dispatched", int(time.time()))
+        assert result is True
+
+    def test_is_duplicate_returns_false_when_no_match(self):
+        from src.router.worker import _is_duplicate_flag
+        mock_conn = MagicMock()
+        mock_conn.execute.return_value.fetchone.return_value = None
+        with patch("src.router.worker.get_connection", return_value=mock_conn):
+            result = _is_duplicate_flag("t1", "entity", None, int(time.time()))
+        assert result is False
+
+    def test_check_rate_limit_unlimited(self):
+        from src.router.worker import _check_rate_limit
+        profile = {"escalation_rate_limit": None}
+        assert _check_rate_limit("t1", profile, int(time.time())) is False
+
+    def test_check_rate_limit_under(self):
+        from src.router.worker import _check_rate_limit
+        mock_conn = MagicMock()
+        mock_conn.execute.return_value.fetchone.return_value = (3,)
+        profile = {"escalation_rate_limit": 10}
+        with patch("src.router.worker.get_connection", return_value=mock_conn):
+            assert _check_rate_limit("t1", profile, int(time.time())) is False
+
+    def test_check_rate_limit_over(self):
+        from src.router.worker import _check_rate_limit
+        mock_conn = MagicMock()
+        mock_conn.execute.return_value.fetchone.return_value = (10,)
+        profile = {"escalation_rate_limit": 10}
+        with patch("src.router.worker.get_connection", return_value=mock_conn):
+            assert _check_rate_limit("t1", profile, int(time.time())) is True

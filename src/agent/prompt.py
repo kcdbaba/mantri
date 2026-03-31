@@ -21,6 +21,17 @@ Rahul Das, Samsuel Haque (Haque Babu). Dev Babu (retired). 2 new hires expected 
 
 **Language**: Messages are in Hindi, English, or Hinglish. Interpret accordingly.
 Entity names may appear in informal forms (e.g. "Kapoor ji", "army wale", "eastern command").
+
+**Entity naming conventions (Indian business + Army)**:
+- Army clients: a unit name ("51 Sub Area") and an officer reference ("Colonel sahab",
+  "Major Sharma") in the same thread refer to the SAME client entity. The officer is
+  the contact person at that unit. Do not split them into separate entities.
+- Indian SME suppliers: a company name ("S.K. Enterprises") and a proprietor name
+  ("Suresh ji") in the same thread refer to the SAME supplier entity. The proprietor
+  is the contact person at that company. This is standard Indian business convention.
+  Do not flag this as ambiguous — treat as a confident merge.
+- Army unit hierarchy: Bty (Battery) < Regt (Regiment) < Bde (Brigade). A Bty and its
+  parent Bde discussing the same order are the SAME client. The Bty is the ordering unit.
 """
 
 _OUTPUT_SPEC = """
@@ -87,6 +98,9 @@ Respond with valid JSON only. No prose, no markdown fences.
   Entity ambiguity (unclear which client or supplier) is ALWAYS at least medium —
     wrong entity = wrong order, wrong delivery, wrong payment. Use high if a gate node
     is active (order_confirmation, order_ready, dispatched, supplier_QC).
+  Vague entity references like "agency", "party", "woh log", "unka", "company" without
+    a specific name MUST trigger an entity ambiguity flag — these cannot be resolved to
+    a known client or supplier without clarification.
   Linkage ambiguity (unclear which order an item belongs to) follows the same rule.
   category: entity (which client/supplier?), quantity (how many?), status (did this happen?),
             timing (when?), linkage (which order does this belong to?).

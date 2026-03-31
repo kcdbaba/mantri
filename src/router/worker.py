@@ -24,7 +24,7 @@ from src.store.task_store import (
     update_node, update_node_as_update_agent,
     append_message, get_task, get_node_states,
     apply_item_extractions, apply_node_data_extractions,
-    check_stock_path_order_ready,
+    check_stock_path_order_ready, cascade_auto_triggers,
 )
 from src.store.db import get_connection, transaction
 
@@ -80,6 +80,11 @@ def process_message(message: dict, r: redis.Redis):
             result = check_stock_path_order_ready(task_id)
             if result:
                 log.info("Stock path → order_ready=%s for task=%s", result, task_id)
+
+        # Cascade downstream auto-triggers (predispatch_checklist, delivery_photo_check)
+        cascaded = cascade_auto_triggers(task_id)
+        if cascaded:
+            log.info("Auto-trigger cascade: task=%s → %s", task_id, cascaded)
 
         # Log new task candidates (no creation flow in Sprint 3)
         for candidate in output.new_task_candidates:
@@ -147,6 +152,11 @@ def process_message_batch(task_id: str, messages: list[dict], r: redis.Redis):
         result = check_stock_path_order_ready(task_id)
         if result:
             log.info("Stock path → order_ready=%s for task=%s", result, task_id)
+
+    # Cascade downstream auto-triggers (predispatch_checklist, delivery_photo_check)
+    cascaded = cascade_auto_triggers(task_id)
+    if cascaded:
+        log.info("Auto-trigger cascade: task=%s → %s", task_id, cascaded)
 
     for candidate in output.new_task_candidates:
         _log_new_task_candidate(candidate, last_msg, task_id)

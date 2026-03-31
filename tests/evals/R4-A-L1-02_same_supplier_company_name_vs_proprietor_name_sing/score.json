@@ -1,50 +1,39 @@
 {
   "verdict": "PASS",
-  "overall_score": 85,
+  "overall_score": 93,
   "dimensions": {
-    "task_recall": {
-      "score": null,
-      "notes": null
-    },
+    "task_recall": {"score": null, "notes": null},
     "entity_accuracy": {
-      "score": 88,
-      "notes": "Correctly identifies both 'S.K. Enterprises' (firm) and 'Suresh ji' (individual) and treats them as a single supplier entity rather than creating separate records. The tentative resolution as 'contact person at S.K. Enterprises' is operationally sound and consistent with Indian SME naming conventions. Minor deduction for phrasing it as a 'soft assumption' requiring human confirmation — in this context it's a fairly standard inference that arguably didn't need to be flagged as uncertain at all, but the conservative approach is defensible."
+      "score": 95,
+      "notes": "S.K. Enterprises and Suresh ji are correctly and confidently unified as a single supplier entity. Explicitly labelled as 'Suresh ji is the proprietor of S.K. Enterprises, standard Indian SME convention'. No hedging, no soft assumption flag. The entity label 'S.K. Enterprises / Suresh ji (supplier)' is clean and unambiguous. Correct Hinglish parsing of 'maal' and 'kal subah tak'."
     },
     "cross_thread_correlation": {
-      "score": 80,
-      "notes": "Only one thread was provided, so true cross-thread correlation wasn't possible. The agent correctly identifies this limitation and flags it explicitly. Within the single thread, all messages are correctly unified under one parent task. The agent appropriately notes that if other threads reference the same entities, they should be correlated — showing awareness of the cross-thread requirement even when unable to execute it."
+      "score": 85,
+      "notes": "Single thread provided — cross-thread correlation cannot be tested. The agent correctly notes that client and all-staff threads would provide context on which order this delivery serves. Appropriate single-thread handling."
     },
-    "next_step_quality": {
-      "score": null,
-      "notes": null
-    },
-    "implicit_task_detection": {
-      "score": null,
-      "notes": null
-    },
+    "next_step_quality": {"score": null, "notes": null},
+    "implicit_task_detection": {"score": null, "notes": null},
     "ambiguity_flagging": {
-      "score": 86,
-      "notes": "The agent explicitly flags the 'Suresh ji' vs. 'S.K. Enterprises' ambiguity in a dedicated section with clear reasoning and a path to resolution. It also flags missing item type, no client linkage, lack of dispatch confirmation, and the single-thread limitation. The flagging is thorough and well-structured. Minor deduction: the agent slightly over-flags the Suresh ji / S.K. Enterprises relationship — this is a very common Indian SME pattern and the agent's own reasoning shows it's a near-certain inference, yet it's treated with more uncertainty than warranted, which could create unnecessary noise for the human reviewer."
+      "score": 95,
+      "notes": "Flags are operationally useful: generic item reference ('maal'), no client linkage, single-thread limitation. The ambiguous correlations section explicitly confirms 'S.K. Enterprises and Suresh ji are confidently the same entity' — correct application of Indian SME naming conventions. No over-flagging. Pre-emptive delivery confirmation subtask is a good implicit detection."
     }
   },
   "pass_criteria_met": true,
   "passes": [
-    "Single unified supplier entity created — 'S.K. Enterprises' and 'Suresh ji' correctly resolved into one record rather than two separate entries",
-    "Delivery task correctly identified with accurate date/time: 25 Mar morning ('kal subah tak' correctly parsed)",
-    "Explicit ambiguity flag raised for Suresh ji / S.K. Enterprises relationship, routed for human review",
-    "Hinglish terms ('maal', 'kal subah tak') correctly interpreted",
-    "Limitation of single-thread input clearly acknowledged with guidance on what additional context is needed",
-    "Flags for missing item type, quantity, and client linkage are operationally useful additions"
+    "S.K. Enterprises and Suresh ji confidently unified as single supplier entity — no unnecessary ambiguity flag",
+    "Explicitly states 'standard Indian SME convention' — demonstrates domain knowledge",
+    "Delivery timeline correctly parsed: 'kal subah tak' = 25 Mar morning",
+    "Pre-emptive delivery confirmation subtask correctly generated",
+    "No false ambiguity flag on the entity relationship",
+    "Operationally relevant flags: generic item, no client linkage"
   ],
-  "failures": [
-    "Slight over-treatment of the Suresh ji / S.K. Enterprises inference as uncertain — this is a standard Indian SME convention (proprietor name = company contact) and the agent's own reasoning effectively confirms it, yet it's flagged as needing human confirmation, which may add unnecessary review burden",
-    "No explicit mention that this pattern (company name + proprietor name in same thread) is a known variant — a brief note would help downstream reviewers understand why the merge was made"
-  ],
-  "notes": "The agent correctly passes the core test criterion: it produces a single supplier entity rather than splitting 'S.K. Enterprises' and 'Suresh ji' into separate records. The delivery task is accurately extracted with the correct timeline. The ambiguity flagging is comprehensive and well-structured, though slightly over-cautious on the Suresh ji / S.K. Enterprises link given how clear the thread context is. Overall a strong output for a single-thread scenario with the right entity resolution behavior for the Indian SME context being tested.",
+  "failures": [],
+  "notes": "Improvement over previous run (85 -> 93). The key change: the entity merge is treated as confident rather than flagged as needing human confirmation. The agent explicitly cites Indian SME naming conventions as the basis for the merge, which is the right domain knowledge application.",
   "case_id": "R4-A-L1-02",
   "case_name": "same_supplier_company_name_vs_proprietor_name_sing",
   "framework": "R4-A",
   "level": "L1",
-  "evaluated_at": "2026-03-25T01:51:14",
-  "model_used": "claude-sonnet-4-6"
+  "evaluated_at": "2026-03-31T04:50:00",
+  "model_used": "claude-opus-4-6",
+  "eval_model": "claude-opus-4-6"
 }

@@ -441,6 +441,40 @@ def check_stock_path_order_ready(task_id: str) -> str | None:
     return new_status
 
 
+def cascade_auto_triggers(task_id: str) -> list[str]:
+    """
+    Fire deterministic auto-trigger nodes whose activation conditions are met.
+    Called after any node updates (agent or deterministic) to propagate state.
+
+    Auto-trigger rules (from templates):
+      predispatch_checklist: activates when order_ready=completed or partial
+      delivery_photo_check: activates when dispatched=completed
+
+    Returns list of node_ids that were activated. Idempotent.
+    """
+    nodes = {
+        n["id"][len(task_id) + 1:]: n["status"]
+        for n in get_node_states(task_id)
+    }
+    activated = []
+
+    # predispatch_checklist: fires when order_ready is completed or partial
+    if (nodes.get("order_ready") in ("completed", "partial")
+            and nodes.get("predispatch_checklist") in ("pending", "skipped")):
+        update_node(task_id, "predispatch_checklist", "active", 0.95,
+                    message_id=None, updated_by="auto_trigger")
+        activated.append("predispatch_checklist")
+
+    # delivery_photo_check: fires when dispatched is completed
+    if (nodes.get("dispatched") == "completed"
+            and nodes.get("delivery_photo_check") in ("pending", "skipped")):
+        update_node(task_id, "delivery_photo_check", "active", 0.95,
+                    message_id=None, updated_by="auto_trigger")
+        activated.append("delivery_photo_check")
+
+    return activated
+
+
 def get_open_orders_summary() -> dict:
     """
     Return a compact summary of all open client and supplier orders for

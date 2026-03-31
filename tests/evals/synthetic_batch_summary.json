@@ -1,822 +1,287 @@
 {
-  "run_at": "2026-03-30T01:07:01",
-  "total": 16,
-  "passed": 16,
+  "run_at": "2026-03-31T04:59:00",
+  "total": 29,
+  "passed": 29,
   "partial": 0,
   "failed": 0,
   "errored": 0,
-  "avg_score": 89.0,
+  "avg_score": 90.9,
+  "by_framework": {
+    "R1-D": {
+      "count": 1,
+      "verdicts": [
+        "P"
+      ],
+      "avg_score": 84.0
+    },
+    "R2": {
+      "count": 8,
+      "verdicts": [
+        "P",
+        "P",
+        "P",
+        "P",
+        "P",
+        "P",
+        "P",
+        "P"
+      ],
+      "avg_score": 93.2
+    },
+    "R3-C": {
+      "count": 6,
+      "verdicts": [
+        "P",
+        "P",
+        "P",
+        "P",
+        "P",
+        "P"
+      ],
+      "avg_score": 90.0
+    },
+    "R4-A": {
+      "count": 5,
+      "verdicts": [
+        "P",
+        "P",
+        "P",
+        "P",
+        "P"
+      ],
+      "avg_score": 91.0
+    },
+    "R4-B": {
+      "count": 4,
+      "verdicts": [
+        "P",
+        "P",
+        "P",
+        "P"
+      ],
+      "avg_score": 90.0
+    },
+    "R5": {
+      "count": 4,
+      "verdicts": [
+        "P",
+        "P",
+        "P",
+        "P"
+      ],
+      "avg_score": 90.5
+    },
+    "R6-L1": {
+      "count": 1,
+      "verdicts": [
+        "P"
+      ],
+      "avg_score": 88.0
+    }
+  },
   "results": [
     {
-      "verdict": "PASS",
-      "overall_score": 91,
-      "dimensions": {
-        "task_recall": {
-          "score": null,
-          "notes": null
-        },
-        "entity_accuracy": {
-          "score": 93,
-          "notes": "Correctly resolves 'Sharma ji' and 'Sharma bhai' into a single supplier entity 'Sharma' rather than creating two records. Item (tandoor), timing (afternoon, 24 Mar), and assigning staff (Staff 1 / Ashish) are all accurately captured. Minor: labels client as 'unknown' rather than leaving it blank, but this is a honest reflection of available data, not an error."
-        },
-        "cross_thread_correlation": {
-          "score": null,
-          "notes": "Not applicable \u2014 single thread provided. Agent correctly notes only one thread was supplied and flags that client group and all-staff threads are missing, which is an appropriate structural observation rather than a scoring failure."
-        },
-        "implicit_task_detection": {
-          "score": null,
-          "notes": null
-        },
-        "next_step_quality": {
-          "score": null,
-          "notes": null
-        },
-        "ambiguity_flagging": {
-          "score": 90,
-          "notes": "Exemplary flagging. The alias merge ('Sharma ji' vs 'Sharma bhai') is explicitly surfaced with a human-review request rather than silently resolved. Unknown client identity, missing quantity, absent logistics details, and incomplete thread coverage are all called out clearly in the FLAGS and AMBIGUOUS CORRELATIONS sections. Slight verbosity in the flags does not reduce utility; all flags are operationally meaningful. The note to Ashish about validating naming conventions aligns with the case metadata instruction."
-        }
-      },
-      "pass_criteria_met": true,
-      "passes": [
-        "Single supplier entity 'Sharma' created \u2014 'Sharma ji' and 'Sharma bhai' correctly merged into one record, not split into two.",
-        "Alias merge explicitly flagged for human confirmation (Ashish) rather than silently assumed.",
-        "Core delivery task identified: confirm exact delivery time today \u2014 matches expected output.",
-        "Client identity gap flagged as requiring human input rather than invented or silently omitted.",
-        "Missing thread coverage (client group, all-staff group) noted as a structural data gap.",
-        "No fabricated entities, quantities, order values, or addresses introduced."
-      ],
-      "failures": [
-        "Subtasks 2\u20134 (logistics confirmation, client notification, receipt/inspection) go beyond the expected output scope and could introduce noise for an operator who only needs the single confirmed task. Not a hard failure, but marginally over-engineered for the thin input available.",
-        "The 'Meta-Note on This Test' section is addressed to the evaluator rather than an operational user \u2014 inappropriate framing for a live task output, though it does not affect accuracy."
-      ],
-      "notes": "The agent satisfies the core pass criterion cleanly: one supplier entity record for Sharma, with the alias merge explicitly flagged rather than silently resolved or erroneously split. Entity accuracy and ambiguity flagging are both strong. The output is more verbose than strictly necessary for a 3-message, single-thread input, and the meta-commentary at the end is misplaced in an operational context, but neither issue constitutes an operational failure. The case metadata instruction to 'validate naming conventions with Ashish' is implicitly addressed by the flagging behaviour, though not explicitly quoted back. Overall a high-quality response for the constraints given.",
-      "case_id": "R4-A-L1-01",
-      "case_name": "same_supplier_2_name_variants_single_thread",
-      "framework": "R4-A",
-      "level": "L1",
-      "evaluated_at": "2026-03-26T04:36:45",
-      "model_used": "claude-sonnet-4-6",
-      "eval_model": "claude-sonnet-4-6"
-    },
-    {
-      "verdict": "PASS",
-      "overall_score": 85,
-      "dimensions": {
-        "task_recall": {
-          "score": null,
-          "notes": null
-        },
-        "entity_accuracy": {
-          "score": 88,
-          "notes": "Correctly identifies both 'S.K. Enterprises' (firm) and 'Suresh ji' (individual) and treats them as a single supplier entity rather than creating separate records. The tentative resolution as 'contact person at S.K. Enterprises' is operationally sound and consistent with Indian SME naming conventions. Minor deduction for phrasing it as a 'soft assumption' requiring human confirmation \u2014 in this context it's a fairly standard inference that arguably didn't need to be flagged as uncertain at all, but the conservative approach is defensible."
-        },
-        "cross_thread_correlation": {
-          "score": 80,
-          "notes": "Only one thread was provided, so true cross-thread correlation wasn't possible. The agent correctly identifies this limitation and flags it explicitly. Within the single thread, all messages are correctly unified under one parent task. The agent appropriately notes that if other threads reference the same entities, they should be correlated \u2014 showing awareness of the cross-thread requirement even when unable to execute it."
-        },
-        "next_step_quality": {
-          "score": null,
-          "notes": null
-        },
-        "implicit_task_detection": {
-          "score": null,
-          "notes": null
-        },
-        "ambiguity_flagging": {
-          "score": 86,
-          "notes": "The agent explicitly flags the 'Suresh ji' vs. 'S.K. Enterprises' ambiguity in a dedicated section with clear reasoning and a path to resolution. It also flags missing item type, no client linkage, lack of dispatch confirmation, and the single-thread limitation. The flagging is thorough and well-structured. Minor deduction: the agent slightly over-flags the Suresh ji / S.K. Enterprises relationship \u2014 this is a very common Indian SME pattern and the agent's own reasoning shows it's a near-certain inference, yet it's treated with more uncertainty than warranted, which could create unnecessary noise for the human reviewer."
-        }
-      },
-      "pass_criteria_met": true,
-      "passes": [
-        "Single unified supplier entity created \u2014 'S.K. Enterprises' and 'Suresh ji' correctly resolved into one record rather than two separate entries",
-        "Delivery task correctly identified with accurate date/time: 25 Mar morning ('kal subah tak' correctly parsed)",
-        "Explicit ambiguity flag raised for Suresh ji / S.K. Enterprises relationship, routed for human review",
-        "Hinglish terms ('maal', 'kal subah tak') correctly interpreted",
-        "Limitation of single-thread input clearly acknowledged with guidance on what additional context is needed",
-        "Flags for missing item type, quantity, and client linkage are operationally useful additions"
-      ],
-      "failures": [
-        "Slight over-treatment of the Suresh ji / S.K. Enterprises inference as uncertain \u2014 this is a standard Indian SME convention (proprietor name = company contact) and the agent's own reasoning effectively confirms it, yet it's flagged as needing human confirmation, which may add unnecessary review burden",
-        "No explicit mention that this pattern (company name + proprietor name in same thread) is a known variant \u2014 a brief note would help downstream reviewers understand why the merge was made"
-      ],
-      "notes": "The agent correctly passes the core test criterion: it produces a single supplier entity rather than splitting 'S.K. Enterprises' and 'Suresh ji' into separate records. The delivery task is accurately extracted with the correct timeline. The ambiguity flagging is comprehensive and well-structured, though slightly over-cautious on the Suresh ji / S.K. Enterprises link given how clear the thread context is. Overall a strong output for a single-thread scenario with the right entity resolution behavior for the Indian SME context being tested.",
-      "case_id": "R4-A-L1-02",
-      "case_name": "same_supplier_company_name_vs_proprietor_name_sing",
-      "framework": "R4-A",
-      "level": "L1",
-      "evaluated_at": "2026-03-25T01:51:14",
-      "model_used": "claude-sonnet-4-6"
-    },
-    {
-      "verdict": "PASS",
-      "overall_score": 91,
-      "dimensions": {
-        "task_recall": {
-          "score": null,
-          "notes": null
-        },
-        "entity_accuracy": {
-          "score": 93,
-          "notes": "Correctly identifies 'Sharma ji' and 'Sharma bhai' as a single supplier entity under 'Sharma Supplier'. Item (tandoor), timeline (25 Mar), and thread sources are all accurately attributed. No spurious entities introduced. Minor: 'Sharma Supplier' as a label is a reasonable normalisation though the canonical name is simply 'Sharma' per expected output \u2014 functionally equivalent."
-        },
-        "cross_thread_correlation": {
-          "score": 92,
-          "notes": "Both threads are cleanly unified into a single parent delivery task with explicit source-thread attribution. The agent correctly identifies that Thread 1 (supplier coordination) and Thread 2 (staff availability question) both refer to the same delivery event on 25 Mar. No duplicate tasks created. Cross-thread reasoning is shown transparently."
-        },
-        "next_step_quality": {
-          "score": null,
-          "notes": null
-        },
-        "implicit_task_detection": {
-          "score": null,
-          "notes": null
-        },
-        "ambiguity_flagging": {
-          "score": 90,
-          "notes": "The alias merge is explicitly flagged as tentative with a clear recommendation for human confirmation. Staff availability gap, missing delivery window, unspecified quantity, and absent client identity are all surfaced as distinct flags rather than silently assumed. The agent also flags that only 2 threads were provided and that the task list may be incomplete \u2014 useful operational caution. Slight over-flagging on items (client identity, delivery address) that go beyond the scope of the test case, but this does not constitute a failure \u2014 it is conservative and appropriate."
-        }
-      },
-      "pass_criteria_met": true,
-      "passes": [
-        "Single unified supplier entity created (Sharma Supplier) linked across both threads \u2014 no duplicate supplier records",
-        "One unified delivery task for tandoor on 25 Mar \u2014 not split into separate unlinked tasks per thread",
-        "Alias resolution ('Sharma ji' / 'Sharma bhai') handled correctly as tentative merge with explicit human-confirmation flag",
-        "Cross-thread source attribution is explicit (Supplier Group, All Staff Group listed under parent task)",
-        "Staff availability gap (unconfirmed receiver for delivery) correctly detected and flagged as a blocking risk",
-        "Ambiguity flagging section populated with specific, actionable uncertainty items rather than silent assumptions",
-        "Transparent reasoning shown before output \u2014 merge logic is auditable"
-      ],
-      "failures": [
-        "Parent task label uses 'Sharma Supplier' rather than simply 'Sharma' \u2014 trivially minor, no operational impact",
-        "Subtasks 3 and 4 (delivery address, client identity) extend beyond what the test threads support \u2014 slightly inflates the task list, though they are correctly marked as pending/unknown rather than fabricated"
-      ],
-      "notes": "The agent cleanly satisfies the core pass criteria: one supplier entity, one unified delivery task, and the alias merge is flagged rather than silently assumed. Cross-thread correlation is handled correctly and transparently. Ambiguity flagging is thorough \u2014 arguably over-thorough for the minimal input, but conservative flagging is preferable to silent guessing in an ops context. The self-evaluation table at the end is a useful transparency feature. Overall a strong L2 performance on this cross-thread entity resolution baseline test.",
-      "case_id": "R4-A-L2-01",
-      "case_name": "same_supplier_2_name_variants_across_2_threads",
-      "framework": "R4-A",
-      "level": "L2",
-      "evaluated_at": "2026-03-25T01:52:03",
-      "model_used": "claude-sonnet-4-6"
-    },
-    {
-      "verdict": "PASS",
-      "overall_score": 88,
-      "dimensions": {
-        "task_recall": {
-          "score": null,
-          "notes": null
-        },
-        "entity_accuracy": {
-          "score": 90,
-          "notes": "Kapoor ji and Delhi wale correctly merged into a single supplier entity. Rate of \u20b947,000 and item (tandoor) accurately attributed. No phantom entities created. Minor over-elaboration (GST, freight) goes beyond thread content but does not introduce factual errors."
-        },
-        "cross_thread_correlation": {
-          "score": 92,
-          "notes": "Thread 1 (Ashish asking about Delhi wale rate) and Thread 2 (Staff 1 reporting Kapoor ji quote) are correctly unified into a single procurement task. Correlation reasoning is explicit and well-justified: timing alignment, contextual fit, no contradicting signals. Single parent task correctly instantiated rather than two separate tasks."
-        },
-        "next_step_quality": {
-          "score": null,
-          "notes": null
-        },
-        "implicit_task_detection": {
-          "score": null,
-          "notes": null
-        },
-        "ambiguity_flagging": {
-          "score": 85,
-          "notes": "The agent correctly flags the Delhi wale / Kapoor ji merge as a soft assumption requiring human confirmation, which is exactly what the pass criteria and additional notes call for. It also appropriately flags missing client context. Flags are prominently placed and clearly worded. Minor issue: the agent introduces several additional ambiguities (multiple orders, GST inclusivity, transporter) that go beyond the core test scenario \u2014 these are not wrong, but they dilute focus on the primary flag. The core flag is present and well-articulated."
-        }
-      },
-      "pass_criteria_met": true,
-      "passes": [
-        "Single supplier entity correctly formed from 'Delhi wale' and 'Kapoor ji' \u2014 not treated as two separate suppliers",
-        "Rate of \u20b947,000 accurately captured and associated with the merged supplier entity",
-        "Cross-thread merge is explicitly reasoned and documented rather than silently assumed",
-        "Ambiguity flag for the Delhi wale / Kapoor ji identity match is prominently surfaced for human (Ashish) review",
-        "Task status correctly characterised as 'rate received, awaiting decision' consistent with expected output",
-        "No hallucinated entity names, amounts, or order details introduced"
-      ],
-      "failures": [
-        "The ambiguity flag, while present, is somewhat buried within a large volume of output \u2014 operational users may miss it amid numerous other flags about GST, freight, client identity, etc.",
-        "Minor: The agent introduces substantial implicit task scaffolding (e-way bill, PO, transporter) that, while not incorrect, exceeds what the two-message scenario warrants and could create noise in a real ops dashboard"
-      ],
-      "notes": "The agent passes the core test criterion cleanly: it identifies Delhi wale and Kapoor ji as a single supplier entity and does not bifurcate them into two separate records. The entity merge is documented with explicit reasoning and correctly flagged for human validation, aligning well with the case note about confirming 'city wala' reference patterns. The primary deduction (rate at \u20b947,000, awaiting final decision) matches the expected output. The main weakness is proportionality \u2014 the agent generates a heavily scaffolded response for a two-message scenario, which while operationally thorough, risks burying the critical flag in noise. This does not constitute a failure but is a calibration concern for production use.",
-      "case_id": "R4-A-L2-02",
-      "case_name": "same_supplier_honorific_vs_productbased_reference",
-      "framework": "R4-A",
-      "level": "L2",
-      "evaluated_at": "2026-03-26T04:03:00",
-      "model_used": "claude-sonnet-4-6"
-    },
-    {
-      "verdict": "PASS",
-      "overall_score": 92,
-      "dimensions": {
-        "task_recall": {
-          "score": null,
-          "notes": null
-        },
-        "entity_accuracy": {
-          "score": 95,
-          "notes": "Both supplier references ('Sharma ji' and 'S. Sharma & Co.') are correctly identified and tentatively unified into a single supplier entity. The agent does not create duplicate records. Client entity gap is also correctly noted. No spurious entities are introduced."
-        },
-        "cross_thread_correlation": {
-          "score": 93,
-          "notes": "All three threads (Client Group, Supplier Group, All Staff Group) are correctly correlated to a single parent task. The same tandoor order is unified across threads without fragmentation. Thread-level sourcing is explicit for each subtask."
-        },
-        "next_step_quality": {
-          "score": null,
-          "notes": null
-        },
-        "implicit_task_detection": {
-          "score": null,
-          "notes": null
-        },
-        "ambiguity_flagging": {
-          "score": 90,
-          "notes": "The agent explicitly flags the Sharma ji / S. Sharma & Co. entity resolution as uncertain and requests human confirmation rather than silently merging. Additional operational gaps (packaging readiness, missing inspection step, delivery logistics, client identity) are also flagged. The flag language is precise and actionable. Minor deduction: the flag could more directly state the business risk of a wrong merge (e.g., payment going to wrong entity), but the core requirement is met."
-        }
-      },
-      "pass_criteria_met": true,
-      "passes": [
-        "All three supplier references ('Sharma ji', 'S. Sharma & Co.', and implicit context) resolved to a single supplier entity with no duplicate record created.",
-        "Entity resolution is treated as tentative with an explicit human-review flag rather than a silent assumption.",
-        "All three threads are consumed and their signals unified under one parent task.",
-        "Delivery-confirmed-for-tomorrow and packaging-preparation tasks are both captured, matching the expected output.",
-        "No hallucinated supplier names, order numbers, or client details introduced.",
-        "Operational gaps beyond the core task (inspection, transport, invoice) are proactively surfaced."
-      ],
-      "failures": [
-        "The ambiguity flag, while correct, does not explicitly articulate the downstream financial risk of a wrong entity merge (e.g., payment or credit going to wrong supplier record) \u2014 a minor gap in flag completeness.",
-        "The agent notes thread coverage uncertainty but does not propose a concrete resolution step (e.g., 'request Ashish to share earlier thread context') \u2014 slightly reduces actionability of that flag."
-      ],
-      "notes": "This is a strong L3 response. The core pass criterion \u2014 resolving three variant references to a single supplier without creating duplicates \u2014 is fully met. Entity accuracy and cross-thread correlation are both excellent. The ambiguity flagging correctly avoids silent resolution while still producing a usable unified task list. The agent's meta-commentary (what it tested well, what gaps remain) goes beyond the task scope but does not interfere with the operational output. Overall quality is near the top of the scoring range for this case.",
-      "case_id": "R4-A-L3-01",
-      "case_name": "same_supplier_34_variants_across_3_threads",
-      "framework": "R4-A",
+      "case_id": "R1-D-L3-01",
+      "framework": "R1-D",
       "level": "L3",
-      "evaluated_at": "2026-03-26T04:45:19",
-      "model_used": "claude-sonnet-4-6",
-      "eval_model": "claude-sonnet-4-6"
+      "verdict": "PASS",
+      "overall_score": 84
     },
     {
-      "verdict": "PASS",
-      "overall_score": 82,
-      "dimensions": {
-        "task_recall": {
-          "score": null,
-          "notes": null
-        },
-        "entity_accuracy": {
-          "score": 85,
-          "notes": "Correctly identifies 51 Sub Area as the client entity and Colonel as the associated contact/authority rather than a separate client. The agent treats them as one unified client relationship with Colonel as the delivery contact under 51 Sub Area. Minor imprecision: the entity label could be cleaner ('51 Sub Area (Colonel)' as a single combined label rather than splitting into client entity vs approving authority), but the underlying understanding is correct \u2014 no false separation is made."
-        },
-        "cross_thread_correlation": {
-          "score": 70,
-          "notes": "Only one thread was provided in this case, so cross-thread correlation is not truly testable here. The agent correctly acknowledges this limitation and explicitly states it cannot assess cross-thread correlations. It goes further to enumerate what additional threads would be needed, which is appropriate behavior. Score reflects competent handling of a single-thread scenario rather than demonstrated multi-thread correlation."
-        },
-        "next_step_quality": {
-          "score": null,
-          "notes": null
-        },
-        "implicit_task_detection": {
-          "score": null,
-          "notes": null
-        },
-        "ambiguity_flagging": {
-          "score": 88,
-          "notes": "Strong ambiguity flagging overall. The agent flags: (1) item/product unknown, (2) delivery date not internally established creating client commitment risk, (3) no supplier thread meaning a date communicated to Colonel may not be validated against supplier availability \u2014 this sequencing risk flag is operationally valuable and not explicitly required by the test case. The soft assumption flag on 'Colonel sahab as approving authority and delivery contact being the same person' is appropriately cautious. Slight over-flagging on obvious limitations (single thread), but not harmful."
-        }
-      },
-      "pass_criteria_met": true,
-      "passes": [
-        "51 Sub Area and Colonel sahab are correctly unified as a single client entity \u2014 Colonel is treated as a contact role under 51 Sub Area, not a separate client",
-        "Core task identified correctly: confirm delivery date with client (Colonel sahab)",
-        "Sequencing risk flagged proactively: committing delivery date to client before supplier confirmation is an operationally meaningful catch",
-        "Appropriate acknowledgment that single-thread context limits cross-thread analysis",
-        "Missing information (item, quantity, rate) clearly surfaced"
-      ],
-      "failures": [
-        "Entity label formatting is slightly split ('51 Sub Area (client) / Colonel (approving authority)') rather than presenting as a single clean entity '51 Sub Area (Colonel)' \u2014 marginally increases risk of downstream misreading, though the logical treatment is correct",
-        "The caveat about Colonel sahab possibly being a different person from the approving authority, while cautiously flagged, introduces unnecessary uncertainty \u2014 Army naming conventions make this a near-certain same-person reference"
-      ],
-      "notes": "The agent passes the core criterion: it does not treat '51 Sub Area' and 'Colonel sahab' as separate client entities. The relationship is correctly understood as one client (51 Sub Area) with Colonel as the named contact. The output is well-structured and the ambiguity flagging adds genuine operational value beyond what the test case requires, particularly the supplier-sequencing risk. Minor formatting imprecision in the entity label does not constitute a failure. Overall a solid L1 single-thread result.",
-      "case_id": "R4-B-L1-01",
-      "case_name": "same_army_unit_formal_unit_name_vs_officer_referen",
-      "framework": "R4-B",
+      "case_id": "R2a-L1-01",
+      "framework": "R2",
       "level": "L1",
-      "evaluated_at": "2026-03-26T04:45:51",
-      "model_used": "claude-sonnet-4-6",
-      "eval_model": "claude-sonnet-4-6"
+      "verdict": "PASS",
+      "overall_score": 96
     },
     {
-      "verdict": "PASS",
-      "overall_score": 88,
-      "dimensions": {
-        "task_recall": {
-          "score": null,
-          "notes": null
-        },
-        "entity_accuracy": {
-          "score": 90,
-          "notes": "Agent correctly identifies both 'Tezpur unit' and '51 Sub Area Tezpur' as referring to the same client entity, using a combined label 'Tezpur unit / 51 Sub Area Tezpur'. The merge is treated as the primary resolution rather than treating them as separate clients, which matches expected output. Slight deduction for labeling it 'tentative' when the informal/formal name pattern is quite clear, but this caution is operationally reasonable rather than harmful."
-        },
-        "cross_thread_correlation": {
-          "score": 80,
-          "notes": "Only one thread was provided, so true cross-thread correlation was not tested here. The agent correctly notes this limitation and makes the intra-thread entity correlation (Staff 1's 'Tezpur unit' vs Ashish's '51 Sub Area Tezpur'). The agent appropriately explains that no cross-thread data was available and flags this as a potential information gap. No credit deducted for absence of multi-thread data since none was provided."
-        },
-        "next_step_quality": {
-          "score": null,
-          "notes": null
-        },
-        "implicit_task_detection": {
-          "score": null,
-          "notes": null
-        },
-        "ambiguity_flagging": {
-          "score": 92,
-          "notes": "Agent explicitly flags the entity merge as a tentative assumption requiring human confirmation, flags the unanswered status question from Ashish, notes missing item/transport/invoice details, and highlights that only one thread was provided. The flag about 'Tezpur unit' vs '51 Sub Area Tezpur' needing human confirmation is well-placed and directly addresses the key risk in this test case. Flagging is specific, actionable, and not over-hedged."
-        }
-      },
-      "pass_criteria_met": true,
-      "passes": [
-        "Correctly merges 'Tezpur unit' and '51 Sub Area Tezpur' into a single client entity rather than treating them as separate clients",
-        "Uses combined label 'Tezpur unit / 51 Sub Area Tezpur' to preserve both references while unifying the entity",
-        "Explicitly flags the entity merge for human confirmation, consistent with the case note to validate with Ashish",
-        "Correctly identifies the delivery date as 25 Mar from contextual 'kal' reference",
-        "Flags unconfirmed order completion status as a blocker \u2014 correctly reads Ashish's question as a status check, not a confirmation",
-        "Proactively notes absence of other threads (supplier, transporter) as an information gap"
-      ],
-      "failures": [
-        "Labels the entity merge as 'tentative assumption' which slightly undersells the confidence warranted by the informal/formal name pattern \u2014 could cause unnecessary hesitation in a time-sensitive context",
-        "Does not explicitly note that informal location-based references like 'Tezpur unit' are common in Army supply contexts (per the case note), which would have strengthened the merge rationale"
-      ],
-      "notes": "The agent correctly handles the core test: 'Tezpur unit' and '51 Sub Area Tezpur' are unified into a single client entity, satisfying the pass criterion. The entity resolution reasoning is sound \u2014 informal shorthand vs. formal designation is well-explained. Ambiguity flagging is strong and appropriately directed at human review. The main minor weakness is labeling an essentially clear entity merge as 'tentative', which adds caution that may slow operational decision-making. Overall a solid performance on a relatively straightforward single-thread case.",
-      "case_id": "R4-B-L1-02",
-      "case_name": "same_army_unit_location_reference_vs_unit_number_s",
-      "framework": "R4-B",
+      "case_id": "R2a-L1-02",
+      "framework": "R2",
       "level": "L1",
-      "evaluated_at": "2026-03-26T04:46:18",
-      "model_used": "claude-sonnet-4-6",
-      "eval_model": "claude-sonnet-4-6"
+      "verdict": "PASS",
+      "overall_score": 92
     },
     {
+      "case_id": "R2b-L1-01",
+      "framework": "R2",
+      "level": "L1",
       "verdict": "PASS",
-      "overall_score": 88,
-      "dimensions": {
-        "task_recall": {
-          "score": null,
-          "notes": null
-        },
-        "entity_accuracy": {
-          "score": 85,
-          "notes": "Correctly identifies the client as 51 Sub Area / Colonel sahab and links both references. Notes individual vs. unit distinction accurately. Minor deduction because the agent presents this as tentative rather than resolved, but the underlying entity mapping is correct. Relocation risk to payment timeline is not explicitly flagged as a financial/payment risk \u2014 only as a delivery urgency risk."
-        },
-        "cross_thread_correlation": {
-          "score": 90,
-          "notes": "Successfully unifies the two threads into a single parent task. Correctly notes that 'Colonel sahab' (Thread 1) and '51 Sub Area' (Thread 2) map to the same client entity. The internal 'kal tak' deadline from the staff group is correlated with the client's relocation mention from the client group. The correlation is well-reasoned and the source threads are clearly cited."
-        },
-        "ambiguity_flagging": {
-          "score": 92,
-          "notes": "Excellent ambiguity handling. The agent explicitly flags the tentative Colonel sahab / 51 Sub Area merge for human review rather than silently assuming. Flags missing item details, missing transporter info, deadline discrepancy between client and staff statements, and lack of Ashish acknowledgment. The only gap is that it does not explicitly flag relocation as a risk to the payment or invoice timeline \u2014 it frames relocation purely as a delivery urgency driver, missing the financial/collections risk angle noted in the case metadata."
-        },
-        "next_step_quality": {
-          "score": null,
-          "notes": null
-        },
-        "implicit_task_detection": {
-          "score": null,
-          "notes": null
-        }
-      },
-      "pass_criteria_met": true,
-      "passes": [
-        "Single client entity correctly linked across both threads (Colonel sahab = 51 Sub Area) rather than creating two separate records",
-        "Urgency flag captured clearly \u2014 25 Mar delivery deadline prominently highlighted",
-        "Unit relocation next week captured as context and used to frame delivery urgency and no-recovery-window risk",
-        "Ambiguity around the Colonel sahab / 51 Sub Area identity presented transparently for human review rather than silently resolved",
-        "Cross-thread deadline discrepancy (client's softer 'next week' vs. staff's harder 'kal tak / 25 Mar') correctly identified and flagged",
-        "Missing information (item, transporter, PO reference) systematically flagged as blockers",
-        "Lack of client acknowledgment from Ashish noted as a pending action"
-      ],
-      "failures": [
-        "Relocation not explicitly flagged as a risk to the payment or invoice collection timeline \u2014 the case metadata specifically calls this out as an expected insight; the agent only treats relocation as a delivery urgency driver",
-        "The entity merge is presented as 'tentative' requiring human confirmation when the signals (same date, same urgency, Army unit context) are strong enough that the agent could have expressed higher confidence while still noting the distinction between individual title and unit designation"
-      ],
-      "notes": "Strong overall performance on a same-unit cross-thread correlation case. The agent correctly avoids creating two separate client records, captures the urgency, and flags the ambiguity around the dual reference styles transparently. The main gap relative to the expected output is the absence of an explicit payment/collections risk flag tied to the relocation \u2014 the business implication (unit moves = harder to chase payment, possibly different point of contact) is a meaningful operational insight that was not surfaced. This is a minor but real miss given the case metadata specifically calls it out. Verdict is PASS because both core pass criteria are met: single entity linked, urgency captured.",
-      "case_id": "R4-B-L2-01",
-      "case_name": "same_army_unit_2_reference_styles_across_2_threads",
-      "framework": "R4-B",
-      "level": "L2",
-      "evaluated_at": "2026-03-26T04:46:48",
-      "model_used": "claude-sonnet-4-6",
-      "eval_model": "claude-sonnet-4-6"
+      "overall_score": 95
     },
     {
+      "case_id": "R2c-L1-01",
+      "framework": "R2",
+      "level": "L1",
       "verdict": "PASS",
-      "overall_score": 91,
-      "dimensions": {
-        "task_recall": {
-          "score": null,
-          "notes": null
-        },
-        "entity_accuracy": {
-          "score": 92,
-          "notes": "All three references \u2014 'Brigadier sahab,' 'Eastern Command walo,' 'HQ Eastern Command' \u2014 are correctly resolved and consolidated under a single parent entity 'HQ Eastern Command / Brigadier Sahab.' The dual naming in the entity field accurately reflects the alias situation without fabricating a clean canonical name it cannot confirm. Slight deduction for not explicitly noting the additional instruction from case metadata to validate naming conventions with Ashish (though this is captured indirectly in the ambiguity flag)."
-        },
-        "cross_thread_correlation": {
-          "score": 95,
-          "notes": "Exemplary. The pre-analysis table makes the correlation logic fully transparent: three threads are mapped by signal (client reference, action, timing) and the timeline (09:00 \u2192 10:00 \u2192 14:00) is used to validate that they represent a single progressive order lifecycle rather than parallel orders. No duplicate records are created. The 'tentative merge' framing is honest and traceable."
-        },
-        "next_step_quality": {
-          "score": null,
-          "notes": null
-        },
-        "implicit_task_detection": {
-          "score": null,
-          "notes": null
-        },
-        "ambiguity_flagging": {
-          "score": 88,
-          "notes": "Strong flagging throughout. AMBIGUITY 1 correctly isolates the entity resolution uncertainty and requests human confirmation before delivery. AMBIGUITY 2 flags unknown item type and order origin. Flag 2 (Ashish's query going unanswered across threads) and Flag 3 (scheduling instruction vs. confirmed booking) are operationally valuable catches. Minor gap: the case metadata explicitly states 'Validate HQ Eastern Command naming conventions with Ashish' as an additional note, and while the agent flags entity uncertainty generally, it does not surface this specific named-person action item (validate naming conventions with Ashish) as a discrete flag or subtask, which means a human reviewer could miss it."
-        }
-      },
-      "pass_criteria_met": true,
-      "passes": [
-        "All three reference styles ('Brigadier sahab,' 'Eastern Command walo,' 'HQ Eastern Command') are resolved into a single client entity with no duplicate records created.",
-        "Cross-thread correlation is made fully explicit via a pre-analysis table mapping signals, actions, and timestamps across all three threads.",
-        "The tentative-merge approach with a human-review flag prevents silent wrong guessing while still producing an actionable task list.",
-        "Delivery commitment for 25 Mar (tomorrow morning) is correctly identified as the primary task output, matching expected output.",
-        "Ambiguity flags are granular, numbered, and actionable \u2014 distinguishing entity uncertainty from operational gaps.",
-        "Information asymmetry between threads (packing confirmed in Thread 2 but not relayed to Thread 1 where Ashish asked) is correctly detected and flagged."
-      ],
-      "failures": [
-        "The case metadata additional note 'Validate HQ Eastern Command naming conventions with Ashish' is not surfaced as a discrete action item or flag \u2014 this specific human-review step is buried or absent, and a busy operator scanning the output could miss it.",
-        "Minor: the entity field retains two names ('HQ Eastern Command / Brigadier Sahab') without explicitly proposing a canonical form pending Ashish's confirmation, which slightly reduces clarity for downstream record-keeping even though the ambiguity flag addresses it narratively."
-      ],
-      "notes": "This is a high-quality output that fully satisfies the pass criteria: a single client entity is produced, no duplicate records exist, and the merge logic is transparent and auditable. The cross-thread correlation methodology is particularly strong \u2014 using timestamps and action-stage progression as corroborating evidence is exactly the right approach for tentative merges. The main gap is failure to convert the metadata instruction ('validate naming conventions with Ashish') into a concrete flagged action, which could cause that step to be overlooked in operational use. This is a minor but real operational gap, keeping the score just below the top band.",
-      "case_id": "R4-B-L3-01",
-      "case_name": "same_army_unit_3_reference_styles_across_3_threads",
-      "framework": "R4-B",
-      "level": "L3",
-      "evaluated_at": "2026-03-26T04:47:27",
-      "model_used": "claude-sonnet-4-6",
-      "eval_model": "claude-sonnet-4-6"
+      "overall_score": 92
     },
     {
+      "case_id": "R2d-L1-01",
+      "framework": "R2",
+      "level": "L1",
       "verdict": "PASS",
-      "overall_score": 93,
-      "dimensions": {
-        "task_recall": {
-          "score": 95,
-          "notes": "Both parent tasks fully captured with appropriate subtasks. Client A's order (2 units, urgent, 25 Mar deadline) and Client B's order (1 unit, quotation stage) are both present. Subtasks cover sourcing, confirmation, and quoting for each. Minor: Subtask 3 for Client A (quotation/rate) is a reasonable inference but slightly speculative given no rate discussion was flagged in the thread \u2014 still a useful implicit task detection."
-        },
-        "entity_accuracy": {
-          "score": 95,
-          "notes": "Entities correctly attributed: Client A linked to 2-unit urgent order, Client B linked to 1-unit quotation-stage order. Ashish correctly identified as responsible party in both threads. Item (tandoor), quantities, and stages all accurately reflected. No cross-attribution errors detected."
-        },
-        "cross_thread_correlation": {
-          "score": 90,
-          "notes": "The two orders are correctly kept separate despite being the same item type from different clients on the same day. The agent explicitly calls this out in the ambiguous correlations section, noting they are treated as distinct orders with a recommendation for human confirmation. Source threads are correctly tagged per parent task. No false merging occurred."
-        },
-        "next_step_quality": {
-          "score": null,
-          "notes": null
-        },
-        "implicit_task_detection": {
-          "score": null,
-          "notes": null
-        },
-        "ambiguity_flagging": {
-          "score": 92,
-          "notes": "Strong ambiguity flagging throughout. The agent explicitly notes: missing supplier threads for both orders, unverified rate send status for Client B, unknown whether sourcing has been initiated for Client A, and the need to confirm that the two tandoor orders are indeed separate. The dedicated 'AMBIGUOUS CORRELATIONS' section directly surfaces the same-item same-day coincidence for human review rather than silently assuming. Slight over-flagging on the 'kept separate \u2014 human should confirm' note (could be seen as unnecessary hedging given clear separate threads) but this is a minor issue."
-        }
-      },
-      "pass_criteria_met": true,
-      "passes": [
-        "Two distinct parent task records created \u2014 one for Client A, one for Client B",
-        "Client A correctly linked to 2-unit urgent order with 25 Mar deadline",
-        "Client B correctly linked to 1-unit quotation-stage order with no deadline",
-        "No cross-attribution: quantities, stages, and clients are not mixed between tasks",
-        "Same-item same-day coincidence explicitly flagged for human review rather than silently merged",
-        "Missing supplier threads flagged as operational risk for both orders",
-        "Rate-not-sent status for Client B correctly identified as pending verification",
-        "Summary snapshot table correctly reflects different statuses and priorities"
-      ],
-      "failures": [
-        "Minor: Subtask 3 for Client A (prepare quotation/rate) is somewhat speculative \u2014 no direct evidence from thread that rate discussion is missing; this could be noise in an otherwise clean output",
-        "Minor: The 'Human should confirm this separation is correct' note in ambiguous correlations, while well-intentioned, slightly undercuts confidence in what should be a straightforward separation given distinct thread sources"
-      ],
-      "notes": "This is a high-quality output that cleanly satisfies the core pass criteria. The agent correctly separates two tandoor orders into distinct parent tasks, links each to the right client with correct quantities and stages, and avoids the primary failure mode of merging or cross-attributing. Ambiguity flagging is proactive and operationally useful, particularly the missing-supplier-thread flag for both orders. The output is well-structured and actionable. Minor speculative subtask generation and slight hedging on an obvious separation are the only meaningful deductions.",
+      "overall_score": 95
+    },
+    {
+      "case_id": "R2e-L1-01",
+      "framework": "R2",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 97
+    },
+    {
+      "case_id": "R2f-L1-01",
+      "framework": "R2",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 91
+    },
+    {
+      "case_id": "R2f-L1-02",
+      "framework": "R2",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 88
+    },
+    {
       "case_id": "R3-C-L1-01",
-      "case_name": "two_tandoor_orders_clearly_different_clients_separ",
       "framework": "R3-C",
       "level": "L1",
-      "evaluated_at": "2026-03-26T04:39:34",
-      "model_used": "claude-sonnet-4-6",
-      "eval_model": "claude-sonnet-4-6"
+      "verdict": "PASS",
+      "overall_score": 93
     },
     {
-      "verdict": "PASS",
-      "overall_score": 92,
-      "dimensions": {
-        "task_recall": {
-          "score": 95,
-          "notes": "Both orders (Tandoor and Generator) are identified as separate parent tasks with appropriate subtasks. All actionable items are captured: follow-up for tandoor details, acknowledgement and detail collection for generator. No tasks appear to be missed given the limited thread content."
-        },
-        "entity_accuracy": {
-          "score": 93,
-          "notes": "Client A is correctly linked to both orders. Items (Tandoor, Generator) are accurately attributed. Ashish is correctly identified as the staff member handling both. Source threads are correctly differentiated by date. No misattributions detected."
-        },
-        "cross_thread_correlation": {
-          "score": 90,
-          "notes": "The agent correctly kept the two orders as separate parent tasks despite being from the same client. It explicitly reasoned about why they should remain separate (different items, different dates, different sourcing workflows). The note about same-group vs. different-group labelling shows careful handling of thread identity. The agent correctly avoids over-merging."
-        },
-        "ambiguity_flagging": {
-          "score": 90,
-          "notes": "Strong ambiguity flagging throughout. The agent flags: (1) the deliberate decision to keep orders separate with a recommendation for human confirmation, (2) missing context from other threads, (3) thread labelling ambiguity (same group on different days vs. two distinct groups). All flags are actionable and appropriately escalated for human review rather than silently assumed."
-        },
-        "next_step_quality": {
-          "score": null,
-          "notes": null
-        },
-        "implicit_task_detection": {
-          "score": null,
-          "notes": null
-        }
-      },
-      "pass_criteria_met": true,
-      "passes": [
-        "Two separate parent tasks created for Tandoor and Generator \u2014 meets the core pass criterion",
-        "Both tasks correctly attributed to Client A without conflation",
-        "Agent explicitly documented the reasoning for keeping items separate rather than merging",
-        "Ambiguity flag raised for human confirmation of the separation decision",
-        "Missing details (specs, quantity, delivery date) flagged for both orders",
-        "Unacknowledged generator enquiry correctly identified as a blocker",
-        "Thread labelling ambiguity (same group vs. different groups) proactively flagged",
-        "Summary dashboard and immediate action list provide clear operational guidance"
-      ],
-      "failures": [
-        "Minor: The agent notes 'only one group thread' is provided but the case indicates two separate threads were processed \u2014 slight inconsistency in self-description, though operationally harmless",
-        "Minor: No explicit flag that the tandoor follow-up is 'overdue' in a time-critical sense beyond labelling it 'ASAP'; could have quantified the delay more precisely"
-      ],
-      "notes": "The agent performs excellently on the core test objective: it correctly separates two different item orders from the same client into distinct parent tasks and does not collapse them into a single order. The output is well-structured, reasoning is transparent, and ambiguity handling is proactive. The two minor failures are cosmetic and would not cause operational failures. This is a clean PASS.",
       "case_id": "R3-C-L1-02",
-      "case_name": "two_different_item_orders_same_client_separate_thr",
       "framework": "R3-C",
       "level": "L1",
-      "evaluated_at": "2026-03-26T04:39:59",
-      "model_used": "claude-sonnet-4-6",
-      "eval_model": "claude-sonnet-4-6"
+      "verdict": "PASS",
+      "overall_score": 92
     },
     {
-      "verdict": "PASS",
-      "overall_score": 91,
-      "dimensions": {
-        "task_recall": {
-          "score": 92,
-          "notes": "Both tandoor orders are captured as separate parent tasks with full subtask hierarchies (confirm order details, source supplier, prepare quotation). No tasks appear to be missing. Subtask decomposition is thorough and operationally useful given the sparse input."
-        },
-        "entity_accuracy": {
-          "score": 90,
-          "notes": "Tezpur unit (2 units) and Ranchi unit (1 unit) are correctly identified with the right quantities. Informal references 'Tezpur walo' and 'Ranchi unit' are resolved to their respective Army clients with appropriate caveats. Supplier is correctly marked as unconfirmed for both. No mis-attribution detected."
-        },
-        "cross_thread_correlation": {
-          "score": 93,
-          "notes": "Agent correctly separates the two orders rather than merging them. Sources are tracked per task (Client Group vs All Staff Group). The cross-order note about potential combined procurement is a valuable addition. No false merging or incorrect thread attribution."
-        },
-        "implicit_task_detection": {
-          "score": null,
-          "notes": null
-        },
-        "next_step_quality": {
-          "score": null,
-          "notes": null
-        },
-        "ambiguity_flagging": {
-          "score": 88,
-          "notes": "Agent explicitly flags client identity ambiguity (location-based references vs named contacts), missing POs, no delivery timelines, inter-city/inter-state logistics considerations, and the question of whether these orders should be combined for procurement efficiency. Flags are well-reasoned and actionable rather than noise. Minor deduction: the 'no ambiguous correlations' declaration is slightly overconfident given how sparse the input is described to be \u2014 there could be edge cases not visible."
-        }
-      },
-      "pass_criteria_met": true,
-      "passes": [
-        "Two separate parent tasks correctly created for Tezpur (2 units) and Ranchi (1 unit) \u2014 not merged",
-        "Correct client attribution: Tezpur Army Unit and Ranchi Army Unit separately identified",
-        "Informal client references ('Tezpur walo', 'Ranchi unit') resolved with explicit annotation and caveat",
-        "Source threads tracked separately (Client Group vs All Staff Group)",
-        "Client identity ambiguity flagged for human review \u2014 actual contact names not assumed",
-        "Cross-order procurement efficiency opportunity flagged for Ashish's decision",
-        "Missing supplier, timeline, and formal PO gaps all surfaced as actionable flags",
-        "Logical subtask hierarchy maintained under each parent task"
-      ],
-      "failures": [
-        "Slight overconfidence in declaring 'no ambiguity' on correlation \u2014 input sparseness acknowledged in self-evaluation but the ambiguity section could have more explicitly invited human confirmation rather than declaring separation certain",
-        "Pre-output reasoning and self-evaluation tables are included in the output, which adds noise for an operational system expecting clean task list output only"
-      ],
-      "notes": "Strong output that cleanly satisfies the core pass criterion: two separate orders correctly attributed to two different clients with right quantities. The agent handled informal location-based references well, resolved them without silently guessing, and appropriately flagged the identity gap. The cross-order procurement note shows good operational awareness. Minor issues are stylistic (verbose self-evaluation included in response) and a marginal overconfidence on ambiguity resolution, neither of which would cause operational failure.",
       "case_id": "R3-C-L2-01",
-      "case_name": "two_tandoor_orders_informalabbreviated_client_refe",
       "framework": "R3-C",
       "level": "L2",
-      "evaluated_at": "2026-03-26T04:40:35",
-      "model_used": "claude-sonnet-4-6",
-      "eval_model": "claude-sonnet-4-6"
+      "verdict": "PASS",
+      "overall_score": 91
     },
     {
-      "verdict": "PASS",
-      "overall_score": 88,
-      "dimensions": {
-        "task_recall": {
-          "score": 90,
-          "notes": "All core tasks identified: confirm order placement, place order if not done, capture order details. Implicit tasks (quantity/price/timeline confirmation) also surfaced. No meaningful task gaps."
-        },
-        "entity_accuracy": {
-          "score": 88,
-          "notes": "Correctly links 51 Sub Area / 51 SA as a single client entity, Sharma ji as supplier, tandoor as the item. Marks Sharma ji as tentative/unconfirmed, which is appropriate given the thread context. No incorrect entity assignments."
-        },
-        "cross_thread_correlation": {
-          "score": 92,
-          "notes": "Correctly identifies a single order spanning both threads. Explicitly labels the correlation as HIGH CONFIDENCE and explains the basis (same item, same client, same date, 2-hour gap). Crucially, no duplicate order record was created \u2014 the pass criterion is met. The soft-assumption flag is good epistemic hygiene rather than a deduplication failure."
-        },
-        "next_step_quality": {
-          "score": null,
-          "notes": null
-        },
-        "implicit_task_detection": {
-          "score": null,
-          "notes": null
-        },
-        "ambiguity_flagging": {
-          "score": 87,
-          "notes": "Strong flagging: missing quantity, price, delivery timeline, no Staff 1 response visible, and Sharma ji identity uncertainty are all called out explicitly. The agent correctly notes the correlation is a soft assumption and requests human confirmation. Slight over-hedging on the correlation confidence (it is treated as a single order correctly, but the repeated caveats could create unnecessary operational uncertainty for a high-confidence match), but this is minor."
-        }
-      },
-      "pass_criteria_met": true,
-      "passes": [
-        "Single unified order record created for 51 Sub Area \u2014 no duplicate order generated",
-        "Both thread references (51 SA and 51 Sub Area) resolved to the same client entity",
-        "Sharma ji correctly associated as the supplier for this single order",
-        "Cross-thread correlation explicitly documented with reasoning and confidence level",
-        "Missing order details (quantity, price, delivery date) flagged as blockers",
-        "Ambiguity around Sharma ji's identity and whether the order is confirmed flagged for human review",
-        "Staff 1's lack of response to Ashish's query correctly noted as an unresolved status gap"
-      ],
-      "failures": [
-        "Minor: The repeated soft-assumption caveats on a HIGH CONFIDENCE correlation may introduce unnecessary operational hesitation \u2014 the agent could have been more decisive given the match quality",
-        "Minor: Supplier Group vs All Staff Group distinction not fully explained in terms of what each thread contributed to the correlation \u2014 slightly reduces traceability"
-      ],
-      "notes": "The agent correctly solves the core deduplication test: one order, one client record, no duplication despite different abbreviations across threads. The ambiguity flagging is thorough and appropriate for an operations monitoring context. The only weakness is marginal over-hedging on a correlation that the agent itself rates as HIGH CONFIDENCE, which could slow human review unnecessarily. Overall, this is a strong output that would not cause operational failures.",
       "case_id": "R3-C-L2-02",
-      "case_name": "same_item_order_client_name_abbreviated_differentl",
       "framework": "R3-C",
       "level": "L2",
-      "evaluated_at": "2026-03-26T04:41:06",
-      "model_used": "claude-sonnet-4-6",
-      "eval_model": "claude-sonnet-4-6"
+      "verdict": "PASS",
+      "overall_score": 88
     },
     {
-      "verdict": "PASS",
-      "overall_score": 88,
-      "dimensions": {
-        "task_recall": {
-          "score": 90,
-          "notes": "Both delivery tasks are identified and represented as separate parent tasks with subtasks. Tezpur delivery correctly marked completed at 10:45; Ranchi delivery correctly marked as delayed with revised ETA of 15:00. An implicit subtask for notifying the Ranchi client of the delay is also surfaced. Minor gap: no explicit mention of any post-delivery confirmation/receipt collection task for Tezpur beyond a vague next-step note."
-        },
-        "entity_accuracy": {
-          "score": 85,
-          "notes": "Item (tandoor) correctly attributed to both tasks. Client identities are honestly represented as location-based inferences rather than confirmed names, which is accurate given the thread content. Staff assignments (Staff 1 for Tezpur, Staff 2 for Ranchi) are correctly attributed. Times are accurate: Tezpur completed 10:45, Ranchi driver ETA revised to 15:00. No cross-attribution errors detected."
-        },
-        "cross_thread_correlation": {
-          "score": 80,
-          "notes": "The agent works from a single consolidated staff group thread, which limits true cross-thread correlation testing. However, within that thread the agent correctly separates two concurrent orders that reference overlapping actors and identical items. The agent explicitly acknowledges what additional threads would resolve and maps the gaps to specific missing thread types. The correlation logic applied is sound even if the multi-thread scenario was not fully realised in the input."
-        },
-        "next_step_quality": null,
-        "implicit_task_detection": null,
-        "ambiguity_flagging": {
-          "score": 92,
-          "notes": "Strong ambiguity flagging throughout. The agent explicitly flags: (1) both client identities as location-inferred rather than confirmed names; (2) uncertainty about whether the two tandoor deliveries are separate orders or a split delivery, with a stated low-confidence assumption and request for human verification; (3) the Ranchi delivery final status as unknown because the thread ends mid-event at 14:10; (4) absence of evidence that the Ranchi client was notified of the delay; (5) missing invoice/payment status for both orders. All flags are operationally relevant and actionable. No silent guessing observed."
-        }
-      },
-      "pass_criteria_met": true,
-      "passes": [
-        "Two separate delivery tasks created \u2014 no merging of concurrent orders despite identical item types",
-        "Tezpur delivery correctly attributed and marked completed at 10:45",
-        "Ranchi delivery correctly attributed and marked delayed with revised ETA 15:00",
-        "Independent status tracking maintained for both tasks with no cross-attribution",
-        "Client identities flagged as unconfirmed (location only) rather than silently assumed",
-        "Implicit task detected: Ranchi client may not have been notified of delay",
-        "Thread incompleteness explicitly flagged for Ranchi delivery outcome",
-        "Escalation path defined if Ranchi driver does not arrive by 15:15",
-        "Clear table of what additional threads would resolve current gaps"
-      ],
-      "failures": [
-        "Cross-thread correlation dimension is partially untestable given single consolidated thread input \u2014 the scenario's design intent of interleaved references across multiple threads may not have been fully exercised",
-        "No explicit order numbers or invoice references captured, though the agent does note their absence as a gap",
-        "Post-delivery receipt confirmation for Tezpur is mentioned only as a vague next-step note rather than a formal subtask, slightly underweighting its operational importance"
-      ],
-      "notes": "The agent performs well against the core pass criteria: two separate delivery tasks are created, correctly attributed to distinct clients (Tezpur and Ranchi), and tracked with independent statuses (completed vs. delayed). The output is well-structured, operationally useful, and demonstrates disciplined ambiguity flagging throughout. The main scoring deduction comes from the cross-thread correlation dimension being partially constrained by single-thread input, and minor gaps in formalising post-delivery receipt tracking for Tezpur. The analyst note appended to the output is a useful meta-observation but ideally would not appear in a production task list output. Overall this is a strong L3 result.",
       "case_id": "R3-C-L3-01",
-      "case_name": "two_concurrent_orders_references_interleaved_in_sh",
       "framework": "R3-C",
       "level": "L3",
-      "evaluated_at": "2026-03-26T04:41:40",
-      "model_used": "claude-sonnet-4-6",
-      "eval_model": "claude-sonnet-4-6"
+      "verdict": "PASS",
+      "overall_score": 88
     },
     {
-      "verdict": "PASS",
-      "overall_score": 88,
-      "dimensions": {
-        "task_recall": {
-          "score": 90,
-          "notes": "All three flag order parent tasks are correctly identified and separated: Client X (5 flags, 6x4 ft, blazer cloth), Client Y (1 flag, single photo, incomplete specs), and Client Z (T flag 4 nos + Lancer flag 6 nos + 3x2 ft flags). Subtasks are thorough and include cadence tasks like QC, transport, pricing, and spec confirmation. Minor gap: the expected output describes Client Z's order as 'Client A \u2014 blazer cloth flags 3x2 ft' and maps Lancer flags to Client C and T flags to Client B specifically, while the agent assigns all three to one 'Client Z'. However, the agent correctly reads the '9 Mar baki sab 1 bande ka hai' message as grouping Lancer + T + 3x2 together, which is a valid interpretation of the text. No tasks are dropped entirely."
-        },
-        "entity_accuracy": {
-          "score": 85,
-          "notes": "Item specs are accurately captured: T flag 4 nos thick cloth, Lancer flag 6 nos thick quality, 1+1+1 flags 3x2 ft blazer cloth, 5-design flags 6x4 ft blazer cloth. The 5 Mar size clarification is correctly attributed to Client X's 5-flag order. Supplier (Malerkotla) correctly linked throughout. The '05 flags 01 nos each' ambiguity is flagged rather than silently resolved. Minor issue: expected output treats Lancer flags (Client C) and T flags (Client B) as separate parent tasks rather than grouping them with the 3x2 flags under one client \u2014 the agent's grouping under 'Client Z' diverges from the expected output's 3-way split, though the agent's reading of the source text is defensible."
-        },
-        "cross_thread_correlation": {
-          "score": 82,
-          "notes": "Only one thread is provided, so cross-thread correlation is limited in scope. Within the single thread, the agent correctly correlates the 3 Feb order messages, the 5 Mar size clarification, and the 9 Mar client-grouping messages into a coherent multi-client order picture. The agent explicitly notes the single-thread limitation and flags that client-facing threads are absent. The 5 Mar '05 flags 6x4 ft' reply is correctly connected to the 3 Feb order rather than treated as a new independent order. No spurious correlations introduced."
-        },
-        "next_step_quality": null,
-        "implicit_task_detection": null,
-        "ambiguity_flagging": {
-          "score": 95,
-          "notes": "Ambiguity flagging is a standout strength. All three client identities are explicitly flagged as unresolvable from text alone and marked for human review. Client Y's missing specs (quantity, size, material) are flagged as a blocker. The '05 flags' ambiguity on 5 Mar is documented as an assumption with a request for Ashish confirmation. The cloth type inconsistency within Client Z's order is noted. Pricing absence is flagged. The 34-day elapsed time since 'jaldi karwa do' is flagged as a concern. The agent correctly identifies that client identity is entirely dependent on dropped photos that cannot be read. No silent guessing on any material ambiguity."
-        }
-      },
-      "pass_criteria_met": true,
-      "passes": [
-        "Three separate parent tasks created, one per client group, correctly separated",
-        "All three tasks flagged as having unresolvable client identities dependent on dropped photos",
-        "Client Y correctly identified as blocked due to missing specs (quantity, size, material)",
-        "9 Mar grouping message ('baki sab 1 bande ka hai') correctly parsed to assign T flag + Lancer flag + 3x2 flags to one client",
-        "5 Mar size clarification correctly attributed to the 5-flag order rather than treated as a new order",
-        "Urgency signals ('jaldi karwa do') captured and contextualized with 34-day elapsed time",
-        "Cloth type and size specs accurately preserved per item across all three orders",
-        "Pricing absence and supplier non-confirmation of production timeline flagged as critical gaps",
-        "Interstate transport and e-way bill requirements noted as implicit tasks",
-        "Summary table provided for quick operational reference"
-      ],
-      "failures": [
-        "Expected output separates Lancer flags (Client C) and T flags (Client B) as distinct parent tasks; agent groups both with 3x2 flags under one 'Client Z' \u2014 technically defensible from the text but diverges from expected 3-way split where each flag type maps to a different client",
-        "Agent's client labeling (X/Y/Z) does not map to expected output's client labeling (A/B/C) \u2014 minor but creates cross-reference confusion if validated against expected",
-        "Expected output explicitly notes '5 photos dropped, 3/9' as the source cue for Client A's order \u2014 agent captures the 5-photo detail but does not explicitly call out the date-of-photo-drop as a key identification signal"
-      ],
-      "notes": "Strong overall performance. The agent correctly identifies the core challenge \u2014 client separation from a single supplier thread where identity depends entirely on dropped photos \u2014 and handles it appropriately by creating 3 parent tasks and flagging all three for human review. The main divergence from the expected output is in client grouping: the expected output treats Lancer flags, T flags, and the 3x2 blazer cloth flags as belonging to three separate clients (C, B, and A respectively), while the agent groups the latter three under one 'Client Z' based on the '9 Mar baki sab 1 bande ka hai' message. This is a genuine interpretation difference, not a processing error \u2014 the agent's reading is plausible but may miss that the 9 Mar message was only grouping the *remaining* items not covered by the two photo-drops, and those remaining items could still span multiple clients. The ambiguity flagging and implicit task detection are excellent. Operational risk is low \u2014 the three-task structure is preserved and human review is correctly triggered.",
       "case_id": "R3-C-L3-02",
-      "case_name": "multiclient_flag_orders_in_single_supplier_thread",
       "framework": "R3-C",
       "level": "L3",
-      "evaluated_at": "2026-03-26T04:42:42",
-      "model_used": "claude-sonnet-4-6",
-      "eval_model": "claude-sonnet-4-6"
+      "verdict": "PASS",
+      "overall_score": 88
     },
     {
+      "case_id": "R4-A-L1-01",
+      "framework": "R4-A",
+      "level": "L1",
       "verdict": "PASS",
-      "overall_score": 88,
-      "dimensions": {
-        "task_recall": {
-          "score": 90,
-          "notes": "Both core post-delivery follow-up tasks are identified: (1) locate and deliver missing 5 car flags, (2) quality issue on India flag and elephant flag with rejection risk. Agent goes further with Subtasks 3 and 4 (inspection decision, payment reconciliation) which are valid implicit tasks. Order is correctly marked BLOCKED despite payment. The \u20b928,000 paid / delivery incomplete mismatch is explicitly called out. No meaningful task omissions against the pass criteria."
-        },
-        "entity_accuracy": null,
-        "cross_thread_correlation": null,
-        "next_step_quality": null,
-        "implicit_task_detection": {
-          "score": 85,
-          "notes": "Agent correctly detects the implicit risk that 'payment cleared' must not be treated as 'order closed' \u2014 this is the core implicit task and it is flagged prominently. The inspection-hold decision (Subtask 3) and payment reconciliation/credit claim (Subtask 4) are solid implicit detections. The agent also implicitly flags the staff communication gap (Mrs Samita Roy's unclear role and possible follow-up failure) and the image-content limitation for the courier note, which aligns with the case's noted R7a verbal instruction gap. Slight deduction: the agent does not explicitly surface the verbal instruction gap (Ashish told Mrs Samita Roy to update supplier, she did not) as a discrete process risk task \u2014 it is touched on but not actioned as a separate follow-up item."
-        },
-        "ambiguity_flagging": {
-          "score": 92,
-          "notes": "Ambiguity flagging is thorough. Agent flags: single-thread limitation and requests companion threads; scope uncertainty around \u20b928,000 (order-specific vs account settlement); quantity ambiguity on the 5 car flags; unknown client identity; Mrs Samita Roy's unclear role; image content not readable (QR/payment screenshot and implicitly the courier consignment note). The courier note being an image \u2014 a key detail in the case notes \u2014 is acknowledged under the IMAGE CONTENT NOT AVAILABLE flag. All flags are actionable and directed at human review rather than silently assumed. Minor gap: no supplier response visible is flagged but not explicitly escalated as a time-sensitive action item separate from the subtasks."
-        }
-      },
-      "pass_criteria_met": true,
-      "passes": [
-        "Both required post-delivery follow-up tasks created: missing 5 car flags (Subtask 1) and quality defect on India flag / elephant flag (Subtask 2)",
-        "Order status correctly set to BLOCKED despite \u20b928,000 payment being marked cleared",
-        "Explicit warning that 'payment cleared' must not be treated as 'order closed'",
-        "Malerkotla supplier correctly identified as responsible entity for both issues",
-        "Image content limitation acknowledged \u2014 relevant to courier consignment note",
-        "Ambiguity flagging is comprehensive with actionable human-review requests",
-        "Additional implicit tasks (inspection decision, payment reconciliation/credit claim) add operational value",
-        "Mrs Samita Roy's role flagged as unclear, hinting at communication gap risk"
-      ],
-      "failures": [
-        "Verbal instruction gap (Ashish \u2192 Mrs Samita Roy \u2192 supplier) not surfaced as a discrete process failure task or risk item \u2014 this is the R7a variant noted in the case and represents a systemic issue worth explicit follow-up",
-        "No explicit call to verify whether the courier consignment note image (dispatch confirmation) has been reviewed/extracted \u2014 agent notes image limitation generally but does not flag this specific document as requiring extraction or confirmation of dispatch"
-      ],
-      "notes": "The agent fully meets the pass criteria: both post-delivery follow-up tasks are present, the order is correctly blocked despite payment, and the payment-vs-delivery mismatch is prominently flagged. The output is operationally useful with strong ambiguity flagging and implicit task detection. The two gaps \u2014 the verbal instruction chain failure not being actioned as a discrete risk item, and the courier note image not being specifically called out for extraction \u2014 are meaningful in the context of the case's noted contributing failures (R7a) but do not undermine the core pass criteria. Overall a high-quality, cautious output.",
+      "overall_score": 91
+    },
+    {
+      "case_id": "R4-A-L1-02",
+      "framework": "R4-A",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 93
+    },
+    {
+      "case_id": "R4-A-L2-01",
+      "framework": "R4-A",
+      "level": "L2",
+      "verdict": "PASS",
+      "overall_score": 91
+    },
+    {
+      "case_id": "R4-A-L2-02",
+      "framework": "R4-A",
+      "level": "L2",
+      "verdict": "PASS",
+      "overall_score": 88
+    },
+    {
+      "case_id": "R4-A-L3-01",
+      "framework": "R4-A",
+      "level": "L3",
+      "verdict": "PASS",
+      "overall_score": 92
+    },
+    {
+      "case_id": "R4-B-L1-01",
+      "framework": "R4-B",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 93
+    },
+    {
+      "case_id": "R4-B-L1-02",
+      "framework": "R4-B",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 88
+    },
+    {
+      "case_id": "R4-B-L2-01",
+      "framework": "R4-B",
+      "level": "L2",
+      "verdict": "PASS",
+      "overall_score": 88
+    },
+    {
+      "case_id": "R4-B-L3-01",
+      "framework": "R4-B",
+      "level": "L3",
+      "verdict": "PASS",
+      "overall_score": 91
+    },
+    {
+      "case_id": "R5-L1-01",
+      "framework": "R5",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 92
+    },
+    {
+      "case_id": "R5-L1-02",
+      "framework": "R5",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 88
+    },
+    {
+      "case_id": "R5-L2-01",
+      "framework": "R5",
+      "level": "L2",
+      "verdict": "PASS",
+      "overall_score": 91
+    },
+    {
+      "case_id": "R5-L2-02",
+      "framework": "R5",
+      "level": "L2",
+      "verdict": "PASS",
+      "overall_score": 91
+    },
+    {
       "case_id": "R6-L1-01",
-      "case_name": "payment_confirmed_delivery_shortfall_and_quality_r",
       "framework": "R6-L1",
       "level": "01",
-      "evaluated_at": "2026-03-26T04:48:05",
-      "model_used": "claude-sonnet-4-6",
-      "eval_model": "claude-sonnet-4-6"
+      "verdict": "PASS",
+      "overall_score": 88
     }
   ]
 }

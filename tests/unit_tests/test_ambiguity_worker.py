@@ -1,5 +1,5 @@
 """
-Unit tests for ambiguity_worker._process_entry state machine.
+Unit tests for ambiguity_worker._process_entry state machine + check_ambiguity_queue.
 No DB writes — patches transaction() and update_node.
 """
 
@@ -8,7 +8,9 @@ import pytest
 import allure
 from unittest.mock import patch, MagicMock, call
 
-from src.alerts.ambiguity_worker import _process_entry, _auto_resolve
+from src.alerts.ambiguity_worker import (
+    _process_entry, _auto_resolve, check_ambiguity_queue, _send_escalation,
+)
 
 
 def _make_profile(timeout_high=1800, timeout_low=14400, silent=False):
@@ -191,3 +193,69 @@ class TestAutoResolve:
             mock_tx.return_value.__exit__ = MagicMock(return_value=False)
             _auto_resolve(entry)
         mock_update.assert_not_called()
+
+
+# ---------------------------------------------------------------------------
+# check_ambiguity_queue — polls and processes
+# ---------------------------------------------------------------------------
+
+@allure.feature("Ambiguity Handling")
+@allure.story("Queue Polling")
+class TestCheckAmbiguityQueue:
+
+    def test_processes_pending_entries(self):
+        entry = dict(_make_entry(status="pending"))
+        mock_conn = MagicMock()
+        mock_conn.execute.return_value.fetchall.return_value = [entry]
+        with patch("src.alerts.ambiguity_worker.get_connection", return_value=mock_conn), \
+             patch("src.alerts.ambiguity_worker._process_entry") as mock_process:
+            check_ambiguity_queue()
+        mock_process.assert_called_once()
+
+    def test_processes_escalated_entries(self):
+        entry = dict(_make_entry(status="escalated", escalated_at=int(time.time()) - 100))
+        mock_conn = MagicMock()
+        mock_conn.execute.return_value.fetchall.return_value = [entry]
+        with patch("src.alerts.ambiguity_worker.get_connection", return_value=mock_conn), \
+             patch("src.alerts.ambiguity_worker._process_entry") as mock_process:
+            check_ambiguity_queue()
+        mock_process.assert_called_once()
+
+    def test_empty_queue_no_processing(self):
+        mock_conn = MagicMock()
+        mock_conn.execute.return_value.fetchall.return_value = []
+        with patch("src.alerts.ambiguity_worker.get_connection", return_value=mock_conn), \
+             patch("src.alerts.ambiguity_worker._process_entry") as mock_process:
+            check_ambiguity_queue()
+        mock_process.assert_not_called()
+
+
+# ---------------------------------------------------------------------------
+# _send_escalation — writes to log file
+# ---------------------------------------------------------------------------
+
+@allure.feature("Ambiguity Handling")
+@allure.story("Send Escalation")
+class TestSendEscalation:
+
+    def test_writes_to_alert_log(self, tmp_path):
+        import json
+        log_path = tmp_path / "alerts.log"
+        entry = _make_entry(status="pending")
+        with patch("src.alerts.ambiguity_worker.ALERT_LOG_PATH", str(log_path)):
+            _send_escalation(entry, is_re_escalation=False)
+        content = log_path.read_text()
+        alert = json.loads(content.strip())
+        assert alert["type"] == "ambiguity_escalation"
+        assert alert["re_escalation"] is False
+
+    def test_re_escalation_flag(self, tmp_path):
+        import json
+        log_path = tmp_path / "alerts.log"
+        entry = _make_entry(status="escalated", re_escalations=2)
+        with patch("src.alerts.ambiguity_worker.ALERT_LOG_PATH", str(log_path)):
+            _send_escalation(entry, is_re_escalation=True)
+        content = log_path.read_text()
+        alert = json.loads(content.strip())
+        assert alert["re_escalation"] is True
+        assert alert["re_escalation_count"] == 2

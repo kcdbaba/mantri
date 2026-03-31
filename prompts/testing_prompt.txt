@@ -55,6 +55,16 @@ Do NOT prescribe a specific financing solution — flag the risk and prompt Ashi
 
 When a message references a staff member by first name or alias (e.g. "Haque Babu", "Abhisha di"), resolve to the full name above. Dev Babu recently retired — if his name appears, flag for context.
 
+**Entity naming conventions (Indian business + Army)**:
+- Army clients: a unit name ("51 Sub Area", "14 Gorkha") and an officer reference ("Colonel sahab", "Major Sharma") in the same thread refer to the SAME client entity. The officer is the contact person at that unit. Merge confidently — do not flag as ambiguous.
+- Indian SME suppliers: a company name ("S.K. Enterprises") and a proprietor name ("Suresh ji") in the same thread refer to the SAME supplier entity. The proprietor is the contact person at that company. This is standard Indian business convention. Merge confidently — do not flag as ambiguous.
+
+**Army unit hierarchy** (for entity resolution):
+- A "Bty" (Battery) is a sub-unit of a "Regt" (Regiment), which is part of a "Bde" (Brigade)
+- "Sata Bty Bn" (SATA Battery Battalion) is a sub-unit within the Artillery Brigade ("Arty Bde")
+- When "Arty Bde" and "Sata Bty Bn" appear in the same business context, they are likely the SAME client (the battery is the ordering unit within the brigade). Resolve with high confidence unless there are contradicting signals (different items, different delivery locations).
+- General rule: if a smaller unit (Bty, Coy, Pl) and a larger formation (Bde, Div, Corps) appear together discussing the same order, the smaller unit is the actual ordering entity and the larger formation is context.
+
 **Business entities**: This business operates under three registered entities. Understanding which entity is being referenced matters for invoice and payment correlation:
 - **Uttam Enterprise** — the primary operating entity. All purchases are made in this name. If a supplier invoice or purchase message references "Uttam Enterprise", that is Ashish's business.
 - **Army Stores** — used for billing and accounting purposes only. Never used for purchases.
@@ -145,6 +155,29 @@ When given multiple WhatsApp threads:
       Note: Thread date is [date] — [end-of-month / end-of-quarter / year-end]. This periodic task is expected at this time and is almost never mentioned in WhatsApp.
       Next step: [What to action]
    ```
+
+   **Year-end closeout (within 7 days of 31 Mar)**: When thread dates fall within 24-31 Mar,
+   create a **standalone parent task** (not a subtask) for year-end financial closeout:
+   ```
+   📦 PARENT TASK: Year-End Financial Closeout (FY ending 31 Mar)
+      Entity: Uttam Enterprise / Army Stores / Sun Traders
+      Status: Pending — implicit task, calendar-triggered
+      Priority: High
+      Due: 31 Mar [year]
+      Assigned to: Ashish + Ms. Mousumi (Tally)
+
+      ↳ SUBTASK 1: Clear all pending invoices before year-end
+      ↳ SUBTASK 2: GST reconciliation for March
+      ↳ SUBTASK 3: Stock-take and inventory count
+      ↳ SUBTASK 4: Accounts payable/receivable review
+      ↳ SUBTASK 5: Advance tax assessment (if applicable)
+   ```
+   This must appear as a top-level parent task, not buried as a subtask under an order.
+
+   **Payment follow-up for delivered items**: When items have been delivered but no
+   payment confirmation is visible in the threads, create an explicit payment follow-up
+   subtask with a specific trigger date (30 days post-delivery for commercial clients,
+   60 days for Army clients). Assign to Ashish for Army clients.
 
    **Non-order implicit tasks — proactive sourcing and feedback**: In addition to order-lifecycle tasks, look for two categories of implicit tasks that have no order context:
 

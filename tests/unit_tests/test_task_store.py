@@ -658,3 +658,120 @@ class TestTemplateQueries:
         from src.agent.templates import get_template
         with pytest.raises(ValueError, match="Unknown order type"):
             get_template("nonexistent")
+
+
+# ---------------------------------------------------------------------------
+# cascade_auto_triggers
+# ---------------------------------------------------------------------------
+
+def _seed_nodes_for_triggers(db_path, task_id):
+    """Seed the nodes needed for cascade and stock path tests."""
+    for node_id, status in [
+        ("order_ready", "pending"), ("predispatch_checklist", "pending"),
+        ("dispatched", "pending"), ("delivery_photo_check", "pending"),
+        ("filled_from_stock", "skipped"), ("supplier_indent", "skipped"),
+    ]:
+        _seed_node(db_path, task_id, node_id, status)
+
+
+@allure.feature("Auto-Triggers")
+@allure.story("Cascade Auto Triggers")
+class TestCascadeAutoTriggers:
+
+    def test_order_ready_completed_activates_predispatch(self, db_path):
+        _seed_task(db_path, "t1", "standard_procurement")
+        _seed_nodes_for_triggers(db_path, "t1")
+        with patch("src.store.db.DB_PATH", str(db_path)):
+            from src.store.task_store import update_node, cascade_auto_triggers
+            update_node("t1", "order_ready", "completed", 0.95, "m1", "test")
+            activated = cascade_auto_triggers("t1")
+        assert "predispatch_checklist" in activated
+
+    def test_order_ready_partial_activates_predispatch(self, db_path):
+        _seed_task(db_path, "t1", "standard_procurement")
+        _seed_nodes_for_triggers(db_path, "t1")
+        with patch("src.store.db.DB_PATH", str(db_path)):
+            from src.store.task_store import update_node, cascade_auto_triggers
+            update_node("t1", "order_ready", "partial", 0.8, "m1", "test")
+            activated = cascade_auto_triggers("t1")
+        assert "predispatch_checklist" in activated
+
+    def test_order_ready_pending_no_cascade(self, db_path):
+        _seed_task(db_path, "t1", "standard_procurement")
+        _seed_nodes_for_triggers(db_path, "t1")
+        with patch("src.store.db.DB_PATH", str(db_path)):
+            from src.store.task_store import cascade_auto_triggers
+            activated = cascade_auto_triggers("t1")
+        assert activated == []
+
+    def test_dispatched_completed_activates_photo_check(self, db_path):
+        _seed_task(db_path, "t1", "standard_procurement")
+        _seed_nodes_for_triggers(db_path, "t1")
+        with patch("src.store.db.DB_PATH", str(db_path)):
+            from src.store.task_store import update_node, cascade_auto_triggers
+            update_node("t1", "dispatched", "completed", 0.95, "m1", "test")
+            activated = cascade_auto_triggers("t1")
+        assert "delivery_photo_check" in activated
+
+    def test_idempotent_no_double_activation(self, db_path):
+        _seed_task(db_path, "t1", "standard_procurement")
+        _seed_nodes_for_triggers(db_path, "t1")
+        with patch("src.store.db.DB_PATH", str(db_path)):
+            from src.store.task_store import update_node, cascade_auto_triggers
+            update_node("t1", "order_ready", "completed", 0.95, "m1", "test")
+            first = cascade_auto_triggers("t1")
+            second = cascade_auto_triggers("t1")
+        assert "predispatch_checklist" in first
+        assert second == []
+
+
+@allure.feature("Auto-Triggers")
+@allure.story("Stock Path Order Ready")
+class TestCheckStockPathOrderReady:
+
+    def test_filled_from_stock_completed_sets_order_ready(self, db_path):
+        _seed_task(db_path, "t1", "standard_procurement")
+        _seed_nodes_for_triggers(db_path, "t1")
+        with patch("src.store.db.DB_PATH", str(db_path)):
+            from src.store.task_store import update_node, check_stock_path_order_ready
+            update_node("t1", "filled_from_stock", "completed", 0.9, "m1", "test")
+            result = check_stock_path_order_ready("t1")
+        assert result == "completed"
+
+    def test_filled_from_stock_active_sets_order_ready_active(self, db_path):
+        _seed_task(db_path, "t1", "standard_procurement")
+        _seed_nodes_for_triggers(db_path, "t1")
+        with patch("src.store.db.DB_PATH", str(db_path)):
+            from src.store.task_store import update_node, check_stock_path_order_ready
+            update_node("t1", "filled_from_stock", "active", 0.9, "m1", "test")
+            result = check_stock_path_order_ready("t1")
+        assert result == "active"
+
+    def test_supplier_active_skips_stock_trigger(self, db_path):
+        _seed_task(db_path, "t1", "standard_procurement")
+        _seed_nodes_for_triggers(db_path, "t1")
+        with patch("src.store.db.DB_PATH", str(db_path)):
+            from src.store.task_store import update_node, check_stock_path_order_ready
+            update_node("t1", "filled_from_stock", "completed", 0.9, "m1", "test")
+            update_node("t1", "supplier_indent", "active", 0.9, "m1", "test")
+            result = check_stock_path_order_ready("t1")
+        assert result is None
+
+    def test_stock_not_active_returns_none(self, db_path):
+        _seed_task(db_path, "t1", "standard_procurement")
+        _seed_nodes_for_triggers(db_path, "t1")
+        with patch("src.store.db.DB_PATH", str(db_path)):
+            from src.store.task_store import check_stock_path_order_ready
+            result = check_stock_path_order_ready("t1")
+        assert result is None
+
+    def test_idempotent_already_set(self, db_path):
+        _seed_task(db_path, "t1", "standard_procurement")
+        _seed_nodes_for_triggers(db_path, "t1")
+        with patch("src.store.db.DB_PATH", str(db_path)):
+            from src.store.task_store import update_node, check_stock_path_order_ready
+            update_node("t1", "filled_from_stock", "completed", 0.9, "m1", "test")
+            first = check_stock_path_order_ready("t1")
+            second = check_stock_path_order_ready("t1")
+        assert first == "completed"
+        assert second is None
