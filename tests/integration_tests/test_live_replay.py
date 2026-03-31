@@ -202,6 +202,21 @@ def _snapshot_state(db_path: str) -> dict:
     except sqlite3.OperationalError:
         dead_letters = []
 
+    # Model usage from usage_log
+    model_usage = []
+    total_cost = 0.0
+    try:
+        model_rows = conn.execute(
+            "SELECT model, COUNT(*) as calls, SUM(cost_usd) as cost "
+            "FROM usage_log GROUP BY model ORDER BY calls DESC"
+        ).fetchall()
+        model_usage = [{"model": r["model"], "calls": r["calls"],
+                        "cost": r["cost"] or 0} for r in model_rows]
+        cost_row = conn.execute("SELECT SUM(cost_usd) FROM usage_log").fetchone()
+        total_cost = cost_row[0] or 0 if cost_row else 0
+    except sqlite3.OperationalError:
+        pass
+
     conn.close()
 
     return {
@@ -211,6 +226,8 @@ def _snapshot_state(db_path: str) -> dict:
         "ambiguity_flags": ambiguity_flags,
         "message_counts": message_counts,
         "dead_letter_count": len(dead_letters),
+        "model_usage": model_usage,
+        "total_cost": total_cost,
     }
 
 
@@ -416,6 +433,8 @@ class TestLiveReplay:
             "messages_per_task": state["message_counts"],
             "skip_linkage": skip_linkage,
             "max_messages": max_messages,
+            "model_usage": state.get("model_usage", []),
+            "total_cost": state.get("total_cost", 0),
         })
 
         # Basic sanity assertions

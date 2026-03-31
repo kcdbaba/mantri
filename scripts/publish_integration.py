@@ -643,9 +643,9 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
         rows = []
         for case_id in sorted(dry_by_case.keys()):
             case_runs = dry_by_case[case_id]
-            # Find the latest full run for group row data
+            # Find the latest full run for group row data (runs sorted newest-first)
             full_runs = [r for r in case_runs if not r.get("max_messages")]
-            latest = full_runs[-1] if full_runs else case_runs[-1]
+            latest = full_runs[0] if full_runs else case_runs[0]
             group_key = f"dry_{case_id}"
             n_runs = len(case_runs)
             rate = f"{latest.get('routing_rate', 0):.0%}"
@@ -697,7 +697,7 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                 r for r in case_runs
                 if not r.get("skip_linkage") and not r.get("max_messages")
             ]
-            latest = full_runs[-1] if full_runs else case_runs[-1]
+            latest = full_runs[0] if full_runs else case_runs[0]
             group_key = f"live_{case_id}"
             n_runs = len(case_runs)
 
@@ -742,10 +742,18 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                 r_node_summary = r.get("node_summary", {})
                 r_total_nodes = sum(v.get("total", 0) for v in r_node_summary.values())
                 r_link_count = r.get("fulfillment_link_count", 0)
-                # Show model/cost only for the latest (first) run
-                is_latest = (r is case_runs[0])
-                r_models = models_html if is_latest else "\u2014"
-                r_cost = cost_html if is_latest else "\u2014"
+                # Show model/cost from run record if available, else from case DB for latest
+                r_model_usage = r.get("model_usage", [])
+                r_total_cost = r.get("total_cost", 0)
+                if r_model_usage:
+                    r_models = _fmt_model_usage(r_model_usage)
+                    r_cost = f"${r_total_cost:.2f}" if r_total_cost else "\u2014"
+                elif r is case_runs[0]:
+                    r_models = models_html  # fallback to case DB for latest
+                    r_cost = cost_html
+                else:
+                    r_models = "\u2014"
+                    r_cost = "\u2014"
                 rows.append(
                     f"<tr class='group-child' data-group='{group_key}'>"
                     f"<td class='dim'>{_fmt_dt(r.get('run_at',''))}</td>"
