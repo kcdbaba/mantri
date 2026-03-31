@@ -1,0 +1,1 @@
+Schema initialised at /private/var/folders/v3/v0hgbtcx7p18k_9f151zg0dm0000gn/T/pytest-of-kunalc/pytest-83/test_auto_confirms_at_high_con0/test.db

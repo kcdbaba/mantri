@@ -1,0 +1,2 @@
+Schema initialised at /private/var/folders/v3/v0hgbtcx7p18k_9f151zg0dm0000gn/T/pytest-of-kunalc/pytest-89/test_seed_creates_task_and_nod0/test.db
+Seeded task t1 with 2 nodes and 1 aliases

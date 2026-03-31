@@ -250,6 +250,8 @@ def run_live_replay(case_dir: Path, trace: list[dict], seed: dict,
     mock_redis = StreamCapture()
 
     messages_to_process = trace[:max_messages] if max_messages else trace
+    progress_path = case_dir / "replay_progress.json"
+    t_start = time.time()
 
     stats = {
         "messages_total": len(messages_to_process),
@@ -261,6 +263,20 @@ def run_live_replay(case_dir: Path, trace: list[dict], seed: dict,
         "linkage_agent_failures": 0,
         "errors": [],
     }
+
+    def _write_progress(phase: str, detail: str = ""):
+        elapsed = time.time() - t_start
+        progress = {
+            "phase": phase,
+            "detail": detail,
+            "elapsed_s": round(elapsed, 1),
+            "stats": {k: v for k, v in stats.items() if k != "errors"},
+            "error_count": len(stats["errors"]),
+        }
+        try:
+            progress_path.write_text(json.dumps(progress, indent=2, default=str))
+        except Exception:
+            pass
 
     with patch("src.store.db.DB_PATH", db_path), \
          patch("src.config.DB_PATH", db_path), \
@@ -282,10 +298,12 @@ def run_live_replay(case_dir: Path, trace: list[dict], seed: dict,
                     batches_to_flush.append((tid, list(buf["messages"])))
             batch_buf.clear()
 
+        _write_progress("routing", f"0/{len(messages_to_process)} messages")
         for i, msg in enumerate(messages_to_process):
             if (i + 1) % 50 == 0:
                 log.info("Processing message %d/%d: %s",
                          i + 1, len(messages_to_process), msg["message_id"])
+                _write_progress("routing", f"{i+1}/{len(messages_to_process)} messages")
 
             routes = route(msg)
             if not routes:
@@ -315,6 +333,7 @@ def run_live_replay(case_dir: Path, trace: list[dict], seed: dict,
         _flush_all()
 
         # Process all batches
+        _write_progress("batches", f"0/{len(batches_to_flush)} batches")
         for batch_idx, (task_id, batch_msgs) in enumerate(batches_to_flush):
             if (batch_idx + 1) % 20 == 0:
                 log.info("Processing batch %d/%d: task=%s size=%d",
@@ -331,6 +350,11 @@ def run_live_replay(case_dir: Path, trace: list[dict], seed: dict,
                 })
                 log.error("Batch failed for task=%s: %s", task_id, e)
                 continue
+            finally:
+                if (batch_idx + 1) % 5 == 0 or batch_idx == len(batches_to_flush) - 1:
+                    _write_progress("batches",
+                                    f"{batch_idx+1}/{len(batches_to_flush)} batches, "
+                                    f"task={task_id}, size={len(batch_msgs)}")
 
             # Feed stream events to linkage worker
             new_events = mock_redis.drain_events()
@@ -348,11 +372,13 @@ def run_live_replay(case_dir: Path, trace: list[dict], seed: dict,
                         })
                         log.error("Linkage failed for batch %d: %s", batch_idx, e)
 
+    _write_progress("snapshot", "computing final state")
     snapshot = _snapshot_state(db_path)
 
     # Keep the DB for manual inspection
     result_db = case_dir / "replay_result.db"
     Path(db_path).rename(result_db)
+    _write_progress("complete", f"done in {time.time()-t_start:.0f}s")
     log.info("Result DB saved to: %s", result_db)
 
     return {
@@ -365,6 +391,186 @@ def run_live_replay(case_dir: Path, trace: list[dict], seed: dict,
 # ---------------------------------------------------------------------------
 # Test
 # ---------------------------------------------------------------------------
+
+def _get_run_metadata() -> dict:
+    """Capture config state and git version at the time of the run."""
+    import subprocess
+    from src.config import (
+        ENABLE_LIVE_TASK_CREATION, CLAUDE_MODEL, CLAUDE_MODEL_FAST,
+        GEMINI_MODEL, ACTIVE_ESCALATION_PROFILE,
+    )
+    git_hash = ""
+    try:
+        git_hash = subprocess.check_output(
+            ["git", "rev-parse", "--short", "HEAD"], text=True
+        ).strip()
+    except Exception:
+        pass
+
+    return {
+        "git_commit": git_hash,
+        "live_task_creation": ENABLE_LIVE_TASK_CREATION,
+        "models": {
+            "complex": CLAUDE_MODEL,
+            "simple": GEMINI_MODEL,
+        },
+        "escalation_profile": ACTIVE_ESCALATION_PROFILE,
+    }
+
+
+def _compute_pipeline_score(stats: dict, state: dict, skip_linkage: bool) -> dict:
+    """
+    Compute a metric-based pipeline quality score from replay results.
+    Dimensions:
+      - reliability: dead letter rate, failure rate
+      - routing: routed/total ratio
+      - extraction: items extracted per routed message
+      - node_progression: completed nodes / total nodes
+      - ambiguity_quality: flag rate (lower is better, but 0 is suspicious)
+      - linkage: fulfillment links created (if applicable)
+    """
+    total_msgs = stats["messages_total"]
+    routed = stats["messages_routed"]
+    failures = stats["update_agent_failures"] + stats.get("linkage_agent_failures", 0)
+    dead_letters = state["dead_letter_count"]
+    n_flags = len(state["ambiguity_flags"])
+    n_links = len(state["fulfillment_links"])
+    n_errors = len(stats.get("errors", []))
+    agent_calls = stats["update_agent_calls"]
+
+    # Total nodes across all tasks
+    all_nodes = [n for nodes in state["node_states"].values() for n in nodes]
+    completed = sum(1 for n in all_nodes if n["status"] == "completed")
+    active = sum(1 for n in all_nodes if n["status"] in ("active", "in_progress"))
+    total_nodes = len(all_nodes)
+    progressed = completed + active
+
+    # Total items
+    total_items = sum(len(items) for items in state["items"].values())
+
+    # --- Scoring ---
+
+    # Reliability (0-100): penalise dead letters and failures
+    if agent_calls == 0:
+        reliability = 50
+    else:
+        dead_rate = dead_letters / agent_calls
+        fail_rate = failures / agent_calls
+        reliability = max(0, int(100 - dead_rate * 500 - fail_rate * 300 - n_errors * 10))
+
+    # Routing (0-100): % of messages routed
+    routing = int(100 * routed / total_msgs) if total_msgs else 0
+
+    # Extraction (0-100): items per 100 routed messages (expect ~5-20 items per 100 msgs)
+    if routed == 0:
+        extraction = 0
+    else:
+        items_per_100 = total_items / routed * 100
+        extraction = min(100, int(items_per_100 * 5))  # 20 items/100msgs = 100
+
+    # Node progression (0-100): % of nodes progressed from pending
+    if total_nodes == 0:
+        node_prog = 0
+    else:
+        node_prog = int(100 * progressed / total_nodes)
+
+    # Ambiguity quality (0-100): moderate flag rate is good
+    # 0 flags = suspicious (50), 1-3 per call = too many (penalise), sweet spot ~0.1-0.5/call
+    if agent_calls == 0:
+        ambiguity_q = 50
+    else:
+        flag_rate = n_flags / agent_calls
+        if flag_rate == 0:
+            ambiguity_q = 60  # suspiciously low
+        elif flag_rate <= 0.5:
+            ambiguity_q = 95  # ideal range
+        elif flag_rate <= 1.0:
+            ambiguity_q = 80
+        elif flag_rate <= 2.0:
+            ambiguity_q = 60
+        else:
+            ambiguity_q = max(20, int(100 - flag_rate * 20))
+
+    # Linkage (0-100): only if linkage was run
+    linkage_score = None
+    if not skip_linkage:
+        if n_links > 0:
+            linkage_score = min(100, 70 + n_links * 5)  # baseline 70, +5 per link
+        else:
+            linkage_score = 40  # no links created
+
+    # Overall: weighted average
+    weights = {
+        "reliability": 30,
+        "routing": 15,
+        "extraction": 20,
+        "node_progression": 15,
+        "ambiguity_quality": 10,
+    }
+    if linkage_score is not None:
+        weights["linkage"] = 10
+    else:
+        weights["extraction"] += 5
+        weights["node_progression"] += 5
+
+    scores = {
+        "reliability": reliability,
+        "routing": routing,
+        "extraction": extraction,
+        "node_progression": node_prog,
+        "ambiguity_quality": ambiguity_q,
+    }
+    if linkage_score is not None:
+        scores["linkage"] = linkage_score
+
+    total_weight = sum(weights.values())
+    overall = sum(scores[k] * weights[k] for k in scores) / total_weight
+
+    dimensions = {}
+    for k in ["reliability", "routing", "extraction", "node_progression",
+              "ambiguity_quality", "linkage"]:
+        if k in scores:
+            dimensions[k] = {"score": scores[k], "notes": ""}
+        else:
+            dimensions[k] = {"score": None, "notes": ""}
+
+    # Add notes
+    dimensions["reliability"]["notes"] = (
+        f"{dead_letters} dead letters, {failures} failures, {n_errors} errors "
+        f"out of {agent_calls} agent calls"
+    )
+    dimensions["routing"]["notes"] = f"{routed}/{total_msgs} messages routed"
+    dimensions["extraction"]["notes"] = f"{total_items} items extracted across {len(state['items'])} tasks"
+    dimensions["node_progression"]["notes"] = (
+        f"{completed} completed, {active} active out of {total_nodes} total nodes"
+    )
+    dimensions["ambiguity_quality"]["notes"] = (
+        f"{n_flags} flags from {agent_calls} calls "
+        f"({n_flags/max(agent_calls,1):.2f}/call)"
+    )
+    if linkage_score is not None:
+        dimensions["linkage"]["notes"] = f"{n_links} fulfillment links created"
+
+    return {
+        "verdict": "PASS" if overall >= 60 else "PARTIAL" if overall >= 40 else "FAIL",
+        "overall_score": round(overall),
+        "dimensions": dimensions,
+        "metrics": {
+            "total_messages": total_msgs,
+            "routed": routed,
+            "agent_calls": agent_calls,
+            "dead_letters": dead_letters,
+            "failures": failures,
+            "errors": n_errors,
+            "ambiguity_flags": n_flags,
+            "fulfillment_links": n_links,
+            "total_items": total_items,
+            "total_nodes": total_nodes,
+            "completed_nodes": completed,
+            "active_nodes": active,
+        },
+    }
+
 
 LIVE_CASES = _discover_cases()
 LIVE_CASE_IDS = [d.name for d in LIVE_CASES]
@@ -379,6 +585,7 @@ class TestLiveReplay:
 
         skip_linkage = request.config.getoption("--skip-linkage")
         max_messages = request.config.getoption("--max-messages")
+        run_note = request.config.getoption("--run-note")
         case_id = case_dir.name.split("_")[0]
 
         trace = _load_json(case_dir, "replay_trace.json")
@@ -403,9 +610,20 @@ class TestLiveReplay:
         )
         log.info("Results written to: %s", output_path)
 
-        # Save publishable run record
+        # Compute pipeline score
         stats = result["stats"]
         state = result["state"]
+        score = _compute_pipeline_score(stats, state, skip_linkage)
+        score["case_id"] = case_id
+        score["case_name"] = case_dir.name
+        score["evaluated_at"] = time.strftime("%Y-%m-%dT%H:%M:%S")
+        score_path = case_dir / "pipeline_score.json"
+        score_path.write_text(
+            json.dumps(score, indent=2, ensure_ascii=False, default=str),
+            encoding="utf-8",
+        )
+
+        # Save publishable run record
         save_run_record("live", case_id, {
             "messages_total": stats["messages_total"],
             "messages_routed": stats["messages_routed"],
@@ -435,6 +653,10 @@ class TestLiveReplay:
             "max_messages": max_messages,
             "model_usage": state.get("model_usage", []),
             "total_cost": state.get("total_cost", 0),
+            "tasks_created": len(state["node_states"]),
+            "pipeline_score": score.get("overall_score") if score else None,
+            "run_metadata": _get_run_metadata(),
+            "run_notes": run_note or "",
         })
 
         # Basic sanity assertions
@@ -476,3 +698,11 @@ class TestLiveReplay:
                 print(f"  [{err['phase']}] {err['message_id']}: {err['error'][:80]}")
         print(f"\nResult DB: {result['db_path']}")
         print(f"Full results: {case_dir / 'replay_result.json'}")
+
+        # --- Pipeline quality score ---
+        print(f"\nPIPELINE SCORE: {score['overall_score']}/100")
+        for dim, data in score["dimensions"].items():
+            if data["score"] is not None:
+                bar = "█" * (data["score"] // 10) + "░" * (10 - data["score"] // 10)
+                print(f"  {dim:25s} {bar} {data['score']}")
+        print(f"Score written to: {score_path}")

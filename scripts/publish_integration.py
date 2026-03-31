@@ -481,6 +481,13 @@ def _build_dual_axis_svg(case_id: str, full_runs: list[dict]) -> str:
     )
 
 
+MODEL_ABBREV = {
+    "claude-sonnet-4-6": "Sonnet",
+    "gemini-2.5-flash": "Flash",
+    "claude-haiku-4-5-20251001": "Haiku",
+}
+
+
 def _case_section(case: dict) -> str:
     stats = case["stats"]
     state = case["state"]
@@ -501,20 +508,72 @@ def _case_section(case: dict) -> str:
         f"{n_flags} flags"
     )
 
-    # Stats summary
-    summary = (
-        f"<div class='stats-grid'>"
-        f"<div class='stat'><span class='stat-val'>{stats['messages_total']}</span><span class='stat-label'>Messages</span></div>"
-        f"<div class='stat'><span class='stat-val'>{stats['messages_routed']}</span><span class='stat-label'>Routed</span></div>"
-        f"<div class='stat'><span class='stat-val'>{stats['update_agent_calls']}</span><span class='stat-label'>Update agent calls</span></div>"
-        f"<div class='stat'><span class='stat-val'>{stats['linkage_events_processed']}</span><span class='stat-label'>Linkage events</span></div>"
-        f"<div class='stat'><span class='stat-val {('fail' if stats['update_agent_failures'] else '')}'>"
-        f"{stats['update_agent_failures']}</span><span class='stat-label'>Agent failures</span></div>"
-        f"<div class='stat'><span class='stat-val'>{state['dead_letter_count']}</span><span class='stat-label'>Dead letters</span></div>"
-        f"<div class='stat'><span class='stat-val'>{n_flags}</span><span class='stat-label'>Ambiguity flags</span></div>"
-        f"<div class='stat'><span class='stat-val'>{n_links}</span><span class='stat-label'>Fulfillment links</span></div>"
-        f"</div>"
+    # Stats summary — built programmatically from available data
+    stat_items = [
+        ("Messages", stats["messages_total"], ""),
+        ("Routed", stats["messages_routed"], ""),
+        ("Agent calls", stats["update_agent_calls"], ""),
+        ("Linkage events", stats["linkage_events_processed"], ""),
+        ("Agent failures", stats["update_agent_failures"],
+         "fail" if stats["update_agent_failures"] else ""),
+        ("Dead letters", state["dead_letter_count"],
+         "fail" if state["dead_letter_count"] else ""),
+        ("Ambiguity flags", n_flags, ""),
+        ("Fulfillment links", n_links, ""),
+        ("Tasks", len(state["node_states"]), ""),
+    ]
+
+    # Pipeline score from pipeline_score.json if available
+    score_path = Path(CASES_DIR) / case["_case_dir"] / "pipeline_score.json"
+    if score_path.exists():
+        p_score = json.loads(score_path.read_text())
+        score_val = p_score.get("overall_score", "")
+        score_cls = "pass" if score_val >= 70 else ("partial" if score_val >= 50 else "fail")
+        stat_items.append(("Pipeline score", score_val, score_cls))
+
+    # Model usage
+    model_usage = case.get("_model_usage", [])
+    if model_usage:
+        model_str = ", ".join(
+            f"{MODEL_ABBREV.get(u['model'], u['model'])} x{u['calls']}"
+            for u in model_usage
+        )
+        stat_items.append(("Models", model_str, ""))
+
+    # Cost
+    total_cost = case.get("_total_cost", 0)
+    if total_cost:
+        stat_items.append(("Cost", f"${total_cost:.2f}", ""))
+
+    # Run metadata
+    run_meta = {}
+    run_record_path = sorted(
+        Path(RUNS_DIR).glob(f"live-{case_id}-*.json"), reverse=True
     )
+    if run_record_path:
+        run_record = json.loads(run_record_path[0].read_text())
+        run_meta = run_record.get("run_metadata", {})
+        if run_meta.get("git_commit"):
+            stat_items.append(("Git", run_meta["git_commit"], "dim"))
+        if run_meta.get("live_task_creation"):
+            stat_items.append(("Task creation", "enabled", ""))
+
+    stat_cells = []
+    for label, value, cls in stat_items:
+        cls_attr = f" class='{cls}'" if cls else ""
+        stat_cells.append(
+            f"<div class='stat'><span class='stat-val'{cls_attr}>{value}</span>"
+            f"<span class='stat-label'>{label}</span></div>"
+        )
+
+    # Run notes
+    notes_html = ""
+    if run_record_path:
+        run_notes = json.loads(run_record_path[0].read_text()).get("run_notes", "")
+        if run_notes:
+            notes_html = f"<div class='run-note'><em>Note:</em> {run_notes}</div>"
+
+    summary = f"<div class='stats-grid'>{''.join(stat_cells)}</div>{notes_html}"
 
     # Fix 4: Sort tasks — client before supplier
     task_ids = sorted(
@@ -571,13 +630,6 @@ def _case_section(case: dict) -> str:
     )
 
 
-MODEL_ABBREV = {
-    "claude-sonnet-4-6": "Sonnet",
-    "gemini-2.5-flash": "Flash",
-    "claude-haiku-4-5-20251001": "Haiku",
-}
-
-
 def _abbreviate_model(model: str) -> str:
     return MODEL_ABBREV.get(model, model)
 
@@ -620,6 +672,7 @@ def _fmt_per_group_plain(per_group: dict) -> str:
 
 
 def _run_history(runs: list[dict], cases: list[dict]) -> str:
+    import html as html_mod
     if not runs:
         return ""
 
@@ -719,6 +772,22 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
             cost_html = f"${total_cost:.2f}" if total_cost else "\u2014"
 
             routed_val = f"{latest.get('messages_routed',0)}/{latest.get('messages_total',0)}"
+            tasks_created = latest.get("tasks_created", len(latest.get("node_summary", {})))
+            p_score = latest.get("pipeline_score", "")
+            p_score_html = f"{p_score}" if p_score else "\u2014"
+            meta = latest.get("run_metadata", {})
+            config_html = ""
+            if meta:
+                parts = []
+                if meta.get("git_commit"):
+                    parts.append(meta["git_commit"])
+                if meta.get("live_task_creation"):
+                    parts.append("task_create=on")
+                if meta.get("note"):
+                    config_html = f"<span title='{html_mod.escape(meta['note'], quote=True)}'>" + " ".join(parts) + " ⓘ</span>"
+                else:
+                    config_html = " ".join(parts)
+
             rows.append(
                 f"<tr class='group-row' data-group='{group_key}' onclick='toggleGroup(this)'>"
                 f"<td><span class='toggle'>&#9654;</span> {case_id} ({n_runs} runs)</td>"
@@ -732,8 +801,11 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                 f"{latest.get('dead_letter_count',0)}</td>"
                 f"<td data-value='{latest.get('error_count',0)}' data-empty=''>"
                 f"{latest.get('error_count',0)}</td>"
+                f"<td data-value='{tasks_created}' data-empty=''>{tasks_created}</td>"
+                f"<td data-value='{p_score_html}' data-empty=''>{p_score_html}</td>"
                 f"<td data-value='{models_html}' data-empty=''>{models_html}</td>"
-                f"<td data-value='{cost_html}' data-empty=''>{cost_html}</td></tr>"
+                f"<td data-value='{cost_html}' data-empty=''>{cost_html}</td>"
+                f"<td data-value='{config_html}' data-empty=''>{config_html}</td></tr>"
             )
             for r in case_runs:
                 mode = "update only" if r.get("skip_linkage") else "full"
@@ -764,16 +836,29 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                     f"<td>{r.get('ambiguity_flag_count',0)}</td>"
                     f"<td>{r.get('dead_letter_count',0)}</td>"
                     f"<td>{r.get('error_count',0)}</td>"
+                    f"<td>{r.get('tasks_created', len(r.get('node_summary', {})))}</td>"
+                    f"<td>{r.get('pipeline_score') or chr(8212)}</td>"
                     f"<td>{r_models}</td>"
-                    f"<td>{r_cost}</td></tr>"
+                    f"<td>{r_cost}</td>"
+                    f"<td class='dim'>{r.get('run_metadata', {}).get('git_commit', '')}</td></tr>"
                 )
+                # Show run_notes as a sub-row if present
+                notes = r.get("run_notes", "")
+                if notes:
+                    escaped_notes = html_mod.escape(notes, quote=True)
+                    rows.append(
+                        f"<tr class='group-child' data-group='{group_key}'>"
+                        f"<td colspan='13' class='run-note'>"
+                        f"<em>Note:</em> {escaped_notes}</td></tr>"
+                    )
         sections.append(
             "<h3>Live Replay History</h3>"
             "<table class='detail'><thead><tr>"
             "<th>Case / Run</th><th>Mode</th><th>Routed</th>"
             "<th>Nodes</th><th>Links</th><th>Ambiguity</th>"
             "<th>Dead Letters</th><th>Errors</th>"
-            "<th>Models</th><th>Cost</th>"
+            "<th>Tasks</th><th>Score</th>"
+            "<th>Models</th><th>Cost</th><th>Config</th>"
             "</tr></thead><tbody>" + "".join(rows) + "</tbody></table>"
             + _live_replay_chart(live_by_case)
         )
@@ -804,6 +889,7 @@ h5 { font-size: 0.8rem; color: #4a5568; margin: 0.75rem 0 0.3rem; }
 .meta { font-size: 0.78rem; color: #4a5568; margin-bottom: 2rem; }
 .case-desc { font-size: 0.82rem; color: #4a5568; margin-bottom: 1rem; }
 .dim { color: #4a5568; font-size: 0.8rem; }
+.run-note { background: #1a1f2e; color: #a0aec0; font-size: 0.8rem; padding: 0.5rem 1rem; border-left: 3px solid #4a5568; }
 
 .stats-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));

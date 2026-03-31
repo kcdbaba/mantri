@@ -14,6 +14,8 @@ def pytest_addoption(parser):
                      help="Skip linkage agent calls (update_agent only)")
     parser.addoption("--max-messages", type=int, default=None,
                      help="Process only the first N messages (for quick iteration)")
+    parser.addoption("--run-note", type=str, default="",
+                     help="Note to attach to the run record (e.g. 'testing new prompt rules')")
 
 
 def save_run_record(test_type: str, case_id: str, results: dict):

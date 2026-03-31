@@ -502,6 +502,68 @@ def _unit_section(runs: list[dict]) -> str:
     )
 
 
+# ── Linkage section ──────────────────────────────────────────────────────────
+
+def _linkage_section(runs: list[dict]) -> str:
+    import html as html_mod
+
+    linkage_runs = [r for r in runs if r.get("case_id", "").startswith("LINKAGE")]
+    if not linkage_runs:
+        return "<p class='empty'>No linkage test runs recorded yet.</p>"
+
+    from collections import OrderedDict
+    groups: OrderedDict[str, list[dict]] = OrderedDict()
+    for r in linkage_runs:
+        groups.setdefault(r.get("case_id", "?"), []).append(r)
+
+    rows = []
+    for case_id, members in groups.items():
+        tooltip = html_mod.escape(_case_tooltip(case_id), quote=True)
+        for r in members:
+            routed = r.get("messages_routed", 0)
+            total = r.get("messages_total", 0)
+            ua_calls = r.get("update_agent_calls", 0)
+            linkage_evts = r.get("linkage_events_processed", 0)
+            links = r.get("fulfillment_link_count", 0)
+            flags = r.get("ambiguity_flag_count", 0)
+            dead = r.get("dead_letter_count", 0)
+
+            # Model / cost info
+            model_info = ""
+            model_usage = r.get("model_usage", [])
+            if model_usage:
+                parts = [f"{m.get('model', '?')} ({m.get('calls', 0)} calls)" for m in model_usage]
+                model_info = ", ".join(parts)
+            cost = r.get("total_cost")
+            cost_str = f"${cost:.4f}" if cost is not None else ""
+            extra = " · ".join(filter(None, [model_info, cost_str]))
+
+            rows.append(
+                f"<tr>"
+                f"<td class='case-id' title='{tooltip}'>{case_id}</td>"
+                f"<td>{_fmt_dt(r.get('run_at', ''))}</td>"
+                f"<td>{total}</td>"
+                f"<td>{routed}/{total}</td>"
+                f"<td>{ua_calls}</td>"
+                f"<td>{linkage_evts}</td>"
+                f"<td>{links}</td>"
+                f"<td>{flags}</td>"
+                f"<td class='{'fail' if dead else ''}'>{dead}</td>"
+                f"<td class='case-id'>{extra}</td>"
+                f"</tr>"
+            )
+
+    return (
+        "<table>"
+        "<thead><tr><th>Case</th><th>Run</th><th>Messages</th>"
+        "<th>Routed</th><th>Update Agent</th><th>Linkage Events</th>"
+        "<th>Links</th><th>Ambiguity</th><th>Dead Letters</th>"
+        "<th>Model / Cost</th></tr></thead>"
+        "<tbody>" + "".join(rows) + "</tbody>"
+        "</table>"
+    )
+
+
 # ── Integration section ───────────────────────────────────────────────────────
 
 def _integration_section(runs: list[dict]) -> str:
@@ -577,6 +639,16 @@ def _integration_section(runs: list[dict]) -> str:
             total_completed = sum(v.get("completed", 0) for v in node_summary.values())
             total_nodes = sum(v.get("total", 0) for v in node_summary.values())
 
+            p_score = latest.get("pipeline_score")
+            p_score_str = str(p_score) if p_score else ""
+            tasks_n = latest.get("tasks_created", len(latest.get("node_summary", {})))
+            meta = latest.get("run_metadata", {})
+            config_str = meta.get("git_commit", "")
+            if meta.get("live_task_creation"):
+                config_str += " tc=on"
+            note = latest.get("run_notes", "")
+            note_icon = f" <span title='{html_mod.escape(note, quote=True)}'>&#9432;</span>" if note else ""
+
             rows.append(
                 f"<tr class='group-row' data-group='live-{case_id}' onclick='toggleGroup(this)'>"
                 f"<td><span class='toggle'>&#9654;</span></td>"
@@ -587,6 +659,9 @@ def _integration_section(runs: list[dict]) -> str:
                 f"<td>{latest.get('fulfillment_link_count', 0)}</td>"
                 f"<td>{latest.get('ambiguity_flag_count', 0)}</td>"
                 f"<td></td>"
+                f"<td>{tasks_n}</td>"
+                f"<td>{p_score_str}</td>"
+                f"<td>{config_str}{note_icon}</td>"
                 f"</tr>"
             )
             for r in members:
@@ -599,6 +674,13 @@ def _integration_section(runs: list[dict]) -> str:
                 mode = "update only" if r.get("skip_linkage") else "full"
                 if r.get("max_messages"):
                     mode += f" (first {r['max_messages']})"
+                r_score = r.get("pipeline_score")
+                r_score_str = str(r_score) if r_score else ""
+                r_tasks = r.get("tasks_created", len(r.get("node_summary", {})))
+                r_meta = r.get("run_metadata", {})
+                r_config = r_meta.get("git_commit", "")
+                r_note = r.get("run_notes", "")
+                r_note_icon = f" <span title='{html_mod.escape(r_note, quote=True)}'>&#9432;</span>" if r_note else ""
 
                 rows.append(
                     f"<tr class='group-child' data-group='live-{case_id}'>"
@@ -610,6 +692,9 @@ def _integration_section(runs: list[dict]) -> str:
                     f"<td>{links}</td>"
                     f"<td>{flags}</td>"
                     f"<td class='{'fail' if errors else ''}'>{errors}</td>"
+                    f"<td>{r_tasks}</td>"
+                    f"<td>{r_score_str}</td>"
+                    f"<td>{r_config}{r_note_icon}</td>"
                     f"</tr>"
                 )
 
@@ -617,8 +702,9 @@ def _integration_section(runs: list[dict]) -> str:
             "<h3>Live Replay (full pipeline)</h3>"
             "<table>"
             "<thead><tr><th></th><th>Case</th><th>Runs</th>"
-            "<th>Routed</th><th>Nodes completed</th><th>Links</th>"
-            "<th>Ambiguity</th><th>Errors</th></tr></thead>"
+            "<th>Routed</th><th>Nodes</th><th>Links</th>"
+            "<th>Ambiguity</th><th>Errors</th>"
+            "<th>Tasks</th><th>Score</th><th>Config</th></tr></thead>"
             "<tbody>" + "".join(rows) + "</tbody>"
             "</table>"
         )
@@ -741,6 +827,7 @@ def generate() -> str:
     <a href="#unit">Unit</a> &nbsp;·&nbsp;
     <a href="#coverage">Coverage</a> &nbsp;·&nbsp;
     <a href="#inc">Incremental</a> &nbsp;·&nbsp;
+    <a href="#linkage">Linkage</a> &nbsp;·&nbsp;
     <a href="#int">Integration</a> &nbsp;·&nbsp;
     <a href="#synth">Eval (Synthetic)</a> &nbsp;·&nbsp;
     <a href="#real">Eval (Real Cases)</a>
@@ -755,9 +842,12 @@ def generate() -> str:
   <h2 id="inc">Incremental Tests (INC)</h2>
   {_inc_section(inc_runs)}
 
+  <h2 id="linkage">Linkage Tests</h2>
+  {_linkage_section(int_runs)}
+
   <h2 id="int">Integration Tests (Replay)</h2>
   <p class="summary"><a href="/developer/integration/">Full detail view →</a></p>
-  {_integration_section(int_runs)}
+  {_integration_section([r for r in int_runs if not r.get("case_id", "").startswith("LINKAGE")])}
 
   {_legend_section()}
 
