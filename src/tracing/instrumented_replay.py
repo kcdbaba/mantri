@@ -39,7 +39,7 @@ def run_instrumented_replay(
     Returns stats dict compatible with test_live_replay.py expectations.
     """
     tracer = ReplayTracer(
-        project_name="mantri-eval",
+        project_name="mantri",
         phoenix_endpoint=phoenix_endpoint,
     )
     tracer.start(run_ctx)
