@@ -435,14 +435,45 @@ def _coverage_section(cov: dict | None) -> str:
 
 # ── Unit tests section ─────────────────────────────────────────────────────────
 
+def _unit_run_key(r: dict) -> tuple:
+    """Key for dedup: (total, passed, failed, skipped)."""
+    return (r.get("total", 0), r.get("passed", 0), r.get("failed", 0), r.get("skipped", 0))
+
+
 def _unit_section(runs: list[dict]) -> str:
     if not runs:
         return "<p class='empty'>No unit test runs recorded yet.</p>"
+
+    # Filter out runs with very small totals (early dev noise)
+    MIN_TOTAL = 20
+    runs = [r for r in runs if r.get("total", 0) >= MIN_TOTAL]
+
+    # Compress: drop runs where data is same as the next (later) contiguous row.
+    # Runs are sorted newest-first, so "next" means the row below (older).
+    # We keep the LATEST of each contiguous group and show how many were skipped.
+    MAX_ROWS = 20
+    compressed: list[tuple[dict, int]] = []  # (run, skipped_count)
+    i = 0
+    while i < len(runs):
+        key = _unit_run_key(runs[i])
+        skipped = 0
+        j = i + 1
+        while j < len(runs) and _unit_run_key(runs[j]) == key:
+            skipped += 1
+            j += 1
+        compressed.append((runs[i], skipped))
+        i = j
+    total_compressed = len(compressed)
+    compressed = compressed[:MAX_ROWS]
+
     rows = []
-    for r in runs:
+    for r, skipped in compressed:
+        ts = _fmt_dt(r.get('run_at', ''))
+        if skipped:
+            ts += f" <span class='skip-note'>({skipped} identical run{'s' if skipped > 1 else ''} hidden)</span>"
         rows.append(
             f"<tr>"
-            f"<td>{_fmt_dt(r.get('run_at', ''))}</td>"
+            f"<td>{ts}</td>"
             f"<td>{r.get('total', 0)}</td>"
             f"<td>{_pct_bar(r.get('passed', 0), r.get('total', 0))}</td>"
             f"<td class='{'fail' if r.get('failed', 0) else ''}'>{r.get('failed', 0)}</td>"
@@ -456,6 +487,10 @@ def _unit_section(runs: list[dict]) -> str:
         + (f" &nbsp;·&nbsp; <span class='fail'>{latest.get('failed', 0)} failed</span>"
            if latest.get('failed') else "")
     )
+    truncated = ""
+    if total_compressed > MAX_ROWS:
+        truncated = f"<p class='skip-note'>Showing {MAX_ROWS} of {total_compressed} unique runs (oldest hidden)</p>"
+
     return (
         f"<p class='summary'>{summary} &nbsp;·&nbsp; "
         f"<a href='/developer/tests/'>Full Allure report →</a></p>"
@@ -463,6 +498,7 @@ def _unit_section(runs: list[dict]) -> str:
         "<thead><tr><th>Run</th><th>Total</th><th>Pass rate</th><th>Failed</th><th>Skipped</th></tr></thead>"
         "<tbody>" + "".join(rows) + "</tbody>"
         "</table>"
+        + truncated
     )
 
 
@@ -660,6 +696,7 @@ nav { margin-bottom: 2rem; font-size: 0.82rem; }
 .group-row.open .toggle { transform: rotate(90deg); }
 .group-child { display: none; }
 .group-child.visible { display: table-row; }
+.skip-note { font-size: 0.75rem; color: #718096; font-style: italic; }
 /* Legend section */
 .legend { margin-bottom: 1.5rem; }
 .legend details { margin-bottom: 0.75rem; }
