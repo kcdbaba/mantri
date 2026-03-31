@@ -10,6 +10,7 @@ Usage:
 """
 
 import json
+import sqlite3
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
@@ -38,6 +39,24 @@ def _load_case_results() -> list[dict]:
             if meta_candidates:
                 meta = json.loads(meta_candidates[0].read_text(encoding="utf-8"))
                 data["_meta"] = meta
+
+            # Fix 5: Load ambiguity bodies from replay_result.db if available
+            db_path = d / "replay_result.db"
+            if db_path.exists():
+                try:
+                    conn = sqlite3.connect(str(db_path))
+                    conn.row_factory = sqlite3.Row
+                    rows = conn.execute(
+                        "SELECT description, body FROM ambiguity_queue ORDER BY created_at"
+                    ).fetchall()
+                    body_map = {row["description"]: row["body"] for row in rows}
+                    conn.close()
+                    # Attach body to each flag in the state
+                    for flag in data.get("state", {}).get("ambiguity_flags", []):
+                        flag["body"] = body_map.get(flag.get("description"), "")
+                except Exception:
+                    pass
+
             results.append(data)
     return results
 
@@ -68,6 +87,14 @@ def _fmt_dt_short(iso: str) -> str:
         return iso
 
 
+def _fmt_dt_chart(iso: str) -> str:
+    """Format date as 'Mar 30' for chart x-axis."""
+    try:
+        return datetime.fromisoformat(iso).strftime("%b %d")
+    except Exception:
+        return iso
+
+
 # ---------------------------------------------------------------------------
 # HTML sections
 # ---------------------------------------------------------------------------
@@ -90,45 +117,91 @@ SEVERITY_CLASSES = {
 }
 
 
+def _paginated_table(headers: list[str], rows_html: list[str], table_id: str) -> str:
+    """Wrap rows in a paginated table (10 rows per page)."""
+    global _table_counter
+    _table_counter += 1
+    tid = table_id or f"tbl_{_table_counter}"
+    page_size = 10
+    needs_pagination = len(rows_html) > page_size
+
+    tagged_rows = []
+    for idx, row_html in enumerate(rows_html):
+        page = idx // page_size
+        style = "" if page == 0 else " style='display:none'"
+        # Inject pagination attributes into the <tr> tag
+        tagged_rows.append(
+            row_html.replace("<tr>", f"<tr class='prow-{tid}' data-page='{page}'{style}>", 1)
+        )
+
+    total_pages = (len(rows_html) + page_size - 1) // page_size
+    pagination_html = ""
+    if needs_pagination:
+        pagination_html = (
+            f"<div class='pagination' id='pag-{tid}'>"
+            f"<button onclick=\"paginate('{tid}', -1)\">Previous</button>"
+            f"<span class='page-indicator' id='page-ind-{tid}'>Page 1 of {total_pages}</span>"
+            f"<button onclick=\"paginate('{tid}', 1)\">Next</button>"
+            f"</div>"
+        )
+
+    header_html = "".join(f"<th>{h}</th>" for h in headers)
+    return (
+        f"<table class='detail' id='tbl-{tid}'>"
+        f"<thead><tr>{header_html}</tr></thead>"
+        f"<tbody>{''.join(tagged_rows)}</tbody></table>"
+        f"{pagination_html}"
+    )
+
+
 def _node_table(task_id: str, nodes: list[dict]) -> str:
-    rows = []
+    global _table_counter
+    _table_counter += 1
+    tid = f"node_{task_id}_{_table_counter}"
+
+    raw_rows = []
     for n in nodes:
         name = n["name"]
         status = n["status"]
         cls = STATUS_CLASSES.get(status, "")
         conf = f"{n['confidence']:.2f}" if n["confidence"] is not None else "\u2014"
         by = n.get("updated_by", "\u2014")
-        rows.append(
+        raw_rows.append(
             f"<tr><td>{name}</td>"
             f"<td class='{cls}'>{status}</td>"
             f"<td>{conf}</td>"
             f"<td class='dim'>{by}</td></tr>"
         )
-    return (
-        f"<table class='detail'>"
-        f"<thead><tr><th>Node</th><th>Status</th><th>Confidence</th><th>Updated by</th></tr></thead>"
-        f"<tbody>{''.join(rows)}</tbody></table>"
+    return _paginated_table(
+        ["Node", "Status", "Confidence", "Updated by"],
+        raw_rows,
+        tid,
     )
 
 
 def _items_table(task_id: str, items: list[dict]) -> str:
     if not items:
         return "<p class='dim'>No items extracted</p>"
-    rows = []
+
+    global _table_counter
+    _table_counter += 1
+    tid = f"items_{task_id}_{_table_counter}"
+
+    raw_rows = []
     for item in items:
         qty = item["quantity"] if item["quantity"] is not None else "<span class='fail'>null</span>"
         specs = (item.get("specs") or "\u2014")[:120]
         unit = item.get("unit", "\u2014")
-        rows.append(
+        raw_rows.append(
             f"<tr><td>{item['description']}</td>"
             f"<td>{qty}</td>"
             f"<td>{unit}</td>"
             f"<td class='dim'>{specs}</td></tr>"
         )
-    return (
-        f"<table class='detail'>"
-        f"<thead><tr><th>Description</th><th>Qty</th><th>Unit</th><th>Specs</th></tr></thead>"
-        f"<tbody>{''.join(rows)}</tbody></table>"
+    return _paginated_table(
+        ["Description", "Qty", "Unit", "Specs"],
+        raw_rows,
+        tid,
     )
 
 
@@ -142,6 +215,9 @@ def _ambiguity_table(flags: list[dict], table_id: str = "") -> str:
     page_size = 10
     needs_pagination = len(flags) > page_size
 
+    # Check if any flag has a body (from Fix 5)
+    has_body = any(f.get("body") for f in flags)
+
     rows = []
     for idx, f in enumerate(flags):
         sev_cls = SEVERITY_CLASSES.get(f["severity"], "")
@@ -150,13 +226,18 @@ def _ambiguity_table(flags: list[dict], table_id: str = "") -> str:
         # Add data-page attribute for pagination
         page = idx // page_size
         style = "" if page == 0 else " style='display:none'"
+        body_col = ""
+        if has_body:
+            body_text = (f.get("body") or "\u2014")[:80]
+            body_col = f"<td class='dim'>{body_text}</td>"
         rows.append(
             f"<tr class='prow-{tid}' data-page='{page}'{style}>"
             f"<td>{f['task_id']}</td>"
             f"<td class='{sev_cls}'>{f['severity']}</td>"
             f"<td>{f['category']}</td>"
             f"<td>{node}</td>"
-            f"<td class='desc'>{desc}</td></tr>"
+            f"<td class='desc'>{desc}</td>"
+            f"{body_col}</tr>"
         )
 
     total_pages = (len(flags) + page_size - 1) // page_size
@@ -171,10 +252,11 @@ def _ambiguity_table(flags: list[dict], table_id: str = "") -> str:
             f"</div>"
         )
 
+    msg_header = "<th>Message</th>" if has_body else ""
     return (
         f"<table class='detail' id='tbl-{tid}'>"
         f"<thead><tr><th>Task</th><th>Severity</th><th>Category</th>"
-        f"<th>Node</th><th>Description</th></tr></thead>"
+        f"<th>Node</th><th>Description</th>{msg_header}</tr></thead>"
         f"<tbody>{''.join(rows)}</tbody></table>"
         f"{pagination_html}"
     )
@@ -203,105 +285,183 @@ def _links_table(links: list[dict]) -> str:
     )
 
 
-def _live_replay_chart(case_id: str, runs: list[dict]) -> str:
-    """Generate an inline SVG line chart for a case_id's live replay runs.
+def _live_replay_chart(live_by_case: dict[str, list[dict]]) -> str:
+    """Generate tabbed dual-axis bar charts for all cases.
 
-    Only includes 'full' mode runs (no skip_linkage, no max_messages).
-    X axis: run timestamp, Y axis: ambiguity_flag_count (line) + error_count (bars).
+    One SVG per case_id, with tab buttons to switch between them.
+    Only includes 'full' runs (no skip_linkage, no max_messages).
     """
-    # Filter to full runs only
-    full_runs = [
-        r for r in runs
-        if not r.get("skip_linkage") and not r.get("max_messages")
-    ]
-    if len(full_runs) < 2:
-        return ""  # Need at least 2 points for a line
+    case_ids = sorted(live_by_case.keys())
+    if not case_ids:
+        return ""
 
-    # Sort by timestamp
-    full_runs.sort(key=lambda r: r.get("run_at", ""))
+    # Filter each case to full runs only
+    full_by_case = {}
+    for cid in case_ids:
+        full_runs = [
+            r for r in live_by_case[cid]
+            if not r.get("skip_linkage") and not r.get("max_messages")
+        ]
+        if full_runs:
+            full_runs.sort(key=lambda r: r.get("run_at", ""))
+            full_by_case[cid] = full_runs
 
-    w, h = 700, 200
-    pad_l, pad_r, pad_t, pad_b = 50, 20, 30, 40
+    if not full_by_case:
+        return ""
+
+    tab_ids = list(full_by_case.keys())
+
+    # Build tab buttons
+    tab_buttons = []
+    for i, cid in enumerate(tab_ids):
+        active_cls = " chart-tab-active" if i == 0 else ""
+        tab_buttons.append(
+            f"<button class='chart-tab{active_cls}' "
+            f"onclick=\"switchChartTab('{_safe_id(cid)}')\">{cid}</button>"
+        )
+
+    # Build one SVG per case
+    svgs = []
+    for i, cid in enumerate(tab_ids):
+        display = "block" if i == 0 else "none"
+        svgs.append(
+            f"<div class='chart-tab-panel' id='chart-panel-{_safe_id(cid)}' "
+            f"style='display:{display}'>"
+            f"{_build_dual_axis_svg(cid, full_by_case[cid])}"
+            f"</div>"
+        )
+
+    return (
+        f"<div class='chart-container'>"
+        f"<div class='chart-tabs'>{''.join(tab_buttons)}</div>"
+        f"{''.join(svgs)}"
+        f"</div>"
+    )
+
+
+def _safe_id(s: str) -> str:
+    return s.replace("-", "_").replace(" ", "_")
+
+
+def _build_dual_axis_svg(case_id: str, full_runs: list[dict]) -> str:
+    """Build a dual-axis bar chart SVG for a single case."""
+    w, h = 700, 220
+    pad_l, pad_r, pad_t, pad_b = 55, 55, 30, 45
 
     plot_w = w - pad_l - pad_r
     plot_h = h - pad_t - pad_b
 
     amb_vals = [r.get("ambiguity_flag_count", 0) for r in full_runs]
     err_vals = [r.get("error_count", 0) for r in full_runs]
-    max_y = max(max(amb_vals), max(err_vals), 1)
+    max_amb = max(amb_vals) if amb_vals else 1
+    max_err = max(err_vals) if err_vals else 1
+    max_amb = max(max_amb, 1)
+    max_err = max(max_err, 1)
 
     n = len(full_runs)
-    bar_w = max(6, plot_w // (n * 3))
+    group_w = plot_w / max(n, 1)
+    bar_w_amb = min(group_w * 0.35, 30)
+    bar_w_err = min(group_w * 0.25, 20)
 
-    def x_pos(i):
-        if n == 1:
-            return pad_l + plot_w / 2
-        return pad_l + i * plot_w / (n - 1)
+    def x_center(i):
+        return pad_l + (i + 0.5) * group_w
 
-    def y_pos(v):
-        return pad_t + plot_h - (v / max_y) * plot_h
+    def y_amb(v):
+        return pad_t + plot_h - (v / max_amb) * plot_h
 
-    # Build line path
-    points = " ".join(f"{x_pos(i):.1f},{y_pos(v):.1f}" for i, v in enumerate(amb_vals))
+    def y_err(v):
+        return pad_t + plot_h - (v / max_err) * plot_h
 
-    # Build error bars
+    baseline = pad_t + plot_h
+
+    # Build ambiguity bars (blue/cyan) and error bars (red, narrower, overlaid)
     bars = []
-    for i, v in enumerate(err_vals):
-        if v > 0:
-            bx = x_pos(i) - bar_w / 2
-            by = y_pos(v)
-            bh = y_pos(0) - by
+    for i in range(n):
+        cx = x_center(i)
+        # Ambiguity bar
+        av = amb_vals[i]
+        if av > 0:
+            aby = y_amb(av)
+            abh = baseline - aby
             bars.append(
-                f"<rect x='{bx:.1f}' y='{by:.1f}' width='{bar_w}' height='{bh:.1f}' "
-                f"fill='#fc8181' opacity='0.4'/>"
+                f"<rect x='{cx - bar_w_amb / 2:.1f}' y='{aby:.1f}' "
+                f"width='{bar_w_amb:.1f}' height='{abh:.1f}' "
+                f"fill='#63b3ed' opacity='0.8'/>"
+            )
+            bars.append(
+                f"<text x='{cx:.1f}' y='{aby - 3:.1f}' text-anchor='middle' "
+                f"font-size='8' fill='#63b3ed'>{av}</text>"
+            )
+        # Error bar (narrower, overlaid)
+        ev = err_vals[i]
+        if ev > 0:
+            eby = y_err(ev)
+            ebh = baseline - eby
+            bars.append(
+                f"<rect x='{cx - bar_w_err / 2:.1f}' y='{eby:.1f}' "
+                f"width='{bar_w_err:.1f}' height='{ebh:.1f}' "
+                f"fill='#fc8181' opacity='0.7'/>"
+            )
+            bars.append(
+                f"<text x='{cx:.1f}' y='{eby - 3:.1f}' text-anchor='middle' "
+                f"font-size='8' fill='#fc8181'>{ev}</text>"
             )
 
-    # X axis labels (every label or skip if too many)
-    step = max(1, n // 6)
+    # X axis labels
+    step = max(1, n // 8)
     x_labels = []
     for i in range(0, n, step):
-        label = _fmt_dt_short(full_runs[i].get("run_at", ""))
+        label = _fmt_dt_chart(full_runs[i].get("run_at", ""))
         x_labels.append(
-            f"<text x='{x_pos(i):.1f}' y='{h - 5}' text-anchor='middle' "
+            f"<text x='{x_center(i):.1f}' y='{h - 5}' text-anchor='middle' "
             f"font-size='9' fill='#4a5568'>{label}</text>"
         )
 
-    # Y axis labels
+    # Y left axis labels (ambiguity)
     y_ticks = 4
-    y_labels = []
+    y_labels_left = []
     for i in range(y_ticks + 1):
-        v = int(max_y * i / y_ticks)
-        yp = y_pos(v)
-        y_labels.append(
+        v = int(max_amb * i / y_ticks)
+        yp = y_amb(v)
+        y_labels_left.append(
             f"<text x='{pad_l - 8}' y='{yp + 3:.1f}' text-anchor='end' "
-            f"font-size='9' fill='#4a5568'>{v}</text>"
+            f"font-size='9' fill='#63b3ed'>{v}</text>"
             f"<line x1='{pad_l}' y1='{yp:.1f}' x2='{w - pad_r}' y2='{yp:.1f}' "
             f"stroke='#2d3748' stroke-width='0.5'/>"
         )
 
+    # Y right axis labels (errors)
+    y_labels_right = []
+    for i in range(y_ticks + 1):
+        v = int(max_err * i / y_ticks)
+        yp = y_err(v)
+        y_labels_right.append(
+            f"<text x='{w - pad_r + 8}' y='{yp + 3:.1f}' text-anchor='start' "
+            f"font-size='9' fill='#fc8181'>{v}</text>"
+        )
+
     return (
-        f"<div class='chart-container'>"
         f"<svg width='{w}' height='{h}' viewBox='0 0 {w} {h}' "
         f"xmlns='http://www.w3.org/2000/svg'>"
         f"<text x='{w // 2}' y='16' text-anchor='middle' font-size='11' "
-        f"fill='#a0aec0' font-weight='600'>{case_id} \u2014 Ambiguity Flags Over Time</text>"
-        f"{''.join(y_labels)}"
+        f"fill='#a0aec0' font-weight='600'>{case_id}</text>"
+        f"{''.join(y_labels_left)}"
+        f"{''.join(y_labels_right)}"
         f"{''.join(bars)}"
-        f"<polyline points='{points}' fill='none' stroke='#4a90d9' stroke-width='2'/>"
-        + "".join(
-            f"<circle cx='{x_pos(i):.1f}' cy='{y_pos(v):.1f}' r='3' fill='#4a90d9'/>"
-            for i, v in enumerate(amb_vals)
-        )
-        + f"{''.join(x_labels)}"
-        f"<line x1='{pad_l}' y1='{pad_t}' x2='{pad_l}' y2='{h - pad_b}' "
+        f"{''.join(x_labels)}"
+        # Axes
+        f"<line x1='{pad_l}' y1='{pad_t}' x2='{pad_l}' y2='{baseline}' "
+        f"stroke='#63b3ed' stroke-width='1'/>"
+        f"<line x1='{w - pad_r}' y1='{pad_t}' x2='{w - pad_r}' y2='{baseline}' "
+        f"stroke='#fc8181' stroke-width='1'/>"
+        f"<line x1='{pad_l}' y1='{baseline}' x2='{w - pad_r}' y2='{baseline}' "
         f"stroke='#2d3748' stroke-width='1'/>"
-        f"<line x1='{pad_l}' y1='{h - pad_b}' x2='{w - pad_r}' y2='{h - pad_b}' "
-        f"stroke='#2d3748' stroke-width='1'/>"
-        f"<text x='{w - pad_r}' y='{h - pad_b - 5}' text-anchor='end' font-size='9' "
-        f"fill='#4a90d9'>ambiguity flags</text>"
-        f"<text x='{w - pad_r}' y='{h - pad_b - 16}' text-anchor='end' font-size='9' "
-        f"fill='#fc8181' opacity='0.7'>error count</text>"
-        f"</svg></div>"
+        # Axis labels
+        f"<text x='{pad_l}' y='{pad_t - 6}' text-anchor='middle' font-size='9' "
+        f"fill='#63b3ed'>Ambiguity</text>"
+        f"<text x='{w - pad_r}' y='{pad_t - 6}' text-anchor='middle' font-size='9' "
+        f"fill='#fc8181'>Errors</text>"
+        f"</svg>"
     )
 
 
@@ -340,25 +500,34 @@ def _case_section(case: dict) -> str:
         f"</div>"
     )
 
-    # Node states per task
+    # Fix 4: Sort tasks — client before supplier
+    task_ids = sorted(
+        state["node_states"].keys(),
+        key=lambda tid: (0 if "client" in tid else 1, tid),
+    )
+
+    # Node states per task — Fix 3: wrap each in <details>
     node_sections = []
-    for task_id, nodes in state["node_states"].items():
+    for task_id in task_ids:
+        nodes = state["node_states"][task_id]
         completed = sum(1 for n in nodes if n["status"] == "completed")
         active = sum(1 for n in nodes if n["status"] in ("active", "in_progress"))
         blocked = sum(1 for n in nodes if n["status"] == "blocked")
         msgs = state.get("message_counts", {}).get(task_id, 0)
         items = state.get("items", {}).get(task_id, [])
 
-        task_header = (
-            f"<h4>{task_id} "
+        task_summary = (
+            f"{task_id} "
             f"<span class='dim'>({completed} completed, {active} active, "
-            f"{blocked} blocked, {msgs} messages)</span></h4>"
+            f"{blocked} blocked, {msgs} messages)</span>"
         )
         node_sections.append(
-            f"{task_header}"
+            f"<details>"
+            f"<summary class='task-summary'>{task_summary}</summary>"
             f"{_node_table(task_id, nodes)}"
             f"<h5>Items ({len(items)})</h5>"
             f"{_items_table(task_id, items)}"
+            f"</details>"
         )
 
     amb_table_id = case_id.replace("-", "_").replace(" ", "_")
@@ -414,29 +583,21 @@ def _run_history(runs: list[dict]) -> str:
                 rows.append(
                     f"<tr class='group-child' data-group='{group_key}'>"
                     f"<td class='dim'>{_fmt_dt(r.get('run_at',''))}</td>"
-                    f"<td>{case_id}</td>"
                     f"<td>{r.get('total',0)}</td>"
                     f"<td>{r.get('routed',0)}/{r.get('total',0)}</td></tr>"
                 )
         sections.append(
             "<h3>Dry Replay History</h3>"
             "<table class='detail'><thead><tr>"
-            "<th>Run</th><th>Case</th><th>Messages</th><th>Routed</th>"
+            "<th>Case / Run</th><th>Messages</th><th>Routed</th>"
             "</tr></thead><tbody>" + "".join(rows) + "</tbody></table>"
         )
 
-    # --- Live replay history, grouped by case_id, with charts ---
+    # --- Live replay history, grouped by case_id ---
     if live:
         live_by_case = defaultdict(list)
         for r in live:
             live_by_case[r.get("case_id", "?")].append(r)
-
-        # Generate charts above the table
-        charts = []
-        for case_id in sorted(live_by_case.keys()):
-            chart = _live_replay_chart(case_id, live_by_case[case_id])
-            if chart:
-                charts.append(chart)
 
         rows = []
         for case_id in sorted(live_by_case.keys()):
@@ -454,7 +615,6 @@ def _run_history(runs: list[dict]) -> str:
                 rows.append(
                     f"<tr class='group-child' data-group='{group_key}'>"
                     f"<td class='dim'>{_fmt_dt(r.get('run_at',''))}</td>"
-                    f"<td>{case_id}</td>"
                     f"<td>{mode}</td>"
                     f"<td>{r.get('messages_routed',0)}/{r.get('messages_total',0)}</td>"
                     f"<td>{r.get('error_count',0)}</td>"
@@ -462,11 +622,11 @@ def _run_history(runs: list[dict]) -> str:
                 )
         sections.append(
             "<h3>Live Replay History</h3>"
-            + "".join(charts)
-            + "<table class='detail'><thead><tr>"
-            "<th>Run</th><th>Case</th><th>Mode</th><th>Routed</th>"
+            "<table class='detail'><thead><tr>"
+            "<th>Case / Run</th><th>Mode</th><th>Routed</th>"
             "<th>Errors</th><th>Ambiguity</th>"
             "</tr></thead><tbody>" + "".join(rows) + "</tbody></table>"
+            + _live_replay_chart(live_by_case)
         )
 
     return "".join(sections)
@@ -550,9 +710,23 @@ summary.sub-summary {
   text-transform: uppercase; letter-spacing: 0.06em;
 }
 summary.sub-summary:hover { color: #e2e8f0; }
+summary.task-summary {
+  font-size: 0.88rem; color: #e2e8f0;
+  cursor: pointer; padding: 0.3rem 0; margin: 0.5rem 0 0.3rem;
+}
+summary.task-summary:hover { color: #4a90d9; }
 
-/* Chart container */
+/* Chart container and tabs */
 .chart-container { margin: 1rem 0; }
+.chart-tabs { display: flex; gap: 0; margin-bottom: 0; }
+.chart-tab {
+  background: #1a2030; border: 1px solid #2d3748; color: #4a5568;
+  padding: 0.4rem 1rem; cursor: pointer; font-size: 0.8rem;
+  border-bottom: none; border-radius: 4px 4px 0 0;
+}
+.chart-tab:hover { color: #e2e8f0; }
+.chart-tab-active { background: #0f1117; color: #63b3ed; border-color: #63b3ed; border-bottom: 1px solid #0f1117; }
+.chart-tab-panel { border: 1px solid #2d3748; border-radius: 0 4px 4px 4px; padding: 0.5rem; }
 
 /* Pagination */
 .pagination {
@@ -597,6 +771,24 @@ function paginate(tid, dir) {
     }
     document.getElementById('page-ind-' + tid).textContent =
         'Page ' + (newPage + 1) + ' of ' + (maxPage + 1);
+}
+
+function switchChartTab(caseId) {
+    var panels = document.querySelectorAll('.chart-tab-panel');
+    for (var i = 0; i < panels.length; i++) {
+        panels[i].style.display = 'none';
+    }
+    var tabs = document.querySelectorAll('.chart-tab');
+    for (var i = 0; i < tabs.length; i++) {
+        tabs[i].classList.remove('chart-tab-active');
+    }
+    document.getElementById('chart-panel-' + caseId).style.display = 'block';
+    // Find the clicked tab and activate it
+    for (var i = 0; i < tabs.length; i++) {
+        if (tabs[i].getAttribute('onclick').indexOf(caseId) !== -1) {
+            tabs[i].classList.add('chart-tab-active');
+        }
+    }
 }
 """
 
