@@ -163,10 +163,10 @@ def _paginated_table(headers: list[str], rows_html: list[str], table_id: str) ->
 
     header_html = "".join(f"<th>{h}</th>" for h in headers)
     return (
+        f"{pagination_html}"
         f"<table class='detail' id='tbl-{tid}'>"
         f"<thead><tr>{header_html}</tr></thead>"
         f"<tbody>{''.join(tagged_rows)}</tbody></table>"
-        f"{pagination_html}"
     )
 
 
@@ -270,11 +270,11 @@ def _ambiguity_table(flags: list[dict], table_id: str = "") -> str:
 
     msg_header = "<th>Message</th>" if has_body else ""
     return (
+        f"{pagination_html}"
         f"<table class='detail' id='tbl-{tid}'>"
         f"<thead><tr><th>Task</th><th>Severity</th><th>Category</th>"
         f"<th>Node</th><th>Description</th>{msg_header}</tr></thead>"
         f"<tbody>{''.join(rows)}</tbody></table>"
-        f"{pagination_html}"
     )
 
 
@@ -742,6 +742,10 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                 r_node_summary = r.get("node_summary", {})
                 r_total_nodes = sum(v.get("total", 0) for v in r_node_summary.values())
                 r_link_count = r.get("fulfillment_link_count", 0)
+                # Show model/cost only for the latest (first) run
+                is_latest = (r is case_runs[0])
+                r_models = models_html if is_latest else "\u2014"
+                r_cost = cost_html if is_latest else "\u2014"
                 rows.append(
                     f"<tr class='group-child' data-group='{group_key}'>"
                     f"<td class='dim'>{_fmt_dt(r.get('run_at',''))}</td>"
@@ -752,8 +756,8 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                     f"<td>{r.get('ambiguity_flag_count',0)}</td>"
                     f"<td>{r.get('dead_letter_count',0)}</td>"
                     f"<td>{r.get('error_count',0)}</td>"
-                    f"<td>\u2014</td>"
-                    f"<td>\u2014</td></tr>"
+                    f"<td>{r_models}</td>"
+                    f"<td>{r_cost}</td></tr>"
                 )
         sections.append(
             "<h3>Live Replay History</h3>"
