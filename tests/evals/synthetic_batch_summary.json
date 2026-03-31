@@ -1,19 +1,12 @@
 {
-  "run_at": "2026-03-31T04:59:00",
-  "total": 29,
-  "passed": 29,
+  "run_at": "2026-03-31T06:19:01",
+  "total": 26,
+  "passed": 26,
   "partial": 0,
   "failed": 0,
   "errored": 0,
-  "avg_score": 90.9,
+  "avg_score": 91.3,
   "by_framework": {
-    "R1-D": {
-      "count": 1,
-      "verdicts": [
-        "P"
-      ],
-      "avg_score": 84.0
-    },
     "R2": {
       "count": 8,
       "verdicts": [
@@ -29,16 +22,15 @@
       "avg_score": 93.2
     },
     "R3-C": {
-      "count": 6,
+      "count": 5,
       "verdicts": [
-        "P",
         "P",
         "P",
         "P",
         "P",
         "P"
       ],
-      "avg_score": 90.0
+      "avg_score": 90.4
     },
     "R4-A": {
       "count": 5,
@@ -70,23 +62,9 @@
         "P"
       ],
       "avg_score": 90.5
-    },
-    "R6-L1": {
-      "count": 1,
-      "verdicts": [
-        "P"
-      ],
-      "avg_score": 88.0
     }
   },
   "results": [
-    {
-      "case_id": "R1-D-L3-01",
-      "framework": "R1-D",
-      "level": "L3",
-      "verdict": "PASS",
-      "overall_score": 84
-    },
     {
       "case_id": "R2a-L1-01",
       "framework": "R2",
@@ -173,13 +151,6 @@
     },
     {
       "case_id": "R3-C-L3-01",
-      "framework": "R3-C",
-      "level": "L3",
-      "verdict": "PASS",
-      "overall_score": 88
-    },
-    {
-      "case_id": "R3-C-L3-02",
       "framework": "R3-C",
       "level": "L3",
       "verdict": "PASS",
@@ -275,13 +246,6 @@
       "level": "L2",
       "verdict": "PASS",
       "overall_score": 91
-    },
-    {
-      "case_id": "R6-L1-01",
-      "framework": "R6-L1",
-      "level": "01",
-      "verdict": "PASS",
-      "overall_score": 88
     }
   ]
 }
