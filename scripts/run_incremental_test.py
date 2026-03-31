@@ -239,13 +239,14 @@ def score_single_message_case(case_dir: Path, output: AgentOutput | None) -> dic
     if routing_exp:
         message = json.loads((case_dir / "new_message.json").read_text())
         routes = route(message)
-        if any(task_id == routing_exp["expected_task_id"] for task_id, _ in routes):
+        expected_id = routing_exp.get("expected_entity_id") or routing_exp.get("expected_task_id")
+        if any(rid == expected_id for rid, _ in routes):
             result["routing_correct"] = True
-            result["details"].append(f"✓ Routing: message → {routing_exp['expected_task_id']}")
+            result["details"].append(f"✓ Routing: message → {expected_id}")
         else:
             result["routing_correct"] = False
             result["details"].append(
-                f"✗ Routing: expected {routing_exp['expected_task_id']}, got {routes}"
+                f"✗ Routing: expected {expected_id}, got {routes}"
             )
 
     # --- Verdict ---

@@ -9,7 +9,7 @@
   "required_task_candidates": [],
   "forbidden_updates": [],
   "routing": {
-    "expected_task_id": "task_001",
-    "note": "Agent must resolve 'Sata' as entity alias to route message to task_001"
+    "expected_entity_id": "entity_sata",
+    "note": "Router must resolve 'Sata' as entity alias to route message to entity_sata"
   }
 }
