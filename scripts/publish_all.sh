@@ -5,6 +5,9 @@
 set -euo pipefail
 cd "$(git rev-parse --show-toplevel)"
 
+echo "Running unit tests with coverage..."
+PYTHONPATH=. python -m pytest tests/unit_tests/ --cov=src --cov-report=json:tests/runs/coverage.json -q --no-header 2>&1 | tail -3
+
 echo "Publishing Allure report..."
 python scripts/publish_allure.py
 

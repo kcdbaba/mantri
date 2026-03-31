@@ -117,7 +117,8 @@ def _inc_section(runs: list[dict]) -> str:
                     cells.append('<td class="partial">~</td>')
                 else:
                     cells.append('<td class="fail">✗</td>')
-            body_rows.append(f"<tr><td class='case-id'>{case_id}</td>{''.join(cells)}</tr>")
+            tooltip = _case_tooltip(case_id)
+            body_rows.append(f"<tr><td class='case-id' title='{tooltip}'>{case_id}</td>{''.join(cells)}</tr>")
 
         matrix = (
             "<h3>Per-case history</h3>"
@@ -165,16 +166,65 @@ DIFFICULTY_LEVELS = {
 FRAMEWORK_GROUP_ORDER = ["R2", "R3-C", "R4-A", "R4-B", "R5"]
 
 
+def _load_inc_descriptions() -> dict[str, str]:
+    """Load INC test descriptions from metadata.json files."""
+    descs = {}
+    inc_dir = Path("tests/functional_tests")
+    if inc_dir.exists():
+        for meta_path in sorted(inc_dir.glob("INC-*/metadata.json")):
+            try:
+                meta = json.loads(meta_path.read_text(encoding="utf-8"))
+                cid = meta.get("id", "")
+                name = meta.get("name", "").replace("_", " ").title()
+                qrd = meta.get("quality_risk_dimension", "")
+                descs[cid] = f"{name} ({qrd})" if qrd else name
+            except Exception:
+                pass
+    return descs
+
+
+def _load_integration_descriptions() -> dict[str, str]:
+    """Load integration test case descriptions from metadata.json files."""
+    descs = {}
+    for meta_path in sorted(Path("tests/evals").glob("*/metadata.json")):
+        try:
+            meta = json.loads(meta_path.read_text(encoding="utf-8"))
+            cid = meta.get("id", "")
+            desc = meta.get("description", "")
+            if desc:
+                descs[cid] = desc[:80]
+        except Exception:
+            pass
+    # Also check integration test dirs
+    for meta_path in sorted(Path("tests/integration_tests").glob("*/seed_tasks.json")):
+        case_name = meta_path.parent.name
+        cid = case_name.split("_")[0]
+        if cid not in descs:
+            descs[cid] = case_name.replace("_", " ").title()[:80]
+    return descs
+
+
+# Loaded at generation time
+INC_DESCRIPTIONS: dict[str, str] = {}
+INTEGRATION_DESCRIPTIONS: dict[str, str] = {}
+
+
 def _case_tooltip(case_id: str) -> str:
-    """Build tooltip text from the case_id prefix (e.g. R2a-L1-01 -> R2a description)."""
-    # Try longest prefix match first (e.g. R2a before R2)
+    """Build tooltip text from case_id. Handles eval (R-prefix), INC, and integration cases."""
+    # INC tests
+    if case_id in INC_DESCRIPTIONS:
+        return INC_DESCRIPTIONS[case_id]
+
+    # Integration test cases
+    if case_id in INTEGRATION_DESCRIPTIONS:
+        return INTEGRATION_DESCRIPTIONS[case_id]
+
+    # Eval cases: risk category + difficulty level
     parts = []
-    # Extract sub-category: everything before -L
     sub = case_id.split("-L")[0] if "-L" in case_id else case_id
     if sub in RISK_CATEGORIES:
         name, desc = RISK_CATEGORIES[sub]
         parts.append(f"{name}: {desc}")
-    # Also add level info
     for lvl_code, (lvl_name, lvl_desc) in DIFFICULTY_LEVELS.items():
         if f"-{lvl_code}-" in case_id or case_id.endswith(f"-{lvl_code}"):
             parts.append(f"{lvl_code} = {lvl_name}: {lvl_desc}")
@@ -439,10 +489,11 @@ def _integration_section(runs: list[dict]) -> str:
                 f"{g}: {v.get('routed', 0)}/{v.get('routed', 0) + v.get('unrouted', 0)}"
                 for g, v in sorted(per_group.items())
             )
+            int_tooltip = _case_tooltip(r.get('case_id', ''))
             rows.append(
                 f"<tr>"
                 f"<td>{_fmt_dt(r.get('run_at', ''))}</td>"
-                f"<td>{r.get('case_id', '?')}</td>"
+                f"<td class='case-id' title='{int_tooltip}'>{r.get('case_id', '?')}</td>"
                 f"<td>{r.get('total', 0)}</td>"
                 f"<td>{rate_pct}</td>"
                 f"<td class='case-id'>{group_detail}</td>"
@@ -471,10 +522,11 @@ def _integration_section(runs: list[dict]) -> str:
             if r.get("max_messages"):
                 mode += f" (first {r['max_messages']})"
 
+            live_tooltip = _case_tooltip(r.get('case_id', ''))
             rows.append(
                 f"<tr>"
                 f"<td>{_fmt_dt(r.get('run_at', ''))}</td>"
-                f"<td>{r.get('case_id', '?')}</td>"
+                f"<td class='case-id' title='{live_tooltip}'>{r.get('case_id', '?')}</td>"
                 f"<td>{mode}</td>"
                 f"<td>{r.get('messages_routed', 0)}/{r.get('messages_total', 0)}</td>"
                 f"<td>{_pct_bar(total_completed, total_nodes)}</td>"
@@ -579,6 +631,10 @@ nav { margin-bottom: 2rem; font-size: 0.82rem; }
 
 
 def generate() -> str:
+    global INC_DESCRIPTIONS, INTEGRATION_DESCRIPTIONS
+    INC_DESCRIPTIONS = _load_inc_descriptions()
+    INTEGRATION_DESCRIPTIONS = _load_integration_descriptions()
+
     inc_runs   = _load_runs(RUNS_INC)
     unit_runs  = _load_runs(RUNS_UNIT)
     int_runs   = _load_runs(RUNS_INT)
