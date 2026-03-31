@@ -151,7 +151,8 @@ def run_update_agent(
     system_prompt = build_system_prompt(task_id, task=task_override)
     user_section = build_user_section(node_states, recent_messages, messages, current_items,
                                        routing_confidence=routing_confidence,
-                                       entity_tasks=entity_tasks)
+                                       entity_tasks=entity_tasks,
+                                       task_id=task_id)
 
     # Load image from the last message that has one (vision path)
     image_bytes, image_media_type = None, ""

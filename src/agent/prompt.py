@@ -277,7 +277,8 @@ based on incoming WhatsApp messages.
 def build_user_section(node_states: list[dict], recent_messages: list[dict],
                        new_messages, current_items: list[dict] | None = None,
                        routing_confidence: float = 1.0,
-                       entity_tasks: list[dict] | None = None) -> str:
+                       entity_tasks: list[dict] | None = None,
+                       task_id: str = "") -> str:
     """Build the variable user section for a single update call.
     new_messages: a single message dict or a list of message dicts (batch).
     entity_tasks: all active tasks for the entity (for multi-task assignment)."""
@@ -337,7 +338,9 @@ def build_user_section(node_states: list[dict], recent_messages: list[dict],
             + chr(10).join(lines) + "\n"
         )
 
-    return f"""## Current node states
+    task_id_line = f"## Current task: {task_id}\n" if task_id else ""
+
+    return f"""{task_id_line}## Current node states
 
 {json.dumps(nodes_summary, ensure_ascii=False)}
 {items_block}{entity_block}
