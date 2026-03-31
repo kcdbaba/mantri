@@ -214,23 +214,6 @@ emit a new_task_candidates entry:
 If filled_from_stock is activated, emit:
   {"type": "stock_taking_update", "items": "<items mentioned>", "source_task_id": "<task_id>"}
 
-## New order detection
-If the message discusses items, quantities, or delivery requirements that do NOT match
-any item in the current order items list, this may be a new separate order. Emit:
-  {"type": "new_order", "order_type": "client_order" or "supplier_order",
-   "entity_id": "<entity_id if known, else null>",
-   "entity_name": "<entity name as mentioned in message>",
-   "context": "<brief summary of the new order>",
-   "items_mentioned": ["<item1>", "<item2>"]}
-
-Rules for new_order:
-- Emit "client_order" when a client initiates a new enquiry with items distinct from
-  the current task's order items.
-- Emit "supplier_order" when a new supplier is discussed for items not covered by the
-  current task.
-- Do NOT emit if the items match existing order items — that is an update, not a new order.
-- Do NOT emit for generic follow-ups, acknowledgements, or status queries about existing items.
-- When in doubt, do NOT emit — false positives create unnecessary tasks.
 """
 
 

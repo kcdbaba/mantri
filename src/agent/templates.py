@@ -25,6 +25,7 @@ Node fields:
 
 STANDARD_PROCUREMENT_TEMPLATE = {
     "order_type": "standard_procurement",
+    "confirmation_gate": "order_confirmation",
     "nodes": [
 
         # ── Client subgraph ────────────────────────────────────────────────
@@ -221,6 +222,7 @@ STANDARD_PROCUREMENT_TEMPLATE = {
 
 CLIENT_ORDER_TEMPLATE = {
     "order_type": "client_order",
+    "confirmation_gate": "order_confirmation",
     "nodes": [
 
         # ── Client subgraph ────────────────────────────────────────────────
@@ -358,6 +360,7 @@ CLIENT_ORDER_TEMPLATE = {
 
 SUPPLIER_ORDER_TEMPLATE = {
     "order_type": "supplier_order",
+    "confirmation_gate": "supplier_confirmation",
     "nodes": [
 
         # ── Supplier subgraph ──────────────────────────────────────────────
@@ -368,6 +371,15 @@ SUPPLIER_ORDER_TEMPLATE = {
             "stage": "supplier",
             "owner": "update_agent",
             "description": "Initial supplier discussion; captures supplier name, items, lead times. Entry point for this task.",
+        },
+        {
+            "id": "supplier_confirmation",
+            "type": "auto_trigger",
+            "name": "Supplier confirmation",
+            "stage": "supplier",
+            "owner": "update_agent",
+            "activates_when": "supplier_indent.status=completed",
+            "description": "Supplier has committed to deliver. Set completed when: delivery date committed, invoice received, or advance payment made. After this, the item list is locked — new items from this supplier require a new supplier_order task.",
         },
         {
             "id": "supplier_invoice",
@@ -449,6 +461,7 @@ SUPPLIER_ORDER_TEMPLATE = {
 
 LINKAGE_TASK_TEMPLATE = {
     "order_type": "linkage_task",
+    "confirmation_gate": None,
     "nodes": [
         # The linkage_task has a single status-tracking node.
         # All actual work (M:N coordination, item matching, order_ready reconciliation)

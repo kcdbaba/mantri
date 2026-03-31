@@ -99,10 +99,12 @@ def test_layer2a_direct_group():
         "body": "order ready hai",
         "group_id": "REPLACE_SATA_CLIENT_JID@g.us",
     }
-    results = route(msg)
+    # Config maps group → "task_001" → resolved to entity via client_id
+    with patch("src.router.router._resolve_to_entity", return_value="entity_sata"):
+        results = route(msg)
     assert len(results) == 1
-    task_id, conf = results[0]
-    assert task_id == "task_001"
+    entity_id, conf = results[0]
+    assert entity_id == "entity_sata"
     assert conf == pytest.approx(0.90)
 
 
@@ -112,20 +114,14 @@ def test_layer2a_direct_group():
 
 def test_layer2b_entity_match_on_shared_group():
     # All-staff group has no direct task mapping (None) → falls to 2b
-    # Seed a matching active task via mock
-    fake_task = {
-        "id": "task_001",
-        "client_id": "entity_sata",
-        "supplier_ids": '["entity_kapoor_steel"]',
+    # Layer 2b now returns entity_ids directly (no task lookup)
+    msg = {
+        "media_type": "text",
+        "body": "kapoor steel wale aa gaye",
+        "group_id": "REPLACE_ALL_STAFF_JID@g.us",
     }
-    with patch("src.router.router.get_active_tasks", return_value=[fake_task]):
-        msg = {
-            "media_type": "text",
-            "body": "kapoor steel wale aa gaye",
-            "group_id": "REPLACE_ALL_STAFF_JID@g.us",
-        }
-        results = route(msg)
-    assert any(tid == "task_001" for tid, _ in results)
+    results = route(msg)
+    assert any(eid == "entity_kapoor_steel" for eid, _ in results)
 
 
 def test_layer2b_no_entity_match_unrouted():
@@ -204,35 +200,35 @@ class TestDBAlias:
 @allure.story("Runtime Task Routing")
 class TestRuntimeRouting:
 
-    def test_runtime_task_returned_for_group(self):
+    def test_runtime_entity_returned_for_group(self):
         from src.router.router import route
         with patch("src.router.router.MONITORED_GROUPS", {"grp": None}), \
-             patch("src.router.router._get_runtime_tasks", return_value=["task_live_1"]):
+             patch("src.router.router._get_runtime_entities", return_value=["entity_live"]):
             results = route({"body": "test", "message_id": "m1", "group_id": "grp"})
-        assert any(tid == "task_live_1" for tid, _ in results)
+        assert any(eid == "entity_live" for eid, _ in results)
 
     def test_runtime_plus_direct_both_returned(self):
         from src.router.router import route
-        with patch("src.router.router.MONITORED_GROUPS", {"grp": "task_seed"}), \
-             patch("src.router.router._get_runtime_tasks", return_value=["task_live_1"]):
+        with patch("src.router.router.MONITORED_GROUPS", {"grp": "entity_seed"}), \
+             patch("src.router.router._get_runtime_entities", return_value=["entity_live"]):
             results = route({"body": "test", "message_id": "m1", "group_id": "grp"})
-        task_ids = {tid for tid, _ in results}
-        assert "task_seed" in task_ids
-        assert "task_live_1" in task_ids
+        entity_ids = {eid for eid, _ in results}
+        assert "entity_seed" in entity_ids
+        assert "entity_live" in entity_ids
 
     def test_no_duplicates_in_results(self):
         from src.router.router import route
-        with patch("src.router.router.MONITORED_GROUPS", {"grp": "task_1"}), \
-             patch("src.router.router._get_runtime_tasks", return_value=["task_1"]):
+        with patch("src.router.router.MONITORED_GROUPS", {"grp": "entity_x"}), \
+             patch("src.router.router._get_runtime_entities", return_value=["entity_x"]):
             results = route({"body": "test", "message_id": "m1", "group_id": "grp"})
-        assert len(results) == 1  # no duplicate
+        assert len(results) == 1
 
     def test_runtime_confidence_lower_than_direct(self):
         from src.router.router import route, RUNTIME_TASK_CONFIDENCE, DIRECT_GROUP_CONFIDENCE
-        with patch("src.router.router.MONITORED_GROUPS", {"grp": "task_seed"}), \
-             patch("src.router.router._get_runtime_tasks", return_value=["task_live"]):
+        with patch("src.router.router.MONITORED_GROUPS", {"grp": "entity_seed"}), \
+             patch("src.router.router._get_runtime_entities", return_value=["entity_live"]):
             results = route({"body": "test", "message_id": "m1", "group_id": "grp"})
-        conf_map = {tid: conf for tid, conf in results}
-        assert conf_map["task_seed"] == DIRECT_GROUP_CONFIDENCE
-        assert conf_map["task_live"] == RUNTIME_TASK_CONFIDENCE
-        assert conf_map["task_live"] < conf_map["task_seed"]
+        conf_map = {eid: conf for eid, conf in results}
+        assert conf_map["entity_seed"] == DIRECT_GROUP_CONFIDENCE
+        assert conf_map["entity_live"] == RUNTIME_TASK_CONFIDENCE
+        assert conf_map["entity_live"] < conf_map["entity_seed"]

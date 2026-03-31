@@ -7,7 +7,7 @@
     "body_preview": "Price chahiye",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -84,7 +84,7 @@
     "body_preview": "Good morning sir, kindly share rate for\nLG Refrigerator 242 ltr \nwith handle, 3/",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -98,7 +98,7 @@
     "body_preview": "..",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -112,7 +112,7 @@
     "body_preview": "..",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -126,7 +126,7 @@
     "body_preview": "Sir these rates ok?",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -140,7 +140,7 @@
     "body_preview": "Increased",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -154,7 +154,7 @@
     "body_preview": "Sir kindly share",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -168,7 +168,7 @@
     "body_preview": "Sir also provide rate & model details for\nMini Refrigerator 75/100 ltr",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -191,7 +191,7 @@
     "body_preview": "Sir kindly reshare the rate for\n1. 1.5 ton Split Ac 28500\n2. 1.5 ton window ac 2",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -205,7 +205,7 @@
     "body_preview": "thanks a ton sir",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -219,7 +219,7 @@
     "body_preview": "2 more parts have to be orderd extra sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -233,7 +233,7 @@
     "body_preview": "Two ya one battery",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -247,7 +247,7 @@
     "body_preview": "ordered sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -306,7 +306,7 @@
     "body_preview": "To\nJiwan Ram \nRs 35,500/- paid \n02-03-2026",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -320,7 +320,7 @@
     "body_preview": "bill no= 3078 cleared",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -334,7 +334,7 @@
     "body_preview": "ok",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -348,7 +348,7 @@
     "body_preview": "https://mkp.gem.gov.in/basketball-shoes/basketball-shoes/p-5116877-54205704768-c",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -362,7 +362,7 @@
     "body_preview": "Ok",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -376,7 +376,7 @@
     "body_preview": "LG \nS 292 RPZX\nMrp-35999\nDp-32000\nNlc-27840 With Handel \nBluestar mini fridge \n4",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -390,7 +390,7 @@
     "body_preview": "Thankyou Sir",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -404,7 +404,7 @@
     "body_preview": "Welcome",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -670,7 +670,7 @@
     "body_preview": "Ok",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -720,7 +720,7 @@
     "body_preview": "Eska update",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -887,7 +887,7 @@
     "body_preview": "You deleted this message",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -901,7 +901,7 @@
     "body_preview": "https://mkp.gem.gov.in/non-metallic-nameplates/name-plate/p-5116877-96535631154-",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -915,7 +915,7 @@
     "body_preview": "12000/-",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -929,7 +929,7 @@
     "body_preview": "https://mkp.gem.gov.in/target-face-archery-v2/na/p-5116877-40977676029-cat.html#",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -943,7 +943,7 @@
     "body_preview": "https://mkp.gem.gov.in/target-face-archery-v2/target-frame-1x1-frame/p-5116877-9",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -957,7 +957,7 @@
     "body_preview": "https://mkp.gem.gov.in/register-v2/cam-47-gpf-provident-fund-ledger-register-200",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -971,7 +971,7 @@
     "body_preview": "https://mkp.gem.gov.in/lithium-ion-rechargeable-batteries-72-volt-e-rickshaws/9a",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -985,7 +985,7 @@
     "body_preview": "https://mkp.gem.gov.in/pid-controller/epc3004-p10-vh-d1-xx-xx-xx-xx/p-5116877-35",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -999,7 +999,7 @@
     "body_preview": "...https://mkp.gem.gov.in/dc-winch-motor/x450/p-5116877-56793873111-cat.html#var",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1031,7 +1031,7 @@
     "body_preview": "B2B bill hai thik hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1045,7 +1045,7 @@
     "body_preview": "sir clear pic chahiye hoga",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1086,7 +1086,7 @@
     "body_preview": "Sir link kiska de sakte hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1100,7 +1100,7 @@
     "body_preview": "Microsoft office professional 2024 plus ka link mil sakta hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1114,7 +1114,7 @@
     "body_preview": "antivirus",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1128,7 +1128,7 @@
     "body_preview": "Eska chahiye tha",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1151,7 +1151,7 @@
     "body_preview": "Bata dijiye kiska kiska mil jayega",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1165,7 +1165,7 @@
     "body_preview": "Bid upload karna padega",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1188,7 +1188,7 @@
     "body_preview": "UTTAM ENT.pdf",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1202,7 +1202,7 @@
     "body_preview": "CHARU ENTERPRISE \nAc/no 50200028165837\nIFSC CODE/HDFC0002930\nBank branch HDFC BE",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1216,7 +1216,7 @@
     "body_preview": "PTT-20260303-WA0016.opus (file attached)",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1230,7 +1230,7 @@
     "body_preview": "Okay sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1244,7 +1244,7 @@
     "body_preview": "21000/- payment karna jo b2b bill send kar diya, already es matter per baat hua ",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1258,7 +1258,7 @@
     "body_preview": "Do aur hai bill milane per bhej dunga",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1272,7 +1272,7 @@
     "body_preview": "Sir blinds ka price bata dijiye jo banane ke liye diya hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1286,7 +1286,7 @@
     "body_preview": "Sir blinds ka price bata dijiye jo banane ke liye diya hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1300,7 +1300,7 @@
     "body_preview": "Prestige Marvel Plus Toughened Glass Top Gas Stove (1 Burner) - GTM 01, Black \n ",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1314,7 +1314,7 @@
     "body_preview": "Ye order kar dijiye",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1328,7 +1328,7 @@
     "body_preview": "BLDM 360 Degree Rotation Wooden Golden Premium Metal Mobile Holder for Desktop a",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1342,7 +1342,7 @@
     "body_preview": "Ye two pcs order kar dijiye",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1356,7 +1356,7 @@
     "body_preview": "JBL Partybox 120 Wireless Bluetooth 160W Party Speaker, AI Sound Boost, Futurist",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1370,7 +1370,7 @@
     "body_preview": "App ke quatation se match ho raha hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1393,7 +1393,7 @@
     "body_preview": "Clear photo",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1407,7 +1407,7 @@
     "body_preview": "Air fyer bhi check karna",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1421,7 +1421,7 @@
     "body_preview": "Maximum large capacity",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1435,7 +1435,7 @@
     "body_preview": "Sir order kar dijiye",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1449,7 +1449,7 @@
     "body_preview": "Payment ho gaya sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1463,7 +1463,7 @@
     "body_preview": "9864923247\nEs number per 20000/- payment karna hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1477,7 +1477,7 @@
     "body_preview": "Bill milega",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1635,7 +1635,7 @@
     "body_preview": "*Sir kindly add*\n*Water Dispenser floor standing*\n with Refrigerator- 9800/- 03 ",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1649,7 +1649,7 @@
     "body_preview": "Ok",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1672,7 +1672,7 @@
     "body_preview": "Sir ye order kar dijiye",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1686,7 +1686,7 @@
     "body_preview": "Sir 21000/- payment kar diye kya",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1736,7 +1736,7 @@
     "body_preview": "Ye payment karna hai eska bill app ke firm naam se hoga payment hone ke baad",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1750,7 +1750,7 @@
     "body_preview": "ok sir doing now",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1773,7 +1773,7 @@
     "body_preview": "Ok",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1814,7 +1814,7 @@
     "body_preview": "Ye",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1828,7 +1828,7 @@
     "body_preview": "ne ddoors \n17760/-",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1842,7 +1842,7 @@
     "body_preview": "Ye",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1856,7 +1856,7 @@
     "body_preview": "17760/-",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1879,7 +1879,7 @@
     "body_preview": "To\nJiwan Ram \nRs 50,000/-\n05-03-2026",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -1911,7 +1911,7 @@
     "body_preview": "19100-",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2132,7 +2132,7 @@
     "body_preview": "paid",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2155,7 +2155,7 @@
     "body_preview": "Name Avi international \nAc no 921020026698045\nIFSC UTIB0004177\nBANK NAME AXIS BA",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2169,7 +2169,7 @@
     "body_preview": "Challan number \n1033\n1024\n962\n939\n902\n897\n866",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2183,7 +2183,7 @@
     "body_preview": "Es per 15000/- payment karna hai bill milega",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2206,7 +2206,7 @@
     "body_preview": "Good Morning Sir\nNeed rate for   bar mein transparent type ka fridge",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2220,7 +2220,7 @@
     "body_preview": "Good Morning Sir\nNeed rate for   bar mein transparent type ka fridge",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2252,7 +2252,7 @@
     "body_preview": "Is type mai sir",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2266,7 +2266,7 @@
     "body_preview": "45ltr",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2280,7 +2280,7 @@
     "body_preview": "8500",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2294,7 +2294,7 @@
     "body_preview": "sir  model no  ...? <This message was edited>",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2317,7 +2317,7 @@
     "body_preview": "Clear photo evening time tak Mil jayega",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2331,7 +2331,7 @@
     "body_preview": "Ok thank you sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2426,7 +2426,7 @@
     "body_preview": "blinds sent + charger for battery for the blower also sent",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2440,7 +2440,7 @@
     "body_preview": "Ok",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2463,7 +2463,7 @@
     "body_preview": "Sent in todays convoy",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2477,7 +2477,7 @@
     "body_preview": "BlueStar \n250 ltrs \nMrp-45500\nNlc-31500\nBlueStar \n290 ltrs \nMrp-51000\nNlc-34500",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2491,7 +2491,7 @@
     "body_preview": "Bluestar Visicooler",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2505,7 +2505,7 @@
     "body_preview": "Thankyou Sir",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2519,7 +2519,7 @@
     "body_preview": "Chhalla no",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2569,7 +2569,7 @@
     "body_preview": "To\nAvi International\nRs 15,000/-\n06-03-2026",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2583,7 +2583,7 @@
     "body_preview": "This message was deleted",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2597,7 +2597,7 @@
     "body_preview": "This message was deleted",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2629,7 +2629,7 @@
     "body_preview": "Ok Sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2661,7 +2661,7 @@
     "body_preview": "JB Uttam Enterprise.pdf",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -2720,7 +2720,7 @@
     "body_preview": "Ok",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3031,7 +3031,7 @@
     "body_preview": "",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3072,7 +3072,7 @@
     "body_preview": "2100/- payment karna hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3122,7 +3122,7 @@
     "body_preview": "Ok",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3136,7 +3136,7 @@
     "body_preview": "Without GST hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3150,7 +3150,7 @@
     "body_preview": "done sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3299,7 +3299,7 @@
     "body_preview": "Esko acrylic bd me chahiye",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3313,7 +3313,7 @@
     "body_preview": "Ho jayega Kal tak",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3327,7 +3327,7 @@
     "body_preview": "checking sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3377,7 +3377,7 @@
     "body_preview": "4ft x 3ft",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3391,7 +3391,7 @@
     "body_preview": "Koi update",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3405,7 +3405,7 @@
     "body_preview": "Ho jayega",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3419,7 +3419,7 @@
     "body_preview": "Evening time",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3433,7 +3433,7 @@
     "body_preview": "Sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3456,7 +3456,7 @@
     "body_preview": "yeh kya hai sir ?",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3470,7 +3470,7 @@
     "body_preview": "Ye size hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3484,7 +3484,7 @@
     "body_preview": "not 3x4 ft",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3498,7 +3498,7 @@
     "body_preview": "Yes",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3512,7 +3512,7 @@
     "body_preview": "Ye size confirm hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3526,7 +3526,7 @@
     "body_preview": "Sun bds me chahiye",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3540,7 +3540,7 @@
     "body_preview": "Hold",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3635,15 +3635,7 @@
     "body_preview": "Ok sir.",
     "routes": [
       {
-        "task_id": "task_sata_client",
-        "confidence": 0.72
-      },
-      {
-        "task_id": "task_voltas_supplier",
-        "confidence": 0.72
-      },
-      {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.72
       }
     ],
@@ -3684,7 +3676,7 @@
     "body_preview": "1440/-\n3750/-",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3698,7 +3690,7 @@
     "body_preview": "Payment kar dijiye",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3748,7 +3740,7 @@
     "body_preview": "Ho gaya sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3807,7 +3799,7 @@
     "body_preview": "yeh same model hai that we are getting these days ?",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3839,7 +3831,7 @@
     "body_preview": "sir kahan ita hard working mai kahan hu",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3853,7 +3845,7 @@
     "body_preview": "😁",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3867,7 +3859,7 @@
     "body_preview": "abhi karta hu",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3881,7 +3873,7 @@
     "body_preview": "Money Sent ✅\nPaytm has improved so much lately! Also, they have started giving r",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3895,7 +3887,7 @@
     "body_preview": "Hey, I sent ₹1440.00 to Kashmiri Saikia using paytm.",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3936,7 +3928,7 @@
     "body_preview": "To\nJiwan Ram \nRs 64,000/-\n10-03-2026",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3950,7 +3942,7 @@
     "body_preview": "Yes sir this is the same model as confirmed by Punit ji",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -3982,11 +3974,11 @@
     "body_preview": "Ha",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_kapoor_steel",
         "confidence": 0.75
       },
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_voltas_uttam",
         "confidence": 0.75
       }
     ],
@@ -4045,15 +4037,7 @@
     "body_preview": "Ok sir.",
     "routes": [
       {
-        "task_id": "task_sata_client",
-        "confidence": 0.72
-      },
-      {
-        "task_id": "task_voltas_supplier",
-        "confidence": 0.72
-      },
-      {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.72
       }
     ],
@@ -4103,7 +4087,7 @@
     "body_preview": "Ok",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4117,7 +4101,7 @@
     "body_preview": "Horn ka two items pending hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4140,7 +4124,7 @@
     "body_preview": "Ok",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4154,7 +4138,7 @@
     "body_preview": "sir aur koi sewa ?",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4204,7 +4188,7 @@
     "body_preview": "Sir items sent in todays convoy \nKindly collect it",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4362,7 +4346,7 @@
     "body_preview": "OK sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4376,7 +4360,7 @@
     "body_preview": "Sir ye seva kar dijiye",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4390,7 +4374,7 @@
     "body_preview": "🙏",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4404,7 +4388,7 @@
     "body_preview": "Link chahiye",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4418,7 +4402,7 @@
     "body_preview": "Sir Chaat masala ka link bna hua hai kya?",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4432,7 +4416,7 @@
     "body_preview": "Yes already cheque debit ho gaya hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4446,7 +4430,7 @@
     "body_preview": "Bal amt 36373/- ka hi link chahiye",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4460,7 +4444,7 @@
     "body_preview": "Next 14000/- ka",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4474,7 +4458,7 @@
     "body_preview": "Two months ka hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4488,7 +4472,7 @@
     "body_preview": "Ye Mar ka hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4502,7 +4486,7 @@
     "body_preview": "You deleted this message",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4642,15 +4626,7 @@
     "body_preview": "Ok sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
-        "confidence": 0.72
-      },
-      {
-        "task_id": "task_voltas_supplier",
-        "confidence": 0.72
-      },
-      {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.72
       }
     ],
@@ -4736,7 +4712,7 @@
     "body_preview": "https://mkp.gem.gov.in/turmeric-haldi/turmeric-powder/p-5116877-84804301228-cat.",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4750,7 +4726,7 @@
     "body_preview": "https://mkp.gem.gov.in/cloves/cloves/p-5116877-11865834044-cat.html\nCloves\n6 x 1",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4764,7 +4740,7 @@
     "body_preview": "https://mkp.gem.gov.in/biryani-masala/briyani-masala/p-5116877-13786307770-cat.h",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4778,7 +4754,7 @@
     "body_preview": "https://mkp.gem.gov.in/sambhar-masala/sambar-masala/p-5116877-73025237623-cat.ht",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4792,7 +4768,7 @@
     "body_preview": "https://mkp.gem.gov.in/chili/spiceland-chili-1-kg/p-5116877-22683186413-cat.html",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4806,7 +4782,7 @@
     "body_preview": "This message was deleted",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4820,7 +4796,7 @@
     "body_preview": "Sabji masala and coriander powder pending",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4834,7 +4810,7 @@
     "body_preview": "Sabji masala ka stock update kia hua hai pr abhi reflect nahi hua hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4848,7 +4824,7 @@
     "body_preview": "coriander powder me error aa raha hai stock update nahi ho raha",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4871,7 +4847,7 @@
     "body_preview": "https://mkp.gem.gov.in/sabji-masala/sabji-masala/p-5116877-11496495754-cat.html\n",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4885,7 +4861,7 @@
     "body_preview": "https://mkp.gem.gov.in/chili/spiceland-chili-1-kg/p-5116877-22683186413-cat.html",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4899,7 +4875,7 @@
     "body_preview": "https://mkp.gem.gov.in/sambhar-masala/sambar-masala/p-5116877-73025237623-cat.ht",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -4913,7 +4889,7 @@
     "body_preview": "Ok sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5098,7 +5074,7 @@
     "body_preview": "https://mkp.gem.gov.in/spices-condiments-coriander-whole-ground-v2-conforming-24",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5112,7 +5088,7 @@
     "body_preview": "spices.xlsx",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5126,7 +5102,7 @@
     "body_preview": "🙏",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5194,7 +5170,7 @@
     "body_preview": "Ram Ram sahab \n8806715286\nRs-7000",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5208,7 +5184,7 @@
     "body_preview": "Ye payment kar dijiye",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5231,7 +5207,7 @@
     "body_preview": "PAID SIR",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5245,7 +5221,7 @@
     "body_preview": "Money Sent ✅\nPaytm has improved so much lately! Also, they have started giving r",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5268,7 +5244,7 @@
     "body_preview": "OK sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5390,7 +5366,7 @@
     "body_preview": "Serial number 7 ka abhi nahi chahiye baki ka link chahiye",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5404,7 +5380,7 @@
     "body_preview": "ledger cover not on gem",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5418,7 +5394,7 @@
     "body_preview": "file or folder link shall be used sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5432,7 +5408,7 @@
     "body_preview": "Serial number 4,5,6 me ye amt teeno  me dal dijiye",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5446,7 +5422,7 @@
     "body_preview": "sl no 2-6 Rs 47500\nsl no 8 5000\ng total to match 52500/-",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5460,7 +5436,7 @@
     "body_preview": "please confirm",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5474,7 +5450,7 @@
     "body_preview": "Serial number 8 ko chhod dijiye",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5488,7 +5464,7 @@
     "body_preview": "47500 to match sir ?",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5520,7 +5496,7 @@
     "body_preview": "Sir ek minute",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5534,7 +5510,7 @@
     "body_preview": "Sir total 43000/ ka Bana dijiye Koi ek items chhod dijiyega last me balance amt ",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5548,7 +5524,7 @@
     "body_preview": "ok sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5598,7 +5574,7 @@
     "body_preview": "Dono me se Kaon sa hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5612,7 +5588,7 @@
     "body_preview": "Sahed yahi hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5644,7 +5620,7 @@
     "body_preview": "Price not show",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5658,7 +5634,7 @@
     "body_preview": "Same problem price not show",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5690,7 +5666,7 @@
     "body_preview": "Sir gem ka issue chal raha hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5704,7 +5680,7 @@
     "body_preview": "Aaj aayega",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5718,7 +5694,7 @@
     "body_preview": "Almost 24 hour peeche chal raha hai gem",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5813,7 +5789,7 @@
     "body_preview": "Sir kindly share the L1 rates",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5827,7 +5803,7 @@
     "body_preview": "Ji",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5931,7 +5907,7 @@
     "body_preview": "Look at this product that I found on google.com https://share.google/QXLRL0wOmyz",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5945,7 +5921,7 @@
     "body_preview": "Ye Mil jayega",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5959,7 +5935,7 @@
     "body_preview": "",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5973,7 +5949,7 @@
     "body_preview": "Ye bid ka amt hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -5987,7 +5963,7 @@
     "body_preview": "Thankyou Sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6199,7 +6175,7 @@
     "body_preview": "Back",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6213,7 +6189,7 @@
     "body_preview": "Thickness : 4mmm",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6227,7 +6203,7 @@
     "body_preview": "Size 1 mtrs x 15 mtrs \nPrice per mtrs @ 1450/- all inclusive",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6241,7 +6217,7 @@
     "body_preview": "sir this is whats sold to most of the battery areas",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6255,7 +6231,7 @@
     "body_preview": "please have a look and guide",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6269,7 +6245,7 @@
     "body_preview": "regards ashish",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6283,7 +6259,7 @@
     "body_preview": "https://mkp.gem.gov.in/paper-clips-v2-conforming-5650/u-clip-steel-35-mm/p-51168",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6297,7 +6273,7 @@
     "body_preview": "Require to wait",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6311,7 +6287,7 @@
     "body_preview": "https://mkp.gem.gov.in/register-v2/account-note-book/p-5116877-43491632326-cat.h",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6325,7 +6301,7 @@
     "body_preview": "https://mkp.gem.gov.in/register-v2/nobility/p-5116877-45122894211-cat.html\nRegis",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6339,7 +6315,7 @@
     "body_preview": "https://mkp.gem.gov.in/staple-pins-staples-v3/kangaro-stapler-pin-23-13/p-511687",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6353,7 +6329,7 @@
     "body_preview": "14-03-26_uttam.xlsx",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6367,7 +6343,7 @@
     "body_preview": "sir done please recheck",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6381,7 +6357,7 @@
     "body_preview": "Money Sent ✅\nPaytm has improved so much recently! Seen their new app?",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6395,7 +6371,7 @@
     "body_preview": "Ok",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6409,7 +6385,7 @@
     "body_preview": "Gst bill mila app ko",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6576,7 +6552,7 @@
     "body_preview": "nahi sir not yet",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6608,7 +6584,7 @@
     "body_preview": "Ye",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6622,7 +6598,7 @@
     "body_preview": "Ye GST Bill eska hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6636,7 +6612,7 @@
     "body_preview": "Eska",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6650,7 +6626,7 @@
     "body_preview": "NISUN 24 Pockets File Organizer, Expanding File Plastic Letter Size with Labels,",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6664,7 +6640,7 @@
     "body_preview": "Ye sir order kar dijiye one pcs",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6678,7 +6654,7 @@
     "body_preview": "Ye app ke pass hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6728,7 +6704,7 @@
     "body_preview": "12 pockets wala \n280/- milega sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6742,7 +6718,7 @@
     "body_preview": "colour green black available",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6765,7 +6741,7 @@
     "body_preview": "Ok",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6815,7 +6791,7 @@
     "body_preview": "Confirm hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6829,7 +6805,7 @@
     "body_preview": "yes sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6843,7 +6819,7 @@
     "body_preview": "Confirm hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6857,7 +6833,7 @@
     "body_preview": "Link confirm",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6871,7 +6847,7 @@
     "body_preview": "Sir eska confirm kijiye",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6885,7 +6861,7 @@
     "body_preview": "Show nahi kar raha hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6899,7 +6875,7 @@
     "body_preview": "Sir eska amt show nahi kar raha hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6913,7 +6889,7 @@
     "body_preview": "Pl check",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6954,7 +6930,7 @@
     "body_preview": "Sir\nSurge protectors 1KVS ka pata kar dijiye <This message was edited>",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6977,7 +6953,7 @@
     "body_preview": "sir cost for split ac 1.5 ton 03 star",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -6991,15 +6967,7 @@
     "body_preview": "Sir...",
     "routes": [
       {
-        "task_id": "task_sata_client",
-        "confidence": 0.75
-      },
-      {
-        "task_id": "task_voltas_supplier",
-        "confidence": 0.75
-      },
-      {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.75
       }
     ],
@@ -7013,7 +6981,7 @@
     "body_preview": "Surge protector",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7036,7 +7004,7 @@
     "body_preview": "5535/-",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7050,7 +7018,7 @@
     "body_preview": "3050/-",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7064,7 +7032,7 @@
     "body_preview": "sirr item ka koi idea nahi hai \nyehi pic online mila jispe shop ne yeh rate diya",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7078,7 +7046,7 @@
     "body_preview": "aap check karwa lijiye please and guide",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7092,7 +7060,7 @@
     "body_preview": "Ok sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7106,7 +7074,7 @@
     "body_preview": "tahnks s ir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7120,7 +7088,7 @@
     "body_preview": "?",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7134,7 +7102,7 @@
     "body_preview": "Cost- 28500/-",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7184,7 +7152,7 @@
     "body_preview": "https://mkp.gem.gov.in/cloves/cloves/p-5116877-11865834044-cat.html\n6 x 1082/- =",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7198,7 +7166,7 @@
     "body_preview": "https://mkp.gem.gov.in/biryani-masala/shudh-pari-shahi-biryani-masala-1-kg/p-511",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7212,7 +7180,7 @@
     "body_preview": "Okay sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7523,7 +7491,7 @@
     "body_preview": "To\nSanbira\nRs 19900/-\n19-03-2026",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7546,7 +7514,7 @@
     "body_preview": "To\nSanbira\nRs 19900/-\n19-03-2026",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7569,7 +7537,7 @@
     "body_preview": "Yes \nRecieved",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7583,7 +7551,7 @@
     "body_preview": "window ac 03\nref 242 ltr : 01\nmini ref : 01",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7669,7 +7637,7 @@
     "body_preview": "Sir army store ka nahi hua hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7692,7 +7660,7 @@
     "body_preview": "all bills are generated kindly process  \nthank you sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7706,7 +7674,7 @@
     "body_preview": "OK sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7801,7 +7769,7 @@
     "body_preview": "@⁨Mousumi Banik New Staff⁩",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7815,7 +7783,7 @@
     "body_preview": "To\nSanbira\nRs 29,400/-  paid \n04-02-2026",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7829,7 +7797,7 @@
     "body_preview": "To\nSanbira\nRs 30,000/- paid \nBal- Nil\n21-02-2026",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7852,7 +7820,7 @@
     "body_preview": "Sir 59400/- cleared",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7866,7 +7834,7 @@
     "body_preview": ".",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7880,7 +7848,7 @@
     "body_preview": ".",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7894,7 +7862,7 @@
     "body_preview": "thanks",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7908,7 +7876,7 @@
     "body_preview": "no dues sir",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7940,7 +7908,7 @@
     "body_preview": "Yes",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7954,7 +7922,7 @@
     "body_preview": "The statement forwarded is till 25th of December 2025",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7968,7 +7936,7 @@
     "body_preview": "You deleted this message",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -7982,7 +7950,7 @@
     "body_preview": "later payments recieved is to be again adjusted in the statement",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8104,7 +8072,7 @@
     "body_preview": "Es bid me participate ho gaya hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8118,7 +8086,7 @@
     "body_preview": "Pl confirm",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8132,7 +8100,7 @@
     "body_preview": "Mini refrigerators.  1 Nos\nVoltas window AC 1.5 Ton  3 Nos\nAC Stabilizer 4 KVA  ",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8146,7 +8114,7 @@
     "body_preview": "Kab tak denge wah app Bata dijiyega",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8160,7 +8128,7 @@
     "body_preview": "@⁨Abhisha New Staff Jun 24 (UE )⁩",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8174,7 +8142,7 @@
     "body_preview": "answer for the bid now",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8188,7 +8156,7 @@
     "body_preview": "Sir 13 mar ko diya hua hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8202,7 +8170,7 @@
     "body_preview": "Ye amt hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8225,7 +8193,7 @@
     "body_preview": "sir aaj kar rahe hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8239,7 +8207,7 @@
     "body_preview": "24 ka opening hai iska",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8253,7 +8221,7 @@
     "body_preview": "🙏",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8267,7 +8235,7 @@
     "body_preview": "520.90 x 9 =4688.1\nFlex print ka link chahiye tha",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8281,7 +8249,7 @@
     "body_preview": "Eska refill chahiye tha",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8295,7 +8263,7 @@
     "body_preview": "Qty five",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8309,7 +8277,7 @@
     "body_preview": "iska refill to nahi aata hai sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8323,7 +8291,7 @@
     "body_preview": "use and throw  hai yeh",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8337,7 +8305,7 @@
     "body_preview": "only cartridge wala pen alag aata hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8351,7 +8319,7 @@
     "body_preview": "Sir cartridge esme use hota hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8365,7 +8333,7 @@
     "body_preview": "Photo send karo cartridge ka",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8379,7 +8347,7 @@
     "body_preview": "Link Ho Gaya",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8393,7 +8361,7 @@
     "body_preview": "within few minutes sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8407,7 +8375,7 @@
     "body_preview": "sir yeh open kaise hua ?",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8421,7 +8389,7 @@
     "body_preview": "old cart ka pic share kijiye please",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8435,7 +8403,7 @@
     "body_preview": "Okay",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8458,7 +8426,7 @@
     "body_preview": "nahi sir yeh use and throw hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8472,7 +8440,7 @@
     "body_preview": "Ok",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8495,7 +8463,7 @@
     "body_preview": "Ok sir two pen app bhej dijiye",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8509,7 +8477,7 @@
     "body_preview": "...",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8550,7 +8518,7 @@
     "body_preview": "sir please have a look",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8564,7 +8532,7 @@
     "body_preview": "this is the final items ?",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8578,7 +8546,7 @@
     "body_preview": "Ye",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8592,7 +8560,7 @@
     "body_preview": "This message was deleted",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8606,7 +8574,7 @@
     "body_preview": "SIR 03 *window  AC* 1.5 TON CONFIRMED <This message was edited>",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8620,7 +8588,7 @@
     "body_preview": "PLEASE SEND WHEN POSSIBLE",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8634,7 +8602,7 @@
     "body_preview": "ALSO SIR KOI MINI REF \n45-100 LTR MAI MILEGA 01 NOS NEEDED",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8648,7 +8616,7 @@
     "body_preview": "lg ka to aap deal nahi karte nahi to uska ref bhi chahiye tha 242 ltr wala",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8662,7 +8630,7 @@
     "body_preview": "@⁨Mousumi Banik New Staff⁩ \nplease followup with sir and update asap",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8676,7 +8644,7 @@
     "body_preview": "Bluestar ka 8500",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8690,7 +8658,7 @@
     "body_preview": "sir which one ?",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8704,7 +8672,7 @@
     "body_preview": "LG 242 LTR\nS 292 RPZX\nWith Handel\n03 STAR",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8727,7 +8695,7 @@
     "body_preview": "Mini ref",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8741,7 +8709,7 @@
     "body_preview": "this also needed 01 nos",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8764,7 +8732,7 @@
     "body_preview": "is this the one sir ?",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8778,7 +8746,7 @@
     "body_preview": "mini ref ?",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8792,7 +8760,7 @@
     "body_preview": "Yes",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8806,7 +8774,7 @@
     "body_preview": "nothing bigger possible right sir",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8820,7 +8788,7 @@
     "body_preview": "90 ltr or some thing",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8834,7 +8802,7 @@
     "body_preview": "No",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8848,7 +8816,7 @@
     "body_preview": "ok this also final",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8862,7 +8830,7 @@
     "body_preview": "01 nos",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8876,7 +8844,7 @@
     "body_preview": "Ok",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8890,7 +8858,7 @@
     "body_preview": "iska kuch sir ?",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8913,7 +8881,7 @@
     "body_preview": "Sir statement & \nLink",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8927,7 +8895,7 @@
     "body_preview": "making the same",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8941,7 +8909,7 @@
     "body_preview": "mini ref45 ltr ordered \n03 split ac voltas ordered",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8955,7 +8923,7 @@
     "body_preview": "kal aa jayega",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8969,7 +8937,7 @@
     "body_preview": "stabilizer ka de dijiye mai mangwa lu aaj hi",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8983,7 +8951,7 @@
     "body_preview": "towel ready white colour",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -8997,7 +8965,7 @@
     "body_preview": "starter ready",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9011,7 +8979,7 @@
     "body_preview": "sir small correction window ac \nmy mistake sorry",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9034,7 +9002,7 @@
     "body_preview": "iska karwa dijiye mera order clear ho ajyega",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9048,7 +9016,7 @@
     "body_preview": "V-Guard iMagno 410 AC Stabilizer for 1.5 ton Inverter AC | Digital Display| Inte",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9062,7 +9030,7 @@
     "body_preview": "Flex banner still pending",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9076,7 +9044,7 @@
     "body_preview": "OK sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9090,7 +9058,7 @@
     "body_preview": "sir stablizer online kar du ?",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9104,7 +9072,7 @@
     "body_preview": "Kya market se nahi milega",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9118,7 +9086,7 @@
     "body_preview": "milega",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9132,7 +9100,7 @@
     "body_preview": "already checking for that also",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9155,7 +9123,7 @@
     "body_preview": "microtek wala shall cost 2500 all inclusive <This message was edited>",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9169,7 +9137,7 @@
     "body_preview": "Nahi sir \nV guard",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9183,7 +9151,7 @@
     "body_preview": "ok ji",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9197,7 +9165,7 @@
     "body_preview": "Sir\n977\n1033\n1034",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9211,7 +9179,7 @@
     "body_preview": "https://mkp.gem.gov.in/flex-posters-banners-v2/na/p-5116877-39071465536-cat.html",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9225,7 +9193,7 @@
     "body_preview": "Require to wait",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9293,7 +9261,7 @@
     "body_preview": "LG \nS 292 RPZX\nMrp-35999\nDp-32000\nNlc-27840 With Handel\n01 nos confirmed sir",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9307,7 +9275,7 @@
     "body_preview": "03 star rating wala",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9339,7 +9307,7 @@
     "body_preview": "To\nJiwan Ram\nRs 39200/-\n23-03-2026\nAll Cld",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9353,7 +9321,7 @@
     "body_preview": "old dues cleared sir",
     "routes": [
       {
-        "task_id": "task_voltas_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9367,7 +9335,7 @@
     "body_preview": "Yes yeh 3 Star ⭐ hei👆",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9381,7 +9349,7 @@
     "body_preview": "please send when possible \nor let us know where it is to be collected from",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9404,7 +9372,7 @@
     "body_preview": "sir please have a look",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9418,7 +9386,7 @@
     "body_preview": "Thnx",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9432,7 +9400,7 @@
     "body_preview": "state mar 2026.pdf",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9446,7 +9414,7 @@
     "body_preview": "sir please guide kijiyega if any mistakes aor we forgot some challans",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9460,7 +9428,7 @@
     "body_preview": "thanks a lot",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9474,7 +9442,7 @@
     "body_preview": "OK sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9497,7 +9465,7 @@
     "body_preview": "sir wednesday ke liye veh bol sakte hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9511,7 +9479,7 @@
     "body_preview": "Ok",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9588,7 +9556,7 @@
     "body_preview": "3450/-",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9602,7 +9570,7 @@
     "body_preview": "range bhie acha hai 160-220v",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9616,7 +9584,7 @@
     "body_preview": "apne wale se better hoga",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9648,7 +9616,7 @@
     "body_preview": "ok",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9662,7 +9630,7 @@
     "body_preview": "Qty please",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9676,7 +9644,7 @@
     "body_preview": "01 nos sir",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9690,7 +9658,7 @@
     "body_preview": "..",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9704,7 +9672,7 @@
     "body_preview": "If your auto comes then please inform \nmy auto will be chargeable \nfor 1 nos Qty",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9718,7 +9686,7 @@
     "body_preview": "yes sir",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9732,7 +9700,7 @@
     "body_preview": "lena kahan se hoga ?",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9746,7 +9714,7 @@
     "body_preview": "Sir \nbatata hu",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9760,7 +9728,7 @@
     "body_preview": "just let me check kaha rakha hei maine",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9774,7 +9742,7 @@
     "body_preview": "Sir \ngodown bandh ho gaya hei aur mera staff phone nahi utha raha hei \napko thor",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9788,7 +9756,7 @@
     "body_preview": "either laktokiya",
     "routes": [
       {
-        "task_id": "task_lg_supplier",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9802,7 +9770,7 @@
     "body_preview": "Ok",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9816,7 +9784,7 @@
     "body_preview": "Sir all items are ready \nSir please sent vehicle tomorrow",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9830,7 +9798,7 @@
     "body_preview": "Sir link show nahi kar raha hai",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -9997,7 +9965,7 @@
     "body_preview": "http://mkp.gem.gov.in/flex-posters-banners-v2/flex-banners/p-5116877-33368651760",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -10011,7 +9979,7 @@
     "body_preview": "Require to wait",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],
@@ -10025,7 +9993,7 @@
     "body_preview": "new link also made sir",
     "routes": [
       {
-        "task_id": "task_sata_client",
+        "task_id": "entity_sata",
         "confidence": 0.9
       }
     ],

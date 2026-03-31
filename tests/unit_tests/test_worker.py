@@ -141,7 +141,10 @@ def _make_node_update(node_id="order_confirmation", status="completed", confiden
 def _run_process_message(message, task, agent_output):
     from src.router.worker import process_message
     mock_r = MagicMock()
-    with patch("src.router.worker.route", return_value=[("t1", 0.9)]), \
+    entity_tasks = [{"task_id": "t1", "order_type": task.get("order_type", "standard_procurement"),
+                     "items": [], "is_mature": False}]
+    with patch("src.router.worker.route", return_value=[("entity_test", 0.9)]), \
+         patch("src.store.task_store.get_tasks_for_entity", return_value=entity_tasks), \
          patch("src.router.worker.get_task", return_value=task), \
          patch("src.router.worker.append_message"), \
          patch("src.router.worker.run_update_agent", return_value=agent_output), \
@@ -149,7 +152,9 @@ def _run_process_message(message, task, agent_output):
          patch("src.router.worker.apply_item_extractions"), \
          patch("src.router.worker.apply_node_data_extractions"), \
          patch("src.router.worker._check_post_confirmation_item_changes"), \
-         patch("src.router.worker._handle_ambiguity") as mock_ambiguity:
+         patch("src.router.worker._handle_ambiguity") as mock_ambiguity, \
+         patch("src.router.worker.check_stock_path_order_ready", return_value=None), \
+         patch("src.router.worker.cascade_auto_triggers", return_value=[]):
         process_message(message, mock_r)
     return mock_update_node, mock_ambiguity, mock_r
 
@@ -228,13 +233,16 @@ class TestProcessMessage:
         from src.agent.update_agent import NodeUpdate
         from src.router.worker import process_message
         msg = {"body": "godown se de denge", "message_id": "m8"}
-        task = {"id": "t1", "order_type": "standard_procurement"}
+        task = {"id": "t1", "order_type": "standard_procurement", "client_id": "entity_test"}
+        entity_tasks = [{"task_id": "t1", "order_type": "standard_procurement",
+                         "items": [], "is_mature": False}]
         output = _make_agent_output(node_updates=[
             NodeUpdate(node_id="filled_from_stock", new_status="completed",
                        confidence=0.9, evidence="stock"),
         ])
         mock_r = MagicMock()
-        with patch("src.router.worker.route", return_value=[("t1", 0.9)]), \
+        with patch("src.router.worker.route", return_value=[("entity_test", 0.9)]), \
+             patch("src.store.task_store.get_tasks_for_entity", return_value=entity_tasks), \
              patch("src.router.worker.get_task", return_value=task), \
              patch("src.router.worker.append_message"), \
              patch("src.router.worker.run_update_agent", return_value=output), \
@@ -511,10 +519,13 @@ class TestDeadLetterLogging:
 
     def test_process_message_logs_dead_letter_on_agent_none(self):
         msg = {"body": "test", "message_id": "m99"}
-        task = {"id": "t1", "order_type": "standard_procurement"}
+        task = {"id": "t1", "order_type": "standard_procurement", "client_id": "entity_test"}
+        entity_tasks = [{"task_id": "t1", "order_type": "standard_procurement",
+                         "items": [], "is_mature": False}]
         from src.router.worker import process_message
         mock_r = MagicMock()
-        with patch("src.router.worker.route", return_value=[("t1", 0.9)]), \
+        with patch("src.router.worker.route", return_value=[("entity_test", 0.9)]), \
+             patch("src.store.task_store.get_tasks_for_entity", return_value=entity_tasks), \
              patch("src.router.worker.get_task", return_value=task), \
              patch("src.router.worker.append_message"), \
              patch("src.router.worker.run_update_agent", return_value=None), \

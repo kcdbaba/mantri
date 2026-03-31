@@ -89,6 +89,20 @@ def append_message(task_id: str, message: dict, routing_confidence: float):
         )
 
 
+def is_mature(task_id: str, order_type: str) -> bool:
+    """Check if a task's confirmation gate is completed (item list locked)."""
+    from src.agent.templates import get_template
+    template = get_template(order_type)
+    gate = template.get("confirmation_gate")
+    if gate is None:
+        return False  # linkage_task has no gate — never "mature"
+    nodes = {
+        n["id"][len(task_id) + 1:]: n["status"]
+        for n in get_node_states(task_id)
+    }
+    return nodes.get(gate) == "completed"
+
+
 def get_active_tasks() -> list[dict]:
     conn = get_connection()
     rows = conn.execute(
@@ -96,6 +110,43 @@ def get_active_tasks() -> list[dict]:
     ).fetchall()
     conn.close()
     return [dict(r) for r in rows]
+
+
+def get_tasks_for_entity(entity_id: str) -> list[dict]:
+    """Return all active tasks for an entity, with items and maturity status.
+
+    Returns: [{"task_id", "order_type", "items": [...], "is_mature": bool}]
+    """
+    conn = get_connection()
+    tasks = conn.execute(
+        "SELECT id, order_type, client_id, supplier_ids FROM task_instances "
+        "WHERE client_id = ? AND stage != 'completed'",
+        (entity_id,),
+    ).fetchall()
+
+    result = []
+    for t in tasks:
+        tid = t["id"]
+        otype = t["order_type"]
+        items = []
+        for table in ("client_order_items", "supplier_order_items"):
+            try:
+                rows = conn.execute(
+                    f"SELECT description, unit, quantity FROM {table} WHERE task_id = ?",
+                    (tid,),
+                ).fetchall()
+                items.extend({"description": r["description"], "unit": r["unit"],
+                              "quantity": r["quantity"]} for r in rows)
+            except Exception:
+                pass
+        result.append({
+            "task_id": tid,
+            "order_type": otype,
+            "items": items,
+            "is_mature": is_mature(tid, otype),
+        })
+    conn.close()
+    return result
 
 
 # ─────────────────────────────────────────────────────────────────────────────

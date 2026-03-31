@@ -32,22 +32,126 @@ from src.store.db import get_connection, transaction, create_task_live
 log = logging.getLogger(__name__)
 
 
+def _apply_output(task_id: str, order_type: str, output, message: dict, r):
+    """Apply agent output (node updates, items, flags, etc.) to a specific task."""
+    # Write node updates
+    for update in output.node_updates:
+        status = update.new_status
+        if update.confidence < PROVISIONAL_THRESHOLD and status not in ("pending", "provisional"):
+            status = "provisional"
+            log.debug("Downgraded node %s to provisional (confidence=%.2f)",
+                      update.node_id, update.confidence)
+        update_node_as_update_agent(
+            task_id=task_id, node_id=update.node_id,
+            new_status=status, confidence=update.confidence,
+            message_id=message.get("message_id"),
+        )
+        log.info("Node update: task=%s node=%s → %s (conf=%.2f) | %s",
+                 task_id, update.node_id, status, update.confidence, update.evidence)
+
+    # Stock path → order_ready auto-trigger
+    if any(u.node_id == "filled_from_stock" for u in output.node_updates):
+        result = check_stock_path_order_ready(task_id)
+        if result:
+            log.info("Stock path → order_ready=%s for task=%s", result, task_id)
+
+    # Cascade downstream auto-triggers
+    cascaded = cascade_auto_triggers(task_id)
+    if cascaded:
+        log.info("Auto-trigger cascade: task=%s → %s", task_id, cascaded)
+
+    # New task candidates (log only — creation handled by entity routing)
+    for candidate in output.new_task_candidates:
+        _log_new_task_candidate(candidate, message, task_id)
+
+    # Ambiguity flags
+    for flag in output.ambiguity_flags:
+        _handle_ambiguity(flag, task_id, message)
+
+    # Node data extractions
+    if output.node_data_extractions:
+        apply_node_data_extractions(task_id, output.node_data_extractions)
+
+    # Item extractions
+    if output.item_extractions:
+        apply_item_extractions(task_id, order_type, output.item_extractions)
+        _check_post_confirmation_item_changes(
+            task_id, order_type, output.item_extractions, message
+        )
+
+    # Publish to task_events stream for linkage_worker
+    _publish_task_event(task_id, message, r)
+
+
+def _resolve_task_for_entity(entity_id: str, entity_tasks: list[dict],
+                              message: dict, r) -> str:
+    """Determine which task to process a message against for an entity.
+
+    Rules:
+    1. No tasks → create default task
+    2. Has immature tasks → use immature (conflate)
+    3. Only mature tasks + message has items → create new task
+    4. Only mature tasks + status/follow-up → pick matching mature task
+    """
+    if not entity_tasks:
+        # Case 1: no tasks — create default
+        # Determine order_type from group context (could be enhanced)
+        order_type = "client_order"  # safe default
+        task_id = create_task_live(
+            order_type=order_type, client_id=entity_id,
+            source_group_id=message.get("group_id"),
+            source_message_id=message.get("message_id"),
+        )
+        from src.router.alias_dict import invalidate_alias_cache
+        invalidate_alias_cache()
+        log.info("ENTITY FIRST CREATE: %s → new %s (%s)", entity_id, task_id, order_type)
+        return task_id
+
+    immature = [t for t in entity_tasks if not t["is_mature"]]
+
+    if immature:
+        # Case 2/5: has immature tasks — use first (or only) immature task
+        # TODO: when multiple immature, agent decides which one
+        return immature[0]["task_id"]
+
+    # Case 3/4: only mature tasks
+    # For now, create a new task — the agent will handle status updates
+    # on mature tasks via normal routing (they'll match in future calls)
+    if ENABLE_LIVE_TASK_CREATION:
+        order_type = entity_tasks[0]["order_type"]  # same type as existing
+        task_id = create_task_live(
+            order_type=order_type, client_id=entity_id,
+            source_group_id=message.get("group_id"),
+            source_message_id=message.get("message_id"),
+        )
+        from src.router.alias_dict import invalidate_alias_cache
+        invalidate_alias_cache()
+        log.info("ENTITY MATURE CREATE: %s → new %s (all %d tasks mature)",
+                 entity_id, task_id, len(entity_tasks))
+        return task_id
+    else:
+        # Feature flag off — use most recent mature task
+        return entity_tasks[0]["task_id"]
+
+
 def process_message(message: dict, r: redis.Redis):
-    """Process a single message — route, store, run update agent, publish event.
-    For batched processing, use process_message_batch instead."""
+    """Process a single message — route to entity, resolve task, run agent, apply output."""
     routes = route(message)
 
     if not routes:
         _log_unrouted(message)
         return
 
-    for task_id, confidence in routes:
+    for entity_id, confidence in routes:
+        from src.store.task_store import get_tasks_for_entity
+        entity_tasks = get_tasks_for_entity(entity_id)
+
+        task_id = _resolve_task_for_entity(entity_id, entity_tasks, message, r)
         task = get_task(task_id)
         order_type = task["order_type"] if task else "standard_procurement"
 
         append_message(task_id, message, routing_confidence=confidence)
 
-        # Run update agent
         output = run_update_agent(task_id, [message], task_override=task,
                                    routing_confidence=confidence)
         if output is None:
@@ -56,75 +160,18 @@ def process_message(message: dict, r: redis.Redis):
             _log_dead_letter(task_id, message)
             continue
 
-        # Write node updates
-        for update in output.node_updates:
-            status = update.new_status
-            # Downgrade to provisional if agent confidence is low
-            if update.confidence < PROVISIONAL_THRESHOLD and status not in ("pending", "provisional"):
-                status = "provisional"
-                log.debug("Downgraded node %s to provisional (confidence=%.2f)",
-                          update.node_id, update.confidence)
-
-            update_node_as_update_agent(
-                task_id=task_id,
-                node_id=update.node_id,
-                new_status=status,
-                confidence=update.confidence,
-                message_id=message.get("message_id"),
-            )
-            log.info("Node update: task=%s node=%s → %s (conf=%.2f) | %s",
-                     task_id, update.node_id, status, update.confidence, update.evidence)
-
-        # Stock path → order_ready auto-trigger (deterministic, no LLM)
-        stock_updated = any(u.node_id == "filled_from_stock" for u in output.node_updates)
-        if stock_updated:
-            result = check_stock_path_order_ready(task_id)
-            if result:
-                log.info("Stock path → order_ready=%s for task=%s", result, task_id)
-
-        # Cascade downstream auto-triggers (predispatch_checklist, delivery_photo_check)
-        cascaded = cascade_auto_triggers(task_id)
-        if cascaded:
-            log.info("Auto-trigger cascade: task=%s → %s", task_id, cascaded)
-
-        # Log new task candidates (no creation flow in Sprint 3)
-        for candidate in output.new_task_candidates:
-            if candidate.get("type") == "new_order" and ENABLE_LIVE_TASK_CREATION:
-                _create_task_from_candidate(candidate, message, task_id, r)
-            else:
-                _log_new_task_candidate(candidate, message, task_id)
-
-        # Handle ambiguity flags — enqueue, escalate, block gate nodes
-        for flag in output.ambiguity_flags:
-            _handle_ambiguity(flag, task_id, message)
-
-        # Apply node_data extractions (merge into task_nodes.node_data)
-        if output.node_data_extractions:
-            apply_node_data_extractions(task_id, output.node_data_extractions)
-            log.debug("Node data extractions: task=%s nodes=%s",
-                      task_id, [e.node_id for e in output.node_data_extractions])
-
-        # Apply item extractions and check for post-confirmation changes
-        if output.item_extractions:
-            apply_item_extractions(task_id, order_type, output.item_extractions)
-            _check_post_confirmation_item_changes(
-                task_id, order_type, output.item_extractions, message
-            )
-
-        # Publish to task_events stream for linkage_worker consumption
-        _publish_task_event(task_id, message, r)
+        _apply_output(task_id, order_type, output, message, r)
 
 
 def process_message_batch(task_id: str, messages: list[dict], r: redis.Redis):
-    """Process a batch of messages for a single task_id — one LLM call for the batch."""
+    """Process a batch of messages for a single task_id — one LLM call for the batch.
+    Note: task_id here is resolved by the caller (run loop or integration test)."""
     task = get_task(task_id)
     order_type = task["order_type"] if task else "standard_procurement"
 
     # Store all messages
     for msg in messages:
-        routes = route(msg)
-        confidence = next((c for tid, c in routes if tid == task_id), 0.9)
-        append_message(task_id, msg, routing_confidence=confidence)
+        append_message(task_id, msg, routing_confidence=0.9)
 
     # Single LLM call for the batch
     output = run_update_agent(task_id, messages, task_override=task,
@@ -138,49 +185,7 @@ def process_message_batch(task_id: str, messages: list[dict], r: redis.Redis):
         _publish_task_event(task_id, last_msg, r)
         return
 
-    for update in output.node_updates:
-        status = update.new_status
-        if update.confidence < PROVISIONAL_THRESHOLD and status not in ("pending", "provisional"):
-            status = "provisional"
-        update_node_as_update_agent(
-            task_id=task_id, node_id=update.node_id,
-            new_status=status, confidence=update.confidence,
-            message_id=last_msg.get("message_id"),
-        )
-        log.info("Node update: task=%s node=%s → %s (conf=%.2f) | %s",
-                 task_id, update.node_id, status, update.confidence, update.evidence)
-
-    # Stock path → order_ready auto-trigger (deterministic, no LLM)
-    stock_updated = any(u.node_id == "filled_from_stock" for u in output.node_updates)
-    if stock_updated:
-        result = check_stock_path_order_ready(task_id)
-        if result:
-            log.info("Stock path → order_ready=%s for task=%s", result, task_id)
-
-    # Cascade downstream auto-triggers (predispatch_checklist, delivery_photo_check)
-    cascaded = cascade_auto_triggers(task_id)
-    if cascaded:
-        log.info("Auto-trigger cascade: task=%s → %s", task_id, cascaded)
-
-    for candidate in output.new_task_candidates:
-        if candidate.get("type") == "new_order" and ENABLE_LIVE_TASK_CREATION:
-            _create_task_from_candidate(candidate, last_msg, task_id, r)
-        else:
-            _log_new_task_candidate(candidate, last_msg, task_id)
-
-    for flag in output.ambiguity_flags:
-        _handle_ambiguity(flag, task_id, last_msg)
-
-    if output.node_data_extractions:
-        apply_node_data_extractions(task_id, output.node_data_extractions)
-
-    if output.item_extractions:
-        apply_item_extractions(task_id, order_type, output.item_extractions)
-        _check_post_confirmation_item_changes(
-            task_id, order_type, output.item_extractions, last_msg
-        )
-
-    _publish_task_event(task_id, last_msg, r)
+    _apply_output(task_id, order_type, output, last_msg, r)
 
 
 CONSUMER_GROUP = "router_worker_group"
@@ -269,6 +274,21 @@ def _flush_batch(task_id: str, batch: list[dict], event_ids: list[str], r: redis
         r.xack(INGEST_STREAM, CONSUMER_GROUP, eid)
 
 
+def _flush_entity_batch(entity_id: str, batch: list[dict], event_ids: list[str], r: redis.Redis):
+    """Flush a batch of messages for an entity — resolve task, then process."""
+    from src.store.task_store import get_tasks_for_entity
+    entity_tasks = get_tasks_for_entity(entity_id)
+    task_id = _resolve_task_for_entity(entity_id, entity_tasks, batch[-1], r)
+
+    try:
+        process_message_batch(task_id, batch, r)
+    except Exception as e:
+        log.error("Entity batch failed for entity=%s task=%s batch_size=%d: %s",
+                  entity_id, task_id, len(batch), e)
+    for eid in event_ids:
+        r.xack(INGEST_STREAM, CONSUMER_GROUP, eid)
+
+
 def run():
     log.info("Router worker started — consuming stream %s (batch_window=%ds)",
              INGEST_STREAM, BATCH_WINDOW_S)
@@ -309,13 +329,13 @@ def run():
                             r.xack(INGEST_STREAM, CONSUMER_GROUP, event_id)
                             continue
 
-                        # Add to batch buffer for each routed task
-                        for task_id, confidence in routes:
-                            if task_id not in batch_buffer:
-                                batch_buffer[task_id] = {
+                        # Add to batch buffer per entity
+                        for entity_id, confidence in routes:
+                            if entity_id not in batch_buffer:
+                                batch_buffer[entity_id] = {
                                     "messages": [], "event_ids": [], "last_at": 0,
                                 }
-                            buf = batch_buffer[task_id]
+                            buf = batch_buffer[entity_id]
                             buf["messages"].append(message)
                             buf["event_ids"].append(event_id)
                             buf["last_at"] = time.time()
@@ -323,14 +343,14 @@ def run():
             # Flush batches that have timed out or hit max size
             now = time.time()
             flushed = []
-            for task_id, buf in batch_buffer.items():
+            for entity_id, buf in batch_buffer.items():
                 elapsed = now - buf["last_at"]
                 if elapsed >= BATCH_WINDOW_S or len(buf["messages"]) >= BATCH_MAX_SIZE:
-                    _flush_batch(task_id, buf["messages"], buf["event_ids"], r)
-                    flushed.append(task_id)
+                    _flush_entity_batch(entity_id, buf["messages"], buf["event_ids"], r)
+                    flushed.append(entity_id)
 
-            for task_id in flushed:
-                del batch_buffer[task_id]
+            for entity_id in flushed:
+                del batch_buffer[entity_id]
 
         except redis.RedisError as e:
             log.error("Router worker Redis error: %s — retrying in 5s", e)
