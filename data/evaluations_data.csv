@@ -101,3 +101,39 @@ R6-L1-01,Post-Delivery Issue Detection,L1,S2,real-incomplete,"Payment confirmed 
 [18:47, 3/18/2026] Ashish Chhabra: wo kahan hai
 [18:47, 3/18/2026] Ashish Chhabra: and india flag and hathi wala dono jahan white hai bahut ganda hai
 [18:48, 3/18/2026] Ashish Chhabra: reject ho sakta hai","Two post-delivery follow-up tasks: (1) Locate and deliver missing car flags — 5 nos — from Malerkotla supplier (urgent). (2) Quality review: India flag and elephant flag — white quality defect — client rejection risk. Order status: Blocked/In Progress — NOT complete despite payment. 28000 paid but delivery incomplete and quality disputed.","Payment confirmation (""paid 28000 all cleared"") on 3/16 is a strong order-closure signal. Quality defect and delivery shortfall raised 2 days later in same thread. Agent must not treat payment as order closure.","PASS: Agent creates 2 post-delivery follow-up tasks (missing items + quality issue) and marks order Blocked or In Progress despite payment. FAIL: Order marked Complete after payment; no follow-up tasks for missing car flags or quality rejection.","Real data — Malerkotla supplier thread (incomplete). New risk R6 — not in original framework. Mrs Samita Roy is Ashish's staff member. Actual resolution chain (off-platform): missing items noticed on collection day → Ashish verbally asked Mrs Samita Roy to update supplier on WhatsApp → she did not → 2 days later no update, she had forgotten and claimed she couldn't reach supplier by phone → supplier called urgently, notified verbally → still no WhatsApp group update → supplier eventually shared courier consignment note image on chat confirming dispatch. Verbal instruction gap (R7a variant) is a key contributing failure. Courier note is an image — agent needs image support to extract dispatch confirmation."
+R1-D-L1-01,Delivery Completion,L1,S2,fully-synthetic,Single-thread delivery completion with supplier QC pass and dispatch,"=== THREAD 1: Supplier Group (Ashish + Staff 1 + Supplier) ===
+[24 Mar 09:00] Staff 1: Sharma ji maal kab tak aayega?
+[24 Mar 09:15] Supplier: Kal subah tak aa jayega, 50 bags atta
+[24 Mar 10:00] Staff 1: Ok sir confirmed
+[25 Mar 09:30] Staff 1: Maal aa gaya sir, sab check kar liya theek hai
+[25 Mar 10:00] Ashish: Good, dispatch karo Sata Bty Bn ko aaj hi
+[25 Mar 11:00] Staff 1: Vehicle ready hai, challan bana rahe hain
+[25 Mar 14:00] Staff 1: Dispatch ho gaya sir, vehicle number AS01 BK 4521
+[25 Mar 18:00] Staff 1: Delivery ho gayi sir, Sub Arvind ne receive kar liya","Single parent task: Atta delivery to Sata Bty Bn. Full lifecycle: supplier delivery → QC pass → dispatch → delivery confirmed. All milestone nodes completed. Implicit tasks: delivery challan, gate pass, GRN, invoice, payment follow-up (30d).","Agent must track full delivery lifecycle in a single thread — supplier delivery, QC, dispatch, and client delivery confirmation — and generate implicit milestone tasks.","PASS: All lifecycle nodes tracked (supplier delivery, QC, dispatch, delivery confirmed). Implicit tasks generated (challan, invoice, payment follow-up). FAIL: Missing lifecycle stages or no implicit tasks.","Synthetic baseline for R1-D. Single thread, straightforward lifecycle."
+R5-L3-01,Ambiguity Detection,L3,S2,fully-synthetic,Conflicting delivery signals across three threads with ambiguous entity,"=== THREAD 1: Client Group (Ashish + Staff 1 + Client) ===
+[24 Mar 09:00] Client: Sir maal kab tak milega?
+[24 Mar 09:15] Ashish: Kal tak ho jayega sir
+[24 Mar 15:00] Client: Agency ne bola abhi tak nahi aaya
+
+=== THREAD 2: Supplier Group (Ashish + Staff 1 + Supplier) ===
+[24 Mar 10:00] Staff 1: Kapoor ji maal ready hai?
+[24 Mar 10:15] Supplier: Haan bhai dispatch ho gaya subah
+[24 Mar 16:00] Supplier: Aapka driver aaya nahi abhi tak
+
+=== THREAD 3: All Staff Group ===
+[24 Mar 11:00] Staff 1: Maal ready hai godown mein
+[24 Mar 14:00] Haque Babu: Sir kiska maal hai ye? Do order pending hain
+[24 Mar 14:30] Ashish: Confirm karo Kapoor wala hai ya Sharma wala
+[24 Mar 16:30] Staff 1: Sir driver bol raha hai traffic mein fasa hai","Multiple ambiguity flags: (1) 'Agency' in Thread 1 — vague entity, which client? (2) Conflicting dispatch status — supplier says dispatched but driver hasn't arrived. (3) 'Maal ready hai godown mein' — unclear which order (Kapoor or Sharma). (4) Two pending orders — entity ambiguity on which order the goods belong to.","Three threads with conflicting signals: supplier says dispatched, staff says ready at godown, client says not received. Plus entity ambiguity — 'Agency' is vague, and two pending orders create confusion about which maal is being discussed.","PASS: At least 3 distinct ambiguity flags raised (entity, status conflict, order attribution). Next steps recommend resolving ambiguity before action. FAIL: Agent silently resolves ambiguities or misses the dispatch status conflict.",Hardest ambiguity scenario — cross-thread conflicting signals plus entity ambiguity.
+R2a-L2-01,Cadence - Delivery Subtasks,L2,S2,fully-synthetic,Delivery completed across two threads but invoice and payment follow-up missing,"=== THREAD 1: Client Group (Ashish + Staff 1 + Client) ===
+[20 Mar 09:00] Client: Sir items mil gaye, thank you
+[20 Mar 09:15] Ashish: Great sir, glad to hear
+[20 Mar 09:16] Ashish: @Staff 1 invoice raise karo aaj hi
+[24 Mar 10:00] Client: Sir invoice abhi tak nahi aaya
+
+=== THREAD 2: All Staff Group ===
+[20 Mar 10:00] Staff 1: Client ne confirm kar diya delivery ho gayi
+[20 Mar 10:15] Ashish: Toh invoice banao aur challan ka copy bhi attach karo
+[20 Mar 15:00] Mousumi Banik: Sir challan number kya hai?
+[20 Mar 15:30] Staff 1: 4521
+[24 Mar 11:00] Ashish: Invoice raise hua ya nahi? Client bol raha hai nahi mila","Parent task: Delivery to client — completed but invoice pending. Implicit tasks: (1) Invoice raising — overdue (4 days since delivery, client has complained). (2) Delivery challan — challan 4521 referenced but formal document not confirmed sent to client. (3) Payment follow-up — cannot start until invoice raised. (4) GST reconciliation for this invoice.","Delivery is confirmed across two threads but the post-delivery cadence tasks (invoice, challan, payment follow-up) are not completed. Agent must detect these as overdue implicit tasks, not just note them.","PASS: Invoice flagged as overdue with urgency (client complained). Challan, payment follow-up, and GST reconciliation surfaced as implicit tasks. FAIL: Only delivery marked complete with no post-delivery tasks.",Tests cadence detection across two threads — delivery confirmed in both but administrative follow-through is missing.

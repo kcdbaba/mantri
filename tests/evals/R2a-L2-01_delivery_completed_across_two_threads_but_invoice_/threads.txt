@@ -1,0 +1,12 @@
+=== THREAD 1: Client Group (Ashish + Staff 1 + Client) ===
+[20 Mar 09:00] Client: Sir items mil gaye, thank you
+[20 Mar 09:15] Ashish: Great sir, glad to hear
+[20 Mar 09:16] Ashish: @Staff 1 invoice raise karo aaj hi
+[24 Mar 10:00] Client: Sir invoice abhi tak nahi aaya
+
+=== THREAD 2: All Staff Group ===
+[20 Mar 10:00] Staff 1: Client ne confirm kar diya delivery ho gayi
+[20 Mar 10:15] Ashish: Toh invoice banao aur challan ka copy bhi attach karo
+[20 Mar 15:00] Mousumi Banik: Sir challan number kya hai?
+[20 Mar 15:30] Staff 1: 4521
+[24 Mar 11:00] Ashish: Invoice raise hua ya nahi? Client bol raha hai nahi mila

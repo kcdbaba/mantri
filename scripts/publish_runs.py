@@ -137,6 +137,87 @@ def _inc_section(runs: list[dict]) -> str:
     return f"<p class='summary'>{summary}</p>{history}{matrix}"
 
 
+# ── Risk framework legend & tooltips ──────────────────────────────────────────
+
+RISK_CATEGORIES = {
+    "R1-D":  ("Delivery Completion",            "End-to-end delivery tracking across full order lifecycle"),
+    "R2":    ("Cadence & Proactive Tasks",      "Detection of implicit/cadence tasks not mentioned in messages"),
+    "R2a":   ("Delivery Subtasks",              "Invoice, challan, sign-off after delivery"),
+    "R2b":   ("Periodic Cadence",               "End-of-month reconciliation, stock checks"),
+    "R2c":   ("Supplier Dates",                 "Conservative milestone setting from optimistic supplier dates"),
+    "R2d":   ("Deadline Reminders",             "Pre-delivery enquiry timing"),
+    "R2e":   ("Large Order Flags",              "Invoice financing, working capital flags"),
+    "R2f":   ("Proactive Outreach",             "Client follow-up, post-delivery feedback"),
+    "R3-C":  ("Order Conflation",               "Separating distinct orders that share entities or threads"),
+    "R4-A":  ("Supplier Entity Resolution",     "Resolving supplier name variants to single entity"),
+    "R4-B":  ("Army Client Entity Resolution",  "Resolving Army unit/officer references to single client"),
+    "R5":    ("Ambiguity Detection",            "Flagging uncertain information for human review"),
+    "R6":    ("Post-Delivery QC",               "Handling delivery shortfalls and quality rejections"),
+}
+
+DIFFICULTY_LEVELS = {
+    "L1": ("Single Thread",   "All information in one WhatsApp thread"),
+    "L2": ("Two Threads",     "Information split across two threads"),
+    "L3": ("Three+ Threads",  "Information split across three or more threads"),
+}
+
+# Group order for collapsible rows
+FRAMEWORK_GROUP_ORDER = ["R2", "R3-C", "R4-A", "R4-B", "R5"]
+
+
+def _case_tooltip(case_id: str) -> str:
+    """Build tooltip text from the case_id prefix (e.g. R2a-L1-01 -> R2a description)."""
+    # Try longest prefix match first (e.g. R2a before R2)
+    parts = []
+    # Extract sub-category: everything before -L
+    sub = case_id.split("-L")[0] if "-L" in case_id else case_id
+    if sub in RISK_CATEGORIES:
+        name, desc = RISK_CATEGORIES[sub]
+        parts.append(f"{name}: {desc}")
+    # Also add level info
+    for lvl_code, (lvl_name, lvl_desc) in DIFFICULTY_LEVELS.items():
+        if f"-{lvl_code}-" in case_id or case_id.endswith(f"-{lvl_code}"):
+            parts.append(f"{lvl_code} = {lvl_name}: {lvl_desc}")
+            break
+    return " | ".join(parts) if parts else case_id
+
+
+def _legend_section() -> str:
+    """Risk Framework Legend with nomenclature, risk categories, and difficulty levels."""
+    # Risk categories table
+    cat_rows = []
+    for code, (name, desc) in RISK_CATEGORIES.items():
+        cat_rows.append(f"<tr><td class='case-id'>{code}</td><td>{name}</td><td>{desc}</td></tr>")
+
+    # Difficulty levels table
+    lvl_rows = []
+    for code, (name, desc) in DIFFICULTY_LEVELS.items():
+        lvl_rows.append(f"<tr><td class='case-id'>{code}</td><td>{name}</td><td>{desc}</td></tr>")
+
+    return (
+        "<div class='legend'>"
+        "<details>"
+        "<summary>Risk Framework Legend</summary>"
+        "<p class='nomenclature'>"
+        "Nomenclature: <code>R{category}-{subcategory}-L{level}-{sequence}</code><br>"
+        "R = Risk category (R1&ndash;R6) &nbsp;&middot;&nbsp; "
+        "L = Difficulty level (L1 = single thread, L2 = two threads, L3 = three+ threads)"
+        "</p>"
+        "<h3>Risk Categories</h3>"
+        "<table>"
+        "<thead><tr><th>Code</th><th>Name</th><th>Description</th></tr></thead>"
+        "<tbody>" + "".join(cat_rows) + "</tbody>"
+        "</table>"
+        "<h3>Difficulty Levels</h3>"
+        "<table>"
+        "<thead><tr><th>Level</th><th>Name</th><th>Description</th></tr></thead>"
+        "<tbody>" + "".join(lvl_rows) + "</tbody>"
+        "</table>"
+        "</details>"
+        "</div>"
+    )
+
+
 # ── Eval section ───────────────────────────────────────────────────────────────
 
 def _eval_section(runs: list[dict], suite: str) -> str:
@@ -153,35 +234,101 @@ def _eval_section(runs: list[dict], suite: str) -> str:
         f"{passed}/{total} PASS &nbsp;·&nbsp; avg score: {avg}</p>"
     )
 
-    # Per-case detail from latest run
     results = latest.get("results", [])
-    if results:
-        case_rows = []
-        for c in results:
+    if not results:
+        return summary
+
+    if suite == "synth":
+        return summary + _eval_grouped_table(results, suite)
+    else:
+        return summary + _eval_flat_table(results)
+
+
+def _eval_flat_table(results: list[dict]) -> str:
+    """Original flat eval table (used for real cases)."""
+    case_rows = []
+    for c in results:
+        v = c.get("verdict", "?")
+        cls = "pass" if v == "PASS" else ("partial" if v == "PARTIAL" else "fail")
+        score = c.get("overall_score", "—")
+        fw = c.get("framework", "")
+        lvl = c.get("level", "")
+        tooltip = _case_tooltip(c.get("case_id", ""))
+        case_rows.append(
+            f"<tr>"
+            f"<td class='case-id' title='{tooltip}'>{c.get('case_id', '?')}</td>"
+            f"<td>{fw}</td><td>{lvl}</td>"
+            f"<td class='{cls}'>{v}</td>"
+            f"<td>{score}</td>"
+            f"</tr>"
+        )
+    return (
+        "<table>"
+        "<thead><tr><th>Case</th><th>Framework</th><th>Level</th>"
+        "<th>Verdict</th><th>Score</th></tr></thead>"
+        "<tbody>" + "".join(case_rows) + "</tbody>"
+        "</table>"
+    )
+
+
+def _eval_grouped_table(results: list[dict], suite: str) -> str:
+    """Grouped eval table with collapsible framework groups (for synthetic)."""
+    from collections import OrderedDict
+    import html as html_mod
+
+    # Group results by framework
+    groups: OrderedDict[str, list[dict]] = OrderedDict()
+    for fw in FRAMEWORK_GROUP_ORDER:
+        members = [c for c in results if c.get("framework") == fw]
+        if members:
+            groups[fw] = members
+    # Catch any frameworks not in the predefined order
+    seen = set(FRAMEWORK_GROUP_ORDER)
+    for c in results:
+        fw = c.get("framework", "other")
+        if fw not in seen:
+            seen.add(fw)
+            groups.setdefault(fw, [])
+            groups[fw].append(c)
+
+    table_id = f"eval-{suite}"
+    rows = []
+    for fw, members in groups.items():
+        scores = [c.get("overall_score", 0) for c in members if isinstance(c.get("overall_score"), (int, float))]
+        avg_score = f"{sum(scores) / len(scores):.1f}" if scores else "—"
+        pass_count = sum(1 for c in members if c.get("verdict") == "PASS")
+        fw_name = RISK_CATEGORIES.get(fw, (fw, ""))[0]
+
+        rows.append(
+            f"<tr class='group-row' data-group='{table_id}-{fw}' onclick='toggleGroup(this)'>"
+            f"<td><span class='toggle'>&#9654;</span>{fw}</td>"
+            f"<td>{fw_name}</td><td></td>"
+            f"<td>{pass_count}/{len(members)}</td>"
+            f"<td>{avg_score}</td>"
+            f"</tr>"
+        )
+        for c in members:
             v = c.get("verdict", "?")
-            cls = "pass" if v == "PASS" else "fail"
+            cls = "pass" if v == "PASS" else ("partial" if v == "PARTIAL" else "fail")
             score = c.get("overall_score", "—")
-            fw = c.get("framework", "")
             lvl = c.get("level", "")
-            case_rows.append(
-                f"<tr>"
-                f"<td class='case-id'>{c.get('case_id', '?')}</td>"
-                f"<td>{fw}</td><td>{lvl}</td>"
+            tooltip = html_mod.escape(_case_tooltip(c.get("case_id", "")), quote=True)
+            rows.append(
+                f"<tr class='group-child' data-group='{table_id}-{fw}'>"
+                f"<td class='case-id' title='{tooltip}'>&nbsp;&nbsp;{c.get('case_id', '?')}</td>"
+                f"<td></td><td>{lvl}</td>"
                 f"<td class='{cls}'>{v}</td>"
                 f"<td>{score}</td>"
                 f"</tr>"
             )
-        case_table = (
-            "<table>"
-            "<thead><tr><th>Case</th><th>Framework</th><th>Level</th>"
-            "<th>Verdict</th><th>Score</th></tr></thead>"
-            "<tbody>" + "".join(case_rows) + "</tbody>"
-            "</table>"
-        )
-    else:
-        case_table = ""
 
-    return summary + case_table
+    return (
+        "<table>"
+        "<thead><tr><th>Case</th><th>Framework</th><th>Level</th>"
+        "<th>Verdict</th><th>Score</th></tr></thead>"
+        "<tbody>" + "".join(rows) + "</tbody>"
+        "</table>"
+    )
 
 
 # ── Coverage section ──────────────────────────────────────────────────────────
@@ -409,6 +556,25 @@ tr:hover td { background: #1a2030; }
 table.matrix td, table.matrix th { padding: 0.3rem 0.6rem; text-align: center; }
 table.matrix td.case-id { text-align: left; }
 nav { margin-bottom: 2rem; font-size: 0.82rem; }
+.dim { font-size: 0.85rem; color: #4a5568; }
+/* Collapsible group rows */
+.group-row { cursor: pointer; background: #1a2030; }
+.group-row:hover td { background: #242c3a; }
+.group-row td { font-weight: 600; color: #a0aec0; }
+.group-row .toggle { display: inline-block; width: 1em; font-size: 0.75rem;
+                     margin-right: 0.3rem; transition: transform 0.15s; }
+.group-row.open .toggle { transform: rotate(90deg); }
+.group-child { display: none; }
+.group-child.visible { display: table-row; }
+/* Legend section */
+.legend { margin-bottom: 1.5rem; }
+.legend details { margin-bottom: 0.75rem; }
+.legend summary { cursor: pointer; font-size: 0.85rem; color: #a0aec0;
+                  font-weight: 600; margin-bottom: 0.4rem; }
+.legend .nomenclature { font-size: 0.82rem; color: #718096;
+                        margin: 0.5rem 0 1rem 0; line-height: 1.5; }
+.legend code { background: #2d3748; padding: 0.1rem 0.35rem; border-radius: 3px;
+               font-size: 0.8rem; color: #e2e8f0; }
 """
 
 
@@ -458,12 +624,25 @@ def generate() -> str:
   <p class="summary"><a href="/developer/integration/">Full detail view →</a></p>
   {_integration_section(int_runs)}
 
+  {_legend_section()}
+
   <h2 id="synth">Eval — Synthetic Cases</h2>
   {_eval_section(synth_runs, "synth")}
 
   <h2 id="real">Eval — Real Cases</h2>
   {_eval_section(real_runs, "real")}
 
+  <script>
+  function toggleGroup(row) {{
+    var group = row.getAttribute('data-group');
+    var open = row.classList.toggle('open');
+    var children = document.querySelectorAll('tr.group-child[data-group="' + group + '"]');
+    for (var i = 0; i < children.length; i++) {{
+      if (open) {{ children[i].classList.add('visible'); }}
+      else {{ children[i].classList.remove('visible'); }}
+    }}
+  }}
+  </script>
 </body>
 </html>"""
 

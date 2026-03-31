@@ -1,0 +1,9 @@
+=== THREAD 1: Supplier Group (Ashish + Staff 1 + Supplier) ===
+[24 Mar 09:00] Staff 1: Sharma ji maal kab tak aayega?
+[24 Mar 09:15] Supplier: Kal subah tak aa jayega, 50 bags atta
+[24 Mar 10:00] Staff 1: Ok sir confirmed
+[25 Mar 09:30] Staff 1: Maal aa gaya sir, sab check kar liya theek hai
+[25 Mar 10:00] Ashish: Good, dispatch karo Sata Bty Bn ko aaj hi
+[25 Mar 11:00] Staff 1: Vehicle ready hai, challan bana rahe hain
+[25 Mar 14:00] Staff 1: Dispatch ho gaya sir, vehicle number AS01 BK 4521
+[25 Mar 18:00] Staff 1: Delivery ho gayi sir, Sub Arvind ne receive kar liya

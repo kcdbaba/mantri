@@ -1,0 +1,15 @@
+=== THREAD 1: Client Group (Ashish + Staff 1 + Client) ===
+[24 Mar 09:00] Client: Sir maal kab tak milega?
+[24 Mar 09:15] Ashish: Kal tak ho jayega sir
+[24 Mar 15:00] Client: Agency ne bola abhi tak nahi aaya
+
+=== THREAD 2: Supplier Group (Ashish + Staff 1 + Supplier) ===
+[24 Mar 10:00] Staff 1: Kapoor ji maal ready hai?
+[24 Mar 10:15] Supplier: Haan bhai dispatch ho gaya subah
+[24 Mar 16:00] Supplier: Aapka driver aaya nahi abhi tak
+
+=== THREAD 3: All Staff Group ===
+[24 Mar 11:00] Staff 1: Maal ready hai godown mein
+[24 Mar 14:00] Haque Babu: Sir kiska maal hai ye? Do order pending hain
+[24 Mar 14:30] Ashish: Confirm karo Kapoor wala hai ya Sharma wala
+[24 Mar 16:30] Staff 1: Sir driver bol raha hai traffic mein fasa hai

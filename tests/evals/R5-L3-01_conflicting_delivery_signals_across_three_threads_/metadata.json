@@ -1,0 +1,18 @@
+{
+  "id": "R5-L3-01",
+  "name": "conflicting_delivery_signals_across_three_threads_",
+  "framework": "R5",
+  "level": "L3",
+  "sprint": "S2",
+  "data_source": "fully-synthetic",
+  "description": "Conflicting delivery signals across three threads with ambiguous entity",
+  "chat_inputs": null,
+  "completeness": {
+    "complete": true,
+    "missing": []
+  },
+  "expected_output": "Multiple ambiguity flags: (1) 'Agency' in Thread 1 \u2014 vague entity, which client? (2) Conflicting dispatch status \u2014 supplier says dispatched but driver hasn't arrived. (3) 'Maal ready hai godown mein' \u2014 unclear which order (Kapoor or Sharma). (4) Two pending orders \u2014 entity ambiguity on which order the goods belong to.",
+  "pass_criteria": "PASS: At least 3 distinct ambiguity flags raised (entity, status conflict, order attribution). Next steps recommend resolving ambiguity before action. FAIL: Agent silently resolves ambiguities or misses the dispatch status conflict.",
+  "challenge": "Three threads with conflicting signals: supplier says dispatched, staff says ready at godown, client says not received. Plus entity ambiguity \u2014 'Agency' is vague, and two pending orders create confusion about which maal is being discussed.",
+  "notes": "Hardest ambiguity scenario \u2014 cross-thread conflicting signals plus entity ambiguity."
+}

@@ -1,0 +1,18 @@
+{
+  "id": "R1-D-L1-01",
+  "name": "singlethread_delivery_completion_with_supplier_qc_",
+  "framework": "R1-D",
+  "level": "L1",
+  "sprint": "S2",
+  "data_source": "fully-synthetic",
+  "description": "Single-thread delivery completion with supplier QC pass and dispatch",
+  "chat_inputs": null,
+  "completeness": {
+    "complete": true,
+    "missing": []
+  },
+  "expected_output": "Single parent task: Atta delivery to Sata Bty Bn. Full lifecycle: supplier delivery \u2192 QC pass \u2192 dispatch \u2192 delivery confirmed. All milestone nodes completed. Implicit tasks: delivery challan, gate pass, GRN, invoice, payment follow-up (30d).",
+  "pass_criteria": "PASS: All lifecycle nodes tracked (supplier delivery, QC, dispatch, delivery confirmed). Implicit tasks generated (challan, invoice, payment follow-up). FAIL: Missing lifecycle stages or no implicit tasks.",
+  "challenge": "Agent must track full delivery lifecycle in a single thread \u2014 supplier delivery, QC, dispatch, and client delivery confirmation \u2014 and generate implicit milestone tasks.",
+  "notes": "Synthetic baseline for R1-D. Single thread, straightforward lifecycle."
+}

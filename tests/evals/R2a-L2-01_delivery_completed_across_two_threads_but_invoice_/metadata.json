@@ -1,0 +1,18 @@
+{
+  "id": "R2a-L2-01",
+  "name": "delivery_completed_across_two_threads_but_invoice_",
+  "framework": "R2a",
+  "level": "L2",
+  "sprint": "S2",
+  "data_source": "fully-synthetic",
+  "description": "Delivery completed across two threads but invoice and payment follow-up missing",
+  "chat_inputs": null,
+  "completeness": {
+    "complete": true,
+    "missing": []
+  },
+  "expected_output": "Parent task: Delivery to client \u2014 completed but invoice pending. Implicit tasks: (1) Invoice raising \u2014 overdue (4 days since delivery, client has complained). (2) Delivery challan \u2014 challan 4521 referenced but formal document not confirmed sent to client. (3) Payment follow-up \u2014 cannot start until invoice raised. (4) GST reconciliation for this invoice.",
+  "pass_criteria": "PASS: Invoice flagged as overdue with urgency (client complained). Challan, payment follow-up, and GST reconciliation surfaced as implicit tasks. FAIL: Only delivery marked complete with no post-delivery tasks.",
+  "challenge": "Delivery is confirmed across two threads but the post-delivery cadence tasks (invoice, challan, payment follow-up) are not completed. Agent must detect these as overdue implicit tasks, not just note them.",
+  "notes": "Tests cadence detection across two threads \u2014 delivery confirmed in both but administrative follow-through is missing."
+}
