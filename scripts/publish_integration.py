@@ -40,20 +40,36 @@ def _load_case_results() -> list[dict]:
                 meta = json.loads(meta_candidates[0].read_text(encoding="utf-8"))
                 data["_meta"] = meta
 
-            # Fix 5: Load ambiguity bodies from replay_result.db if available
+            # Load from replay_result.db if available
             db_path = d / "replay_result.db"
             if db_path.exists():
                 try:
                     conn = sqlite3.connect(str(db_path))
                     conn.row_factory = sqlite3.Row
+
+                    # Fix 5: Load ambiguity bodies
                     rows = conn.execute(
                         "SELECT description, body FROM ambiguity_queue ORDER BY created_at"
                     ).fetchall()
                     body_map = {row["description"]: row["body"] for row in rows}
-                    conn.close()
-                    # Attach body to each flag in the state
                     for flag in data.get("state", {}).get("ambiguity_flags", []):
                         flag["body"] = body_map.get(flag.get("description"), "")
+
+                    # Model usage and cost
+                    usage_rows = conn.execute(
+                        "SELECT model, COUNT(*) as calls, SUM(cost_usd) as cost "
+                        "FROM usage_log GROUP BY model"
+                    ).fetchall()
+                    data["_model_usage"] = [
+                        {"model": r["model"], "calls": r["calls"], "cost": r["cost"] or 0}
+                        for r in usage_rows
+                    ]
+                    total_cost = conn.execute(
+                        "SELECT SUM(cost_usd) FROM usage_log"
+                    ).fetchone()[0] or 0
+                    data["_total_cost"] = total_cost
+
+                    conn.close()
                 except Exception:
                     pass
 
@@ -122,7 +138,7 @@ def _paginated_table(headers: list[str], rows_html: list[str], table_id: str) ->
     global _table_counter
     _table_counter += 1
     tid = table_id or f"tbl_{_table_counter}"
-    page_size = 10
+    page_size = 5
     needs_pagination = len(rows_html) > page_size
 
     tagged_rows = []
@@ -212,7 +228,7 @@ def _ambiguity_table(flags: list[dict], table_id: str = "") -> str:
 
     _table_counter += 1
     tid = table_id or f"amb_{_table_counter}"
-    page_size = 10
+    page_size = 5
     needs_pagination = len(flags) > page_size
 
     # Check if any flag has a body (from Fix 5)
@@ -555,12 +571,66 @@ def _case_section(case: dict) -> str:
     )
 
 
-def _run_history(runs: list[dict]) -> str:
+MODEL_ABBREV = {
+    "claude-sonnet-4-6": "Sonnet",
+    "gemini-2.5-flash": "Flash",
+    "claude-haiku-4-5-20251001": "Haiku",
+}
+
+
+def _abbreviate_model(model: str) -> str:
+    return MODEL_ABBREV.get(model, model)
+
+
+def _fmt_model_usage(usage: list[dict]) -> str:
+    if not usage:
+        return "\u2014"
+    parts = [f"{_abbreviate_model(u['model'])} \u00d7{u['calls']}" for u in usage]
+    return ", ".join(parts)
+
+
+def _fmt_per_group(per_group: dict) -> str:
+    """Format per-group routing data with color-coded routed/unrouted counts."""
+    if not per_group:
+        return "\u2014"
+    parts = []
+    for group, counts in per_group.items():
+        routed = counts.get("routed", 0)
+        unrouted = counts.get("unrouted", 0)
+        r_span = f'<span class="pg-routed">{routed}</span>'
+        total = routed + unrouted
+        if unrouted:
+            u_span = f'<span class="pg-unrouted">{unrouted}</span>'
+            parts.append(f"{group}: {r_span}/{total} ({u_span} unrouted)")
+        else:
+            parts.append(f"{group}: {r_span}/{total}")
+    return ", ".join(parts)
+
+
+def _fmt_per_group_plain(per_group: dict) -> str:
+    """Plain text version for data-value attribute."""
+    if not per_group:
+        return "\u2014"
+    parts = []
+    for group, counts in per_group.items():
+        routed = counts.get("routed", 0)
+        unrouted = counts.get("unrouted", 0)
+        parts.append(f"{group}: {routed}/{routed + unrouted}")
+    return ", ".join(parts)
+
+
+def _run_history(runs: list[dict], cases: list[dict]) -> str:
     if not runs:
         return ""
 
     dry = [r for r in runs if r.get("test_type") == "dry"]
     live = [r for r in runs if r.get("test_type") == "live"]
+
+    # Build case data lookup for model/cost info
+    case_data_map = {}
+    for c in cases:
+        cid = c.get("_meta", {}).get("id", c.get("_case_dir", ""))
+        case_data_map[cid] = c
 
     sections = []
 
@@ -573,23 +643,43 @@ def _run_history(runs: list[dict]) -> str:
         rows = []
         for case_id in sorted(dry_by_case.keys()):
             case_runs = dry_by_case[case_id]
+            # Find the latest full run for group row data
+            full_runs = [r for r in case_runs if not r.get("max_messages")]
+            latest = full_runs[-1] if full_runs else case_runs[-1]
             group_key = f"dry_{case_id}"
+            n_runs = len(case_runs)
+            rate = f"{latest.get('routing_rate', 0):.0%}"
+            per_group_html = _fmt_per_group(latest.get("per_group", {}))
+            per_group_plain = _fmt_per_group_plain(latest.get("per_group", {}))
+
             rows.append(
                 f"<tr class='group-row' data-group='{group_key}' onclick='toggleGroup(this)'>"
-                f"<td><span class='toggle'>&#9654;</span> {case_id}</td>"
-                f"<td colspan='3'>{len(case_runs)} run(s)</td></tr>"
+                f"<td><span class='toggle'>&#9654;</span> {case_id} ({n_runs} runs)</td>"
+                f"<td data-value='{latest.get('total', 0)}' data-empty=''>{latest.get('total', 0)}</td>"
+                f"<td data-value='{rate}' data-empty=''>{rate}</td>"
+                f"<td data-value='{per_group_plain}' data-empty=''>{per_group_html}</td></tr>"
             )
             for r in case_runs:
+                r_rate = f"{r.get('routing_rate', 0):.0%}"
+                r_pg = _fmt_per_group(r.get("per_group", {}))
                 rows.append(
                     f"<tr class='group-child' data-group='{group_key}'>"
                     f"<td class='dim'>{_fmt_dt(r.get('run_at',''))}</td>"
                     f"<td>{r.get('total',0)}</td>"
-                    f"<td>{r.get('routed',0)}/{r.get('total',0)}</td></tr>"
+                    f"<td>{r_rate}</td>"
+                    f"<td>{r_pg}</td></tr>"
                 )
+
+        per_group_tooltip = (
+            'title="Layer 2a: Direct group JID → task mapping (confidence 0.90). '
+            'Layer 2b: Entity keyword matching via rapidfuzz (confidence 0.75). '
+            'Unrouted: no matching group or entity found."'
+        )
         sections.append(
             "<h3>Dry Replay History</h3>"
             "<table class='detail'><thead><tr>"
-            "<th>Case / Run</th><th>Messages</th><th>Routed</th>"
+            "<th>Case / Run</th><th>Messages</th><th>Route Rate</th>"
+            f"<th {per_group_tooltip}>Per Group</th>"
             "</tr></thead><tbody>" + "".join(rows) + "</tbody></table>"
         )
 
@@ -602,29 +692,76 @@ def _run_history(runs: list[dict]) -> str:
         rows = []
         for case_id in sorted(live_by_case.keys()):
             case_runs = live_by_case[case_id]
+            # Find the latest full run for group row data
+            full_runs = [
+                r for r in case_runs
+                if not r.get("skip_linkage") and not r.get("max_messages")
+            ]
+            latest = full_runs[-1] if full_runs else case_runs[-1]
             group_key = f"live_{case_id}"
+            n_runs = len(case_runs)
+
+            # Compute node/link totals from latest
+            node_summary = latest.get("node_summary", {})
+            total_nodes = sum(v.get("total", 0) for v in node_summary.values())
+            link_count = latest.get("fulfillment_link_count", 0)
+
+            # Mode for latest
+            latest_mode = "update only" if latest.get("skip_linkage") else "full"
+            if latest.get("max_messages"):
+                latest_mode += f" (first {latest['max_messages']})"
+
+            # Model/cost from case data
+            cdata = case_data_map.get(case_id, {})
+            model_usage = cdata.get("_model_usage", [])
+            total_cost = cdata.get("_total_cost", 0)
+            models_html = _fmt_model_usage(model_usage)
+            cost_html = f"${total_cost:.2f}" if total_cost else "\u2014"
+
+            routed_val = f"{latest.get('messages_routed',0)}/{latest.get('messages_total',0)}"
             rows.append(
                 f"<tr class='group-row' data-group='{group_key}' onclick='toggleGroup(this)'>"
-                f"<td><span class='toggle'>&#9654;</span> {case_id}</td>"
-                f"<td colspan='5'>{len(case_runs)} run(s)</td></tr>"
+                f"<td><span class='toggle'>&#9654;</span> {case_id} ({n_runs} runs)</td>"
+                f"<td data-value='{latest_mode}' data-empty=''>{latest_mode}</td>"
+                f"<td data-value='{routed_val}' data-empty=''>{routed_val}</td>"
+                f"<td data-value='{total_nodes}' data-empty=''>{total_nodes}</td>"
+                f"<td data-value='{link_count}' data-empty=''>{link_count}</td>"
+                f"<td data-value='{latest.get('ambiguity_flag_count',0)}' data-empty=''>"
+                f"{latest.get('ambiguity_flag_count',0)}</td>"
+                f"<td data-value='{latest.get('dead_letter_count',0)}' data-empty=''>"
+                f"{latest.get('dead_letter_count',0)}</td>"
+                f"<td data-value='{latest.get('error_count',0)}' data-empty=''>"
+                f"{latest.get('error_count',0)}</td>"
+                f"<td data-value='{models_html}' data-empty=''>{models_html}</td>"
+                f"<td data-value='{cost_html}' data-empty=''>{cost_html}</td></tr>"
             )
             for r in case_runs:
                 mode = "update only" if r.get("skip_linkage") else "full"
                 if r.get("max_messages"):
                     mode += f" (first {r['max_messages']})"
+                r_node_summary = r.get("node_summary", {})
+                r_total_nodes = sum(v.get("total", 0) for v in r_node_summary.values())
+                r_link_count = r.get("fulfillment_link_count", 0)
                 rows.append(
                     f"<tr class='group-child' data-group='{group_key}'>"
                     f"<td class='dim'>{_fmt_dt(r.get('run_at',''))}</td>"
                     f"<td>{mode}</td>"
                     f"<td>{r.get('messages_routed',0)}/{r.get('messages_total',0)}</td>"
+                    f"<td>{r_total_nodes}</td>"
+                    f"<td>{r_link_count}</td>"
+                    f"<td>{r.get('ambiguity_flag_count',0)}</td>"
+                    f"<td>{r.get('dead_letter_count',0)}</td>"
                     f"<td>{r.get('error_count',0)}</td>"
-                    f"<td>{r.get('ambiguity_flag_count',0)}</td></tr>"
+                    f"<td>\u2014</td>"
+                    f"<td>\u2014</td></tr>"
                 )
         sections.append(
             "<h3>Live Replay History</h3>"
             "<table class='detail'><thead><tr>"
             "<th>Case / Run</th><th>Mode</th><th>Routed</th>"
-            "<th>Errors</th><th>Ambiguity</th>"
+            "<th>Nodes</th><th>Links</th><th>Ambiguity</th>"
+            "<th>Dead Letters</th><th>Errors</th>"
+            "<th>Models</th><th>Cost</th>"
             "</tr></thead><tbody>" + "".join(rows) + "</tbody></table>"
             + _live_replay_chart(live_by_case)
         )
@@ -677,6 +814,8 @@ table.detail td { padding: 0.35rem 0.6rem; border-bottom: 1px solid #1a2030;
 table.detail tr:hover td { background: #1a2030; }
 td.desc { max-width: 400px; font-size: 0.78rem; line-height: 1.4; }
 
+.pg-routed  { color: #68d391; }
+.pg-unrouted { color: #718096; }
 .pass     { color: #48bb78; }
 .active   { color: #4a90d9; }
 .fail     { color: #fc8181; }
@@ -750,6 +889,19 @@ function toggleGroup(row) {
     var children = document.querySelectorAll('tr.group-child[data-group="' + group + '"]');
     for (var i = 0; i < children.length; i++) {
         children[i].classList.toggle('visible');
+    }
+    // Swap data cells between showing data and empty
+    var isOpen = row.classList.contains('open');
+    var tds = row.querySelectorAll('td[data-value]');
+    for (var j = 0; j < tds.length; j++) {
+        if (!tds[j].hasAttribute('data-html')) {
+            tds[j].setAttribute('data-html', tds[j].innerHTML);
+        }
+        if (isOpen) {
+            tds[j].innerHTML = tds[j].getAttribute('data-empty');
+        } else {
+            tds[j].innerHTML = tds[j].getAttribute('data-html');
+        }
     }
 }
 
@@ -827,7 +979,7 @@ def generate() -> str:
   </nav>
 
   <div id="history">
-  {_run_history(runs)}
+  {_run_history(runs, cases)}
   </div>
 
   <h2 id="results">Latest Replay Results</h2>
