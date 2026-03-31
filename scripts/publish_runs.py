@@ -469,76 +469,118 @@ def _unit_section(runs: list[dict]) -> str:
 # ── Integration section ───────────────────────────────────────────────────────
 
 def _integration_section(runs: list[dict]) -> str:
+    import html as html_mod
+    from collections import OrderedDict
+
     if not runs:
         return "<p class='empty'>No integration test runs recorded yet.</p>"
 
-    # Split into dry and live
     dry_runs = [r for r in runs if r.get("test_type") == "dry"]
     live_runs = [r for r in runs if r.get("test_type") == "live"]
 
     sections = []
 
-    # Dry replay table
+    # --- Dry replay: grouped by case_id ---
     if dry_runs:
-        rows = []
+        groups: OrderedDict[str, list[dict]] = OrderedDict()
         for r in dry_runs:
-            rate = r.get("routing_rate", 0)
-            rate_pct = f"{rate:.1%}"
-            per_group = r.get("per_group", {})
-            group_detail = " · ".join(
-                f"{g}: {v.get('routed', 0)}/{v.get('routed', 0) + v.get('unrouted', 0)}"
-                for g, v in sorted(per_group.items())
-            )
-            int_tooltip = _case_tooltip(r.get('case_id', ''))
+            groups.setdefault(r.get("case_id", "?"), []).append(r)
+
+        rows = []
+        for case_id, members in groups.items():
+            tooltip = html_mod.escape(_case_tooltip(case_id), quote=True)
+            latest = members[0]
+            rate = latest.get("routing_rate", 0)
+
             rows.append(
-                f"<tr>"
-                f"<td>{_fmt_dt(r.get('run_at', ''))}</td>"
-                f"<td class='case-id' title='{int_tooltip}'>{r.get('case_id', '?')}</td>"
-                f"<td>{r.get('total', 0)}</td>"
-                f"<td>{rate_pct}</td>"
-                f"<td class='case-id'>{group_detail}</td>"
+                f"<tr class='group-row' data-group='dry-{case_id}' onclick='toggleGroup(this)'>"
+                f"<td><span class='toggle'>&#9654;</span></td>"
+                f"<td class='case-id' title='{tooltip}'>{case_id}</td>"
+                f"<td>{len(members)} runs</td>"
+                f"<td>{rate:.1%}</td>"
+                f"<td></td>"
                 f"</tr>"
             )
+            for r in members:
+                r_rate = r.get("routing_rate", 0)
+                per_group = r.get("per_group", {})
+                group_detail = " · ".join(
+                    f"{g}: {v.get('routed', 0)}/{v.get('routed', 0) + v.get('unrouted', 0)}"
+                    for g, v in sorted(per_group.items())
+                )
+                rows.append(
+                    f"<tr class='group-child' data-group='dry-{case_id}'>"
+                    f"<td></td>"
+                    f"<td>{_fmt_dt(r.get('run_at', ''))}</td>"
+                    f"<td>{r.get('total', 0)} msgs</td>"
+                    f"<td>{r_rate:.1%}</td>"
+                    f"<td class='case-id'>{group_detail}</td>"
+                    f"</tr>"
+                )
+
         sections.append(
             "<h3>Dry Replay (routing only)</h3>"
             "<table>"
-            "<thead><tr><th>Run</th><th>Case</th><th>Messages</th>"
+            "<thead><tr><th></th><th>Case</th><th>Runs</th>"
             "<th>Route rate</th><th>Per group</th></tr></thead>"
             "<tbody>" + "".join(rows) + "</tbody>"
             "</table>"
         )
 
-    # Live replay table
+    # --- Live replay: grouped by case_id ---
     if live_runs:
-        rows = []
+        groups: OrderedDict[str, list[dict]] = OrderedDict()
         for r in live_runs:
-            node_summary = r.get("node_summary", {})
+            groups.setdefault(r.get("case_id", "?"), []).append(r)
+
+        rows = []
+        for case_id, members in groups.items():
+            tooltip = html_mod.escape(_case_tooltip(case_id), quote=True)
+            latest = members[0]
+            node_summary = latest.get("node_summary", {})
             total_completed = sum(v.get("completed", 0) for v in node_summary.values())
             total_nodes = sum(v.get("total", 0) for v in node_summary.values())
-            flags = r.get("ambiguity_flag_count", 0)
-            links = r.get("fulfillment_link_count", 0)
-            errors = r.get("error_count", 0)
-            mode = "update only" if r.get("skip_linkage") else "full"
-            if r.get("max_messages"):
-                mode += f" (first {r['max_messages']})"
 
-            live_tooltip = _case_tooltip(r.get('case_id', ''))
             rows.append(
-                f"<tr>"
-                f"<td>{_fmt_dt(r.get('run_at', ''))}</td>"
-                f"<td class='case-id' title='{live_tooltip}'>{r.get('case_id', '?')}</td>"
-                f"<td>{mode}</td>"
-                f"<td>{r.get('messages_routed', 0)}/{r.get('messages_total', 0)}</td>"
+                f"<tr class='group-row' data-group='live-{case_id}' onclick='toggleGroup(this)'>"
+                f"<td><span class='toggle'>&#9654;</span></td>"
+                f"<td class='case-id' title='{tooltip}'>{case_id}</td>"
+                f"<td>{len(members)} runs</td>"
+                f"<td>{latest.get('messages_routed', 0)}/{latest.get('messages_total', 0)}</td>"
                 f"<td>{_pct_bar(total_completed, total_nodes)}</td>"
-                f"<td>{links}</td>"
-                f"<td>{flags}</td>"
-                f"<td class='{'fail' if errors else ''}'>{errors}</td>"
+                f"<td>{latest.get('fulfillment_link_count', 0)}</td>"
+                f"<td>{latest.get('ambiguity_flag_count', 0)}</td>"
+                f"<td></td>"
                 f"</tr>"
             )
+            for r in members:
+                ns = r.get("node_summary", {})
+                tc = sum(v.get("completed", 0) for v in ns.values())
+                tn = sum(v.get("total", 0) for v in ns.values())
+                flags = r.get("ambiguity_flag_count", 0)
+                links = r.get("fulfillment_link_count", 0)
+                errors = r.get("error_count", 0)
+                mode = "update only" if r.get("skip_linkage") else "full"
+                if r.get("max_messages"):
+                    mode += f" (first {r['max_messages']})"
+
+                rows.append(
+                    f"<tr class='group-child' data-group='live-{case_id}'>"
+                    f"<td></td>"
+                    f"<td>{_fmt_dt(r.get('run_at', ''))} ({mode})</td>"
+                    f"<td></td>"
+                    f"<td>{r.get('messages_routed', 0)}/{r.get('messages_total', 0)}</td>"
+                    f"<td>{_pct_bar(tc, tn)}</td>"
+                    f"<td>{links}</td>"
+                    f"<td>{flags}</td>"
+                    f"<td class='{'fail' if errors else ''}'>{errors}</td>"
+                    f"</tr>"
+                )
+
         sections.append(
             "<h3>Live Replay (full pipeline)</h3>"
             "<table>"
-            "<thead><tr><th>Run</th><th>Case</th><th>Mode</th>"
+            "<thead><tr><th></th><th>Case</th><th>Runs</th>"
             "<th>Routed</th><th>Nodes completed</th><th>Links</th>"
             "<th>Ambiguity</th><th>Errors</th></tr></thead>"
             "<tbody>" + "".join(rows) + "</tbody>"
