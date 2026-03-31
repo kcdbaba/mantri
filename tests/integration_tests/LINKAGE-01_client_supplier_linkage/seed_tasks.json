@@ -1,0 +1,36 @@
+{
+  "monitored_groups": {
+    "client_grp": "task_client_01",
+    "supplier_grp": "task_supplier_01"
+  },
+  "entities": [
+    {
+      "id": "entity_army_unit",
+      "name": "51 Sub Area",
+      "aliases": ["51 sub area", "army", "colonel sahab"]
+    },
+    {
+      "id": "entity_kapoor",
+      "name": "Kapoor Steel",
+      "aliases": ["kapoor", "kapoor ji", "kapoor steel"]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task_client_01",
+      "order_type": "client_order",
+      "client_id": "entity_army_unit",
+      "supplier_ids": [],
+      "stage": "active",
+      "_note": "Client order for 51 Sub Area — 50 bags atta + 20 bags daal"
+    },
+    {
+      "id": "task_supplier_01",
+      "order_type": "supplier_order",
+      "client_id": "entity_army_unit",
+      "supplier_ids": ["entity_kapoor"],
+      "stage": "active",
+      "_note": "Kapoor Steel supplying atta and daal"
+    }
+  ]
+}
