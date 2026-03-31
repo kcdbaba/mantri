@@ -40,6 +40,8 @@ _OUTPUT_SPEC = """
 Respond with valid JSON only. No prose, no markdown fences.
 
 {
+  "task_assignment": "<task_id from entity tasks list, 'new', or empty string — see rules below>",
+  "new_task_order_type": "<'client_order' or 'supplier_order' — only if task_assignment is 'new', else null>",
   "node_updates": [
     {
       "node_id": "<node id from template>",
@@ -214,6 +216,29 @@ emit a new_task_candidates entry:
 If filled_from_stock is activated, emit:
   {"type": "stock_taking_update", "items": "<items mentioned>", "source_task_id": "<task_id>"}
 
+## Task assignment (only when "Active tasks for this entity" section is present)
+
+If the user section shows multiple tasks for this entity, you must decide which task
+this message belongs to. Follow this reasoning chain:
+
+Step 1 — Does this message contain NEW item information (items not in any task)?
+  YES → check all tasks' items. If no task has these items AND all tasks are confirmed
+        (mature) → set task_assignment = "new". If an unconfirmed task exists → assign there.
+  NO  → this is a follow-up (payment, delivery, status, ack). Go to step 2.
+
+Step 2 — Match to an existing task by context:
+  - If message mentions items by name → find the task containing those items.
+  - If message is about payment/delivery → find the task in the relevant stage.
+  - If message is a generic ack or unclear → assign to the most recently active task.
+
+Rules:
+  - task_assignment must be set to an existing task_id from the entity tasks list,
+    or "new", or "" (empty = use current task, for backward compat when no entity tasks shown).
+  - ALWAYS prefer existing tasks. "new" only when items are clearly distinct from ALL tasks.
+  - If unsure, assign to the most relevant existing task — never create unnecessary tasks.
+  - node_updates and item_extractions apply to the assigned task.
+  - A mature task (order_confirmation or supplier_confirmation = completed) has its items
+    locked. New items for a mature entity must go to a new task or an immature task.
 """
 
 
@@ -241,9 +266,11 @@ based on incoming WhatsApp messages.
 
 def build_user_section(node_states: list[dict], recent_messages: list[dict],
                        new_messages, current_items: list[dict] | None = None,
-                       routing_confidence: float = 1.0) -> str:
+                       routing_confidence: float = 1.0,
+                       entity_tasks: list[dict] | None = None) -> str:
     """Build the variable user section for a single update call.
-    new_messages: a single message dict or a list of message dicts (batch)."""
+    new_messages: a single message dict or a list of message dicts (batch).
+    entity_tasks: all active tasks for the entity (for multi-task assignment)."""
     # Normalise to list
     if isinstance(new_messages, dict):
         new_messages = [new_messages]
@@ -287,10 +314,23 @@ def build_user_section(node_states: list[dict], recent_messages: list[dict],
         ]
         items_block = f"\n## Current order items\n\n{json.dumps(compact, ensure_ascii=False)}\n"
 
+    entity_block = ""
+    if entity_tasks and len(entity_tasks) > 1:
+        lines = []
+        for et in entity_tasks:
+            mature_tag = " [CONFIRMED]" if et.get("is_mature") else ""
+            items_str = ", ".join(it.get("description", "?") for it in et.get("items", []))
+            lines.append(f"  - {et['task_id']} ({et['order_type']}{mature_tag}): "
+                         f"{items_str or '(no items yet)'}")
+        entity_block = (
+            "\n## Active tasks for this entity\n\n"
+            + chr(10).join(lines) + "\n"
+        )
+
     return f"""## Current node states
 
 {json.dumps(nodes_summary, ensure_ascii=False)}
-{items_block}
+{items_block}{entity_block}
 ## Recent messages (last {len(recent_messages)})
 
 {chr(10).join(messages_summary) if messages_summary else "(none)"}
