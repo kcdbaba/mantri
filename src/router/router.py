@@ -21,6 +21,7 @@ Returns: list of (task_id, confidence) tuples.
 Empty list → push to dead letter queue (unrouted).
 """
 
+import json
 import logging
 from src.config import (
     MONITORED_GROUPS, DIRECT_GROUP_CONFIDENCE,
@@ -30,6 +31,27 @@ from src.router.alias_dict import match_entities
 from src.store.task_store import get_active_tasks
 
 log = logging.getLogger(__name__)
+
+RUNTIME_TASK_CONFIDENCE = 0.85
+
+
+def _get_runtime_tasks(group_id: str) -> list[str]:
+    """Get task_ids from task_routing_context whose source_groups include this group."""
+    try:
+        from src.store.db import get_connection
+        conn = get_connection()
+        rows = conn.execute(
+            "SELECT task_id, source_groups FROM task_routing_context"
+        ).fetchall()
+        conn.close()
+        result = []
+        for row in rows:
+            groups = json.loads(row[1] or "[]")
+            if group_id in groups:
+                result.append(row[0])
+        return result
+    except Exception:
+        return []
 
 # Message types that carry no operational content
 NOISE_TYPES = {"reaction", "sticker", "system", "revoked"}
@@ -54,28 +76,40 @@ def route(message: dict) -> list[tuple[str, float]]:
     group_id = message.get("group_id", "")
 
     # --- Layer 2a: direct group → task map ---
+    results = []
     if group_id in MONITORED_GROUPS:
         task_id = MONITORED_GROUPS[group_id]
         if task_id is not None:
+            results.append((task_id, DIRECT_GROUP_CONFIDENCE))
             log.debug("Layer 2a: %s → %s (conf=%.2f)", group_id, task_id, DIRECT_GROUP_CONFIDENCE)
-            return [(task_id, DIRECT_GROUP_CONFIDENCE)]
-        # group is monitored but shared → fall through to 2b
+
+    # --- Layer 2a+: runtime tasks from task_routing_context ---
+    runtime_tasks = _get_runtime_tasks(group_id)
+    seen_task_ids = {tid for tid, _ in results}
+    for rt_id in runtime_tasks:
+        if rt_id not in seen_task_ids:
+            results.append((rt_id, RUNTIME_TASK_CONFIDENCE))
+            seen_task_ids.add(rt_id)
+            log.debug("Layer 2a+: runtime task %s for group %s (conf=%.2f)",
+                      rt_id, group_id, RUNTIME_TASK_CONFIDENCE)
+
+    if results:
+        return results
 
     # --- Layer 2b: entity keyword + alias matching ---
     entity_matches = match_entities(body)
     if entity_matches:
-        results = []
         active_tasks = {t["id"]: t for t in get_active_tasks()}
         for entity_id, match_confidence in entity_matches:
-            # Find active tasks involving this entity
             for task in active_tasks.values():
-                import json
                 supplier_ids = json.loads(task.get("supplier_ids") or "[]")
                 if task["client_id"] == entity_id or entity_id in supplier_ids:
                     confidence = min(match_confidence, ENTITY_MATCH_CONFIDENCE)
-                    results.append((task["id"], confidence))
-                    log.debug("Layer 2b: entity=%s → task=%s (conf=%.2f)",
-                              entity_id, task["id"], confidence)
+                    if task["id"] not in seen_task_ids:
+                        results.append((task["id"], confidence))
+                        seen_task_ids.add(task["id"])
+                        log.debug("Layer 2b: entity=%s → task=%s (conf=%.2f)",
+                                  entity_id, task["id"], confidence)
         if results:
             return results
 

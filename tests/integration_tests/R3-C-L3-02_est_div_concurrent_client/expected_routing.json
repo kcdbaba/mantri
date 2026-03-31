@@ -3758,8 +3758,17 @@
     "group_id": "Tasks",
     "sender_jid": "Sammsul Haque Staff",
     "body_preview": "Ha",
-    "routes": [],
-    "routed": false
+    "routes": [
+      {
+        "task_id": "task_est_div_client",
+        "confidence": 0.75
+      },
+      {
+        "task_id": "task_voltas_supplier",
+        "confidence": 0.75
+      }
+    ],
+    "routed": true
   },
   {
     "message_id": "R3-C-L3-02-INT_Tasks_0192",
@@ -3830,8 +3839,17 @@
     "group_id": "Tasks",
     "sender_jid": "Sammsul Haque Staff",
     "body_preview": "Han",
-    "routes": [],
-    "routed": false
+    "routes": [
+      {
+        "task_id": "task_est_div_client",
+        "confidence": 0.75
+      },
+      {
+        "task_id": "task_voltas_supplier",
+        "confidence": 0.75
+      }
+    ],
+    "routed": true
   },
   {
     "message_id": "R3-C-L3-02-INT_Tasks_0200",
@@ -4820,8 +4838,17 @@
     "group_id": "Tasks",
     "sender_jid": "Ashish Chhabra",
     "body_preview": "all",
-    "routes": [],
-    "routed": false
+    "routes": [
+      {
+        "task_id": "task_est_div_client",
+        "confidence": 0.75
+      },
+      {
+        "task_id": "task_voltas_supplier",
+        "confidence": 0.75
+      }
+    ],
+    "routed": true
   },
   {
     "message_id": "R3-C-L3-02-INT_Tasks_0260",

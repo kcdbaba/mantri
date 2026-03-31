@@ -137,3 +137,102 @@ def test_layer2b_no_entity_match_unrouted():
         }
         results = route(msg)
     assert results == []
+
+
+# ---------------------------------------------------------------------------
+# DB-aware alias matching
+# ---------------------------------------------------------------------------
+
+import allure
+
+@allure.feature("Entity Resolution")
+@allure.story("DB Alias Loading")
+class TestDBAlias:
+
+    def test_db_alias_matches(self):
+        """Aliases from DB should be found by match_entities."""
+        from src.router.alias_dict import match_entities, invalidate_alias_cache
+        db_aliases = {"narmohan da": "entity_baishya_steel"}
+        with patch("src.router.alias_dict._load_db_aliases", return_value=db_aliases):
+            invalidate_alias_cache()
+            results = match_entities("Narmohan Da se steel gate banwa rahe hain")
+        assert any(eid == "entity_baishya_steel" for eid, _ in results)
+
+    def test_db_alias_overrides_config(self):
+        """DB alias should take precedence over config alias for same key."""
+        from src.router.alias_dict import get_all_aliases, invalidate_alias_cache
+        db_aliases = {"kapoor": "entity_kapoor_new"}
+        with patch("src.router.alias_dict._load_db_aliases", return_value=db_aliases):
+            invalidate_alias_cache()
+            all_a = get_all_aliases()
+        assert all_a["kapoor"] == "entity_kapoor_new"
+
+    def test_config_alias_still_works(self):
+        """Config aliases should still match when DB has no override."""
+        from src.router.alias_dict import match_entities, invalidate_alias_cache
+        with patch("src.router.alias_dict._load_db_aliases", return_value={}):
+            invalidate_alias_cache()
+            results = match_entities("Kapoor ji se maal aayega")
+        assert any(eid == "entity_kapoor_steel" for eid, _ in results)
+
+    def test_invalidate_cache_forces_reload(self):
+        from src.router.alias_dict import invalidate_alias_cache, _load_db_aliases
+        invalidate_alias_cache()
+        mock_conn = MagicMock()
+        mock_conn.execute.return_value.fetchall.return_value = [("refresh", "entity_r")]
+        with patch("src.store.db.get_connection", return_value=mock_conn):
+            result = _load_db_aliases()
+        assert result.get("refresh") == "entity_r"
+
+    def test_cache_avoids_repeated_db_calls(self):
+        """Repeated calls within TTL should not hit DB again."""
+        from src.router.alias_dict import _load_db_aliases, invalidate_alias_cache
+        mock_conn = MagicMock()
+        mock_conn.execute.return_value.fetchall.return_value = [("test", "entity_test")]
+        invalidate_alias_cache()
+        with patch("src.store.db.get_connection", return_value=mock_conn):
+            _load_db_aliases()
+            _load_db_aliases()  # should use cache
+        mock_conn.execute.assert_called_once()  # only 1 DB call
+
+
+# ---------------------------------------------------------------------------
+# Runtime group routing (Layer 2a+)
+# ---------------------------------------------------------------------------
+
+@allure.feature("Message Routing")
+@allure.story("Runtime Task Routing")
+class TestRuntimeRouting:
+
+    def test_runtime_task_returned_for_group(self):
+        from src.router.router import route
+        with patch("src.router.router.MONITORED_GROUPS", {"grp": None}), \
+             patch("src.router.router._get_runtime_tasks", return_value=["task_live_1"]):
+            results = route({"body": "test", "message_id": "m1", "group_id": "grp"})
+        assert any(tid == "task_live_1" for tid, _ in results)
+
+    def test_runtime_plus_direct_both_returned(self):
+        from src.router.router import route
+        with patch("src.router.router.MONITORED_GROUPS", {"grp": "task_seed"}), \
+             patch("src.router.router._get_runtime_tasks", return_value=["task_live_1"]):
+            results = route({"body": "test", "message_id": "m1", "group_id": "grp"})
+        task_ids = {tid for tid, _ in results}
+        assert "task_seed" in task_ids
+        assert "task_live_1" in task_ids
+
+    def test_no_duplicates_in_results(self):
+        from src.router.router import route
+        with patch("src.router.router.MONITORED_GROUPS", {"grp": "task_1"}), \
+             patch("src.router.router._get_runtime_tasks", return_value=["task_1"]):
+            results = route({"body": "test", "message_id": "m1", "group_id": "grp"})
+        assert len(results) == 1  # no duplicate
+
+    def test_runtime_confidence_lower_than_direct(self):
+        from src.router.router import route, RUNTIME_TASK_CONFIDENCE, DIRECT_GROUP_CONFIDENCE
+        with patch("src.router.router.MONITORED_GROUPS", {"grp": "task_seed"}), \
+             patch("src.router.router._get_runtime_tasks", return_value=["task_live"]):
+            results = route({"body": "test", "message_id": "m1", "group_id": "grp"})
+        conf_map = {tid: conf for tid, conf in results}
+        assert conf_map["task_seed"] == DIRECT_GROUP_CONFIDENCE
+        assert conf_map["task_live"] == RUNTIME_TASK_CONFIDENCE
+        assert conf_map["task_live"] < conf_map["task_seed"]

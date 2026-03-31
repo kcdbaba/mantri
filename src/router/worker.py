@@ -17,6 +17,7 @@ from src.config import (
     PROVISIONAL_THRESHOLD,
     ESCALATION_PROFILES, ACTIVE_ESCALATION_PROFILE,
     ESCALATION_CATEGORY_OVERRIDES, GATE_NODES,
+    ENABLE_LIVE_TASK_CREATION,
 )
 from src.router.router import route
 from src.agent.update_agent import run_update_agent, AmbiguityFlag
@@ -26,7 +27,7 @@ from src.store.task_store import (
     apply_item_extractions, apply_node_data_extractions,
     check_stock_path_order_ready, cascade_auto_triggers,
 )
-from src.store.db import get_connection, transaction
+from src.store.db import get_connection, transaction, create_task_live
 
 log = logging.getLogger(__name__)
 
@@ -88,7 +89,10 @@ def process_message(message: dict, r: redis.Redis):
 
         # Log new task candidates (no creation flow in Sprint 3)
         for candidate in output.new_task_candidates:
-            _log_new_task_candidate(candidate, message, task_id)
+            if candidate.get("type") == "new_order" and ENABLE_LIVE_TASK_CREATION:
+                _create_task_from_candidate(candidate, message, task_id, r)
+            else:
+                _log_new_task_candidate(candidate, message, task_id)
 
         # Handle ambiguity flags — enqueue, escalate, block gate nodes
         for flag in output.ambiguity_flags:
@@ -159,7 +163,10 @@ def process_message_batch(task_id: str, messages: list[dict], r: redis.Redis):
         log.info("Auto-trigger cascade: task=%s → %s", task_id, cascaded)
 
     for candidate in output.new_task_candidates:
-        _log_new_task_candidate(candidate, last_msg, task_id)
+        if candidate.get("type") == "new_order" and ENABLE_LIVE_TASK_CREATION:
+            _create_task_from_candidate(candidate, last_msg, task_id, r)
+        else:
+            _log_new_task_candidate(candidate, last_msg, task_id)
 
     for flag in output.ambiguity_flags:
         _handle_ambiguity(flag, task_id, last_msg)
@@ -577,6 +584,84 @@ def _log_dead_letter(task_id: str, message: dict, failure_reason: str = ""):
         "DEAD LETTER: update_agent failed for task=%s message=%s reason=%s",
         task_id, message.get("message_id"), reason,
     )
+
+
+def _create_task_from_candidate(candidate: dict, message: dict,
+                                source_task_id: str, r) -> str | None:
+    """Create a new task from a new_order candidate. Returns new task_id or None."""
+    order_type = candidate.get("order_type")
+    if order_type not in ("client_order", "supplier_order"):
+        log.warning("Invalid order_type in new_order candidate: %s", order_type)
+        _log_new_task_candidate(candidate, message, source_task_id)
+        return None
+
+    entity_id = candidate.get("entity_id") or f"entity_{uuid.uuid4().hex[:6]}"
+    entity_name = candidate.get("entity_name", "")
+
+    # Dedup: check if same (entity_id, order_type) was created in last 5 minutes
+    now = int(time.time())
+    conn = get_connection()
+    recent = conn.execute(
+        """SELECT id FROM task_instances
+           WHERE client_id=? AND order_type=? AND source='live' AND created_at >= ?
+           LIMIT 1""",
+        (entity_id, order_type, now - 300),
+    ).fetchone()
+    conn.close()
+    if recent:
+        log.info("DEDUP: task for (%s, %s) already created recently → %s",
+                 entity_id, order_type, recent[0])
+        return None
+
+    # Build aliases from candidate
+    aliases = []
+    if entity_name:
+        aliases.append({"alias": entity_name.lower(), "entity_id": entity_id,
+                        "entity_type": "client" if order_type == "client_order" else "supplier"})
+
+    try:
+        new_task_id = create_task_live(
+            order_type=order_type,
+            client_id=entity_id,
+            source_group_id=message.get("group_id"),
+            source_message_id=message.get("message_id"),
+            aliases=aliases,
+        )
+    except Exception as e:
+        log.error("Failed to create task from candidate: %s", e)
+        _log_new_task_candidate(candidate, message, source_task_id)
+        return None
+
+    # Invalidate alias cache so new aliases are immediately routable
+    from src.router.alias_dict import invalidate_alias_cache
+    invalidate_alias_cache()
+
+    # Route the triggering message to the new task
+    append_message(new_task_id, message, routing_confidence=0.85)
+
+    # Log creation event
+    with transaction() as conn:
+        conn.execute(
+            "INSERT INTO task_event_log (id, task_id, event_type, payload, ts) VALUES (?,?,?,?,?)",
+            (
+                str(uuid.uuid4()),
+                new_task_id,
+                "task_created",
+                json.dumps({
+                    "source_task_id": source_task_id,
+                    "candidate": candidate,
+                    "source_message_id": message.get("message_id"),
+                }),
+                now,
+            ),
+        )
+
+    # Publish task event for linkage worker
+    _publish_task_event(new_task_id, message, r)
+
+    log.info("TASK CREATED: %s (%s) from candidate in task=%s | %s",
+             new_task_id, order_type, source_task_id, candidate.get("context", ""))
+    return new_task_id
 
 
 def _log_new_task_candidate(candidate: dict, message: dict, task_id: str):

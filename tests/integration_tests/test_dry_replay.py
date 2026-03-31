@@ -103,9 +103,11 @@ class TestDryReplay:
         db_path, seed, trace, expected = _setup_case(case_dir)
         monitored = seed.get("monitored_groups", {})
 
+        from src.router.alias_dict import invalidate_alias_cache
         with patch("src.store.db.DB_PATH", db_path), \
              patch("src.config.DB_PATH", db_path), \
              patch("src.router.router.MONITORED_GROUPS", monitored):
+            invalidate_alias_cache()
             from src.router.router import route
 
             mismatches = []
@@ -151,9 +153,11 @@ class TestDryReplay:
         if not dedicated:
             pytest.skip("No dedicated groups in this case")
 
+        from src.router.alias_dict import invalidate_alias_cache
         with patch("src.store.db.DB_PATH", db_path), \
              patch("src.config.DB_PATH", db_path), \
              patch("src.router.router.MONITORED_GROUPS", monitored):
+            invalidate_alias_cache()  # ensure DB aliases read from test DB
             from src.router.router import route
             unrouted = []
             for msg in trace:
@@ -174,9 +178,11 @@ class TestDryReplay:
         monitored = seed.get("monitored_groups", {})
         case_id = case_dir.name.split("_")[0]  # e.g. "R1-D-L3-01"
 
+        from src.router.alias_dict import invalidate_alias_cache
         with patch("src.store.db.DB_PATH", db_path), \
              patch("src.config.DB_PATH", db_path), \
              patch("src.router.router.MONITORED_GROUPS", monitored):
+            invalidate_alias_cache()
             from src.router.router import route
 
             group_routed = Counter()

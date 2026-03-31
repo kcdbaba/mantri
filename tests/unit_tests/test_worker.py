@@ -811,6 +811,77 @@ class TestProcessMessageBatch:
 # ---------------------------------------------------------------------------
 # _publish_task_event
 # ---------------------------------------------------------------------------
+# _create_task_from_candidate
+# ---------------------------------------------------------------------------
+
+@allure.feature("Task Creation")
+@allure.story("Create Task From Candidate")
+class TestCreateTaskFromCandidate:
+
+    def test_creates_task_for_valid_new_order(self):
+        from src.router.worker import _create_task_from_candidate
+        candidate = {
+            "type": "new_order",
+            "order_type": "client_order",
+            "entity_id": "entity_new_client",
+            "entity_name": "New Client",
+            "context": "new AC order",
+        }
+        msg = {"message_id": "m1", "group_id": "grp@g.us", "body": "test"}
+        mock_r = MagicMock()
+        mock_conn = MagicMock()
+        mock_conn.execute.return_value.fetchone.return_value = None  # no dedup hit
+        with patch("src.router.worker.get_connection", return_value=mock_conn), \
+             patch("src.router.worker.create_task_live", return_value="task_abc123") as mock_create, \
+             patch("src.router.worker.append_message"), \
+             patch("src.router.alias_dict.invalidate_alias_cache"), \
+             patch("src.router.worker.transaction") as mock_tx:
+            mock_tx.return_value.__enter__ = MagicMock(return_value=MagicMock())
+            mock_tx.return_value.__exit__ = MagicMock(return_value=False)
+            result = _create_task_from_candidate(candidate, msg, "t1", mock_r)
+        assert result == "task_abc123"
+        mock_create.assert_called_once()
+
+    def test_dedup_prevents_duplicate_creation(self):
+        from src.router.worker import _create_task_from_candidate
+        candidate = {"type": "new_order", "order_type": "client_order",
+                     "entity_id": "entity_dup"}
+        msg = {"message_id": "m1", "group_id": "grp@g.us"}
+        mock_conn = MagicMock()
+        mock_conn.execute.return_value.fetchone.return_value = ("task_existing",)
+        with patch("src.router.worker.get_connection", return_value=mock_conn):
+            result = _create_task_from_candidate(candidate, msg, "t1", MagicMock())
+        assert result is None
+
+    def test_invalid_order_type_falls_back_to_log(self):
+        from src.router.worker import _create_task_from_candidate
+        candidate = {"type": "new_order", "order_type": "invalid_type"}
+        msg = {"message_id": "m1"}
+        with patch("src.router.worker._log_new_task_candidate") as mock_log:
+            result = _create_task_from_candidate(candidate, msg, "t1", MagicMock())
+        assert result is None
+        mock_log.assert_called_once()
+
+    def test_publishes_task_event_after_creation(self):
+        from src.router.worker import _create_task_from_candidate
+        candidate = {"type": "new_order", "order_type": "supplier_order",
+                     "entity_id": "entity_s"}
+        msg = {"message_id": "m1", "group_id": "grp@g.us"}
+        mock_r = MagicMock()
+        mock_conn = MagicMock()
+        mock_conn.execute.return_value.fetchone.return_value = None
+        with patch("src.router.worker.get_connection", return_value=mock_conn), \
+             patch("src.router.worker.create_task_live", return_value="task_new"), \
+             patch("src.router.worker.append_message"), \
+             patch("src.router.alias_dict.invalidate_alias_cache"), \
+             patch("src.router.worker.transaction") as mock_tx:
+            mock_tx.return_value.__enter__ = MagicMock(return_value=MagicMock())
+            mock_tx.return_value.__exit__ = MagicMock(return_value=False)
+            _create_task_from_candidate(candidate, msg, "t1", mock_r)
+        mock_r.xadd.assert_called_once()
+
+
+# ---------------------------------------------------------------------------
 
 @allure.feature("Message Routing")
 @allure.story("Task Event Publishing")

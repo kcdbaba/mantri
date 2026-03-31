@@ -286,6 +286,80 @@ def init_schema():
     print(f"Schema initialised at {DB_PATH}")
 
 
+def create_task_live(
+    order_type: str,
+    client_id: str,
+    supplier_ids: list[str] | None = None,
+    source_group_id: str | None = None,
+    source_message_id: str | None = None,
+    aliases: list[dict] | None = None,
+) -> str:
+    """
+    Create a new task at runtime from an agent-detected new order.
+    Auto-generates task ID, creates node graph from template,
+    populates routing context and entity aliases.
+
+    Returns the new task_id.
+    """
+    import time
+    import uuid
+    from src.agent.templates import get_template
+
+    task_id = f"task_{uuid.uuid4().hex[:8]}"
+    now = int(time.time())
+    supplier_ids = supplier_ids or []
+    template = get_template(order_type)
+
+    with transaction() as conn:
+        # Task instance
+        conn.execute(
+            """INSERT INTO task_instances
+               (id, order_type, client_id, supplier_ids, created_at, last_updated, stage, source)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+            (task_id, order_type, client_id, json.dumps(supplier_ids),
+             now, now, "active", "live"),
+        )
+
+        # Nodes from template
+        for node in template["nodes"]:
+            default_status = "skipped" if node.get("optional") else "pending"
+            conn.execute(
+                """INSERT INTO task_nodes
+                   (id, task_id, node_type, name, status, updated_at, updated_by,
+                    optional, requires_all, warns_if_incomplete)
+                   VALUES (?, ?, ?, ?, ?, ?, 'live_create', ?, ?, ?)""",
+                (
+                    f"{task_id}_{node['id']}", task_id, node["type"], node["name"],
+                    default_status, now,
+                    1 if node.get("optional") else 0,
+                    json.dumps(node.get("requires_all", [])),
+                    json.dumps(node.get("warns_if_incomplete", [])),
+                ),
+            )
+
+        # Routing context
+        source_groups = json.dumps([source_group_id] if source_group_id else [])
+        entity_ids = json.dumps([client_id] + supplier_ids)
+        conn.execute(
+            """INSERT OR REPLACE INTO task_routing_context
+               (task_id, source_groups, entity_ids)
+               VALUES (?, ?, ?)""",
+            (task_id, source_groups, entity_ids),
+        )
+
+        # Entity aliases
+        for alias_entry in (aliases or []):
+            conn.execute(
+                """INSERT OR IGNORE INTO entity_aliases
+                   (alias, entity_id, entity_type, confidence, source)
+                   VALUES (?, ?, ?, ?, 'live')""",
+                (alias_entry["alias"], alias_entry["entity_id"],
+                 alias_entry.get("entity_type", "unknown"), 1.0),
+            )
+
+    return task_id
+
+
 def seed_task(task: dict, nodes: list[dict], entity_aliases: list[dict]):
     """Insert the hardcoded MVP task instance, nodes, and entity aliases."""
     import time

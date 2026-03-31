@@ -172,3 +172,101 @@ class TestSeedTask:
             row = conn.execute("SELECT status FROM task_nodes WHERE id='t1_filled_from_stock'").fetchone()
             conn.close()
         assert row[0] == "skipped"
+
+
+@allure.feature("Database")
+@allure.story("Create Task Live")
+class TestCreateTaskLive:
+
+    def test_creates_task_with_nodes(self, tmp_path):
+        db_path = tmp_path / "test.db"
+        with patch("src.store.db.DB_PATH", str(db_path)):
+            from src.store.db import init_schema, create_task_live, get_connection
+            init_schema()
+            task_id = create_task_live(
+                order_type="client_order",
+                client_id="entity_sata",
+                supplier_ids=["entity_kapoor"],
+            )
+            conn = get_connection()
+            conn.row_factory = __import__("sqlite3").Row
+            task = conn.execute("SELECT * FROM task_instances WHERE id=?", (task_id,)).fetchone()
+            nodes = conn.execute("SELECT * FROM task_nodes WHERE task_id=?", (task_id,)).fetchall()
+            conn.close()
+
+        assert task is not None
+        assert task["order_type"] == "client_order"
+        assert task["client_id"] == "entity_sata"
+        assert task["source"] == "live"
+        assert len(nodes) > 0  # client_order template has 11+ nodes
+
+    def test_returns_unique_task_id(self, tmp_path):
+        db_path = tmp_path / "test.db"
+        with patch("src.store.db.DB_PATH", str(db_path)):
+            from src.store.db import init_schema, create_task_live
+            init_schema()
+            id1 = create_task_live("client_order", "e1")
+            id2 = create_task_live("client_order", "e1")
+        assert id1 != id2
+        assert id1.startswith("task_")
+        assert id2.startswith("task_")
+
+    def test_creates_routing_context(self, tmp_path):
+        db_path = tmp_path / "test.db"
+        with patch("src.store.db.DB_PATH", str(db_path)):
+            from src.store.db import init_schema, create_task_live, get_connection
+            init_schema()
+            task_id = create_task_live(
+                order_type="supplier_order",
+                client_id="entity_sata",
+                source_group_id="supplier_grp@g.us",
+            )
+            conn = get_connection()
+            row = conn.execute(
+                "SELECT source_groups, entity_ids FROM task_routing_context WHERE task_id=?",
+                (task_id,),
+            ).fetchone()
+            conn.close()
+
+        assert row is not None
+        import json
+        assert "supplier_grp@g.us" in json.loads(row[0])
+        assert "entity_sata" in json.loads(row[1])
+
+    def test_inserts_entity_aliases(self, tmp_path):
+        db_path = tmp_path / "test.db"
+        with patch("src.store.db.DB_PATH", str(db_path)):
+            from src.store.db import init_schema, create_task_live, get_connection
+            init_schema()
+            create_task_live(
+                order_type="client_order",
+                client_id="entity_new",
+                aliases=[
+                    {"alias": "new client", "entity_id": "entity_new", "entity_type": "client"},
+                    {"alias": "naya wala", "entity_id": "entity_new"},
+                ],
+            )
+            conn = get_connection()
+            rows = conn.execute(
+                "SELECT alias, entity_id FROM entity_aliases WHERE entity_id='entity_new'"
+            ).fetchall()
+            conn.close()
+
+        aliases = {r[0] for r in rows}
+        assert "new client" in aliases
+        assert "naya wala" in aliases
+
+    def test_optional_nodes_skipped(self, tmp_path):
+        db_path = tmp_path / "test.db"
+        with patch("src.store.db.DB_PATH", str(db_path)):
+            from src.store.db import init_schema, create_task_live, get_connection
+            init_schema()
+            task_id = create_task_live("client_order", "e1")
+            conn = get_connection()
+            row = conn.execute(
+                "SELECT status FROM task_nodes WHERE id=?",
+                (f"{task_id}_filled_from_stock",),
+            ).fetchone()
+            conn.close()
+        assert row is not None
+        assert row[0] == "skipped"
