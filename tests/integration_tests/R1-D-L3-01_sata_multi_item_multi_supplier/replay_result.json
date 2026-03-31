@@ -1,0 +1,464 @@
+{
+  "stats": {
+    "messages_total": 20,
+    "messages_routed": 12,
+    "messages_unrouted": 4,
+    "messages_noise": 4,
+    "update_agent_calls": 12,
+    "update_agent_failures": 0,
+    "linkage_events_processed": 0,
+    "linkage_agent_failures": 0,
+    "tasks_created_live": 0,
+    "errors": []
+  },
+  "state": {
+    "node_states": {
+      "task_lg_supplier": [
+        {
+          "node_id": "task_lg_supplier_supplier_QC",
+          "name": "Supplier QC",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_lg_supplier_supplier_collection",
+          "name": "Supplier collection",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_lg_supplier_supplier_confirmation",
+          "name": "Supplier confirmation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_lg_supplier_supplier_indent",
+          "name": "Supplier indent",
+          "status": "in_progress",
+          "confidence": 0.85,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_lg_supplier_supplier_invoice",
+          "name": "Supplier invoice",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_lg_supplier_supplier_payment",
+          "name": "Supplier payment",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_lg_supplier_supplier_po",
+          "name": "Supplier PO",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_lg_supplier_supplier_predelivery_enquiry",
+          "name": "Supplier pre-delivery enquiry",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_lg_supplier_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        }
+      ],
+      "task_sata_client": [
+        {
+          "node_id": "task_sata_client_client_enquiry",
+          "name": "Client enquiry",
+          "status": "completed",
+          "confidence": 0.9,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_sata_client_client_quotation",
+          "name": "Client quotation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_sata_client_delivery_confirmed",
+          "name": "Delivery confirmed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_sata_client_delivery_photo_check",
+          "name": "Delivery photo check",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_sata_client_dispatched",
+          "name": "Dispatched",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_sata_client_filled_from_stock",
+          "name": "Filled from stock",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_sata_client_order_confirmation",
+          "name": "Order confirmation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_sata_client_order_ready",
+          "name": "Order ready",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_sata_client_payment_followup_30d",
+          "name": "Payment follow-up (30d)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_sata_client_predispatch_checklist",
+          "name": "Pre-dispatch checklist",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_sata_client_quote_followup_48h",
+          "name": "Quote follow-up (48h)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_sata_client_supplier_QC",
+          "name": "Supplier QC",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_sata_client_supplier_collection",
+          "name": "Supplier collection",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_sata_client_supplier_indent",
+          "name": "Supplier indent",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_sata_client_supplier_invoice",
+          "name": "Supplier invoice",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_sata_client_supplier_payment",
+          "name": "Supplier payment",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_sata_client_supplier_po",
+          "name": "Supplier PO",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_sata_client_supplier_predelivery_enquiry",
+          "name": "Supplier pre-delivery enquiry",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "seed"
+        }
+      ],
+      "task_voltas_supplier": [
+        {
+          "node_id": "task_voltas_supplier_supplier_QC",
+          "name": "Supplier QC",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_voltas_supplier_supplier_collection",
+          "name": "Supplier collection",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_voltas_supplier_supplier_confirmation",
+          "name": "Supplier confirmation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_voltas_supplier_supplier_indent",
+          "name": "Supplier indent",
+          "status": "in_progress",
+          "confidence": 0.85,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_voltas_supplier_supplier_invoice",
+          "name": "Supplier invoice",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_voltas_supplier_supplier_payment",
+          "name": "Supplier payment",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_voltas_supplier_supplier_po",
+          "name": "Supplier PO",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_voltas_supplier_supplier_predelivery_enquiry",
+          "name": "Supplier pre-delivery enquiry",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_voltas_supplier_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        }
+      ]
+    },
+    "items": {
+      "task_sata_client": [
+        {
+          "description": "LG Refrigerator 242 Ltrs with handle, 3/4 STAR",
+          "unit": "Nos",
+          "quantity": 1.0,
+          "specs": "242 Litres, with handle, 3/4 Star rating",
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "Voltas Window AC 1.5 Ton",
+          "unit": "Nos",
+          "quantity": 3.0,
+          "specs": "1.5 Ton Window AC",
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "Canon camera with lence (EOS R10)",
+          "unit": "Nos",
+          "quantity": 1.0,
+          "specs": "Canon EOS R10 with lens",
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "Prestige Single gas burner",
+          "unit": "Nos",
+          "quantity": 1.0,
+          "specs": null,
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "Mini Refrigerator 75/100 Ltr",
+          "unit": "Nos",
+          "quantity": 1.0,
+          "specs": "75 to 100 Litre capacity",
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "Casserole 0.5 Kg",
+          "unit": "Nos",
+          "quantity": 4.0,
+          "specs": "0.5 Kg",
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "White Bed Sheet (premium quality)",
+          "unit": "Nos",
+          "quantity": 15.0,
+          "specs": "Premium quality",
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "Three wheel golf push cart",
+          "unit": "Nos",
+          "quantity": 1.0,
+          "specs": null,
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "JBL Party speaker box",
+          "unit": "Nos",
+          "quantity": 2.0,
+          "specs": null,
+          "source_table": "client_order_items"
+        }
+      ],
+      "task_lg_supplier": [
+        {
+          "description": "LG Refrigerator 242 ltr with handle, 3/4 star",
+          "unit": "Nos",
+          "quantity": 1.0,
+          "specs": "242 Litres, with handle, 3/4 Star rating",
+          "source_table": "supplier_order_items"
+        },
+        {
+          "description": "LG Refrigerator 242 ltr with handle, 3/4 star",
+          "unit": null,
+          "quantity": null,
+          "specs": null,
+          "source_table": "supplier_order_items"
+        },
+        {
+          "description": "LG Refrigerator 242 ltr with handle, 3/4*",
+          "unit": null,
+          "quantity": null,
+          "specs": null,
+          "source_table": "supplier_order_items"
+        },
+        {
+          "description": "Mini Refrigerator 75/100 ltr",
+          "unit": "Nos",
+          "quantity": null,
+          "specs": "75 to 100 Litre capacity",
+          "source_table": "supplier_order_items"
+        }
+      ],
+      "task_voltas_supplier": [
+        {
+          "description": "Voltas 1.5 Ton Split AC",
+          "unit": "Nos",
+          "quantity": null,
+          "specs": "1.5 Ton Split AC, rate 28500",
+          "source_table": "supplier_order_items"
+        },
+        {
+          "description": "Voltas 1.5 Ton Window AC",
+          "unit": "Nos",
+          "quantity": null,
+          "specs": "1.5 Ton Window AC, rate 28600",
+          "source_table": "supplier_order_items"
+        },
+        {
+          "description": "Voltas 2 Ton Split AC",
+          "unit": "Nos",
+          "quantity": null,
+          "specs": "2 Ton Split AC, rate 41500",
+          "source_table": "supplier_order_items"
+        },
+        {
+          "description": "Voltas 2 Ton Window AC",
+          "unit": "Nos",
+          "quantity": null,
+          "specs": "2 Ton Window AC, rate 35000",
+          "source_table": "supplier_order_items"
+        },
+        {
+          "description": "Stabilizer 4 KVA",
+          "unit": "Nos",
+          "quantity": null,
+          "specs": "4 KVA Stabilizer, rate 3700",
+          "source_table": "supplier_order_items"
+        },
+        {
+          "description": "Stabilizer 5 KVA",
+          "unit": "Nos",
+          "quantity": null,
+          "specs": "5 KVA Stabilizer, rate 4200",
+          "source_table": "supplier_order_items"
+        }
+      ]
+    },
+    "fulfillment_links": [],
+    "ambiguity_flags": [
+      {
+        "task_id": "task_sata_client",
+        "node_id": null,
+        "severity": "low",
+        "category": "timing",
+        "description": "No delivery location or required-by date mentioned. These are typically needed before quotation can be finalized.",
+        "status": "expired"
+      },
+      {
+        "task_id": "task_voltas_supplier",
+        "node_id": null,
+        "severity": "medium",
+        "category": "quantity",
+        "description": "Punit-Jrbk Voltas message appears cut off — item 7 onwards is missing. Full rate list may be incomplete.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_sata_client",
+        "node_id": null,
+        "severity": "medium",
+        "category": "quantity",
+        "description": "Ashish mentions '2 more parts have to be ordered extra' but does not specify what the parts are. Cannot determine if these are new items for task_sata_client or relate to another order.",
+        "status": "pending"
+      }
+    ],
+    "message_counts": {
+      "task_lg_supplier": 4,
+      "task_sata_client": 12,
+      "task_voltas_supplier": 5
+    },
+    "dead_letter_count": 0,
+    "model_usage": [
+      {
+        "model": "gemini-2.5-flash",
+        "calls": 6,
+        "cost": 0
+      },
+      {
+        "model": "claude-sonnet-4-6",
+        "calls": 6,
+        "cost": 0.09335550000000001
+      }
+    ],
+    "total_cost": 0.09335550000000001
+  },
+  "db_path": "/Users/kunalc/src/mantri/tests/integration_tests/R1-D-L3-01_sata_multi_item_multi_supplier/replay_result.db"
+}

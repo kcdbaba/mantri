@@ -1,0 +1,47 @@
+{
+  "verdict": "PASS",
+  "overall_score": 83,
+  "dimensions": {
+    "reliability": {
+      "score": 100,
+      "notes": "0 dead letters, 0 failures, 0 errors out of 6 agent calls"
+    },
+    "routing": {
+      "score": 100,
+      "notes": "6/6 messages routed"
+    },
+    "extraction": {
+      "score": 100,
+      "notes": "4 items extracted across 2 tasks"
+    },
+    "node_progression": {
+      "score": 19,
+      "notes": "3 completed, 1 active out of 21 total nodes"
+    },
+    "ambiguity_quality": {
+      "score": 95,
+      "notes": "2 flags from 6 calls (0.33/call)"
+    },
+    "linkage": {
+      "score": null,
+      "notes": ""
+    }
+  },
+  "metrics": {
+    "total_messages": 6,
+    "routed": 6,
+    "agent_calls": 6,
+    "dead_letters": 0,
+    "failures": 0,
+    "errors": 0,
+    "ambiguity_flags": 2,
+    "fulfillment_links": 0,
+    "total_items": 4,
+    "total_nodes": 21,
+    "completed_nodes": 3,
+    "active_nodes": 1
+  },
+  "case_id": "LINKAGE-01",
+  "case_name": "LINKAGE-01_client_supplier_linkage",
+  "evaluated_at": "2026-04-01T01:36:26"
+}

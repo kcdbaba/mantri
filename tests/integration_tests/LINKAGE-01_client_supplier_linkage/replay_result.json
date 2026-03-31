@@ -1,0 +1,236 @@
+{
+  "stats": {
+    "messages_total": 6,
+    "messages_routed": 6,
+    "messages_unrouted": 0,
+    "messages_noise": 0,
+    "update_agent_calls": 6,
+    "update_agent_failures": 0,
+    "linkage_events_processed": 0,
+    "linkage_agent_failures": 0,
+    "tasks_created_live": 0,
+    "errors": []
+  },
+  "state": {
+    "node_states": {
+      "task_client_01": [
+        {
+          "node_id": "task_client_01_client_enquiry",
+          "name": "Client enquiry",
+          "status": "active",
+          "confidence": 0.92,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_client_01_client_quotation",
+          "name": "Client quotation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_client_01_delivery_confirmed",
+          "name": "Delivery confirmed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_client_01_delivery_photo_check",
+          "name": "Delivery photo check",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_client_01_dispatched",
+          "name": "Dispatched",
+          "status": "blocked",
+          "confidence": 0.0,
+          "updated_by": "ambiguity_block"
+        },
+        {
+          "node_id": "task_client_01_filled_from_stock",
+          "name": "Filled from stock",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_client_01_order_confirmation",
+          "name": "Order confirmation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_client_01_order_ready",
+          "name": "Order ready",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_client_01_payment_followup_30d",
+          "name": "Payment follow-up (30d)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_client_01_predispatch_checklist",
+          "name": "Pre-dispatch checklist",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_client_01_quote_followup_48h",
+          "name": "Quote follow-up (48h)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_client_01_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        }
+      ],
+      "task_supplier_01": [
+        {
+          "node_id": "task_supplier_01_supplier_QC",
+          "name": "Supplier QC",
+          "status": "completed",
+          "confidence": 0.9,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_supplier_01_supplier_collection",
+          "name": "Supplier collection",
+          "status": "completed",
+          "confidence": 0.9,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_supplier_01_supplier_confirmation",
+          "name": "Supplier confirmation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_supplier_01_supplier_indent",
+          "name": "Supplier indent",
+          "status": "completed",
+          "confidence": 0.88,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_supplier_01_supplier_invoice",
+          "name": "Supplier invoice",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_supplier_01_supplier_payment",
+          "name": "Supplier payment",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_supplier_01_supplier_po",
+          "name": "Supplier PO",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_supplier_01_supplier_predelivery_enquiry",
+          "name": "Supplier pre-delivery enquiry",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "seed"
+        },
+        {
+          "node_id": "task_supplier_01_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "seed"
+        }
+      ]
+    },
+    "items": {
+      "task_client_01": [
+        {
+          "description": "atta",
+          "unit": "bags",
+          "quantity": 50.0,
+          "specs": null,
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "daal",
+          "unit": "bags",
+          "quantity": 20.0,
+          "specs": null,
+          "source_table": "client_order_items"
+        }
+      ],
+      "task_supplier_01": [
+        {
+          "description": "atta",
+          "unit": "bags",
+          "quantity": 50.0,
+          "specs": null,
+          "source_table": "supplier_order_items"
+        },
+        {
+          "description": "daal",
+          "unit": "bags",
+          "quantity": 20.0,
+          "specs": null,
+          "source_table": "supplier_order_items"
+        }
+      ]
+    },
+    "fulfillment_links": [],
+    "ambiguity_flags": [
+      {
+        "task_id": "task_client_01",
+        "node_id": null,
+        "severity": "low",
+        "category": "timing",
+        "description": "Delivery deadline 'kal tak' (by tomorrow) is relative to message timestamp [1743230000]. Exact calendar date should be confirmed to set a hard delivery deadline.",
+        "status": "expired"
+      },
+      {
+        "task_id": "task_client_01",
+        "node_id": "dispatched",
+        "severity": "high",
+        "category": "status",
+        "description": "Dispatch announced ('dispatch kar rahe hain aaj') but order_confirmation node is still pending — no explicit client confirmation of the quotation/order has been recorded before dispatch is being initiated.",
+        "status": "pending"
+      }
+    ],
+    "message_counts": {
+      "task_client_01": 6,
+      "task_supplier_01": 3
+    },
+    "dead_letter_count": 0,
+    "model_usage": [
+      {
+        "model": "claude-sonnet-4-6",
+        "calls": 6,
+        "cost": 0.0605415
+      }
+    ],
+    "total_cost": 0.0605415
+  },
+  "db_path": "/Users/kunalc/src/mantri/tests/integration_tests/LINKAGE-01_client_supplier_linkage/replay_result.db"
+}
