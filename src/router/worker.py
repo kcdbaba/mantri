@@ -107,37 +107,6 @@ def _resolve_task_for_entity(entity_id: str, entity_tasks: list[dict],
     return None
 
 
-def _handle_task_assignment(output, entity_id: str, entity_tasks: list[dict],
-                             primary_task_id: str, message: dict, r) -> str:
-    """Handle agent's task_assignment decision. Returns actual task_id to apply output to."""
-    assignment = output.task_assignment
-
-    if assignment == "new" and ENABLE_LIVE_TASK_CREATION:
-        order_type = output.new_task_order_type or "client_order"
-        new_id = create_task_live(
-            order_type=order_type, client_id=entity_id,
-            source_group_id=message.get("group_id"),
-            source_message_id=message.get("message_id"),
-        )
-        from src.router.alias_dict import invalidate_alias_cache
-        invalidate_alias_cache()
-        append_message(new_id, message, routing_confidence=0.85)
-        log.info("AGENT CREATE: %s → new %s (%s) for entity %s",
-                 new_id, order_type, output.task_assignment, entity_id)
-        return new_id
-
-    if assignment and assignment != primary_task_id:
-        # Agent reassigned to a different existing task
-        valid_ids = {t["task_id"] for t in entity_tasks}
-        if assignment in valid_ids:
-            append_message(assignment, message, routing_confidence=0.85)
-            log.info("AGENT REASSIGN: %s → %s for entity %s",
-                     primary_task_id, assignment, entity_id)
-            return assignment
-        log.warning("Agent assigned to unknown task %s — using primary %s",
-                    assignment, primary_task_id)
-
-    return primary_task_id
 
 
 def process_message(message: dict, r: redis.Redis):
@@ -166,35 +135,57 @@ def process_message(message: dict, r: redis.Redis):
             if output is None:
                 _log_dead_letter(task_id, message)
                 continue
-            _apply_output(task_id, order_type, output, message, r)
+
+            # Apply each task_output (usually just one for single-task)
+            for task_output in output.task_outputs:
+                _apply_output(task_id, order_type, task_output, message, r)
 
         else:
-            # Multiple tasks — agent decides assignment
-            # Use first immature task as primary (or first task if all mature)
+            # Multiple tasks — agent decides assignment per task_output
+            # Use first immature task as context anchor for the agent call
             immature = [t for t in entity_tasks if not t["is_mature"]]
-            primary = immature[0] if immature else entity_tasks[0]
-            primary_task_id = primary["task_id"]
-            task = get_task(primary_task_id)
+            anchor = immature[0] if immature else entity_tasks[0]
+            anchor_task_id = anchor["task_id"]
+            task = get_task(anchor_task_id)
             order_type = task["order_type"] if task else "standard_procurement"
 
-            append_message(primary_task_id, message, routing_confidence=confidence)
+            append_message(anchor_task_id, message, routing_confidence=confidence)
             output = run_update_agent(
-                primary_task_id, [message], task_override=task,
+                anchor_task_id, [message], task_override=task,
                 routing_confidence=confidence,
                 entity_tasks=entity_tasks,
             )
             if output is None:
-                _log_dead_letter(primary_task_id, message)
+                _log_dead_letter(anchor_task_id, message)
                 continue
 
-            # Handle agent's task assignment decision
-            actual_task_id = _handle_task_assignment(
-                output, entity_id, entity_tasks, primary_task_id, message, r
-            )
-            actual_task = get_task(actual_task_id) if actual_task_id != primary_task_id else task
-            actual_order_type = actual_task["order_type"] if actual_task else order_type
+            # Process each task_output from the agent
+            valid_ids = {t["task_id"] for t in entity_tasks}
+            for task_output in output.task_outputs:
+                target_id = task_output.task_assignment
 
-            _apply_output(actual_task_id, actual_order_type, output, message, r)
+                if target_id == "new" and ENABLE_LIVE_TASK_CREATION:
+                    new_type = task_output.new_task_order_type or "client_order"
+                    target_id = create_task_live(
+                        order_type=new_type, client_id=entity_id,
+                        source_group_id=message.get("group_id"),
+                        source_message_id=message.get("message_id"),
+                    )
+                    from src.router.alias_dict import invalidate_alias_cache
+                    invalidate_alias_cache()
+                    append_message(target_id, message, routing_confidence=0.85)
+                    log.info("AGENT CREATE: %s (%s) for entity %s",
+                             target_id, new_type, entity_id)
+                elif target_id not in valid_ids:
+                    log.warning("Agent assigned to unknown task %s — skipping",
+                                target_id)
+                    continue
+                elif target_id != anchor_task_id:
+                    append_message(target_id, message, routing_confidence=0.85)
+
+                target_task = get_task(target_id)
+                target_order_type = target_task["order_type"] if target_task else order_type
+                _apply_output(target_id, target_order_type, task_output, message, r)
 
 
 def process_message_batch(task_id: str, messages: list[dict], r: redis.Redis):
@@ -219,7 +210,8 @@ def process_message_batch(task_id: str, messages: list[dict], r: redis.Redis):
         _publish_task_event(task_id, last_msg, r)
         return
 
-    _apply_output(task_id, order_type, output, last_msg, r)
+    for task_output in output.task_outputs:
+        _apply_output(task_id, order_type, task_output, last_msg, r)
 
 
 CONSUMER_GROUP = "router_worker_group"

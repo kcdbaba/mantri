@@ -122,14 +122,18 @@ class TestEscalationDescription:
 # ---------------------------------------------------------------------------
 
 def _make_agent_output(node_updates=None, ambiguity_flags=None,
-                       item_extractions=None, node_data_extractions=None):
-    from src.agent.update_agent import AgentOutput
+                       item_extractions=None, node_data_extractions=None,
+                       task_assignment="t1"):
+    from src.agent.update_agent import AgentOutput, TaskOutput
     return AgentOutput(
-        node_updates=node_updates or [],
-        new_task_candidates=[],
-        ambiguity_flags=ambiguity_flags or [],
-        item_extractions=item_extractions or [],
-        node_data_extractions=node_data_extractions or [],
+        task_outputs=[TaskOutput(
+            task_assignment=task_assignment,
+            node_updates=node_updates or [],
+            new_task_candidates=[],
+            ambiguity_flags=ambiguity_flags or [],
+            item_extractions=item_extractions or [],
+            node_data_extractions=node_data_extractions or [],
+        )],
     )
 
 
@@ -300,10 +304,13 @@ class TestProcessMessage:
 
     def test_new_task_candidates_logged(self):
         from src.router.worker import process_message
+        from src.agent.update_agent import AgentOutput, TaskOutput
         msg = {"body": "QC failed", "message_id": "m11"}
         task = {"id": "t1", "order_type": "standard_procurement"}
-        output = _make_agent_output()
-        output.new_task_candidates = [{"type": "client_notification", "context": "QC fail"}]
+        output = AgentOutput(task_outputs=[TaskOutput(
+            task_assignment="t1",
+            new_task_candidates=[{"type": "client_notification", "context": "QC fail"}],
+        )])
         mock_r = MagicMock()
         with patch("src.router.worker.route", return_value=[("t1", 0.9)]), \
              patch("src.router.worker.get_task", return_value=task), \

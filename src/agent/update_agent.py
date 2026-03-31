@@ -69,14 +69,19 @@ class ItemExtraction(BaseModel):
     existing_description: str | None = None  # for update/remove: which existing item to match
 
 
-class AgentOutput(BaseModel):
-    task_assignment: str = ""  # existing task_id, "new", or "" (use current task)
+class TaskOutput(BaseModel):
+    """Per-task output — agent returns one of these per task it processes."""
+    task_assignment: str          # existing task_id or "new"
     new_task_order_type: str | None = None  # only when task_assignment == "new"
-    node_updates: list[NodeUpdate]
-    new_task_candidates: list[dict] = []
+    node_updates: list[NodeUpdate] = []
     ambiguity_flags: list[AmbiguityFlag] = []
     item_extractions: list[ItemExtraction] = []
     node_data_extractions: list[NodeDataExtraction] = []
+    new_task_candidates: list[dict] = []
+
+
+class AgentOutput(BaseModel):
+    task_outputs: list[TaskOutput]
 
 
 _HAS_NUMBERS = re.compile(r'\d')

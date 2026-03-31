@@ -40,42 +40,49 @@ _OUTPUT_SPEC = """
 Respond with valid JSON only. No prose, no markdown fences.
 
 {
-  "task_assignment": "<task_id from entity tasks list, 'new', or empty string — see rules below>",
-  "new_task_order_type": "<'client_order' or 'supplier_order' — only if task_assignment is 'new', else null>",
-  "node_updates": [
+  "task_outputs": [
     {
-      "node_id": "<node id from template>",
-      "new_status": "<status — see rules below>",
-      "confidence": <0.0 to 1.0>,
-      "evidence": "<brief message excerpt or reason>"
-    }
-  ],
-  "new_task_candidates": [],
-  "ambiguity_flags": [
-    {
-      "description": "<plain English description of the ambiguity>",
-      "severity": "<high|medium|low>",
-      "category": "<entity|quantity|status|timing|linkage>",
-      "blocking_node_id": "<node_id to block, or null if non-blocking>"
-    }
-  ],
-  "item_extractions": [
-    {
-      "operation": "<add|update|remove>",
-      "description": "<item description as stated in this message>",
-      "unit": "<unit, e.g. kg/pcs/bags/litres, or null if not mentioned>",
-      "quantity": <number or null>,
-      "specs": "<additional spec notes, or null>",
-      "existing_description": "<copy exactly from current order items for update/remove; null for add>"
-    }
-  ],
-  "node_data_extractions": [
-    {
-      "node_id": "<node_id from template>",
-      "data": { "<field>": "<value>", "...": "..." }
+      "task_assignment": "<existing task_id or 'new' — see task assignment rules>",
+      "new_task_order_type": "<'client_order' or 'supplier_order' — only when task_assignment is 'new', else null>",
+      "node_updates": [
+        {
+          "node_id": "<node id from template>",
+          "new_status": "<status — see rules below>",
+          "confidence": <0.0 to 1.0>,
+          "evidence": "<brief message excerpt or reason>"
+        }
+      ],
+      "new_task_candidates": [],
+      "ambiguity_flags": [
+        {
+          "description": "<plain English description of the ambiguity>",
+          "severity": "<high|medium|low>",
+          "category": "<entity|quantity|status|timing|linkage>",
+          "blocking_node_id": "<node_id to block, or null if non-blocking>"
+        }
+      ],
+      "item_extractions": [
+        {
+          "operation": "<add|update|remove>",
+          "description": "<item description as stated in this message>",
+          "unit": "<unit, e.g. kg/pcs/bags/litres, or null if not mentioned>",
+          "quantity": <number or null>,
+          "specs": "<additional spec notes, or null>",
+          "existing_description": "<copy exactly from current order items for update/remove; null for add>"
+        }
+      ],
+      "node_data_extractions": [
+        {
+          "node_id": "<node_id from template>",
+          "data": { "<field>": "<value>", "...": "..." }
+        }
+      ]
     }
   ]
 }
+
+task_outputs is ALWAYS a list, even for single-task messages (list of one).
+If the message references multiple tasks, include one entry per task.
 
 ## Status values
 - pending       : not yet started
@@ -216,29 +223,32 @@ emit a new_task_candidates entry:
 If filled_from_stock is activated, emit:
   {"type": "stock_taking_update", "items": "<items mentioned>", "source_task_id": "<task_id>"}
 
-## Task assignment (only when "Active tasks for this entity" section is present)
+## Task assignment
 
-If the user section shows multiple tasks for this entity, you must decide which task
-this message belongs to. Follow this reasoning chain:
+For EVERY entry in task_outputs, set task_assignment to a valid task_id or "new".
 
-Step 1 — Does this message contain NEW item information (items not in any task)?
-  YES → check all tasks' items. If no task has these items AND all tasks are confirmed
-        (mature) → set task_assignment = "new". If an unconfirmed task exists → assign there.
-  NO  → this is a follow-up (payment, delivery, status, ack). Go to step 2.
+When "Active tasks for this entity" section is present (multiple tasks):
+  Follow this reasoning for each piece of content in the message:
 
-Step 2 — Match to an existing task by context:
-  - If message mentions items by name → find the task containing those items.
-  - If message is about payment/delivery → find the task in the relevant stage.
-  - If message is a generic ack or unclear → assign to the most recently active task.
+  Step 1 — Does this message reference items or topics from an existing task?
+    YES → create a task_outputs entry for that task with relevant node_updates/items.
+    If the message references MULTIPLE existing tasks, create one entry per task.
+
+  Step 2 — Does this message contain NEW items not in any existing task?
+    All tasks confirmed (mature) → add entry with task_assignment = "new".
+    An unconfirmed task exists → assign new items there (add entry for that task).
+
+  Step 3 — Generic message (ack, greeting, unclear) → assign to most recently active task.
+
+When no entity tasks section (single task):
+  Single entry in task_outputs with the current task_id as task_assignment.
 
 Rules:
-  - task_assignment must be set to an existing task_id from the entity tasks list,
-    or "new", or "" (empty = use current task, for backward compat when no entity tasks shown).
+  - task_assignment must be a valid task_id from the entity tasks list, or "new".
   - ALWAYS prefer existing tasks. "new" only when items are clearly distinct from ALL tasks.
-  - If unsure, assign to the most relevant existing task — never create unnecessary tasks.
-  - node_updates and item_extractions apply to the assigned task.
-  - A mature task (order_confirmation or supplier_confirmation = completed) has its items
-    locked. New items for a mature entity must go to a new task or an immature task.
+  - If unsure, assign to the most relevant existing task.
+  - A [CONFIRMED] task has its items locked — new items must go to "new" or an unconfirmed task.
+  - Most messages touch only ONE task — task_outputs will usually have one entry.
 """
 
 

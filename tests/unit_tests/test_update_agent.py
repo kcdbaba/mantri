@@ -14,6 +14,20 @@ from src.agent.update_agent import (
 )
 
 
+def _valid_output_json(**task_output_overrides):
+    """Build valid AgentOutput JSON with the new task_outputs schema."""
+    task_output = {
+        "task_assignment": "t1",
+        "node_updates": [],
+        "new_task_candidates": [],
+        "ambiguity_flags": [],
+        "item_extractions": [],
+        "node_data_extractions": [],
+        **task_output_overrides,
+    }
+    return json.dumps({"task_outputs": [task_output]})
+
+
 # ---------------------------------------------------------------------------
 # _parse_raw
 # ---------------------------------------------------------------------------
@@ -23,35 +37,23 @@ from src.agent.update_agent import (
 class TestParseRaw:
 
     def test_valid_json_parses(self):
-        raw = json.dumps({
-            "node_updates": [{"node_id": "client_enquiry", "new_status": "completed",
-                              "confidence": 0.9, "evidence": "test"}],
-            "new_task_candidates": [],
-            "ambiguity_flags": [],
-            "item_extractions": [],
-            "node_data_extractions": [],
-        })
+        raw = _valid_output_json(node_updates=[
+            {"node_id": "client_enquiry", "new_status": "completed",
+             "confidence": 0.9, "evidence": "test"}
+        ])
         result = _parse_raw(raw, "t1", "m1")
         assert result is not None
-        assert len(result.node_updates) == 1
-        assert result.node_updates[0].node_id == "client_enquiry"
+        assert len(result.task_outputs) == 1
+        assert len(result.task_outputs[0].node_updates) == 1
+        assert result.task_outputs[0].node_updates[0].node_id == "client_enquiry"
 
     def test_markdown_fences_stripped(self):
-        inner = json.dumps({
-            "node_updates": [], "new_task_candidates": [],
-            "ambiguity_flags": [], "item_extractions": [],
-            "node_data_extractions": [],
-        })
-        raw = f"```json\n{inner}\n```"
+        raw = f"```json\n{_valid_output_json()}\n```"
         result = _parse_raw(raw, "t1", "m1")
         assert result is not None
 
     def test_array_wrapped_output_unwrapped(self):
-        inner = {
-            "node_updates": [], "new_task_candidates": [],
-            "ambiguity_flags": [], "item_extractions": [],
-            "node_data_extractions": [],
-        }
+        inner = json.loads(_valid_output_json())
         raw = json.dumps([inner])
         result = _parse_raw(raw, "t1", "m1")
         assert result is not None
@@ -65,31 +67,28 @@ class TestParseRaw:
         assert result is None
 
     def test_empty_output_parses(self):
-        raw = json.dumps({
-            "node_updates": [], "new_task_candidates": [],
-            "ambiguity_flags": [], "item_extractions": [],
-            "node_data_extractions": [],
-        })
+        raw = _valid_output_json()
         result = _parse_raw(raw, "t1", "m1")
         assert result is not None
-        assert result.node_updates == []
+        assert result.task_outputs[0].node_updates == []
 
     def test_full_output_with_all_fields(self):
-        raw = json.dumps({
-            "node_updates": [{"node_id": "dispatched", "new_status": "completed",
-                              "confidence": 0.95, "evidence": "goods sent"}],
-            "new_task_candidates": [{"type": "client_notification"}],
-            "ambiguity_flags": [{"description": "which entity?", "severity": "medium",
-                                 "category": "entity", "blocking_node_id": None}],
-            "item_extractions": [{"operation": "add", "description": "atta 50kg"}],
-            "node_data_extractions": [{"node_id": "dispatched",
-                                       "data": {"dispatch_date": "2026-03-25"}}],
-        })
+        raw = _valid_output_json(
+            node_updates=[{"node_id": "dispatched", "new_status": "completed",
+                           "confidence": 0.95, "evidence": "goods sent"}],
+            new_task_candidates=[{"type": "client_notification"}],
+            ambiguity_flags=[{"description": "which entity?", "severity": "medium",
+                              "category": "entity", "blocking_node_id": None}],
+            item_extractions=[{"operation": "add", "description": "atta 50kg"}],
+            node_data_extractions=[{"node_id": "dispatched",
+                                    "data": {"dispatch_date": "2026-03-25"}}],
+        )
         result = _parse_raw(raw, "t1", "m1")
-        assert len(result.node_updates) == 1
-        assert len(result.ambiguity_flags) == 1
-        assert len(result.item_extractions) == 1
-        assert len(result.node_data_extractions) == 1
+        to = result.task_outputs[0]
+        assert len(to.node_updates) == 1
+        assert len(to.ambiguity_flags) == 1
+        assert len(to.item_extractions) == 1
+        assert len(to.node_data_extractions) == 1
 
 
 # ---------------------------------------------------------------------------
@@ -202,11 +201,7 @@ class TestLLMResponse:
 class TestRunUpdateAgentInputNorm:
 
     def _valid_raw(self):
-        return json.dumps({
-            "node_updates": [], "new_task_candidates": [],
-            "ambiguity_flags": [], "item_extractions": [],
-            "node_data_extractions": [],
-        })
+        return _valid_output_json()
 
     _SENTINEL = object()
 

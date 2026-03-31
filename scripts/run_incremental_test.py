@@ -301,15 +301,21 @@ def score_multi_message_case(case_dir: Path) -> dict:
             result["details"].append(f"AGENT FAILURE on message seq={msg['seq']}")
             return result
 
+        # Unwrap to single TaskOutput
+        task_output = output.task_outputs[0] if output.task_outputs else None
+        if not task_output:
+            result["details"].append(f"EMPTY task_outputs on message seq={msg['seq']}")
+            continue
+
         # Simulate deterministic stock path → order_ready auto-trigger
-        _simulate_deterministic_triggers(output, {
+        _simulate_deterministic_triggers(task_output, {
             "task_id": initial_state["task_id"],
             "nodes": [{"node_id": k, "status": v} for k, v in current_nodes.items()],
         })
 
         message_history.append(msg)
         msg_result = {"seq": msg["seq"], "updates": []}
-        for upd in output.node_updates:
+        for upd in task_output.node_updates:
             current_nodes[upd.node_id] = upd.new_status
             msg_result["updates"].append(f"{upd.node_id} → {upd.new_status}")
         result["per_message"].append(msg_result)
@@ -433,33 +439,35 @@ def run_case(case_dir: Path) -> dict:
     )
     elapsed = time.time() - t0
 
-    # Simulate deterministic stock path → order_ready auto-trigger
-    # (in production this runs in the router worker after update_agent)
-    if output:
-        _simulate_deterministic_triggers(output, task_state)
+    # Unwrap to single TaskOutput (incremental tests always target one task)
+    task_output = output.task_outputs[0] if output and output.task_outputs else None
 
-    result = score_single_message_case(case_dir, output)
+    # Simulate deterministic stock path → order_ready auto-trigger
+    if task_output:
+        _simulate_deterministic_triggers(task_output, task_state)
+
+    result = score_single_message_case(case_dir, task_output)
     result["elapsed_s"] = round(elapsed, 2)
     result["quality_risk_dimension"] = meta.get("quality_risk_dimension", "unknown")
     result["case_name"] = meta.get("name", "")
 
-    if output:
+    if task_output:
         result["raw_updates"] = [
             {"node_id": u.node_id, "status": u.new_status, "conf": u.confidence}
-            for u in output.node_updates
+            for u in task_output.node_updates
         ]
-        result["raw_candidates"] = output.new_task_candidates
+        result["raw_candidates"] = task_output.new_task_candidates
         result["raw_item_extractions"] = [
             {"op": e.operation, "desc": e.description, "qty": e.quantity, "unit": e.unit}
-            for e in output.item_extractions
+            for e in task_output.item_extractions
         ]
         result["raw_node_data"] = [
             {"node_id": e.node_id, "keys": list(e.data.keys())}
-            for e in output.node_data_extractions
+            for e in task_output.node_data_extractions
         ]
         result["raw_ambiguity_flags"] = [
             {"severity": f.severity, "category": f.category, "blocking": f.blocking_node_id}
-            for f in output.ambiguity_flags
+            for f in task_output.ambiguity_flags
         ]
 
     return result
