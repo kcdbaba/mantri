@@ -1,12 +1,13 @@
 ---
 # Mantri deployment playbook
 # Usage (from project root):
-#   source .env
 #   ssh-add ~/.ssh/DO_Mantri_droplet
-#   echo "$ANSIBLE_VAULT_PASSWORD" | ansible-playbook deploy/playbook.yml \
-#     --vault-password-file /dev/stdin \
-#     -i deploy/inventory.yml \
-#     --private-key ~/.ssh/DO_Mantri_droplet
+#
+#   Full provision (first time or infra changes):
+#     ansible-playbook -i deploy/inventory.yml deploy/playbook.yml --vault-password-file ~/.mantri_vault_pass
+#
+#   Code-only deploy (fast — skips apt, firewall, nginx, htpasswd):
+#     ansible-playbook -i deploy/inventory.yml deploy/playbook.yml --vault-password-file ~/.mantri_vault_pass --tags deploy
 
 - name: Provision and configure Mantri server
   hosts: mantri
@@ -25,6 +26,7 @@
         update_cache: yes
         upgrade: dist
         cache_valid_time: 3600
+      tags: [provision]
 
     - name: Install system dependencies
       ansible.builtin.apt:
@@ -39,12 +41,14 @@
           - ffmpeg
           - ufw
         state: present
+      tags: [provision]
 
     - name: Enable and start Redis
       ansible.builtin.systemd:
         name: redis-server
         enabled: yes
         state: started
+      tags: [provision]
 
     # -----------------------------------------------------------------------
     # Firewall
@@ -54,22 +58,26 @@
       community.general.ufw:
         rule: allow
         port: "22"
+      tags: [provision]
 
     - name: Allow HTTPS
       community.general.ufw:
         rule: allow
         port: "443"
+      tags: [provision]
 
     - name: Allow HTTP (for Let's Encrypt renewal)
       community.general.ufw:
         rule: allow
         port: "80"
+      tags: [provision]
 
     - name: Enable UFW (deny all other inbound)
       community.general.ufw:
         state: enabled
         policy: deny
         direction: incoming
+      tags: [provision]
 
     # -----------------------------------------------------------------------
     # Directories
@@ -80,6 +88,7 @@
         path: /etc/mantri
         state: directory
         mode: "0755"
+      tags: [provision]
 
     # -----------------------------------------------------------------------
     # Secrets
@@ -90,6 +99,7 @@
         src: templates/secrets.env.j2
         dest: /etc/mantri/secrets.env
         mode: "0600"
+      tags: [provision, deploy]
 
     # -----------------------------------------------------------------------
     # Code deployment
@@ -102,6 +112,7 @@
         version: "{{ repo_branch }}"
         force: yes
         update: yes
+      tags: [deploy]
 
     - name: Create data, logs, and phoenix data directories
       ansible.builtin.file:
@@ -112,18 +123,19 @@
         - "{{ app_dir }}/data"
         - "{{ app_dir }}/data/phoenix"
         - "{{ app_dir }}/logs"
-
-    # (data/logs/phoenix dirs handled above)
+      tags: [deploy]
 
     - name: Create Python venv
       ansible.builtin.command:
         cmd: python3.12 -m venv "{{ venv_dir }}"
         creates: "{{ venv_dir }}/bin/activate"
+      tags: [deploy]
 
     - name: Install Python dependencies
       ansible.builtin.pip:
         requirements: "{{ app_dir }}/{{ requirements_file }}"
         virtualenv: "{{ venv_dir }}"
+      tags: [deploy]
 
     # -----------------------------------------------------------------------
     # Database
@@ -137,6 +149,7 @@
         DB_PATH: "{{ db_path }}"
       register: db_init
       changed_when: "'Schema initialised' in db_init.stdout"
+      tags: [deploy]
 
     # -----------------------------------------------------------------------
     # Systemd services
@@ -153,6 +166,7 @@
         - cron_worker
         - ambiguity_worker
       notify: Reload systemd
+      tags: [provision]
 
     - name: Enable and start Mantri services
       ansible.builtin.systemd:
@@ -164,6 +178,7 @@
         - linkage_worker
         - cron_worker
         - ambiguity_worker
+      tags: [provision]
 
     # -----------------------------------------------------------------------
     # Nginx
@@ -175,6 +190,7 @@
         dest: /etc/nginx/sites-available/mantri
         mode: "0644"
       notify: Reload nginx
+      tags: [provision]
 
     - name: Enable nginx site
       ansible.builtin.file:
@@ -182,12 +198,14 @@
         dest: /etc/nginx/sites-enabled/mantri
         state: link
       notify: Reload nginx
+      tags: [provision]
 
     - name: Remove nginx default site
       ansible.builtin.file:
         path: /etc/nginx/sites-enabled/default
         state: absent
       notify: Reload nginx
+      tags: [provision]
 
     - name: Create developer htpasswd
       ansible.builtin.command:
@@ -195,6 +213,7 @@
           htpasswd -cb /etc/nginx/.htpasswd_developer
           {{ developer_user }} {{ developer_password }}
       no_log: true
+      tags: [provision]
 
     - name: Create admin htpasswd
       ansible.builtin.command:
@@ -202,12 +221,14 @@
           htpasswd -cb /etc/nginx/.htpasswd_admin
           {{ admin_user }} {{ admin_password }}
       no_log: true
+      tags: [provision]
 
     - name: Enable and start nginx
       ansible.builtin.systemd:
         name: nginx
         enabled: yes
         state: started
+      tags: [provision]
 
     # -----------------------------------------------------------------------
     # Phoenix systemd service
@@ -219,12 +240,14 @@
         dest: /etc/systemd/system/mantri-phoenix.service
         mode: "0644"
       notify: Reload systemd
+      tags: [provision]
 
     - name: Enable and start Phoenix
       ansible.builtin.systemd:
         name: mantri-phoenix
         enabled: yes
         state: started
+      tags: [provision]
 
   handlers:
     - name: Reload systemd
