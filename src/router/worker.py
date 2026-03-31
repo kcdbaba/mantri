@@ -597,21 +597,7 @@ def _create_task_from_candidate(candidate: dict, message: dict,
 
     entity_id = candidate.get("entity_id") or f"entity_{uuid.uuid4().hex[:6]}"
     entity_name = candidate.get("entity_name", "")
-
-    # Dedup: check if same (entity_id, order_type) was created in last 5 minutes
     now = int(time.time())
-    conn = get_connection()
-    recent = conn.execute(
-        """SELECT id FROM task_instances
-           WHERE client_id=? AND order_type=? AND source='live' AND created_at >= ?
-           LIMIT 1""",
-        (entity_id, order_type, now - 300),
-    ).fetchone()
-    conn.close()
-    if recent:
-        log.info("DEDUP: task for (%s, %s) already created recently → %s",
-                 entity_id, order_type, recent[0])
-        return None
 
     # Build aliases from candidate
     aliases = []
