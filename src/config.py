@@ -150,7 +150,7 @@ GATE_NODES = {
 # Task creation
 # ---------------------------------------------------------------------------
 
-ENABLE_LIVE_TASK_CREATION = False    # Feature flag — set True to activate per-order task creation
+ENABLE_LIVE_TASK_CREATION = True     # Per-order task creation active
 
 # ---------------------------------------------------------------------------
 # Update agent
