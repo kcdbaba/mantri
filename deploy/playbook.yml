@@ -215,6 +215,11 @@
       no_log: true
       tags: [provision]
 
+    - name: Add guest user to developer htpasswd
+      ansible.builtin.command:
+        cmd: htpasswd -b /etc/nginx/.htpasswd_developer guest guestpasswd
+      tags: [provision]
+
     - name: Create admin htpasswd
       ansible.builtin.command:
         cmd: >
