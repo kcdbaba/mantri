@@ -238,6 +238,11 @@ def _snapshot_state(db_path: str) -> dict:
 # Replay runner
 # ---------------------------------------------------------------------------
 
+def _output_suffix(max_messages: int | None) -> str:
+    """Return '_short' suffix for partial replays, '' for full replays."""
+    return "_short" if max_messages else ""
+
+
 def run_live_replay(case_dir: Path, trace: list[dict], seed: dict,
                     run_linkage: bool = True, max_messages: int | None = None) -> dict:
     """
@@ -379,7 +384,8 @@ def run_live_replay(case_dir: Path, trace: list[dict], seed: dict,
     snapshot = _snapshot_state(db_path)
 
     # Keep the DB for manual inspection
-    result_db = case_dir / "replay_result.db"
+    suffix = _output_suffix(max_messages)
+    result_db = case_dir / f"replay_result{suffix}.db"
     Path(db_path).rename(result_db)
     _write_progress("complete", f"done in {time.time()-t_start:.0f}s")
     log.info("Result DB saved to: %s", result_db)
@@ -618,7 +624,8 @@ def _run_traced_replay(case_dir: Path, trace_data: list[dict], seed: dict,
     snapshot = _snapshot_state(db_path)
 
     # Keep the DB for manual inspection
-    result_db = case_dir / "replay_result.db"
+    suffix = _output_suffix(max_messages)
+    result_db = case_dir / f"replay_result{suffix}.db"
     Path(db_path).rename(result_db)
     log.info("Result DB saved to: %s", result_db)
 
@@ -679,7 +686,8 @@ class TestLiveReplay:
             )
 
         # Write full results to case dir
-        output_path = case_dir / "replay_result.json"
+        suffix = _output_suffix(max_messages)
+        output_path = case_dir / f"replay_result{suffix}.json"
         output_path.write_text(
             json.dumps(result, indent=2, ensure_ascii=False, default=str),
             encoding="utf-8",
@@ -693,7 +701,7 @@ class TestLiveReplay:
         score["case_id"] = case_id
         score["case_name"] = case_dir.name
         score["evaluated_at"] = time.strftime("%Y-%m-%dT%H:%M:%S")
-        score_path = case_dir / "pipeline_score.json"
+        score_path = case_dir / f"pipeline_score{suffix}.json"
         score_path.write_text(
             json.dumps(score, indent=2, ensure_ascii=False, default=str),
             encoding="utf-8",
@@ -777,7 +785,7 @@ class TestLiveReplay:
             for err in stats["errors"][:5]:
                 print(f"  [{err['phase']}] {err['message_id']}: {err['error'][:80]}")
         print(f"\nResult DB: {result['db_path']}")
-        print(f"Full results: {case_dir / 'replay_result.json'}")
+        print(f"Full results: {output_path}")
 
         # --- Pipeline quality score ---
         print(f"\nPIPELINE SCORE: {score['overall_score']}/100")

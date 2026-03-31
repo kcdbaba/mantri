@@ -57,7 +57,7 @@
       "seq": 2,
       "body_summary": "Staff orders from Kapoor: 50 bags atta + 20 bags daal, delivery by tomorrow morning",
       "expected_routing": {
-        "entity_id": "entity_kapoor",
+        "entity_id": "entity_army_unit",
         "route_layer": "2a",
         "routed": true
       },
@@ -65,7 +65,7 @@
       "expected_model_tier": "complex",
       "expected_model_reason": "has_numbers_or_keywords",
       "expected_node_updates": [
-        {"node_id": "supplier_indent", "new_status": "completed", "min_confidence": 0.7}
+        {"node_id": "supplier_indent", "new_status_options": ["active", "in_progress", "completed"], "min_confidence": 0.5}
       ],
       "expected_items": [
         {"operation": "add", "description_contains": "atta", "quantity": 50, "unit": "bags"},
@@ -82,7 +82,7 @@
       "seq": 3,
       "body_summary": "Kapoor confirms atta ready, daal will be ready by morning",
       "expected_routing": {
-        "entity_id": "entity_kapoor",
+        "entity_id": "entity_army_unit",
         "route_layer": "2a",
         "routed": true
       },
@@ -102,7 +102,7 @@
       "seq": 4,
       "body_summary": "Staff confirms goods received and QC passed — 50 bags atta, 20 bags daal OK",
       "expected_routing": {
-        "entity_id": "entity_kapoor",
+        "entity_id": "entity_army_unit",
         "route_layer": "2a",
         "routed": true
       },

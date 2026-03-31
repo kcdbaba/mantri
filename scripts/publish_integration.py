@@ -525,6 +525,7 @@ def _case_section(case: dict) -> str:
 
     # Pipeline score from pipeline_score.json if available
     score_path = Path(CASES_DIR) / case["_case_dir"] / "pipeline_score.json"
+    p_score = None
     if score_path.exists():
         p_score = json.loads(score_path.read_text())
         score_val = p_score.get("overall_score", "")
@@ -607,16 +608,79 @@ def _case_section(case: dict) -> str:
 
     amb_table_id = case_id.replace("-", "_").replace(" ", "_")
 
+    # Eval Scores section from pipeline_score.json dimensions
+    eval_scores_html = ""
+    if p_score:
+        dimensions = p_score.get("dimensions", {})
+        # Show the DAG eval dimensions if available
+        # Prioritised DAG eval dimensions — show these first, then any others
+        # Covers both requested names and actual keys found in pipeline_score.json
+        dag_dims = ["routing", "extraction", "item_extraction",
+                     "node_progression", "node_updates", "ambiguity_quality"]
+        dim_rows = []
+        for dim_key in dag_dims:
+            if dim_key in dimensions:
+                dim = dimensions[dim_key]
+                d_score = dim.get("score")
+                d_notes = dim.get("notes", "")
+                if d_score is None:
+                    score_str = "<span class='dim'>n/a</span>"
+                else:
+                    d_cls = "pass" if d_score >= 70 else ("partial" if d_score >= 50 else "fail")
+                    score_str = f"<span class='{d_cls}'>{d_score}</span>"
+                dim_rows.append(
+                    f"<tr><td>{dim_key.replace('_', ' ').title()}</td>"
+                    f"<td>{score_str}</td>"
+                    f"<td class='dim'>{d_notes}</td></tr>"
+                )
+        # Also show any other dimensions not in the DAG set
+        for dim_key, dim in dimensions.items():
+            if dim_key not in dag_dims:
+                d_score = dim.get("score")
+                d_notes = dim.get("notes", "")
+                if d_score is None:
+                    score_str = "<span class='dim'>n/a</span>"
+                else:
+                    d_cls = "pass" if d_score >= 70 else ("partial" if d_score >= 50 else "fail")
+                    score_str = f"<span class='{d_cls}'>{d_score}</span>"
+                dim_rows.append(
+                    f"<tr><td>{dim_key.replace('_', ' ').title()}</td>"
+                    f"<td>{score_str}</td>"
+                    f"<td class='dim'>{d_notes}</td></tr>"
+                )
+        if dim_rows:
+            eval_scores_html = (
+                f"<details>"
+                f"<summary class='sub-summary'>Eval Scores</summary>"
+                f"<table class='detail'>"
+                f"<thead><tr><th>Dimension</th><th>Score</th><th>Notes</th></tr></thead>"
+                f"<tbody>{''.join(dim_rows)}</tbody></table>"
+                f"</details>"
+            )
+
+    # Phoenix trace link from run record
+    phoenix_link_html = ""
+    if run_record_path:
+        rr = json.loads(run_record_path[0].read_text())
+        phoenix_ep = rr.get("phoenix_endpoint", "")
+        if phoenix_ep:
+            phoenix_link_html = (
+                f"<p class='dim' style='margin-top:0.5rem'>"
+                f"<a href='{phoenix_ep}' target='_blank'>View Phoenix traces</a></p>"
+            )
+
     return (
         f"<div class='case'>"
         f"<details open>"
         f"<summary class='case-summary'>{summary_line}</summary>"
         f"<p class='case-desc'>{case_name}: {description}</p>"
         f"{summary}"
+        f"{phoenix_link_html}"
         f"<details open>"
         f"<summary class='sub-summary'>Node States & Items</summary>"
         f"{''.join(node_sections)}"
         f"</details>"
+        f"{eval_scores_html}"
         f"<details>"
         f"<summary class='sub-summary'>Ambiguity Flags ({n_flags})</summary>"
         f"{_ambiguity_table(state['ambiguity_flags'], amb_table_id)}"
@@ -772,9 +836,19 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
             cost_html = f"${total_cost:.2f}" if total_cost else "\u2014"
 
             routed_val = f"{latest.get('messages_routed',0)}/{latest.get('messages_total',0)}"
+            noise_count = latest.get("messages_noise", 0)
+            noise_str = f" ({noise_count} noise)" if noise_count else ""
             tasks_created = latest.get("tasks_created", len(latest.get("node_summary", {})))
             p_score = latest.get("pipeline_score", "")
             p_score_html = f"{p_score}" if p_score else "\u2014"
+            r_mode = latest.get("routing_mode", "")
+            mode_badge = f" <span class='badge badge-mode'>{r_mode}</span>" if r_mode else ""
+            traced_icon = " <span class='badge badge-traced'>T</span>" if latest.get("traced") else ""
+            phoenix_ep = latest.get("phoenix_endpoint", "")
+            phoenix_link = (
+                f" <a href='{phoenix_ep}' target='_blank' class='dim' "
+                f"style='font-size:0.72rem'>traces</a>"
+            ) if phoenix_ep else ""
             meta = latest.get("run_metadata", {})
             config_html = ""
             if meta:
@@ -790,9 +864,11 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
 
             rows.append(
                 f"<tr class='group-row' data-group='{group_key}' onclick='toggleGroup(this)'>"
-                f"<td><span class='toggle'>&#9654;</span> {case_id} ({n_runs} runs)</td>"
+                f"<td><span class='toggle'>&#9654;</span> {case_id} ({n_runs} runs)"
+                f"{mode_badge}{traced_icon}{phoenix_link}</td>"
                 f"<td data-value='{latest_mode}' data-empty=''>{latest_mode}</td>"
-                f"<td data-value='{routed_val}' data-empty=''>{routed_val}</td>"
+                f"<td data-value='{routed_val}{noise_str}' data-empty=''>"
+                f"{routed_val}{(' <span class=dim>' + noise_str + '</span>') if noise_str else ''}</td>"
                 f"<td data-value='{total_nodes}' data-empty=''>{total_nodes}</td>"
                 f"<td data-value='{link_count}' data-empty=''>{link_count}</td>"
                 f"<td data-value='{latest.get('ambiguity_flag_count',0)}' data-empty=''>"
@@ -826,11 +902,17 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                 else:
                     r_models = "\u2014"
                     r_cost = "\u2014"
+                r_rm = r.get("routing_mode", "")
+                r_rm_badge = f" <span class='badge badge-mode'>{r_rm}</span>" if r_rm else ""
+                r_traced = " <span class='badge badge-traced'>T</span>" if r.get("traced") else ""
+                r_noise = r.get("messages_noise", 0)
+                r_noise_str = f" <span class='dim'>({r_noise} noise)</span>" if r_noise else ""
+
                 rows.append(
                     f"<tr class='group-child' data-group='{group_key}'>"
-                    f"<td class='dim'>{_fmt_dt(r.get('run_at',''))}</td>"
+                    f"<td class='dim'>{_fmt_dt(r.get('run_at',''))}{r_rm_badge}{r_traced}</td>"
                     f"<td>{mode}</td>"
-                    f"<td>{r.get('messages_routed',0)}/{r.get('messages_total',0)}</td>"
+                    f"<td>{r.get('messages_routed',0)}/{r.get('messages_total',0)}{r_noise_str}</td>"
                     f"<td>{r_total_nodes}</td>"
                     f"<td>{r_link_count}</td>"
                     f"<td>{r.get('ambiguity_flag_count',0)}</td>"
@@ -977,6 +1059,11 @@ summary.task-summary:hover { color: #4a90d9; }
 }
 .pagination button:hover { background: #242c3a; }
 .page-indicator { color: #4a5568; }
+.badge { display: inline-block; font-size: 0.65rem; padding: 0.1rem 0.35rem;
+         border-radius: 3px; vertical-align: middle; margin-left: 0.3rem;
+         font-weight: 600; letter-spacing: 0.03em; }
+.badge-mode { background: #2d3748; color: #63b3ed; }
+.badge-traced { background: #2f855a; color: #c6f6d5; }
 """
 
 
