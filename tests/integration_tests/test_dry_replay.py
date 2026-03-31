@@ -181,7 +181,13 @@ class TestDryReplay:
 
             group_routed = Counter()
             group_unrouted = Counter()
+            noise_count = 0
             for msg in trace:
+                body = (msg.get("body") or "").strip()
+                has_image = bool(msg.get("image_path") or msg.get("image_bytes"))
+                if not body and not has_image:
+                    noise_count += 1
+                    continue  # noise — don't count in routing rate
                 routes = route(msg)
                 if routes:
                     group_routed[msg["group_id"]] += 1
@@ -191,13 +197,16 @@ class TestDryReplay:
         Path(db_path).unlink(missing_ok=True)
 
         total = len(trace)
+        routable = total - noise_count
         routed_count = sum(group_routed.values())
-        rate = routed_count / total if total else 0
+        rate = routed_count / routable if routable else 0
 
         save_run_record("dry", case_id, {
             "total": total,
+            "noise": noise_count,
+            "routable": routable,
             "routed": routed_count,
-            "unrouted": total - routed_count,
+            "unrouted": routable - routed_count,
             "routing_rate": round(rate, 4),
             "per_group": {
                 g: {"routed": group_routed.get(g, 0), "unrouted": group_unrouted.get(g, 0)}
