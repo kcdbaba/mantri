@@ -774,18 +774,20 @@ def _system_summary(int_runs: list[dict], real_runs: list[dict],
             cost = latest.get("total_cost", 0)
             dead = latest.get("dead_letter_count", 0)
 
-            # Tags
-            tags = []
+            # Tags as badges with hover tooltips
+            tag_badges = []
             rm = latest.get("routing_mode", "")
             if rm:
-                tags.append(rm)
+                tip = "Entity-first routing (v0.3.0+)" if rm == "entity_first" else "Legacy batch routing"
+                tag_badges.append(f"<span class='badge badge-mode' title='{tip}'>{rm}</span>")
             if latest.get("traced"):
-                tags.append("traced")
+                tag_badges.append("<span class='badge badge-traced' title='Phoenix OTEL tracing enabled'>T</span>")
             if latest.get("skip_linkage"):
-                tags.append("skip-linkage")
+                tag_badges.append("<span class='badge badge-warn' title='Linkage agent skipped'>no-link</span>")
             if latest.get("max_messages"):
-                tags.append(f"max-{latest['max_messages']}")
-            tags_str = ", ".join(tags) if tags else "—"
+                n = latest["max_messages"]
+                tag_badges.append(f"<span class='badge badge-dim' title='Partial replay (first {n} messages)'>max-{n}</span>")
+            tags_html = " ".join(tag_badges) if tag_badges else "<span class='dim'>—</span>"
 
             score_html = f"<span class='pass'>{score}</span>" if score and score >= 70 else (
                 f"<span class='partial'>{score}</span>" if score and score >= 50 else
@@ -799,7 +801,7 @@ def _system_summary(int_runs: list[dict], real_runs: list[dict],
                 f"<td>{tasks}</td>"
                 f"<td>{dead}</td>"
                 f"<td>{score_html}</td>"
-                f"<td class='dim'>{tags_str}</td>"
+                f"<td>{tags_html}</td>"
                 f"<td class='dim'>${cost:.2f}</td>"
                 f"<td class='dim'>{_fmt_dt(latest.get('run_at', ''))}</td>"
                 f"</tr>"
@@ -883,6 +885,12 @@ tr:hover td { background: #1a2030; }
 table.matrix td, table.matrix th { padding: 0.3rem 0.6rem; text-align: center; }
 table.matrix td.case-id { text-align: left; }
 nav { margin-bottom: 2rem; font-size: 0.82rem; }
+.badge { display: inline-block; padding: 0.1rem 0.4rem; border-radius: 3px;
+         font-size: 0.7rem; font-weight: 500; margin: 0 0.1rem; cursor: help; }
+.badge-mode { background: #2d3748; color: #63b3ed; }
+.badge-traced { background: #2f855a; color: #c6f6d5; }
+.badge-warn { background: #744210; color: #fefcbf; }
+.badge-dim { background: #1a2030; color: #718096; border: 1px solid #2d3748; }
 .dim { font-size: 0.85rem; color: #4a5568; }
 /* Collapsible group rows */
 .group-row { cursor: pointer; background: #1a2030; }

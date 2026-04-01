@@ -928,16 +928,24 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                     f"<td>{r_cost}</td>"
                     f"<td class='dim'>{r.get('run_metadata', {}).get('git_commit', '')}</td></tr>"
                 )
-                # Show run_notes as a sub-row if present
+                # Show run_notes as a connected sub-row
                 notes = r.get("run_notes", "")
                 if notes:
                     escaped_notes = html_mod.escape(notes, quote=True)
+                    # Remove border-bottom from the data row above
+                    prev_row = rows[-1]
+                    rows[-1] = prev_row.replace(
+                        f"<tr class='group-child' data-group='{group_key}'>",
+                        f"<tr class='group-child has-note' data-group='{group_key}' "
+                        f"style='border-bottom:none'>",
+                    )
                     rows.append(
-                        f"<tr class='group-child note-row' data-group='{group_key}'>"
-                        f"<td colspan='13' style='padding-left:2.5rem; "
-                        f"border-left:3px solid #2d3748; background:#0d1017; "
-                        f"font-size:0.78rem; color:#718096'>"
-                        f"📝 {escaped_notes}</td></tr>"
+                        f"<tr class='group-child note-row' data-group='{group_key}' "
+                        f"title='Run note for the row above'>"
+                        f"<td colspan='13' style='padding:0.2rem 0.75rem 0.4rem 2.5rem; "
+                        f"border-top:none; border-left:3px solid #4a90d9; "
+                        f"background:#0d1017; font-size:0.75rem; color:#718096'>"
+                        f"↳ <em>{escaped_notes}</em></td></tr>"
                     )
         sections.append(
             "<h3>Live Replay History</h3>"
