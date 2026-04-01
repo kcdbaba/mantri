@@ -972,28 +972,17 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                         f"background:#0d1017; font-size:0.75rem; color:#718096'>"
                         f"↳ <em>{escaped_notes}</em></td></tr>"
                     )
-            # Insert pagination controls as first child row (above data rows)
+            # Store page count on group header for JS to inject controls
             total_pages = (len(case_runs) + PAGE_SIZE - 1) // PAGE_SIZE
             if total_pages > 1:
-                # Find the index where child rows for this group start
-                # (right after the group header row)
-                insert_idx = None
+                # Add data-pages to the group header row so JS can inject controls
                 for ri in range(len(rows)):
-                    if f"data-group='{group_key}'" in rows[ri] and "group-child" in rows[ri]:
-                        insert_idx = ri
+                    if f"data-group='{group_key}'" in rows[ri] and "group-row" in rows[ri]:
+                        rows[ri] = rows[ri].replace(
+                            f"data-group='{group_key}'",
+                            f"data-group='{group_key}' data-pages='{total_pages}'",
+                        )
                         break
-                ctrl_row = (
-                    f"<tr class='group-child pagination-row' data-group='{group_key}'>"
-                    f"<td colspan='13'><div class='pagination'>"
-                    f"<button onclick=\"paginateGroup('{group_key}',-1)\">‹ Prev</button>"
-                    f"<span id='gpage-ind-{group_key}'>Page 1 of {total_pages}</span>"
-                    f"<button onclick=\"paginateGroup('{group_key}',1)\">Next ›</button>"
-                    f"</div></td></tr>"
-                )
-                if insert_idx is not None:
-                    rows.insert(insert_idx, ctrl_row)
-                else:
-                    rows.append(ctrl_row)
 
         sections.append(
             "<h3>Live Replay History</h3>"
@@ -1180,6 +1169,33 @@ function toggleGroup(row) {
         } else {
             tds[j].innerHTML = tds[j].getAttribute('data-html');
         }
+    }
+    // Inject/remove pagination controls in header row
+    var totalPages = parseInt(row.getAttribute('data-pages') || '0');
+    var existingCtrl = row.querySelector('.gpag-ctrl');
+    if (isOpen && totalPages > 1 && !existingCtrl) {
+        var curPage = gpageState[group] || 0;
+        var firstTd = row.querySelector('td:first-child');
+        if (firstTd) {
+            var ctrl = document.createElement('span');
+            ctrl.className = 'gpag-ctrl pagination';
+            ctrl.style.cssText = 'margin-left:1rem; display:inline-flex';
+            var prevBtn = document.createElement('button');
+            prevBtn.textContent = '‹';
+            prevBtn.onclick = function(e) { e.stopPropagation(); paginateGroup(group, -1); };
+            var ind = document.createElement('span');
+            ind.id = 'gpage-ind-' + group;
+            ind.textContent = 'Page ' + (curPage+1) + ' of ' + totalPages;
+            var nextBtn = document.createElement('button');
+            nextBtn.textContent = '›';
+            nextBtn.onclick = function(e) { e.stopPropagation(); paginateGroup(group, 1); };
+            ctrl.appendChild(prevBtn);
+            ctrl.appendChild(ind);
+            ctrl.appendChild(nextBtn);
+            firstTd.appendChild(ctrl);
+        }
+    } else if (!isOpen && existingCtrl) {
+        existingCtrl.remove();
     }
 }
 
