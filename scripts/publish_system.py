@@ -94,23 +94,27 @@ def _load_runs() -> list[dict]:
 
 
 def _build_tags_html(run: dict) -> str:
-    """Build tags badges with hover tooltips from a run record."""
+    """Build concise tag badges with hover tooltips from a run record."""
     badges = []
+    # Routing mode
     rm = run.get("routing_mode", "")
-    if rm:
-        tip = "Entity-first routing (v0.3.0+)" if rm == "entity_first" else "Legacy batch routing"
-        badges.append(f"<span class='badge badge-mode' title='{tip}'>{rm}</span>")
+    if rm == "entity_first":
+        badges.append("<span class='tag tag-mode' title='Entity-first routing (v0.3.0+)'>E</span>")
+    elif rm == "legacy_batch":
+        badges.append("<span class='tag tag-legacy' title='Legacy batch routing (pre v0.3.0)'>L</span>")
+    # Tracing
     if run.get("traced"):
-        badges.append("<span class='badge badge-traced' title='Phoenix OTEL tracing enabled'>T</span>")
-    if run.get("skip_linkage"):
-        badges.append("<span class='badge badge-warn' title='Linkage agent skipped'>no-link</span>")
+        badges.append("<span class='tag tag-traced' title='Phoenix OTEL tracing enabled'>T</span>")
+    # Agents used
+    badges.append("<span class='tag tag-agent' title='Update agent for order processing'>AO</span>")
+    if not run.get("skip_linkage"):
+        badges.append("<span class='tag tag-agent' title='Linkage agent for fulfillment matching'>AL</span>")
+    # AS (conversation routing) — future
+    # badges.append("<span class='tag tag-dim' title='Conversation routing for shared groups (under construction)'>AS</span>")
+    # Partial replay
     max_msgs = run.get("max_messages")
     if max_msgs:
-        badges.append(f"<span class='badge badge-dim' title='Partial replay (first {max_msgs} messages)'>max-{max_msgs}</span>")
-    phoenix_eps = run.get("phoenix_endpoints") or []
-    if phoenix_eps:
-        eps_str = ", ".join(str(e) for e in phoenix_eps)
-        badges.append(f"<span class='badge badge-dim' title='Phoenix endpoints: {eps_str}'>phoenix</span>")
+        badges.append(f"<span class='tag tag-dim' title='Partial replay (first {max_msgs} messages)'>{max_msgs}</span>")
     return " ".join(badges) if badges else "<span class='dim'>\u2014</span>"
 
 
@@ -1081,11 +1085,14 @@ summary.task-summary:hover { color: #4a90d9; }
 }
 .pagination button:hover { background: #242c3a; }
 .page-indicator { color: #4a5568; }
-.badge { display: inline-block; font-size: 0.65rem; padding: 0.1rem 0.35rem;
-         border-radius: 3px; vertical-align: middle; margin-left: 0.3rem;
-         font-weight: 600; letter-spacing: 0.03em; }
-.badge-mode { background: #2d3748; color: #63b3ed; }
-.badge-traced { background: #2f855a; color: #c6f6d5; }
+.tag { display: inline-block; padding: 0.1rem 0.35rem; border-radius: 3px;
+       font-size: 0.68rem; font-weight: 600; margin: 0 1px; cursor: help;
+       letter-spacing: 0.02em; vertical-align: middle; }
+.tag-mode { background: #2d3748; color: #63b3ed; }
+.tag-legacy { background: #2d3748; color: #a0aec0; }
+.tag-traced { background: #2f855a; color: #c6f6d5; }
+.tag-agent { background: #2a4365; color: #90cdf4; }
+.tag-dim { background: #1a2030; color: #718096; border: 1px solid #2d3748; }
 """
 
 
@@ -1188,6 +1195,19 @@ def generate() -> str:
   <div id="history">
   {_run_history(runs, cases)}
   </div>
+
+  <details style="margin:1rem 0">
+  <summary class="dim" style="cursor:pointer; font-size:0.78rem">Tag Legend</summary>
+  <table class="detail" style="margin-top:0.3rem; font-size:0.78rem">
+  <tr><td><span class="tag tag-mode">E</span></td><td>Entity-first routing (v0.3.0+)</td></tr>
+  <tr><td><span class="tag tag-legacy">L</span></td><td>Legacy batch routing (pre v0.3.0)</td></tr>
+  <tr><td><span class="tag tag-traced">T</span></td><td>Phoenix OTEL tracing enabled</td></tr>
+  <tr><td><span class="tag tag-agent">AO</span></td><td>Update agent — order processing</td></tr>
+  <tr><td><span class="tag tag-agent">AL</span></td><td>Linkage agent — fulfillment matching</td></tr>
+  <tr><td><span class="tag tag-dim">AS</span></td><td>Shared groups conversation routing (planned)</td></tr>
+  <tr><td><span class="tag tag-dim">N</span></td><td>Partial replay — first N messages only</td></tr>
+  </table>
+  </details>
 
   <h2 id="results">Latest Replay Results</h2>
   {case_sections}

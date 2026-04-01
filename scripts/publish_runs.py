@@ -751,6 +751,22 @@ def _load_eval_runs() -> tuple[list[dict], list[dict]]:
 
 # ── System tests compact summary ───────────────────────────────────────────────
 
+def _tag_legend() -> str:
+    return (
+        "<details style='margin-top:0.75rem'>"
+        "<summary class='dim' style='cursor:pointer; font-size:0.78rem'>Tag Legend</summary>"
+        "<table class='detail' style='margin-top:0.3rem; font-size:0.78rem'>"
+        "<tr><td><span class='tag tag-mode'>E</span></td><td>Entity-first routing (v0.3.0+)</td></tr>"
+        "<tr><td><span class='tag tag-legacy'>L</span></td><td>Legacy batch routing (pre v0.3.0)</td></tr>"
+        "<tr><td><span class='tag tag-traced'>T</span></td><td>Phoenix OTEL tracing enabled</td></tr>"
+        "<tr><td><span class='tag tag-agent'>AO</span></td><td>Update agent — order processing</td></tr>"
+        "<tr><td><span class='tag tag-agent'>AL</span></td><td>Linkage agent — fulfillment matching</td></tr>"
+        "<tr><td><span class='tag tag-dim'>AS</span></td><td>Shared groups conversation routing (planned)</td></tr>"
+        "<tr><td><span class='tag tag-dim'>N</span></td><td>Partial replay — first N messages only</td></tr>"
+        "</table></details>"
+    )
+
+
 def _system_summary(int_runs: list[dict], real_runs: list[dict],
                      synth_runs: list[dict]) -> str:
     """Compact summary of system tests for /runs/ page."""
@@ -774,19 +790,21 @@ def _system_summary(int_runs: list[dict], real_runs: list[dict],
             cost = latest.get("total_cost", 0)
             dead = latest.get("dead_letter_count", 0)
 
-            # Tags as badges with hover tooltips
+            # Concise tag badges with hover tooltips
             tag_badges = []
             rm = latest.get("routing_mode", "")
-            if rm:
-                tip = "Entity-first routing (v0.3.0+)" if rm == "entity_first" else "Legacy batch routing"
-                tag_badges.append(f"<span class='badge badge-mode' title='{tip}'>{rm}</span>")
+            if rm == "entity_first":
+                tag_badges.append("<span class='tag tag-mode' title='Entity-first routing (v0.3.0+)'>E</span>")
+            elif rm == "legacy_batch":
+                tag_badges.append("<span class='tag tag-legacy' title='Legacy batch routing (pre v0.3.0)'>L</span>")
             if latest.get("traced"):
-                tag_badges.append("<span class='badge badge-traced' title='Phoenix OTEL tracing enabled'>T</span>")
-            if latest.get("skip_linkage"):
-                tag_badges.append("<span class='badge badge-warn' title='Linkage agent skipped'>no-link</span>")
+                tag_badges.append("<span class='tag tag-traced' title='Phoenix OTEL tracing enabled'>T</span>")
+            tag_badges.append("<span class='tag tag-agent' title='Update agent for order processing'>AO</span>")
+            if not latest.get("skip_linkage"):
+                tag_badges.append("<span class='tag tag-agent' title='Linkage agent for fulfillment matching'>AL</span>")
             if latest.get("max_messages"):
                 n = latest["max_messages"]
-                tag_badges.append(f"<span class='badge badge-dim' title='Partial replay (first {n} messages)'>max-{n}</span>")
+                tag_badges.append(f"<span class='tag tag-dim' title='Partial replay (first {n} messages)'>{n}</span>")
             tags_html = " ".join(tag_badges) if tag_badges else "<span class='dim'>—</span>"
 
             score_html = f"<span class='pass'>{score}</span>" if score and score >= 70 else (
@@ -833,15 +851,7 @@ def _system_summary(int_runs: list[dict], real_runs: list[dict],
 
     # Tags legend
     sections.append(
-        "<details style='margin-top:1rem'>"
-        "<summary class='dim' style='cursor:pointer'>Tag Legend</summary>"
-        "<table class='detail' style='margin-top:0.5rem'>"
-        "<tr><td><code>entity_first</code></td><td>Entity-first routing (v0.3.0+)</td></tr>"
-        "<tr><td><code>legacy_batch</code></td><td>Legacy batch routing (pre v0.3.0)</td></tr>"
-        "<tr><td><code>traced</code></td><td>Phoenix OTEL tracing enabled</td></tr>"
-        "<tr><td><code>skip-linkage</code></td><td>Linkage agent skipped (update agent only)</td></tr>"
-        "<tr><td><code>max-N</code></td><td>Partial replay (first N messages only)</td></tr>"
-        "</table></details>"
+        _tag_legend()
     )
 
     return "\n".join(sections) if sections else "<p class='empty'>No system test results yet.</p>"
@@ -885,12 +895,14 @@ tr:hover td { background: #1a2030; }
 table.matrix td, table.matrix th { padding: 0.3rem 0.6rem; text-align: center; }
 table.matrix td.case-id { text-align: left; }
 nav { margin-bottom: 2rem; font-size: 0.82rem; }
-.badge { display: inline-block; padding: 0.1rem 0.4rem; border-radius: 3px;
-         font-size: 0.7rem; font-weight: 500; margin: 0 0.1rem; cursor: help; }
-.badge-mode { background: #2d3748; color: #63b3ed; }
-.badge-traced { background: #2f855a; color: #c6f6d5; }
-.badge-warn { background: #744210; color: #fefcbf; }
-.badge-dim { background: #1a2030; color: #718096; border: 1px solid #2d3748; }
+.tag { display: inline-block; padding: 0.1rem 0.35rem; border-radius: 3px;
+       font-size: 0.68rem; font-weight: 600; margin: 0 1px; cursor: help;
+       letter-spacing: 0.02em; vertical-align: middle; }
+.tag-mode { background: #2d3748; color: #63b3ed; }
+.tag-legacy { background: #2d3748; color: #a0aec0; }
+.tag-traced { background: #2f855a; color: #c6f6d5; }
+.tag-agent { background: #2a4365; color: #90cdf4; }
+.tag-dim { background: #1a2030; color: #718096; border: 1px solid #2d3748; }
 .dim { font-size: 0.85rem; color: #4a5568; }
 /* Collapsible group rows */
 .group-row { cursor: pointer; background: #1a2030; }
