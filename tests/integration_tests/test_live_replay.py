@@ -603,7 +603,7 @@ def _run_traced_replay(case_dir: Path, trace_data: list[dict], seed: dict,
 
     metadata = _get_run_metadata()
     run_ctx = RunContext(
-        run_id=f"run_{uuid.uuid4().hex[:8]}",
+        run_id=f"{case_dir.name.split('_')[0]}_{time.strftime('%Y%m%d_%H%M')}",
         case_id=case_dir.name.split("_")[0],
         run_type="live_replay",
         git_commit=metadata.get("git_commit", ""),

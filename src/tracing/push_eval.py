@@ -20,6 +20,7 @@ def push_eval_to_phoenix(
     phoenix_endpoint: str = "http://localhost:6006",
     project_name: str = "mantri",
     auth_headers: dict | None = None,
+    session_id: str | None = None,
 ):
     """
     Run eval and push results to Phoenix as SpanEvaluations.
@@ -49,15 +50,34 @@ def push_eval_to_phoenix(
     state = replay["state"]
 
     client = px.Client(endpoint=phoenix_endpoint, headers=auth_headers or {})
-    trace_df = client.get_spans_dataframe(project_name=project_name, limit=50000)
+    trace_df = client.get_spans_dataframe(project_name=project_name, limit=50000, timeout=60)
 
     if trace_df is None or len(trace_df) == 0:
         log.warning("No spans found in Phoenix project %s", project_name)
         return
 
     msg_spans = trace_df[trace_df["name"].str.startswith("message:")]
+
+    # Filter by session if specified
+    if session_id:
+        msg_spans = msg_spans[msg_spans["attributes.session.id"] == session_id]
+        log.info("Filtered to session %s: %d message spans", session_id, len(msg_spans))
+    elif "attributes.session.id" in msg_spans.columns:
+        # Auto-detect: if case_dir name matches a session's case_id attribute, use that
+        case_id = case_dir.name.split("_")[0]
+        for sid in msg_spans["attributes.session.id"].dropna().unique():
+            session_spans = msg_spans[msg_spans["attributes.session.id"] == sid]
+            if len(session_spans) > 0:
+                run_attrs = session_spans.iloc[0].get("attributes.run", {})
+                if isinstance(run_attrs, dict) and run_attrs.get("case_id") == case_id:
+                    msg_spans = session_spans
+                    session_id = sid
+                    log.info("Auto-detected session %s for case %s: %d spans",
+                             sid, case_id, len(msg_spans))
+                    break
+
     if len(msg_spans) == 0:
-        log.warning("No message spans found")
+        log.warning("No message spans found (session=%s)", session_id)
         return
 
     # Build message_id → span_id lookup
@@ -70,7 +90,7 @@ def push_eval_to_phoenix(
                 msg_span_ids[mid] = row["context.span_id"]
 
     all_span_ids = list(msg_span_ids.values())
-    log.info("Found %d message spans in Phoenix", len(all_span_ids))
+    log.info("Found %d message spans in Phoenix (session=%s)", len(all_span_ids), session_id)
 
     # ── 1. Deterministic scorers → one eval per message span ────────
     card = score_replay(stats, state, trace_df=trace_df)
