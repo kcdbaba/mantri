@@ -1146,35 +1146,46 @@ function toggleGroup(row) {
                 children[i].classList.add('visible');
             }
         }
-        // Inject pagination controls into header row
+        // Inject pagination controls as a spanning cell in header row
         if (hasPagination) {
-            var firstTd = row.querySelector('td:first-child');
-            if (firstTd && !row.querySelector('.gpag-ctrl')) {
-                var ctrl = document.createElement('span');
-                ctrl.className = 'gpag-ctrl pagination';
-                ctrl.style.cssText = 'margin-left:1rem; display:inline-flex; vertical-align:middle';
-                var prevBtn = document.createElement('button');
-                prevBtn.textContent = String.fromCharCode(8249);
-                prevBtn.onclick = function(e) { e.stopPropagation(); paginateGroup(group, -1); };
-                var ind = document.createElement('span');
-                ind.id = 'gpage-ind-' + group;
-                ind.textContent = 'Page ' + (curPage+1) + ' / ' + totalPages;
-                var nextBtn = document.createElement('button');
-                nextBtn.textContent = String.fromCharCode(8250);
-                nextBtn.onclick = function(e) { e.stopPropagation(); paginateGroup(group, 1); };
-                ctrl.appendChild(prevBtn);
-                ctrl.appendChild(ind);
-                ctrl.appendChild(nextBtn);
-                firstTd.appendChild(ctrl);
+            if (!row.querySelector('.gpag-cell')) {
+                // Hide all cells except first, insert spanning pagination cell
+                var allTds = row.querySelectorAll('td');
+                var colsToSpan = allTds.length - 1;
+                for (var c = 1; c < allTds.length; c++) {
+                    allTds[c].style.display = 'none';
+                    allTds[c].classList.add('gpag-hidden');
+                }
+                var pagTd = document.createElement('td');
+                pagTd.className = 'gpag-cell';
+                pagTd.setAttribute('colspan', colsToSpan);
+                pagTd.style.cssText = 'text-align:center';
+                pagTd.innerHTML = '<div class="pagination" style="justify-content:center">' +
+                    '<button id="gprev-' + group + '">&#8249; Prev</button> ' +
+                    '<span id="gpage-ind-' + group + '">Page ' + (curPage+1) + ' / ' + totalPages + '</span> ' +
+                    '<button id="gnext-' + group + '">Next &#8250;</button></div>';
+                row.appendChild(pagTd);
+                // Attach click handlers (stopPropagation to prevent collapse)
+                document.getElementById('gprev-' + group).onclick = function(e) {
+                    e.stopPropagation(); paginateGroup(group, -1);
+                };
+                document.getElementById('gnext-' + group).onclick = function(e) {
+                    e.stopPropagation(); paginateGroup(group, 1);
+                };
             }
         }
     } else {
-        // Collapse — hide all children, remove pagination controls
+        // Collapse — hide all children, remove pagination cell, restore hidden cells
         for (var i = 0; i < children.length; i++) {
             children[i].classList.remove('visible');
         }
-        var ctrl = row.querySelector('.gpag-ctrl');
-        if (ctrl) ctrl.remove();
+        var pagCell = row.querySelector('.gpag-cell');
+        if (pagCell) pagCell.remove();
+        var hiddenCells = row.querySelectorAll('.gpag-hidden');
+        for (var h = 0; h < hiddenCells.length; h++) {
+            hiddenCells[h].style.display = '';
+            hiddenCells[h].classList.remove('gpag-hidden');
+        }
     }
 
     // Swap data cells between showing data and empty
