@@ -1049,7 +1049,7 @@ td.desc { max-width: 400px; font-size: 0.78rem; line-height: 1.4; }
 nav { margin-bottom: 2rem; font-size: 0.82rem; }
 
 /* Group row styles for collapsible history tables */
-.group-row { cursor: pointer; background: #1a2030; }
+.group-row { cursor: pointer; background: #1a2030; border-top: 6px solid #0f1117; }
 .group-row:hover td { background: #242c3a; }
 .group-row td { font-weight: 600; color: #a0aec0; }
 .group-row .toggle { display: inline-block; width: 1em; font-size: 0.75rem; transition: transform 0.2s; }
