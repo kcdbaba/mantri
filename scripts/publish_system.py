@@ -846,11 +846,8 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
         rows = []
         for case_id in sorted(live_by_case.keys()):
             case_runs = live_by_case[case_id]
-            # Find the latest full run for group row data
-            full_runs = [
-                r for r in case_runs
-                if not r.get("skip_linkage") and not r.get("max_messages")
-            ]
+            # Find the latest full run for group row data (newest, no max_messages)
+            full_runs = [r for r in case_runs if not r.get("max_messages")]
             latest = full_runs[0] if full_runs else case_runs[0]
             group_key = f"live_{case_id}"
             n_runs = len(case_runs)
@@ -894,7 +891,7 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
             rows.append(
                 f"<tr class='group-row' data-group='{group_key}' onclick='toggleGroup(this)'>"
                 f"<td><span class='toggle'>&#9654;</span> {case_id} ({n_runs} runs)</td>"
-                f"<td>{tags_html}</td>"
+                f"<td class='hide-on-expand'>{tags_html}</td>"
                 f"<td data-value='{routed_val}{noise_str}' data-empty=''>"
                 f"{routed_val}{(' <span class=dim>' + noise_str + '</span>') if noise_str else ''}</td>"
                 f"<td data-value='{total_nodes}' data-empty=''>{total_nodes}</td>"
@@ -1046,6 +1043,7 @@ nav { margin-bottom: 2rem; font-size: 0.82rem; }
 .group-row td { font-weight: 600; color: #a0aec0; }
 .group-row .toggle { display: inline-block; width: 1em; font-size: 0.75rem; transition: transform 0.2s; }
 .group-row.open .toggle { transform: rotate(90deg); }
+.group-row.open .hide-on-expand { visibility: hidden; }
 .group-child { display: none; }
 .group-child.visible { display: table-row; }
 
