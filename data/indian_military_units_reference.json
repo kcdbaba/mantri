@@ -578,5 +578,411 @@
       "op", "outpost", "pp", "police post",
       "range", "zone", "dist police"
     ]
+  },
+
+  "numbered_units": {
+    "_meta": {
+      "description": "Actual numbered military units with known details. Use for entity extraction and disambiguation.",
+      "completeness": "Best-effort from open sources. Partial info included where full details unavailable.",
+      "updated": "2026-04-01"
+    },
+
+    "ne_india_units": [
+      {"number": "3", "type": "corps", "full_name": "III Corps (Spear Corps)", "location": "Dimapur (Rangapahar)", "parent": "Eastern Command", "aliases": ["3 corps", "iii corps", "spear corps"]},
+      {"number": "4", "type": "corps", "full_name": "IV Corps (Gajraj Corps)", "location": "Tezpur", "parent": "Eastern Command", "aliases": ["4 corps", "iv corps", "gajraj corps"]},
+      {"number": "33", "type": "corps", "full_name": "XXXIII Corps (Trishakti Corps)", "location": "Sukna (Siliguri)", "parent": "Eastern Command", "aliases": ["33 corps", "xxxiii corps", "trishakti corps"]},
+
+      {"number": "2", "type": "mtn div", "full_name": "2 Mountain Division (Dao Division)", "location": "Dinjan", "parent": "III Corps", "aliases": ["2 mtn div", "2 mountain div", "dao division"]},
+      {"number": "5", "type": "mtn div", "full_name": "5 Mountain Division (Ball of Fire)", "location": "Rupa (near Bomdila)", "parent": "IV Corps", "aliases": ["5 mtn div", "5 mountain div", "ball of fire", "ball of fire division"]},
+      {"number": "21", "type": "mtn div", "full_name": "21 Mountain Division (Red Horn Division)", "location": "Rangia", "parent": "IV Corps", "aliases": ["21 mtn div", "21 mountain div", "red horn", "red horn division"]},
+      {"number": "56", "type": "mtn div", "full_name": "56 Infantry Division", "location": "Likabali", "parent": "III Corps", "aliases": ["56 mtn div", "56 inf div", "56 mountain div"]},
+      {"number": "57", "type": "mtn div", "full_name": "57 Mountain Division (Red Shield Division)", "location": "Leimakhong (near Imphal)", "parent": "III Corps", "aliases": ["57 mtn div", "57 mountain div", "red shield", "red shield division"]},
+      {"number": "71", "type": "mtn div", "full_name": "71 Mountain Division", "location": "Missamari", "parent": "IV Corps", "aliases": ["71 mtn div", "71 mountain div"]},
+      {"number": "17", "type": "mtn div", "full_name": "17 Mountain Division (Black Cat Division)", "location": "Gangtok", "parent": "XXXIII Corps", "aliases": ["17 mtn div", "17 mountain div", "black cat division"]},
+      {"number": "20", "type": "mtn div", "full_name": "20 Mountain Division (Kirpan Division)", "location": "Binnaguri", "parent": "XXXIII Corps", "aliases": ["20 mtn div", "20 mountain div", "kirpan division"]},
+      {"number": "27", "type": "mtn div", "full_name": "27 Mountain Division (Striking Lion Division)", "location": "Kalimpong", "parent": "XXXIII Corps", "aliases": ["27 mtn div", "27 mountain div", "striking lion division"]},
+
+      {"number": "5", "type": "mtn bde", "full_name": "5 Mountain Brigade", "location": "Aalo (Along), Arunachal Pradesh", "parent": "2 Mountain Division", "aliases": ["5 mtn bde", "5 mountain bde", "5 bde"]},
+      {"number": "82", "type": "mtn bde", "full_name": "82 Mountain Brigade", "location": "Tezu, Arunachal Pradesh", "parent": "2 Mountain Division", "aliases": ["82 mtn bde", "82 mountain bde", "82 bde"]},
+      {"number": "181", "type": "mtn bde", "full_name": "181 Mountain Brigade", "location": "Laipuli, Tinsukia", "parent": "2 Mountain Division", "aliases": ["181 mtn bde", "181 mountain bde", "181 bde"]},
+      {"number": "77", "type": "mtn bde", "full_name": "77 Mountain Brigade", "location": "Rangia area", "parent": "21 Mountain Division", "aliases": ["77 mtn bde", "77 mountain bde", "77 bde"]},
+      {"number": "66", "type": "mtn bde", "full_name": "66 Mountain Brigade", "location": "North Assam", "parent": "21 Mountain Division", "aliases": ["66 mtn bde", "66 mountain bde", "66 bde"]},
+      {"number": "107", "type": "inf bde", "full_name": "107 Infantry Brigade", "location": "Tezpur area", "parent": "21 Mountain Division", "aliases": ["107 bde", "107 inf bde", "107 infantry bde"]},
+      {"number": "61", "type": "inf bde", "full_name": "61 Infantry Brigade", "location": "Manipur/Nagaland area", "parent": "57 Mountain Division", "aliases": ["61 bde", "61 inf bde"]},
+      {"number": "73", "type": "mtn bde", "full_name": "73 Mountain Brigade", "location": "Bishnupur, Manipur", "parent": "57 Mountain Division", "aliases": ["73 mtn bde", "73 mountain bde", "73 bde"]},
+      {"number": "311", "type": "mtn bde", "full_name": "311 Mountain Brigade", "location": "Manipur area", "parent": "57 Mountain Division", "aliases": ["311 mtn bde", "311 mountain bde", "311 bde"]},
+      {"number": "46", "type": "mtn bde", "full_name": "46 Mountain Brigade (Dibang)", "location": "Dibang Valley area", "parent": "56 Infantry Division", "aliases": ["46 mtn bde", "46 mountain bde", "46 bde", "46 brigade dibang"]},
+      {"number": "22", "type": "mtn bde", "full_name": "22 Mountain Brigade", "location": "Lekhapani", "parent": "56 Infantry Division / 2 Mountain Division", "aliases": ["22 mtn bde", "22 mountain bde", "22 bde"]},
+      {"number": "9", "type": "mtn bde", "full_name": "9 Mountain Brigade", "location": "Tenga / Bomdila area", "parent": "5 Mountain Division", "aliases": ["9 mtn bde", "9 mountain bde", "9 bde"]},
+      {"number": "114", "type": "mtn bde", "full_name": "114 Mountain Brigade", "location": "Arunachal Pradesh", "parent": "5 Mountain Division", "aliases": ["114 mtn bde", "114 mountain bde", "114 bde"]},
+      {"number": "161", "type": "mtn bde", "full_name": "161 Mountain Brigade", "location": "Arunachal Pradesh", "parent": "5 Mountain Division", "aliases": ["161 mtn bde", "161 mountain bde", "161 bde"]},
+      {"number": "112", "type": "mtn bde", "full_name": "112 Mountain Brigade", "location": "Sikkim", "parent": "17 Mountain Division", "aliases": ["112 mtn bde", "112 mountain bde", "112 bde"]},
+      {"number": "99", "type": "mtn bde", "full_name": "99 Mountain Brigade", "location": "Sikkim area", "parent": "17 Mountain Division", "aliases": ["99 mtn bde", "99 mountain bde", "99 bde"]},
+      {"number": "48", "type": "inf bde", "full_name": "48 Infantry Brigade", "location": "West Bengal / Sikkim corridor", "parent": "XXXIII Corps area", "aliases": ["48 bde", "48 inf bde"]},
+      {"number": "164", "type": "mtn bde", "full_name": "164 Mountain Brigade", "location": "Manipur / Mizoram area", "parent": "III Corps area", "aliases": ["164 mtn bde", "164 mountain bde", "164 bde"]},
+
+      {"number": "315", "type": "fd regt", "full_name": "315 Field Regiment", "location": "Udalguri", "parent": "21 Mountain Division", "aliases": ["315 fd regt", "315 field regt"]},
+
+      {"number": "23", "type": "arty bde", "full_name": "23 Artillery Brigade", "location": "Ranchi (Dipatoli)", "parent": "23 Infantry Division", "aliases": ["23 arty bde"]},
+      {"number": "167", "type": "inf bde", "full_name": "167 Infantry Brigade", "location": "Shahjahanpur", "parent": "23 Infantry Division", "aliases": ["167 bde", "167 inf bde"]}
+    ],
+
+    "infantry_regiment_battalions": {
+      "_doc": "Known battalion counts per infantry regiment. Individual battalions are numbered 1/Regt, 2/Regt etc.",
+      "assam_regt": {
+        "total_battalions": 25,
+        "regular": 15,
+        "rashtriya_rifles": 3,
+        "territorial_army": 5,
+        "arunachal_scouts": 2,
+        "regimental_centre": "Happy Valley, Shillong",
+        "known_battalions": ["1 Assam", "2 Assam", "3 Assam", "4 Assam", "5 Assam", "6 Assam", "7 Assam", "8 Assam", "9 Assam", "10 Assam", "11 Assam", "12 Assam", "13 Assam", "14 Assam", "15 Assam"],
+        "aliases_pattern": "{N} assam"
+      },
+      "naga_regt": {
+        "total_battalions": 3,
+        "regimental_centre": "Ranikhet (affiliated to Kumaon)",
+        "known_battalions": ["1 Naga", "2 Naga", "3 Naga"],
+        "aliases_pattern": "{N} naga"
+      },
+      "1_gorkha_rifles": {
+        "total_battalions": 5,
+        "regimental_centre": "Sabathu",
+        "known_battalions": ["1/1 GR", "2/1 GR", "3/1 GR", "4/1 GR", "5/1 GR"],
+        "aliases_pattern": "{N}/1 GR"
+      },
+      "3_gorkha_rifles": {
+        "total_battalions": 5,
+        "regimental_centre": "Varanasi",
+        "known_battalions": ["1/3 GR", "2/3 GR", "3/3 GR", "4/3 GR", "5/3 GR"],
+        "aliases_pattern": "{N}/3 GR"
+      },
+      "4_gorkha_rifles": {
+        "total_battalions": 5,
+        "regimental_centre": "Sabathu",
+        "known_battalions": ["1/4 GR", "2/4 GR", "3/4 GR", "4/4 GR", "5/4 GR"],
+        "aliases_pattern": "{N}/4 GR"
+      },
+      "5_gorkha_rifles": {
+        "total_battalions": 6,
+        "regimental_centre": "Shillong",
+        "known_battalions": ["1/5 GR", "2/5 GR", "3/5 GR", "4/5 GR", "5/5 GR", "6/5 GR"],
+        "aliases_pattern": "{N}/5 GR",
+        "note": "5 GR (Frontier Force), centre at Shillong—significant NE presence"
+      },
+      "8_gorkha_rifles": {
+        "total_battalions": 6,
+        "regimental_centre": "Shillong",
+        "known_battalions": ["1/8 GR", "2/8 GR", "3/8 GR", "4/8 GR", "5/8 GR", "6/8 GR"],
+        "aliases_pattern": "{N}/8 GR",
+        "note": "Centre at Shillong—significant NE presence"
+      },
+      "9_gorkha_rifles": {
+        "total_battalions": 5,
+        "regimental_centre": "Varanasi",
+        "known_battalions": ["1/9 GR", "2/9 GR", "3/9 GR", "4/9 GR", "5/9 GR"],
+        "aliases_pattern": "{N}/9 GR"
+      },
+      "11_gorkha_rifles": {
+        "total_battalions": 7,
+        "territorial_army": 1,
+        "regimental_centre": "Lucknow",
+        "known_battalions": ["1/11 GR", "2/11 GR", "3/11 GR", "4/11 GR", "5/11 GR", "6/11 GR", "7/11 GR"],
+        "aliases_pattern": "{N}/11 GR",
+        "note": "Raised post-independence, TA bn is 107 Inf Bn (11 GR)"
+      },
+      "jak_rif": {
+        "total_battalions": 15,
+        "regimental_centre": "Jabalpur",
+        "known_battalions": ["1 JAK Rif", "2 JAK Rif", "3 JAK Rif", "4 JAK Rif", "5 JAK Rif", "6 JAK Rif", "7 JAK Rif", "8 JAK Rif", "9 JAK Rif", "10 JAK Rif", "11 JAK Rif", "12 JAK Rif", "13 JAK Rif", "14 JAK Rif", "15 JAK Rif"],
+        "aliases_pattern": "{N} jak rif",
+        "note": "Multiple battalions deployed in NE India for CI ops"
+      },
+      "kumaon_regt": {
+        "total_battalions": 20,
+        "regimental_centre": "Ranikhet",
+        "aliases_pattern": "{N} kumaon",
+        "note": "Includes 3 affiliated Naga Regt battalions"
+      },
+      "rajput_regt": {
+        "total_battalions": 21,
+        "regimental_centre": "Fatehgarh",
+        "aliases_pattern": "{N} rajput"
+      },
+      "sikh_regt": {
+        "total_battalions": 19,
+        "regimental_centre": "Ramgarh",
+        "aliases_pattern": "{N} sikh"
+      },
+      "sikh_li": {
+        "total_battalions": 12,
+        "regimental_centre": "Fatehgarh",
+        "aliases_pattern": "{N} sikh li"
+      },
+      "dogra_regt": {
+        "total_battalions": 18,
+        "regimental_centre": "Faizabad",
+        "aliases_pattern": "{N} dogra"
+      },
+      "jat_regt": {
+        "total_battalions": 20,
+        "regimental_centre": "Bareilly",
+        "aliases_pattern": "{N} jat"
+      },
+      "rajputana_rif": {
+        "total_battalions": 21,
+        "regimental_centre": "Delhi Cantt",
+        "aliases_pattern": "{N} raj rif"
+      },
+      "maratha_li": {
+        "total_battalions": 18,
+        "regimental_centre": "Belgaum",
+        "aliases_pattern": "{N} maratha li"
+      },
+      "grenadiers": {
+        "total_battalions": 18,
+        "regimental_centre": "Jabalpur",
+        "aliases_pattern": "{N} gren"
+      },
+      "madras_regt": {
+        "total_battalions": 19,
+        "regimental_centre": "Wellington",
+        "aliases_pattern": "{N} madras"
+      },
+      "punjab_regt": {
+        "total_battalions": 20,
+        "regimental_centre": "Ramgarh",
+        "aliases_pattern": "{N} punjab"
+      },
+      "bihar_regt": {
+        "total_battalions": 17,
+        "regimental_centre": "Danapur",
+        "aliases_pattern": "{N} bihar"
+      },
+      "mahar_regt": {
+        "total_battalions": 20,
+        "regimental_centre": "Saugor",
+        "aliases_pattern": "{N} mahar"
+      },
+      "guards": {
+        "total_battalions": 20,
+        "regimental_centre": "Kamptee",
+        "aliases_pattern": "{N} guards"
+      },
+      "garhwal_rif": {
+        "total_battalions": 18,
+        "regimental_centre": "Lansdowne",
+        "aliases_pattern": "{N} garh rif"
+      },
+      "mech_inf": {
+        "total_battalions": 10,
+        "regimental_centre": "Ahmednagar",
+        "aliases_pattern": "{N} mech inf"
+      },
+      "para_regt": {
+        "total_battalions": 15,
+        "regimental_centre": "Bengaluru",
+        "aliases_pattern": "{N} para",
+        "note": "Includes SF and Maroon Beret battalions"
+      },
+      "ladakh_scouts": {
+        "total_battalions": 5,
+        "regimental_centre": "Leh",
+        "aliases_pattern": "{N} ladakh scouts"
+      },
+      "arunachal_scouts": {
+        "total_battalions": 2,
+        "regimental_centre": "Arunachal Pradesh",
+        "known_battalions": ["1 Arunachal Scouts", "2 Arunachal Scouts"],
+        "aliases_pattern": "{N} arunachal scouts",
+        "note": "Affiliated to Assam Regiment, based in Arunachal Pradesh"
+      },
+      "sikkim_scouts": {
+        "total_battalions": 1,
+        "regimental_centre": "Sikkim",
+        "known_battalions": ["1 Sikkim Scouts"],
+        "aliases_pattern": "{N} sikkim scouts"
+      }
+    },
+
+    "other_india_units": [
+      {"number": "1", "type": "corps", "full_name": "I Corps", "location": "Mathura", "parent": "Central/Western Command", "aliases": ["1 corps", "i corps"], "note": "Strike Corps"},
+      {"number": "2", "type": "corps", "full_name": "II Corps", "location": "Ambala", "parent": "Western Command", "aliases": ["2 corps", "ii corps"], "note": "Strike Corps"},
+      {"number": "9", "type": "corps", "full_name": "IX Corps", "location": "Yol (near Dharamsala)", "parent": "Western Command", "aliases": ["9 corps", "ix corps"]},
+      {"number": "10", "type": "corps", "full_name": "X Corps", "location": "Bathinda", "parent": "South Western Command", "aliases": ["10 corps", "x corps"]},
+      {"number": "11", "type": "corps", "full_name": "XI Corps", "location": "Jalandhar", "parent": "Western Command", "aliases": ["11 corps", "xi corps"]},
+      {"number": "12", "type": "corps", "full_name": "XII Corps", "location": "Jodhpur", "parent": "Southern Command", "aliases": ["12 corps", "xii corps"]},
+      {"number": "14", "type": "corps", "full_name": "XIV Corps (Fire and Fury Corps)", "location": "Leh", "parent": "Northern Command", "aliases": ["14 corps", "xiv corps", "fire and fury corps"]},
+      {"number": "15", "type": "corps", "full_name": "XV Corps (Chinar Corps)", "location": "Srinagar", "parent": "Northern Command", "aliases": ["15 corps", "xv corps", "chinar corps"]},
+      {"number": "16", "type": "corps", "full_name": "XVI Corps (White Knight Corps)", "location": "Nagrota", "parent": "Northern Command", "aliases": ["16 corps", "xvi corps", "white knight corps"]},
+      {"number": "17", "type": "corps", "full_name": "XVII Corps", "location": "Panagarh", "parent": "Eastern Command", "aliases": ["17 corps", "xvii corps"], "note": "Mountain Strike Corps"},
+      {"number": "21", "type": "corps", "full_name": "XXI Corps (Sudarshan Chakra Corps)", "location": "Bhopal", "parent": "Southern Command", "aliases": ["21 corps", "xxi corps", "sudarshan chakra corps"], "note": "Strike Corps"},
+
+      {"number": "1", "type": "armd div", "full_name": "1 Armoured Division", "location": "Patiala", "parent": "II Corps", "aliases": ["1 armd div"]},
+      {"number": "2", "type": "armd div", "full_name": "2 Armoured Division", "location": "Jhansi", "parent": "I Corps", "aliases": ["2 armd div"]},
+      {"number": "3", "type": "armd div", "full_name": "3 Armoured Division", "location": "Hisar", "parent": "Western Command", "aliases": ["3 armd div"]},
+
+      {"number": "1", "type": "inf div", "full_name": "1 Infantry Division", "location": "Jammu area", "parent": "XVI Corps", "aliases": ["1 inf div"]},
+      {"number": "3", "type": "inf div", "full_name": "3 Infantry Division (Trishul Division)", "location": "Leh", "parent": "XIV Corps", "aliases": ["3 inf div", "trishul division"]},
+      {"number": "4", "type": "inf div", "full_name": "4 Infantry Division", "location": "Allahabad", "parent": "Central Command", "aliases": ["4 inf div"]},
+      {"number": "6", "type": "mtn div", "full_name": "6 Mountain Division", "location": "Bareilly", "parent": "Central Command", "aliases": ["6 mtn div"]},
+      {"number": "7", "type": "inf div", "full_name": "7 Infantry Division", "location": "Ferozepore", "parent": "XI Corps", "aliases": ["7 inf div"]},
+      {"number": "8", "type": "mtn div", "full_name": "8 Mountain Division", "location": "Kargil area", "parent": "XIV Corps", "aliases": ["8 mtn div"], "note": "Switched from NE CI to Kargil high altitude"},
+      {"number": "9", "type": "inf div", "full_name": "9 Infantry Division", "location": "Meerut area", "parent": "I Corps", "aliases": ["9 inf div"]},
+      {"number": "10", "type": "inf div", "full_name": "10 Infantry Division", "location": "Bathinda area", "parent": "X Corps", "aliases": ["10 inf div"]},
+      {"number": "11", "type": "inf div", "full_name": "11 Infantry Division", "location": "Ahmedabad area", "parent": "Southern Command", "aliases": ["11 inf div"]},
+      {"number": "12", "type": "inf div", "full_name": "12 Infantry Division", "location": "Jodhpur area", "parent": "XII Corps", "aliases": ["12 inf div"]},
+      {"number": "14", "type": "rapid div", "full_name": "14 RAPID Division", "location": "Dehradun", "parent": "IX Corps", "aliases": ["14 rapid", "14 inf div"]},
+      {"number": "15", "type": "inf div", "full_name": "15 Infantry Division", "location": "Amritsar", "parent": "XI Corps", "aliases": ["15 inf div", "panther division"]},
+      {"number": "16", "type": "inf div", "full_name": "16 Infantry Division", "location": "Sri Ganganagar", "parent": "X Corps", "aliases": ["16 inf div"]},
+      {"number": "18", "type": "rapid div", "full_name": "18 Infantry Division RAPID", "location": "Kota", "parent": "XII Corps", "aliases": ["18 rapid", "18 inf div"]},
+      {"number": "19", "type": "inf div", "full_name": "19 Infantry Division (Dagger Division)", "location": "Baramulla (J&K)", "parent": "XV Corps", "aliases": ["19 inf div", "dagger division"]},
+      {"number": "22", "type": "inf div", "full_name": "22 Infantry Division", "location": "Mhow", "parent": "XXI Corps", "aliases": ["22 inf div"]},
+      {"number": "23", "type": "inf div", "full_name": "23 Infantry Division", "location": "Ranchi (Dipatoli)", "parent": "III Corps", "aliases": ["23 inf div"]},
+      {"number": "24", "type": "inf div", "full_name": "24 Infantry Division (RAPID)", "location": "Bikaner area", "parent": "South Western Command", "aliases": ["24 inf div", "24 rapid"]},
+      {"number": "25", "type": "inf div", "full_name": "25 Infantry Division", "location": "Rajauri (J&K)", "parent": "XVI Corps", "aliases": ["25 inf div"]},
+      {"number": "26", "type": "inf div", "full_name": "26 Infantry Division", "location": "Jammu area", "parent": "XVI Corps", "aliases": ["26 inf div"]},
+      {"number": "28", "type": "inf div", "full_name": "28 Infantry Division", "location": "Gurez/J&K", "parent": "XV Corps", "aliases": ["28 inf div"]},
+      {"number": "29", "type": "inf div", "full_name": "29 Infantry Division", "location": "Pathankot", "parent": "IX Corps", "aliases": ["29 inf div"]},
+      {"number": "36", "type": "rapid div", "full_name": "36 Infantry Division RAPID", "location": "Ambala area", "parent": "II Corps", "aliases": ["36 rapid", "36 inf div"]},
+      {"number": "33", "type": "armd div", "full_name": "33 Armoured Division", "location": "Hisar", "parent": "I/II Corps", "aliases": ["33 armd div"]},
+
+      {"number": "40", "type": "arty div", "full_name": "40 Artillery Division", "location": "Ambala area", "parent": "II Corps", "aliases": ["40 arty div"]},
+      {"number": "41", "type": "arty div", "full_name": "41 Artillery Division", "location": "Mathura area", "parent": "I Corps", "aliases": ["41 arty div"]},
+
+      {"number": "50", "type": "indep para bde", "full_name": "50 Independent Parachute Brigade", "location": "Agra", "parent": "Army HQ Reserve", "aliases": ["50 para bde", "50 indep para bde"]}
+    ],
+
+    "capf_ne_units": {
+      "assam_rifles": {
+        "total_battalions": 46,
+        "hq": "DGAR, Laitkor, Shillong",
+        "igar_hqs": [
+          {"name": "IGAR (North)", "location": "Kohima, Nagaland"},
+          {"name": "IGAR (South)", "location": "Mantripukhri, Imphal, Manipur"},
+          {"name": "IGAR (East)", "location": "Silchar, Assam"}
+        ],
+        "sector_hqs": [
+          {"number": "5", "location": "Poonch (J&K)", "parent": "IGAR (North)", "note": "Deployed outside NE"},
+          {"number": "6", "location": "Dimapur, Nagaland", "parent": "IGAR (North)"},
+          {"number": "7", "location": "Tuensang, Nagaland", "parent": "IGAR (North)"},
+          {"number": "9", "location": "Imphal, Manipur", "parent": "IGAR (South)"},
+          {"number": "10", "location": "Ukhrul, Manipur", "parent": "IGAR (South)"},
+          {"number": "21", "location": "Agartala, Tripura", "parent": "IGAR (East)"},
+          {"number": "22", "location": "Haflong, Assam", "parent": "IGAR (East)"},
+          {"number": "23", "location": "Aizawl, Mizoram", "parent": "IGAR (East)"},
+          {"number": "25", "location": "Lekhapani, Assam", "parent": "IGAR (East)"},
+          {"number": "26", "location": "Thoubal, Manipur", "parent": "IGAR (South)"},
+          {"number": "27", "location": "Churachandpur, Manipur", "parent": "IGAR (South)"},
+          {"number": "28", "location": "Kakching, Manipur", "parent": "IGAR (South)"}
+        ],
+        "known_battalions": [
+          "1 AR", "2 AR", "3 AR", "4 AR", "5 AR", "6 AR", "7 AR", "8 AR", "9 AR", "10 AR",
+          "11 AR", "12 AR", "13 AR", "14 AR", "15 AR", "16 AR", "17 AR", "18 AR", "19 AR", "20 AR",
+          "21 AR", "22 AR", "23 AR", "24 AR", "25 AR", "26 AR", "27 AR", "28 AR", "29 AR", "30 AR",
+          "31 AR", "32 AR", "33 AR", "34 AR", "35 AR", "36 AR", "37 AR", "38 AR", "39 AR", "40 AR",
+          "41 AR", "42 AR", "43 AR", "44 AR", "45 AR", "46 AR"
+        ],
+        "aliases_pattern": "{N} AR, {N} assam rifles"
+      },
+
+      "bsf_ne": {
+        "description": "BSF guards Indo-Bangladesh border in NE: Assam, West Bengal, Meghalaya, Tripura, Mizoram",
+        "total_battalions_india": 193,
+        "ne_frontiers": [
+          {"name": "Guwahati Frontier", "location": "Guwahati, Assam", "border_coverage": "Indo-Bangladesh border in Assam"},
+          {"name": "Meghalaya Frontier", "location": "Shillong, Meghalaya", "border_coverage": "856 km Indo-Bangladesh border through hills/forests"},
+          {"name": "Tripura Frontier", "location": "Agartala, Tripura", "border_coverage": "Indo-Bangladesh border in Tripura"},
+          {"name": "Mizoram & Cachar Frontier", "location": "Masimpur, Silchar, Assam", "border_coverage": "Indo-Bangladesh/Myanmar border in Mizoram and Cachar"}
+        ],
+        "note": "Specific battalion numbers in NE are operational deployment details; battalions rotate. Total 802 BOPs along 4096 km Indo-Bangladesh border."
+      },
+
+      "crpf_ne": {
+        "description": "CRPF North East Zone handles CI/IS ops in all NE states",
+        "ne_zone_details": {
+          "total_battalions": 60,
+          "cobra_battalions": 1,
+          "sectors": [
+            "HQ Manipur & Nagaland Sector",
+            "HQ Jorhat Ops Sector",
+            "HQ Lower Assam Ops Range",
+            "HQ North Eastern Sector"
+          ],
+          "group_centres": 6,
+          "hospitals": 3
+        },
+        "known_ne_battalions": [
+          {"number": "128", "location": "IOC Complex, Noonmati, Guwahati (Kamrup)", "type": "bn crpf"},
+          {"number": "109", "location": "Mongsangei, Canchipur, West Imphal", "type": "bn crpf"}
+        ],
+        "aliases_pattern": "{N} bn crpf, {N} crpf"
+      },
+
+      "itbp_ne": {
+        "description": "ITBP guards India-China border from Karakoram to Diphu La",
+        "total_battalions_india": 60,
+        "ne_deployment": "Replaced Assam Rifles in Sikkim and Arunachal Pradesh in 2004. Multiple battalions along LAC in Arunachal.",
+        "recent_additions": "6 new battalions added for Arunachal Pradesh deployment",
+        "aliases_pattern": "{N} bn itbp, {N} itbp"
+      },
+
+      "ssb_ne": {
+        "description": "SSB guards India-Bhutan and India-Nepal borders",
+        "total_battalions_india": 73,
+        "ne_deployment": "Guards India-Bhutan border in Assam, West Bengal, Arunachal Pradesh, Sikkim",
+        "historical_note": "First established at Tezpur in Assam (1963) after 1962 war",
+        "ne_frontiers": [
+          {"name": "SSB Frontier HQ", "location": "Tezpur", "border_coverage": "India-Bhutan border sector"},
+          {"name": "SSB Frontier HQ", "location": "Siliguri", "border_coverage": "India-Nepal/Bhutan border sector"}
+        ],
+        "aliases_pattern": "{N} bn ssb, {N} ssb"
+      }
+    },
+
+    "sub_areas": [
+      {"number": "51", "full_name": "51 Sub Area", "location": "Panjabari, Narangi, Guwahati", "parent": "Eastern Command", "aliases": ["51 sub area", "51 sa", "hq 51 sub area"], "note": "Controls military stations in Assam area"},
+      {"number": "473", "full_name": "473 Sub Area", "location": "Tezpur area (estimated)", "parent": "Eastern Command", "aliases": ["473 sub area", "473 sa"], "note": "Details limited; sub areas are static formations controlling stations"}
+    ],
+
+    "station_hqs": [
+      {"name": "Stn HQ Narangi", "location": "Narangi, Guwahati", "parent": "51 Sub Area", "aliases": ["stn hq narangi", "station hq narangi", "narangi stn hq"], "note": "3300 acres, major base in Guwahati"},
+      {"name": "Stn HQ Tezpur", "location": "Tezpur, Assam", "parent": "IV Corps area", "aliases": ["stn hq tezpur", "station hq tezpur"]},
+      {"name": "Stn HQ Missamari", "location": "Missamari, Assam", "parent": "IV Corps area", "aliases": ["stn hq missamari", "station hq missamari"], "note": "3500+ acres, established 1961, Army Aviation base"},
+      {"name": "Stn HQ Rangapahar", "location": "Rangapahar, Dimapur, Nagaland", "parent": "III Corps", "aliases": ["stn hq rangapahar", "station hq rangapahar", "rangapahar ms"]},
+      {"name": "Stn HQ Dinjan", "location": "Dinjan, Dibrugarh, Assam", "parent": "2 Mountain Division", "aliases": ["stn hq dinjan", "station hq dinjan"], "note": "Nerve centre for LAC operations, operates Heron UAVs"},
+      {"name": "Stn HQ Tenga", "location": "Tenga, Arunachal Pradesh", "parent": "5 Mountain Division", "aliases": ["stn hq tenga", "station hq tenga", "tenga garrison"]},
+      {"name": "Stn HQ Bomdila", "location": "Bomdila, Arunachal Pradesh", "parent": "5 Mountain Division", "aliases": ["stn hq bomdila"]},
+      {"name": "Stn HQ Leimakhong", "location": "Leimakhong, Manipur", "parent": "57 Mountain Division", "aliases": ["stn hq leimakhong", "station hq leimakhong"]},
+      {"name": "Stn HQ Shillong", "location": "Shillong, Meghalaya", "parent": "Eastern Command area", "aliases": ["stn hq shillong"]},
+      {"name": "Stn HQ Umroi", "location": "Umroi, near Shillong, Meghalaya", "parent": "Eastern Command area", "aliases": ["stn hq umroi"]},
+      {"name": "Stn HQ Jorhat", "location": "Jorhat, Assam", "parent": "Eastern Command area", "aliases": ["stn hq jorhat"]},
+      {"name": "Stn HQ Likabali", "location": "Likabali, Arunachal Pradesh", "parent": "56 Infantry Division", "aliases": ["stn hq likabali"]},
+      {"name": "Stn HQ Lokra", "location": "Lokra, near Tezpur", "parent": "IV Corps area", "aliases": ["stn hq lokra"]},
+      {"name": "Stn HQ Binnaguri", "location": "Binnaguri, West Bengal", "parent": "XXXIII Corps", "aliases": ["stn hq binnaguri"]},
+      {"name": "Stn HQ Sukna", "location": "Sukna, near Siliguri, West Bengal", "parent": "XXXIII Corps", "aliases": ["stn hq sukna"]},
+      {"name": "Stn HQ Gangtok", "location": "Gangtok, Sikkim", "parent": "17 Mountain Division", "aliases": ["stn hq gangtok"]},
+      {"name": "Stn HQ Hashimara", "location": "Hashimara, West Bengal", "parent": "XXXIII Corps area", "aliases": ["stn hq hashimara"]},
+      {"name": "Stn HQ Bengdubi", "location": "Bengdubi, West Bengal", "parent": "XXXIII Corps area", "aliases": ["stn hq bengdubi"]},
+      {"name": "Stn HQ Panagarh", "location": "Panagarh, West Bengal", "parent": "XVII Corps", "aliases": ["stn hq panagarh"]},
+      {"name": "Stn HQ Kohima", "location": "Kohima, Nagaland", "parent": "III Corps area", "aliases": ["stn hq kohima"]},
+      {"name": "Stn HQ Imphal", "location": "Imphal, Manipur", "parent": "III Corps area", "aliases": ["stn hq imphal"]},
+      {"name": "Stn HQ Aizawl", "location": "Aizawl, Mizoram", "parent": "III Corps area", "aliases": ["stn hq aizawl"]},
+      {"name": "Stn HQ Agartala", "location": "Agartala, Tripura", "parent": "III Corps area", "aliases": ["stn hq agartala"]},
+      {"name": "Stn HQ Kalimpong", "location": "Kalimpong, West Bengal", "parent": "27 Mountain Division", "aliases": ["stn hq kalimpong"]},
+      {"name": "Stn HQ Tezu", "location": "Tezu, Arunachal Pradesh", "parent": "2 Mountain Division", "aliases": ["stn hq tezu"]},
+      {"name": "Stn HQ Aalo", "location": "Aalo (Along), Arunachal Pradesh", "parent": "5 Mountain Brigade", "aliases": ["stn hq aalo", "stn hq along"]}
+    ],
+
+    "ne_military_hospitals": [
+      {"name": "MH Narangi", "location": "Narangi, Guwahati", "aliases": ["mh narangi", "mh guwahati", "military hospital narangi"]},
+      {"name": "MH Tezpur", "location": "Tezpur, Assam", "aliases": ["mh tezpur", "military hospital tezpur"]},
+      {"name": "MH Missamari", "location": "Missamari, Assam", "aliases": ["mh missamari"]},
+      {"name": "MH Rangapahar", "location": "Rangapahar, Dimapur", "aliases": ["mh rangapahar", "mh dimapur"]},
+      {"name": "MH Dinjan", "location": "Dinjan, Assam", "aliases": ["mh dinjan"]},
+      {"name": "MH Leimakhong", "location": "Leimakhong, Manipur", "aliases": ["mh leimakhong"]},
+      {"name": "MH Shillong", "location": "Shillong, Meghalaya", "aliases": ["mh shillong"]},
+      {"name": "Command Hospital (Eastern Command)", "location": "Kolkata", "aliases": ["ch ec", "command hospital kolkata"]}
+    ]
   }
 }
