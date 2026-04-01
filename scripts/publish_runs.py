@@ -677,8 +677,6 @@ def _integration_section(runs: list[dict]) -> str:
             tasks_n = latest.get("tasks_created", len(latest.get("node_summary", {})))
             meta = latest.get("run_metadata", {})
             config_str = meta.get("git_commit", "")
-            if meta.get("live_task_creation"):
-                config_str += " tc=on"
             note = latest.get("run_notes", "")
             note_icon = f" <span title='{html_mod.escape(note, quote=True)}'>&#9432;</span>" if note else ""
 

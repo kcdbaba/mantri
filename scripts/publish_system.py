@@ -593,8 +593,7 @@ def _case_section(case: dict) -> str:
         run_meta = run_record.get("run_metadata", {})
         if run_meta.get("git_commit"):
             stat_items.append(("Git", run_meta["git_commit"], "dim"))
-        if run_meta.get("live_task_creation"):
-            stat_items.append(("Task creation", "enabled", ""))
+        # live_task_creation always on since entity-first routing (v0.3.0)
 
     stat_cells = []
     for label, value, cls in stat_items:
@@ -881,8 +880,7 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                 parts = []
                 if meta.get("git_commit"):
                     parts.append(meta["git_commit"])
-                if meta.get("live_task_creation"):
-                    parts.append("task_create=on")
+                # live_task_creation always on, not shown
                 if meta.get("note"):
                     config_html = f"<span title='{html_mod.escape(meta['note'], quote=True)}'>" + " ".join(parts) + " ⓘ</span>"
                 else:
