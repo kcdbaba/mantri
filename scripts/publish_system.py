@@ -807,7 +807,7 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
 
             rows.append(
                 f"<tr class='group-row' data-group='{group_key}' onclick='toggleGroup(this)'>"
-                f"<td><span class='toggle'>&#9654;</span> {case_id} ({n_runs} runs)</td>"
+                f"<td><span class='toggle'>&#9654;</span> {case_id}</td>"
                 f"<td data-value='{latest.get('total', 0)}' data-empty=''>{latest.get('total', 0)}</td>"
                 f"<td data-value='{rate}' data-empty=''>{rate}</td>"
                 f"<td data-value='{per_group_plain}' data-empty=''>{per_group_html}</td></tr>"
@@ -888,7 +888,7 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
 
             rows.append(
                 f"<tr class='group-row' data-group='{group_key}' onclick='toggleGroup(this)'>"
-                f"<td><span class='toggle'>&#9654;</span> {case_id} ({n_runs} runs)</td>"
+                f"<td><span class='toggle'>&#9654;</span> {case_id}</td>"
                 f"<td data-value='' data-empty=''>{tags_html}</td>"
                 f"<td data-value='{routed_val}{noise_str}' data-empty=''>"
                 f"{routed_val}{(' <span class=dim>' + noise_str + '</span>') if noise_str else ''}</td>"
@@ -1152,7 +1152,7 @@ function toggleGroup(row) {
             if (firstTd && !row.querySelector('.gpag-ctrl')) {
                 var ctrl = document.createElement('span');
                 ctrl.className = 'gpag-ctrl pagination';
-                ctrl.style.cssText = 'margin-left:1rem; display:inline-flex';
+                ctrl.style.cssText = 'margin-left:1rem; display:inline-flex; vertical-align:middle';
                 var prevBtn = document.createElement('button');
                 prevBtn.textContent = String.fromCharCode(8249);
                 prevBtn.onclick = function(e) { e.stopPropagation(); paginateGroup(group, -1); };
