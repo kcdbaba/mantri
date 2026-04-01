@@ -8,6 +8,7 @@ navigation controls above the table.
 import re
 
 PAGE_SIZE = 10
+UNIT_PAGE_SIZE = 20
 
 
 def paginate_rows(rows: list[str], table_id: str, page_size: int = PAGE_SIZE) -> tuple[str, str]:

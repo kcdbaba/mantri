@@ -109,13 +109,11 @@ def _build_tags_html(run: dict) -> str:
     run_agents = run.get("agents", [])
     if not run_agents:
         run_agents = ["AO"] if run.get("skip_linkage") else ["AO", "AL"]
-    agent_labels = {"AO": "\U0001f575\ufe0fO", "AL": "\U0001f575\ufe0fL", "AS": "\U0001f575\ufe0fS"}
     agent_tips = {"AO": "Update agent for order processing",
                   "AL": "Linkage agent for fulfillment matching",
                   "AS": "Conversation routing for shared groups"}
     for agent in run_agents:
-        label = agent_labels.get(agent, agent)
-        badges.append(f"<span class='tag tag-agent' title='{agent_tips.get(agent, agent)}'>{label}</span>")
+        badges.append(f"<span class='tag tag-agent' title='{agent_tips.get(agent, agent)}'>{agent}</span>")
     # Batching mode
     if run.get("batch_mode"):
         badges.append("<span class='tag tag-batch' title='Production batching (60s window)'>B</span>")
@@ -910,8 +908,6 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                 f"<td data-value='{cost_html}' data-empty=''>{cost_html}</td>"
                 f"<td data-value='{config_html}' data-empty=''>{config_html}</td></tr>"
             )
-            PAGE_SIZE = 10
-            child_idx = 0
             for r in case_runs:
                 # Mode info is in tags badges
                 r_node_summary = r.get("node_summary", {})
@@ -933,12 +929,8 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                 r_noise_str = f" <span class='dim'>({r_noise} noise)</span>" if r_noise else ""
                 r_tags_html = _build_tags_html(r)
 
-                gpage = child_idx // PAGE_SIZE
-                gpage_attr = f" data-gpage='{gpage}'"
-                hide_style = " style='display:none'" if gpage > 0 else ""
-                child_idx += 1
                 rows.append(
-                    f"<tr class='group-child' data-group='{group_key}'{gpage_attr}{hide_style}>"
+                    f"<tr class='group-child' data-group='{group_key}'>"
                     f"<td class='dim'>{_fmt_dt(r.get('run_at',''))}</td>"
                     f"<td>{r_tags_html}</td>"
                     f"<td>{r.get('messages_routed',0)}/{r.get('messages_total',0)}{r_noise_str}</td>"
@@ -972,17 +964,7 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                         f"background:#0d1017; font-size:0.75rem; color:#718096'>"
                         f"↳ <em>{escaped_notes}</em></td></tr>"
                     )
-            # Store page count on group header for JS to inject controls
-            total_pages = (len(case_runs) + PAGE_SIZE - 1) // PAGE_SIZE
-            if total_pages > 1:
-                # Add data-pages to the group header row so JS can inject controls
-                for ri in range(len(rows)):
-                    if f"data-group='{group_key}'" in rows[ri] and "group-row" in rows[ri]:
-                        rows[ri] = rows[ri].replace(
-                            f"data-group='{group_key}'",
-                            f"data-group='{group_key}' data-pages='{total_pages}'",
-                        )
-                        break
+            # (pagination for replay history handled by simple expand/collapse)
 
         sections.append(
             "<h3>Live Replay History</h3>"
@@ -1131,34 +1113,15 @@ summary.task-summary:hover { color: #4a90d9; }
 
 
 JS = """
-var gpageState = {};
 function toggleGroup(row) {
     var group = row.getAttribute('data-group');
     row.classList.toggle('open');
-    var isOpen = row.classList.contains('open');
     var children = document.querySelectorAll('tr.group-child[data-group="' + group + '"]');
-    var curPage = gpageState[group] || 0;
-
     for (var i = 0; i < children.length; i++) {
-        if (isOpen) {
-            // Show only current page rows (or pagination controls / note rows)
-            var gp = children[i].getAttribute('data-gpage');
-            var isPagCtrl = children[i].className.indexOf('pagination-row') >= 0;
-            var isNote = children[i].className.indexOf('note-row') >= 0;
-            if (isPagCtrl) {
-                children[i].classList.add('visible');
-            } else if (gp !== null) {
-                if (parseInt(gp) === curPage) {
-                    children[i].classList.add('visible');
-                }
-            } else {
-                children[i].classList.add('visible');
-            }
-        } else {
-            children[i].classList.remove('visible');
-        }
+        children[i].classList.toggle('visible');
     }
     // Swap data cells between showing data and empty
+    var isOpen = row.classList.contains('open');
     var tds = row.querySelectorAll('td[data-value]');
     for (var j = 0; j < tds.length; j++) {
         if (!tds[j].hasAttribute('data-html')) {
@@ -1170,59 +1133,6 @@ function toggleGroup(row) {
             tds[j].innerHTML = tds[j].getAttribute('data-html');
         }
     }
-    // Inject/remove pagination controls in header row
-    var totalPages = parseInt(row.getAttribute('data-pages') || '0');
-    var existingCtrl = row.querySelector('.gpag-ctrl');
-    if (isOpen && totalPages > 1 && !existingCtrl) {
-        var curPage = gpageState[group] || 0;
-        var firstTd = row.querySelector('td:first-child');
-        if (firstTd) {
-            var ctrl = document.createElement('span');
-            ctrl.className = 'gpag-ctrl pagination';
-            ctrl.style.cssText = 'margin-left:1rem; display:inline-flex';
-            var prevBtn = document.createElement('button');
-            prevBtn.textContent = '‹';
-            prevBtn.onclick = function(e) { e.stopPropagation(); paginateGroup(group, -1); };
-            var ind = document.createElement('span');
-            ind.id = 'gpage-ind-' + group;
-            ind.textContent = 'Page ' + (curPage+1) + ' of ' + totalPages;
-            var nextBtn = document.createElement('button');
-            nextBtn.textContent = '›';
-            nextBtn.onclick = function(e) { e.stopPropagation(); paginateGroup(group, 1); };
-            ctrl.appendChild(prevBtn);
-            ctrl.appendChild(ind);
-            ctrl.appendChild(nextBtn);
-            firstTd.appendChild(ctrl);
-        }
-    } else if (!isOpen && existingCtrl) {
-        existingCtrl.remove();
-    }
-}
-
-function paginateGroup(gkey, dir) {
-    if (!gpageState[gkey]) gpageState[gkey] = 0;
-    var rows = document.querySelectorAll('tr.group-child[data-group="' + gkey + '"][data-gpage]');
-    var maxPage = 0;
-    for (var i = 0; i < rows.length; i++) {
-        var p = parseInt(rows[i].getAttribute('data-gpage'));
-        if (p > maxPage) maxPage = p;
-    }
-    var newPage = gpageState[gkey] + dir;
-    if (newPage < 0 || newPage > maxPage) return;
-    gpageState[gkey] = newPage;
-    for (var i = 0; i < rows.length; i++) {
-        if (rows[i].className.indexOf('pagination-row') >= 0) continue;
-        var p = parseInt(rows[i].getAttribute('data-gpage'));
-        if (p === newPage) {
-            rows[i].classList.add('visible');
-            rows[i].style.display = '';
-        } else {
-            rows[i].classList.remove('visible');
-            rows[i].style.display = 'none';
-        }
-    }
-    var ind = document.getElementById('gpage-ind-' + gkey);
-    if (ind) ind.textContent = 'Page ' + (newPage + 1) + ' of ' + (maxPage + 1);
 }
 
 var pageState = {};
@@ -1308,9 +1218,9 @@ def generate() -> str:
   <tr><td><span class="tag tag-mode">E</span></td><td>Entity-first routing (v0.3.0+)</td></tr>
   <tr><td><span class="tag tag-legacy">L</span></td><td>Legacy batch routing (pre v0.3.0)</td></tr>
   <tr><td><span class="tag tag-traced">T</span></td><td>Phoenix OTEL tracing enabled</td></tr>
-  <tr><td><span class="tag tag-agent">🕵️O</span></td><td>Update agent — order processing</td></tr>
-  <tr><td><span class="tag tag-agent">🕵️L</span></td><td>Linkage agent — fulfillment matching</td></tr>
-  <tr><td><span class="tag tag-dim">🕵️S</span></td><td>Shared groups conversation routing (planned)</td></tr>
+  <tr><td><span class="tag tag-agent">AO</span></td><td>Update agent — order processing</td></tr>
+  <tr><td><span class="tag tag-agent">AL</span></td><td>Linkage agent — fulfillment matching</td></tr>
+  <tr><td><span class="tag tag-dim">AS</span></td><td>Shared groups conversation routing (planned)</td></tr>
   <tr><td><span class="tag tag-batch">B</span></td><td>Production batching (60s window, max 10 msgs)</td></tr>
   <tr><td><span class="tag tag-dim">🔃</span></td><td>Asynchronous linkage processing (planned)</td></tr>
   <tr><td><span class="tag tag-dim">N</span></td><td>Partial replay — first N messages only</td></tr>
