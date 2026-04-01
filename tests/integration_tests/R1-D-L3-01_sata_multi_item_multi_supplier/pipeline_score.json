@@ -1,26 +1,26 @@
 {
   "verdict": "PASS",
-  "overall_score": 75,
+  "overall_score": 77,
   "dimensions": {
     "reliability": {
-      "score": 100,
-      "notes": "0 dead letters, 0 failures, 0 errors out of 12 agent calls"
+      "score": 99,
+      "notes": "1 dead letters, 0 failures, 0 errors out of 766 agent calls"
     },
     "routing": {
-      "score": 60,
-      "notes": "12/20 messages routed"
+      "score": 57,
+      "notes": "520/904 messages routed"
     },
     "extraction": {
-      "score": 100,
-      "notes": "19 items extracted across 3 tasks"
+      "score": 96,
+      "notes": "100 items extracted across 6 tasks"
     },
     "node_progression": {
-      "score": 8,
-      "notes": "1 completed, 2 active out of 36 total nodes"
+      "score": 25,
+      "notes": "10 completed, 8 active out of 72 total nodes"
     },
     "ambiguity_quality": {
       "score": 95,
-      "notes": "3 flags from 12 calls (0.25/call)"
+      "notes": "106 flags from 766 calls (0.14/call)"
     },
     "linkage": {
       "score": null,
@@ -28,20 +28,20 @@
     }
   },
   "metrics": {
-    "total_messages": 20,
-    "routed": 12,
-    "agent_calls": 12,
-    "dead_letters": 0,
+    "total_messages": 904,
+    "routed": 520,
+    "agent_calls": 766,
+    "dead_letters": 1,
     "failures": 0,
     "errors": 0,
-    "ambiguity_flags": 3,
+    "ambiguity_flags": 106,
     "fulfillment_links": 0,
-    "total_items": 19,
-    "total_nodes": 36,
-    "completed_nodes": 1,
-    "active_nodes": 2
+    "total_items": 100,
+    "total_nodes": 72,
+    "completed_nodes": 10,
+    "active_nodes": 8
   },
   "case_id": "R1-D-L3-01",
   "case_name": "R1-D-L3-01_sata_multi_item_multi_supplier",
-  "evaluated_at": "2026-04-01T02:07:47"
+  "evaluated_at": "2026-04-01T09:15:36"
 }
