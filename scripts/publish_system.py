@@ -891,7 +891,7 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
             rows.append(
                 f"<tr class='group-row' data-group='{group_key}' onclick='toggleGroup(this)'>"
                 f"<td><span class='toggle'>&#9654;</span> {case_id} ({n_runs} runs)</td>"
-                f"<td data-value='{tags_html}' data-empty=''>{tags_html}</td>"
+                f"<td data-value='' data-empty=''>{tags_html}</td>"
                 f"<td data-value='{routed_val}{noise_str}' data-empty=''>"
                 f"{routed_val}{(' <span class=dim>' + noise_str + '</span>') if noise_str else ''}</td>"
                 f"<td data-value='{total_nodes}' data-empty=''>{total_nodes}</td>"
