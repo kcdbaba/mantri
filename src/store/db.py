@@ -229,6 +229,62 @@ CREATE TABLE IF NOT EXISTS usage_log (
     model           TEXT,
     ts              INTEGER
 );
+
+-- Conversation routing for shared groups
+
+CREATE TABLE IF NOT EXISTS conversations (
+    id              TEXT PRIMARY KEY,
+    group_id        TEXT NOT NULL,
+    entity_id       TEXT,           -- assigned entity (null if unresolved)
+    task_id         TEXT,           -- assigned task (null if unresolved)
+    conv_type       TEXT NOT NULL,  -- 'order' | 'singleton' | 'ephemeral'
+    status          TEXT NOT NULL DEFAULT 'active',  -- 'active' | 'dormant' | 'closed'
+    created_at      INTEGER NOT NULL,
+    last_activity   INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS scraps (
+    id              TEXT PRIMARY KEY,
+    group_id        TEXT NOT NULL,
+    sender_jid      TEXT NOT NULL,
+    first_msg_ts    INTEGER NOT NULL,
+    last_msg_ts     INTEGER NOT NULL,
+    status          TEXT NOT NULL DEFAULT 'open',  -- 'open' | 'assigned' | 'processed'
+    created_at      INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS scrap_messages (
+    scrap_id        TEXT NOT NULL REFERENCES scraps(id),
+    message_id      TEXT NOT NULL,
+    seq             INTEGER NOT NULL,
+    PRIMARY KEY (scrap_id, message_id)
+);
+
+CREATE TABLE IF NOT EXISTS scrap_conversations (
+    scrap_id        TEXT NOT NULL REFERENCES scraps(id),
+    conversation_id TEXT NOT NULL REFERENCES conversations(id),
+    PRIMARY KEY (scrap_id, conversation_id)
+);
+
+CREATE TABLE IF NOT EXISTS segments (
+    id              TEXT PRIMARY KEY,
+    conversation_id TEXT NOT NULL REFERENCES conversations(id),
+    epoch           INTEGER NOT NULL DEFAULT 0,
+    seq_in_epoch    INTEGER NOT NULL DEFAULT 0,
+    status          TEXT NOT NULL DEFAULT 'pending',  -- 'pending' | 'processed' | 'summarized'
+    processed_at    INTEGER,
+    agent_output    TEXT
+);
+
+CREATE TABLE IF NOT EXISTS segment_summaries (
+    segment_id      TEXT PRIMARY KEY REFERENCES segments(id),
+    summary_text    TEXT NOT NULL,
+    created_at      INTEGER NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_scraps_sender ON scraps(group_id, sender_jid, last_msg_ts);
+CREATE INDEX IF NOT EXISTS idx_scrap_convos ON scrap_conversations(conversation_id);
+CREATE INDEX IF NOT EXISTS idx_segments_conv ON segments(conversation_id, epoch);
 """
 
 PRICING = {
