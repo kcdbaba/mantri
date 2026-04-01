@@ -129,8 +129,12 @@ class TestIsComplexMessage:
     def test_numbers_make_complex(self):
         assert _is_complex_message({"body": "50 bags"}) is True
 
-    def test_image_makes_complex(self):
-        assert _is_complex_message({"body": "ok", "image_path": "/tmp/x.jpg"}) is True
+    def test_image_alone_not_complex(self):
+        """Images alone don't force Sonnet — Gemini Flash handles vision."""
+        assert _is_complex_message({"body": "ok", "image_path": "/tmp/x.jpg"}) is False
+
+    def test_image_with_numbers_is_complex(self):
+        assert _is_complex_message({"body": "50 bags atta", "image_path": "/tmp/x.jpg"}) is True
 
     def test_order_keyword_makes_complex(self):
         assert _is_complex_message({"body": "order done"}) is True
@@ -268,8 +272,8 @@ class TestRunUpdateAgentInputNorm:
             )
         assert result is None
 
-    def test_image_overrides_gemini_to_sonnet(self):
-        """When image is present and model is Gemini, should override to Sonnet."""
+    def test_image_uses_gemini_for_simple_text(self):
+        """When image is present but text is simple, Gemini handles vision."""
         from src.agent.update_agent import run_update_agent
         resp = LLMResponse(raw=self._valid_raw(), tokens_in=100, tokens_out=50)
         captured_model = []
@@ -288,7 +292,7 @@ class TestRunUpdateAgentInputNorm:
                 node_states_override=[], recent_messages_override=[],
                 task_override={"id": "t1", "order_type": "standard_procurement"},
             )
-        assert captured_model[0] == "claude-sonnet-4-6"
+        assert captured_model[0] == "gemini-2.5-flash"
 
 
 # ---------------------------------------------------------------------------

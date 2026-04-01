@@ -708,9 +708,15 @@ class TestSelectModel:
         from src.agent.update_agent import _select_model
         assert _select_model([{"body": "Sir kindly reshare the rate for 1.5 ton Split Ac and others"}]) == "claude-sonnet-4-6"
 
-    def test_image_in_batch_uses_sonnet(self):
+    def test_image_alone_uses_gemini(self):
+        """Images with simple text go to Gemini Flash (supports vision)."""
         from src.agent.update_agent import _select_model
         msgs = [{"body": "ok"}, {"body": "hi", "image_path": "/tmp/x.jpg"}]
+        assert _select_model(msgs) == "gemini-2.5-flash"
+
+    def test_image_with_numbers_uses_sonnet(self):
+        from src.agent.update_agent import _select_model
+        msgs = [{"body": "50 bags", "image_path": "/tmp/x.jpg"}]
         assert _select_model(msgs) == "claude-sonnet-4-6"
 
     def test_numbers_trigger_sonnet(self):

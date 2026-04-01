@@ -95,11 +95,10 @@ _SIMPLE_MESSAGE_MAX_LEN = 40
 
 
 def _is_complex_message(message: dict) -> bool:
-    """Return True if a message needs Sonnet-level reasoning."""
+    """Return True if a message needs Sonnet-level reasoning.
+    Images alone don't force Sonnet — Gemini Flash handles vision.
+    Only force Sonnet when the TEXT portion is complex."""
     body = (message.get("body") or "").strip()
-    has_image = bool(message.get("image_path") or message.get("image_bytes"))
-    if has_image:
-        return True
     if len(body) > _SIMPLE_MESSAGE_MAX_LEN:
         return True
     if _HAS_NUMBERS.search(body):
@@ -165,10 +164,9 @@ def run_update_agent(
 
     last_message_id = messages[-1].get("message_id")
 
-    # Images force Anthropic (Gemini image path not yet implemented)
-    if image_bytes and _is_gemini_model(model):
-        model = CLAUDE_MODEL
-        log.debug("Image present — overriding to %s", model)
+    # Images: Gemini Flash now supports vision — no need to force Sonnet
+    if image_bytes:
+        log.debug("Image present — using %s for vision", model)
 
     t0 = time.time()
     resp = _call_with_retry(
@@ -336,6 +334,8 @@ def _call_anthropic_with_retry(system_prompt: str, user_section: str,
 
 def _call_gemini_with_retry(system_prompt: str, user_section: str,
                             message_id: str | None, task_id: str,
+                            image_bytes: bytes | None = None,
+                            image_media_type: str = "",
                             model: str = GEMINI_MODEL,
                             max_retries: int = 3) -> LLMResponse | None:
     from google.genai import types
@@ -349,11 +349,20 @@ def _call_gemini_with_retry(system_prompt: str, user_section: str,
     if "2.5" in model:
         config.thinking_config = types.ThinkingConfig(thinking_budget=0)
 
+    # Build contents — text only or multipart with image
+    if image_bytes:
+        contents = [
+            types.Part.from_bytes(data=image_bytes, mime_type=image_media_type or "image/jpeg"),
+            user_section,
+        ]
+    else:
+        contents = user_section
+
     delay = 1
     for attempt in range(max_retries):
         try:
             response = client.models.generate_content(
-                model=model, contents=user_section, config=config,
+                model=model, contents=contents, config=config,
             )
             um = response.usage_metadata
             return LLMResponse(
@@ -380,9 +389,9 @@ def _call_with_retry(system_prompt: str, user_section: str,
                      max_retries: int = 3) -> LLMResponse | None:
     """Dispatch to the correct backend based on model name."""
     if _is_gemini_model(model):
-        # Gemini doesn't support image via this path yet
         return _call_gemini_with_retry(
             system_prompt, user_section, message_id, task_id,
+            image_bytes=image_bytes, image_media_type=image_media_type,
             model=model, max_retries=max_retries,
         )
     return _call_anthropic_with_retry(
