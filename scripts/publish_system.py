@@ -812,16 +812,29 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                 f"<td data-value='{rate}' data-empty=''>{rate}</td>"
                 f"<td data-value='{per_group_plain}' data-empty=''>{per_group_html}</td></tr>"
             )
-            for r in case_runs:
+            DRY_GP = 10
+            for ci, r in enumerate(case_runs):
+                gp = ci // DRY_GP
                 r_rate = f"{r.get('routing_rate', 0):.0%}"
                 r_pg = _fmt_per_group(r.get("per_group", {}))
                 rows.append(
-                    f"<tr class='group-child' data-group='{group_key}'>"
+                    f"<tr class='group-child' data-group='{group_key}' data-gpage='{gp}'>"
                     f"<td class='dim'>{_fmt_dt(r.get('run_at',''))}</td>"
                     f"<td>{r.get('total',0)}</td>"
                     f"<td>{r_rate}</td>"
                     f"<td>{r_pg}</td></tr>"
                 )
+
+            # Add page count to group header if needed
+            dry_pages = (len(case_runs) + DRY_GP - 1) // DRY_GP
+            if dry_pages > 1:
+                for ri in range(len(rows)):
+                    if f"data-group='{group_key}'" in rows[ri] and "group-row" in rows[ri]:
+                        rows[ri] = rows[ri].replace(
+                            f"data-group='{group_key}'",
+                            f"data-group='{group_key}' data-gpages='{dry_pages}'",
+                        )
+                        break
 
         per_group_tooltip = (
             'title="Layer 2a: Direct group JID → task mapping (confidence 0.90). '
