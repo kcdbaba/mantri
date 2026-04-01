@@ -849,9 +849,8 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
             link_count = latest.get("fulfillment_link_count", 0)
 
             # Mode for latest
-            latest_mode = "update only" if latest.get("skip_linkage") else "full"
-            if latest.get("max_messages"):
-                latest_mode += f" (first {latest['max_messages']})"
+            # Mode info is now in tags badges
+            # (max_messages info is in tags badges)
 
             # Model/cost from case data
             cdata = case_data_map.get(case_id, {})
@@ -883,7 +882,7 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
             rows.append(
                 f"<tr class='group-row' data-group='{group_key}' onclick='toggleGroup(this)'>"
                 f"<td><span class='toggle'>&#9654;</span> {case_id} ({n_runs} runs)</td>"
-                f"<td data-value='{latest_mode}' data-empty=''>{latest_mode}</td>"
+                f"<td>{tags_html}</td>"
                 f"<td data-value='{routed_val}{noise_str}' data-empty=''>"
                 f"{routed_val}{(' <span class=dim>' + noise_str + '</span>') if noise_str else ''}</td>"
                 f"<td data-value='{total_nodes}' data-empty=''>{total_nodes}</td>"
@@ -898,13 +897,10 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                 f"<td data-value='{p_score_html}' data-empty=''>{p_score_html}</td>"
                 f"<td data-value='{models_html}' data-empty=''>{models_html}</td>"
                 f"<td data-value='{cost_html}' data-empty=''>{cost_html}</td>"
-                f"<td data-value='{config_html}' data-empty=''>{config_html}</td>"
-                f"<td>{tags_html}</td></tr>"
+                f"<td data-value='{config_html}' data-empty=''>{config_html}</td></tr>"
             )
             for r in case_runs:
-                mode = "update only" if r.get("skip_linkage") else "full"
-                if r.get("max_messages"):
-                    mode += f" (first {r['max_messages']})"
+                # Mode info is in tags badges
                 r_node_summary = r.get("node_summary", {})
                 r_total_nodes = sum(v.get("total", 0) for v in r_node_summary.values())
                 r_link_count = r.get("fulfillment_link_count", 0)
@@ -927,7 +923,7 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                 rows.append(
                     f"<tr class='group-child' data-group='{group_key}'>"
                     f"<td class='dim'>{_fmt_dt(r.get('run_at',''))}</td>"
-                    f"<td>{mode}</td>"
+                    f"<td>{r_tags_html}</td>"
                     f"<td>{r.get('messages_routed',0)}/{r.get('messages_total',0)}{r_noise_str}</td>"
                     f"<td>{r_total_nodes}</td>"
                     f"<td>{r_link_count}</td>"
@@ -938,8 +934,7 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                     f"<td>{r.get('pipeline_score') or chr(8212)}</td>"
                     f"<td>{r_models}</td>"
                     f"<td>{r_cost}</td>"
-                    f"<td class='dim'>{r.get('run_metadata', {}).get('git_commit', '')}</td>"
-                    f"<td>{r_tags_html}</td></tr>"
+                    f"<td class='dim'>{r.get('run_metadata', {}).get('git_commit', '')}</td></tr>"
                 )
                 # Show run_notes as a connected sub-row
                 notes = r.get("run_notes", "")
@@ -955,7 +950,7 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                     rows.append(
                         f"<tr class='group-child note-row' data-group='{group_key}' "
                         f"title='Run note for the row above'>"
-                        f"<td colspan='14' style='padding:0.2rem 0.75rem 0.4rem 2.5rem; "
+                        f"<td colspan='13' style='padding:0.2rem 0.75rem 0.4rem 2.5rem; "
                         f"border-top:none; border-left:3px solid #4a90d9; "
                         f"background:#0d1017; font-size:0.75rem; color:#718096'>"
                         f"↳ <em>{escaped_notes}</em></td></tr>"
@@ -963,7 +958,7 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
         sections.append(
             "<h3>Live Replay History</h3>"
             "<table class='detail'><thead><tr>"
-            "<th>Case / Run</th><th>Mode</th><th>Routed</th>"
+            "<th>Case / Run</th><th>Tags</th><th>Routed</th>"
             "<th>Nodes</th><th>Links</th><th>Ambiguity</th>"
             "<th>Dead Letters</th><th>Errors</th>"
             "<th>Tasks</th><th>Score</th>"
