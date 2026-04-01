@@ -1,36 +1,51 @@
 """
 Phoenix OTEL tracer for replay and eval runs.
 
+Data model:
+  Session (session.id = run_id)     → one replay run
+    Trace (trace_id per message)    → one message processing
+      Span: routing                 → routing decision
+      Span: task_resolution         → entity → task resolution
+      Span: llm:update_agent        → LLM call with full prompt/output
+      Span: post_processing         → node updates, items, flags applied
+
+Supports 1-2 Phoenix endpoints (e.g., local + remote) with dual-write.
+Each endpoint receives identical trace data via separate BatchSpanProcessors.
+
 Usage:
-    from src.tracing.tracer import ReplayTracer
-
-    tracer = ReplayTracer(project_name="mantri")
-    tracer.start()
-    # ... run replay, calling tracer.record_* methods ...
+    tracer = ReplayTracer(
+        project_name="mantri",
+        phoenix_endpoints=["http://localhost:6006/v1/traces",
+                          "http://droplet:80/developer/phoenix/v1/traces"],
+    )
+    tracer.start(run_ctx)
+    with tracer.trace_message(msg, seq=0) as mt:
+        mt.record_routing(...)
+        mt.record_llm_call(...)
     tracer.stop()
-
-Non-invasive: production code doesn't import this module.
 """
 
-import hashlib
 import json
 import logging
 import time
 from contextlib import contextmanager
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
 from typing import Any
 
-from opentelemetry import trace
+import requests as _requests
+
+from opentelemetry import trace, context as otel_context
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from opentelemetry.sdk.resources import Resource
 from opentelemetry.trace import StatusCode
 
 log = logging.getLogger(__name__)
 
-DEFAULT_PHOENIX_ENDPOINT = "http://localhost:6006/v1/traces"
+# Default: remote droplet Phoenix
+DEFAULT_PHOENIX_ENDPOINT = "http://152.42.156.128/developer/phoenix/v1/traces"
 
-# Cost per token (approximate, for cost tracking)
+# Cost per token (approximate)
 MODEL_COSTS = {
     "claude-sonnet-4-6": {"input": 3.0 / 1_000_000, "output": 15.0 / 1_000_000},
     "claude-haiku-4-5-20251001": {"input": 0.80 / 1_000_000, "output": 4.0 / 1_000_000},
@@ -44,13 +59,24 @@ def _estimate_cost(model: str, tokens_in: int, tokens_out: int) -> float:
 
 
 def _now_ns() -> int:
-    """Current time as nanoseconds since epoch (OTEL format)."""
     return int(time.time() * 1_000_000_000)
+
+
+def check_phoenix_connectivity(endpoint: str, auth: dict | None = None,
+                                timeout: int = 5) -> bool:
+    """Check if a Phoenix endpoint is reachable. Returns True if healthy."""
+    # Convert /v1/traces to /healthz for the check
+    base = endpoint.replace("/v1/traces", "").rstrip("/")
+    try:
+        resp = _requests.get(f"{base}/healthz", headers=auth or {}, timeout=timeout)
+        return resp.text.strip() == "OK"
+    except Exception as e:
+        log.warning("Phoenix endpoint unreachable: %s — %s", base, e)
+        return False
 
 
 @dataclass
 class RunContext:
-    """Metadata for a single replay run."""
     run_id: str
     case_id: str
     run_type: str = "live_replay"
@@ -60,122 +86,162 @@ class RunContext:
 
 
 class ReplayTracer:
-    """Non-invasive tracer for replay runs. Emits OpenTelemetry spans to Phoenix."""
+    """
+    Tracer for replay runs. Supports 1-2 Phoenix endpoints with dual-write.
+    Each instance has its own TracerProvider (no global state).
+    """
 
     def __init__(self, project_name: str = "mantri",
-                 phoenix_endpoint: str | None = None):
+                 phoenix_endpoints: list[str] | None = None,
+                 auth_headers: dict | None = None):
+        """
+        Args:
+            project_name: Phoenix project name (default: mantri)
+            phoenix_endpoints: list of 1-2 OTEL trace endpoints
+                              (default: [remote droplet])
+            auth_headers: HTTP headers for authenticated endpoints (e.g., basic auth)
+        """
         self.project_name = project_name
-        self.phoenix_endpoint = phoenix_endpoint or DEFAULT_PHOENIX_ENDPOINT
+        self.phoenix_endpoints = phoenix_endpoints or [DEFAULT_PHOENIX_ENDPOINT]
+        self.auth_headers = auth_headers or {}
         self._provider: TracerProvider | None = None
         self._tracer: trace.Tracer | None = None
-        self._run_span = None
-        self._run_ctx = None
-        self._run_start_ns = 0
-        # Cumulative stats for the run
+        self._run_ctx: RunContext | None = None
         self._total_tokens_in = 0
         self._total_tokens_out = 0
         self._total_cost = 0.0
+        self._active_endpoints: list[str] = []
 
     def start(self, run_ctx: RunContext):
-        """Initialize OTEL provider and start the root run span."""
+        """
+        Initialize TracerProvider with one BatchSpanProcessor per endpoint.
+        Checks connectivity first — skips unreachable endpoints with a warning.
+        Fails if no endpoints are reachable.
+
+        Uses phoenix.otel.register() for the first endpoint (correct project targeting),
+        then adds additional exporters for dual-write.
+        """
+        from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
         from phoenix.otel import register
 
-        self._provider = register(
+        # Check connectivity for each endpoint
+        self._active_endpoints = []
+        for ep in self.phoenix_endpoints:
+            if check_phoenix_connectivity(ep, auth=self.auth_headers):
+                self._active_endpoints.append(ep)
+                log.info("Phoenix endpoint OK: %s", ep)
+            else:
+                log.warning("Phoenix endpoint UNREACHABLE (skipping): %s", ep)
+
+        if not self._active_endpoints:
+            raise ConnectionError(
+                f"No Phoenix endpoints reachable: {self.phoenix_endpoints}"
+            )
+
+        # Get the Resource from phoenix.otel.register() — this sets project.name
+        # correctly. But don't use its provider — build our own with explicit
+        # HTTP exporters for all endpoints.
+        temp_provider = register(
             project_name=self.project_name,
-            endpoint=self.phoenix_endpoint,
+            endpoint=self._active_endpoints[0],
+            headers=dict(self.auth_headers),
+            set_global_tracer_provider=False,
         )
+        # Steal the resource, then shut down the temp provider
+        resource = temp_provider.resource
+        temp_provider.shutdown()
+
+        # Build our own provider with explicit HTTP exporters for ALL endpoints
+        self._provider = TracerProvider(resource=resource)
+        for ep in self._active_endpoints:
+            headers = dict(self.auth_headers)
+            exporter = OTLPSpanExporter(endpoint=ep, headers=headers)
+            self._provider.add_span_processor(BatchSpanProcessor(exporter))
+            log.info("Exporter added: %s", ep)
+
         self._tracer = self._provider.get_tracer("mantri.replay")
         self._run_ctx = run_ctx
-        self._run_start_ns = _now_ns()
 
-        self._run_span = self._tracer.start_span(
-            name=f"replay:{run_ctx.case_id}",
-            start_time=self._run_start_ns,
-            attributes={
-                "run.id": run_ctx.run_id,
-                "run.case_id": run_ctx.case_id,
-                "run.type": run_ctx.run_type,
-                "run.git_commit": run_ctx.git_commit,
-                "run.config_flags": json.dumps(run_ctx.config_flags),
-                "run.notes": run_ctx.run_notes,
-                "openinference.span.kind": "AGENT",
-            },
-        )
-        self._run_token = trace.context_api.attach(
-            trace.set_span_in_context(self._run_span)
-        )
-        log.info("Tracing started: project=%s run=%s",
-                 self.project_name, run_ctx.run_id)
+        log.info("Tracing started: project=%s run=%s endpoints=%s",
+                 self.project_name, run_ctx.run_id,
+                 [ep.split("/")[2] for ep in self._active_endpoints])
 
     def stop(self, stats: dict | None = None):
-        """Flush and shutdown the tracer."""
-        if self._run_span:
-            end_ns = _now_ns()
-            if stats:
-                self._run_span.set_attribute("run.stats", json.dumps(stats))
-            self._run_span.set_attribute("cumulative.tokens_in", self._total_tokens_in)
-            self._run_span.set_attribute("cumulative.tokens_out", self._total_tokens_out)
-            self._run_span.set_attribute("cumulative.tokens_total",
-                                         self._total_tokens_in + self._total_tokens_out)
-            self._run_span.set_attribute("cumulative.cost_usd", round(self._total_cost, 6))
-            self._run_span.set_status(StatusCode.OK)
-            self._run_span.end(end_time=end_ns)
-            trace.context_api.detach(self._run_token)
-
+        """Flush and shutdown."""
         if self._provider:
-            self._provider.force_flush()
+            self._provider.force_flush(timeout_millis=10000)
             self._provider.shutdown()
-            log.info("Tracing stopped. Total: %d tokens in, %d tokens out, $%.4f",
-                     self._total_tokens_in, self._total_tokens_out, self._total_cost)
+            log.info("Tracing stopped. Total: %d tokens in, %d out, $%.4f → %d endpoints",
+                     self._total_tokens_in, self._total_tokens_out,
+                     self._total_cost, len(self._active_endpoints))
 
     @contextmanager
     def trace_message(self, message: dict, seq: int):
-        """Context manager for tracing a single message through the pipeline."""
+        """
+        Create a new TRACE for this message (its own trace_id).
+        The root span represents the message processing.
+        session.id groups all message traces into one replay run.
+        """
         if not self._tracer:
             yield MessageTrace()
             return
 
         msg_id = message.get("message_id", f"msg_{seq}")
+        body = (message.get("body") or "")[:500]
         start_ns = _now_ns()
-        span = self._tracer.start_span(
+
+        # Fresh context = new trace_id, no parent
+        ctx = otel_context.Context()
+
+        root_span = self._tracer.start_span(
             name=f"message:{msg_id}",
+            context=ctx,
             start_time=start_ns,
             attributes={
+                "session.id": self._run_ctx.run_id,
+                "openinference.span.kind": "CHAIN",
+                "input.value": body,
                 "message.id": msg_id,
                 "message.seq": seq,
-                "message.body": (message.get("body") or "")[:500],
                 "message.sender_jid": message.get("sender_jid", ""),
                 "message.group_id": message.get("group_id", ""),
                 "message.has_image": bool(message.get("image_path") or message.get("image_bytes")),
-                "openinference.span.kind": "CHAIN",
+                "run.case_id": self._run_ctx.case_id,
+                "run.git_commit": self._run_ctx.git_commit,
+                "run.notes": self._run_ctx.run_notes,
             },
         )
-        token = trace.context_api.attach(trace.set_span_in_context(span))
-        msg_trace = MessageTrace(tracer=self._tracer, parent_span=span, parent_tracer=self)
+
+        token = otel_context.attach(trace.set_span_in_context(root_span))
+        mt = MessageTrace(tracer=self._tracer, parent_tracer=self)
+
         try:
-            yield msg_trace
-            span.set_status(StatusCode.OK)
+            yield mt
+            root_span.set_status(StatusCode.OK)
         except Exception as e:
-            span.set_status(StatusCode.ERROR, str(e))
-            span.record_exception(e)
+            root_span.set_status(StatusCode.ERROR, str(e))
+            root_span.record_exception(e)
             raise
         finally:
-            # Set cumulative stats on message span
-            if msg_trace.msg_tokens_in > 0:
-                span.set_attribute("cumulative.tokens_in", msg_trace.msg_tokens_in)
-                span.set_attribute("cumulative.tokens_out", msg_trace.msg_tokens_out)
-                span.set_attribute("cumulative.cost_usd", round(msg_trace.msg_cost, 6))
-            if msg_trace.route_data:
-                span.set_attribute("route.data", json.dumps(msg_trace.route_data))
-            span.end(end_time=_now_ns())
-            trace.context_api.detach(token)
+            root_span.set_attribute("output.value", json.dumps({
+                "routed": mt.route_data.get("routes", []) != [],
+                "tokens_in": mt.msg_tokens_in,
+                "tokens_out": mt.msg_tokens_out,
+                "cost_usd": round(mt.msg_cost, 6),
+            }))
+            if mt.msg_tokens_in > 0:
+                root_span.set_attribute("llm.token_count.prompt", mt.msg_tokens_in)
+                root_span.set_attribute("llm.token_count.completion", mt.msg_tokens_out)
+                root_span.set_attribute("llm.token_count.total",
+                                        mt.msg_tokens_in + mt.msg_tokens_out)
+            root_span.end(end_time=_now_ns())
+            otel_context.detach(token)
 
 
 @dataclass
 class MessageTrace:
-    """Accumulates trace data for a single message."""
+    """Accumulates trace data for a single message (one trace)."""
     tracer: trace.Tracer | None = None
-    parent_span: Any = None
     parent_tracer: ReplayTracer | None = None
     route_data: dict = field(default_factory=dict)
     msg_tokens_in: int = 0
@@ -184,7 +250,6 @@ class MessageTrace:
 
     def record_routing(self, routes: list[tuple[str, float]],
                        layer: str = "", is_noise: bool = False):
-        """Record the routing decision."""
         self.route_data = {
             "routes": [(eid, conf) for eid, conf in routes],
             "layer": layer,
@@ -193,17 +258,22 @@ class MessageTrace:
         if not self.tracer:
             return
 
+        input_val = json.dumps({"layer": layer, "is_noise": is_noise})
+        output_val = json.dumps({"routed": len(routes) > 0,
+                                  "entities": [eid for eid, _ in routes],
+                                  "confidences": [conf for _, conf in routes]})
+
         span = self.tracer.start_span(
             name="routing",
             attributes={
+                "openinference.span.kind": "CHAIN",
+                "input.value": input_val,
+                "output.value": output_val,
                 "routing.entity_ids": json.dumps([eid for eid, _ in routes]),
                 "routing.confidences": json.dumps([conf for _, conf in routes]),
                 "routing.layer": layer,
                 "routing.is_noise": is_noise,
                 "routing.route_count": len(routes),
-                "openinference.span.kind": "CHAIN",
-                "input.value": json.dumps(self.route_data),
-                "output.value": f"routed={len(routes) > 0}, layer={layer}",
             },
         )
         span.set_status(StatusCode.OK)
@@ -212,7 +282,6 @@ class MessageTrace:
     def record_task_resolution(self, entity_id: str, entity_tasks: list[dict],
                                 resolved_task_id: str | None,
                                 resolution_method: str):
-        """Record how entity resolved to task(s)."""
         if not self.tracer:
             return
 
@@ -223,23 +292,19 @@ class MessageTrace:
             for t in entity_tasks
         ]
 
-        input_val = json.dumps({"entity_id": entity_id, "tasks": tasks_summary})
-        output_val = json.dumps({
-            "resolved_task_id": resolved_task_id,
-            "method": resolution_method,
-        })
-
         span = self.tracer.start_span(
             name="task_resolution",
             attributes={
+                "openinference.span.kind": "CHAIN",
+                "input.value": json.dumps({"entity_id": entity_id,
+                                            "task_count": len(entity_tasks)}),
+                "output.value": json.dumps({"resolved_task_id": resolved_task_id,
+                                             "method": resolution_method}),
                 "resolution.entity_id": entity_id,
                 "resolution.method": resolution_method,
                 "resolution.resolved_task_id": resolved_task_id or "",
                 "resolution.entity_tasks": json.dumps(tasks_summary),
                 "resolution.task_count": len(entity_tasks),
-                "openinference.span.kind": "CHAIN",
-                "input.value": input_val,
-                "output.value": output_val,
             },
         )
         span.set_status(StatusCode.OK)
@@ -253,14 +318,10 @@ class MessageTrace:
                         cache_creation: int, cache_read: int,
                         latency_ms: int, parse_success: bool,
                         is_retry: bool = False):
-        """Record a full LLM call with proper timing and token tracking."""
         if not self.tracer:
             return
 
-        # Compute cost
         cost = _estimate_cost(model, tokens_in, tokens_out)
-
-        # Track cumulative stats
         self.msg_tokens_in += tokens_in
         self.msg_tokens_out += tokens_out
         self.msg_cost += cost
@@ -269,36 +330,34 @@ class MessageTrace:
             self.parent_tracer._total_tokens_out += tokens_out
             self.parent_tracer._total_cost += cost
 
-        # Create span with proper timing
         end_ns = _now_ns()
-        start_ns = end_ns - (latency_ms * 1_000_000)  # backdate start by latency
+        start_ns = end_ns - (latency_ms * 1_000_000)
 
         span = self.tracer.start_span(
             name=f"llm:{call_type}",
             start_time=start_ns,
             attributes={
-                "llm.call_type": call_type,
-                "llm.task_id": task_id,
+                "openinference.span.kind": "LLM",
+                "input.value": f"SYSTEM:\n{system_prompt}\n\nUSER:\n{user_section}",
+                "output.value": raw_output,
                 "llm.model_name": model,
-                "llm.model_selection_reason": model_selection_reason,
                 "llm.token_count.prompt": tokens_in,
                 "llm.token_count.completion": tokens_out,
                 "llm.token_count.total": tokens_in + tokens_out,
+                "llm.cost_usd": round(cost, 6),
                 "llm.cache_creation_tokens": cache_creation,
                 "llm.cache_read_tokens": cache_read,
                 "llm.latency_ms": latency_ms,
                 "llm.parse_success": parse_success,
                 "llm.is_retry": is_retry,
-                "llm.cost_usd": round(cost, 6),
-                "input.value": f"SYSTEM:\n{system_prompt}\n\nUSER:\n{user_section}",
-                "output.value": raw_output,
-                "openinference.span.kind": "LLM",
+                "llm.call_type": call_type,
+                "llm.task_id": task_id,
+                "llm.model_selection_reason": model_selection_reason,
             },
         )
         if parsed_output:
             span.set_attribute("llm.parsed_output",
                                json.dumps(parsed_output, default=str)[:5000])
-
         span.set_status(StatusCode.OK if parse_success else StatusCode.ERROR)
         span.end(end_time=end_ns)
 
@@ -308,39 +367,37 @@ class MessageTrace:
                                 ambiguity_flags: list[dict],
                                 items_applied: list[dict],
                                 node_updates: list[dict]):
-        """Record deterministic post-processing actions."""
         if not self.tracer:
             return
 
         input_val = json.dumps({
-            "task_id": task_id,
             "node_updates": node_updates,
             "items": items_applied,
             "ambiguity_flags": ambiguity_flags,
-        }, default=str)
+        }, default=str)[:5000]
 
         output_val = json.dumps({
-            "cascades_fired": cascades_fired,
-            "tasks_created": tasks_created,
             "updates_applied": len(node_updates),
             "items_applied": len(items_applied),
             "flags_raised": len(ambiguity_flags),
+            "cascades_fired": cascades_fired,
+            "tasks_created": tasks_created,
         })
 
         span = self.tracer.start_span(
             name=f"post_processing:{task_id}",
             attributes={
+                "openinference.span.kind": "TOOL",
+                "input.value": input_val,
+                "output.value": output_val,
                 "pp.task_id": task_id,
                 "pp.task_output_index": task_output_index,
+                "pp.node_updates_count": len(node_updates),
+                "pp.items_applied_count": len(items_applied),
+                "pp.ambiguity_flags_count": len(ambiguity_flags),
+                "pp.node_updates": json.dumps(node_updates)[:3000],
                 "pp.cascades_fired": json.dumps(cascades_fired),
                 "pp.tasks_created": json.dumps(tasks_created),
-                "pp.ambiguity_flags_count": len(ambiguity_flags),
-                "pp.items_applied_count": len(items_applied),
-                "pp.node_updates_count": len(node_updates),
-                "pp.node_updates": json.dumps(node_updates)[:3000],
-                "openinference.span.kind": "TOOL",
-                "input.value": input_val[:5000],
-                "output.value": output_val,
             },
         )
         span.set_status(StatusCode.OK)

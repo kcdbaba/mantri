@@ -583,7 +583,9 @@ def _compute_pipeline_score(stats: dict, state: dict, skip_linkage: bool) -> dic
 
 def _run_traced_replay(case_dir: Path, trace_data: list[dict], seed: dict,
                        run_linkage: bool = True, max_messages: int | None = None,
-                       run_note: str = "", phoenix_endpoint: str | None = None) -> dict:
+                       run_note: str = "",
+                       phoenix_endpoints: list[str] | None = None,
+                       auth_headers: dict | None = None) -> dict:
     """
     Run replay using the instrumented entity-first pipeline with Phoenix tracing.
     Returns result dict in the same format as run_live_replay().
@@ -618,7 +620,8 @@ def _run_traced_replay(case_dir: Path, trace_data: list[dict], seed: dict,
         run_ctx=run_ctx,
         run_linkage=run_linkage,
         max_messages=max_messages,
-        phoenix_endpoint=phoenix_endpoint,
+        phoenix_endpoints=phoenix_endpoints,
+        auth_headers=auth_headers,
     )
 
     snapshot = _snapshot_state(db_path)
@@ -651,8 +654,32 @@ class TestLiveReplay:
         max_messages = request.config.getoption("--max-messages")
         run_note = request.config.getoption("--run-note")
         use_traced = request.config.getoption("--traced")
-        phoenix_endpoint = request.config.getoption("--phoenix-endpoint")
+        raw_endpoints = request.config.getoption("--phoenix-endpoint")
+        phoenix_user = request.config.getoption("--phoenix-user")
+        phoenix_password = request.config.getoption("--phoenix-password")
         case_id = case_dir.name.split("_")[0]
+
+        # Resolve Phoenix endpoints
+        # Default: remote droplet. Use --phoenix-endpoint local for localhost.
+        # Use --phoenix-endpoint local --phoenix-endpoint remote for dual-write.
+        LOCAL_EP = "http://localhost:6006/v1/traces"
+        REMOTE_EP = "http://152.42.156.128/developer/phoenix/v1/traces"
+        phoenix_endpoints = None
+        if raw_endpoints:
+            phoenix_endpoints = []
+            for ep in raw_endpoints:
+                if ep == "local":
+                    phoenix_endpoints.append(LOCAL_EP)
+                elif ep == "remote":
+                    phoenix_endpoints.append(REMOTE_EP)
+                else:
+                    phoenix_endpoints.append(ep)
+
+        import base64
+        auth_headers = {}
+        if phoenix_user and phoenix_password:
+            token = base64.b64encode(f"{phoenix_user}:{phoenix_password}".encode()).decode()
+            auth_headers = {"Authorization": f"Basic {token}"}
 
         trace = _load_json(case_dir, "replay_trace.json")
         seed = _load_json(case_dir, "seed_tasks.json")
@@ -676,7 +703,8 @@ class TestLiveReplay:
                 run_linkage=not skip_linkage,
                 max_messages=max_messages,
                 run_note=run_note,
-                phoenix_endpoint=phoenix_endpoint,
+                phoenix_endpoints=phoenix_endpoints,
+                auth_headers=auth_headers,
             )
         else:
             result = run_live_replay(
@@ -743,7 +771,7 @@ class TestLiveReplay:
             "run_metadata": _get_run_metadata(),
             "run_notes": run_note or "",
             "traced": use_traced,
-            "phoenix_endpoint": phoenix_endpoint or ("http://localhost:6006" if use_traced else None),
+            "phoenix_endpoints": phoenix_endpoints if use_traced else None,
             "routing_mode": "entity_first" if use_traced else "legacy_batch",
         })
 

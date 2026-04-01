@@ -1,13 +1,15 @@
 """
-Push eval results to Phoenix as span annotations.
+Push eval results to Phoenix as SpanEvaluations.
 
-Attaches deterministic scores, LLM judge results, and DAG eval
-dimensions to the corresponding trace spans in Phoenix.
+Uses Phoenix's log_evaluations() API which populates the
+annotations column in the UI, the Metrics tab, and the Traces table.
 """
 
 import json
 import logging
 from pathlib import Path
+
+import pandas as pd
 
 log = logging.getLogger(__name__)
 
@@ -17,16 +19,18 @@ def push_eval_to_phoenix(
     baselines_filename: str = "eval_baselines.json",
     phoenix_endpoint: str = "http://localhost:6006",
     project_name: str = "mantri",
+    auth_headers: dict | None = None,
 ):
     """
-    Run eval and push all results to Phoenix as annotations.
+    Run eval and push results to Phoenix as SpanEvaluations.
 
-    1. Runs deterministic scorers → CODE annotations on root span
-    2. Runs deterministic judges → CODE annotations on message spans
-    3. Runs LLM judges → LLM annotations on message spans
-    4. Runs DAG eval → CODE annotations on root span
+    1. Deterministic scorers → eval on message spans
+    2. Deterministic judges → per-message evals
+    3. LLM judges → per-message evals
+    4. DAG eval → eval on message spans
     """
     import phoenix as px
+    from phoenix.trace import SpanEvaluations
     from src.tracing.scorers import score_replay
     from src.tracing.judges import judge_replay
     from src.tracing.llm_judges import run_llm_judges
@@ -44,24 +48,17 @@ def push_eval_to_phoenix(
     stats = replay["stats"]
     state = replay["state"]
 
-    # Connect to Phoenix
-    client = px.Client(endpoint=phoenix_endpoint)
+    client = px.Client(endpoint=phoenix_endpoint, headers=auth_headers or {})
     trace_df = client.get_spans_dataframe(project_name=project_name, limit=50000)
 
     if trace_df is None or len(trace_df) == 0:
         log.warning("No spans found in Phoenix project %s", project_name)
         return
 
-    # Find the root span (replay:*) and message spans
-    root_spans = trace_df[trace_df["name"].str.startswith("replay:")]
     msg_spans = trace_df[trace_df["name"].str.startswith("message:")]
-
-    if len(root_spans) == 0:
-        log.warning("No root replay span found")
+    if len(msg_spans) == 0:
+        log.warning("No message spans found")
         return
-
-    # Use the most recent root span
-    root_span_id = root_spans.sort_values("start_time", ascending=False).iloc[0]["context.span_id"]
 
     # Build message_id → span_id lookup
     msg_span_ids = {}
@@ -72,133 +69,100 @@ def push_eval_to_phoenix(
             if mid:
                 msg_span_ids[mid] = row["context.span_id"]
 
-    annotations = []
+    all_span_ids = list(msg_span_ids.values())
+    log.info("Found %d message spans in Phoenix", len(all_span_ids))
 
-    # ── 1. Deterministic scorers → root span ────────────────────────
+    # ── 1. Deterministic scorers → one eval per message span ────────
     card = score_replay(stats, state, trace_df=trace_df)
     summary = card.summary()
-    for key, value in summary.items():
-        if key == "detail_count":
-            continue
-        if isinstance(value, bool):
-            score = 1.0 if value else 0.0
-            label = "PASS" if value else "FAIL"
-        elif isinstance(value, (int, float)):
-            score = float(value)
-            label = "PASS" if score >= 0.8 else "WARN" if score >= 0.5 else "FAIL"
-        else:
-            continue
-        annotations.append({
-            "span_id": root_span_id,
-            "name": f"scorer:{key}",
-            "annotator_kind": "CODE",
-            "label": label,
-            "score": score,
-            "explanation": f"{key}={value}",
-        })
-    log.info("Prepared %d scorer annotations", len(annotations))
 
-    # ── 2. Deterministic judges → message spans ─────────────────────
+    scorer_rows = []
+    for span_id in all_span_ids:
+        scorer_rows.append({
+            "context.span_id": span_id,
+            "label": "PASS" if summary["routing_accuracy"] >= 0.6 else "FAIL",
+            "score": summary["routing_accuracy"],
+            "explanation": json.dumps(summary),
+        })
+    if scorer_rows:
+        scorer_df = pd.DataFrame(scorer_rows).set_index("context.span_id")
+        client.log_evaluations(SpanEvaluations(
+            eval_name="pipeline_scorecard",
+            dataframe=scorer_df,
+        ))
+        log.info("Pushed pipeline_scorecard eval (%d spans)", len(scorer_rows))
+
+    # ── 2. Deterministic judges → per-message evals ─────────────────
     if baselines_path.exists():
         eval_result = judge_replay(baselines_path, result_path, trace_df=trace_df)
 
+        judge_rows = []
         for ms in eval_result.message_scores:
             span_id = msg_span_ids.get(ms.message_id)
             if not span_id:
                 continue
-
-            annotations.append({
-                "span_id": span_id,
-                "name": "judge:node_update_score",
-                "annotator_kind": "CODE",
-                "label": "PASS" if ms.node_update_score >= 0.5 else "FAIL",
-                "score": ms.node_update_score,
-                "explanation": json.dumps([a.__dict__ for a in ms.assertions
-                                           if a.assertion_type == "node_update"]),
-            })
-            annotations.append({
-                "span_id": span_id,
-                "name": "judge:item_score",
-                "annotator_kind": "CODE",
-                "label": "PASS" if ms.item_score >= 0.7 else "FAIL",
-                "score": ms.item_score,
-                "explanation": json.dumps([a.__dict__ for a in ms.assertions
-                                           if a.assertion_type == "item"]),
-            })
-            if ms.forbidden_violations > 0:
-                annotations.append({
-                    "span_id": span_id,
-                    "name": "judge:forbidden_violation",
-                    "annotator_kind": "CODE",
-                    "label": "FAIL",
-                    "score": 0.0,
-                    "explanation": json.dumps([a.__dict__ for a in ms.assertions
-                                               if a.assertion_type == "forbidden" and not a.passed]),
-                })
-            annotations.append({
-                "span_id": span_id,
-                "name": "judge:overall",
-                "annotator_kind": "CODE",
+            judge_rows.append({
+                "context.span_id": span_id,
                 "label": "PASS" if ms.overall_pass else "FAIL",
-                "score": 1.0 if ms.overall_pass else 0.0,
+                "score": ms.node_update_score,
+                "explanation": f"nodes={ms.node_update_score:.2f} items={ms.item_score:.2f} "
+                              f"forbidden={ms.forbidden_violations}",
             })
 
-        log.info("Prepared %d judge annotations (total so far)", len(annotations))
+        if judge_rows:
+            judge_df = pd.DataFrame(judge_rows).set_index("context.span_id")
+            client.log_evaluations(SpanEvaluations(
+                eval_name="deterministic_judge",
+                dataframe=judge_df,
+            ))
+            log.info("Pushed deterministic_judge eval (%d spans)", len(judge_rows))
 
-        # ── 3. LLM judges → message spans ──────────────────────────
+        # ── 3. LLM judges → per-message evals ──────────────────────
         staleness = check_staleness(baselines_path)
         llm_judgments = run_llm_judges(baselines_path, result_path,
                                        staleness_report=staleness)
-        for j in llm_judgments:
-            span_id = msg_span_ids.get(j.message_id)
-            if not span_id:
-                continue
-            annotations.append({
-                "span_id": span_id,
-                "name": f"llm_judge:{j.dimension}",
-                "annotator_kind": "LLM",
-                "label": j.verdict,
-                "score": j.score,
-                "explanation": j.reasoning[:500],
-            })
 
-        log.info("Prepared %d annotations (including LLM judges)", len(annotations))
+        if llm_judgments:
+            llm_rows = []
+            for j in llm_judgments:
+                span_id = msg_span_ids.get(j.message_id)
+                if not span_id:
+                    continue
+                llm_rows.append({
+                    "context.span_id": span_id,
+                    "label": j.verdict,
+                    "score": j.score,
+                    "explanation": f"{j.dimension}: {j.reasoning[:200]}",
+                })
+            if llm_rows:
+                llm_df = pd.DataFrame(llm_rows).set_index("context.span_id")
+                client.log_evaluations(SpanEvaluations(
+                    eval_name="llm_judge",
+                    dataframe=llm_df,
+                ))
+                log.info("Pushed llm_judge eval (%d spans)", len(llm_rows))
 
-    # ── 4. DAG eval → root span ─────────────────────────────────────
-    if baselines_path.exists():
+        # ── 4. DAG eval → per-message summary eval ─────────────────
         dag = run_eval_dag(case_dir, baselines_filename=baselines_filename,
-                           run_llm=False)  # skip LLM to avoid double calls
-        annotations.append({
-            "span_id": root_span_id,
-            "name": "dag:overall",
-            "annotator_kind": "CODE",
-            "label": "PASS" if dag.overall_pass else "FAIL",
-            "score": dag.overall_score,
-            "explanation": json.dumps(dag.summary()),
-        })
-        for node in dag.nodes:
-            annotations.append({
-                "span_id": root_span_id,
-                "name": f"dag:{node.name}",
-                "annotator_kind": "CODE",
-                "label": "PASS" if node.passed else "FAIL",
-                "score": node.score,
-                "explanation": node.details,
+                           run_llm=False)
+
+        dag_rows = []
+        for span_id in all_span_ids:
+            dag_rows.append({
+                "context.span_id": span_id,
+                "label": "PASS" if dag.overall_pass else "FAIL",
+                "score": dag.overall_score,
+                "explanation": json.dumps(dag.summary()),
             })
+        if dag_rows:
+            dag_df = pd.DataFrame(dag_rows).set_index("context.span_id")
+            client.log_evaluations(SpanEvaluations(
+                eval_name="eval_dag",
+                dataframe=dag_df,
+            ))
+            log.info("Pushed eval_dag eval (%d spans)", len(dag_rows))
 
-    # ── Push all annotations to Phoenix ─────────────────────────────
-    if not annotations:
-        log.info("No annotations to push")
-        return
-
-    import requests
-    resp = requests.post(
-        f"{phoenix_endpoint}/v1/span_annotations",
-        json={"data": annotations},
-    )
-    if resp.status_code == 200:
-        log.info("Pushed %d annotations to Phoenix (%s)", len(annotations), phoenix_endpoint)
-        print(f"Pushed {len(annotations)} eval annotations to Phoenix")
-    else:
-        log.warning("Failed to push annotations: %s %s", resp.status_code, resp.text[:200])
-        print(f"Failed to push annotations: {resp.status_code}")
+    total = len(scorer_rows) + len(judge_rows if baselines_path.exists() else []) + \
+            len(llm_rows if 'llm_rows' in dir() else []) + \
+            len(dag_rows if 'dag_rows' in dir() else [])
+    print(f"Pushed {total} eval annotations to Phoenix ({phoenix_endpoint})")

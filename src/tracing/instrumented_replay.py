@@ -31,16 +31,22 @@ def run_instrumented_replay(
     run_ctx: RunContext,
     run_linkage: bool = True,
     max_messages: int | None = None,
-    phoenix_endpoint: str | None = None,
+    phoenix_endpoints: list[str] | None = None,
+    auth_headers: dict | None = None,
 ) -> dict:
     """
     Run the full entity-first pipeline with Phoenix trace capture.
+
+    Args:
+        phoenix_endpoints: list of 1-2 Phoenix OTEL endpoints (default: remote droplet)
+        auth_headers: HTTP headers for authenticated endpoints
 
     Returns stats dict compatible with test_live_replay.py expectations.
     """
     tracer = ReplayTracer(
         project_name="mantri",
-        phoenix_endpoint=phoenix_endpoint,
+        phoenix_endpoints=phoenix_endpoints,
+        auth_headers=auth_headers,
     )
     tracer.start(run_ctx)
 

@@ -18,8 +18,13 @@ def pytest_addoption(parser):
                      help="Note to attach to the run record (e.g. 'testing new prompt rules')")
     parser.addoption("--traced", action="store_true", default=False,
                      help="Enable Phoenix tracing (entity-first pipeline, per-message processing)")
-    parser.addoption("--phoenix-endpoint", type=str, default=None,
-                     help="Phoenix OTEL endpoint (default: http://localhost:6006/v1/traces)")
+    parser.addoption("--phoenix-endpoint", type=str, action="append", default=None,
+                     help="Phoenix OTEL endpoint(s). Repeat for dual-write. "
+                          "Default: remote droplet. Use 'local' for http://localhost:6006/v1/traces")
+    parser.addoption("--phoenix-user", type=str, default="guest",
+                     help="Basic auth user for remote Phoenix (default: guest)")
+    parser.addoption("--phoenix-password", type=str, default="guestpasswd",
+                     help="Basic auth password for remote Phoenix")
 
 
 def save_run_record(test_type: str, case_id: str, results: dict):
