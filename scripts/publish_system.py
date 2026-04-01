@@ -906,7 +906,8 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                 f"<td data-value='{cost_html}' data-empty=''>{cost_html}</td>"
                 f"<td data-value='{config_html}' data-empty=''>{config_html}</td></tr>"
             )
-            for r in case_runs:
+            GP_SIZE = 10
+            for child_i, r in enumerate(case_runs):
                 # Mode info is in tags badges
                 r_node_summary = r.get("node_summary", {})
                 r_total_nodes = sum(v.get("total", 0) for v in r_node_summary.values())
@@ -927,8 +928,9 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                 r_noise_str = f" <span class='dim'>({r_noise} noise)</span>" if r_noise else ""
                 r_tags_html = _build_tags_html(r)
 
+                gp = child_i // GP_SIZE
                 rows.append(
-                    f"<tr class='group-child' data-group='{group_key}'>"
+                    f"<tr class='group-child' data-group='{group_key}' data-gpage='{gp}'>"
                     f"<td class='dim'>{_fmt_dt(r.get('run_at',''))}</td>"
                     f"<td>{r_tags_html}</td>"
                     f"<td>{r.get('messages_routed',0)}/{r.get('messages_total',0)}{r_noise_str}</td>"
@@ -950,19 +952,28 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                     # Remove border-bottom from the data row above
                     prev_row = rows[-1]
                     rows[-1] = prev_row.replace(
-                        f"<tr class='group-child' data-group='{group_key}'>",
-                        f"<tr class='group-child has-note' data-group='{group_key}' "
+                        f"data-group='{group_key}' data-gpage='{gp}'>",
+                        f"data-group='{group_key}' data-gpage='{gp}' "
                         f"style='border-bottom:none'>",
                     )
                     rows.append(
                         f"<tr class='group-child note-row' data-group='{group_key}' "
-                        f"title='Run note for the row above'>"
+                        f"data-gpage='{gp}' title='Run note for the row above'>"
                         f"<td colspan='13' style='padding:0.2rem 0.75rem 0.4rem 2.5rem; "
                         f"border-top:none; border-left:3px solid #4a90d9; "
                         f"background:#0d1017; font-size:0.75rem; color:#718096'>"
                         f"↳ <em>{escaped_notes}</em></td></tr>"
                     )
-            # (pagination for replay history handled by simple expand/collapse)
+            # Add page count to group header for JS pagination
+            total_gpages = (len(case_runs) + GP_SIZE - 1) // GP_SIZE
+            if total_gpages > 1:
+                for ri in range(len(rows)):
+                    if f"data-group='{group_key}'" in rows[ri] and "group-row" in rows[ri]:
+                        rows[ri] = rows[ri].replace(
+                            f"data-group='{group_key}'",
+                            f"data-group='{group_key}' data-gpages='{total_gpages}'",
+                        )
+                        break
 
         sections.append(
             "<h3>Live Replay History</h3>"
@@ -1111,15 +1122,62 @@ summary.task-summary:hover { color: #4a90d9; }
 
 
 JS = """
+var gpageState = {};
+
 function toggleGroup(row) {
     var group = row.getAttribute('data-group');
     row.classList.toggle('open');
-    var children = document.querySelectorAll('tr.group-child[data-group="' + group + '"]');
-    for (var i = 0; i < children.length; i++) {
-        children[i].classList.toggle('visible');
-    }
-    // Swap data cells between showing data and empty
     var isOpen = row.classList.contains('open');
+    var totalPages = parseInt(row.getAttribute('data-gpages') || '0');
+    var hasPagination = totalPages > 1;
+    var children = document.querySelectorAll('tr.group-child[data-group="' + group + '"]');
+
+    if (isOpen) {
+        var curPage = gpageState[group] || 0;
+        for (var i = 0; i < children.length; i++) {
+            var gp = children[i].getAttribute('data-gpage');
+            if (hasPagination && gp !== null) {
+                // Only show rows on current page
+                if (parseInt(gp) === curPage) {
+                    children[i].classList.add('visible');
+                }
+            } else {
+                // No pagination — show all
+                children[i].classList.add('visible');
+            }
+        }
+        // Inject pagination controls into header row
+        if (hasPagination) {
+            var firstTd = row.querySelector('td:first-child');
+            if (firstTd && !row.querySelector('.gpag-ctrl')) {
+                var ctrl = document.createElement('span');
+                ctrl.className = 'gpag-ctrl pagination';
+                ctrl.style.cssText = 'margin-left:1rem; display:inline-flex';
+                var prevBtn = document.createElement('button');
+                prevBtn.textContent = String.fromCharCode(8249);
+                prevBtn.onclick = function(e) { e.stopPropagation(); paginateGroup(group, -1); };
+                var ind = document.createElement('span');
+                ind.id = 'gpage-ind-' + group;
+                ind.textContent = 'Page ' + (curPage+1) + ' / ' + totalPages;
+                var nextBtn = document.createElement('button');
+                nextBtn.textContent = String.fromCharCode(8250);
+                nextBtn.onclick = function(e) { e.stopPropagation(); paginateGroup(group, 1); };
+                ctrl.appendChild(prevBtn);
+                ctrl.appendChild(ind);
+                ctrl.appendChild(nextBtn);
+                firstTd.appendChild(ctrl);
+            }
+        }
+    } else {
+        // Collapse — hide all children, remove pagination controls
+        for (var i = 0; i < children.length; i++) {
+            children[i].classList.remove('visible');
+        }
+        var ctrl = row.querySelector('.gpag-ctrl');
+        if (ctrl) ctrl.remove();
+    }
+
+    // Swap data cells between showing data and empty
     var tds = row.querySelectorAll('td[data-value]');
     for (var j = 0; j < tds.length; j++) {
         if (!tds[j].hasAttribute('data-html')) {
@@ -1131,6 +1189,29 @@ function toggleGroup(row) {
             tds[j].innerHTML = tds[j].getAttribute('data-html');
         }
     }
+}
+
+function paginateGroup(group, dir) {
+    var headerRow = document.querySelector('tr.group-row[data-group="' + group + '"]');
+    var totalPages = parseInt(headerRow.getAttribute('data-gpages') || '1');
+    var curPage = gpageState[group] || 0;
+    var newPage = curPage + dir;
+    if (newPage < 0 || newPage >= totalPages) return;
+    gpageState[group] = newPage;
+
+    var children = document.querySelectorAll('tr.group-child[data-group="' + group + '"]');
+    for (var i = 0; i < children.length; i++) {
+        var gp = children[i].getAttribute('data-gpage');
+        if (gp !== null) {
+            if (parseInt(gp) === newPage) {
+                children[i].classList.add('visible');
+            } else {
+                children[i].classList.remove('visible');
+            }
+        }
+    }
+    var ind = document.getElementById('gpage-ind-' + group);
+    if (ind) ind.textContent = 'Page ' + (newPage+1) + ' / ' + totalPages;
 }
 
 var pageState = {};
