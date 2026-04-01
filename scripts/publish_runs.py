@@ -762,6 +762,8 @@ def _tag_legend() -> str:
         "<tr><td><span class='tag tag-agent'>AO</span></td><td>Update agent — order processing</td></tr>"
         "<tr><td><span class='tag tag-agent'>AL</span></td><td>Linkage agent — fulfillment matching</td></tr>"
         "<tr><td><span class='tag tag-dim'>AS</span></td><td>Shared groups conversation routing (planned)</td></tr>"
+        "<tr><td><span class='tag tag-batch'>B</span></td><td>Production batching (60s window, max 10 msgs)</td></tr>"
+        "<tr><td><span class='tag tag-dim'>🔃</span></td><td>Asynchronous linkage processing (planned)</td></tr>"
         "<tr><td><span class='tag tag-dim'>N</span></td><td>Partial replay — first N messages only</td></tr>"
         "</table></details>"
     )
@@ -799,9 +801,19 @@ def _system_summary(int_runs: list[dict], real_runs: list[dict],
                 tag_badges.append("<span class='tag tag-legacy' title='Legacy batch routing (pre v0.3.0)'>L</span>")
             if latest.get("traced"):
                 tag_badges.append("<span class='tag tag-traced' title='Phoenix OTEL tracing enabled'>T</span>")
-            tag_badges.append("<span class='tag tag-agent' title='Update agent for order processing'>AO</span>")
-            if not latest.get("skip_linkage"):
-                tag_badges.append("<span class='tag tag-agent' title='Linkage agent for fulfillment matching'>AL</span>")
+            # Agents
+            run_agents = latest.get("agents", [])
+            if not run_agents:
+                run_agents = ["AO"] if latest.get("skip_linkage") else ["AO", "AL"]
+            for agent in run_agents:
+                tips = {"AO": "Update agent for order processing",
+                        "AL": "Linkage agent for fulfillment matching",
+                        "AS": "Conversation routing for shared groups"}
+                tag_badges.append(f"<span class='tag tag-agent' title='{tips.get(agent, agent)}'>{agent}</span>")
+            # Batching
+            if latest.get("batch_mode"):
+                tag_badges.append("<span class='tag tag-batch' title='Production batching (60s window)'>B</span>")
+            # Partial replay
             if latest.get("max_messages"):
                 n = latest["max_messages"]
                 tag_badges.append(f"<span class='tag tag-dim' title='Partial replay (first {n} messages)'>{n}</span>")
@@ -902,6 +914,7 @@ nav { margin-bottom: 2rem; font-size: 0.82rem; }
 .tag-legacy { background: #2d3748; color: #a0aec0; }
 .tag-traced { background: #2f855a; color: #c6f6d5; }
 .tag-agent { background: #2a4365; color: #90cdf4; }
+.tag-batch { background: #553c9a; color: #d6bcfa; }
 .tag-dim { background: #1a2030; color: #718096; border: 1px solid #2d3748; }
 .dim { font-size: 0.85rem; color: #4a5568; }
 /* Collapsible group rows */

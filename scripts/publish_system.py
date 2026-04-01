@@ -106,11 +106,19 @@ def _build_tags_html(run: dict) -> str:
     if run.get("traced"):
         badges.append("<span class='tag tag-traced' title='Phoenix OTEL tracing enabled'>T</span>")
     # Agents used
-    badges.append("<span class='tag tag-agent' title='Update agent for order processing'>AO</span>")
-    if not run.get("skip_linkage"):
-        badges.append("<span class='tag tag-agent' title='Linkage agent for fulfillment matching'>AL</span>")
-    # AS (conversation routing) — future
-    # badges.append("<span class='tag tag-dim' title='Conversation routing for shared groups (under construction)'>AS</span>")
+    run_agents = run.get("agents", [])
+    if not run_agents:
+        run_agents = ["AO"] if run.get("skip_linkage") else ["AO", "AL"]
+    agent_tips = {"AO": "Update agent for order processing",
+                  "AL": "Linkage agent for fulfillment matching",
+                  "AS": "Conversation routing for shared groups"}
+    for agent in run_agents:
+        badges.append(f"<span class='tag tag-agent' title='{agent_tips.get(agent, agent)}'>{agent}</span>")
+    # Batching mode
+    if run.get("batch_mode"):
+        badges.append("<span class='tag tag-batch' title='Production batching (60s window)'>B</span>")
+    # Async replay — planned
+    # badges.append("<span class='tag tag-dim' title='Asynchronous replay (planned)'>🔃</span>")
     # Partial replay
     max_msgs = run.get("max_messages")
     if max_msgs:
@@ -1092,6 +1100,7 @@ summary.task-summary:hover { color: #4a90d9; }
 .tag-legacy { background: #2d3748; color: #a0aec0; }
 .tag-traced { background: #2f855a; color: #c6f6d5; }
 .tag-agent { background: #2a4365; color: #90cdf4; }
+.tag-batch { background: #553c9a; color: #d6bcfa; }
 .tag-dim { background: #1a2030; color: #718096; border: 1px solid #2d3748; }
 """
 
@@ -1205,6 +1214,8 @@ def generate() -> str:
   <tr><td><span class="tag tag-agent">AO</span></td><td>Update agent — order processing</td></tr>
   <tr><td><span class="tag tag-agent">AL</span></td><td>Linkage agent — fulfillment matching</td></tr>
   <tr><td><span class="tag tag-dim">AS</span></td><td>Shared groups conversation routing (planned)</td></tr>
+  <tr><td><span class="tag tag-batch">B</span></td><td>Production batching (60s window, max 10 msgs)</td></tr>
+  <tr><td><span class="tag tag-dim">🔃</span></td><td>Asynchronous linkage processing (planned)</td></tr>
   <tr><td><span class="tag tag-dim">N</span></td><td>Partial replay — first N messages only</td></tr>
   </table>
   </details>

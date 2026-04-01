@@ -118,13 +118,14 @@ summary.task-summary:hover { color: #4a90d9; }
 .tag-legacy { background: #2d3748; color: #a0aec0; }
 .tag-traced { background: #2f855a; color: #c6f6d5; }
 .tag-agent { background: #2a4365; color: #90cdf4; }
+.tag-batch { background: #553c9a; color: #d6bcfa; }
 .tag-dim { background: #1a2030; color: #718096; border: 1px solid #2d3748; }
 </style>
 </head>
 <body>
   <h1>System Test Results</h1>
   <p class="meta">
-    Generated 2026-04-02 00:58 &nbsp;&middot;&nbsp;
+    Generated 2026-04-02 01:24 &nbsp;&middot;&nbsp;
     <a href="/developer/">Developer Portal</a> &nbsp;&middot;&nbsp;
     <a href="/developer/runs/">Test Results</a>
   </p>
@@ -147,6 +148,8 @@ summary.task-summary:hover { color: #4a90d9; }
   <tr><td><span class="tag tag-agent">AO</span></td><td>Update agent — order processing</td></tr>
   <tr><td><span class="tag tag-agent">AL</span></td><td>Linkage agent — fulfillment matching</td></tr>
   <tr><td><span class="tag tag-dim">AS</span></td><td>Shared groups conversation routing (planned)</td></tr>
+  <tr><td><span class="tag tag-batch">B</span></td><td>Production batching (60s window, max 10 msgs)</td></tr>
+  <tr><td><span class="tag tag-dim">🔃</span></td><td>Asynchronous linkage processing (planned)</td></tr>
   <tr><td><span class="tag tag-dim">N</span></td><td>Partial replay — first N messages only</td></tr>
   </table>
   </details>

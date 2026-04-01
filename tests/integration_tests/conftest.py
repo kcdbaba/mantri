@@ -28,6 +28,10 @@ def pytest_addoption(parser):
                      help="Basic auth user for remote Phoenix (default: guest)")
     parser.addoption("--phoenix-password", type=str, default="guestpasswd",
                      help="Basic auth password for remote Phoenix")
+    parser.addoption("--batch", action="store_true", default=False,
+                     help="Simulate production batching (60s window, max 10 msgs)")
+    parser.addoption("--agents", type=str, default="AO,AL",
+                     help="Comma-separated agents to run: AO (orders), AL (linkage), AS (conversation). Default: AO,AL")
 
 
 def save_run_record(test_type: str, case_id: str, results: dict):

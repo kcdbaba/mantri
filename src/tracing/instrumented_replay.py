@@ -22,6 +22,110 @@ from src.tracing.tracer import ReplayTracer, RunContext, MessageTrace
 log = logging.getLogger(__name__)
 
 
+BATCH_WINDOW_S = 60   # Production batching window
+BATCH_MAX_SIZE = 10   # Production max batch size
+
+
+def _run_batched(messages, tracer, _mt, _apply_idx, stats, mock_redis,
+                 drain_linkage_fn, write_progress_fn, monitored, process_message_fn):
+    """
+    Simulate production batching: group messages by entity within BATCH_WINDOW_S,
+    then process each batch via process_message_batch().
+
+    This matches the production worker.py:run() behavior where messages are
+    buffered per entity and flushed after a timeout or max batch size.
+    """
+    from src.router.router import route
+    from src.router.worker import process_message_batch
+
+    # Phase 1: Route all messages and group into batches
+    batch_buf = {}  # entity_id → {"messages": [], "last_ts": int}
+    batches_to_flush = []  # [(entity_id, [messages])]
+
+    def _flush_all():
+        for eid, buf in batch_buf.items():
+            if buf["messages"]:
+                batches_to_flush.append((eid, list(buf["messages"])))
+        batch_buf.clear()
+
+    write_progress_fn("routing", f"0/{len(messages)} messages")
+    for i, msg in enumerate(messages):
+        if (i + 1) % 50 == 0:
+            write_progress_fn("routing", f"{i+1}/{len(messages)} messages")
+
+        routes = route(msg)
+        if not routes:
+            body = msg.get("body") or ""
+            has_content = body.strip() or msg.get("image_path") or msg.get("image_bytes")
+            if not has_content:
+                stats["messages_noise"] += 1
+            else:
+                stats["messages_unrouted"] += 1
+            continue
+
+        stats["messages_routed"] += 1
+        msg_ts = msg.get("timestamp", 0)
+
+        for entity_id, confidence in routes:
+            if entity_id in batch_buf:
+                elapsed = msg_ts - batch_buf[entity_id]["last_ts"]
+                if elapsed > BATCH_WINDOW_S or len(batch_buf[entity_id]["messages"]) >= BATCH_MAX_SIZE:
+                    batches_to_flush.append(
+                        (entity_id, list(batch_buf[entity_id]["messages"]))
+                    )
+                    del batch_buf[entity_id]
+
+            if entity_id not in batch_buf:
+                batch_buf[entity_id] = {"messages": [], "last_ts": 0}
+
+            batch_buf[entity_id]["messages"].append(msg)
+            batch_buf[entity_id]["last_ts"] = msg_ts
+
+    _flush_all()
+
+    # Phase 2: Process batches
+    write_progress_fn("batches", f"0/{len(batches_to_flush)} batches")
+    for batch_idx, (entity_id, batch_msgs) in enumerate(batches_to_flush):
+        if (batch_idx + 1) % 10 == 0:
+            log.info("Processing batch %d/%d: entity=%s size=%d",
+                     batch_idx + 1, len(batches_to_flush), entity_id, len(batch_msgs))
+            write_progress_fn("batches",
+                              f"{batch_idx+1}/{len(batches_to_flush)} batches")
+
+        # Trace span for the batch (use last message as representative)
+        last_msg = batch_msgs[-1]
+        _apply_idx[0] = 0
+
+        with tracer.trace_message(last_msg, seq=batch_idx) as mt:
+            _mt[0] = mt
+            mt.record_routing([(entity_id, 0.9)], layer="batch")
+
+            try:
+                # Resolve entity → task for the batch
+                from src.store.task_store import get_tasks_for_entity
+                from src.router.worker import _resolve_task_for_entity
+                entity_tasks = get_tasks_for_entity(entity_id)
+                task_id = _resolve_task_for_entity(entity_id, entity_tasks, last_msg, mock_redis)
+
+                if task_id:
+                    process_message_batch(task_id, batch_msgs, mock_redis)
+                    stats["update_agent_calls"] += 1
+                else:
+                    # Multi-task — fall back to per-message processing
+                    for msg in batch_msgs:
+                        process_message_fn(msg, mock_redis)
+            except Exception as e:
+                stats["errors"].append({
+                    "phase": "batch_process",
+                    "message_id": last_msg.get("message_id"),
+                    "error": str(e),
+                })
+                log.error("Batch failed for entity=%s: %s", entity_id, e)
+                continue
+
+            drain_linkage_fn(last_msg, batch_idx)
+
+
 def run_instrumented_replay(
     case_dir: Path,
     trace_messages: list[dict],
@@ -33,6 +137,7 @@ def run_instrumented_replay(
     max_messages: int | None = None,
     phoenix_endpoints: list[str] | None = None,
     auth_headers: dict | None = None,
+    batch_mode: bool = False,
 ) -> dict:
     """
     Run the full entity-first pipeline with Phoenix trace capture.
@@ -40,6 +145,8 @@ def run_instrumented_replay(
     Args:
         phoenix_endpoints: list of 1-2 Phoenix OTEL endpoints (default: remote droplet)
         auth_headers: HTTP headers for authenticated endpoints
+        batch_mode: if True, simulate production batching (60s window, max 10 msgs).
+                    If False, process one message at a time.
 
     Returns stats dict compatible with test_live_replay.py expectations.
     """
@@ -232,49 +339,61 @@ def run_instrumented_replay(
 
         _write_progress("processing", f"0/{len(messages_to_process)} messages")
 
+        def _drain_linkage(msg_ref, batch_idx=0):
+            """Feed mock Redis events to linkage worker."""
+            if not run_linkage:
+                return
+            new_events = mock_redis.drain_events()
+            for stream_key, fields in new_events:
+                try:
+                    process_event(f"replay-{batch_idx}", fields, mock_redis)
+                    stats["linkage_events_processed"] += 1
+                except Exception as e:
+                    stats["linkage_agent_failures"] += 1
+                    stats["errors"].append({
+                        "phase": "linkage_agent",
+                        "message_id": msg_ref.get("message_id"),
+                        "error": str(e),
+                    })
+
         with patch("src.router.worker.route", _traced_route), \
              patch("src.agent.update_agent._call_with_retry", _traced_call_with_retry), \
              patch("src.router.worker._resolve_task_for_entity", _traced_resolve), \
              patch("src.router.worker._apply_output", _traced_apply):
 
-            for i, msg in enumerate(messages_to_process):
-                if (i + 1) % 25 == 0:
-                    log.info("Processing message %d/%d: %s",
-                             i + 1, len(messages_to_process), msg.get("message_id"))
-                    _write_progress("processing",
-                                    f"{i+1}/{len(messages_to_process)} messages")
+            if batch_mode:
+                # ── Batch mode: simulate production 60s window ─────────
+                log.info("Batch mode: simulating production batching (%ds window, max %d)",
+                         BATCH_WINDOW_S, BATCH_MAX_SIZE)
+                _run_batched(messages_to_process, tracer, _mt, _apply_idx,
+                             stats, mock_redis, _drain_linkage, _write_progress,
+                             monitored, process_message)
+            else:
+                # ── Per-message mode: one process_message() per message ─
+                for i, msg in enumerate(messages_to_process):
+                    if (i + 1) % 25 == 0:
+                        log.info("Processing message %d/%d: %s",
+                                 i + 1, len(messages_to_process), msg.get("message_id"))
+                        _write_progress("processing",
+                                        f"{i+1}/{len(messages_to_process)} messages")
 
-                _apply_idx[0] = 0  # reset per message
+                    _apply_idx[0] = 0
 
-                with tracer.trace_message(msg, seq=i) as mt:
-                    _mt[0] = mt
+                    with tracer.trace_message(msg, seq=i) as mt:
+                        _mt[0] = mt
+                        try:
+                            process_message(msg, mock_redis)
+                        except Exception as e:
+                            stats["errors"].append({
+                                "phase": "process_message",
+                                "message_id": msg.get("message_id"),
+                                "error": str(e),
+                            })
+                            log.error("process_message failed for %s: %s",
+                                      msg.get("message_id"), e)
+                            continue
 
-                    try:
-                        process_message(msg, mock_redis)
-                    except Exception as e:
-                        stats["errors"].append({
-                            "phase": "process_message",
-                            "message_id": msg.get("message_id"),
-                            "error": str(e),
-                        })
-                        log.error("process_message failed for %s: %s",
-                                  msg.get("message_id"), e)
-                        continue
-
-                    # Feed stream events to linkage worker
-                    if run_linkage:
-                        new_events = mock_redis.drain_events()
-                        for stream_key, fields in new_events:
-                            try:
-                                process_event(f"replay-{i}", fields, mock_redis)
-                                stats["linkage_events_processed"] += 1
-                            except Exception as e:
-                                stats["linkage_agent_failures"] += 1
-                                stats["errors"].append({
-                                    "phase": "linkage_agent",
-                                    "message_id": msg.get("message_id"),
-                                    "error": str(e),
-                                })
+                        _drain_linkage(msg, i)
 
     _write_progress("complete", f"done in {time.time()-t_start:.0f}s")
     tracer.stop(stats=stats)

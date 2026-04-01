@@ -596,7 +596,8 @@ def _run_traced_replay(case_dir: Path, trace_data: list[dict], seed: dict,
                        run_linkage: bool = True, max_messages: int | None = None,
                        run_note: str = "",
                        phoenix_endpoints: list[str] | None = None,
-                       auth_headers: dict | None = None) -> dict:
+                       auth_headers: dict | None = None,
+                       batch_mode: bool = False) -> dict:
     """
     Run replay using the instrumented entity-first pipeline with Phoenix tracing.
     Returns result dict in the same format as run_live_replay().
@@ -633,6 +634,7 @@ def _run_traced_replay(case_dir: Path, trace_data: list[dict], seed: dict,
         max_messages=max_messages,
         phoenix_endpoints=phoenix_endpoints,
         auth_headers=auth_headers,
+        batch_mode=batch_mode,
     )
 
     snapshot = _snapshot_state(db_path)
@@ -669,6 +671,15 @@ class TestLiveReplay:
         raw_endpoints = request.config.getoption("--phoenix-endpoint")
         phoenix_user = request.config.getoption("--phoenix-user")
         phoenix_password = request.config.getoption("--phoenix-password")
+        batch_mode = request.config.getoption("--batch")
+        agents_str = request.config.getoption("--agents")
+
+        # Parse --agents flag: overrides --skip-linkage
+        agents = [a.strip().upper() for a in agents_str.split(",")]
+        if "AL" not in agents:
+            skip_linkage = True
+        if "AL" in agents:
+            skip_linkage = False
         case_id = case_dir.name.split("_")[0]
 
         # Resolve Phoenix endpoints
@@ -717,6 +728,7 @@ class TestLiveReplay:
                 run_note=run_note,
                 phoenix_endpoints=phoenix_endpoints,
                 auth_headers=auth_headers,
+                batch_mode=batch_mode,
             )
         else:
             result = run_live_replay(
@@ -786,6 +798,8 @@ class TestLiveReplay:
             "traced": use_traced,
             "phoenix_endpoints": phoenix_endpoints if use_traced else None,
             "routing_mode": "entity_first" if use_traced else "legacy_batch",
+            "batch_mode": batch_mode if use_traced else False,
+            "agents": agents if use_traced else ["AO"],
         })
 
         # Basic sanity assertions
