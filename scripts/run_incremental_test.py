@@ -33,7 +33,9 @@ from src.router.router import route
 
 CASES_DIR = Path("tests/functional_tests")
 RESULTS_DIR = Path("tests/functional_tests/results")
-RUNS_DIR = Path("tests/runs/incremental")
+# Respect MANTRI_OUTPUT_DIR for /tmp artifact isolation
+_OUTPUT_BASE = Path(os.environ.get("MANTRI_OUTPUT_DIR", "tests/runs"))
+RUNS_DIR = _OUTPUT_BASE / "incremental" if "MANTRI_OUTPUT_DIR" in os.environ else Path("tests/runs/incremental")
 
 
 # ---------------------------------------------------------------------------

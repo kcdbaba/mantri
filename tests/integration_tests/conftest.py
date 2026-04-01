@@ -1,10 +1,13 @@
 """Integration test configuration and shared fixtures."""
 
 import json
+import os
 from datetime import datetime
 from pathlib import Path
 
-RUNS_DIR = Path("tests/runs/integration")
+# Respect MANTRI_OUTPUT_DIR for /tmp artifact isolation
+_OUTPUT_BASE = os.environ.get("MANTRI_OUTPUT_DIR")
+RUNS_DIR = Path(_OUTPUT_BASE) / "integration" if _OUTPUT_BASE else Path("tests/runs/integration")
 
 
 def pytest_addoption(parser):

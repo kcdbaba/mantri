@@ -18,6 +18,7 @@ Skip linkage (update_agent only):
 """
 
 import json
+import os
 import time
 import sqlite3
 import tempfile
@@ -32,6 +33,15 @@ from src.agent.templates import get_template
 from tests.integration_tests.conftest import save_run_record
 
 CASES_DIR = Path(__file__).parent
+
+def _output_dir(case_dir: Path) -> Path:
+    """Return output directory — /tmp override or case_dir."""
+    env_dir = os.environ.get("MANTRI_OUTPUT_DIR")
+    if env_dir:
+        out = Path(env_dir) / case_dir.name
+        out.mkdir(parents=True, exist_ok=True)
+        return out
+    return case_dir
 
 log = logging.getLogger(__name__)
 
@@ -384,8 +394,9 @@ def run_live_replay(case_dir: Path, trace: list[dict], seed: dict,
     snapshot = _snapshot_state(db_path)
 
     # Keep the DB for manual inspection
+    out = _output_dir(case_dir)
     suffix = _output_suffix(max_messages)
-    result_db = case_dir / f"replay_result{suffix}.db"
+    result_db = out / f"replay_result{suffix}.db"
     Path(db_path).rename(result_db)
     _write_progress("complete", f"done in {time.time()-t_start:.0f}s")
     log.info("Result DB saved to: %s", result_db)
@@ -627,8 +638,9 @@ def _run_traced_replay(case_dir: Path, trace_data: list[dict], seed: dict,
     snapshot = _snapshot_state(db_path)
 
     # Keep the DB for manual inspection
+    out = _output_dir(case_dir)
     suffix = _output_suffix(max_messages)
-    result_db = case_dir / f"replay_result{suffix}.db"
+    result_db = out / f"replay_result{suffix}.db"
     Path(db_path).rename(result_db)
     log.info("Result DB saved to: %s", result_db)
 
@@ -713,9 +725,10 @@ class TestLiveReplay:
                 max_messages=max_messages,
             )
 
-        # Write full results to case dir
+        # Write full results to output dir (case_dir or /tmp override)
+        out_dir = _output_dir(case_dir)
         suffix = _output_suffix(max_messages)
-        output_path = case_dir / f"replay_result{suffix}.json"
+        output_path = out_dir / f"replay_result{suffix}.json"
         output_path.write_text(
             json.dumps(result, indent=2, ensure_ascii=False, default=str),
             encoding="utf-8",
@@ -729,7 +742,7 @@ class TestLiveReplay:
         score["case_id"] = case_id
         score["case_name"] = case_dir.name
         score["evaluated_at"] = time.strftime("%Y-%m-%dT%H:%M:%S")
-        score_path = case_dir / f"pipeline_score{suffix}.json"
+        score_path = out_dir / f"pipeline_score{suffix}.json"
         score_path.write_text(
             json.dumps(score, indent=2, ensure_ascii=False, default=str),
             encoding="utf-8",

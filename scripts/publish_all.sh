@@ -14,7 +14,7 @@ python scripts/publish_allure.py
 echo "Publishing test runs dashboard..."
 PYTHONPATH=. python scripts/publish_runs.py
 
-echo "Publishing integration replay detail..."
-PYTHONPATH=. python scripts/publish_integration.py
+echo "Publishing system test detail..."
+PYTHONPATH=. python scripts/publish_system.py
 
 echo "Done. Commit static/developer/ and deploy to update the portal."

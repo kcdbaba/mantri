@@ -26,6 +26,11 @@ server {
         try_files $uri $uri/index.html =404;
     }
 
+    # ── Redirect old /integration/ to /system/ ────────────────────────────────
+    location /developer/integration/ {
+        return 301 /developer/system/;
+    }
+
     # ── Phoenix — proxied under /developer/phoenix/ ──────────────────────────
     # Phoenix is started with PHOENIX_HOST_ROOT_PATH=/developer/phoenix
     # nginx strips the prefix when forwarding to port 6006
