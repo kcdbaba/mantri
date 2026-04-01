@@ -93,6 +93,27 @@ def _load_runs() -> list[dict]:
     return runs
 
 
+def _build_tags_html(run: dict) -> str:
+    """Build tags badges with hover tooltips from a run record."""
+    badges = []
+    rm = run.get("routing_mode", "")
+    if rm:
+        tip = "Entity-first routing (v0.3.0+)" if rm == "entity_first" else "Legacy batch routing"
+        badges.append(f"<span class='badge badge-mode' title='{tip}'>{rm}</span>")
+    if run.get("traced"):
+        badges.append("<span class='badge badge-traced' title='Phoenix OTEL tracing enabled'>T</span>")
+    if run.get("skip_linkage"):
+        badges.append("<span class='badge badge-warn' title='Linkage agent skipped'>no-link</span>")
+    max_msgs = run.get("max_messages")
+    if max_msgs:
+        badges.append(f"<span class='badge badge-dim' title='Partial replay (first {max_msgs} messages)'>max-{max_msgs}</span>")
+    phoenix_eps = run.get("phoenix_endpoints") or []
+    if phoenix_eps:
+        eps_str = ", ".join(str(e) for e in phoenix_eps)
+        badges.append(f"<span class='badge badge-dim' title='Phoenix endpoints: {eps_str}'>phoenix</span>")
+    return " ".join(badges) if badges else "<span class='dim'>\u2014</span>"
+
+
 def _fmt_dt(iso: str) -> str:
     try:
         return datetime.fromisoformat(iso).strftime("%Y-%m-%d %H:%M")
@@ -845,14 +866,7 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
             tasks_created = latest.get("tasks_created", len(latest.get("node_summary", {})))
             p_score = latest.get("pipeline_score", "")
             p_score_html = f"{p_score}" if p_score else "\u2014"
-            r_mode = latest.get("routing_mode", "")
-            mode_badge = f" <span class='badge badge-mode'>{r_mode}</span>" if r_mode else ""
-            traced_icon = " <span class='badge badge-traced'>T</span>" if latest.get("traced") else ""
-            phoenix_ep = latest.get("phoenix_endpoint", "")
-            phoenix_link = (
-                f" <a href='{phoenix_ep}' target='_blank' class='dim' "
-                f"style='font-size:0.72rem'>traces</a>"
-            ) if phoenix_ep else ""
+            tags_html = _build_tags_html(latest)
             meta = latest.get("run_metadata", {})
             config_html = ""
             if meta:
@@ -868,8 +882,7 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
 
             rows.append(
                 f"<tr class='group-row' data-group='{group_key}' onclick='toggleGroup(this)'>"
-                f"<td><span class='toggle'>&#9654;</span> {case_id} ({n_runs} runs)"
-                f"{mode_badge}{traced_icon}{phoenix_link}</td>"
+                f"<td><span class='toggle'>&#9654;</span> {case_id} ({n_runs} runs)</td>"
                 f"<td data-value='{latest_mode}' data-empty=''>{latest_mode}</td>"
                 f"<td data-value='{routed_val}{noise_str}' data-empty=''>"
                 f"{routed_val}{(' <span class=dim>' + noise_str + '</span>') if noise_str else ''}</td>"
@@ -885,7 +898,8 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                 f"<td data-value='{p_score_html}' data-empty=''>{p_score_html}</td>"
                 f"<td data-value='{models_html}' data-empty=''>{models_html}</td>"
                 f"<td data-value='{cost_html}' data-empty=''>{cost_html}</td>"
-                f"<td data-value='{config_html}' data-empty=''>{config_html}</td></tr>"
+                f"<td data-value='{config_html}' data-empty=''>{config_html}</td>"
+                f"<td>{tags_html}</td></tr>"
             )
             for r in case_runs:
                 mode = "update only" if r.get("skip_linkage") else "full"
@@ -906,15 +920,13 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                 else:
                     r_models = "\u2014"
                     r_cost = "\u2014"
-                r_rm = r.get("routing_mode", "")
-                r_rm_badge = f" <span class='badge badge-mode'>{r_rm}</span>" if r_rm else ""
-                r_traced = " <span class='badge badge-traced'>T</span>" if r.get("traced") else ""
                 r_noise = r.get("messages_noise", 0)
                 r_noise_str = f" <span class='dim'>({r_noise} noise)</span>" if r_noise else ""
+                r_tags_html = _build_tags_html(r)
 
                 rows.append(
                     f"<tr class='group-child' data-group='{group_key}'>"
-                    f"<td class='dim'>{_fmt_dt(r.get('run_at',''))}{r_rm_badge}{r_traced}</td>"
+                    f"<td class='dim'>{_fmt_dt(r.get('run_at',''))}</td>"
                     f"<td>{mode}</td>"
                     f"<td>{r.get('messages_routed',0)}/{r.get('messages_total',0)}{r_noise_str}</td>"
                     f"<td>{r_total_nodes}</td>"
@@ -926,7 +938,8 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                     f"<td>{r.get('pipeline_score') or chr(8212)}</td>"
                     f"<td>{r_models}</td>"
                     f"<td>{r_cost}</td>"
-                    f"<td class='dim'>{r.get('run_metadata', {}).get('git_commit', '')}</td></tr>"
+                    f"<td class='dim'>{r.get('run_metadata', {}).get('git_commit', '')}</td>"
+                    f"<td>{r_tags_html}</td></tr>"
                 )
                 # Show run_notes as a connected sub-row
                 notes = r.get("run_notes", "")
@@ -942,7 +955,7 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                     rows.append(
                         f"<tr class='group-child note-row' data-group='{group_key}' "
                         f"title='Run note for the row above'>"
-                        f"<td colspan='13' style='padding:0.2rem 0.75rem 0.4rem 2.5rem; "
+                        f"<td colspan='14' style='padding:0.2rem 0.75rem 0.4rem 2.5rem; "
                         f"border-top:none; border-left:3px solid #4a90d9; "
                         f"background:#0d1017; font-size:0.75rem; color:#718096'>"
                         f"↳ <em>{escaped_notes}</em></td></tr>"
@@ -954,7 +967,7 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
             "<th>Nodes</th><th>Links</th><th>Ambiguity</th>"
             "<th>Dead Letters</th><th>Errors</th>"
             "<th>Tasks</th><th>Score</th>"
-            "<th>Models</th><th>Cost</th><th>Config</th>"
+            "<th>Models</th><th>Cost</th><th>Config</th><th>Tags</th>"
             "</tr></thead><tbody>" + "".join(rows) + "</tbody></table>"
             + _live_replay_chart(live_by_case)
         )
