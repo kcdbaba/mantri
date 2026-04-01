@@ -1,0 +1,27 @@
+{
+  "run_at": "2026-03-30T12:22:45.415445",
+  "test_type": "dry",
+  "case_id": "R3-C-L3-02",
+  "total": 690,
+  "routed": 197,
+  "unrouted": 493,
+  "routing_rate": 0.2855,
+  "per_group": {
+    "Tasks": {
+      "routed": 0,
+      "unrouted": 404
+    },
+    "Voltas_supplier": {
+      "routed": 21,
+      "unrouted": 6
+    },
+    "est_div_jobs": {
+      "routed": 161,
+      "unrouted": 80
+    },
+    "est_div_jobs_26-27": {
+      "routed": 15,
+      "unrouted": 3
+    }
+  }
+}

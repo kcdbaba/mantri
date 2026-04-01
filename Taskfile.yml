@@ -1,0 +1,53 @@
+# Taskfile.yml — CLI aliases for test_runner.py
+# Install: brew install go-task
+# Usage: task status, task unit, task pipeline, etc.
+
+version: '3'
+
+vars:
+  RUNNER: python3 scripts/test_runner.py
+
+tasks:
+  status:
+    desc: Show pipeline state
+    cmds: ["{{.RUNNER}} status {{.CLI_ARGS}}"]
+
+  unit:
+    desc: Run unit tests
+    cmds: ["{{.RUNNER}} run unit {{.CLI_ARGS}}"]
+
+  inc:
+    desc: Run incremental tests
+    cmds: ["{{.RUNNER}} run incremental {{.CLI_ARGS}}"]
+
+  dry:
+    desc: Run dry replay
+    cmds: ["{{.RUNNER}} run dry_replay {{.CLI_ARGS}}"]
+
+  replay:
+    desc: Run live replay
+    cmds: ["{{.RUNNER}} run live_replay {{.CLI_ARGS}}"]
+
+  eval:
+    desc: Run automated eval
+    cmds: ["{{.RUNNER}} run eval_auto {{.CLI_ARGS}}"]
+
+  publish:
+    desc: Regenerate portal pages
+    cmds: ["{{.RUNNER}} publish"]
+
+  pipeline:
+    desc: Run full pipeline (record mode)
+    cmds: ["{{.RUNNER}} pipeline {{.CLI_ARGS}}"]
+
+  retry:
+    desc: Retry last infra-failed stage
+    cmds: ["{{.RUNNER}} retry"]
+
+  recommend:
+    desc: Suggest stages based on code changes
+    cmds: ["{{.RUNNER}} recommend"]
+
+  cleanup:
+    desc: Delete stale test branches
+    cmds: ["{{.RUNNER}} cleanup"]

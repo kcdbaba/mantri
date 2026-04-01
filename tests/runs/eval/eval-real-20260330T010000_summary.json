@@ -1,0 +1,60 @@
+{
+  "run_at": "2026-03-30T10:59:00.648438",
+  "total": 3,
+  "passed": 3,
+  "failed": 0,
+  "avg_score": 87,
+  "results": [
+    {
+      "case_id": "R1-D-L3-01",
+      "name": "sata_multi_item_multi_supplier",
+      "framework": "R1-D",
+      "level": "L3",
+      "data_source": "real",
+      "verdict": "PASS",
+      "overall_score": 84,
+      "dimensions": {
+        "task_recall": 87,
+        "entity_accuracy": null,
+        "cross_thread_correlation": 90,
+        "next_step_quality": 82,
+        "implicit_task_detection": 85,
+        "ambiguity_flagging": 83
+      }
+    },
+    {
+      "case_id": "R3-C-L3-02",
+      "name": "multiclient_flag_orders_in_single_supplier_thread",
+      "framework": "R3-C",
+      "level": "L3",
+      "data_source": "real-incomplete",
+      "verdict": "PASS",
+      "overall_score": 88,
+      "dimensions": {
+        "task_recall": 90,
+        "entity_accuracy": 85,
+        "cross_thread_correlation": 82,
+        "next_step_quality": null,
+        "implicit_task_detection": null,
+        "ambiguity_flagging": 95
+      }
+    },
+    {
+      "case_id": "R6-L1-01",
+      "name": "payment_confirmed_delivery_shortfall_and_quality_r",
+      "framework": "R6-L1",
+      "level": "01",
+      "data_source": "real-incomplete",
+      "verdict": "PASS",
+      "overall_score": 88,
+      "dimensions": {
+        "task_recall": 90,
+        "entity_accuracy": null,
+        "cross_thread_correlation": null,
+        "next_step_quality": null,
+        "implicit_task_detection": 85,
+        "ambiguity_flagging": 92
+      }
+    }
+  ]
+}

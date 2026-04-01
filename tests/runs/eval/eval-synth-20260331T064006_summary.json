@@ -1,0 +1,287 @@
+{
+  "run_at": "2026-03-31T06:40:06",
+  "total": 29,
+  "passed": 29,
+  "partial": 0,
+  "failed": 0,
+  "errored": 0,
+  "avg_score": 91.6,
+  "by_framework": {
+    "R1-D": {
+      "count": 1,
+      "verdicts": [
+        "P"
+      ],
+      "avg_score": 94.0
+    },
+    "R2": {
+      "count": 8,
+      "verdicts": [
+        "P",
+        "P",
+        "P",
+        "P",
+        "P",
+        "P",
+        "P",
+        "P"
+      ],
+      "avg_score": 93.2
+    },
+    "R2a": {
+      "count": 1,
+      "verdicts": [
+        "P"
+      ],
+      "avg_score": 95.0
+    },
+    "R3-C": {
+      "count": 5,
+      "verdicts": [
+        "P",
+        "P",
+        "P",
+        "P",
+        "P"
+      ],
+      "avg_score": 90.4
+    },
+    "R4-A": {
+      "count": 5,
+      "verdicts": [
+        "P",
+        "P",
+        "P",
+        "P",
+        "P"
+      ],
+      "avg_score": 91.0
+    },
+    "R4-B": {
+      "count": 4,
+      "verdicts": [
+        "P",
+        "P",
+        "P",
+        "P"
+      ],
+      "avg_score": 90.0
+    },
+    "R5": {
+      "count": 5,
+      "verdicts": [
+        "P",
+        "P",
+        "P",
+        "P",
+        "P"
+      ],
+      "avg_score": 91.0
+    }
+  },
+  "results": [
+    {
+      "case_id": "R1-D-L1-01",
+      "framework": "R1-D",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 94
+    },
+    {
+      "case_id": "R2a-L1-01",
+      "framework": "R2",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 96
+    },
+    {
+      "case_id": "R2a-L1-02",
+      "framework": "R2",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 92
+    },
+    {
+      "case_id": "R2a-L2-01",
+      "framework": "R2a",
+      "level": "L2",
+      "verdict": "PASS",
+      "overall_score": 95
+    },
+    {
+      "case_id": "R2b-L1-01",
+      "framework": "R2",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 95
+    },
+    {
+      "case_id": "R2c-L1-01",
+      "framework": "R2",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 92
+    },
+    {
+      "case_id": "R2d-L1-01",
+      "framework": "R2",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 95
+    },
+    {
+      "case_id": "R2e-L1-01",
+      "framework": "R2",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 97
+    },
+    {
+      "case_id": "R2f-L1-01",
+      "framework": "R2",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 91
+    },
+    {
+      "case_id": "R2f-L1-02",
+      "framework": "R2",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 88
+    },
+    {
+      "case_id": "R3-C-L1-01",
+      "framework": "R3-C",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 93
+    },
+    {
+      "case_id": "R3-C-L1-02",
+      "framework": "R3-C",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 92
+    },
+    {
+      "case_id": "R3-C-L2-01",
+      "framework": "R3-C",
+      "level": "L2",
+      "verdict": "PASS",
+      "overall_score": 91
+    },
+    {
+      "case_id": "R3-C-L2-02",
+      "framework": "R3-C",
+      "level": "L2",
+      "verdict": "PASS",
+      "overall_score": 88
+    },
+    {
+      "case_id": "R3-C-L3-01",
+      "framework": "R3-C",
+      "level": "L3",
+      "verdict": "PASS",
+      "overall_score": 88
+    },
+    {
+      "case_id": "R4-A-L1-01",
+      "framework": "R4-A",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 91
+    },
+    {
+      "case_id": "R4-A-L1-02",
+      "framework": "R4-A",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 93
+    },
+    {
+      "case_id": "R4-A-L2-01",
+      "framework": "R4-A",
+      "level": "L2",
+      "verdict": "PASS",
+      "overall_score": 91
+    },
+    {
+      "case_id": "R4-A-L2-02",
+      "framework": "R4-A",
+      "level": "L2",
+      "verdict": "PASS",
+      "overall_score": 88
+    },
+    {
+      "case_id": "R4-A-L3-01",
+      "framework": "R4-A",
+      "level": "L3",
+      "verdict": "PASS",
+      "overall_score": 92
+    },
+    {
+      "case_id": "R4-B-L1-01",
+      "framework": "R4-B",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 93
+    },
+    {
+      "case_id": "R4-B-L1-02",
+      "framework": "R4-B",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 88
+    },
+    {
+      "case_id": "R4-B-L2-01",
+      "framework": "R4-B",
+      "level": "L2",
+      "verdict": "PASS",
+      "overall_score": 88
+    },
+    {
+      "case_id": "R4-B-L3-01",
+      "framework": "R4-B",
+      "level": "L3",
+      "verdict": "PASS",
+      "overall_score": 91
+    },
+    {
+      "case_id": "R5-L1-01",
+      "framework": "R5",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 92
+    },
+    {
+      "case_id": "R5-L1-02",
+      "framework": "R5",
+      "level": "L1",
+      "verdict": "PASS",
+      "overall_score": 88
+    },
+    {
+      "case_id": "R5-L2-01",
+      "framework": "R5",
+      "level": "L2",
+      "verdict": "PASS",
+      "overall_score": 91
+    },
+    {
+      "case_id": "R5-L2-02",
+      "framework": "R5",
+      "level": "L2",
+      "verdict": "PASS",
+      "overall_score": 91
+    },
+    {
+      "case_id": "R5-L3-01",
+      "framework": "R5",
+      "level": "L3",
+      "verdict": "PASS",
+      "overall_score": 93
+    }
+  ]
+}

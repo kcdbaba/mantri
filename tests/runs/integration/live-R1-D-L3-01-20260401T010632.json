@@ -1,0 +1,77 @@
+{
+  "run_at": "2026-04-01T01:06:32.726101",
+  "test_type": "live",
+  "case_id": "R1-D-L3-01",
+  "messages_total": 10,
+  "messages_routed": 3,
+  "messages_unrouted": 4,
+  "update_agent_calls": 3,
+  "update_agent_failures": 0,
+  "linkage_events_processed": 0,
+  "linkage_agent_failures": 0,
+  "error_count": 0,
+  "dead_letter_count": 0,
+  "ambiguity_flag_count": 1,
+  "fulfillment_link_count": 0,
+  "node_summary": {
+    "task_lg_supplier": {
+      "completed": 1,
+      "active": 0,
+      "pending": 7,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 9
+    },
+    "task_sata_client": {
+      "completed": 1,
+      "active": 0,
+      "pending": 9,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 18
+    },
+    "task_voltas_supplier": {
+      "completed": 0,
+      "active": 0,
+      "pending": 8,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 9
+    }
+  },
+  "items_per_task": {
+    "task_sata_client": 9,
+    "task_lg_supplier": 1
+  },
+  "messages_per_task": {
+    "task_lg_supplier": 2,
+    "task_sata_client": 3
+  },
+  "skip_linkage": true,
+  "max_messages": 10,
+  "model_usage": [
+    {
+      "model": "claude-sonnet-4-6",
+      "calls": 2,
+      "cost": 0.047670899999999995
+    },
+    {
+      "model": "gemini-2.5-flash",
+      "calls": 1,
+      "cost": 0
+    }
+  ],
+  "total_cost": 0.047670899999999995,
+  "tasks_created": 3,
+  "pipeline_score": 70,
+  "run_metadata": {
+    "git_commit": "9022bb55f",
+    "live_task_creation": true,
+    "models": {
+      "complex": "claude-sonnet-4-6",
+      "simple": "gemini-2.5-flash"
+    },
+    "escalation_profile": "ashish_current"
+  },
+  "run_notes": ""
+}

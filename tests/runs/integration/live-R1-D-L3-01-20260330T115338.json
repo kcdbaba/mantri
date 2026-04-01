@@ -1,0 +1,54 @@
+{
+  "run_at": "2026-03-30T11:53:38.576915",
+  "test_type": "live",
+  "case_id": "R1-D-L3-01",
+  "messages_total": 100,
+  "messages_routed": 34,
+  "messages_unrouted": 66,
+  "update_agent_calls": 19,
+  "update_agent_failures": 0,
+  "linkage_events_processed": 19,
+  "linkage_agent_failures": 0,
+  "error_count": 0,
+  "dead_letter_count": 3,
+  "ambiguity_flag_count": 44,
+  "fulfillment_link_count": 0,
+  "node_summary": {
+    "task_lg_supplier": {
+      "completed": 1,
+      "active": 0,
+      "pending": 5,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 8
+    },
+    "task_sata_client": {
+      "completed": 1,
+      "active": 2,
+      "pending": 4,
+      "blocked": 3,
+      "provisional": 1,
+      "total": 18
+    },
+    "task_voltas_supplier": {
+      "completed": 3,
+      "active": 0,
+      "pending": 3,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 8
+    }
+  },
+  "items_per_task": {
+    "task_sata_client": 5,
+    "task_lg_supplier": 2,
+    "task_voltas_supplier": 6
+  },
+  "messages_per_task": {
+    "task_lg_supplier": 8,
+    "task_sata_client": 19,
+    "task_voltas_supplier": 7
+  },
+  "skip_linkage": false,
+  "max_messages": 100
+}

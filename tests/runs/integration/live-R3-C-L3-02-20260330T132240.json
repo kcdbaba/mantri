@@ -1,0 +1,57 @@
+{
+  "run_at": "2026-03-30T13:22:40.013055",
+  "test_type": "live",
+  "case_id": "R3-C-L3-02",
+  "messages_total": 690,
+  "messages_routed": 197,
+  "messages_unrouted": 493,
+  "update_agent_calls": 99,
+  "update_agent_failures": 0,
+  "linkage_events_processed": 99,
+  "linkage_agent_failures": 0,
+  "error_count": 0,
+  "dead_letter_count": 11,
+  "ambiguity_flag_count": 211,
+  "fulfillment_link_count": 0,
+  "node_summary": {
+    "task_est_div_client": {
+      "completed": 4,
+      "active": 3,
+      "pending": 2,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 18
+    },
+    "task_voltas_supplier": {
+      "completed": 4,
+      "active": 0,
+      "pending": 2,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 8
+    }
+  },
+  "items_per_task": {
+    "task_est_div_client": 20,
+    "task_voltas_supplier": 8
+  },
+  "messages_per_task": {
+    "task_est_div_client": 176,
+    "task_voltas_supplier": 21
+  },
+  "skip_linkage": false,
+  "max_messages": null,
+  "model_usage": [
+    {
+      "model": "claude-sonnet-4-6",
+      "calls": 73,
+      "cost": 1.0208021999999999
+    },
+    {
+      "model": "claude-haiku-4-5-20251001",
+      "calls": 26,
+      "cost": 0.10984464000000001
+    }
+  ],
+  "total_cost": 1.13064684
+}

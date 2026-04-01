@@ -1,0 +1,126 @@
+{
+  "run_at": "2026-04-01T07:14:35.040715",
+  "test_type": "live",
+  "case_id": "R3-C-L3-02",
+  "messages_total": 690,
+  "messages_routed": 331,
+  "messages_unrouted": 96,
+  "messages_noise": 263,
+  "update_agent_calls": 377,
+  "update_agent_failures": 0,
+  "linkage_events_processed": 0,
+  "linkage_agent_failures": 0,
+  "error_count": 0,
+  "dead_letter_count": 5,
+  "ambiguity_flag_count": 55,
+  "fulfillment_link_count": 0,
+  "node_summary": {
+    "task_29c8f56d": {
+      "completed": 1,
+      "active": 2,
+      "pending": 6,
+      "blocked": 1,
+      "provisional": 1,
+      "total": 12
+    },
+    "task_4dffcd0b": {
+      "completed": 4,
+      "active": 4,
+      "pending": 4,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_6856bd9e": {
+      "completed": 0,
+      "active": 2,
+      "pending": 8,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_79d272e9": {
+      "completed": 2,
+      "active": 3,
+      "pending": 6,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_bf8ed708": {
+      "completed": 0,
+      "active": 1,
+      "pending": 10,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_est_div_client": {
+      "completed": 4,
+      "active": 1,
+      "pending": 4,
+      "blocked": 0,
+      "provisional": 1,
+      "total": 18
+    },
+    "task_voltas_supplier": {
+      "completed": 3,
+      "active": 0,
+      "pending": 3,
+      "blocked": 1,
+      "provisional": 1,
+      "total": 9
+    }
+  },
+  "items_per_task": {
+    "task_29c8f56d": 30,
+    "task_4dffcd0b": 16,
+    "task_6856bd9e": 4,
+    "task_79d272e9": 1,
+    "task_bf8ed708": 1,
+    "task_est_div_client": 2,
+    "task_voltas_supplier": 7
+  },
+  "messages_per_task": {
+    "task_29c8f56d": 134,
+    "task_4dffcd0b": 135,
+    "task_6856bd9e": 14,
+    "task_79d272e9": 79,
+    "task_bf8ed708": 2,
+    "task_est_div_client": 33,
+    "task_voltas_supplier": 21
+  },
+  "skip_linkage": true,
+  "max_messages": null,
+  "model_usage": [
+    {
+      "model": "claude-sonnet-4-6",
+      "calls": 230,
+      "cost": 3.1255446
+    },
+    {
+      "model": "gemini-2.5-flash",
+      "calls": 147,
+      "cost": 0
+    }
+  ],
+  "total_cost": 3.1255446,
+  "tasks_created": 7,
+  "pipeline_score": 74,
+  "run_metadata": {
+    "git_commit": "3401b2083",
+    "live_task_creation": true,
+    "models": {
+      "complex": "claude-sonnet-4-6",
+      "simple": "gemini-2.5-flash"
+    },
+    "escalation_profile": "ashish_current"
+  },
+  "run_notes": "Full R3-C entity-first v0.3.0 — dual-write",
+  "traced": true,
+  "phoenix_endpoints": [
+    "http://localhost:6006/v1/traces",
+    "http://152.42.156.128/developer/phoenix/v1/traces"
+  ],
+  "routing_mode": "entity_first"
+}

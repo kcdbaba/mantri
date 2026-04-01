@@ -1,0 +1,52 @@
+{
+  "run_at": "2026-03-31T10:08:03.852621",
+  "test_type": "live",
+  "case_id": "LINKAGE-01",
+  "messages_total": 6,
+  "messages_routed": 6,
+  "messages_unrouted": 0,
+  "update_agent_calls": 6,
+  "update_agent_failures": 0,
+  "linkage_events_processed": 6,
+  "linkage_agent_failures": 0,
+  "error_count": 0,
+  "dead_letter_count": 0,
+  "ambiguity_flag_count": 17,
+  "fulfillment_link_count": 6,
+  "node_summary": {
+    "task_client_01": {
+      "completed": 1,
+      "active": 2,
+      "pending": 5,
+      "blocked": 2,
+      "provisional": 1,
+      "total": 12
+    },
+    "task_supplier_01": {
+      "completed": 3,
+      "active": 0,
+      "pending": 4,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 8
+    }
+  },
+  "items_per_task": {
+    "task_client_01": 2,
+    "task_supplier_01": 2
+  },
+  "messages_per_task": {
+    "task_client_01": 3,
+    "task_supplier_01": 3
+  },
+  "skip_linkage": false,
+  "max_messages": null,
+  "model_usage": [
+    {
+      "model": "claude-sonnet-4-6",
+      "calls": 12,
+      "cost": 0.15568484999999999
+    }
+  ],
+  "total_cost": 0.15568484999999999
+}

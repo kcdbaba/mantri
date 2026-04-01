@@ -1,0 +1,116 @@
+{
+  "run_at": "2026-04-01T09:15:36.896832",
+  "test_type": "live",
+  "case_id": "R1-D-L3-01",
+  "messages_total": 904,
+  "messages_routed": 520,
+  "messages_unrouted": 95,
+  "messages_noise": 289,
+  "update_agent_calls": 766,
+  "update_agent_failures": 0,
+  "linkage_events_processed": 0,
+  "linkage_agent_failures": 0,
+  "error_count": 0,
+  "dead_letter_count": 1,
+  "ambiguity_flag_count": 106,
+  "fulfillment_link_count": 0,
+  "node_summary": {
+    "task_3e11a74b": {
+      "completed": 0,
+      "active": 2,
+      "pending": 6,
+      "blocked": 2,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_7e5a70fe": {
+      "completed": 0,
+      "active": 2,
+      "pending": 6,
+      "blocked": 2,
+      "provisional": 1,
+      "total": 12
+    },
+    "task_f96f3e97": {
+      "completed": 1,
+      "active": 0,
+      "pending": 10,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_lg_supplier": {
+      "completed": 3,
+      "active": 0,
+      "pending": 3,
+      "blocked": 1,
+      "provisional": 1,
+      "total": 9
+    },
+    "task_sata_client": {
+      "completed": 3,
+      "active": 4,
+      "pending": 3,
+      "blocked": 0,
+      "provisional": 1,
+      "total": 18
+    },
+    "task_voltas_supplier": {
+      "completed": 3,
+      "active": 0,
+      "pending": 4,
+      "blocked": 0,
+      "provisional": 1,
+      "total": 9
+    }
+  },
+  "items_per_task": {
+    "task_3e11a74b": 28,
+    "task_7e5a70fe": 30,
+    "task_f96f3e97": 1,
+    "task_sata_client": 28,
+    "task_lg_supplier": 7,
+    "task_voltas_supplier": 6
+  },
+  "messages_per_task": {
+    "task_3e11a74b": 152,
+    "task_7e5a70fe": 152,
+    "task_f96f3e97": 9,
+    "task_lg_supplier": 233,
+    "task_sata_client": 296,
+    "task_voltas_supplier": 22
+  },
+  "skip_linkage": true,
+  "max_messages": null,
+  "model_usage": [
+    {
+      "model": "claude-sonnet-4-6",
+      "calls": 451,
+      "cost": 6.9003642
+    },
+    {
+      "model": "gemini-2.5-flash",
+      "calls": 315,
+      "cost": 0
+    }
+  ],
+  "total_cost": 6.9003642,
+  "tasks_created": 6,
+  "pipeline_score": 77,
+  "run_metadata": {
+    "git_commit": "4dda8f3f3",
+    "live_task_creation": true,
+    "models": {
+      "complex": "claude-sonnet-4-6",
+      "simple": "gemini-2.5-flash"
+    },
+    "escalation_profile": "ashish_current"
+  },
+  "run_notes": "Full R1-D entity-first v0.3.0 — dual-write",
+  "traced": true,
+  "phoenix_endpoints": [
+    "http://localhost:6006/v1/traces",
+    "http://152.42.156.128/developer/phoenix/v1/traces"
+  ],
+  "routing_mode": "entity_first"
+}

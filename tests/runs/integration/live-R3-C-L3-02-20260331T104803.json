@@ -1,0 +1,591 @@
+{
+  "run_at": "2026-03-31T10:48:03.774768",
+  "test_type": "live",
+  "case_id": "R3-C-L3-02",
+  "messages_total": 690,
+  "messages_routed": 200,
+  "messages_unrouted": 490,
+  "update_agent_calls": 105,
+  "update_agent_failures": 0,
+  "linkage_events_processed": 163,
+  "linkage_agent_failures": 0,
+  "error_count": 0,
+  "dead_letter_count": 2,
+  "ambiguity_flag_count": 98,
+  "fulfillment_link_count": 0,
+  "node_summary": {
+    "task_02365d9e": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_03ffea2a": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_06234176": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_066d2a5b": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_0e665309": {
+      "completed": 0,
+      "active": 0,
+      "pending": 10,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_1eb237b3": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_28737502": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_29c9dbef": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_3534533e": {
+      "completed": 0,
+      "active": 0,
+      "pending": 10,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_360fa7b4": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_3a39c278": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_3a965cc6": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_43ba7f67": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_43bb6c9d": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_43fd53e1": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_48ae4ae9": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_4abc478d": {
+      "completed": 0,
+      "active": 0,
+      "pending": 10,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_4c028b37": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_5d565922": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_5e54c4f4": {
+      "completed": 0,
+      "active": 0,
+      "pending": 10,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_5ffc8678": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_662b8dbc": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_66606680": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_6dace44d": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_767f1a2b": {
+      "completed": 0,
+      "active": 0,
+      "pending": 7,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 8
+    },
+    "task_7b629bb5": {
+      "completed": 0,
+      "active": 0,
+      "pending": 10,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_7ee98dc3": {
+      "completed": 0,
+      "active": 0,
+      "pending": 10,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_86554418": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_899acf71": {
+      "completed": 0,
+      "active": 0,
+      "pending": 10,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_8ff66d6f": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_9995b113": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_9b502eba": {
+      "completed": 0,
+      "active": 0,
+      "pending": 10,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_9c9dd83f": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_9e488712": {
+      "completed": 0,
+      "active": 0,
+      "pending": 10,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_a10385e7": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_a40cf6b3": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_c9bf77d1": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_ca10b9ca": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_cf00293b": {
+      "completed": 0,
+      "active": 0,
+      "pending": 10,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_d445e932": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_d6e2a7a1": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_d78827bb": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_e45501a3": {
+      "completed": 0,
+      "active": 0,
+      "pending": 10,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_e5e2521e": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_e64701d9": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_e7bbc600": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_e8179722": {
+      "completed": 0,
+      "active": 0,
+      "pending": 10,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_e84a7dad": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_efee4725": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_est_div_client": {
+      "completed": 3,
+      "active": 3,
+      "pending": 3,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 18
+    },
+    "task_f0a90704": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_f1b9e56e": {
+      "completed": 0,
+      "active": 0,
+      "pending": 10,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_f2e6303c": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_f8dc25c1": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_f9796124": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_fa9d8c62": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_fd10e358": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_fe0f6f93": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_ff535b5f": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_voltas_supplier": {
+      "completed": 1,
+      "active": 2,
+      "pending": 3,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 8
+    }
+  },
+  "items_per_task": {
+    "task_est_div_client": 3,
+    "task_voltas_supplier": 7
+  },
+  "messages_per_task": {
+    "task_02365d9e": 1,
+    "task_03ffea2a": 1,
+    "task_06234176": 1,
+    "task_066d2a5b": 1,
+    "task_0e665309": 1,
+    "task_1eb237b3": 1,
+    "task_28737502": 1,
+    "task_29c9dbef": 1,
+    "task_3534533e": 1,
+    "task_360fa7b4": 1,
+    "task_3a39c278": 1,
+    "task_3a965cc6": 1,
+    "task_43ba7f67": 1,
+    "task_43bb6c9d": 1,
+    "task_43fd53e1": 1,
+    "task_48ae4ae9": 1,
+    "task_4abc478d": 1,
+    "task_4c028b37": 1,
+    "task_5d565922": 1,
+    "task_5e54c4f4": 1,
+    "task_5ffc8678": 1,
+    "task_662b8dbc": 1,
+    "task_66606680": 1,
+    "task_6dace44d": 1,
+    "task_767f1a2b": 1,
+    "task_7b629bb5": 1,
+    "task_7ee98dc3": 1,
+    "task_86554418": 1,
+    "task_899acf71": 1,
+    "task_8ff66d6f": 1,
+    "task_9995b113": 1,
+    "task_9b502eba": 1,
+    "task_9c9dd83f": 1,
+    "task_9e488712": 1,
+    "task_a10385e7": 1,
+    "task_a40cf6b3": 1,
+    "task_c9bf77d1": 1,
+    "task_ca10b9ca": 1,
+    "task_cf00293b": 1,
+    "task_d445e932": 1,
+    "task_d6e2a7a1": 1,
+    "task_d78827bb": 1,
+    "task_e45501a3": 1,
+    "task_e5e2521e": 1,
+    "task_e64701d9": 1,
+    "task_e7bbc600": 1,
+    "task_e8179722": 1,
+    "task_e84a7dad": 1,
+    "task_efee4725": 1,
+    "task_est_div_client": 179,
+    "task_f0a90704": 1,
+    "task_f1b9e56e": 1,
+    "task_f2e6303c": 1,
+    "task_f8dc25c1": 1,
+    "task_f9796124": 1,
+    "task_fa9d8c62": 1,
+    "task_fd10e358": 1,
+    "task_fe0f6f93": 1,
+    "task_ff535b5f": 1,
+    "task_voltas_supplier": 24
+  },
+  "skip_linkage": false,
+  "max_messages": null,
+  "model_usage": [
+    {
+      "model": "claude-sonnet-4-6",
+      "calls": 269,
+      "cost": 3.22595625
+    },
+    {
+      "model": "gemini-2.5-flash",
+      "calls": 32,
+      "cost": 0
+    }
+  ],
+  "total_cost": 3.22595625,
+  "run_metadata": {
+    "git_commit": "55f0bac74",
+    "live_task_creation": true,
+    "models": {
+      "complex": "claude-sonnet-4-6",
+      "simple": "gemini-2.5-flash"
+    },
+    "escalation_profile": "ashish_current"
+  },
+  "tasks_created": 60,
+  "pipeline_score": 48,
+  "run_notes": "First run with ENABLE_LIVE_TASK_CREATION=True. 60 tasks created \u2014 new_order detection too aggressive. Agent emits new_order for most messages with new content. Prompt needs tightening to require genuinely distinct items."
+}

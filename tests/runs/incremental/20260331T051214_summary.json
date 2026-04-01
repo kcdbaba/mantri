@@ -1,0 +1,129 @@
+{
+  "run_at": "2026-03-31T05:12:14",
+  "total": 20,
+  "passed": 19,
+  "partial": 0,
+  "failed": 1,
+  "results": [
+    {
+      "case_id": "INC-01",
+      "verdict": "PASS",
+      "required_passed": 1,
+      "required_total": 1
+    },
+    {
+      "case_id": "INC-02",
+      "verdict": "PASS",
+      "required_passed": 2,
+      "required_total": 2
+    },
+    {
+      "case_id": "INC-03",
+      "verdict": "PASS",
+      "required_passed": 1,
+      "required_total": 1
+    },
+    {
+      "case_id": "INC-04",
+      "verdict": "PASS",
+      "required_passed": 1,
+      "required_total": 1
+    },
+    {
+      "case_id": "INC-05",
+      "verdict": "PASS",
+      "required_passed": 1,
+      "required_total": 1
+    },
+    {
+      "case_id": "INC-06",
+      "verdict": "PASS",
+      "required_passed": 3,
+      "required_total": 3
+    },
+    {
+      "case_id": "INC-07",
+      "verdict": "PASS",
+      "required_passed": 2,
+      "required_total": 2
+    },
+    {
+      "case_id": "INC-08",
+      "verdict": "PASS",
+      "required_passed": 3,
+      "required_total": 3
+    },
+    {
+      "case_id": "INC-09",
+      "verdict": "PASS",
+      "required_passed": 2,
+      "required_total": 2
+    },
+    {
+      "case_id": "INC-10",
+      "verdict": "PASS",
+      "required_passed": 1,
+      "required_total": 1
+    },
+    {
+      "case_id": "INC-11",
+      "verdict": "PASS",
+      "required_passed": 1,
+      "required_total": 1
+    },
+    {
+      "case_id": "INC-12",
+      "verdict": "PASS",
+      "required_passed": 2,
+      "required_total": 2
+    },
+    {
+      "case_id": "INC-13",
+      "verdict": "PASS",
+      "required_passed": null,
+      "required_total": null
+    },
+    {
+      "case_id": "INC-14",
+      "verdict": "PASS",
+      "required_passed": null,
+      "required_total": null
+    },
+    {
+      "case_id": "INC-15",
+      "verdict": "PASS",
+      "required_passed": 5,
+      "required_total": 5
+    },
+    {
+      "case_id": "INC-16",
+      "verdict": "PASS",
+      "required_passed": 2,
+      "required_total": 2
+    },
+    {
+      "case_id": "INC-17",
+      "verdict": "PASS",
+      "required_passed": 2,
+      "required_total": 2
+    },
+    {
+      "case_id": "INC-18",
+      "verdict": "FAIL",
+      "required_passed": 0,
+      "required_total": 1
+    },
+    {
+      "case_id": "INC-19",
+      "verdict": "PASS",
+      "required_passed": 2,
+      "required_total": 2
+    },
+    {
+      "case_id": "INC-20",
+      "verdict": "PASS",
+      "required_passed": 2,
+      "required_total": 2
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "run_at": "2026-03-31T06:19:01",
+  "total": 3,
+  "passed": 3,
+  "partial": 0,
+  "failed": 0,
+  "errored": 0,
+  "avg_score": 88.3,
+  "by_framework": {
+    "R1-D": {
+      "count": 1,
+      "verdicts": [
+        "P"
+      ],
+      "avg_score": 89.0
+    },
+    "R3-C": {
+      "count": 1,
+      "verdicts": [
+        "P"
+      ],
+      "avg_score": 88.0
+    },
+    "R6-L1": {
+      "count": 1,
+      "verdicts": [
+        "P"
+      ],
+      "avg_score": 88.0
+    }
+  },
+  "results": [
+    {
+      "case_id": "R1-D-L3-01",
+      "framework": "R1-D",
+      "level": "L3",
+      "verdict": "PASS",
+      "overall_score": 89
+    },
+    {
+      "case_id": "R3-C-L3-02",
+      "framework": "R3-C",
+      "level": "L3",
+      "verdict": "PASS",
+      "overall_score": 88
+    },
+    {
+      "case_id": "R6-L1-01",
+      "framework": "R6-L1",
+      "level": "01",
+      "verdict": "PASS",
+      "overall_score": 88
+    }
+  ]
+}

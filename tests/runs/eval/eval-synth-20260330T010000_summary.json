@@ -1,0 +1,451 @@
+{
+  "run_at": "2026-03-30T10:59:00.648438",
+  "total": 26,
+  "passed": 26,
+  "failed": 0,
+  "avg_score": 91,
+  "results": [
+    {
+      "case_id": "R2a-L1-01",
+      "name": "delivery_confirmed_invoice_subtask_missing",
+      "framework": "R2",
+      "level": "L1",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 96,
+      "dimensions": {
+        "task_recall": 98,
+        "entity_accuracy": null,
+        "cross_thread_correlation": null,
+        "next_step_quality": 95,
+        "implicit_task_detection": 96,
+        "ambiguity_flagging": null
+      }
+    },
+    {
+      "case_id": "R2a-L1-02",
+      "name": "end_of_month_accounts_stock_cadence_missed",
+      "framework": "R2",
+      "level": "L1",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 92,
+      "dimensions": {
+        "task_recall": 95,
+        "entity_accuracy": null,
+        "cross_thread_correlation": null,
+        "next_step_quality": 91,
+        "implicit_task_detection": 96,
+        "ambiguity_flagging": null
+      }
+    },
+    {
+      "case_id": "R2b-L1-01",
+      "name": "army_client_payment_followup_wrong_tone",
+      "framework": "R2",
+      "level": "L1",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 95,
+      "dimensions": {
+        "task_recall": 98,
+        "entity_accuracy": null,
+        "cross_thread_correlation": null,
+        "next_step_quality": 97,
+        "implicit_task_detection": 95,
+        "ambiguity_flagging": null
+      }
+    },
+    {
+      "case_id": "R2c-L1-01",
+      "name": "supplier_optimistic_deadline_no_conservative_milestone",
+      "framework": "R2",
+      "level": "L1",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 92,
+      "dimensions": {
+        "task_recall": 95,
+        "entity_accuracy": null,
+        "cross_thread_correlation": null,
+        "next_step_quality": 91,
+        "implicit_task_detection": 95,
+        "ambiguity_flagging": null
+      }
+    },
+    {
+      "case_id": "R2d-L1-01",
+      "name": "supplier_deadline_set_no_preemptive_reminder",
+      "framework": "R2",
+      "level": "L1",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 95,
+      "dimensions": {
+        "task_recall": 97,
+        "entity_accuracy": null,
+        "cross_thread_correlation": null,
+        "next_step_quality": 93,
+        "implicit_task_detection": 95,
+        "ambiguity_flagging": null
+      }
+    },
+    {
+      "case_id": "R2e-L1-01",
+      "name": "large_army_order_invoice_financing_not_flagged",
+      "framework": "R2",
+      "level": "L1",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 97,
+      "dimensions": {
+        "task_recall": 98,
+        "entity_accuracy": null,
+        "cross_thread_correlation": null,
+        "next_step_quality": 97,
+        "implicit_task_detection": 97,
+        "ambiguity_flagging": null
+      }
+    },
+    {
+      "case_id": "R2f-L1-01",
+      "name": "proactive_client_outreach_not_surfaced",
+      "framework": "R2",
+      "level": "L1",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 91,
+      "dimensions": {
+        "task_recall": 95,
+        "entity_accuracy": null,
+        "cross_thread_correlation": null,
+        "next_step_quality": 90,
+        "implicit_task_detection": 92,
+        "ambiguity_flagging": null
+      }
+    },
+    {
+      "case_id": "R2f-L1-02",
+      "name": "post_delivery_feedback_not_surfaced",
+      "framework": "R2",
+      "level": "L1",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 88,
+      "dimensions": {
+        "task_recall": 95,
+        "entity_accuracy": null,
+        "cross_thread_correlation": null,
+        "next_step_quality": 85,
+        "implicit_task_detection": 88,
+        "ambiguity_flagging": null
+      }
+    },
+    {
+      "case_id": "R3-C-L1-01",
+      "name": "two_tandoor_orders_clearly_different_clients_separ",
+      "framework": "R3-C",
+      "level": "L1",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 93,
+      "dimensions": {
+        "task_recall": 95,
+        "entity_accuracy": 95,
+        "cross_thread_correlation": 90,
+        "next_step_quality": null,
+        "implicit_task_detection": null,
+        "ambiguity_flagging": 92
+      }
+    },
+    {
+      "case_id": "R3-C-L1-02",
+      "name": "two_different_item_orders_same_client_separate_thr",
+      "framework": "R3-C",
+      "level": "L1",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 92,
+      "dimensions": {
+        "task_recall": 95,
+        "entity_accuracy": 93,
+        "cross_thread_correlation": 90,
+        "ambiguity_flagging": 90,
+        "next_step_quality": null,
+        "implicit_task_detection": null
+      }
+    },
+    {
+      "case_id": "R3-C-L2-01",
+      "name": "two_tandoor_orders_informalabbreviated_client_refe",
+      "framework": "R3-C",
+      "level": "L2",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 91,
+      "dimensions": {
+        "task_recall": 92,
+        "entity_accuracy": 90,
+        "cross_thread_correlation": 93,
+        "implicit_task_detection": null,
+        "next_step_quality": null,
+        "ambiguity_flagging": 88
+      }
+    },
+    {
+      "case_id": "R3-C-L2-02",
+      "name": "same_item_order_client_name_abbreviated_differentl",
+      "framework": "R3-C",
+      "level": "L2",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 88,
+      "dimensions": {
+        "task_recall": 90,
+        "entity_accuracy": 88,
+        "cross_thread_correlation": 92,
+        "next_step_quality": null,
+        "implicit_task_detection": null,
+        "ambiguity_flagging": 87
+      }
+    },
+    {
+      "case_id": "R3-C-L3-01",
+      "name": "two_concurrent_orders_references_interleaved_in_sh",
+      "framework": "R3-C",
+      "level": "L3",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 88,
+      "dimensions": {
+        "task_recall": 90,
+        "entity_accuracy": 85,
+        "cross_thread_correlation": 80,
+        "next_step_quality": null,
+        "implicit_task_detection": null,
+        "ambiguity_flagging": 92
+      }
+    },
+    {
+      "case_id": "R4-A-L1-01",
+      "name": "same_supplier_2_name_variants_single_thread",
+      "framework": "R4-A",
+      "level": "L1",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 91,
+      "dimensions": {
+        "task_recall": null,
+        "entity_accuracy": 93,
+        "cross_thread_correlation": null,
+        "implicit_task_detection": null,
+        "next_step_quality": null,
+        "ambiguity_flagging": 90
+      }
+    },
+    {
+      "case_id": "R4-A-L1-02",
+      "name": "same_supplier_company_name_vs_proprietor_name_sing",
+      "framework": "R4-A",
+      "level": "L1",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 85,
+      "dimensions": {
+        "task_recall": null,
+        "entity_accuracy": 88,
+        "cross_thread_correlation": 80,
+        "next_step_quality": null,
+        "implicit_task_detection": null,
+        "ambiguity_flagging": 86
+      }
+    },
+    {
+      "case_id": "R4-A-L2-01",
+      "name": "same_supplier_2_name_variants_across_2_threads",
+      "framework": "R4-A",
+      "level": "L2",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 91,
+      "dimensions": {
+        "task_recall": null,
+        "entity_accuracy": 93,
+        "cross_thread_correlation": 92,
+        "next_step_quality": null,
+        "implicit_task_detection": null,
+        "ambiguity_flagging": 90
+      }
+    },
+    {
+      "case_id": "R4-A-L2-02",
+      "name": "same_supplier_honorific_vs_productbased_reference",
+      "framework": "R4-A",
+      "level": "L2",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 88,
+      "dimensions": {
+        "task_recall": null,
+        "entity_accuracy": 90,
+        "cross_thread_correlation": 92,
+        "next_step_quality": null,
+        "implicit_task_detection": null,
+        "ambiguity_flagging": 85
+      }
+    },
+    {
+      "case_id": "R4-A-L3-01",
+      "name": "same_supplier_34_variants_across_3_threads",
+      "framework": "R4-A",
+      "level": "L3",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 92,
+      "dimensions": {
+        "task_recall": null,
+        "entity_accuracy": 95,
+        "cross_thread_correlation": 93,
+        "next_step_quality": null,
+        "implicit_task_detection": null,
+        "ambiguity_flagging": 90
+      }
+    },
+    {
+      "case_id": "R4-B-L1-01",
+      "name": "same_army_unit_formal_unit_name_vs_officer_referen",
+      "framework": "R4-B",
+      "level": "L1",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 82,
+      "dimensions": {
+        "task_recall": null,
+        "entity_accuracy": 85,
+        "cross_thread_correlation": 70,
+        "next_step_quality": null,
+        "implicit_task_detection": null,
+        "ambiguity_flagging": 88
+      }
+    },
+    {
+      "case_id": "R4-B-L1-02",
+      "name": "same_army_unit_location_reference_vs_unit_number_s",
+      "framework": "R4-B",
+      "level": "L1",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 88,
+      "dimensions": {
+        "task_recall": null,
+        "entity_accuracy": 90,
+        "cross_thread_correlation": 80,
+        "next_step_quality": null,
+        "implicit_task_detection": null,
+        "ambiguity_flagging": 92
+      }
+    },
+    {
+      "case_id": "R4-B-L2-01",
+      "name": "same_army_unit_2_reference_styles_across_2_threads",
+      "framework": "R4-B",
+      "level": "L2",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 88,
+      "dimensions": {
+        "task_recall": null,
+        "entity_accuracy": 85,
+        "cross_thread_correlation": 90,
+        "ambiguity_flagging": 92,
+        "next_step_quality": null,
+        "implicit_task_detection": null
+      }
+    },
+    {
+      "case_id": "R4-B-L3-01",
+      "name": "same_army_unit_3_reference_styles_across_3_threads",
+      "framework": "R4-B",
+      "level": "L3",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 91,
+      "dimensions": {
+        "task_recall": null,
+        "entity_accuracy": 92,
+        "cross_thread_correlation": 95,
+        "next_step_quality": null,
+        "implicit_task_detection": null,
+        "ambiguity_flagging": 88
+      }
+    },
+    {
+      "case_id": "R5-L1-01",
+      "name": "supplier_ready_ambiguous_which_item",
+      "framework": "R5",
+      "level": "L1",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 92,
+      "dimensions": {
+        "task_recall": null,
+        "entity_accuracy": null,
+        "cross_thread_correlation": null,
+        "next_step_quality": 93,
+        "implicit_task_detection": null,
+        "ambiguity_flagging": 95
+      }
+    },
+    {
+      "case_id": "R5-L1-02",
+      "name": "staff_confirms_delivery_client_silent",
+      "framework": "R5",
+      "level": "L1",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 88,
+      "dimensions": {
+        "task_recall": null,
+        "entity_accuracy": null,
+        "cross_thread_correlation": null,
+        "next_step_quality": 85,
+        "implicit_task_detection": null,
+        "ambiguity_flagging": 92
+      }
+    },
+    {
+      "case_id": "R5-L2-01",
+      "name": "conflicting_payment_signals_across_threads",
+      "framework": "R5",
+      "level": "L2",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 91,
+      "dimensions": {
+        "task_recall": null,
+        "entity_accuracy": null,
+        "cross_thread_correlation": null,
+        "next_step_quality": 92,
+        "implicit_task_detection": null,
+        "ambiguity_flagging": 90
+      }
+    },
+    {
+      "case_id": "R5-L2-02",
+      "name": "spec_change_in_1on1_not_yet_sent_to_supplier",
+      "framework": "R5",
+      "level": "L2",
+      "data_source": "fully-synthetic",
+      "verdict": "PASS",
+      "overall_score": 91,
+      "dimensions": {
+        "task_recall": null,
+        "entity_accuracy": null,
+        "cross_thread_correlation": null,
+        "next_step_quality": 90,
+        "implicit_task_detection": null,
+        "ambiguity_flagging": 93
+      }
+    }
+  ]
+}
