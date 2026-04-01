@@ -908,6 +908,8 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                 f"<td data-value='{cost_html}' data-empty=''>{cost_html}</td>"
                 f"<td data-value='{config_html}' data-empty=''>{config_html}</td></tr>"
             )
+            PAGE_SIZE = 10
+            child_idx = 0
             for r in case_runs:
                 # Mode info is in tags badges
                 r_node_summary = r.get("node_summary", {})
@@ -929,8 +931,12 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                 r_noise_str = f" <span class='dim'>({r_noise} noise)</span>" if r_noise else ""
                 r_tags_html = _build_tags_html(r)
 
+                gpage = child_idx // PAGE_SIZE
+                gpage_attr = f" data-gpage='{gpage}'"
+                hide_style = " style='display:none'" if gpage > 0 else ""
+                child_idx += 1
                 rows.append(
-                    f"<tr class='group-child' data-group='{group_key}'>"
+                    f"<tr class='group-child' data-group='{group_key}'{gpage_attr}{hide_style}>"
                     f"<td class='dim'>{_fmt_dt(r.get('run_at',''))}</td>"
                     f"<td>{r_tags_html}</td>"
                     f"<td>{r.get('messages_routed',0)}/{r.get('messages_total',0)}{r_noise_str}</td>"
@@ -964,6 +970,18 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                         f"background:#0d1017; font-size:0.75rem; color:#718096'>"
                         f"↳ <em>{escaped_notes}</em></td></tr>"
                     )
+            # Add pagination controls if more than PAGE_SIZE runs
+            total_pages = (len(case_runs) + PAGE_SIZE - 1) // PAGE_SIZE
+            if total_pages > 1:
+                rows.append(
+                    f"<tr class='group-child pagination-row' data-group='{group_key}'>"
+                    f"<td colspan='13'><div class='pagination'>"
+                    f"<button onclick=\"paginateGroup('{group_key}',-1)\">‹ Prev</button>"
+                    f"<span id='gpage-ind-{group_key}'>Page 1 of {total_pages}</span>"
+                    f"<button onclick=\"paginateGroup('{group_key}',1)\">Next ›</button>"
+                    f"</div></td></tr>"
+                )
+
         sections.append(
             "<h3>Live Replay History</h3>"
             "<table class='detail'><thead><tr>"
@@ -1100,19 +1118,45 @@ summary.task-summary:hover { color: #4a90d9; }
 .tag-agent { background: #2a4365; color: #90cdf4; }
 .tag-batch { background: #553c9a; color: #d6bcfa; }
 .tag-dim { background: #1a2030; color: #718096; border: 1px solid #2d3748; }
+.pagination { display: flex; align-items: center; gap: 0.5rem;
+              justify-content: center; padding: 0.4rem 0; font-size: 0.78rem; }
+.pagination button { background: #2d3748; color: #e2e8f0; border: 1px solid #4a5568;
+                     border-radius: 3px; padding: 0.2rem 0.6rem; cursor: pointer;
+                     font-size: 0.75rem; }
+.pagination button:hover { background: #4a5568; }
+.pagination span { color: #718096; }
 """
 
 
 JS = """
+var gpageState = {};
 function toggleGroup(row) {
     var group = row.getAttribute('data-group');
     row.classList.toggle('open');
+    var isOpen = row.classList.contains('open');
     var children = document.querySelectorAll('tr.group-child[data-group="' + group + '"]');
+    var curPage = gpageState[group] || 0;
+
     for (var i = 0; i < children.length; i++) {
-        children[i].classList.toggle('visible');
+        if (isOpen) {
+            // Show only current page rows (or pagination controls / note rows)
+            var gp = children[i].getAttribute('data-gpage');
+            var isPagCtrl = children[i].className.indexOf('pagination-row') >= 0;
+            var isNote = children[i].className.indexOf('note-row') >= 0;
+            if (isPagCtrl) {
+                children[i].classList.add('visible');
+            } else if (gp !== null) {
+                if (parseInt(gp) === curPage) {
+                    children[i].classList.add('visible');
+                }
+            } else {
+                children[i].classList.add('visible');
+            }
+        } else {
+            children[i].classList.remove('visible');
+        }
     }
     // Swap data cells between showing data and empty
-    var isOpen = row.classList.contains('open');
     var tds = row.querySelectorAll('td[data-value]');
     for (var j = 0; j < tds.length; j++) {
         if (!tds[j].hasAttribute('data-html')) {
@@ -1124,6 +1168,32 @@ function toggleGroup(row) {
             tds[j].innerHTML = tds[j].getAttribute('data-html');
         }
     }
+}
+
+function paginateGroup(gkey, dir) {
+    if (!gpageState[gkey]) gpageState[gkey] = 0;
+    var rows = document.querySelectorAll('tr.group-child[data-group="' + gkey + '"][data-gpage]');
+    var maxPage = 0;
+    for (var i = 0; i < rows.length; i++) {
+        var p = parseInt(rows[i].getAttribute('data-gpage'));
+        if (p > maxPage) maxPage = p;
+    }
+    var newPage = gpageState[gkey] + dir;
+    if (newPage < 0 || newPage > maxPage) return;
+    gpageState[gkey] = newPage;
+    for (var i = 0; i < rows.length; i++) {
+        if (rows[i].className.indexOf('pagination-row') >= 0) continue;
+        var p = parseInt(rows[i].getAttribute('data-gpage'));
+        if (p === newPage) {
+            rows[i].classList.add('visible');
+            rows[i].style.display = '';
+        } else {
+            rows[i].classList.remove('visible');
+            rows[i].style.display = 'none';
+        }
+    }
+    var ind = document.getElementById('gpage-ind-' + gkey);
+    if (ind) ind.textContent = 'Page ' + (newPage + 1) + ' of ' + (maxPage + 1);
 }
 
 var pageState = {};

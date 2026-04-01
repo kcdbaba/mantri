@@ -90,43 +90,64 @@ def _inc_section(runs: list[dict]) -> str:
             f"</tr>"
         )
 
+    from scripts._pagination import paginate_rows
+
     history = (
         "<table>"
         "<thead><tr><th>Run</th><th>Cases</th><th>Pass rate</th><th>Failed</th></tr></thead>"
-        "<tbody>" + "".join(rows) + "</tbody>"
+        "<tbody>" + paginate_rows(rows, "inc_runs") + "</tbody>"
         "</table>"
     )
 
-    # Case matrix (only if >1 run)
+    # Case matrix — split INC and LINKAGE with subheadings
     matrix = ""
     if len(runs) > 1:
         all_cases = sorted({res["case_id"] for r in runs for res in r.get("results", [])})
+        inc_cases = [c for c in all_cases if c.startswith("INC")]
+        linkage_cases = [c for c in all_cases if not c.startswith("INC")]
         run_labels = [_fmt_dt(r.get("run_at", "")) for r in runs]
 
-        header = "<tr><th>Case</th>" + "".join(f"<th>{l}</th>" for l in run_labels) + "</tr>"
-        body_rows = []
-        for case_id in all_cases:
-            cells = []
-            for r in runs:
-                result = next((res for res in r.get("results", []) if res["case_id"] == case_id), None)
-                if result is None:
-                    cells.append("<td>—</td>")
-                elif result.get("verdict") == "PASS":
-                    cells.append('<td class="pass">✓</td>')
-                elif result.get("verdict") == "PARTIAL":
-                    cells.append('<td class="partial">~</td>')
-                else:
-                    cells.append('<td class="fail">✗</td>')
-            tooltip = _case_tooltip(case_id)
-            body_rows.append(f"<tr><td class='case-id' title='{tooltip}'>{case_id}</td>{''.join(cells)}</tr>")
+        def _case_matrix(cases, table_id):
+            header = "<tr><th>Case</th>" + "".join(f"<th>{l}</th>" for l in run_labels) + "</tr>"
+            body_rows = []
+            for case_id in cases:
+                cells = []
+                for r in runs:
+                    result = next((res for res in r.get("results", []) if res["case_id"] == case_id), None)
+                    if result is None:
+                        cells.append("<td>—</td>")
+                    elif result.get("verdict") == "PASS":
+                        cells.append('<td class="pass">✓</td>')
+                    elif result.get("verdict") == "PARTIAL":
+                        cells.append('<td class="partial">~</td>')
+                    else:
+                        cells.append('<td class="fail">✗</td>')
+                tooltip = _case_tooltip(case_id)
+                body_rows.append(f"<tr><td class='case-id' title='{tooltip}'>{case_id}</td>{''.join(cells)}</tr>")
+            return (
+                f"<div class='scroll'><table class='matrix'>"
+                f"<thead>{header}</thead>"
+                f"<tbody>" + paginate_rows(body_rows, table_id) + "</tbody>"
+                f"</table></div>"
+            )
 
-        matrix = (
-            "<h3>Per-case history</h3>"
-            "<div class='scroll'><table class='matrix'>"
-            f"<thead>{header}</thead>"
-            "<tbody>" + "".join(body_rows) + "</tbody>"
-            "</table></div>"
-        )
+        parts = []
+        if inc_cases:
+            parts.append(
+                "<h3>Incremental Cases (INC)</h3>"
+                "<p class='dim' style='margin-bottom:0.3rem'>Single-message agent behavior tests. "
+                "Each case sends one message through the update agent and checks node updates, "
+                "item extractions, and ambiguity flags.</p>"
+                + _case_matrix(inc_cases, "inc_matrix")
+            )
+        if linkage_cases:
+            parts.append(
+                "<h3>Linkage Cases</h3>"
+                "<p class='dim' style='margin-bottom:0.3rem'>Multi-message pipeline tests including "
+                "linkage agent. Tests client order ↔ supplier order fulfillment link creation.</p>"
+                + _case_matrix(linkage_cases, "linkage_matrix")
+            )
+        matrix = "".join(parts)
 
     latest = runs[0]
     summary = (
@@ -448,11 +469,11 @@ def _unit_section(runs: list[dict]) -> str:
     MIN_TOTAL = 20
     runs = [r for r in runs if r.get("total", 0) >= MIN_TOTAL]
 
+    from scripts._pagination import paginate_rows
+
     # Compress: drop runs where data is same as the next (later) contiguous row.
-    # Runs are sorted newest-first, so "next" means the row below (older).
     # We keep the LATEST of each contiguous group and show how many were skipped.
-    MAX_ROWS = 20
-    compressed: list[tuple[dict, int]] = []  # (run, skipped_count)
+    compressed: list[tuple[dict, int]] = []
     i = 0
     while i < len(runs):
         key = _unit_run_key(runs[i])
@@ -463,8 +484,6 @@ def _unit_section(runs: list[dict]) -> str:
             j += 1
         compressed.append((runs[i], skipped))
         i = j
-    total_compressed = len(compressed)
-    compressed = compressed[:MAX_ROWS]
 
     rows = []
     for r, skipped in compressed:
@@ -487,18 +506,14 @@ def _unit_section(runs: list[dict]) -> str:
         + (f" &nbsp;·&nbsp; <span class='fail'>{latest.get('failed', 0)} failed</span>"
            if latest.get('failed') else "")
     )
-    truncated = ""
-    if total_compressed > MAX_ROWS:
-        truncated = f"<p class='skip-note'>Showing {MAX_ROWS} of {total_compressed} unique runs (oldest hidden)</p>"
 
     return (
         f"<p class='summary'>{summary} &nbsp;·&nbsp; "
         f"<a href='/developer/tests/'>Full Allure report →</a></p>"
         "<table>"
         "<thead><tr><th>Run</th><th>Total</th><th>Pass rate</th><th>Failed</th><th>Skipped</th></tr></thead>"
-        "<tbody>" + "".join(rows) + "</tbody>"
+        "<tbody>" + paginate_rows(rows, "unit_runs") + "</tbody>"
         "</table>"
-        + truncated
     )
 
 
@@ -945,6 +960,13 @@ nav { margin-bottom: 2rem; font-size: 0.82rem; }
                         margin: 0.5rem 0 1rem 0; line-height: 1.5; }
 .legend code { background: #2d3748; padding: 0.1rem 0.35rem; border-radius: 3px;
                font-size: 0.8rem; color: #e2e8f0; }
+.pagination { display: flex; align-items: center; gap: 0.5rem;
+              justify-content: center; padding: 0.4rem 0; font-size: 0.78rem; }
+.pagination button { background: #2d3748; color: #e2e8f0; border: 1px solid #4a5568;
+                     border-radius: 3px; padding: 0.2rem 0.6rem; cursor: pointer;
+                     font-size: 0.75rem; }
+.pagination button:hover { background: #4a5568; }
+.pagination span { color: #718096; }
 """
 
 
@@ -1013,6 +1035,25 @@ def generate() -> str:
       if (open) {{ children[i].classList.add('visible'); }}
       else {{ children[i].classList.remove('visible'); }}
     }}
+  }}
+  var pageState = {{}};
+  function paginate(tid, dir) {{
+    if (!pageState[tid]) pageState[tid] = 0;
+    var rows = document.querySelectorAll('tr[data-page].prow-' + tid);
+    var maxPage = 0;
+    for (var i = 0; i < rows.length; i++) {{
+      var p = parseInt(rows[i].getAttribute('data-page'));
+      if (p > maxPage) maxPage = p;
+    }}
+    var newPage = pageState[tid] + dir;
+    if (newPage < 0 || newPage > maxPage) return;
+    pageState[tid] = newPage;
+    for (var i = 0; i < rows.length; i++) {{
+      var p = parseInt(rows[i].getAttribute('data-page'));
+      rows[i].style.display = (p === newPage) ? '' : 'none';
+    }}
+    var ind = document.getElementById('page-ind-' + tid);
+    if (ind) ind.textContent = 'Page ' + (newPage + 1) + ' of ' + (maxPage + 1);
   }}
   </script>
 </body>
