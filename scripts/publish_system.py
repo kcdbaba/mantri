@@ -1108,6 +1108,7 @@ summary.task-summary:hover { color: #4a90d9; }
   display: flex; align-items: center; gap: 0.75rem;
   margin: 0.5rem 0 1.5rem; font-size: 0.8rem;
 }
+.gpag-cell .pagination { margin: 0; gap: 0.5rem; }
 .pagination button {
   background: #1a2030; border: 1px solid #2d3748; color: #e2e8f0;
   padding: 0.3rem 0.75rem; border-radius: 4px; cursor: pointer;
