@@ -749,6 +749,102 @@ def _load_eval_runs() -> tuple[list[dict], list[dict]]:
     return synth, real
 
 
+# ── System tests compact summary ───────────────────────────────────────────────
+
+def _system_summary(int_runs: list[dict], real_runs: list[dict],
+                     synth_runs: list[dict]) -> str:
+    """Compact summary of system tests for /runs/ page."""
+    sections = []
+
+    # Latest replay results
+    live_runs = [r for r in int_runs if r.get("test_type") == "live"]
+    if live_runs:
+        from collections import OrderedDict
+        groups: OrderedDict[str, list[dict]] = OrderedDict()
+        for r in live_runs:
+            groups.setdefault(r.get("case_id", "?"), []).append(r)
+
+        rows = []
+        for case_id, members in groups.items():
+            latest = members[0]
+            score = latest.get("pipeline_score", "")
+            routed = latest.get("messages_routed", 0)
+            total = latest.get("messages_total", 0)
+            tasks = latest.get("tasks_created", len(latest.get("node_summary", {})))
+            cost = latest.get("total_cost", 0)
+            dead = latest.get("dead_letter_count", 0)
+
+            # Tags
+            tags = []
+            rm = latest.get("routing_mode", "")
+            if rm:
+                tags.append(rm)
+            if latest.get("traced"):
+                tags.append("traced")
+            if latest.get("skip_linkage"):
+                tags.append("skip-linkage")
+            if latest.get("max_messages"):
+                tags.append(f"max-{latest['max_messages']}")
+            tags_str = ", ".join(tags) if tags else "—"
+
+            score_html = f"<span class='pass'>{score}</span>" if score and score >= 70 else (
+                f"<span class='partial'>{score}</span>" if score and score >= 50 else
+                f"<span class='fail'>{score}</span>" if score else "—"
+            )
+
+            rows.append(
+                f"<tr>"
+                f"<td>{case_id}</td>"
+                f"<td>{routed}/{total}</td>"
+                f"<td>{tasks}</td>"
+                f"<td>{dead}</td>"
+                f"<td>{score_html}</td>"
+                f"<td class='dim'>{tags_str}</td>"
+                f"<td class='dim'>${cost:.2f}</td>"
+                f"<td class='dim'>{_fmt_dt(latest.get('run_at', ''))}</td>"
+                f"</tr>"
+            )
+
+        sections.append(
+            "<h3>Latest Replay Results</h3>"
+            "<table><thead><tr>"
+            "<th>Case</th><th>Routed</th><th>Tasks</th><th>Dead Letters</th>"
+            "<th>Score</th><th>Tags</th><th>Cost</th><th>Run</th>"
+            "</tr></thead><tbody>" + "".join(rows) + "</tbody></table>"
+        )
+
+    # Latest eval results
+    for label, runs in [("Eval — Real", real_runs), ("Eval — Synthetic", synth_runs)]:
+        if runs:
+            latest = runs[0]
+            passed = latest.get("passed", 0)
+            total = latest.get("total", 0)
+            avg = latest.get("avg_score", 0)
+            run_at = _fmt_dt(latest.get("run_at", ""))
+
+            sections.append(
+                f"<h3>{label}</h3>"
+                f"<p class='summary'>{_pct_bar(passed, total)} "
+                f"&nbsp;·&nbsp; avg score: {avg:.0f} "
+                f"&nbsp;·&nbsp; {run_at}</p>"
+            )
+
+    # Tags legend
+    sections.append(
+        "<details style='margin-top:1rem'>"
+        "<summary class='dim' style='cursor:pointer'>Tag Legend</summary>"
+        "<table class='detail' style='margin-top:0.5rem'>"
+        "<tr><td><code>entity_first</code></td><td>Entity-first routing (v0.3.0+)</td></tr>"
+        "<tr><td><code>legacy_batch</code></td><td>Legacy batch routing (pre v0.3.0)</td></tr>"
+        "<tr><td><code>traced</code></td><td>Phoenix OTEL tracing enabled</td></tr>"
+        "<tr><td><code>skip-linkage</code></td><td>Linkage agent skipped (update agent only)</td></tr>"
+        "<tr><td><code>max-N</code></td><td>Partial replay (first N messages only)</td></tr>"
+        "</table></details>"
+    )
+
+    return "\n".join(sections) if sections else "<p class='empty'>No system test results yet.</p>"
+
+
 # ── Main ───────────────────────────────────────────────────────────────────────
 
 CSS = """
@@ -846,11 +942,8 @@ def generate() -> str:
   <nav>
     <a href="#unit">Unit</a> &nbsp;·&nbsp;
     <a href="#coverage">Coverage</a> &nbsp;·&nbsp;
-    <a href="#inc">Incremental</a> &nbsp;·&nbsp;
-    <a href="#linkage">Linkage</a> &nbsp;·&nbsp;
-    <a href="#int">Integration</a> &nbsp;·&nbsp;
-    <a href="#synth">Eval (Synthetic)</a> &nbsp;·&nbsp;
-    <a href="#real">Eval (Real Cases)</a>
+    <a href="#integration">Integration</a> &nbsp;·&nbsp;
+    <a href="#system">System</a>
   </nav>
 
   <h2 id="unit">Unit Tests</h2>
@@ -859,23 +952,20 @@ def generate() -> str:
   <h2 id="coverage">Code Coverage</h2>
   {_coverage_section(cov)}
 
-  <h2 id="inc">Incremental Tests (INC)</h2>
+  <h2 id="integration">Integration Tests</h2>
+  <p class="dim" style="margin-bottom:0.5rem">Agent behavior tests: incremental single-message cases (INC-01..20) and linkage pipeline tests.</p>
   {_inc_section(inc_runs)}
-
-  <h2 id="linkage">Linkage Tests</h2>
   {_linkage_section(int_runs)}
 
-  <h2 id="int">Integration Tests (Replay)</h2>
-  <p class="summary"><a href="/developer/integration/">Full detail view →</a></p>
-  {_integration_section([r for r in int_runs if not r.get("case_id", "").startswith("LINKAGE")])}
+  <h2 id="system">System Tests</h2>
+  <p class="dim" style="margin-bottom:0.5rem">
+    Full pipeline replay + eval scoring.
+    <a href="/developer/system/">Full detail view →</a> &nbsp;·&nbsp;
+    <a href="/developer/phoenix/">Phoenix traces →</a>
+  </p>
+  {_system_summary(int_runs, real_runs, synth_runs)}
 
   {_legend_section()}
-
-  <h2 id="synth">Eval — Synthetic Cases</h2>
-  {_eval_section(synth_runs, "synth")}
-
-  <h2 id="real">Eval — Real Cases</h2>
-  {_eval_section(real_runs, "real")}
 
   <script>
   function toggleGroup(row) {{

@@ -933,9 +933,11 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                 if notes:
                     escaped_notes = html_mod.escape(notes, quote=True)
                     rows.append(
-                        f"<tr class='group-child' data-group='{group_key}'>"
-                        f"<td colspan='13' class='run-note'>"
-                        f"<em>Note:</em> {escaped_notes}</td></tr>"
+                        f"<tr class='group-child note-row' data-group='{group_key}'>"
+                        f"<td colspan='13' style='padding-left:2.5rem; "
+                        f"border-left:3px solid #2d3748; background:#0d1017; "
+                        f"font-size:0.78rem; color:#718096'>"
+                        f"📝 {escaped_notes}</td></tr>"
                     )
         sections.append(
             "<h3>Live Replay History</h3>"
