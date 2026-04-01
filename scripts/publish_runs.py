@@ -587,7 +587,8 @@ def _integration_section(runs: list[dict]) -> str:
         rows = []
         for case_id, members in groups.items():
             tooltip = html_mod.escape(_case_tooltip(case_id), quote=True)
-            latest = members[0]
+            full_runs = [r for r in members if not r.get("max_messages")]
+            latest = full_runs[0] if full_runs else members[0]
             rate = latest.get("routing_rate", 0)
 
             rows.append(
@@ -634,7 +635,9 @@ def _integration_section(runs: list[dict]) -> str:
         rows = []
         for case_id, members in groups.items():
             tooltip = html_mod.escape(_case_tooltip(case_id), quote=True)
-            latest = members[0]
+            # Prefer latest full run (no max_messages) for group row
+            full_runs = [r for r in members if not r.get("max_messages")]
+            latest = full_runs[0] if full_runs else members[0]
             node_summary = latest.get("node_summary", {})
             total_completed = sum(v.get("completed", 0) for v in node_summary.values())
             total_nodes = sum(v.get("total", 0) for v in node_summary.values())
@@ -784,7 +787,8 @@ def _system_summary(int_runs: list[dict], real_runs: list[dict],
 
         rows = []
         for case_id, members in groups.items():
-            latest = members[0]
+            full_runs = [r for r in members if not r.get("max_messages")]
+            latest = full_runs[0] if full_runs else members[0]
             score = latest.get("pipeline_score", "")
             routed = latest.get("messages_routed", 0)
             total = latest.get("messages_total", 0)
