@@ -1,0 +1,582 @@
+{
+  "_meta": {
+    "description": "Exhaustive reference of Indian military, paramilitary, and police unit/formation names and abbreviations for entity extraction from WhatsApp messages",
+    "focus_region": "North East India (Guwahati / Assam)",
+    "created": "2026-04-01",
+    "usage": "Build regex patterns for detecting military unit references in informal text"
+  },
+
+  "unit_type_abbreviations": {
+    "_doc": "How formation/unit levels are abbreviated",
+    "entries": {
+      "corps": { "full": "Corps", "pattern_variants": ["corps"] },
+      "div": { "full": "Division", "pattern_variants": ["div", "divn"] },
+      "bde": { "full": "Brigade", "pattern_variants": ["bde", "bgde", "brigade"] },
+      "regt": { "full": "Regiment", "pattern_variants": ["regt", "rgt", "regiment"] },
+      "bn": { "full": "Battalion", "pattern_variants": ["bn", "battn", "battalion", "btln"] },
+      "coy": { "full": "Company", "pattern_variants": ["coy", "company", "cmp"] },
+      "pl": { "full": "Platoon", "pattern_variants": ["pl", "plt", "platoon"] },
+      "sqn": { "full": "Squadron", "pattern_variants": ["sqn", "squadron"] },
+      "bty": { "full": "Battery", "pattern_variants": ["bty", "btry", "battery"] },
+      "tp": { "full": "Troop", "pattern_variants": ["tp", "trp", "troop"] },
+      "sec": { "full": "Section", "pattern_variants": ["sec", "secn", "section"] },
+      "gp": { "full": "Group", "pattern_variants": ["gp", "grp", "group"] },
+      "wg": { "full": "Wing", "pattern_variants": ["wg", "wing"] },
+      "det": { "full": "Detachment", "pattern_variants": ["det", "detach", "detachment"] },
+      "cdo": { "full": "Commando", "pattern_variants": ["cdo", "commando"] }
+    }
+  },
+
+  "arms_and_services": {
+    "_doc": "Indian Army Arms and Services with abbreviations",
+    "combat_arms": {
+      "inf": { "full": "Infantry", "pattern_variants": ["inf", "infantry"] },
+      "armd": { "full": "Armoured Corps", "pattern_variants": ["armd", "armoured", "armor", "armour"] },
+      "arty": { "full": "Artillery", "pattern_variants": ["arty", "artillery"] },
+      "ad": { "full": "Air Defence", "pattern_variants": ["ad", "air def", "air defence"] },
+      "engr": { "full": "Engineers", "pattern_variants": ["engr", "engrs", "engineer", "engineers", "engg"] },
+      "sigs": { "full": "Corps of Signals", "pattern_variants": ["sig", "sigs", "signals", "signal"] },
+      "mech_inf": { "full": "Mechanised Infantry", "pattern_variants": ["mech inf", "mech", "mechanised", "mechanized"] },
+      "para": { "full": "Parachute Regiment", "pattern_variants": ["para", "parachute"] },
+      "sf": { "full": "Special Forces", "pattern_variants": ["sf", "special forces"] },
+      "avn": { "full": "Army Aviation", "pattern_variants": ["avn", "aviation"] }
+    },
+    "services": {
+      "asc": { "full": "Army Service Corps", "pattern_variants": ["asc"] },
+      "aoc": { "full": "Army Ordnance Corps", "pattern_variants": ["aoc"] },
+      "eme": { "full": "Corps of Electronics and Mechanical Engineers", "pattern_variants": ["eme"] },
+      "amc": { "full": "Army Medical Corps", "pattern_variants": ["amc", "med", "medical"] },
+      "adc": { "full": "Army Dental Corps", "pattern_variants": ["adc", "dental"] },
+      "anc": { "full": "Army Nursing Corps", "pattern_variants": ["anc"] },
+      "aec": { "full": "Army Education Corps", "pattern_variants": ["aec", "edn"] },
+      "mes": { "full": "Military Engineering Services", "pattern_variants": ["mes"] },
+      "ord": { "full": "Ordnance", "pattern_variants": ["ord", "ordnance"] },
+      "remount_vet": { "full": "Remount & Veterinary Corps", "pattern_variants": ["rvc", "vet", "remount"] },
+      "apc": { "full": "Army Postal Corps", "pattern_variants": ["apc", "postal"] },
+      "int": { "full": "Intelligence Corps", "pattern_variants": ["int", "intel", "intelligence"] },
+      "jag": { "full": "Judge Advocate General", "pattern_variants": ["jag"] },
+      "cmp": { "full": "Corps of Military Police", "pattern_variants": ["cmp", "mil police", "mp"] },
+      "pioneers": { "full": "Pioneer Corps", "pattern_variants": ["pioneer", "pioneers"] }
+    }
+  },
+
+  "formation_qualifiers": {
+    "_doc": "Adjectives/qualifiers that prefix unit types",
+    "entries": {
+      "fd": { "full": "Field", "pattern_variants": ["fd", "field"] },
+      "mtn": { "full": "Mountain", "pattern_variants": ["mtn", "mountain", "mt"] },
+      "med": { "full": "Medium", "pattern_variants": ["med", "medium"] },
+      "hy": { "full": "Heavy", "pattern_variants": ["hy", "heavy"] },
+      "lt": { "full": "Light", "pattern_variants": ["lt", "light"] },
+      "indep": { "full": "Independent", "pattern_variants": ["indep", "independent", "ind"] },
+      "loc": { "full": "Locating", "pattern_variants": ["loc", "locating"] },
+      "obs": { "full": "Observation", "pattern_variants": ["obs", "observation"] },
+      "tac": { "full": "Tactical", "pattern_variants": ["tac", "tactical"] },
+      "base": { "full": "Base", "pattern_variants": ["base"] },
+      "adv": { "full": "Advanced", "pattern_variants": ["adv", "advanced"] },
+      "fwd": { "full": "Forward", "pattern_variants": ["fwd", "forward"] },
+      "rear": { "full": "Rear", "pattern_variants": ["rear"] },
+      "composite": { "full": "Composite", "pattern_variants": ["composite", "comp"] },
+      "mobile": { "full": "Mobile", "pattern_variants": ["mobile", "mob"] },
+      "static": { "full": "Static", "pattern_variants": ["static"] }
+    }
+  },
+
+  "infantry_regiment_names": {
+    "_doc": "Named regiments of Indian Army infantry and their abbreviations",
+    "entries": {
+      "jak_rif": { "full": "Jammu & Kashmir Rifles", "pattern_variants": ["jak rif", "jak", "j&k rif", "jk rif", "jammu kashmir"] },
+      "jak_li": { "full": "Jammu & Kashmir Light Infantry", "pattern_variants": ["jak li", "jk li", "jakli"] },
+      "rajput": { "full": "Rajput Regiment", "pattern_variants": ["rajput", "raj"] },
+      "sikh": { "full": "Sikh Regiment", "pattern_variants": ["sikh"] },
+      "sikh_li": { "full": "Sikh Light Infantry", "pattern_variants": ["sikh li", "sli"] },
+      "gorkha": { "full": "Gorkha Rifles", "pattern_variants": ["gorkha", "gr", "gorkha rif", "gurkha"] },
+      "maratha_li": { "full": "Maratha Light Infantry", "pattern_variants": ["maratha li", "maratha", "mli"] },
+      "dogra": { "full": "Dogra Regiment", "pattern_variants": ["dogra"] },
+      "kumaon": { "full": "Kumaon Regiment", "pattern_variants": ["kumaon"] },
+      "assam": { "full": "Assam Regiment", "pattern_variants": ["assam", "assam regt"] },
+      "naga": { "full": "Naga Regiment", "pattern_variants": ["naga", "naga regt"] },
+      "mahar": { "full": "Mahar Regiment", "pattern_variants": ["mahar"] },
+      "jat": { "full": "Jat Regiment", "pattern_variants": ["jat"] },
+      "grenadiers": { "full": "Grenadiers", "pattern_variants": ["grenadiers", "gren", "grd"] },
+      "rajputana_rif": { "full": "Rajputana Rifles", "pattern_variants": ["rajputana rif", "raj rif", "rajputana"] },
+      "madras": { "full": "Madras Regiment", "pattern_variants": ["madras"] },
+      "punjab": { "full": "Punjab Regiment", "pattern_variants": ["punjab", "pun"] },
+      "guards": { "full": "Brigade of the Guards", "pattern_variants": ["guards", "gds"] },
+      "bihar": { "full": "Bihar Regiment", "pattern_variants": ["bihar"] },
+      "garh_rif": { "full": "Garhwal Rifles", "pattern_variants": ["garh rif", "garhwal", "garhwal rif"] },
+      "mech_inf": { "full": "Mechanised Infantry Regiment", "pattern_variants": ["mech inf", "mech"] },
+      "arunachal_scouts": { "full": "Arunachal Scouts", "pattern_variants": ["arunachal scouts", "ar scouts"] },
+      "ladakh_scouts": { "full": "Ladakh Scouts", "pattern_variants": ["ladakh scouts", "ldk scouts"] },
+      "sikkim_scouts": { "full": "Sikkim Scouts", "pattern_variants": ["sikkim scouts"] },
+      "rashtriya_rif": { "full": "Rashtriya Rifles", "pattern_variants": ["rr", "rashtriya rif", "rashtriya rifles"] },
+      "para_regt": { "full": "Parachute Regiment", "pattern_variants": ["para", "para regt"] }
+    }
+  },
+
+  "armoured_regiment_names": {
+    "_doc": "Named armoured regiments",
+    "entries": {
+      "presidents_bodyguard": { "full": "President's Bodyguard", "pattern_variants": ["pbg", "presidents bodyguard"] },
+      "scinde_horse": { "full": "Scinde Horse", "pattern_variants": ["scinde horse"] },
+      "poona_horse": { "full": "Poona Horse", "pattern_variants": ["poona horse"] },
+      "skinners_horse": { "full": "Skinner's Horse", "pattern_variants": ["skinners horse"] },
+      "hodson_horse": { "full": "Hodson's Horse", "pattern_variants": ["hodsons horse"] },
+      "deccan_horse": { "full": "Deccan Horse", "pattern_variants": ["deccan horse"] },
+      "central_india_horse": { "full": "Central India Horse", "pattern_variants": ["cih", "central india horse"] },
+      "lancers": { "full": "Lancers", "pattern_variants": ["lancers", "lncrs"] },
+      "cavalary": { "full": "Cavalry", "pattern_variants": ["cavalry", "cav"] },
+      "dragoons": { "full": "Dragoons", "pattern_variants": ["dragoons"] }
+    }
+  },
+
+  "artillery_types": {
+    "_doc": "Artillery unit type abbreviations",
+    "entries": {
+      "fd_regt": { "full": "Field Regiment", "pattern_variants": ["fd regt", "field regt"] },
+      "med_regt": { "full": "Medium Regiment", "pattern_variants": ["med regt", "medium regt"] },
+      "hy_regt": { "full": "Heavy Regiment", "pattern_variants": ["hy regt", "heavy regt"] },
+      "mtn_regt": { "full": "Mountain Regiment", "pattern_variants": ["mtn regt", "mountain regt", "mt regt"] },
+      "ad_regt": { "full": "Air Defence Regiment", "pattern_variants": ["ad regt", "air def regt"] },
+      "loc_bty": { "full": "Locating Battery", "pattern_variants": ["loc bty", "locating bty"] },
+      "obs_bty": { "full": "Observation Battery", "pattern_variants": ["obs bty"] },
+      "rocket_regt": { "full": "Rocket Regiment", "pattern_variants": ["rocket regt", "rkt regt"] },
+      "missile_regt": { "full": "Missile Regiment", "pattern_variants": ["missile regt", "msl regt"] },
+      "sata": { "full": "Surveillance and Target Acquisition", "pattern_variants": ["sata"] },
+      "survey": { "full": "Survey", "pattern_variants": ["survey", "svy"] }
+    }
+  },
+
+  "support_unit_types": {
+    "_doc": "Support and logistics unit abbreviations",
+    "entries": {
+      "fd_wk_sp": { "full": "Field Workshop", "pattern_variants": ["fd wk sp", "fd workshop", "field workshop", "fd wksp"] },
+      "base_wk_sp": { "full": "Base Workshop", "pattern_variants": ["base wk sp", "base workshop", "base wksp"] },
+      "csd": { "full": "Canteen Stores Department", "pattern_variants": ["csd", "canteen"] },
+      "afd": { "full": "Army Field Depot", "pattern_variants": ["afd"] },
+      "cod": { "full": "Central Ordnance Depot", "pattern_variants": ["cod", "ordnance depot"] },
+      "aod": { "full": "Advance Ordnance Depot", "pattern_variants": ["aod"] },
+      "bod": { "full": "Base Ordnance Depot", "pattern_variants": ["bod"] },
+      "vod": { "full": "Vehicle Ordnance Depot", "pattern_variants": ["vod"] },
+      "sup_depot": { "full": "Supply Depot", "pattern_variants": ["sup depot", "supply depot", "sd"] },
+      "mh": { "full": "Military Hospital", "pattern_variants": ["mh", "mil hosp", "military hospital"] },
+      "fh": { "full": "Field Hospital", "pattern_variants": ["fh", "field hosp", "field hospital"] },
+      "ch": { "full": "Command Hospital", "pattern_variants": ["ch", "command hosp", "command hospital"] },
+      "bh": { "full": "Base Hospital", "pattern_variants": ["bh", "base hosp", "base hospital"] },
+      "fd_amb": { "full": "Field Ambulance", "pattern_variants": ["fd amb", "field ambulance", "field amb"] },
+      "aft": { "full": "Army Field Tanning", "pattern_variants": ["aft"] },
+      "map": { "full": "Map/Survey", "pattern_variants": ["map", "svy"] },
+      "emr": { "full": "EME Recovery", "pattern_variants": ["emr", "recovery"] },
+      "ats": { "full": "Army Training School", "pattern_variants": ["ats"] },
+      "ctc": { "full": "Counter Terrorism Centre", "pattern_variants": ["ctc"] },
+      "rr_sector": { "full": "Rashtriya Rifles Sector HQ", "pattern_variants": ["rr sector", "sector hq"] }
+    }
+  },
+
+  "station_and_hq_types": {
+    "_doc": "Station, area, and HQ naming patterns",
+    "entries": {
+      "stn_hq": { "full": "Station Headquarters", "pattern_variants": ["stn hq", "station hq", "stn headquarters"] },
+      "sub_area": { "full": "Sub Area", "pattern_variants": ["sub area", "subarea"] },
+      "area_hq": { "full": "Area Headquarters", "pattern_variants": ["area hq"] },
+      "command_hq": { "full": "Command Headquarters", "pattern_variants": ["command hq", "cmd hq"] },
+      "cantt": { "full": "Cantonment", "pattern_variants": ["cantt", "cantonment", "cant"] },
+      "garrison": { "full": "Garrison", "pattern_variants": ["garrison", "gar"] },
+      "range": { "full": "Firing Range / Range", "pattern_variants": ["range", "firing range"] },
+      "training_area": { "full": "Training Area", "pattern_variants": ["training area", "trg area"] },
+      "dgar": { "full": "Director General Assam Rifles", "pattern_variants": ["dgar"] }
+    }
+  },
+
+  "army_commands": {
+    "_doc": "Indian Army Commands relevant for NE India context",
+    "entries": {
+      "eastern_cmd": { "full": "Eastern Command (Kolkata)", "pattern_variants": ["eastern command", "eastern cmd", "ec"] },
+      "northern_cmd": { "full": "Northern Command (Udhampur)", "pattern_variants": ["northern command", "northern cmd", "nc"] },
+      "western_cmd": { "full": "Western Command (Chandimandir)", "pattern_variants": ["western command", "western cmd", "wc"] },
+      "southern_cmd": { "full": "Southern Command (Pune)", "pattern_variants": ["southern command", "southern cmd", "sc"] },
+      "central_cmd": { "full": "Central Command (Lucknow)", "pattern_variants": ["central command", "central cmd", "cc"] },
+      "sw_cmd": { "full": "South Western Command (Jaipur)", "pattern_variants": ["sw command", "sw cmd"] },
+      "artrac": { "full": "Army Training Command (Shimla)", "pattern_variants": ["artrac", "training command"] }
+    }
+  },
+
+  "ne_india_specific": {
+    "_doc": "Units and formations specifically relevant to North East India / Guwahati",
+    "entries": {
+      "3_corps": { "full": "III Corps (Nagaland/Manipur)", "pattern_variants": ["3 corps", "iii corps"] },
+      "4_corps": { "full": "IV Corps (Tezpur)", "pattern_variants": ["4 corps", "iv corps"] },
+      "33_corps": { "full": "XXXIII Corps (Siliguri)", "pattern_variants": ["33 corps", "xxxiii corps"] },
+      "gajraj_corps": { "full": "Gajraj Corps (IV Corps)", "pattern_variants": ["gajraj", "gajraj corps"] },
+      "spear_corps": { "full": "Spear Corps (III Corps)", "pattern_variants": ["spear corps"] },
+      "trishakti_corps": { "full": "Trishakti Corps (XXXIII Corps)", "pattern_variants": ["trishakti", "trishakti corps"] },
+      "2_mtn_div": { "full": "2nd Mountain Division", "pattern_variants": ["2 mtn div", "2 mountain div"] },
+      "5_mtn_div": { "full": "5th Mountain Division", "pattern_variants": ["5 mtn div", "5 mountain div"] },
+      "21_mtn_div": { "full": "21st Mountain Division", "pattern_variants": ["21 mtn div", "21 mountain div"] },
+      "23_inf_div": { "full": "23rd Infantry Division", "pattern_variants": ["23 inf div"] },
+      "56_mtn_div": { "full": "56th Mountain Division (Zakhama)", "pattern_variants": ["56 mtn div", "56 mountain div"] },
+      "57_mtn_div": { "full": "57th Mountain Division", "pattern_variants": ["57 mtn div", "57 mountain div"] },
+      "71_mtn_div": { "full": "71st Mountain Division", "pattern_variants": ["71 mtn div"] },
+      "assam_rifles": { "full": "Assam Rifles (under MHA, HQ Shillong)", "pattern_variants": ["assam rifles", "ar", "assam rif"] },
+      "igar_north": { "full": "Inspector General Assam Rifles (North)", "pattern_variants": ["igar north", "igar(n)"] },
+      "igar_south": { "full": "Inspector General Assam Rifles (South)", "pattern_variants": ["igar south", "igar(s)"] },
+      "red_shield_div": { "full": "Red Shield Division (23 Inf Div)", "pattern_variants": ["red shield"] },
+      "golden_cat_div": { "full": "Golden Cat Division (57 Mtn Div)", "pattern_variants": ["golden cat"] },
+      "red_eagle_div": { "full": "Red Eagle Division (5 Mtn Div)", "pattern_variants": ["red eagle"] }
+    }
+  },
+
+  "capf_abbreviations": {
+    "_doc": "Central Armed Police Forces",
+    "entries": {
+      "bsf": { "full": "Border Security Force", "pattern_variants": ["bsf", "border security"] },
+      "crpf": { "full": "Central Reserve Police Force", "pattern_variants": ["crpf", "central reserve"] },
+      "cisf": { "full": "Central Industrial Security Force", "pattern_variants": ["cisf"] },
+      "itbp": { "full": "Indo-Tibetan Border Police", "pattern_variants": ["itbp", "indo tibetan"] },
+      "ssb": { "full": "Sashastra Seema Bal", "pattern_variants": ["ssb", "sashastra seema bal", "sashastra seema"] },
+      "nsg": { "full": "National Security Guard", "pattern_variants": ["nsg", "national security guard", "black cat"] },
+      "ar": { "full": "Assam Rifles", "pattern_variants": ["assam rifles", "ar", "assam rif"] },
+      "rpf": { "full": "Railway Protection Force", "pattern_variants": ["rpf", "railway protection"] },
+      "rpsf": { "full": "Railway Protection Special Force", "pattern_variants": ["rpsf"] }
+    },
+    "capf_unit_patterns": {
+      "_doc": "How CAPF units are numbered/named",
+      "examples": [
+        "107 Bn BSF = 107th Battalion BSF",
+        "3 Bn CRPF = 3rd Battalion CRPF",
+        "Alpha Coy = Alpha Company",
+        "HQ DG BSF = Headquarters Director General BSF",
+        "Sector HQ = Sector Headquarters",
+        "Ftr HQ = Frontier Headquarters (BSF)"
+      ]
+    }
+  },
+
+  "other_central_forces": {
+    "_doc": "Other central security/paramilitary organizations",
+    "entries": {
+      "ndrf": { "full": "National Disaster Response Force", "pattern_variants": ["ndrf"] },
+      "nia": { "full": "National Investigation Agency", "pattern_variants": ["nia"] },
+      "spg": { "full": "Special Protection Group", "pattern_variants": ["spg"] },
+      "ib": { "full": "Intelligence Bureau", "pattern_variants": ["ib"] },
+      "raw": { "full": "Research & Analysis Wing", "pattern_variants": ["raw", "r&aw"] },
+      "ncb": { "full": "Narcotics Control Bureau", "pattern_variants": ["ncb"] },
+      "dri": { "full": "Directorate of Revenue Intelligence", "pattern_variants": ["dri"] },
+      "sff": { "full": "Special Frontier Force", "pattern_variants": ["sff", "vikas"] }
+    }
+  },
+
+  "state_police_abbreviations": {
+    "_doc": "State police ranks and formations",
+    "ranks": {
+      "dgp": { "full": "Director General of Police", "pattern_variants": ["dgp", "dg police"] },
+      "adgp": { "full": "Additional Director General of Police", "pattern_variants": ["adgp", "addl dgp"] },
+      "igp": { "full": "Inspector General of Police", "pattern_variants": ["igp", "ig"] },
+      "dig": { "full": "Deputy Inspector General", "pattern_variants": ["dig"] },
+      "sp": { "full": "Superintendent of Police", "pattern_variants": ["sp"] },
+      "addl_sp": { "full": "Additional Superintendent of Police", "pattern_variants": ["addl sp", "additional sp", "asp"] },
+      "dysp": { "full": "Deputy Superintendent of Police", "pattern_variants": ["dysp", "dy sp", "dsp"] },
+      "ci": { "full": "Circle Inspector", "pattern_variants": ["ci", "circle inspector"] },
+      "si": { "full": "Sub Inspector", "pattern_variants": ["si", "sub inspector"] },
+      "asi": { "full": "Assistant Sub Inspector", "pattern_variants": ["asi", "asst sub inspector"] },
+      "hc": { "full": "Head Constable", "pattern_variants": ["hc", "head constable"] },
+      "const": { "full": "Constable", "pattern_variants": ["const", "constable"] },
+      "oc": { "full": "Officer-in-Charge (of PS)", "pattern_variants": ["oc", "officer in charge"] },
+      "ic": { "full": "Inspector-in-Charge", "pattern_variants": ["ic", "inspector in charge"] },
+      "sho": { "full": "Station House Officer", "pattern_variants": ["sho"] }
+    },
+    "formations": {
+      "ps": { "full": "Police Station", "pattern_variants": ["ps", "thana", "police station"] },
+      "op": { "full": "Outpost", "pattern_variants": ["op", "outpost"] },
+      "pp": { "full": "Police Post", "pattern_variants": ["pp", "police post"] },
+      "range": { "full": "Range (group of districts)", "pattern_variants": ["range"] },
+      "dist_police": { "full": "District Police", "pattern_variants": ["dist police", "district police"] },
+      "zone": { "full": "Zone", "pattern_variants": ["zone"] },
+      "battalion": { "full": "State Police Battalion", "pattern_variants": ["bn", "battalion"] }
+    },
+    "ne_state_police": {
+      "_doc": "NE India state police specific",
+      "entries": {
+        "assam_police": { "full": "Assam Police", "pattern_variants": ["assam police"] },
+        "apbn": { "full": "Assam Police Battalion", "pattern_variants": ["apbn", "ap bn"] },
+        "nagaland_police": { "full": "Nagaland Police", "pattern_variants": ["nagaland police", "nap"] },
+        "manipur_police": { "full": "Manipur Police", "pattern_variants": ["manipur police"] },
+        "mizoram_police": { "full": "Mizoram Police", "pattern_variants": ["mizoram police"] },
+        "meghalaya_police": { "full": "Meghalaya Police", "pattern_variants": ["meghalaya police"] },
+        "tripura_police": { "full": "Tripura Police", "pattern_variants": ["tripura police", "tsp"] },
+        "arunachal_police": { "full": "Arunachal Pradesh Police", "pattern_variants": ["arunachal police", "app"] },
+        "irbn": { "full": "India Reserve Battalion (NE states)", "pattern_variants": ["irbn", "ir bn", "india reserve"] }
+      }
+    }
+  },
+
+  "officer_titles_army": {
+    "_doc": "Army officer and JCO/NCO designations as used in informal text",
+    "commissioned_officers": {
+      "co": { "full": "Commanding Officer", "pattern_variants": ["co", "commanding officer"] },
+      "2ic": { "full": "Second-in-Command", "pattern_variants": ["2ic", "2 ic", "second in command"] },
+      "adjt": { "full": "Adjutant", "pattern_variants": ["adjt", "adjutant"] },
+      "qm": { "full": "Quartermaster", "pattern_variants": ["qm", "quartermaster"] },
+      "bm": { "full": "Brigade Major", "pattern_variants": ["bm", "brigade major"] },
+      "gsoi": { "full": "General Staff Officer Grade I", "pattern_variants": ["gso1", "gso 1", "gsoi"] },
+      "gsoii": { "full": "General Staff Officer Grade II", "pattern_variants": ["gso2", "gso 2", "gsoii"] },
+      "gsoiii": { "full": "General Staff Officer Grade III", "pattern_variants": ["gso3", "gso 3", "gsoiii"] },
+      "daqmg": { "full": "Deputy Assistant Quartermaster General", "pattern_variants": ["daqmg"] },
+      "aaqmg": { "full": "Assistant Adjutant & Quartermaster General", "pattern_variants": ["aaqmg", "aa&qmg"] },
+      "goc": { "full": "General Officer Commanding", "pattern_variants": ["goc"] },
+      "cdr": { "full": "Commander", "pattern_variants": ["cdr", "commander", "comdr"] },
+      "comd": { "full": "Commandant", "pattern_variants": ["comd", "comdt", "commandant"] },
+      "da": { "full": "Defence Adviser / Defence Attache", "pattern_variants": ["da"] },
+      "ado": { "full": "Area Defence Officer", "pattern_variants": ["ado"] },
+      "sc": { "full": "Station Commander", "pattern_variants": ["stn cdr", "station commander", "sc"] },
+      "col_gs": { "full": "Colonel General Staff", "pattern_variants": ["col gs"] },
+      "col_q": { "full": "Colonel Q (Logistics)", "pattern_variants": ["col q"] },
+      "col_a": { "full": "Colonel Admin", "pattern_variants": ["col a", "col admin"] },
+      "ato": { "full": "Army Technical Officer", "pattern_variants": ["ato"] },
+      "oic": { "full": "Officer-in-Charge", "pattern_variants": ["oic", "o/c", "o i c"] }
+    },
+    "jco_nco": {
+      "sub_maj": { "full": "Subedar Major", "pattern_variants": ["sub maj", "subedar major", "sm"] },
+      "sub": { "full": "Subedar", "pattern_variants": ["sub", "subedar"] },
+      "nb_sub": { "full": "Naib Subedar", "pattern_variants": ["nb sub", "naib subedar", "naib sub"] },
+      "hav": { "full": "Havildar", "pattern_variants": ["hav", "havildar"] },
+      "nk": { "full": "Naik", "pattern_variants": ["nk", "naik"] },
+      "lnk": { "full": "Lance Naik", "pattern_variants": ["lnk", "l nk", "lance naik"] },
+      "sep": { "full": "Sepoy", "pattern_variants": ["sep", "sepoy"] },
+      "gnr": { "full": "Gunner (Artillery)", "pattern_variants": ["gnr", "gunner"] },
+      "spr": { "full": "Sapper (Engineers)", "pattern_variants": ["spr", "sapper"] },
+      "sigmn": { "full": "Signalman (Signals)", "pattern_variants": ["sigmn", "signalman", "sig man"] },
+      "tpr": { "full": "Trooper (Armoured)", "pattern_variants": ["tpr", "trooper"] },
+      "cfn": { "full": "Craftsman (EME)", "pattern_variants": ["cfn", "craftsman"] },
+      "dvr": { "full": "Driver (ASC)", "pattern_variants": ["dvr", "driver"] },
+      "rfn": { "full": "Rifleman", "pattern_variants": ["rfn", "rifleman"] },
+      "gdr": { "full": "Grenadier", "pattern_variants": ["gdr", "grenadier"] },
+      "swpr": { "full": "Sweeper/Pioneer", "pattern_variants": ["swpr", "pioneer"] }
+    }
+  },
+
+  "officer_ranks": {
+    "_doc": "Rank abbreviations used in text",
+    "entries": {
+      "gen": { "full": "General", "pattern_variants": ["gen", "general"] },
+      "lt_gen": { "full": "Lieutenant General", "pattern_variants": ["lt gen", "lt general"] },
+      "maj_gen": { "full": "Major General", "pattern_variants": ["maj gen", "maj general"] },
+      "brig": { "full": "Brigadier", "pattern_variants": ["brig", "brigadier"] },
+      "col": { "full": "Colonel", "pattern_variants": ["col", "colonel"] },
+      "lt_col": { "full": "Lieutenant Colonel", "pattern_variants": ["lt col", "lt colonel"] },
+      "maj": { "full": "Major", "pattern_variants": ["maj", "major"] },
+      "capt": { "full": "Captain", "pattern_variants": ["capt", "captain"] },
+      "lt": { "full": "Lieutenant", "pattern_variants": ["lt", "lieutenant"] }
+    }
+  },
+
+  "combined_unit_examples": {
+    "_doc": "Real-world examples of how units appear in text — use these to validate patterns",
+    "examples": [
+      { "text": "20 JAK Rif", "meaning": "20th Battalion, Jammu & Kashmir Rifles" },
+      { "text": "107 Bde", "meaning": "107 Infantry Brigade" },
+      { "text": "Stn Hq Guwahati", "meaning": "Station Headquarters Guwahati" },
+      { "text": "4 Corps", "meaning": "IV Corps (Tezpur)" },
+      { "text": "5 Mtn Div", "meaning": "5th Mountain Division" },
+      { "text": "3 Fd Regt", "meaning": "3rd Field Regiment (Artillery)" },
+      { "text": "15 Med Regt", "meaning": "15th Medium Regiment (Artillery)" },
+      { "text": "7 Engr Regt", "meaning": "7th Engineer Regiment" },
+      { "text": "2 Sig Regt", "meaning": "2nd Signal Regiment" },
+      { "text": "12 Mech Inf", "meaning": "12th Mechanised Infantry" },
+      { "text": "101 Ad Regt", "meaning": "101st Air Defence Regiment" },
+      { "text": "33 Armd Regt", "meaning": "33rd Armoured Regiment" },
+      { "text": "512 Fd Wk Sp", "meaning": "512 Field Workshop" },
+      { "text": "Base Wk Sp", "meaning": "Base Workshop" },
+      { "text": "MH Guwahati", "meaning": "Military Hospital Guwahati" },
+      { "text": "3 AR", "meaning": "3rd Battalion Assam Rifles" },
+      { "text": "44 AR", "meaning": "44th Battalion Assam Rifles" },
+      { "text": "7 Assam", "meaning": "7th Battalion Assam Regiment" },
+      { "text": "Sub Area Guwahati", "meaning": "Sub Area HQ Guwahati" },
+      { "text": "EME Bn", "meaning": "EME Battalion" },
+      { "text": "ASC Bn", "meaning": "Army Service Corps Battalion" },
+      { "text": "12 Gorkha", "meaning": "12th Battalion Gorkha Rifles" },
+      { "text": "1 Para SF", "meaning": "1st Parachute Special Forces" },
+      { "text": "9 Para", "meaning": "9th Parachute Battalion" },
+      { "text": "SATA Regt", "meaning": "Surveillance & Target Acquisition Regiment" },
+      { "text": "CSD Canteen", "meaning": "CSD Canteen" },
+      { "text": "MES Office", "meaning": "Military Engineering Services Office" },
+      { "text": "AOS (Army Ordnance Section)", "meaning": "Ordnance sub-unit" }
+    ]
+  },
+
+  "informal_text_patterns": {
+    "_doc": "Patterns for how military units appear in informal WhatsApp messages",
+    "hindi_english_mixing": {
+      "_doc": "Common Hindi/English mixed references",
+      "examples": [
+        "107 bde wala order = order from 107 Brigade",
+        "stn hq ka order = Station HQ's order",
+        "jak rif ke liye = for JAK Rifles",
+        "20 jak ka co = CO of 20 JAK Rif",
+        "army canteen se = from army canteen",
+        "mh ka supply = Military Hospital supply",
+        "cantt mein = in the cantonment",
+        "fauji = soldier / military person",
+        "paltan = regiment/battalion (colloquial)",
+        "camp = temporary military location"
+      ]
+    },
+    "whatsapp_conventions": {
+      "_doc": "Common conventions in WhatsApp messages",
+      "patterns": [
+        "Numbers before unit names: '20 jak', '107 bde', '3 fd regt'",
+        "All lowercase common: 'stn hq', 'jak rif', 'fd wk sp'",
+        "ALL CAPS sometimes: 'EME', 'ASC', 'BSF', 'JAK'",
+        "Mixed case: 'Stn Hq', 'Fd Regt'",
+        "Unit + location: '107 bde guwahati', 'stn hq narangi'",
+        "Shorthand for battalion: 'bn', 'battn'",
+        "Shorthand: 'adj' or 'adjt' for adjutant",
+        "Dropped words: '20 jak' instead of '20 jak rif' or '20th bn jak rif'",
+        "Person+unit: 'CO 20 jak', 'QM 107 bde', 'Adjt stn hq'",
+        "Supply context: 'indent from 107 bde', 'order for mh', 'supply to fd wk sp'",
+        "Assamese context: 'ar' means Assam Rifles in NE, could be ambiguous"
+      ]
+    }
+  },
+
+  "ne_india_locations": {
+    "_doc": "Key military stations/cantonments in North East India relevant for Guwahati-based supply business",
+    "entries": {
+      "narangi": { "full": "Narangi Military Station (Guwahati)", "pattern_variants": ["narangi", "narangi cantt", "narangi camp"] },
+      "basistha": { "full": "Basistha (Guwahati military area)", "pattern_variants": ["basistha"] },
+      "shillong": { "full": "Shillong (HQ Assam Rifles)", "pattern_variants": ["shillong"] },
+      "tezpur": { "full": "Tezpur (HQ 4 Corps)", "pattern_variants": ["tezpur"] },
+      "missamari": { "full": "Missamari (Military Station)", "pattern_variants": ["missamari"] },
+      "rangapahar": { "full": "Rangapahar (Dimapur, 3 Corps HQ)", "pattern_variants": ["rangapahar", "rangapara"] },
+      "dimapur": { "full": "Dimapur (HQ 3 Corps area)", "pattern_variants": ["dimapur"] },
+      "kohima": { "full": "Kohima (Military Station)", "pattern_variants": ["kohima"] },
+      "imphal": { "full": "Imphal (Military Station)", "pattern_variants": ["imphal"] },
+      "leimakhong": { "full": "Leimakhong (near Imphal)", "pattern_variants": ["leimakhong"] },
+      "lokra": { "full": "Lokra (Military Station, near Tezpur)", "pattern_variants": ["lokra"] },
+      "siliguri": { "full": "Siliguri (HQ 33 Corps)", "pattern_variants": ["siliguri"] },
+      "bagdogra": { "full": "Bagdogra (Military Station)", "pattern_variants": ["bagdogra"] },
+      "sukna": { "full": "Sukna (Military Station near Siliguri)", "pattern_variants": ["sukna"] },
+      "binnaguri": { "full": "Binnaguri (Military Station)", "pattern_variants": ["binnaguri"] },
+      "hashimara": { "full": "Hashimara (Military Station)", "pattern_variants": ["hashimara"] },
+      "umroi": { "full": "Umroi (Military Station near Shillong)", "pattern_variants": ["umroi"] },
+      "dinjan": { "full": "Dinjan (Military Station)", "pattern_variants": ["dinjan"] },
+      "likabali": { "full": "Likabali (Military Station)", "pattern_variants": ["likabali"] },
+      "jorhat": { "full": "Jorhat (Military Station)", "pattern_variants": ["jorhat"] },
+      "panagarh": { "full": "Panagarh (Military Station, 23 Inf Div)", "pattern_variants": ["panagarh"] },
+      "bengdubi": { "full": "Bengdubi (Military Station)", "pattern_variants": ["bengdubi"] }
+    }
+  },
+
+  "regex_patterns": {
+    "_doc": "Ready-to-use regex patterns for entity extraction (Python re syntax, case-insensitive)",
+    "numbered_unit": "\\b(\\d{1,3})\\s*(?:jak\\s*(?:rif)?|assam|naga|gorkha|rajput|sikh|dogra|kumaon|mahar|jat|gren|maratha|madras|punjab|bihar|guards|mech\\s*inf|para|ar|bn|bde|bgde|div|divn|regt|rgt|corps|sqn|bty|coy|fd\\s*regt|med\\s*regt|hy\\s*regt|mtn\\s*regt|ad\\s*regt|armd\\s*regt|engr\\s*regt|sig\\s*regt|fd\\s*wk\\s*sp|fd\\s*wksp|fd\\s*amb)\\b",
+
+    "named_unit_no_number": "\\b(?:stn\\s*hq|sub\\s*area|area\\s*hq|command\\s*hq|cmd\\s*hq|base\\s*wk\\s*sp|base\\s*wksp|base\\s*workshop|mh|ch|bh|fh|csd|mes|cantt|garrison)\\b",
+
+    "service_corps": "\\b(?:eme|asc|aoc|amc|adc|aec|apc|cmp|rvc|mes|jag)\\b",
+
+    "capf_units": "\\b(?:(?:\\d{1,3}\\s*(?:bn|battn)\\s*)?(?:bsf|crpf|cisf|itbp|ssb|nsg|rpf|rpsf|assam\\s*rifles|ar))\\b",
+
+    "officer_title_unit": "\\b(?:co|2ic|adjt|qm|bm|goc|cdr|comdt|sc|oic)\\s+(?:\\d{1,3}\\s+)?(?:jak|bde|regt|div|stn\\s*hq|sub\\s*area|mh|ar|assam|gorkha|para)\\b",
+
+    "rank_prefix": "\\b(?:gen|lt\\s*gen|maj\\s*gen|brig|col|lt\\s*col|maj|capt|lt|sub\\s*maj|sub|nb\\s*sub|hav|nk|lnk|sep|gnr|spr|rfn|sigmn|cfn|dvr)\\s+",
+
+    "police_rank": "\\b(?:dgp|adgp|igp|dig|sp|dysp|dy\\s*sp|dsp|ci|si|asi|hc|sho|oc|ic)\\b",
+
+    "artillery_specific": "\\b(?:sata|fd\\s*regt|med\\s*regt|hy\\s*regt|mtn\\s*regt|ad\\s*regt|loc\\s*bty|obs\\s*bty|rocket\\s*regt|missile\\s*regt)\\b",
+
+    "ne_location_military": "\\b(?:narangi|basistha|tezpur|missamari|rangapahar|dimapur|kohima|imphal|leimakhong|lokra|siliguri|sukna|binnaguri|hashimara|umroi|dinjan|jorhat|shillong|bagdogra|bengdubi|panagarh)\\b",
+
+    "informal_hindi_suffix": "(?:jak|bde|regt|stn\\s*hq|mh|ar|cantt)\\s*(?:wala|wale|ke|ka|ki|se|mein|ko|pe)\\b",
+
+    "supply_context": "\\b(?:indent|supply|ration|stores|provisions|demand|issue|receipt|challan)\\s+(?:from|to|for|of)\\s+(?:\\d{1,3}\\s+)?(?:jak|bde|regt|stn|mh|ar|unit)\\b"
+  },
+
+  "flat_lists_for_quick_lookup": {
+    "_doc": "Flat deduplicated lists for quick matching",
+
+    "all_unit_abbreviations": [
+      "corps", "div", "divn", "bde", "bgde", "regt", "rgt", "bn", "battn", "coy",
+      "pl", "plt", "sqn", "bty", "btry", "tp", "trp", "sec", "gp", "grp", "wg",
+      "det", "cdo"
+    ],
+
+    "all_arm_service_abbreviations": [
+      "inf", "armd", "arty", "ad", "engr", "engrs", "sig", "sigs",
+      "mech", "para", "sf", "avn",
+      "asc", "aoc", "eme", "amc", "adc", "anc", "aec", "mes",
+      "ord", "rvc", "apc", "int", "jag", "cmp"
+    ],
+
+    "all_qualifier_abbreviations": [
+      "fd", "mtn", "mt", "med", "hy", "lt", "indep", "ind",
+      "loc", "obs", "tac", "base", "adv", "fwd", "rear",
+      "composite", "comp", "mobile", "mob", "static"
+    ],
+
+    "all_regiment_name_tokens": [
+      "jak", "jak rif", "jk rif", "jak li", "jk li",
+      "rajput", "raj", "sikh", "sikh li", "sli",
+      "gorkha", "gr", "gurkha", "maratha", "maratha li", "mli",
+      "dogra", "kumaon", "assam", "naga", "mahar", "jat",
+      "grenadiers", "gren", "grd",
+      "rajputana", "raj rif", "rajputana rif",
+      "madras", "punjab", "pun", "guards", "gds",
+      "bihar", "garh rif", "garhwal",
+      "mech inf", "para", "para regt",
+      "rr", "rashtriya rif",
+      "ladakh scouts", "arunachal scouts", "sikkim scouts"
+    ],
+
+    "all_capf_tokens": [
+      "bsf", "crpf", "cisf", "itbp", "ssb", "nsg",
+      "assam rifles", "ar", "rpf", "rpsf",
+      "ndrf", "nia", "spg"
+    ],
+
+    "all_station_tokens": [
+      "stn hq", "station hq", "sub area", "area hq",
+      "command hq", "cmd hq", "cantt", "cantonment",
+      "garrison", "gar", "range", "trg area"
+    ],
+
+    "all_support_unit_tokens": [
+      "fd wk sp", "fd wksp", "fd workshop", "field workshop",
+      "base wk sp", "base wksp", "base workshop",
+      "csd", "csd canteen", "canteen",
+      "mh", "mil hosp", "fh", "field hosp",
+      "ch", "command hosp", "bh", "base hosp",
+      "fd amb", "field ambulance",
+      "sup depot", "supply depot",
+      "cod", "aod", "bod", "vod", "afd",
+      "sata"
+    ],
+
+    "all_officer_titles": [
+      "co", "2ic", "adjt", "qm", "bm",
+      "gso1", "gso2", "gso3",
+      "goc", "cdr", "comdr", "comdt", "comd",
+      "sc", "stn cdr", "oic",
+      "col gs", "col q", "col a", "col admin",
+      "daqmg", "aaqmg", "aa&qmg", "ato", "ado",
+      "sub maj", "sm", "sub", "subedar",
+      "nb sub", "naib sub",
+      "hav", "havildar",
+      "nk", "naik", "lnk", "l nk",
+      "sep", "sepoy", "gnr", "spr", "rfn", "sigmn", "cfn", "dvr", "tpr", "gdr"
+    ],
+
+    "all_rank_abbreviations": [
+      "gen", "lt gen", "maj gen", "brig", "col", "lt col",
+      "maj", "capt", "lt",
+      "dgp", "adgp", "igp", "dig", "sp", "addl sp", "dysp", "dy sp", "dsp",
+      "ci", "si", "asi", "hc", "sho", "oc", "ic"
+    ],
+
+    "all_police_formation_tokens": [
+      "ps", "thana", "police station",
+      "op", "outpost", "pp", "police post",
+      "range", "zone", "dist police"
+    ]
+  }
+}

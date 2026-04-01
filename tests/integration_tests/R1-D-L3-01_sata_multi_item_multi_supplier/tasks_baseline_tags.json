@@ -1,0 +1,4418 @@
+{
+  "case_id": "R1-D-L3-01",
+  "group_id": "Tasks",
+  "generated_by": "claude_code_baseline",
+  "message_count": 441,
+  "tags": [
+    {
+      "message_id": "R1-D-L3-01_Tasks_0001",
+      "idx": 0,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/2/26, 11:02",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0002",
+      "idx": 1,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/2/26, 11:02",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0003",
+      "idx": 2,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/2/26, 11:02",
+      "body_preview": "Legal, but Red Colour is required",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0004",
+      "idx": 3,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/2/26, 11:02",
+      "body_preview": "A3 photo Paper 03 pkt bhi chahiye",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0005",
+      "idx": 4,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/2/26, 11:02",
+      "body_preview": "20 jak Rajesh sir",
+      "tag": "unit:20_jak",
+      "confidence": 0.9,
+      "reasoning": "direct mention: '20 jak Rajesh sir'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0006",
+      "idx": 5,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/2/26, 11:13",
+      "body_preview": "Without watermark",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0007",
+      "idx": 6,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/2/26, 12:41",
+      "body_preview": "107 bde chir - 42 pcs",
+      "tag": "unit:107_bde",
+      "confidence": 0.9,
+      "reasoning": "direct mention: '107 bde chir - 42 pcs'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0008",
+      "idx": 7,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/2/26, 12:41",
+      "body_preview": "107 bde chir - 42 pcs",
+      "tag": "unit:107_bde",
+      "confidence": 0.9,
+      "reasoning": "direct mention: '107 bde chir - 42 pcs'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0009",
+      "idx": 8,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/2/26, 14:53",
+      "body_preview": "4 pcs fan",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0010",
+      "idx": 9,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/2/26, 14:53",
+      "body_preview": "4 pcs fan",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0011",
+      "idx": 10,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/2/26, 14:53",
+      "body_preview": "Battery",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0012",
+      "idx": 11,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/2/26, 14:53",
+      "body_preview": "Battery",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0013",
+      "idx": 12,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/2/26, 14:53",
+      "body_preview": "????",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0014",
+      "idx": 13,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/2/26, 14:53",
+      "body_preview": "????",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0015",
+      "idx": 14,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/2/26, 14:55",
+      "body_preview": "fan ka part hai",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0016",
+      "idx": 15,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/2/26, 14:55",
+      "body_preview": "04 hai na",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0017",
+      "idx": 16,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/2/26, 15:03",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0018",
+      "idx": 17,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/2/26, 15:03",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0019",
+      "idx": 18,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/2/26, 15:03",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0020",
+      "idx": 19,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/2/26, 15:03",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0021",
+      "idx": 20,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/2/26, 15:03",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0022",
+      "idx": 21,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/2/26, 15:04",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0023",
+      "idx": 22,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/2/26, 15:04",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0024",
+      "idx": 23,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/2/26, 15:04",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0025",
+      "idx": 24,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/2/26, 15:04",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0026",
+      "idx": 25,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/2/26, 15:04",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0027",
+      "idx": 26,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/2/26, 15:04",
+      "body_preview": "Ups ???",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0028",
+      "idx": 27,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/2/26, 15:05",
+      "body_preview": "Ups ???",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0029",
+      "idx": 28,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/2/26, 15:05",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0030",
+      "idx": 29,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/2/26, 15:05",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0031",
+      "idx": 30,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/2/26, 16:18",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0032",
+      "idx": 31,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/2/26, 16:18",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0033",
+      "idx": 32,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/2/26, 16:32",
+      "body_preview": "Price 14,500+18%\nWooden packing 2000rs extra\nTransport Extra",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0034",
+      "idx": 33,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/2/26, 16:32",
+      "body_preview": "Stainless steel electric Dosa Bhatti 15x15x32 inch with 10mm",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0035",
+      "idx": 34,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/2/26, 17:17",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0036",
+      "idx": 35,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/2/26, 17:17",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0037",
+      "idx": 36,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/2/26, 20:37",
+      "body_preview": "Stn hq daranga lalmohan sir ka number.????",
+      "tag": "unit:stn_hq_daranga",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'Stn hq daranga lalmohan sir ka number.????'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0038",
+      "idx": 37,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/2/26, 20:37",
+      "body_preview": "Stn Hq Darranga Clk Lal Mohammad Ji Feb 26\n+91 70659 22164",
+      "tag": "unit:stn_hq_daranga",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'Stn Hq Darranga Clk Lal Mohammad Ji Feb 26\n+91 706'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0039",
+      "idx": 38,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/3/26, 11:24",
+      "body_preview": "Canon Camera Dealer Kartik Ji Jan 24\n+91 70860 95875",
+      "tag": "supplier:canon_camera",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'Canon Camera Dealer Kartik Ji Jan 24\n+91 70860 958'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0040",
+      "idx": 39,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/3/26, 12:36",
+      "body_preview": "EOS R10 WITH 18-150 Lens \nMRP 1,19,995/-\nDP.     1,01,000/- ",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0041",
+      "idx": 40,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/3/26, 12:36",
+      "body_preview": "For canon camera \nfrom canon camera dealer",
+      "tag": "supplier:canon_camera",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'For canon camera \nfrom canon camera dealer'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0042",
+      "idx": 41,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/3/26, 12:37",
+      "body_preview": "(empty)",
+      "tag": "supplier:canon_camera",
+      "confidence": 0.6,
+      "reasoning": "sender continuity (60s gap)"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0043",
+      "idx": 42,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/3/26, 12:37",
+      "body_preview": "Including GST , Discount 18% only billing item .",
+      "tag": "supplier:canon_camera",
+      "confidence": 0.6,
+      "reasoning": "sender continuity (0s gap)"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0044",
+      "idx": 43,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/3/26, 12:37",
+      "body_preview": "From ahuja  manoj",
+      "tag": "supplier:ahuja_manoj",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'From ahuja  manoj'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0045",
+      "idx": 44,
+      "sender": "Mousumi Banik New Staff",
+      "timestamp_raw": "3/3/26, 12:42",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0046",
+      "idx": 45,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/3/26, 12:42",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0047",
+      "idx": 46,
+      "sender": "Mousumi Banik New Staff",
+      "timestamp_raw": "3/3/26, 12:42",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0048",
+      "idx": 47,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/3/26, 12:44",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0049",
+      "idx": 48,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/3/26, 12:45",
+      "body_preview": "This message was deleted",
+      "tag": "noise:deleted",
+      "confidence": 1.0,
+      "reasoning": "deleted message"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0050",
+      "idx": 49,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/3/26, 12:56",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0051",
+      "idx": 50,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/3/26, 12:56",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0052",
+      "idx": 51,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/3/26, 12:57",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0053",
+      "idx": 52,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/3/26, 12:59",
+      "body_preview": "Sir we need a good quality Colour Printer of Brother, A3 and",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0054",
+      "idx": 53,
+      "sender": "Mousumi Banik New Staff",
+      "timestamp_raw": "3/3/26, 13:03",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0055",
+      "idx": 54,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/3/26, 14:36",
+      "body_preview": "20 jak rif ke item shadilapur trasit camp main rakh diyaa",
+      "tag": "unit:20_jak_rif",
+      "confidence": 0.9,
+      "reasoning": "direct mention: '20 jak rif ke item shadilapur trasit camp main rak'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0056",
+      "idx": 55,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/3/26, 14:36",
+      "body_preview": "20 jak rif ke item shadilapur trasit camp main rakh diyaa",
+      "tag": "unit:20_jak_rif",
+      "confidence": 0.9,
+      "reasoning": "direct mention: '20 jak rif ke item shadilapur trasit camp main rak'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0057",
+      "idx": 56,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/3/26, 14:36",
+      "body_preview": "baat karwa diya?",
+      "tag": "unit:20_jak_rif",
+      "confidence": 0.4,
+      "reasoning": "nearby message context from msg 54"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0058",
+      "idx": 57,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/3/26, 14:45",
+      "body_preview": "Haan ji sir",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0059",
+      "idx": 58,
+      "sender": "Mousumi Banik New Staff",
+      "timestamp_raw": "3/3/26, 16:16",
+      "body_preview": "Ink Tank Printer mfc t4500dw @ 45590.00+18% eXTRA\nFrom ariha",
+      "tag": "supplier:arihant",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'Ink Tank Printer mfc t4500dw @ 45590.00+18% eXTRA\n'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0060",
+      "idx": 59,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/5/26, 12:43",
+      "body_preview": "location: https://maps.google.com/?q=26.1981768,91.7029115",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0061",
+      "idx": 60,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/5/26, 12:43",
+      "body_preview": "mukesh ji mata dimand:\n6200869553；",
+      "tag": "entity:mukesh_ji",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'mukesh ji mata dimand:\n6200869553；'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0062",
+      "idx": 61,
+      "sender": "Mousumi Banik New Staff",
+      "timestamp_raw": "3/5/26, 13:13",
+      "body_preview": "240ltrs @2700/-+18%\nFreight charges extra",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0063",
+      "idx": 62,
+      "sender": "Mousumi Banik New Staff",
+      "timestamp_raw": "3/5/26, 13:13",
+      "body_preview": "dustbin rate \nfrom nilkamal 👆",
+      "tag": "supplier:nilkamal",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'dustbin rate \nfrom nilkamal 👆'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0064",
+      "idx": 63,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/5/26, 14:01",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0065",
+      "idx": 64,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/5/26, 14:04",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0066",
+      "idx": 65,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/5/26, 14:04",
+      "body_preview": "1200",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0067",
+      "idx": 66,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/5/26, 14:10",
+      "body_preview": "Money Sent ✅\nPaytm has improved so much lately! Also, they h",
+      "tag": "singleton:payment",
+      "confidence": 0.5,
+      "reasoning": "payment related"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0068",
+      "idx": 67,
+      "sender": "Mousumi Banik New Staff",
+      "timestamp_raw": "3/5/26, 14:48",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0069",
+      "idx": 68,
+      "sender": "Mousumi Banik New Staff",
+      "timestamp_raw": "3/5/26, 14:49",
+      "body_preview": "vu rahman",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0070",
+      "idx": 69,
+      "sender": "Mousumi Banik New Staff",
+      "timestamp_raw": "3/5/26, 14:49",
+      "body_preview": "500/- auto fair",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0071",
+      "idx": 70,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/5/26, 15:05",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0072",
+      "idx": 71,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/5/26, 15:17",
+      "body_preview": "107 bde item's delivered",
+      "tag": "unit:107_bde",
+      "confidence": 0.9,
+      "reasoning": "direct mention: '107 bde item's delivered'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0073",
+      "idx": 72,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/5/26, 15:17",
+      "body_preview": "107 bde item's delivered",
+      "tag": "unit:107_bde",
+      "confidence": 0.9,
+      "reasoning": "direct mention: '107 bde item's delivered'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0074",
+      "idx": 73,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/5/26, 15:20",
+      "body_preview": "01 stand",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0075",
+      "idx": 74,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/5/26, 15:20",
+      "body_preview": "02 clocks also ?",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0076",
+      "idx": 75,
+      "sender": "Mousumi Banik New Staff",
+      "timestamp_raw": "3/5/26, 16:51",
+      "body_preview": ".",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0077",
+      "idx": 76,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/5/26, 16:54",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0078",
+      "idx": 77,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/5/26, 16:55",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0079",
+      "idx": 78,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/5/26, 16:56",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0080",
+      "idx": 79,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/5/26, 17:00",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0081",
+      "idx": 80,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/5/26, 17:00",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0082",
+      "idx": 81,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/5/26, 17:00",
+      "body_preview": "Csd canteen rangia",
+      "tag": "singleton:csd_canteen",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'Csd canteen rangia'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0083",
+      "idx": 82,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/5/26, 17:29",
+      "body_preview": "Empty bottle - 03 nos",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0084",
+      "idx": 83,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/5/26, 17:30",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0085",
+      "idx": 84,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/5/26, 17:30",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0086",
+      "idx": 85,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/5/26, 17:36",
+      "body_preview": "Money Sent ✅\nPaytm has improved so much lately! Also, they h",
+      "tag": "singleton:payment",
+      "confidence": 0.5,
+      "reasoning": "payment related"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0087",
+      "idx": 86,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/5/26, 19:44",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0088",
+      "idx": 87,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/5/26, 19:44",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0089",
+      "idx": 88,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/5/26, 19:44",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0090",
+      "idx": 89,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/5/26, 19:45",
+      "body_preview": "ok send to cda please have it confirmed",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0091",
+      "idx": 90,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/5/26, 20:25",
+      "body_preview": "1)Water dispenser \n2) OTG big type ka requirement hai mam\n3)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0092",
+      "idx": 91,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/5/26, 20:25",
+      "body_preview": "Is type ka mam",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0093",
+      "idx": 92,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/5/26, 20:25",
+      "body_preview": "do home work",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0094",
+      "idx": 93,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/5/26, 20:26",
+      "body_preview": "dy goc maadam",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0095",
+      "idx": 94,
+      "sender": "Jio Dad",
+      "timestamp_raw": "3/6/26, 10:24",
+      "body_preview": "155357",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0096",
+      "idx": 95,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/6/26, 11:39",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0097",
+      "idx": 96,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/6/26, 11:39",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0098",
+      "idx": 97,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/6/26, 11:39",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0099",
+      "idx": 98,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/6/26, 11:39",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0100",
+      "idx": 99,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/6/26, 11:39",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0101",
+      "idx": 100,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/6/26, 12:00",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0102",
+      "idx": 101,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/6/26, 12:00",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0103",
+      "idx": 102,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/6/26, 12:01",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0104",
+      "idx": 103,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/6/26, 17:59",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0105",
+      "idx": 104,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/7/26, 11:45",
+      "body_preview": "Arty bde item's delivered",
+      "tag": "unit:arty_bde",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'Arty bde item's delivered'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0106",
+      "idx": 105,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/7/26, 11:45",
+      "body_preview": "Arty bde item's delivered",
+      "tag": "unit:arty_bde",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'Arty bde item's delivered'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0107",
+      "idx": 106,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/7/26, 13:59",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0108",
+      "idx": 107,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/7/26, 13:59",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0109",
+      "idx": 108,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/7/26, 13:59",
+      "body_preview": "Good afternoon sir \nSuprabin SB6 ka please confirm",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0110",
+      "idx": 109,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/7/26, 17:59",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0111",
+      "idx": 110,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/7/26, 17:59",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0112",
+      "idx": 111,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/7/26, 17:59",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0113",
+      "idx": 112,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/7/26, 17:59",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0114",
+      "idx": 113,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/7/26, 18:06",
+      "body_preview": "+917439407254",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0115",
+      "idx": 114,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/7/26, 18:34",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0116",
+      "idx": 115,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/9/26, 11:44",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0117",
+      "idx": 116,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/9/26, 11:44",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0118",
+      "idx": 117,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/9/26, 12:54",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0119",
+      "idx": 118,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 13:00",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0120",
+      "idx": 119,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 13:00",
+      "body_preview": "To\nSaikia Electronics\nRs 3200/-\n09-03-2026",
+      "tag": "supplier:saikia_electronic",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'To\nSaikia Electronics\nRs 3200/-\n09-03-2026'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0121",
+      "idx": 120,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/9/26, 13:00",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0122",
+      "idx": 121,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/9/26, 13:00",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0123",
+      "idx": 122,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/9/26, 13:00",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0124",
+      "idx": 123,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/9/26, 13:00",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0125",
+      "idx": 124,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/9/26, 13:01",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0126",
+      "idx": 125,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 13:05",
+      "body_preview": "nahi lena nahi hai '",
+      "tag": "supplier:saikia_electronic",
+      "confidence": 0.6,
+      "reasoning": "sender continuity (300s gap)"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0127",
+      "idx": 126,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 13:06",
+      "body_preview": "thanks pic shared with client no approved yet",
+      "tag": "supplier:saikia_electronic",
+      "confidence": 0.6,
+      "reasoning": "sender continuity (60s gap)"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0128",
+      "idx": 127,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 13:06",
+      "body_preview": "pata karo apna food warmer aaya kya",
+      "tag": "supplier:saikia_electronic",
+      "confidence": 0.6,
+      "reasoning": "sender continuity (0s gap)"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0129",
+      "idx": 128,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 13:06",
+      "body_preview": "?",
+      "tag": "supplier:saikia_electronic",
+      "confidence": 0.6,
+      "reasoning": "sender continuity (0s gap)"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0130",
+      "idx": 129,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 13:06",
+      "body_preview": "oswal mai",
+      "tag": "supplier:saikia_electronic",
+      "confidence": 0.6,
+      "reasoning": "sender continuity (0s gap)"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0131",
+      "idx": 130,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/9/26, 13:09",
+      "body_preview": "Nahi aaya sir.",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0132",
+      "idx": 131,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 13:18",
+      "body_preview": "kab milega ?",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0133",
+      "idx": 132,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/9/26, 13:20",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0134",
+      "idx": 133,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/9/26, 13:20",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0135",
+      "idx": 134,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/9/26, 13:20",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0136",
+      "idx": 135,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/9/26, 13:25",
+      "body_preview": "Transport main hain jab aayega bhai bata dega.",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0137",
+      "idx": 136,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/9/26, 13:25",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0138",
+      "idx": 137,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/9/26, 13:26",
+      "body_preview": "Ukg 5 pkt x 5 pcs = 25",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0139",
+      "idx": 138,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 13:26",
+      "body_preview": "carton rak lo",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0140",
+      "idx": 139,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 13:26",
+      "body_preview": "only sets send karwa do",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0141",
+      "idx": 140,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 13:26",
+      "body_preview": "carton apne kaam aayega",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0142",
+      "idx": 141,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/9/26, 13:27",
+      "body_preview": "Ok bhaiya",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0143",
+      "idx": 142,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/9/26, 13:30",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0144",
+      "idx": 143,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/9/26, 13:30",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0145",
+      "idx": 144,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/9/26, 13:30",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0146",
+      "idx": 145,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 13:31",
+      "body_preview": "koi design mai hoga",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0147",
+      "idx": 146,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 13:31",
+      "body_preview": "pura plain nahi",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0148",
+      "idx": 147,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 13:31",
+      "body_preview": "thoda design mai",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0149",
+      "idx": 148,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 13:34",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0150",
+      "idx": 149,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 13:34",
+      "body_preview": "aisa milega 03 nos ?",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0151",
+      "idx": 150,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/9/26, 13:34",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0152",
+      "idx": 151,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/9/26, 13:34",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0153",
+      "idx": 152,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/9/26, 13:34",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0154",
+      "idx": 153,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/9/26, 13:34",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0155",
+      "idx": 154,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 13:35",
+      "body_preview": "inka cost approx ?",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0156",
+      "idx": 155,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/9/26, 13:37",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0157",
+      "idx": 156,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/9/26, 13:37",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0158",
+      "idx": 157,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/9/26, 13:37",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0159",
+      "idx": 158,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/9/26, 13:37",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0160",
+      "idx": 159,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/9/26, 13:39",
+      "body_preview": "750cost",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0161",
+      "idx": 160,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/9/26, 13:40",
+      "body_preview": "Cost 250",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0162",
+      "idx": 161,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 13:52",
+      "body_preview": "Sameer Driver First Step\n+91 93656 67415",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0163",
+      "idx": 162,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/9/26, 16:54",
+      "body_preview": "3545/-",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0164",
+      "idx": 163,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/9/26, 16:54",
+      "body_preview": "3545/-",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0165",
+      "idx": 164,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 17:01",
+      "body_preview": "paid",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0166",
+      "idx": 165,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 17:02",
+      "body_preview": "Money Sent ✅\nPaytm has improved so much lately! Also, they h",
+      "tag": "singleton:payment",
+      "confidence": 0.5,
+      "reasoning": "payment related"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0167",
+      "idx": 166,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 18:04",
+      "body_preview": "RoboTouch Echo Pro Zero Gravity Full Body Electric Massage C",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0168",
+      "idx": 167,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/9/26, 18:08",
+      "body_preview": "....",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0169",
+      "idx": 168,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/9/26, 18:24",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0170",
+      "idx": 169,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/9/26, 18:24",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0171",
+      "idx": 170,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/9/26, 18:33",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0172",
+      "idx": 171,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 20:35",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0173",
+      "idx": 172,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 20:36",
+      "body_preview": "please share with canteen div",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0174",
+      "idx": 173,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/9/26, 20:36",
+      "body_preview": "@⁨Sammsul Haque Staff⁩ \n@⁨Abhisha New Staff Jun 24 (UE )⁩",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0175",
+      "idx": 174,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/9/26, 20:36",
+      "body_preview": "Ok sir.",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0176",
+      "idx": 175,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/10/26, 11:19",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0177",
+      "idx": 176,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/10/26, 11:19",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0178",
+      "idx": 177,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/10/26, 11:46",
+      "body_preview": "S Kumar 21 Bihar\n+91 97943 80615",
+      "tag": "unit:21_bihar",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'S Kumar 21 Bihar\n+91 97943 80615'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0179",
+      "idx": 178,
+      "sender": "Mousumi Banik New Staff",
+      "timestamp_raw": "3/10/26, 12:57",
+      "body_preview": "1100+18%  uv.  Each",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0180",
+      "idx": 179,
+      "sender": "Mousumi Banik New Staff",
+      "timestamp_raw": "3/10/26, 12:57",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0181",
+      "idx": 180,
+      "sender": "Mousumi Banik New Staff",
+      "timestamp_raw": "3/10/26, 12:57",
+      "body_preview": "Take. 3days",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0182",
+      "idx": 181,
+      "sender": "Mousumi Banik New Staff",
+      "timestamp_raw": "3/10/26, 12:57",
+      "body_preview": "from ulubari printer zone <This message was edited>",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0183",
+      "idx": 182,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/10/26, 13:44",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0184",
+      "idx": 183,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/10/26, 13:44",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0185",
+      "idx": 184,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/10/26, 13:44",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0186",
+      "idx": 185,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/10/26, 14:03",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0187",
+      "idx": 186,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/10/26, 14:03",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0188",
+      "idx": 187,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/10/26, 14:26",
+      "body_preview": "9596962420",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0189",
+      "idx": 188,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/10/26, 15:03",
+      "body_preview": "Ansar Ali Tempo Adabari.vcf (file attached)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0190",
+      "idx": 189,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/10/26, 15:03",
+      "body_preview": "1000/-",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0191",
+      "idx": 190,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/10/26, 15:04",
+      "body_preview": "Ha",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0192",
+      "idx": 191,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/10/26, 15:05",
+      "body_preview": "Hey, I sent ₹1000.00 to Md Anchar Ali using paytm.",
+      "tag": "singleton:payment",
+      "confidence": 0.5,
+      "reasoning": "payment related"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0193",
+      "idx": 192,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/10/26, 15:38",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0194",
+      "idx": 193,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/10/26, 15:38",
+      "body_preview": "4+2",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0195",
+      "idx": 194,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/10/26, 15:38",
+      "body_preview": "blue wala intra hai yeh ?",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0196",
+      "idx": 195,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/10/26, 15:39",
+      "body_preview": "yes perfect",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0197",
+      "idx": 196,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/10/26, 15:39",
+      "body_preview": "Ok sir.",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0198",
+      "idx": 197,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/10/26, 15:39",
+      "body_preview": "table le liya ?",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0199",
+      "idx": 198,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/10/26, 15:40",
+      "body_preview": "Han",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0200",
+      "idx": 199,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/10/26, 15:41",
+      "body_preview": "2 table from modren  living",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0201",
+      "idx": 200,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/11/26, 11:49",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0202",
+      "idx": 201,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/11/26, 11:49",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0203",
+      "idx": 202,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/11/26, 13:00",
+      "body_preview": "This message was deleted",
+      "tag": "noise:deleted",
+      "confidence": 1.0,
+      "reasoning": "deleted message"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0204",
+      "idx": 203,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/11/26, 13:22",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0205",
+      "idx": 204,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/11/26, 13:23",
+      "body_preview": "visitor book collect hua",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0206",
+      "idx": 205,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/11/26, 13:29",
+      "body_preview": "Scan this to pay through PhonePe",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0207",
+      "idx": 206,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/11/26, 13:29",
+      "body_preview": "Das da \n2000/-",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0208",
+      "idx": 207,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/11/26, 13:38",
+      "body_preview": "Money Sent ✅\nPaytm has improved so much lately! Also, they h",
+      "tag": "singleton:payment",
+      "confidence": 0.5,
+      "reasoning": "payment related"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0209",
+      "idx": 208,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/11/26, 13:38",
+      "body_preview": "paid 2000/- das auto",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0210",
+      "idx": 209,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/11/26, 13:46",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0211",
+      "idx": 210,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/11/26, 13:46",
+      "body_preview": "4 ton -4800 plus gst",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0212",
+      "idx": 211,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/11/26, 13:46",
+      "body_preview": "Classic make",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0213",
+      "idx": 212,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/11/26, 13:47",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0214",
+      "idx": 213,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/11/26, 13:47",
+      "body_preview": "8500+ gst",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0215",
+      "idx": 214,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/11/26, 13:47",
+      "body_preview": "unique make",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0216",
+      "idx": 215,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/11/26, 13:47",
+      "body_preview": "From Assam Motor",
+      "tag": "supplier:assam_motor",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'From Assam Motor'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0217",
+      "idx": 216,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/11/26, 13:48",
+      "body_preview": "ask for aa pic of the grease wala",
+      "tag": "supplier:assam_motor",
+      "confidence": 0.4,
+      "reasoning": "nearby message context from msg 215"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0218",
+      "idx": 217,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/11/26, 16:44",
+      "body_preview": "This message was deleted",
+      "tag": "noise:deleted",
+      "confidence": 1.0,
+      "reasoning": "deleted message"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0219",
+      "idx": 218,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/11/26, 18:02",
+      "body_preview": "....",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0220",
+      "idx": 219,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/11/26, 18:02",
+      "body_preview": "...",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0221",
+      "idx": 220,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/12/26, 12:08",
+      "body_preview": "Order for apollo excel care hospital tomorrow requirs 13/03/",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0222",
+      "idx": 221,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/12/26, 12:40",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0223",
+      "idx": 222,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/12/26, 12:40",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0224",
+      "idx": 223,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/12/26, 12:41",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0225",
+      "idx": 224,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/12/26, 12:41",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0226",
+      "idx": 225,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/12/26, 12:41",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0227",
+      "idx": 226,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/12/26, 13:27",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0228",
+      "idx": 227,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/12/26, 15:09",
+      "body_preview": "857 Fd wk sp\nNeed  \n1. Sanitary Diary - 01 nos (Format sir w",
+      "tag": "unit:857_fd_wk_sp",
+      "confidence": 0.9,
+      "reasoning": "direct mention: '857 Fd wk sp\nNeed  \n1. Sanitary Diary - 01 nos (Fo'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0229",
+      "idx": 228,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/12/26, 15:27",
+      "body_preview": "sanmati ka curtain hold",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0230",
+      "idx": 229,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/12/26, 15:27",
+      "body_preview": "dont go there",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0231",
+      "idx": 230,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/12/26, 15:28",
+      "body_preview": "@⁨Sammsul Haque Staff⁩",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0232",
+      "idx": 231,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/12/26, 15:51",
+      "body_preview": "Ok sir",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0233",
+      "idx": 232,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/12/26, 15:52",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0234",
+      "idx": 233,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/12/26, 15:52",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0235",
+      "idx": 234,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/12/26, 15:52",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0236",
+      "idx": 235,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/12/26, 15:55",
+      "body_preview": "Gloves 2 pair",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0237",
+      "idx": 236,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/12/26, 15:55",
+      "body_preview": "900/-",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0238",
+      "idx": 237,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/12/26, 16:18",
+      "body_preview": "Money Sent ✅\nPaytm has improved so much lately! Also, they h",
+      "tag": "singleton:payment",
+      "confidence": 0.5,
+      "reasoning": "payment related"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0239",
+      "idx": 238,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/12/26, 17:38",
+      "body_preview": "Tomorrow 's delivery",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0240",
+      "idx": 239,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/12/26, 17:38",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0241",
+      "idx": 240,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/13/26, 10:46",
+      "body_preview": "For PTM 16/03/26 \n*Need disposible glass 50 no.\n*Tea glass 3",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0242",
+      "idx": 241,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/13/26, 10:46",
+      "body_preview": "For School First step",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0243",
+      "idx": 242,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/13/26, 12:15",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0244",
+      "idx": 243,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/13/26, 13:20",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0245",
+      "idx": 244,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/13/26, 13:20",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0246",
+      "idx": 245,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/13/26, 13:55",
+      "body_preview": "Transport charges to be around 4000-4500/pc",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0247",
+      "idx": 246,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/13/26, 13:55",
+      "body_preview": "SARNA HEAVY DUTY COPPER COOLER WITH SS GRILL BOTH SIDES.pdf",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0248",
+      "idx": 247,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/13/26, 13:55",
+      "body_preview": "16500 plus gst \nCopper motor\n30 inches blade size\nBody size ",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0249",
+      "idx": 248,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/13/26, 13:55",
+      "body_preview": "Brand Coldwave",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0250",
+      "idx": 249,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/13/26, 13:55",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0251",
+      "idx": 250,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/13/26, 14:02",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0252",
+      "idx": 251,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/13/26, 14:02",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0253",
+      "idx": 252,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/13/26, 14:02",
+      "body_preview": "10600/-",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0254",
+      "idx": 253,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/13/26, 14:02",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0255",
+      "idx": 254,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/13/26, 14:03",
+      "body_preview": "Cost- 10600/-\nFrom Bajaj United MArketing",
+      "tag": "supplier:bajaj",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'Cost- 10600/-\nFrom Bajaj United MArketing'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0256",
+      "idx": 255,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/13/26, 14:53",
+      "body_preview": "......",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0257",
+      "idx": 256,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/13/26, 15:16",
+      "body_preview": "Baishya Steel Narmohan Da\n+91 863 849 0032",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0258",
+      "idx": 257,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/13/26, 16:08",
+      "body_preview": "please come to table",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0259",
+      "idx": 258,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/13/26, 16:08",
+      "body_preview": "all",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0260",
+      "idx": 259,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/13/26, 17:52",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0261",
+      "idx": 260,
+      "sender": "Jio Dad",
+      "timestamp_raw": "3/13/26, 18:17",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0262",
+      "idx": 261,
+      "sender": "Jio Dad",
+      "timestamp_raw": "3/13/26, 18:17",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0263",
+      "idx": 262,
+      "sender": "Jio Dad",
+      "timestamp_raw": "3/13/26, 18:24",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0264",
+      "idx": 263,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/13/26, 18:27",
+      "body_preview": "https://mkp.gem.gov.in/pid-controller/profile-pid-controolle",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0265",
+      "idx": 264,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/13/26, 18:28",
+      "body_preview": "https://mkp.gem.gov.in/dc-winch-motor/x450/p-5116877-5679387",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0266",
+      "idx": 265,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/13/26, 19:30",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0267",
+      "idx": 266,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/13/26, 19:33",
+      "body_preview": "RAHUL HAS GONE TO GODOWN TO COLLECT THE PLANTER",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0268",
+      "idx": 267,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/13/26, 19:34",
+      "body_preview": "@⁨Mrs Samita Roy Staff Enquiry⁩ \nPLEASE COORDINATE WITH HIM",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0269",
+      "idx": 268,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/13/26, 19:34",
+      "body_preview": "THANKS",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0270",
+      "idx": 269,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/13/26, 19:46",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0271",
+      "idx": 270,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/13/26, 19:46",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0272",
+      "idx": 271,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/13/26, 19:47",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0273",
+      "idx": 272,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/13/26, 19:47",
+      "body_preview": "size match ho gaya na",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0274",
+      "idx": 273,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/13/26, 19:47",
+      "body_preview": "perfect",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0275",
+      "idx": 274,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/13/26, 19:47",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0276",
+      "idx": 275,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/13/26, 19:47",
+      "body_preview": "ab ek total ka pic de do bas",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0277",
+      "idx": 276,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/13/26, 19:50",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0278",
+      "idx": 277,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/13/26, 19:50",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0279",
+      "idx": 278,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/13/26, 19:56",
+      "body_preview": "thanks",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0280",
+      "idx": 279,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/13/26, 20:41",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0281",
+      "idx": 280,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/13/26, 20:41",
+      "body_preview": "air chef bill but items to be sent when prev all dues are cl",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0282",
+      "idx": 281,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/13/26, 21:08",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0283",
+      "idx": 282,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/13/26, 21:08",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0284",
+      "idx": 283,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/14/26, 10:32",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0285",
+      "idx": 284,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/14/26, 10:39",
+      "body_preview": "PTT-20260314-WA0008.opus (file attached)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0286",
+      "idx": 285,
+      "sender": "Mousumi Banik New Staff",
+      "timestamp_raw": "3/14/26, 10:41",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0287",
+      "idx": 286,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/14/26, 10:46",
+      "body_preview": "Pink can't be given",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0288",
+      "idx": 287,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/14/26, 10:46",
+      "body_preview": "PTT-20260314-WA0010.opus (file attached)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0289",
+      "idx": 288,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/14/26, 11:09",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0290",
+      "idx": 289,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/14/26, 11:09",
+      "body_preview": "MRP 10",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0291",
+      "idx": 290,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/14/26, 11:10",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0292",
+      "idx": 291,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/14/26, 11:10",
+      "body_preview": "MRP 20",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0293",
+      "idx": 292,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/14/26, 12:28",
+      "body_preview": "This message was deleted",
+      "tag": "noise:deleted",
+      "confidence": 1.0,
+      "reasoning": "deleted message"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0294",
+      "idx": 293,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/14/26, 12:31",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0295",
+      "idx": 294,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/14/26, 12:36",
+      "body_preview": "Faber castel",
+      "tag": "supplier:faber_castel",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'Faber castel'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0296",
+      "idx": 295,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/14/26, 12:37",
+      "body_preview": "Ya 621 Kishan sir se confirm kijiye",
+      "tag": "supplier:faber_castel",
+      "confidence": 0.6,
+      "reasoning": "sender continuity (60s gap)"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0297",
+      "idx": 296,
+      "sender": "Mousumi Banik New Staff",
+      "timestamp_raw": "3/14/26, 12:38",
+      "body_preview": "Faber castel not available  from sanju da",
+      "tag": "supplier:faber_castel",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'Faber castel not available  from sanju da'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0298",
+      "idx": 297,
+      "sender": "Mousumi Banik New Staff",
+      "timestamp_raw": "3/14/26, 12:40",
+      "body_preview": "lokumal k pass v nahi ha",
+      "tag": "supplier:faber_castel",
+      "confidence": 0.6,
+      "reasoning": "sender continuity (120s gap)"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0299",
+      "idx": 298,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/14/26, 12:41",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0300",
+      "idx": 299,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/14/26, 14:14",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0301",
+      "idx": 300,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/14/26, 14:31",
+      "body_preview": "621 eme",
+      "tag": "unit:621_eme",
+      "confidence": 0.9,
+      "reasoning": "direct mention: '621 eme'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0302",
+      "idx": 301,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/14/26, 14:31",
+      "body_preview": "621 eme",
+      "tag": "unit:621_eme",
+      "confidence": 0.9,
+      "reasoning": "direct mention: '621 eme'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0303",
+      "idx": 302,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/14/26, 16:57",
+      "body_preview": "Surge protector",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0304",
+      "idx": 303,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/14/26, 17:00",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0305",
+      "idx": 304,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/14/26, 17:14",
+      "body_preview": "New Nitu Furniture Dhiren Mandal.vcf (file attached)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0306",
+      "idx": 305,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/14/26, 18:12",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0307",
+      "idx": 306,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/14/26, 18:12",
+      "body_preview": "22500 +gst",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0308",
+      "idx": 307,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/14/26, 18:12",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0309",
+      "idx": 308,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/14/26, 18:12",
+      "body_preview": "21800+gst",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0310",
+      "idx": 309,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/14/26, 18:12",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0311",
+      "idx": 310,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/14/26, 18:12",
+      "body_preview": "9900+gst",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0312",
+      "idx": 311,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/14/26, 18:13",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0313",
+      "idx": 312,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/14/26, 18:13",
+      "body_preview": "22000+gst",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0314",
+      "idx": 313,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/14/26, 18:13",
+      "body_preview": "From Nitu Nitu Furniture Jalukbari",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0315",
+      "idx": 314,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/14/26, 18:55",
+      "body_preview": "2400",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0316",
+      "idx": 315,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/14/26, 18:55",
+      "body_preview": "4600",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0317",
+      "idx": 316,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/14/26, 18:56",
+      "body_preview": "2400/-",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0318",
+      "idx": 317,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/14/26, 18:56",
+      "body_preview": "4600/-",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0319",
+      "idx": 318,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/14/26, 18:56",
+      "body_preview": "Surge Protector\nFrom biswanath",
+      "tag": "supplier:biswanath",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'Surge Protector\nFrom biswanath'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0320",
+      "idx": 319,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/15/26, 22:24",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0321",
+      "idx": 320,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/15/26, 22:24",
+      "body_preview": "@⁨Pramod Babu⁩ \nplease keep a track when is it coming",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0322",
+      "idx": 321,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/16/26, 10:18",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0323",
+      "idx": 322,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/16/26, 10:18",
+      "body_preview": "another builty",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0324",
+      "idx": 323,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/16/26, 11:14",
+      "body_preview": "Ok bhaiya dono check karte hai",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0325",
+      "idx": 324,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/16/26, 12:03",
+      "body_preview": "264 FD wk sp item delivered",
+      "tag": "unit:264_fd_wk_sp",
+      "confidence": 0.9,
+      "reasoning": "direct mention: '264 FD wk sp item delivered'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0326",
+      "idx": 325,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/16/26, 12:03",
+      "body_preview": "264 FD wk sp item delivered",
+      "tag": "unit:264_fd_wk_sp",
+      "confidence": 0.9,
+      "reasoning": "direct mention: '264 FD wk sp item delivered'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0327",
+      "idx": 326,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/16/26, 12:30",
+      "body_preview": "8135982346",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0328",
+      "idx": 327,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/16/26, 12:35",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0329",
+      "idx": 328,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/16/26, 12:35",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0330",
+      "idx": 329,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/16/26, 12:35",
+      "body_preview": "Otp",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0331",
+      "idx": 330,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/16/26, 12:35",
+      "body_preview": "01 pkt",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0332",
+      "idx": 331,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/16/26, 12:39",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0333",
+      "idx": 332,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/16/26, 12:40",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0334",
+      "idx": 333,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/16/26, 12:40",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0335",
+      "idx": 334,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/16/26, 12:41",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0336",
+      "idx": 335,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/16/26, 13:10",
+      "body_preview": "Nhi aaya",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0337",
+      "idx": 336,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/16/26, 13:10",
+      "body_preview": "Ye nhi pahusa",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0338",
+      "idx": 337,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/16/26, 14:44",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0339",
+      "idx": 338,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/16/26, 14:44",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0340",
+      "idx": 339,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/16/26, 17:00",
+      "body_preview": ".....",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0341",
+      "idx": 340,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/16/26, 17:00",
+      "body_preview": "..",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0342",
+      "idx": 341,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/16/26, 17:45",
+      "body_preview": "31 pocket available",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0343",
+      "idx": 342,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/16/26, 17:45",
+      "body_preview": "https://solo.in/products/expanding-case-31-pocket-ex904?_pos",
+      "tag": "supplier:solo",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'https://solo.in/products/expanding-case-31-pocket-'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0344",
+      "idx": 343,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/16/26, 17:45",
+      "body_preview": "https://solo.in/products/expanding-case-31-pocket-ex904?_pos",
+      "tag": "supplier:solo",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'https://solo.in/products/expanding-case-31-pocket-'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0345",
+      "idx": 344,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/16/26, 17:45",
+      "body_preview": "From Solo",
+      "tag": "supplier:solo",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'From Solo'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0346",
+      "idx": 345,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/16/26, 19:34",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0347",
+      "idx": 346,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/16/26, 19:34",
+      "body_preview": "@⁨Pramod Babu⁩",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0348",
+      "idx": 347,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/16/26, 19:34",
+      "body_preview": "ek aur builty",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0349",
+      "idx": 348,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/17/26, 15:59",
+      "body_preview": "Sir...",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0350",
+      "idx": 349,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/17/26, 18:08",
+      "body_preview": "Pressure roller 01\nTefllon sleeve 01\nModel HP1020",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0351",
+      "idx": 350,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/17/26, 18:08",
+      "body_preview": "For 857 Fd wk sp (TSS)",
+      "tag": "unit:857_fd_wk_sp",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'For 857 Fd wk sp (TSS)'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0352",
+      "idx": 351,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/17/26, 20:27",
+      "body_preview": "Sir Kokrajhar table installation will be done on Thursday as",
+      "tag": "supplier:modren_living",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'Sir Kokrajhar table installation will be done on T'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0353",
+      "idx": 352,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/17/26, 20:27",
+      "body_preview": "Name & contact number he will share tomorrow",
+      "tag": "supplier:modren_living",
+      "confidence": 0.6,
+      "reasoning": "sender continuity (0s gap)"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0354",
+      "idx": 353,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/18/26, 11:37",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0355",
+      "idx": 354,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/18/26, 11:37",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0356",
+      "idx": 355,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/18/26, 13:39",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0357",
+      "idx": 356,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/18/26, 14:46",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0358",
+      "idx": 357,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/18/26, 14:46",
+      "body_preview": "From 107 bde",
+      "tag": "unit:107_bde",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'From 107 bde'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0359",
+      "idx": 358,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/18/26, 14:49",
+      "body_preview": "same hai",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0360",
+      "idx": 359,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/18/26, 14:49",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0361",
+      "idx": 360,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/18/26, 14:49",
+      "body_preview": "2085/-",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0362",
+      "idx": 361,
+      "sender": "Abhisha New Staff Jun 24 ",
+      "timestamp_raw": "3/18/26, 14:50",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0363",
+      "idx": 362,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/18/26, 15:57",
+      "body_preview": "Return from Arty bde",
+      "tag": "unit:arty_bde",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'Return from Arty bde'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0364",
+      "idx": 363,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/18/26, 16:34",
+      "body_preview": "ok",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0365",
+      "idx": 364,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/18/26, 17:15",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0366",
+      "idx": 365,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/18/26, 17:15",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0367",
+      "idx": 366,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/18/26, 17:15",
+      "body_preview": "Size 21\"Inch × 22\" Inch",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0368",
+      "idx": 367,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/18/26, 17:15",
+      "body_preview": "25 pic",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0369",
+      "idx": 368,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/18/26, 18:21",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0370",
+      "idx": 369,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/18/26, 18:24",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0371",
+      "idx": 370,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/18/26, 18:29",
+      "body_preview": "Hav Wagh balu \n21 Mountain Division Rangiya \n'A' mess\nMob No",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0372",
+      "idx": 371,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/18/26, 18:29",
+      "body_preview": "+91 86007 73019",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0373",
+      "idx": 372,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/19/26, 12:25",
+      "body_preview": "VGR V-654 Professional Salon Quality Hair Clipper For Men | ",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0374",
+      "idx": 373,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/19/26, 12:25",
+      "body_preview": "VGR Rosso Professional Men's Beard & Moustache Hair Trimmer ",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0375",
+      "idx": 374,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/19/26, 12:25",
+      "body_preview": "Sir iss dono items ka amazon procurement karna nai aur ek li",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0376",
+      "idx": 375,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/19/26, 12:30",
+      "body_preview": "OPR Stainless Steel Plain Pedal Bin With Plastic Bucket And ",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0377",
+      "idx": 376,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/19/26, 12:30",
+      "body_preview": "Dustbin for 857",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0378",
+      "idx": 377,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/19/26, 14:13",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0379",
+      "idx": 378,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/19/26, 14:14",
+      "body_preview": "No 10    not mm\nKg 120/-\nAppx one round 1.5 mtr",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0380",
+      "idx": 379,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/19/26, 14:15",
+      "body_preview": "From glass shop",
+      "tag": "supplier:glass_shop",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'From glass shop'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0381",
+      "idx": 380,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/19/26, 14:18",
+      "body_preview": "01 kg = kitna mtr ?",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0382",
+      "idx": 381,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/19/26, 14:18",
+      "body_preview": "approx",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0383",
+      "idx": 382,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/19/26, 14:20",
+      "body_preview": "No idea",
+      "tag": "supplier:glass_shop",
+      "confidence": 0.6,
+      "reasoning": "sender continuity (300s gap)"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0384",
+      "idx": 383,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/19/26, 14:21",
+      "body_preview": "hahaha",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0385",
+      "idx": 384,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/19/26, 14:39",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0386",
+      "idx": 385,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/19/26, 16:13",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0387",
+      "idx": 386,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/19/26, 16:13",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0388",
+      "idx": 387,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/19/26, 16:13",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0389",
+      "idx": 388,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/19/26, 16:13",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0390",
+      "idx": 389,
+      "sender": "Sammsul Haque Staff",
+      "timestamp_raw": "3/19/26, 16:13",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0391",
+      "idx": 390,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/19/26, 16:59",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0392",
+      "idx": 391,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/19/26, 16:59",
+      "body_preview": "680 rice",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0393",
+      "idx": 392,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/19/26, 17:02",
+      "body_preview": "Money Sent ✅\nPaytm has improved so much recently! Seen their",
+      "tag": "singleton:payment",
+      "confidence": 0.5,
+      "reasoning": "payment related"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0394",
+      "idx": 393,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/19/26, 17:46",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0395",
+      "idx": 394,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/20/26, 11:58",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0396",
+      "idx": 395,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/20/26, 13:20",
+      "body_preview": "kuber techno craft\n+91 88110 89162",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0397",
+      "idx": 396,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/20/26, 13:20",
+      "body_preview": "9435105516",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0398",
+      "idx": 397,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/20/26, 13:26",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0399",
+      "idx": 398,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/20/26, 13:27",
+      "body_preview": "inka number le ke aaana for the manger",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0400",
+      "idx": 399,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/20/26, 13:34",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0401",
+      "idx": 400,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/20/26, 16:01",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0402",
+      "idx": 401,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/20/26, 16:04",
+      "body_preview": "+91 95572 61729",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0403",
+      "idx": 402,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/20/26, 16:51",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0404",
+      "idx": 403,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/20/26, 16:52",
+      "body_preview": "From Saikia electronic",
+      "tag": "supplier:saikia_electronic",
+      "confidence": 0.9,
+      "reasoning": "direct mention: 'From Saikia electronic'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0405",
+      "idx": 404,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/21/26, 11:08",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0406",
+      "idx": 405,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/21/26, 11:08",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0407",
+      "idx": 406,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/21/26, 11:08",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0408",
+      "idx": 407,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/21/26, 11:18",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0409",
+      "idx": 408,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/21/26, 11:18",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0410",
+      "idx": 409,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/21/26, 11:19",
+      "body_preview": "120",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0411",
+      "idx": 410,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/21/26, 11:19",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0412",
+      "idx": 411,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/21/26, 11:20",
+      "body_preview": "01 nos ya 02 nos liya ?",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0413",
+      "idx": 412,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/21/26, 11:20",
+      "body_preview": "02 nos@60/ per",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0414",
+      "idx": 413,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/21/26, 11:21",
+      "body_preview": "Money Sent ✅\nPaytm has improved so much recently! Seen their",
+      "tag": "singleton:payment",
+      "confidence": 0.5,
+      "reasoning": "payment related"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0415",
+      "idx": 414,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/21/26, 11:53",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0416",
+      "idx": 415,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/21/26, 11:53",
+      "body_preview": "eid mubarak aap sabko",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0417",
+      "idx": 416,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/23/26, 14:28",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0418",
+      "idx": 417,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/23/26, 14:28",
+      "body_preview": "03 pak\n11 bde",
+      "tag": "unit:11_bde",
+      "confidence": 0.9,
+      "reasoning": "direct mention: '03 pak\n11 bde'"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0419",
+      "idx": 418,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/23/26, 15:08",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0420",
+      "idx": 419,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/23/26, 17:07",
+      "body_preview": "3200/-",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0421",
+      "idx": 420,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/23/26, 18:53",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0422",
+      "idx": 421,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/23/26, 18:53",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0423",
+      "idx": 422,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/23/26, 18:53",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0424",
+      "idx": 423,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/23/26, 18:54",
+      "body_preview": "This message was deleted",
+      "tag": "noise:deleted",
+      "confidence": 1.0,
+      "reasoning": "deleted message"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0425",
+      "idx": 424,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/23/26, 18:54",
+      "body_preview": "Cost 3000",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0426",
+      "idx": 425,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/23/26, 18:59",
+      "body_preview": "le lo 03 nos",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0427",
+      "idx": 426,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/23/26, 18:59",
+      "body_preview": "digital display hobo na",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0428",
+      "idx": 427,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/24/26, 13:28",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0429",
+      "idx": 428,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/24/26, 13:28",
+      "body_preview": "Pay 3425",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0430",
+      "idx": 429,
+      "sender": "Rahul Staff New Adabari",
+      "timestamp_raw": "3/24/26, 13:28",
+      "body_preview": "Bank transfer",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0431",
+      "idx": 430,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/24/26, 13:32",
+      "body_preview": "Money Sent ✅\nPaytm has improved so much recently! Seen their",
+      "tag": "singleton:payment",
+      "confidence": 0.5,
+      "reasoning": "payment related"
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0432",
+      "idx": 431,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/24/26, 13:32",
+      "body_preview": "paid 3425/-",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0433",
+      "idx": 432,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/24/26, 14:32",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0434",
+      "idx": 433,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/24/26, 14:57",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0435",
+      "idx": 434,
+      "sender": "Ashish Chhabra",
+      "timestamp_raw": "3/24/26, 14:58",
+      "body_preview": "wasim da eelect recharge done",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0436",
+      "idx": 435,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/24/26, 16:46",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0437",
+      "idx": 436,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/24/26, 16:46",
+      "body_preview": "1765/-",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0438",
+      "idx": 437,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/24/26, 17:06",
+      "body_preview": "Tomorrow 's delivery list",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0439",
+      "idx": 438,
+      "sender": "Mrs Samita Roy Staff Enqu",
+      "timestamp_raw": "3/24/26, 17:06",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0440",
+      "idx": 439,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/24/26, 17:20",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    },
+    {
+      "message_id": "R1-D-L3-01_Tasks_0441",
+      "idx": 440,
+      "sender": "Pramod Babu",
+      "timestamp_raw": "3/24/26, 17:21",
+      "body_preview": "(empty)",
+      "tag": null,
+      "confidence": 0.0,
+      "reasoning": ""
+    }
+  ]
+}
