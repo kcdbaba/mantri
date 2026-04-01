@@ -11,10 +11,15 @@ group that addresses one task/topic. Scrap boundaries are detected by:
 Scraps start unassigned. When evidence arrives (entity mention, item
 reference), the scrap is assigned to a conversation. Assignment propagates
 backward to preceding unassigned messages in the same burst.
+
+Scrap splitting uses a "default-continue, split on evidence" model for
+same-sender messages: continue the current scrap unless a different entity
+is detected or the gap exceeds 15 minutes.
 """
 
 import json
 import logging
+import os
 import re
 import uuid
 import time
@@ -24,8 +29,9 @@ from src.router.alias_dict import match_entities
 
 log = logging.getLogger(__name__)
 
-# Max gap between messages from same sender before starting a new scrap
-BURST_GAP_S = 120
+# Max gap between messages from same sender before starting a new scrap.
+# Uses 15-minute gap (reply-tree informed) instead of the old 120s burst gap.
+BURST_GAP_S = 900
 
 # Army unit pattern: number + unit type abbreviation
 _ARMY_UNIT_RE = re.compile(
@@ -48,46 +54,116 @@ _STOP_WORDS = {
     "tomorrow", "today", "done", "ok sir", "ji sir",
 }
 
+# Payment keywords for bookkeeping singleton detection
+PAYMENT_KEYWORDS = {
+    "money sent", "paytm", "payment", "paid", "bank transfer",
+    "phonepe", "upi", "\u20b9",
+}
 
-def extract_entity_refs(body: str) -> list[str]:
+# ── ORBAT numbered units lookup ─────────────────────────────────────
+# alias_text (lowercase) → (full_name, unit_key)
+_ORBAT_LOOKUP: dict[str, tuple[str, str]] = {}
+
+
+def _load_orbat_lookup():
+    """Load numbered units from indian_military_units_reference.json."""
+    global _ORBAT_LOOKUP
+    if _ORBAT_LOOKUP:
+        return
+
+    ref_path = os.path.join(
+        os.path.dirname(__file__), "..", "..", "data",
+        "indian_military_units_reference.json",
+    )
+    ref_path = os.path.normpath(ref_path)
+
+    try:
+        with open(ref_path, encoding="utf-8") as f:
+            data = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        log.warning("Could not load ORBAT reference from %s", ref_path)
+        return
+
+    numbered = data.get("numbered_units", {})
+
+    # Process list-type sections (ne_india_units, other_india_units, sub_areas,
+    # station_hqs, ne_military_hospitals)
+    for section_key in ("ne_india_units", "other_india_units", "sub_areas",
+                        "station_hqs", "ne_military_hospitals"):
+        entries = numbered.get(section_key, [])
+        if not isinstance(entries, list):
+            continue
+        for entry in entries:
+            full_name = entry.get("full_name") or entry.get("name", "")
+            # Build a stable unit key from the full_name
+            unit_key = re.sub(r'\s+', '_', full_name.lower().strip())
+            for alias in entry.get("aliases", []):
+                _ORBAT_LOOKUP[alias.lower()] = (full_name, unit_key)
+
+    log.info("Loaded %d ORBAT aliases", len(_ORBAT_LOOKUP))
+
+
+# Load at module init
+_load_orbat_lookup()
+
+
+def is_payment_message(body: str) -> bool:
+    """Return True if body contains payment-related keywords."""
+    lower = body.lower()
+    return any(kw in lower for kw in PAYMENT_KEYWORDS)
+
+
+def extract_entity_refs(body: str) -> list[dict]:
     """
     Extract entity references from a message body.
 
-    Uses three sources:
-    1. Alias dictionary (known entities)
-    2. Army unit regex pattern (e.g., "20 jak", "107 bde")
-    3. "from <supplier>" regex pattern
+    Uses four layers (checked in priority order):
+    1. Known entities (alias dict) → confidence 0.95
+    2. ORBAT numbered units lookup → confidence 0.85
+    3. Regex fallback (army unit pattern) → confidence 0.6
+    4. "from <supplier>" regex pattern → confidence 0.6
 
-    Returns list of entity reference strings. These may be entity_ids
-    (from alias dict) or raw references (from regex) that need to be
-    resolved to entities later.
+    Returns list of dicts: [{"ref": str, "confidence": float}, ...]
+    The "ref" may be an entity_id (from alias dict) or a "unit:..." /
+    "supplier:..." raw reference.
     """
-    refs = set()
+    refs: dict[str, float] = {}  # ref → best confidence
 
-    # 1. Known aliases
+    def _add(ref: str, conf: float):
+        if ref not in refs or refs[ref] < conf:
+            refs[ref] = conf
+
+    # 1. Known aliases → confidence 0.95
     matches = match_entities(body)
     for eid, confidence in matches:
         if confidence >= 0.8:
-            refs.add(eid)
+            _add(eid, 0.95)
 
-    # 2. Army unit pattern → normalize to "NNN_unit_type" format
+    # Normalise body for ORBAT / regex matching
+    body_lower = body.lower()
+
+    # 2. ORBAT numbered units lookup → confidence 0.85
+    for alias, (full_name, unit_key) in _ORBAT_LOOKUP.items():
+        if alias in body_lower:
+            _add(f"unit:{unit_key}", 0.85)
+
+    # 3. Army unit regex fallback → confidence 0.6
     for match in _ARMY_UNIT_RE.finditer(body):
         unit_ref = re.sub(r'\s+', '_', match.group(1).lower().strip())
-        refs.add(f"unit:{unit_ref}")
+        _add(f"unit:{unit_ref}", 0.6)
 
-    # 3. "from X" supplier pattern — but check if X is actually an army unit
+    # 4. "from X" supplier pattern → confidence 0.6
     for match in _FROM_SUPPLIER_RE.finditer(body):
         supplier = match.group(1).strip().lower()
         if supplier in _STOP_WORDS or len(supplier) <= 2:
             continue
-        # Check if it's actually an army unit
         if _ARMY_UNIT_RE.search(supplier):
             unit_ref = re.sub(r'\s+', '_', supplier)
-            refs.add(f"unit:{unit_ref}")
+            _add(f"unit:{unit_ref}", 0.6)
         else:
-            refs.add(f"supplier:{supplier}")
+            _add(f"supplier:{supplier}", 0.6)
 
-    return list(refs)
+    return [{"ref": ref, "confidence": conf} for ref, conf in refs.items()]
 
 
 @dataclass
@@ -156,7 +232,7 @@ def _partition_strand(messages: list[dict], group_id: str,
         # Detect entity references in this message
         msg_entities = set()
         if body:
-            msg_entities = set(extract_entity_refs(body))
+            msg_entities = {r["ref"] for r in extract_entity_refs(body)}
 
         # Decide: continue current scrap or start new one
         should_break = False
