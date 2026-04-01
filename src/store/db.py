@@ -266,25 +266,8 @@ CREATE TABLE IF NOT EXISTS scrap_conversations (
     PRIMARY KEY (scrap_id, conversation_id)
 );
 
-CREATE TABLE IF NOT EXISTS segments (
-    id              TEXT PRIMARY KEY,
-    conversation_id TEXT NOT NULL REFERENCES conversations(id),
-    epoch           INTEGER NOT NULL DEFAULT 0,
-    seq_in_epoch    INTEGER NOT NULL DEFAULT 0,
-    status          TEXT NOT NULL DEFAULT 'pending',  -- 'pending' | 'processed' | 'summarized'
-    processed_at    INTEGER,
-    agent_output    TEXT
-);
-
-CREATE TABLE IF NOT EXISTS segment_summaries (
-    segment_id      TEXT PRIMARY KEY REFERENCES segments(id),
-    summary_text    TEXT NOT NULL,
-    created_at      INTEGER NOT NULL
-);
-
 CREATE INDEX IF NOT EXISTS idx_scraps_sender ON scraps(group_id, sender_jid, last_msg_ts);
 CREATE INDEX IF NOT EXISTS idx_scrap_convos ON scrap_conversations(conversation_id);
-CREATE INDEX IF NOT EXISTS idx_segments_conv ON segments(conversation_id, epoch);
 """
 
 PRICING = {
