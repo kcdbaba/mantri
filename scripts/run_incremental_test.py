@@ -687,8 +687,7 @@ if __name__ == "__main__":
     results = run_all(case_filter=args.case_id)
     if not args.summary_only:
         print_summary(results)
-    if not args.case_id:  # only save run history and push to Phoenix for full runs
+    if not args.case_id:  # only save run history for full runs
         save_run_summary(results)
         _emit_allure_results(results)
-        push_to_phoenix(results)
         _publish_results()
