@@ -237,9 +237,19 @@ class LLMResponse:
 def _parse_raw(raw: str, task_id: str, message_id: str | None) -> AgentOutput | None:
     """Parse and validate raw LLM output into AgentOutput. Returns None on failure."""
     cleaned = raw.strip()
+    # Strip markdown fences
     if cleaned.startswith("```"):
         lines = cleaned.splitlines()
         cleaned = "\n".join(lines[1:-1] if lines[-1].strip() == "```" else lines[1:])
+    # Extract JSON from mixed content (model sometimes adds prose before JSON)
+    if not cleaned.startswith("{") and not cleaned.startswith("["):
+        # Find the first { and last } — the JSON object
+        first_brace = cleaned.find("{")
+        last_brace = cleaned.rfind("}")
+        if first_brace >= 0 and last_brace > first_brace:
+            cleaned = cleaned[first_brace:last_brace + 1]
+            log.debug("Extracted JSON from mixed content (skipped %d chars of preamble)",
+                       first_brace)
     try:
         data = json.loads(cleaned)
         # Some models wrap output in an array
