@@ -109,11 +109,13 @@ def _build_tags_html(run: dict) -> str:
     run_agents = run.get("agents", [])
     if not run_agents:
         run_agents = ["AO"] if run.get("skip_linkage") else ["AO", "AL"]
+    agent_labels = {"AO": "\U0001f575\ufe0fO", "AL": "\U0001f575\ufe0fL", "AS": "\U0001f575\ufe0fS"}
     agent_tips = {"AO": "Update agent for order processing",
                   "AL": "Linkage agent for fulfillment matching",
                   "AS": "Conversation routing for shared groups"}
     for agent in run_agents:
-        badges.append(f"<span class='tag tag-agent' title='{agent_tips.get(agent, agent)}'>{agent}</span>")
+        label = agent_labels.get(agent, agent)
+        badges.append(f"<span class='tag tag-agent' title='{agent_tips.get(agent, agent)}'>{label}</span>")
     # Batching mode
     if run.get("batch_mode"):
         badges.append("<span class='tag tag-batch' title='Production batching (60s window)'>B</span>")
@@ -970,10 +972,17 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                         f"background:#0d1017; font-size:0.75rem; color:#718096'>"
                         f"↳ <em>{escaped_notes}</em></td></tr>"
                     )
-            # Add pagination controls if more than PAGE_SIZE runs
+            # Insert pagination controls as first child row (above data rows)
             total_pages = (len(case_runs) + PAGE_SIZE - 1) // PAGE_SIZE
             if total_pages > 1:
-                rows.append(
+                # Find the index where child rows for this group start
+                # (right after the group header row)
+                insert_idx = None
+                for ri in range(len(rows)):
+                    if f"data-group='{group_key}'" in rows[ri] and "group-child" in rows[ri]:
+                        insert_idx = ri
+                        break
+                ctrl_row = (
                     f"<tr class='group-child pagination-row' data-group='{group_key}'>"
                     f"<td colspan='13'><div class='pagination'>"
                     f"<button onclick=\"paginateGroup('{group_key}',-1)\">‹ Prev</button>"
@@ -981,6 +990,10 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                     f"<button onclick=\"paginateGroup('{group_key}',1)\">Next ›</button>"
                     f"</div></td></tr>"
                 )
+                if insert_idx is not None:
+                    rows.insert(insert_idx, ctrl_row)
+                else:
+                    rows.append(ctrl_row)
 
         sections.append(
             "<h3>Live Replay History</h3>"
@@ -989,7 +1002,7 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
             "<th>Nodes</th><th>Links</th><th>Ambiguity</th>"
             "<th>Dead Letters</th><th>Errors</th>"
             "<th>Tasks</th><th>Score</th>"
-            "<th>Models</th><th>Cost</th><th>Config</th><th>Tags</th>"
+            "<th>Models</th><th>Cost</th><th>Config</th>"
             "</tr></thead><tbody>" + "".join(rows) + "</tbody></table>"
             + _live_replay_chart(live_by_case)
         )
@@ -1279,9 +1292,9 @@ def generate() -> str:
   <tr><td><span class="tag tag-mode">E</span></td><td>Entity-first routing (v0.3.0+)</td></tr>
   <tr><td><span class="tag tag-legacy">L</span></td><td>Legacy batch routing (pre v0.3.0)</td></tr>
   <tr><td><span class="tag tag-traced">T</span></td><td>Phoenix OTEL tracing enabled</td></tr>
-  <tr><td><span class="tag tag-agent">AO</span></td><td>Update agent — order processing</td></tr>
-  <tr><td><span class="tag tag-agent">AL</span></td><td>Linkage agent — fulfillment matching</td></tr>
-  <tr><td><span class="tag tag-dim">AS</span></td><td>Shared groups conversation routing (planned)</td></tr>
+  <tr><td><span class="tag tag-agent">🕵️O</span></td><td>Update agent — order processing</td></tr>
+  <tr><td><span class="tag tag-agent">🕵️L</span></td><td>Linkage agent — fulfillment matching</td></tr>
+  <tr><td><span class="tag tag-dim">🕵️S</span></td><td>Shared groups conversation routing (planned)</td></tr>
   <tr><td><span class="tag tag-batch">B</span></td><td>Production batching (60s window, max 10 msgs)</td></tr>
   <tr><td><span class="tag tag-dim">🔃</span></td><td>Asynchronous linkage processing (planned)</td></tr>
   <tr><td><span class="tag tag-dim">N</span></td><td>Partial replay — first N messages only</td></tr>

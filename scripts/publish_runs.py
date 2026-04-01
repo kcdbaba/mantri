@@ -92,10 +92,12 @@ def _inc_section(runs: list[dict]) -> str:
 
     from scripts._pagination import paginate_rows
 
+    inc_ctrl, inc_body = paginate_rows(rows, "inc_runs")
     history = (
+        inc_ctrl +
         "<table>"
         "<thead><tr><th>Run</th><th>Cases</th><th>Pass rate</th><th>Failed</th></tr></thead>"
-        "<tbody>" + paginate_rows(rows, "inc_runs") + "</tbody>"
+        "<tbody>" + inc_body + "</tbody>"
         "</table>"
     )
 
@@ -124,27 +126,30 @@ def _inc_section(runs: list[dict]) -> str:
                         cells.append('<td class="fail">✗</td>')
                 tooltip = _case_tooltip(case_id)
                 body_rows.append(f"<tr><td class='case-id' title='{tooltip}'>{case_id}</td>{''.join(cells)}</tr>")
+            mat_ctrl, mat_body = paginate_rows(body_rows, table_id)
             return (
+                mat_ctrl +
                 f"<div class='scroll'><table class='matrix'>"
                 f"<thead>{header}</thead>"
-                f"<tbody>" + paginate_rows(body_rows, table_id) + "</tbody>"
+                f"<tbody>" + mat_body + "</tbody>"
                 f"</table></div>"
             )
 
         parts = []
         if inc_cases:
             parts.append(
-                "<h3>Incremental Cases (INC)</h3>"
-                "<p class='dim' style='margin-bottom:0.3rem'>Single-message agent behavior tests. "
+                "<h3 style='color:#e2e8f0; margin-top:1.5rem'>Incremental Cases (INC-01..20)</h3>"
+                "<p class='dim' style='margin-bottom:0.5rem'>Single-message agent behavior tests. "
                 "Each case sends one message through the update agent and checks node updates, "
-                "item extractions, and ambiguity flags.</p>"
+                "item extractions, and ambiguity flags against expected outcomes.</p>"
                 + _case_matrix(inc_cases, "inc_matrix")
             )
         if linkage_cases:
             parts.append(
-                "<h3>Linkage Cases</h3>"
-                "<p class='dim' style='margin-bottom:0.3rem'>Multi-message pipeline tests including "
-                "linkage agent. Tests client order ↔ supplier order fulfillment link creation.</p>"
+                "<h3 style='color:#e2e8f0; margin-top:1.5rem'>Linkage Cases</h3>"
+                "<p class='dim' style='margin-bottom:0.5rem'>Multi-message pipeline tests "
+                "exercising the linkage agent. Tests client order ↔ supplier order fulfillment "
+                "link creation across coordinated tasks.</p>"
                 + _case_matrix(linkage_cases, "linkage_matrix")
             )
         matrix = "".join(parts)
@@ -507,12 +512,14 @@ def _unit_section(runs: list[dict]) -> str:
            if latest.get('failed') else "")
     )
 
+    unit_ctrl, unit_body = paginate_rows(rows, "unit_runs")
     return (
         f"<p class='summary'>{summary} &nbsp;·&nbsp; "
         f"<a href='/developer/tests/'>Full Allure report →</a></p>"
+        + unit_ctrl +
         "<table>"
         "<thead><tr><th>Run</th><th>Total</th><th>Pass rate</th><th>Failed</th><th>Skipped</th></tr></thead>"
-        "<tbody>" + paginate_rows(rows, "unit_runs") + "</tbody>"
+        "<tbody>" + unit_body + "</tbody>"
         "</table>"
     )
 
@@ -777,9 +784,9 @@ def _tag_legend() -> str:
         "<tr><td><span class='tag tag-mode'>E</span></td><td>Entity-first routing (v0.3.0+)</td></tr>"
         "<tr><td><span class='tag tag-legacy'>L</span></td><td>Legacy batch routing (pre v0.3.0)</td></tr>"
         "<tr><td><span class='tag tag-traced'>T</span></td><td>Phoenix OTEL tracing enabled</td></tr>"
-        "<tr><td><span class='tag tag-agent'>AO</span></td><td>Update agent — order processing</td></tr>"
-        "<tr><td><span class='tag tag-agent'>AL</span></td><td>Linkage agent — fulfillment matching</td></tr>"
-        "<tr><td><span class='tag tag-dim'>AS</span></td><td>Shared groups conversation routing (planned)</td></tr>"
+        "<tr><td><span class='tag tag-agent'>\U0001f575\ufe0fO</span></td><td>Update agent — order processing</td></tr>"
+        "<tr><td><span class='tag tag-agent'>\U0001f575\ufe0fL</span></td><td>Linkage agent — fulfillment matching</td></tr>"
+        "<tr><td><span class='tag tag-dim'>\U0001f575\ufe0fS</span></td><td>Shared groups conversation routing (planned)</td></tr>"
         "<tr><td><span class='tag tag-batch'>B</span></td><td>Production batching (60s window, max 10 msgs)</td></tr>"
         "<tr><td><span class='tag tag-dim'>🔃</span></td><td>Asynchronous linkage processing (planned)</td></tr>"
         "<tr><td><span class='tag tag-dim'>N</span></td><td>Partial replay — first N messages only</td></tr>"
@@ -824,11 +831,13 @@ def _system_summary(int_runs: list[dict], real_runs: list[dict],
             run_agents = latest.get("agents", [])
             if not run_agents:
                 run_agents = ["AO"] if latest.get("skip_linkage") else ["AO", "AL"]
+            agent_labels = {"AO": "\U0001f575\ufe0fO", "AL": "\U0001f575\ufe0fL", "AS": "\U0001f575\ufe0fS"}
+            tips = {"AO": "Update agent for order processing",
+                    "AL": "Linkage agent for fulfillment matching",
+                    "AS": "Conversation routing for shared groups"}
             for agent in run_agents:
-                tips = {"AO": "Update agent for order processing",
-                        "AL": "Linkage agent for fulfillment matching",
-                        "AS": "Conversation routing for shared groups"}
-                tag_badges.append(f"<span class='tag tag-agent' title='{tips.get(agent, agent)}'>{agent}</span>")
+                label = agent_labels.get(agent, agent)
+                tag_badges.append(f"<span class='tag tag-agent' title='{tips.get(agent, agent)}'>{label}</span>")
             # Batching
             if latest.get("batch_mode"):
                 tag_badges.append("<span class='tag tag-batch' title='Production batching (60s window)'>B</span>")
