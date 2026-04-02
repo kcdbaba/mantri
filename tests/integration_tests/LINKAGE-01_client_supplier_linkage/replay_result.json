@@ -204,17 +204,17 @@
       {
         "task_id": "task_client_01",
         "node_id": null,
-        "severity": "low",
+        "severity": "medium",
         "category": "timing",
-        "description": "Delivery deadline 'kal tak' (by tomorrow) is relative to message timestamp [1743230000]. Exact calendar date should be confirmed to set a hard delivery deadline.",
-        "status": "expired"
+        "description": "Delivery deadline 'kal tak' (by tomorrow) is relative to message timestamp [1743230000] — exact calendar date needs to be pinned for scheduling.",
+        "status": "pending"
       },
       {
         "task_id": "task_client_01",
         "node_id": "dispatched",
-        "severity": "high",
+        "severity": "medium",
         "category": "status",
-        "description": "Dispatch announced ('dispatch kar rahe hain aaj') but order_confirmation node is still pending — no explicit client confirmation of the quotation/order has been recorded before dispatch is being initiated.",
+        "description": "Dispatch is announced ('dispatch kar rahe hain aaj') but order_confirmation has not been explicitly completed — no client confirmation of the quotation is recorded before dispatch is being initiated.",
         "status": "pending"
       }
     ],
@@ -227,10 +227,10 @@
       {
         "model": "claude-sonnet-4-6",
         "calls": 6,
-        "cost": 0.0605415
+        "cost": 0.0458832
       }
     ],
-    "total_cost": 0.0605415
+    "total_cost": 0.0458832
   },
   "db_path": "/Users/kunalc/src/mantri/tests/integration_tests/LINKAGE-01_client_supplier_linkage/replay_result.db"
 }

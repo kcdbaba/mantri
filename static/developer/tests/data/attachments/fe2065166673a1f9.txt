@@ -1,0 +1,1 @@
+WARNING  src.router.worker:worker.py:535 BLOCKED node=dispatched task=task_client_01 — ambiguity: Dispatch is stated as ongoing ('kar rahe hain aaj') but not confirmed as completed. No vehicle number, driver, or actual departure confirmation provided.

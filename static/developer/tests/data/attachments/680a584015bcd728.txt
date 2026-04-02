@@ -1,0 +1,1 @@
+WARNING  src.router.worker:worker.py:535 BLOCKED node=dispatched task=task_client_01 — ambiguity: Dispatch is stated as happening 'aaj' (today) but no confirmation that goods have actually left — could be pre-dispatch intent rather than completed dispatch. No vehicle, driver, or delivery confirmation details provided.

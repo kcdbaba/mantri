@@ -1,0 +1,1 @@
+WARNING  src.router.worker:worker.py:584 POST-CONFIRMATION ITEM CHANGE: task=t1 gate=order_confirmation ops=['add'] items=['steel rods']

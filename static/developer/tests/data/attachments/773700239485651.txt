@@ -1,0 +1,1 @@
+Schema initialised at /private/var/folders/v3/v0hgbtcx7p18k_9f151zg0dm0000gn/T/pytest-of-kunalc/pytest-107/test_filled_from_stock_active_0/test.db

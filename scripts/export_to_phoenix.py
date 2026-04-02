@@ -71,7 +71,7 @@ def main():
     local_client = px.Client(endpoint=args.local_url)
 
     try:
-        spans_df = local_client.get_spans_dataframe()
+        spans_df = local_client.get_spans_dataframe(limit=50000)
     except Exception as e:
         print(f"Error reading spans from local Phoenix: {e}", file=sys.stderr)
         sys.exit(1)

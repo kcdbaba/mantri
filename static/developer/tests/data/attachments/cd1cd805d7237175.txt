@@ -1,0 +1,1 @@
+WARNING  src.router.worker:worker.py:594 Invalid order_type in new_order candidate: invalid_type

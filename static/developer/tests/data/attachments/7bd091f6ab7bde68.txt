@@ -1,0 +1,1 @@
+WARNING  src.agent.update_agent:update_agent.py:272 image_path not found: /nonexistent/photo.jpg

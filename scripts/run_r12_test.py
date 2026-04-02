@@ -20,7 +20,7 @@ from unittest.mock import patch
 
 log = logging.getLogger(__name__)
 
-CASE_DIR = Path("tests/integration_tests/R12-L3-01_sata_internal_conversation_routing")
+CASE_DIR = Path("tests/integration_tests/R12-L3-01_internal_staff_conversation_routing")
 
 
 def main():
