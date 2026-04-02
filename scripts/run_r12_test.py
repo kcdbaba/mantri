@@ -89,6 +89,9 @@ def main():
         "errors": [],
     }
 
+    BATCH_WINDOW_S = 60
+    BATCH_MAX_SIZE = 10
+
     with patch("src.store.db.DB_PATH", db_path), \
          patch("src.config.DB_PATH", db_path), \
          patch("src.config.ENABLE_CONVERSATION_ROUTING", True), \
@@ -96,9 +99,39 @@ def main():
          patch("src.router.router.ENABLE_CONVERSATION_ROUTING", True):
 
         from src.router.router import route
-        from src.router.worker import process_message
+        from src.router.worker import process_message, process_message_batch
 
         t_start = time.time()
+
+        # Batch buffer: {entity_id: {"messages": [...], "last_ts": int}}
+        batch_buf: dict[str, dict] = {}
+        batches_to_flush: list[tuple[str, list[dict]]] = []
+
+        def _flush_batch(entity_id, batch_msgs):
+            """Process a batch of messages for one entity."""
+            stats_data["agent_calls"] += 1
+            try:
+                process_message_batch(entity_id, batch_msgs, mock_redis)
+            except Exception as e:
+                stats_data["agent_failures"] += 1
+                stats_data["errors"].append({
+                    "message_id": batch_msgs[-1].get("message_id"),
+                    "phase": "batch",
+                    "error": str(e)[:100],
+                })
+                log.error("Batch failed: entity=%s size=%d: %s",
+                          entity_id, len(batch_msgs), e)
+
+        def _check_and_flush_batches(current_ts):
+            """Flush batches that have timed out or hit max size."""
+            flushed = []
+            for eid, buf in batch_buf.items():
+                elapsed = current_ts - buf["last_ts"]
+                if elapsed >= BATCH_WINDOW_S or len(buf["messages"]) >= BATCH_MAX_SIZE:
+                    flushed.append((eid, list(buf["messages"])))
+            for eid, msgs in flushed:
+                del batch_buf[eid]
+                _flush_batch(eid, msgs)
 
         for i, msg in enumerate(messages):
             ts = msg.get("timestamp", 0)
@@ -113,12 +146,12 @@ def main():
             else:
                 stats_data["test_messages"] += 1
 
-            if (i + 1) % 25 == 0:
+            if (i + 1) % 50 == 0:
                 log.info("[%s] Processing message %d/%d: %s",
                          phase, i + 1, len(messages), msg.get("message_id"))
 
+            # ── Dry run: no LLM calls ──
             if args.dry_run:
-                # Dry run: no LLM calls at all
                 if group_id == "Tasks":
                     result = conv_router.feed(msg)
                     if result:
@@ -128,7 +161,6 @@ def main():
                             _log_conversation_result(result)
                     stats_data["conv_routed"] += 1
                 else:
-                    # Route only, no agent call
                     routes = route(msg)
                     if routes and routes != [("__conv_pending__", 0.0)]:
                         stats_data["routed"] += 1
@@ -140,18 +172,55 @@ def main():
                             stats_data["unrouted"] += 1
                 continue
 
-            # Full run: process through pipeline
-            try:
-                process_message(msg, mock_redis, conv_router=conv_router)
-                if not is_warmup:
-                    stats_data["routed"] += 1
-            except Exception as e:
-                stats_data["errors"].append({
-                    "message_id": msg.get("message_id"),
-                    "phase": phase,
-                    "error": str(e)[:100],
-                })
-                log.error("[%s] Error: %s — %s", phase, msg.get("message_id"), e)
+            # ── Full run with batching ──
+
+            # Tasks group → conversation router
+            if group_id == "Tasks":
+                result = conv_router.feed(msg)
+                if result:
+                    stats_data["conversations_created"] += len(result.conversations)
+                    stats_data["entities_discovered"] += len(result.discovered_entities)
+                    if not is_warmup:
+                        _log_conversation_result(result)
+                    # Process conversation results through agent batches
+                    for conv in result.conversations:
+                        conv_msgs = []
+                        for s in conv.scraps:
+                            conv_msgs.extend(s.messages)
+                        if conv_msgs and conv.entity_ref != "singleton:bookkeeping":
+                            _flush_batch(conv.entity_ref, conv_msgs)
+                stats_data["conv_routed"] += 1
+                continue
+
+            # Direct-mapped groups → route and batch
+            routes = route(msg)
+            if not routes:
+                body = (msg.get("body") or "").strip()
+                if not body:
+                    stats_data["noise"] += 1
+                else:
+                    stats_data["unrouted"] += 1
+                continue
+
+            stats_data["routed"] += 1
+
+            for entity_id, confidence in routes:
+                if entity_id == "__conv_pending__":
+                    continue
+
+                # Add to batch buffer
+                if entity_id not in batch_buf:
+                    batch_buf[entity_id] = {"messages": [], "last_ts": 0}
+                batch_buf[entity_id]["messages"].append(msg)
+                batch_buf[entity_id]["last_ts"] = ts
+
+            # Check for batches to flush
+            _check_and_flush_batches(ts)
+
+        # Flush remaining batches
+        for eid, buf in batch_buf.items():
+            if buf["messages"]:
+                _flush_batch(eid, buf["messages"])
 
         # Flush remaining conversation buffers
         remaining = conv_router.flush_all()
