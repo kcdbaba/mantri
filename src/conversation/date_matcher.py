@@ -154,8 +154,7 @@ def match_by_date(unassigned_scraps: list[Scrap],
             continue
 
         # Check against each timeline event
-        best_match = None
-        best_distance = float("inf")
+        matching_events = []
 
         for event in timeline:
             if event.event_type in ("delivery", "dispatch"):
@@ -170,9 +169,21 @@ def match_by_date(unassigned_scraps: list[Scrap],
                 window = timedelta(days=DELIVERY_WINDOW_DAYS)
 
             distance = abs((scrap_date - event.date).total_seconds())
-            if distance <= window.total_seconds() and distance < best_distance:
-                best_distance = distance
-                best_match = event
+            if distance <= window.total_seconds():
+                matching_events.append((event, distance))
+
+        # Only match if exactly ONE entity matches. Multiple entities on the
+        # same date = ambiguous, leave for LLM to resolve.
+        if matching_events:
+            unique_entities = set(ev.entity_ref for ev, _ in matching_events)
+            if len(unique_entities) > 1:
+                log.debug("Date match AMBIGUOUS for scrap %s: %d entities match (%s)",
+                          scrap.id, len(unique_entities),
+                          ", ".join(unique_entities))
+                continue
+            best_match = min(matching_events, key=lambda x: x[1])[0]
+        else:
+            best_match = None
 
         if best_match:
             days_diff = (scrap_date - best_match.date).days
