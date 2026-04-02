@@ -40,11 +40,35 @@ _ARMY_UNIT_RE = re.compile(
     re.IGNORECASE,
 )
 
-# "from <supplier>" pattern
+# Military unit type words — used to detect unnumbered references like "Arty bde"
+_UNIT_TYPE_WORDS = {
+    "jak", "bde", "brigade", "regt", "regiment", "bty", "battery",
+    "fd", "field", "engr", "engineer", "sig", "signal", "coy", "company",
+    "bn", "battalion", "div", "division", "corps", "armd", "armoured",
+    "inf", "infantry", "arty", "artillery", "ad", "emd", "med", "medical",
+    "ord", "ordnance", "asc", "aoc", "eme", "stn hq", "jak rif",
+    "mtn", "mountain",
+}
+
+# "from/to <entity>" patterns with verb context
+# delivery/dispatch/received FROM = supplier
+# return FROM = client/unit
+# delivery/dispatch TO = client/unit
+# return TO = supplier
 _FROM_SUPPLIER_RE = re.compile(
     r'\b(?:from|se)\s+([a-zA-Z][\w\s]{2,20}?)(?:\s*[,.\n]|\s+@|\s*$)',
     re.IGNORECASE,
 )
+_RETURN_FROM_RE = re.compile(
+    r'\breturn(?:ed)?\s+from\s+([a-zA-Z][\w\s]{2,20}?)(?:\s*[,.\n]|\s+@|\s*$)',
+    re.IGNORECASE,
+)
+
+
+def _is_military_unit_type(text: str) -> bool:
+    """Check if text contains military unit type words (even without a number)."""
+    words = set(text.lower().split())
+    return bool(words & _UNIT_TYPE_WORDS)
 
 # Known non-entity words to filter out of pattern matches
 _STOP_WORDS = {
@@ -223,14 +247,42 @@ def extract_entity_refs(body: str) -> list[dict]:
             unit_ref = re.sub(r'\s+', '_', matched_text)
             _add(f"unit:{unit_ref}", 0.6)
 
-    # 4. "from X" supplier pattern → confidence 0.6
+    # 3.5 Unnumbered military unit type combinations → confidence 0.5
+    # Catches "Arty bde item's delivered" where there's no number
+    # but two unit type words together indicate a military entity
+    words = body_lower.split()
+    for i in range(len(words) - 1):
+        pair = f"{words[i]} {words[i+1]}"
+        if words[i] in _UNIT_TYPE_WORDS and words[i+1] in _UNIT_TYPE_WORDS:
+            unit_ref = re.sub(r'\s+', '_', pair)
+            if not any(unit_ref in ref for ref in refs):
+                _add(f"unit:{unit_ref}", 0.5)
+
+    # 4. "from X" / "to X" with verb context
+    # "return from X" → X is a client/unit (confidence 0.6)
+    for match in _RETURN_FROM_RE.finditer(body):
+        entity = match.group(1).strip().lower()
+        if entity in _STOP_WORDS or len(entity) <= 2:
+            continue
+        if _is_principal(entity):
+            continue
+        if _ARMY_UNIT_RE.search(entity) or _is_military_unit_type(entity):
+            unit_ref = re.sub(r'\s+', '_', entity)
+            _add(f"unit:{unit_ref}", 0.6)
+        else:
+            _add(f"unit:{entity}", 0.6)  # return from = client/unit, not supplier
+
+    # Generic "from X" → supplier (but skip if already matched by return_from)
+    return_matched = {m.group(1).strip().lower() for m in _RETURN_FROM_RE.finditer(body)}
     for match in _FROM_SUPPLIER_RE.finditer(body):
         supplier = match.group(1).strip().lower()
         if supplier in _STOP_WORDS or len(supplier) <= 2:
             continue
         if _is_principal(supplier):
-            continue  # skip our own business name
-        if _ARMY_UNIT_RE.search(supplier):
+            continue
+        if supplier in return_matched:
+            continue  # already handled by return_from
+        if _ARMY_UNIT_RE.search(supplier) or _is_military_unit_type(supplier):
             unit_ref = re.sub(r'\s+', '_', supplier)
             _add(f"unit:{unit_ref}", 0.6)
         else:
