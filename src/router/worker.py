@@ -109,12 +109,28 @@ def _resolve_task_for_entity(entity_id: str, entity_tasks: list[dict],
 
 
 
-def process_message(message: dict, r: redis.Redis):
-    """Process a single message — route to entity, resolve task, run agent, apply output."""
+def process_message(message: dict, r: redis.Redis,
+                    conv_router=None):
+    """Process a single message — route to entity, resolve task, run agent, apply output.
+
+    If conv_router is provided and the message routes to a shared group
+    (__conv_pending__ sentinel), feeds it to the ConversationRouter instead
+    of processing immediately.
+    """
     routes = route(message)
 
     if not routes:
         _log_unrouted(message)
+        return
+
+    # Check for conversation routing sentinel
+    if routes == [("__conv_pending__", 0.0)]:
+        if conv_router is not None:
+            result = conv_router.feed(message)
+            if result:
+                _process_conversation_result(result, r, conv_router)
+        else:
+            _log_unrouted(message)
         return
 
     for entity_id, confidence in routes:
@@ -384,6 +400,57 @@ def run():
         except Exception as e:
             log.exception("Router worker unhandled error: %s", e)
             time.sleep(1)
+
+
+def _process_conversation_result(result, r, conv_router):
+    """Process a closed conversation from the ConversationRouter."""
+    from src.conversation.conversation_router import ConversationResult
+
+    routes = conv_router.get_entity_routes(result)
+    if not routes:
+        log.debug("Conversation closed with no entity routes: group=%s, %d msgs",
+                  result.group_id, result.total_messages)
+        return
+
+    log.info("Conversation routed: group=%s, %d conversations, entities=%s",
+             result.group_id, len(result.conversations),
+             [e for e, _ in routes])
+
+    # For each conversation, collect all its messages and process as a batch
+    for conv in result.conversations:
+        if conv.entity_ref.startswith("singleton:"):
+            # Singleton conversations (bookkeeping, stock) — log for now
+            log.info("Singleton conversation: %s (%d scraps)", conv.entity_ref, len(conv.scraps))
+            continue
+
+        # Collect messages from all scraps in this conversation
+        conv_messages = []
+        seen_ids = set()
+        for scrap in conv.scraps:
+            for msg in scrap.messages:
+                mid = msg.get("message_id")
+                if mid not in seen_ids:
+                    conv_messages.append(msg)
+                    seen_ids.add(mid)
+
+        if not conv_messages:
+            continue
+
+        # Process the conversation batch through the normal pipeline
+        # The entity_ref may be a unit:xxx or supplier:xxx — need to resolve to entity_id
+        entity_id = conv.entity_ref  # may need alias resolution
+        log.info("Processing conversation: entity=%s, %d messages", entity_id, len(conv_messages))
+
+        # Feed through process_message_batch with the resolved entity
+        from src.store.task_store import get_tasks_for_entity
+        entity_tasks = get_tasks_for_entity(entity_id)
+        task_id = _resolve_task_for_entity(entity_id, entity_tasks, conv_messages[-1], r)
+
+        if task_id:
+            try:
+                process_message_batch(task_id, conv_messages, r)
+            except Exception as e:
+                log.error("Conversation batch failed: entity=%s, %s", entity_id, e)
 
 
 def _log_unrouted(message: dict):

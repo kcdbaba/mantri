@@ -151,6 +151,7 @@ GATE_NODES = {
 # ---------------------------------------------------------------------------
 
 ENABLE_LIVE_TASK_CREATION = True     # Per-order task creation active
+ENABLE_CONVERSATION_ROUTING = False  # Conversation routing for shared groups (AS agent)
 
 # ---------------------------------------------------------------------------
 # Update agent

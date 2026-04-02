@@ -184,6 +184,150 @@ def build_conversations(scraps: list[Scrap], group_id: str,
     return list(conversations.values())
 
 
+def build_conversations_from_threads(
+    threaded_messages: list,  # list[ThreadedMessage] from reply_tree
+    messages: list[dict],     # original message dicts (for body/timestamp access)
+    group_id: str,
+    task_items: dict[str, list[dict]] | None = None,
+    task_entities: dict[str, str] | None = None,
+) -> list[Conversation]:
+    """
+    Build conversations from reply-tree threads instead of sender scraps.
+
+    Each reply-tree thread becomes a candidate conversation. Entity evidence
+    from ANY message in the thread covers the entire thread — this is the
+    key advantage over per-sender scraps.
+
+    For threads without entity evidence, falls back to item matching.
+    """
+    from src.conversation.reply_tree import ThreadedMessage
+    from src.conversation.scrap_detector import extract_entity_refs, is_payment_message
+    from src.conversation.item_matcher import resolve_scrap_entity_by_items
+
+    task_items = task_items or {}
+    task_entities = task_entities or {}
+
+    # Sender carry-forward: once a sender mentions an entity, subsequent
+    # threads involving that sender inherit the entity until:
+    #   (a) a DIFFERENT entity is detected, or
+    #   (b) a long idle gap passes (CARRY_RESET_S)
+    # This matches the scrap model's carry-forward behavior.
+    CARRY_RESET_S = 3600  # 1 hour — reset if sender idle for this long
+    sender_ctx: dict[str, dict] = {}  # sender → {"entity_ref": str, "last_ts": int}
+
+    # Group threaded messages by thread_id
+    threads: dict[int, list[ThreadedMessage]] = {}
+    for tm in threaded_messages:
+        threads.setdefault(tm.thread_id, []).append(tm)
+
+    # Build message dict lookup for original data
+    msg_by_id = {m.get("message_id"): m for m in messages}
+
+    conversations: dict[str, Conversation] = {}
+
+    for tid, thread_msgs in sorted(threads.items()):
+        # Collect entity evidence from ALL messages in the thread
+        thread_entities: set[str] = set()
+        thread_text_parts = []
+        original_msgs = []
+
+        for tm in thread_msgs:
+            orig = msg_by_id.get(tm.message_id, {})
+            original_msgs.append(orig)
+            body = tm.body
+            if body:
+                thread_text_parts.append(body)
+                for ref in extract_entity_refs(body):
+                    thread_entities.add(ref["ref"])
+
+        # If no entity from text, try item matching
+        if not thread_entities and task_items:
+            combined_text = " ".join(thread_text_parts)
+            resolved = resolve_scrap_entity_by_items(
+                combined_text, task_items, task_entities
+            )
+            if resolved:
+                thread_entities.add(resolved)
+                log.debug("Thread %d: item-match → %s", tid, resolved)
+
+        # Create a scrap to wrap the thread (for conversation compatibility)
+        scrap = Scrap(
+            id=f"thread_{tid}",
+            group_id=group_id,
+            sender_jid=thread_msgs[0].sender,  # root sender
+            entity_matches=list(thread_entities),
+            status="assigned" if thread_entities else "open",
+        )
+        for orig in original_msgs:
+            scrap.add_message(orig)
+
+        if thread_entities:
+            # Assign to conversation(s)
+            for entity_ref in thread_entities:
+                conv = _get_or_create_conversation(
+                    conversations, entity_ref, group_id,
+                    thread_msgs[0].timestamp,
+                )
+                conv.add_scrap(scrap)
+
+            # Update sender context for ALL senders in this thread
+            for tm in thread_msgs:
+                sender_ctx[tm.sender] = {
+                    "entity_ref": list(thread_entities)[0],
+                    "last_ts": tm.timestamp,
+                }
+
+        elif not thread_entities:
+            # No direct evidence — try sender carry-forward
+            # If any sender in the thread has a current entity context
+            # (not expired by CARRY_RESET_S), assign the whole thread
+            best_carry = None
+            for tm in thread_msgs:
+                ctx = sender_ctx.get(tm.sender)
+                if ctx and (tm.timestamp - ctx["last_ts"]) <= CARRY_RESET_S:
+                    best_carry = ctx["entity_ref"]
+                    break
+
+            if best_carry:
+                conv = _get_or_create_conversation(
+                    conversations, best_carry, group_id,
+                    thread_msgs[0].timestamp,
+                )
+                conv.add_scrap(scrap)
+                scrap.status = "assigned"
+                scrap.entity_matches = [best_carry]
+                # Update context for all senders in thread
+                for tm in thread_msgs:
+                    sender_ctx[tm.sender] = {
+                        "entity_ref": best_carry,
+                        "last_ts": tm.timestamp,
+                    }
+                log.debug("Thread %d: carry-forward from sender → %s", tid, best_carry)
+
+        # Payment dual-assign
+        combined = " ".join(thread_text_parts)
+        if is_payment_message(combined):
+            bk_conv = _get_or_create_conversation(
+                conversations, BOOKKEEPING_ENTITY_REF, group_id,
+                thread_msgs[0].timestamp,
+            )
+            bk_conv.conv_type = "singleton"
+            bk_conv.add_scrap(scrap)
+
+    assigned_count = sum(
+        1 for tid in threads
+        if any(f"thread_{tid}" == s.id
+               for c in conversations.values() for s in c.scraps)
+    )
+
+    log.info("Thread-based conversations: %d conversations from %d threads "
+             "(%d assigned, %d unassigned)",
+             len(conversations), len(threads), assigned_count,
+             len(threads) - assigned_count)
+
+    return list(conversations.values())
+
+
 def _get_or_create_conversation(conversations: dict[str, Conversation],
                                  entity_ref: str, group_id: str,
                                  timestamp: int) -> Conversation:
