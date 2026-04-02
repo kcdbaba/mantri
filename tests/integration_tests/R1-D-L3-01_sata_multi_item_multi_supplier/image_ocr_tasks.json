@@ -13,8 +13,9 @@
       "file": "IMG-20260313-WA0031.jpg",
       "description": "Invoice from UTTAM ENTERPRISE, Adabari Near Saraighat Petrol Pump, Guwahati, Assam. Invoice to ASC Govt Pvt Ltd, address 4680 Cmd Guwahati, Assam. Date approx 13-01-2026. Contains product description table with HSN codes, GST rates. Grand total visible. Bank details at bottom (Axis Bank).",
       "extracted_text": "UTTAM ENTERPRISE, Invoice, ASC GOVT PVT LTD, 4680 CMD GUWAHATI ASSAM, GSTIN, Grand Total, Bank: Axis Bank",
-      "entities": ["supplier:uttam_enterprise", "unit:4680_cmd"],
-      "category": "invoice"
+      "entities": ["unit:4680_cmd"],
+      "category": "invoice",
+      "_note": "Uttam Enterprise is the principal (our business), not a routing target. ASC GOVT PVT LTD / 4680 CMD is the client."
     },
     "R1-D-L3-01_Tasks_0284": {
       "file": "IMG-20260314-WA0007.jpg",

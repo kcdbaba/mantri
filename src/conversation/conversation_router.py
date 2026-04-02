@@ -76,24 +76,36 @@ def _enrich_with_ocr(messages: list[dict], group_id: str) -> list[dict]:
             ocr = cache[mid]
             ocr_text = ocr.get("extracted_text", "")
             ocr_desc = ocr.get("description", "")
-            ocr_entities = ocr.get("entities", [])
-            needs_copy = False
 
-            if not body and (ocr_text or ocr_desc):
-                needs_copy = True
+            # Always combine: body text + OCR text + OCR description
+            # Never drop either — both are valuable signals
+            # Strip principal entity names from OCR text to prevent false routing
+            from src.conversation.scrap_detector import PRINCIPAL_ENTITIES
+            def _strip_principal(text):
+                lower = text.lower()
+                for p in PRINCIPAL_ENTITIES:
+                    idx = lower.find(p)
+                    if idx >= 0:
+                        text = text[:idx] + text[idx + len(p):]
+                        lower = text.lower()
+                return text.strip()
 
-            if ocr_entities:
-                needs_copy = True
+            parts = []
+            if body:
+                parts.append(body)
+            if ocr_text:
+                parts.append(_strip_principal(ocr_text))
+            if ocr_desc and ocr_desc != ocr_text:
+                parts.append(_strip_principal(ocr_desc))
 
-            if needs_copy:
-                msg = dict(msg)
-                if not body and (ocr_text or ocr_desc):
-                    msg["body"] = ocr_text or ocr_desc
+            if parts:
+                combined = " | ".join(parts)
+                if combined != body:
+                    msg = dict(msg)
+                    msg["body"] = combined
                     msg["_ocr_enriched"] = True
                     msg["_ocr_category"] = ocr.get("category", "")
                     n_enriched += 1
-                if ocr_entities:
-                    msg["_ocr_entities"] = ocr_entities
 
         enriched.append(msg)
 

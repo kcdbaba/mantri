@@ -52,6 +52,18 @@ _STOP_WORDS = {
     "confirm", "kijiye", "here", "there", "this", "that", "main",
     "confirm kijiye", "order", "delivery", "payment", "dispatch",
     "tomorrow", "today", "done", "ok sir", "ji sir",
+    "chh", "prop", "pvt", "ltd", "pvt ltd",
+}
+
+# Principal entities — OUR business, never route TO these.
+# Mentions of these confirm a business transaction but the routing target
+# is the OTHER party (the supplier or client on the document).
+PRINCIPAL_ENTITIES = {
+    "uttam enterprise", "uttam enterprises",
+    "army stores", "army store",
+    "ashish chhabra", "ashish chh", "ashish ch",
+    "prop ashish", "prop. ashish",
+    "army stores prop", "prop ashish chh",
 }
 
 # Payment keywords for bookkeeping singleton detection
@@ -129,6 +141,11 @@ def extract_entity_refs(body: str) -> list[dict]:
     """
     refs: dict[str, float] = {}  # ref → best confidence
 
+    def _is_principal(text: str) -> bool:
+        """Check if text matches a principal entity (our business)."""
+        lower = text.lower().strip()
+        return any(p in lower for p in PRINCIPAL_ENTITIES)
+
     def _add(ref: str, conf: float):
         if ref not in refs or refs[ref] < conf:
             refs[ref] = conf
@@ -157,13 +174,21 @@ def extract_entity_refs(body: str) -> list[dict]:
         supplier = match.group(1).strip().lower()
         if supplier in _STOP_WORDS or len(supplier) <= 2:
             continue
+        if _is_principal(supplier):
+            continue  # skip our own business name
         if _ARMY_UNIT_RE.search(supplier):
             unit_ref = re.sub(r'\s+', '_', supplier)
             _add(f"unit:{unit_ref}", 0.6)
         else:
             _add(f"supplier:{supplier}", 0.6)
 
-    return [{"ref": ref, "confidence": conf} for ref, conf in refs.items()]
+    # Filter out any refs that match principal entities
+    filtered = {
+        ref: conf for ref, conf in refs.items()
+        if not _is_principal(ref.replace("supplier:", "").replace("unit:", ""))
+    }
+
+    return [{"ref": ref, "confidence": conf} for ref, conf in filtered.items()]
 
 
 @dataclass
@@ -230,12 +255,10 @@ def _partition_strand(messages: list[dict], group_id: str,
         ts = msg.get("timestamp", 0)
 
         # Detect entity references in this message
+        # Body may include OCR text appended by conversation_router enrichment
         msg_entities = set()
         if body:
             msg_entities = {r["ref"] for r in extract_entity_refs(body)}
-        # Also include OCR-stored entities (injected by conversation_router)
-        for ocr_ent in msg.get("_ocr_entities", []):
-            msg_entities.add(ocr_ent)
 
         # Decide: continue current scrap or start new one
         should_break = False
