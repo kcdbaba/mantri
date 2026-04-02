@@ -52,7 +52,7 @@ _STOP_WORDS = {
     "confirm", "kijiye", "here", "there", "this", "that", "main",
     "confirm kijiye", "order", "delivery", "payment", "dispatch",
     "tomorrow", "today", "done", "ok sir", "ji sir",
-    "chh", "prop", "pvt", "ltd", "pvt ltd",
+    "prop", "pvt", "ltd", "pvt ltd",
 }
 
 # Principal entities — OUR business, never route TO these.
