@@ -28,22 +28,26 @@ CONTEXT_MATCH_PROMPT = """You are analyzing messages from an internal staff What
 A message has been identified as belonging to this conversation:
 ENTITY: {entity_ref}
 ANCHOR MESSAGE: {anchor_text}
-
+{order_context}
 Below are earlier UNASSIGNED messages from the group. For each, judge whether it belongs to the same conversation (about the same order, entity, or topic).
+
+Be CONSERVATIVE — only return true if there is clear evidence the candidate is about this specific entity/order. Generic messages like "ok", "done", delivery status without specific item references, or empty messages should return false unless there is strong contextual evidence.
 
 CANDIDATES:
 {candidates_text}
 
-For each candidate, return true if it belongs to this conversation, false if not.
+For each candidate, return confidence 0.0-1.0 (only ≥ 0.7 will be accepted).
 Return ONLY valid JSON array:
-[{{"id": 0, "belongs": true/false, "reason": "brief reason"}}]
+[{{"id": 0, "confidence": 0.85, "reason": "brief reason"}}]
 """
+
+CONFIDENCE_THRESHOLD = 0.75
 
 
 @dataclass
 class MatchResult:
-    scrap_id: str
-    belongs: bool
+    scrap_id: int
+    confidence: float
     reason: str
 
 
@@ -51,6 +55,7 @@ def match_backward_context(
     assigned_scraps: list[tuple[Scrap, str]],  # [(scrap, entity_ref)]
     all_scraps: list[Scrap],
     assigned_ids: set[str],
+    order_context: dict[str, str] | None = None,  # entity_ref → order summary text
 ) -> list[tuple[str, str]]:
     """
     For each assigned scrap, look backward for unassigned scraps within
@@ -114,19 +119,29 @@ def match_backward_context(
             if (m.get("body") or "").strip()
         ).strip()[:200]
 
+        # Build order context for this entity
+        ctx_text = ""
+        if order_context and entity_ref in order_context:
+            ctx_text = f"\nORDER CONTEXT:\n{order_context[entity_ref]}\n"
+
         # Ask LLM
-        results = _call_llm_judge(entity_ref, anchor_text, candidates)
+        results = _call_llm_judge(entity_ref, anchor_text, candidates, ctx_text)
         total_calls += 1
 
         for result in results:
-            if result.belongs:
+            if result.confidence >= CONFIDENCE_THRESHOLD:
                 cand = candidates[result.scrap_id] if result.scrap_id < len(candidates) else None
                 if cand:
                     new_assignments.append((cand["scrap"].id, entity_ref))
                     assigned_ids.add(cand["scrap"].id)
                     total_matched += 1
-                    log.info("LLM context match: scrap %s → %s (%s)",
-                             cand["scrap"].id, entity_ref, result.reason)
+                    log.info("LLM context match: scrap %s → %s (conf=%.2f, %s)",
+                             cand["scrap"].id, entity_ref, result.confidence, result.reason)
+            elif result.confidence > 0.3:
+                cand = candidates[result.scrap_id] if result.scrap_id < len(candidates) else None
+                if cand:
+                    log.debug("LLM context SKIP (low conf): scrap %s → %s (conf=%.2f, %s)",
+                              cand["scrap"].id, entity_ref, result.confidence, result.reason)
 
     log.info("LLM backward context: %d calls, %d scraps matched, %d total candidates evaluated",
              total_calls, total_matched, sum(1 for _ in new_assignments))
@@ -135,7 +150,8 @@ def match_backward_context(
 
 
 def _call_llm_judge(entity_ref: str, anchor_text: str,
-                     candidates: list[dict]) -> list[MatchResult]:
+                     candidates: list[dict],
+                     order_context: str = "") -> list[MatchResult]:
     """Call Gemini Flash to judge candidate scraps."""
     candidates_text = "\n".join(
         f"[{c['idx']}] ({c['sender']}, {c['wh_before']:.1f}wh before): \"{c['text']}\""
@@ -146,6 +162,7 @@ def _call_llm_judge(entity_ref: str, anchor_text: str,
         entity_ref=entity_ref,
         anchor_text=anchor_text,
         candidates_text=candidates_text,
+        order_context=order_context,
     )
 
     result = _try_gemini(prompt)
@@ -157,7 +174,7 @@ def _call_llm_judge(entity_ref: str, anchor_text: str,
         for item in result:
             results.append(MatchResult(
                 scrap_id=item.get("id", -1),
-                belongs=item.get("belongs", False),
+                confidence=float(item.get("confidence", 0.0)),
                 reason=item.get("reason", ""),
             ))
     return results

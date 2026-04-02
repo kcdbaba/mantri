@@ -358,6 +358,66 @@ class ConversationRouter:
 
         return conversations
 
+    @staticmethod
+    def _build_order_context(conversations) -> dict[str, str]:
+        """Build compact order context summaries for each entity's conversation.
+
+        Pulls items, stage info, and key messages from the conversation scraps
+        to give the LLM context about what this order is about.
+        """
+        ctx = {}
+        for conv in conversations:
+            if conv.conv_type == "singleton":
+                continue
+
+            parts = []
+            parts.append(f"Entity: {conv.entity_ref}")
+            parts.append(f"Type: {conv.conv_type}")
+
+            # Extract key content from conversation scraps
+            items_mentioned = set()
+            key_messages = []
+            for s in conv.scraps:
+                for m in s.messages:
+                    body = (m.get("body") or "").strip()
+                    if body and len(body) > 5:
+                        key_messages.append(body[:60])
+                        # Look for item-like mentions
+                        words = body.lower().split()
+                        for w in words:
+                            if len(w) > 3 and w not in {"from", "sir", "haan", "bhai",
+                                                         "main", "this", "that", "item"}:
+                                items_mentioned.add(w)
+
+            if key_messages:
+                parts.append(f"Messages so far: {' | '.join(key_messages[:5])}")
+
+            # Try to get task items from DB
+            try:
+                from src.store.task_store import get_active_tasks, get_order_items, get_node_states
+                tasks = get_active_tasks()
+                for task in tasks:
+                    if task.get("client_id") == conv.entity_ref or conv.entity_ref in str(task.get("supplier_ids", [])):
+                        tid = task["id"]
+                        items = get_order_items(tid)
+                        if items:
+                            item_descs = [it.get("description", "")[:40] for it in items[:5]]
+                            parts.append(f"Order items: {', '.join(item_descs)}")
+                        # Get delivery-related node states
+                        nodes = get_node_states(tid)
+                        for n in nodes:
+                            nid = n["id"].split("_", 1)[-1] if "_" in n["id"] else n["id"]
+                            if nid in ("dispatched", "delivery_confirmed", "supplier_collection",
+                                       "order_ready") and n["status"] not in ("pending", "skipped"):
+                                parts.append(f"Stage: {nid}={n['status']}")
+                        break
+            except Exception:
+                pass
+
+            ctx[conv.entity_ref] = "\n".join(parts)
+
+        return ctx
+
     def _enhance_with_llm_context(self, conversations, scraps, group_id):
         """
         Use LLM to match unassigned scraps to conversations by backward context.
@@ -382,9 +442,13 @@ class ConversationRouter:
         if not assigned_with_entity:
             return conversations
 
+        # Build order context summaries for each entity
+        order_ctx = self._build_order_context(conversations)
+
         # Run LLM matching
         new_matches = match_backward_context(
-            assigned_with_entity, scraps, assigned_ids
+            assigned_with_entity, scraps, assigned_ids,
+            order_context=order_ctx,
         )
 
         # Apply matches — add matched scraps to their conversations
