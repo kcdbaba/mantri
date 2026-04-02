@@ -84,7 +84,7 @@ _STOP_WORDS = {
 # is the OTHER party (the supplier or client on the document).
 PRINCIPAL_ENTITIES = {
     "uttam enterprise", "uttam enterprises",
-    "army stores", "army store",
+    "army stores", "army store", "army stores prop",
     "ashish chhabra",
     "prop ashish", "prop. ashish",
     "first step", "first step school",
