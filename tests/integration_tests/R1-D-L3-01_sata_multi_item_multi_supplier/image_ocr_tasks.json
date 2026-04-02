@@ -33,22 +33,22 @@
     },
     "R1-D-L3-01_Tasks_0393": {
       "file": "IMG-20260319-WA0017.jpg",
-      "description": "Paytm payment screenshot. Payment Successful ₹680 to Mr Raj Kumar Kala, UPI ID q237655864@ybl. From Army Stores Prop Ashish Chh... State Bank of India. Date 19 Mar 05:01 PM, Ref No 202238134428.",
-      "extracted_text": "Payment Successful ₹680 To Mr Raj Kumar Kala UPI ID q237655864@ybl From Army Stores Prop Ashish Chh State Bank Of India 0196 19 Mar 05:01 PM Ref No 202238134428",
+      "description": "Paytm payment screenshot. Payment Successful ₹680 to Mr Raj Kumar Kala, UPI ID q237655864@ybl. From Army Stores Prop Ashish Chhabra State Bank of India. Date 19 Mar 05:01 PM, Ref No 202238134428.",
+      "extracted_text": "Payment Successful ₹680 To Mr Raj Kumar Kala UPI ID q237655864@ybl From Army Stores Prop Ashish Chhabra State Bank Of India 0196 19 Mar 05:01 PM Ref No 202238134428",
       "entities": ["supplier:raj_kumar_kala"],
       "category": "payment_screenshot"
     },
     "R1-D-L3-01_Tasks_0414": {
       "file": "IMG-20260321-WA0002.jpg",
-      "description": "Paytm payment screenshot. Payment Successful ₹120 to Bm Pharma And Healthcare Pvt... From Army Stores (prop. Ashish Ch... State Bank of India. Date 21 Mar 11:20 AM, Ref No 608036028288.",
-      "extracted_text": "Payment Successful ₹120 To Bm Pharma And Healthcare Pvt UPI ID sbipmopad From Army Stores prop Ashish Ch State Bank Of India 0196 21 Mar 11:20 AM Ref No 608036028288",
+      "description": "Paytm payment screenshot. Payment Successful ₹120 to Bm Pharma And Healthcare Pvt... From Army Stores (prop. Ashish Chhabra State Bank of India. Date 21 Mar 11:20 AM, Ref No 608036028288.",
+      "extracted_text": "Payment Successful ₹120 To Bm Pharma And Healthcare Pvt UPI ID sbipmopad From Army Stores prop Ashish Chhabra State Bank Of India 0196 21 Mar 11:20 AM Ref No 608036028288",
       "entities": ["supplier:bm_pharma"],
       "category": "payment_screenshot"
     },
     "R1-D-L3-01_Tasks_0431": {
       "file": "IMG-20260324-WA0009.jpg",
-      "description": "Paytm payment screenshot. Payment Successful ₹3,425 to Inland Freight Expre... HDFC Bank 8602. From Army Stores Prop Ashish Chh... State Bank of India. Date 24 Mar 01:32 PM, Ref No 399486105775.",
-      "extracted_text": "Payment Successful ₹3425 To Inland Freight Expre HDFC Bank 8602 From Army Stores Prop Ashish Chh State Bank Of India 0196 24 Mar 01:32 PM Ref No 399486105775",
+      "description": "Paytm payment screenshot. Payment Successful ₹3,425 to Inland Freight Expre... HDFC Bank 8602. From Army Stores Prop Ashish Chhabra State Bank of India. Date 24 Mar 01:32 PM, Ref No 399486105775.",
+      "extracted_text": "Payment Successful ₹3425 To Inland Freight Expre HDFC Bank 8602 From Army Stores Prop Ashish Chhabra State Bank Of India 0196 24 Mar 01:32 PM Ref No 399486105775",
       "entities": ["supplier:inland_freight"],
       "category": "payment_screenshot"
     }
