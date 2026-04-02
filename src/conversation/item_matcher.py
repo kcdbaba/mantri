@@ -35,6 +35,9 @@ _SKIP_WORDS = {
     "bank", "transfer", "number", "approx", "also",
     "tomorrow", "today", "need", "will", "mein", "stand",
     "inka", "intra", "their",
+    "inch", "size", "colour", "color", "type", "model",
+    "quality", "professional", "brand", "make", "wooden",
+    "hair", "salon", "electric",
 }
 
 
@@ -73,15 +76,23 @@ def match_scrap_to_items(scrap_text: str,
 
         for item in items:
             desc = (item.get("description") or "").lower()
-            if not desc or len(desc) < MIN_WORD_LEN:
+            if not desc or len(desc) < 4:  # skip very short items like "pen"
                 continue
 
             # Extract keywords from item description
             item_words = _extract_candidate_words(desc)
 
             for scrap_word in words:
+                # Short words (<=4 chars) use strict full ratio to avoid
+                # substring false positives (e.g., "inch" in "winch",
+                # "hair" in "chair")
+                use_strict = len(scrap_word) <= 4
+
                 # Try matching scrap word against item description directly
-                direct_score = fuzz.partial_ratio(scrap_word, desc)
+                if use_strict:
+                    direct_score = fuzz.ratio(scrap_word, desc)
+                else:
+                    direct_score = fuzz.partial_ratio(scrap_word, desc)
                 if direct_score >= ITEM_MATCH_THRESHOLD:
                     matches.append(ItemMatch(
                         task_id=task_id,
