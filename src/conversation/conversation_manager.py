@@ -114,11 +114,24 @@ def build_conversations(scraps: list[Scrap], group_id: str,
             # Update sender's current context
             state.current_entity_ref = scrap.entity_matches[0]
 
-            # Backward propagation: assign buffered scraps to this conversation
+            # Backward propagation: assign RECENT buffered scraps to this conversation
+            # Only propagate to scraps within BACKPROP_MAX_S of the entity evidence.
+            # Older buffered scraps stay unassigned — prevents junk conversations
+            # from accumulating hours of unrelated messages.
+            BACKPROP_MAX_S = 3600  # 1 hour — balance between coverage and coherence
             if state.buffered_scraps:
                 primary_ref = scrap.entity_matches[0]
                 conv = conversations[primary_ref]
+                recent = []
+                stale = []
                 for buffered in state.buffered_scraps:
+                    gap = scrap.first_msg_ts - buffered.last_msg_ts
+                    if gap <= BACKPROP_MAX_S:
+                        recent.append(buffered)
+                    else:
+                        stale.append(buffered)
+
+                for buffered in recent:
                     conv.add_scrap(buffered)
                     if buffered.id not in assignments:
                         assignments[buffered.id] = []
@@ -126,6 +139,10 @@ def build_conversations(scraps: list[Scrap], group_id: str,
                     buffered.status = "assigned"
                     log.debug("Backward propagation: scrap %s → conversation %s",
                               buffered.id, conv.id)
+
+                if stale:
+                    log.debug("Dropped %d stale buffered scraps (>%ds old)",
+                              len(stale), BACKPROP_MAX_S)
                 state.buffered_scraps.clear()
 
             scrap.status = "assigned"
@@ -145,7 +162,7 @@ def build_conversations(scraps: list[Scrap], group_id: str,
 
             gap = scrap.first_msg_ts - last_ts if last_ts else float("inf")
 
-            if gap <= 300:  # 5 min — still in same context
+            if gap <= 1800:  # 30 min — still in same context
                 conv = conversations[state.current_entity_ref]
                 conv.add_scrap(scrap)
                 if scrap.id not in assignments:
