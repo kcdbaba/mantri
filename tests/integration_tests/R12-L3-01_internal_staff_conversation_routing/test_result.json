@@ -5,9 +5,9 @@
   "unrouted": 0,
   "noise": 37,
   "conv_routed": 164,
-  "agent_calls": 0,
+  "agent_calls": 16,
   "agent_failures": 0,
-  "conversations_created": 8,
+  "conversations_created": 10,
   "entities_discovered": 3,
   "errors": []
 }

@@ -99,7 +99,11 @@ def main():
          patch("src.router.router.ENABLE_CONVERSATION_ROUTING", True):
 
         from src.router.router import route
-        from src.router.worker import process_message, process_message_batch
+        from src.router.worker import (
+            process_message, process_message_batch,
+            _resolve_task_for_entity,
+        )
+        from src.store.task_store import get_tasks_for_entity
 
         t_start = time.time()
 
@@ -108,10 +112,24 @@ def main():
         batches_to_flush: list[tuple[str, list[dict]]] = []
 
         def _flush_batch(entity_id, batch_msgs):
-            """Process a batch of messages for one entity."""
+            """Process a batch of messages for one entity. Resolves entity → task first."""
+            # Resolve entity to task_id
+            try:
+                entity_tasks = get_tasks_for_entity(entity_id)
+                task_id = _resolve_task_for_entity(
+                    entity_id, entity_tasks, batch_msgs[-1], mock_redis
+                )
+            except Exception:
+                task_id = None
+
+            if not task_id:
+                log.debug("No task for entity %s — skipping batch of %d msgs",
+                          entity_id, len(batch_msgs))
+                return
+
             stats_data["agent_calls"] += 1
             try:
-                process_message_batch(entity_id, batch_msgs, mock_redis)
+                process_message_batch(task_id, batch_msgs, mock_redis)
             except Exception as e:
                 stats_data["agent_failures"] += 1
                 stats_data["errors"].append({
@@ -119,8 +137,8 @@ def main():
                     "phase": "batch",
                     "error": str(e)[:100],
                 })
-                log.error("Batch failed: entity=%s size=%d: %s",
-                          entity_id, len(batch_msgs), e)
+                log.error("Batch failed: task=%s entity=%s size=%d: %s",
+                          task_id, entity_id, len(batch_msgs), e)
 
         def _check_and_flush_batches(current_ts):
             """Flush batches that have timed out or hit max size."""
