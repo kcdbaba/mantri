@@ -142,8 +142,10 @@ class ConversationRouter:
     conversation analysis when a burstiness gap is detected.
     """
 
-    def __init__(self, flush_gap_s: int = FLUSH_GAP_S):
+    def __init__(self, flush_gap_s: int = FLUSH_GAP_S,
+                 enable_llm_matching: bool = False):
         self.flush_gap_s = flush_gap_s
+        self.enable_llm_matching = enable_llm_matching
         self._buffers: dict[str, GroupBuffer] = {}  # group_id → buffer
 
     def feed(self, message: dict) -> ConversationResult | None:
@@ -252,6 +254,14 @@ class ConversationRouter:
                 conversations, scraps, threaded, buf.messages, buf.group_id
             )
 
+        # Step 3: LLM backward context matching
+        # For each assigned scrap with entity evidence, look backward within
+        # 16 working hours for unassigned scraps and ask LLM to judge relevance
+        if self.enable_llm_matching:
+            conversations = self._enhance_with_llm_context(
+                conversations, scraps, buf.group_id
+            )
+
         # Collect unassigned messages
         assigned_msg_ids = set()
         for conv in conversations:
@@ -345,6 +355,52 @@ class ConversationRouter:
         if newly_assigned:
             log.info("Reply-tree enhancement: %d messages newly assigned via cross-sender threads",
                      newly_assigned)
+
+        return conversations
+
+    def _enhance_with_llm_context(self, conversations, scraps, group_id):
+        """
+        Use LLM to match unassigned scraps to conversations by backward context.
+
+        For each assigned scrap with entity evidence, looks backward within
+        16 working hours for unassigned scraps and asks Gemini Flash to judge.
+        """
+        from src.conversation.llm_context_matcher import match_backward_context
+        from src.conversation.scrap_detector import Scrap
+
+        # Build assigned scrap list with entity refs
+        assigned_ids = set()
+        assigned_with_entity = []
+        conv_by_entity = {}
+        for conv in conversations:
+            conv_by_entity[conv.entity_ref] = conv
+            for s in conv.scraps:
+                assigned_ids.add(s.id)
+                if s.entity_matches:
+                    assigned_with_entity.append((s, conv.entity_ref))
+
+        if not assigned_with_entity:
+            return conversations
+
+        # Run LLM matching
+        new_matches = match_backward_context(
+            assigned_with_entity, scraps, assigned_ids
+        )
+
+        # Apply matches — add matched scraps to their conversations
+        scrap_by_id = {s.id: s for s in scraps}
+        for scrap_id, entity_ref in new_matches:
+            matched_scrap = scrap_by_id.get(scrap_id)
+            if not matched_scrap:
+                continue
+            conv = conv_by_entity.get(entity_ref)
+            if conv:
+                conv.add_scrap(matched_scrap)
+                matched_scrap.status = "assigned"
+                log.info("LLM context: scrap %s → %s", scrap_id, entity_ref)
+
+        if new_matches:
+            log.info("LLM context matching: %d scraps newly assigned", len(new_matches))
 
         return conversations
 
