@@ -88,6 +88,7 @@ PRINCIPAL_ENTITIES = {
     "ashish chhabra", "ashish chh", "ashish ch",
     "prop ashish", "prop. ashish",
     "army stores prop", "prop ashish chh",
+    "first step", "first step school",
 }
 
 # Payment keywords for bookkeeping singleton detection

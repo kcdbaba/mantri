@@ -191,6 +191,10 @@ def _classify_entity(name: str, context: str) -> str:
 
     # Transport clues
     if any(w in lower for w in ("driver", "tempo", "transport", "auto")):
+        # Check if transport is for the principal (internal resource)
+        from src.conversation.scrap_detector import PRINCIPAL_ENTITIES
+        if any(p in lower or p in ctx_lower for p in PRINCIPAL_ENTITIES):
+            return "internal"
         return "transport"
 
     # Military unit clues
