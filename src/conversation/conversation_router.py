@@ -56,15 +56,17 @@ def set_ocr_cache(group_id: str, cache: dict):
 
 def _enrich_with_ocr(messages: list[dict], group_id: str) -> list[dict]:
     """
-    Enrich empty messages with OCR-extracted text from cached results.
+    Enrich messages with OCR data from cached results.
 
-    For messages with no body but an OCR entry, injects the extracted_text
-    and entities into the message dict so downstream scrap detection can
-    use them. Does NOT modify the original message — creates a shallow copy.
+    - Appends OCR text to message body (never replaces)
+    - Carries truncation resolution mapping as metadata (_ocr_resolutions)
+    - Downstream entity detection uses resolutions as additional evidence
     """
     cache = _ocr_cache.get(group_id, {})
     if not cache:
         return messages
+
+    from src.conversation.scrap_detector import PRINCIPAL_ENTITIES
 
     enriched = []
     n_enriched = 0
@@ -76,27 +78,16 @@ def _enrich_with_ocr(messages: list[dict], group_id: str) -> list[dict]:
             ocr = cache[mid]
             ocr_text = ocr.get("extracted_text", "")
             ocr_desc = ocr.get("description", "")
+            resolutions = ocr.get("resolutions", {})
 
-            # Always combine: body text + OCR text + OCR description
-            # Never drop either — both are valuable signals
-            # Strip principal entity names from OCR text to prevent false routing
-            from src.conversation.scrap_detector import PRINCIPAL_ENTITIES
-            def _strip_principal(text):
-                lower = text.lower()
-                for p in PRINCIPAL_ENTITIES:
-                    idx = lower.find(p)
-                    if idx >= 0:
-                        text = text[:idx] + text[idx + len(p):]
-                        lower = text.lower()
-                return text.strip()
-
+            # Combine body + OCR text (both preserved, never dropped)
             parts = []
             if body:
                 parts.append(body)
             if ocr_text:
-                parts.append(_strip_principal(ocr_text))
+                parts.append(ocr_text)
             if ocr_desc and ocr_desc != ocr_text:
-                parts.append(_strip_principal(ocr_desc))
+                parts.append(ocr_desc)
 
             if parts:
                 combined = " | ".join(parts)
@@ -105,6 +96,10 @@ def _enrich_with_ocr(messages: list[dict], group_id: str) -> list[dict]:
                     msg["body"] = combined
                     msg["_ocr_enriched"] = True
                     msg["_ocr_category"] = ocr.get("category", "")
+                    # Carry resolution mapping — entity detection can use
+                    # resolved names as additional matching evidence
+                    if resolutions:
+                        msg["_ocr_resolutions"] = resolutions
                     n_enriched += 1
 
         enriched.append(msg)

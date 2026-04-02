@@ -366,6 +366,13 @@ def _partition_strand(messages: list[dict], group_id: str,
         if body:
             msg_entities = {r["ref"] for r in extract_entity_refs(body)}
 
+        # Use OCR truncation resolutions as additional entity evidence
+        # The resolved names are matched through extract_entity_refs too
+        ocr_resolutions = msg.get("_ocr_resolutions", {})
+        for _truncated, resolved in ocr_resolutions.items():
+            for ref in extract_entity_refs(resolved):
+                msg_entities.add(ref["ref"])
+
         # Decide: continue current scrap or start new one
         should_break = False
 
