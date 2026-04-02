@@ -160,14 +160,26 @@ def extract_entity_refs(body: str) -> list[dict]:
     body_lower = body.lower()
 
     # 2. ORBAT numbered units lookup → confidence 0.85
+    # Track which text spans were matched by ORBAT so regex doesn't duplicate
+    # Use word-boundary matching to prevent "9 bde" matching inside "999 bde"
+    orbat_matched_texts = set()
     for alias, (full_name, unit_key) in _ORBAT_LOOKUP.items():
-        if alias in body_lower:
+        # Word-boundary check: alias must appear as a whole word/phrase
+        pattern = r'\b' + re.escape(alias) + r'\b'
+        if re.search(pattern, body_lower):
             _add(f"unit:{unit_key}", 0.85)
+            orbat_matched_texts.add(alias)
 
     # 3. Army unit regex fallback → confidence 0.6
+    # Only add if the matched text wasn't already resolved by ORBAT
     for match in _ARMY_UNIT_RE.finditer(body):
-        unit_ref = re.sub(r'\s+', '_', match.group(1).lower().strip())
-        _add(f"unit:{unit_ref}", 0.6)
+        matched_text = match.group(1).lower().strip()
+        # Check if any ORBAT alias covers this text
+        already_orbat = any(oa in matched_text or matched_text in oa
+                           for oa in orbat_matched_texts)
+        if not already_orbat:
+            unit_ref = re.sub(r'\s+', '_', matched_text)
+            _add(f"unit:{unit_ref}", 0.6)
 
     # 4. "from X" supplier pattern → confidence 0.6
     for match in _FROM_SUPPLIER_RE.finditer(body):
