@@ -143,9 +143,13 @@ class ConversationRouter:
     """
 
     def __init__(self, flush_gap_s: int = FLUSH_GAP_S,
-                 enable_llm_matching: bool = False):
+                 enable_llm_matching: bool = False,
+                 preloaded_node_states: dict | None = None,
+                 preloaded_task_entities: dict | None = None):
         self.flush_gap_s = flush_gap_s
         self.enable_llm_matching = enable_llm_matching
+        self.preloaded_node_states = preloaded_node_states  # {task_id: [node_dicts]}
+        self.preloaded_task_entities = preloaded_task_entities  # {task_id: entity_ref}
         self._buffers: dict[str, GroupBuffer] = {}  # group_id → buffer
 
     def feed(self, message: dict) -> ConversationResult | None:
@@ -253,6 +257,13 @@ class ConversationRouter:
             conversations = self._enhance_with_reply_tree(
                 conversations, scraps, threaded, buf.messages, buf.group_id
             )
+
+        # Step 2.5: Date-based deterministic matching
+        # Match unassigned scraps to conversations by correlating message
+        # timestamps with known order timeline events (delivery dates, etc.)
+        conversations = self._enhance_with_date_matching(
+            conversations, scraps, task_entities, buf.group_id
+        )
 
         # Step 3: LLM backward context matching
         # For each assigned scrap with entity evidence, look backward within
@@ -417,6 +428,84 @@ class ConversationRouter:
             ctx[conv.entity_ref] = "\n".join(parts)
 
         return ctx
+
+    def _enhance_with_date_matching(self, conversations, scraps, task_entities, group_id):
+        """
+        Match unassigned scraps to conversations by date proximity to
+        known order timeline events (delivery dates, required-by dates).
+        """
+        from src.conversation.date_matcher import extract_timeline, match_by_date
+        from src.conversation.scrap_detector import Scrap
+
+        # Build assigned set
+        assigned_ids = set()
+        conv_by_entity = {}
+        for conv in conversations:
+            conv_by_entity[conv.entity_ref] = conv
+            for s in conv.scraps:
+                assigned_ids.add(s.id)
+
+        # Get unassigned scraps with text
+        unassigned = [s for s in scraps if s.id not in assigned_ids]
+        if not unassigned:
+            return conversations
+
+        # Extract timeline from task node_data
+        node_states = {}
+        if self.preloaded_node_states:
+            node_states = self.preloaded_node_states
+        else:
+            try:
+                from src.store.task_store import get_node_states
+                for task_id in task_entities:
+                    nodes = get_node_states(task_id)
+                    if nodes:
+                        node_states[task_id] = [dict(n) for n in nodes]
+            except Exception as e:
+                log.debug("Could not load node states for date matching: %s", e)
+                return conversations
+
+        # Use preloaded entity mapping if available (has all tasks including
+        # those created during replay), fall back to _flush_buffer's task_entities
+        effective_entities = self.preloaded_task_entities or task_entities
+        timeline = extract_timeline([], node_states, effective_entities)
+        if not timeline:
+            return conversations
+
+        # Run date matching
+        date_matches = match_by_date(unassigned, timeline)
+
+        # Apply matches
+        scrap_by_id = {s.id: s for s in scraps}
+        for dm in date_matches:
+            matched_scrap = scrap_by_id.get(dm.scrap_id)
+            if not matched_scrap:
+                continue
+
+            # Find or create conversation for this entity
+            conv = conv_by_entity.get(dm.entity_ref)
+            if not conv:
+                from src.conversation.conversation_manager import Conversation
+                import uuid
+                conv = Conversation(
+                    id=f"conv_{uuid.uuid4().hex[:8]}",
+                    group_id=group_id,
+                    entity_ref=dm.entity_ref,
+                    conv_type="order",
+                    created_at=matched_scrap.first_msg_ts,
+                    last_activity=matched_scrap.last_msg_ts,
+                )
+                conversations.append(conv)
+                conv_by_entity[dm.entity_ref] = conv
+
+            conv.add_scrap(matched_scrap)
+            matched_scrap.status = "assigned"
+            assigned_ids.add(matched_scrap.id)
+
+        if date_matches:
+            log.info("Date matching: %d scraps newly assigned", len(date_matches))
+
+        return conversations
 
     def _enhance_with_llm_context(self, conversations, scraps, group_id):
         """
