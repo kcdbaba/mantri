@@ -1,0 +1,127 @@
+{
+  "case_id": "R12-L3-01",
+  "version_tag": "",
+  "generated_by": "claude_code",
+  "generated_at": "2026-04-02",
+  "framework": "R12",
+  "description": "Eval baselines for conversation routing on Tasks group. Test window: March 5 12:43-17:00 (10 scraps). Expected conversation assignments based on entity evidence, carry-forward, and cross-group context from warmup.",
+  "warmup_end_ts": 1772815380,
+
+  "scraps": [
+    {
+      "scrap_index": 1,
+      "timestamp": "2026-03-05 12:43",
+      "sender": "Ashish Chhabra",
+      "content_summary": "Location share + contact (mukesh ji mata dimand + phone)",
+      "expected_entity": null,
+      "expected_assignment": "unassigned",
+      "reason": "No entity evidence. Location + contact for unknown person. Could be any order."
+    },
+    {
+      "scrap_index": 2,
+      "timestamp": "2026-03-05 13:13",
+      "sender": "Mousumi Banik",
+      "content_summary": "240ltrs dustbin @2700+GST from nilkamal, freight extra",
+      "expected_entity": "supplier:nilkamal",
+      "expected_assignment": "new_supplier_conversation",
+      "reason": "'from nilkamal' introduces a supplier. Price quote for dustbins."
+    },
+    {
+      "scrap_index": 3,
+      "timestamp": "2026-03-05 14:01",
+      "sender": "Rahul Staff",
+      "content_summary": "2 empty images + '1200' (price/amount)",
+      "expected_entity": null,
+      "expected_assignment": "unassigned",
+      "reason": "No entity evidence. Number without context. Images unavailable."
+    },
+    {
+      "scrap_index": 4,
+      "timestamp": "2026-03-05 14:10",
+      "sender": "Ashish Chhabra",
+      "content_summary": "Paytm payment screenshot (Money Sent)",
+      "expected_entity": "singleton:bookkeeping",
+      "expected_assignment": "bookkeeping",
+      "reason": "Payment keyword detection → bookkeeping singleton."
+    },
+    {
+      "scrap_index": 5,
+      "timestamp": "2026-03-05 14:48",
+      "sender": "Mousumi Banik",
+      "content_summary": "Image + 'vu rahman' + '500/- auto fair'",
+      "expected_entity": null,
+      "expected_assignment": "unassigned",
+      "reason": "No entity evidence. 'vu rahman' is a person name (transport?), 500/- is auto fare. Not clearly linked to any order."
+    },
+    {
+      "scrap_index": 6,
+      "timestamp": "2026-03-05 15:05",
+      "sender": "Ashish Chhabra",
+      "content_summary": "Image + '01 stand' + '02 clocks also?'",
+      "expected_entity": "unit:107_infantry_brigade",
+      "expected_assignment": "carry_forward_or_reply_tree",
+      "reason": "No direct entity mention, but immediately precedes scrap 7 (107 bde delivery). Items (stand, clocks) likely part of the 107 bde order. Should be assigned via backward propagation or reply tree from scrap 7."
+    },
+    {
+      "scrap_index": 7,
+      "timestamp": "2026-03-05 15:17",
+      "sender": "Sammsul Haque",
+      "content_summary": "107 bde item's delivered (duplicate message)",
+      "expected_entity": "unit:107_infantry_brigade",
+      "expected_assignment": "direct_entity_match",
+      "reason": "Direct ORBAT entity match: '107 bde' → unit:107_infantry_brigade at 0.85 confidence."
+    },
+    {
+      "scrap_index": 8,
+      "timestamp": "2026-03-05 16:51",
+      "sender": "Mousumi Banik",
+      "content_summary": "Single dot '.'",
+      "expected_entity": null,
+      "expected_assignment": "unassigned",
+      "reason": "No content, no entity evidence. Single dot is a placeholder/ping."
+    },
+    {
+      "scrap_index": 9,
+      "timestamp": "2026-03-05 16:54",
+      "sender": "Ashish Chhabra",
+      "content_summary": "3 empty images",
+      "expected_entity": null,
+      "expected_assignment": "unassigned",
+      "reason": "No text content. Images unavailable for OCR."
+    },
+    {
+      "scrap_index": 10,
+      "timestamp": "2026-03-05 17:00",
+      "sender": "Sammsul Haque",
+      "content_summary": "2 empty images + 'Csd canteen rangia'",
+      "expected_entity": null,
+      "expected_assignment": "unassigned_or_new_entity",
+      "reason": "'Csd canteen rangia' is a CSD canteen (client entity) but not in the seed alias dict. Entity learner should discover this. Assignment depends on whether rangia canteen has an active order."
+    }
+  ],
+
+  "expected_conversations": {
+    "unit:107_infantry_brigade": {
+      "min_scraps": 1,
+      "max_scraps": 2,
+      "notes": "Scrap 7 (direct match). Scrap 6 may join via backward propagation."
+    },
+    "singleton:bookkeeping": {
+      "min_scraps": 1,
+      "max_scraps": 1,
+      "notes": "Scrap 4 (payment)."
+    }
+  },
+
+  "expected_discovered_entities": [
+    "nilkamal",
+    "csd canteen rangia"
+  ],
+
+  "metrics": {
+    "min_assigned_scraps": 2,
+    "max_assigned_scraps": 4,
+    "min_conversations": 2,
+    "expected_unassigned": 6
+  }
+}

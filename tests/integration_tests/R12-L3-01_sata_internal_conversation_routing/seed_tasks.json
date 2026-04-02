@@ -1,0 +1,64 @@
+{
+  "_comment": "Seed data for R12-L3-01. Same entities as R1-D but with ENABLE_CONVERSATION_ROUTING=True for Tasks group. Tests that internal staff chatter in Tasks correctly maps to entity-specific order conversations.",
+
+  "monitored_groups": {
+    "sata_jobs": "task_sata_client",
+    "Tasks": null,
+    "Voltas_supplier": "task_voltas_supplier",
+    "LG_supplier": "task_lg_supplier"
+  },
+
+  "config_overrides": {
+    "ENABLE_CONVERSATION_ROUTING": true
+  },
+
+  "test_window": {
+    "warmup_end_ts": 1772815380,
+    "warmup_end_readable": "2026-03-05 12:43",
+    "test_end_ts": 1772830800,
+    "test_end_readable": "2026-03-05 17:00",
+    "description": "Warmup: March 1-5 12:43 (131 msgs). Test: March 5 12:43-17:00 (32 msgs, 10 Tasks scraps)."
+  },
+
+  "entities": [
+    {
+      "id": "entity_sata",
+      "name": "SATA Artillery Regiment",
+      "aliases": ["sata", "sata bty", "arvind sir", "51 sub area"]
+    },
+    {
+      "id": "entity_voltas_uttam",
+      "name": "Voltas / Uttam Enterprise / JRBK",
+      "aliases": ["voltas", "uttam", "uttam enterprise", "jrbk", "charu enterprise"]
+    },
+    {
+      "id": "entity_lg_sanbira",
+      "name": "LG / Sanbira",
+      "aliases": ["lg", "sanbira"]
+    }
+  ],
+
+  "tasks": [
+    {
+      "id": "task_sata_client",
+      "order_type": "standard_procurement",
+      "client_id": "entity_sata",
+      "supplier_ids": ["entity_voltas_uttam", "entity_lg_sanbira"],
+      "stage": "active"
+    },
+    {
+      "id": "task_voltas_supplier",
+      "order_type": "supplier_order",
+      "client_id": "entity_sata",
+      "supplier_ids": ["entity_voltas_uttam"],
+      "stage": "active"
+    },
+    {
+      "id": "task_lg_supplier",
+      "order_type": "supplier_order",
+      "client_id": "entity_sata",
+      "supplier_ids": ["entity_lg_sanbira"],
+      "stage": "active"
+    }
+  ]
+}

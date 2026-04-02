@@ -180,6 +180,13 @@ RISK_CATEGORIES = {
     "R4-B":  ("Army Client Entity Resolution",  "Resolving Army unit/officer references to single client"),
     "R5":    ("Ambiguity Detection",            "Flagging uncertain information for human review"),
     "R6":    ("Post-Delivery QC",               "Handling delivery shortfalls and quality rejections"),
+    "R7a":   ("Off-Platform Instruction Gap",   "Verbal instructions with no WhatsApp trail block downstream actions"),
+    "R7b":   ("Execution Plan Dissonance",      "Staff act on 1:1 chats, groups not updated — agent state diverges"),
+    "R8":    ("Image Content Blindness",        "Business-critical info in images — OCR/vision required (resolved S1)"),
+    "R9":    ("Missing WhatsApp Entries",        "Task appears stalled vs genuinely stalled — no WhatsApp trail"),
+    "R10":   ("Staff Quality Variance",         "Assignee reliability affecting escalation urgency"),
+    "R11":   ("Warehouse Inventory Blindness",  "Stock-filled orders triggering false supplier tasks"),
+    "R12":   ("Internal Group Conversation Routing", "Mapping staff operational chatter to entity-specific order conversations"),
 }
 
 DIFFICULTY_LEVELS = {
@@ -189,7 +196,7 @@ DIFFICULTY_LEVELS = {
 }
 
 # Group order for collapsible rows
-FRAMEWORK_GROUP_ORDER = ["R2", "R3-C", "R4-A", "R4-B", "R5"]
+FRAMEWORK_GROUP_ORDER = ["R2", "R3-C", "R4-A", "R4-B", "R5", "R6", "R7", "R12"]
 
 
 def _load_inc_descriptions() -> dict[str, str]:
