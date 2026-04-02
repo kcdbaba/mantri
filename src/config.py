@@ -41,8 +41,6 @@ ENTITY_ALIASES: dict[str, str] = {
     "sata":                 "entity_sata",
     "51 sub area":          "entity_sata",
     "51 sa":                "entity_sata",
-    "eastern command":      "entity_sata",
-    "army":                 "entity_sata",
 
     # Kapoor Steel variants
     "kapoor":               "entity_kapoor_steel",
