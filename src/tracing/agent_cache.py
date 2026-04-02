@@ -114,7 +114,7 @@ def load_from_replay_result(replay_result_path: str, task_entities: dict[str, st
     # Get task_messages to reconstruct which messages went to which tasks
     try:
         rows = conn.execute(
-            "SELECT task_id, message_id FROM task_messages ORDER BY task_id, created_at"
+            "SELECT task_id, message_id FROM task_messages ORDER BY task_id, timestamp"
         ).fetchall()
     except sqlite3.OperationalError:
         log.warning("No task_messages table in %s", db_path)

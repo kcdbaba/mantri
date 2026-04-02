@@ -117,15 +117,27 @@ def main():
                 log.info("[%s] Processing message %d/%d: %s",
                          phase, i + 1, len(messages), msg.get("message_id"))
 
-            if args.dry_run and group_id == "Tasks":
-                # Dry run: feed to conversation router only, no agent calls
-                result = conv_router.feed(msg)
-                if result:
-                    stats_data["conversations_created"] += len(result.conversations)
-                    stats_data["entities_discovered"] += len(result.discovered_entities)
-                    if not is_warmup:
-                        _log_conversation_result(result)
-                stats_data["conv_routed"] += 1
+            if args.dry_run:
+                # Dry run: no LLM calls at all
+                if group_id == "Tasks":
+                    result = conv_router.feed(msg)
+                    if result:
+                        stats_data["conversations_created"] += len(result.conversations)
+                        stats_data["entities_discovered"] += len(result.discovered_entities)
+                        if not is_warmup:
+                            _log_conversation_result(result)
+                    stats_data["conv_routed"] += 1
+                else:
+                    # Route only, no agent call
+                    routes = route(msg)
+                    if routes and routes != [("__conv_pending__", 0.0)]:
+                        stats_data["routed"] += 1
+                    elif not routes:
+                        body = (msg.get("body") or "").strip()
+                        if not body:
+                            stats_data["noise"] += 1
+                        else:
+                            stats_data["unrouted"] += 1
                 continue
 
             # Full run: process through pipeline

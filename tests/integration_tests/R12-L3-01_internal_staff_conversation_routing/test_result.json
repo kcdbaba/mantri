@@ -1,13 +1,13 @@
 {
   "warmup_messages": 131,
   "test_messages": 32,
-  "routed": 9,
+  "routed": 68,
   "unrouted": 0,
-  "noise": 0,
-  "conv_routed": 23,
+  "noise": 13,
+  "conv_routed": 82,
   "agent_calls": 0,
   "agent_failures": 0,
-  "conversations_created": 2,
-  "entities_discovered": 0,
+  "conversations_created": 8,
+  "entities_discovered": 3,
   "errors": []
 }
