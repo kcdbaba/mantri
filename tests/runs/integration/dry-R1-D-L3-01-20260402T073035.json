@@ -1,0 +1,29 @@
+{
+  "run_at": "2026-04-02T07:30:35.051505",
+  "test_type": "dry",
+  "case_id": "R1-D-L3-01",
+  "total": 904,
+  "noise": 289,
+  "routable": 615,
+  "routed": 372,
+  "unrouted": 243,
+  "routing_rate": 0.6049,
+  "per_group": {
+    "LG_supplier": {
+      "routed": 43,
+      "unrouted": 0
+    },
+    "Tasks": {
+      "routed": 5,
+      "unrouted": 243
+    },
+    "Voltas_supplier": {
+      "routed": 45,
+      "unrouted": 0
+    },
+    "sata_jobs": {
+      "routed": 279,
+      "unrouted": 0
+    }
+  }
+}
