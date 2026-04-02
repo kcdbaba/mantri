@@ -85,9 +85,8 @@ _STOP_WORDS = {
 PRINCIPAL_ENTITIES = {
     "uttam enterprise", "uttam enterprises",
     "army stores", "army store",
-    "ashish chhabra", "ashish chh", "ashish ch",
+    "ashish chhabra",
     "prop ashish", "prop. ashish",
-    "army stores prop", "prop ashish chh",
     "first step", "first step school",
 }
 
