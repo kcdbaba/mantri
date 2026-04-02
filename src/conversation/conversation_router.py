@@ -33,6 +33,75 @@ log = logging.getLogger(__name__)
 # Gap after which a buffer is considered idle and flushed
 FLUSH_GAP_S = 300  # 5 minutes — matches the burst analysis findings
 
+# OCR cache files per case directory
+_ocr_cache: dict[str, dict] = {}  # group_id → {message_id: ocr_data}
+
+
+def load_ocr_cache(ocr_path: str) -> dict:
+    """Load OCR results from a JSON file. Returns {message_id: ocr_data}."""
+    try:
+        import json
+        with open(ocr_path) as f:
+            data = json.load(f)
+        return data.get("images", {})
+    except Exception as e:
+        log.debug("No OCR cache at %s: %s", ocr_path, e)
+        return {}
+
+
+def set_ocr_cache(group_id: str, cache: dict):
+    """Set OCR cache for a group. Called externally before routing."""
+    _ocr_cache[group_id] = cache
+
+
+def _enrich_with_ocr(messages: list[dict], group_id: str) -> list[dict]:
+    """
+    Enrich empty messages with OCR-extracted text from cached results.
+
+    For messages with no body but an OCR entry, injects the extracted_text
+    and entities into the message dict so downstream scrap detection can
+    use them. Does NOT modify the original message — creates a shallow copy.
+    """
+    cache = _ocr_cache.get(group_id, {})
+    if not cache:
+        return messages
+
+    enriched = []
+    n_enriched = 0
+    for msg in messages:
+        mid = msg.get("message_id", "")
+        body = (msg.get("body") or "").strip()
+
+        if mid in cache:
+            ocr = cache[mid]
+            ocr_text = ocr.get("extracted_text", "")
+            ocr_desc = ocr.get("description", "")
+            ocr_entities = ocr.get("entities", [])
+            needs_copy = False
+
+            if not body and (ocr_text or ocr_desc):
+                needs_copy = True
+
+            if ocr_entities:
+                needs_copy = True
+
+            if needs_copy:
+                msg = dict(msg)
+                if not body and (ocr_text or ocr_desc):
+                    msg["body"] = ocr_text or ocr_desc
+                    msg["_ocr_enriched"] = True
+                    msg["_ocr_category"] = ocr.get("category", "")
+                    n_enriched += 1
+                if ocr_entities:
+                    msg["_ocr_entities"] = ocr_entities
+
+        enriched.append(msg)
+
+    if n_enriched:
+        log.info("OCR enrichment: %d messages enriched from cache", n_enriched)
+
+    return enriched
+
 
 @dataclass
 class ConversationResult:
@@ -134,6 +203,9 @@ class ConversationRouter:
         """
         log.info("Flushing conversation buffer: group=%s, %d messages",
                  buf.group_id, len(buf.messages))
+
+        # Enrich empty messages with OCR text if available
+        buf.messages = _enrich_with_ocr(buf.messages, buf.group_id)
 
         # Get active task items for item-based matching
         task_items = {}

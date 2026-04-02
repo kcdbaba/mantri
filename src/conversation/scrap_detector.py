@@ -233,6 +233,9 @@ def _partition_strand(messages: list[dict], group_id: str,
         msg_entities = set()
         if body:
             msg_entities = {r["ref"] for r in extract_entity_refs(body)}
+        # Also include OCR-stored entities (injected by conversation_router)
+        for ocr_ent in msg.get("_ocr_entities", []):
+            msg_entities.add(ocr_ent)
 
         # Decide: continue current scrap or start new one
         should_break = False
