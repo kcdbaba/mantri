@@ -77,6 +77,45 @@ PAYMENT_KEYWORDS = {
 _ORBAT_LOOKUP: dict[str, tuple[str, str]] = {}
 
 
+# Abbreviation ↔ full form pairs for auto-expansion
+_ABBREV_EXPANSIONS = [
+    ("div", "division"),
+    ("bde", "brigade"),
+    ("regt", "regiment"),
+    ("bty", "battery"),
+    ("bn", "battalion"),
+    ("coy", "company"),
+    ("engr", "engineer"),
+    ("sig", "signal"),
+    ("fd", "field"),
+    ("armd", "armoured"),
+    ("inf", "infantry"),
+    ("arty", "artillery"),
+    ("mtn", "mountain"),
+    ("med", "medical"),
+    ("ord", "ordnance"),
+    ("eme", "electrical and mechanical engineers"),
+    ("stn hq", "station headquarters"),
+]
+
+
+def _expand_abbreviations(alias: str) -> list[str]:
+    """Generate expanded/contracted variants of an alias."""
+    variants = []
+    for abbrev, full in _ABBREV_EXPANSIONS:
+        # Expand: "21 mtn div" → "21 mountain division"
+        if f" {abbrev}" in f" {alias}" or alias.endswith(f" {abbrev}"):
+            expanded = alias.replace(abbrev, full)
+            if expanded != alias:
+                variants.append(expanded)
+        # Contract: "21 mountain division" → "21 mtn div"
+        if f" {full}" in f" {alias}" or alias.endswith(f" {full}"):
+            contracted = alias.replace(full, abbrev)
+            if contracted != alias:
+                variants.append(contracted)
+    return variants
+
+
 def _load_orbat_lookup():
     """Load numbered units from indian_military_units_reference.json."""
     global _ORBAT_LOOKUP
@@ -111,6 +150,9 @@ def _load_orbat_lookup():
             unit_key = re.sub(r'\s+', '_', full_name.lower().strip())
             for alias in entry.get("aliases", []):
                 _ORBAT_LOOKUP[alias.lower()] = (full_name, unit_key)
+                # Auto-expand abbreviations to full forms and vice versa
+                for expanded in _expand_abbreviations(alias.lower()):
+                    _ORBAT_LOOKUP[expanded] = (full_name, unit_key)
 
     log.info("Loaded %d ORBAT aliases", len(_ORBAT_LOOKUP))
 
