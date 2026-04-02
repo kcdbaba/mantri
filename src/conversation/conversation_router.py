@@ -122,6 +122,7 @@ class ConversationResult:
     conversations: list[Conversation]
     unassigned_messages: list[dict]
     total_messages: int
+    discovered_entities: list = field(default_factory=list)
 
 
 @dataclass
@@ -273,6 +274,19 @@ class ConversationRouter:
                 conversations, scraps, buf.group_id
             )
 
+        # Step 4: Entity learning — discover new entities from all messages
+        # (runs on ALL messages, not just unassigned, because entity
+        # introductions often appear in assigned contexts too)
+        from src.conversation.entity_learner import discover_entities
+        try:
+            from src.router.alias_dict import get_all_aliases
+            known = set(get_all_aliases().keys())
+        except Exception:
+            known = set()
+        discovered = discover_entities(buf.messages, known_aliases=known)
+        if discovered:
+            log.info("Entity learning: %d new entities discovered", len(discovered))
+
         # Collect unassigned messages
         assigned_msg_ids = set()
         for conv in conversations:
@@ -293,6 +307,7 @@ class ConversationRouter:
             conversations=conversations,
             unassigned_messages=unassigned,
             total_messages=len(buf.messages),
+            discovered_entities=discovered,
         )
 
     @staticmethod
