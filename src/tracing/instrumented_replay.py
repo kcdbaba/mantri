@@ -83,7 +83,7 @@ def run_instrumented_replay(
     # Dev test cache setup
     if dev_test:
         from src.tracing import agent_cache
-        cache_path = str(case_dir / "dev_cache.json")
+        cache_path = str(case_dir / "dev_cache.db")
         agent_cache.init(cache_path)
 
     # Conversation routing setup
@@ -350,7 +350,7 @@ def run_instrumented_replay(
 
     # Save dev cache
     if dev_test:
-        agent_cache.save()
+        agent_cache.close()
         stats["dev_cache"] = agent_cache.stats()
 
     _write_progress("complete", f"done in {time.time()-t_start:.0f}s")

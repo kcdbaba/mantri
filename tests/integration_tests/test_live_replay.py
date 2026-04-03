@@ -688,7 +688,7 @@ class TestLiveReplay:
             pytest.fail("--dev-test and --max-messages are mutually exclusive")
 
         if dev_test:
-            cache_exists = (case_dir / "dev_cache.json").exists()
+            cache_exists = (case_dir / "dev_cache.db").exists()
             if not cache_exists and not run_live:
                 pytest.fail("--dev-test with no cache requires --run-live to build it")
         elif not run_live:
