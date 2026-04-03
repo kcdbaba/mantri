@@ -78,7 +78,8 @@ def _seed_db(db_path: str, seed: dict):
 def _setup_case(case_dir: Path):
     """Set up temp DB and return (route_fn, trace, expected, seed, case_id)."""
     seed = _load_json(case_dir, "seed_tasks.json")
-    trace = _load_json(case_dir, "replay_trace.json")
+    trace_data = _load_json(case_dir, "replay_trace.json")
+    trace = trace_data["messages"]
     expected = {r["message_id"]: r for r in _load_json(case_dir, "expected_routing.json")}
 
     tmp = tempfile.NamedTemporaryFile(suffix=".db", delete=False)

@@ -159,11 +159,16 @@ def main():
         integration_dir.mkdir(parents=True, exist_ok=True)
         output_path = integration_dir / "replay_trace.json"
 
-    print(f"Case: {json.loads(metadata_path.read_text()).get('id', '?')}")
+    case_id = json.loads(metadata_path.read_text()).get("id", "?")
+    print(f"Case: {case_id}")
     trace = build_trace(metadata_path)
 
+    trace_data = {
+        "_meta": {"case_id": case_id, "description": ""},
+        "messages": trace,
+    }
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(json.dumps(trace, indent=2, ensure_ascii=False), encoding="utf-8")
+    output_path.write_text(json.dumps(trace_data, indent=2, ensure_ascii=False), encoding="utf-8")
 
     # Summary stats
     n_images = sum(1 for m in trace if m["image_path"])

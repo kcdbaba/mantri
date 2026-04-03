@@ -369,7 +369,8 @@ def _estimate_cost(model_key: str, tokens_in: int, tokens_out: int) -> float:
 
 def run_benchmark(models: list[str], n_samples: int):
     """Run the full benchmark."""
-    trace = json.loads((CASE_DIR / "replay_trace.json").read_text())
+    trace_data = json.loads((CASE_DIR / "replay_trace.json").read_text())
+    trace = trace_data["messages"]
     seed = json.loads((CASE_DIR / "seed_tasks.json").read_text())
 
     db_path = _seed_temp_db(seed)

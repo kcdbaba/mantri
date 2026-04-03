@@ -1,50 +1,56 @@
-[
-  {
-    "message_id": "link_001",
-    "group_id": "client_grp",
-    "sender_jid": "client@s.whatsapp.net",
-    "body": "Sir 50 bags atta chahiye aur 20 bags daal bhi. Kal tak de sakte ho?",
-    "timestamp": 1743230000,
-    "media_type": "text"
+{
+  "_meta": {
+    "case_id": "LINKAGE-01",
+    "description": "Client-supplier linkage test"
   },
-  {
-    "message_id": "link_002",
-    "group_id": "client_grp",
-    "sender_jid": "ashish@s.whatsapp.net",
-    "body": "Ji sir, aaj hi order kar dete hain. Kal tak deliver ho jayega.",
-    "timestamp": 1743230100,
-    "media_type": "text"
-  },
-  {
-    "message_id": "link_003",
-    "group_id": "supplier_grp",
-    "sender_jid": "staff@s.whatsapp.net",
-    "body": "Kapoor ji 50 bags atta chahiye aur 20 bags daal. Kal subah tak de sakte ho?",
-    "timestamp": 1743230200,
-    "media_type": "text"
-  },
-  {
-    "message_id": "link_004",
-    "group_id": "supplier_grp",
-    "sender_jid": "kapoor@s.whatsapp.net",
-    "body": "Haan bhai, atta 50 bags ready hai. Daal 20 bags bhi de dunga subah tak.",
-    "timestamp": 1743230300,
-    "media_type": "text"
-  },
-  {
-    "message_id": "link_005",
-    "group_id": "supplier_grp",
-    "sender_jid": "staff@s.whatsapp.net",
-    "body": "Maal aa gaya sir. Sab check kar liya, 50 bags atta aur 20 bags daal theek hai.",
-    "timestamp": 1743316700,
-    "media_type": "text"
-  },
-  {
-    "message_id": "link_006",
-    "group_id": "client_grp",
-    "sender_jid": "ashish@s.whatsapp.net",
-    "body": "Sir items ready hain, dispatch kar rahe hain aaj.",
-    "timestamp": 1743316800,
-    "media_type": "text"
-  }
-]
+  "messages": [
+    {
+      "message_id": "link_001",
+      "group_id": "client_grp",
+      "sender_jid": "client@s.whatsapp.net",
+      "body": "Sir 50 bags atta chahiye aur 20 bags daal bhi. Kal tak de sakte ho?",
+      "timestamp": 1743230000,
+      "media_type": "text"
+    },
+    {
+      "message_id": "link_002",
+      "group_id": "client_grp",
+      "sender_jid": "ashish@s.whatsapp.net",
+      "body": "Ji sir, aaj hi order kar dete hain. Kal tak deliver ho jayega.",
+      "timestamp": 1743230100,
+      "media_type": "text"
+    },
+    {
+      "message_id": "link_003",
+      "group_id": "supplier_grp",
+      "sender_jid": "staff@s.whatsapp.net",
+      "body": "Kapoor ji 50 bags atta chahiye aur 20 bags daal. Kal subah tak de sakte ho?",
+      "timestamp": 1743230200,
+      "media_type": "text"
+    },
+    {
+      "message_id": "link_004",
+      "group_id": "supplier_grp",
+      "sender_jid": "kapoor@s.whatsapp.net",
+      "body": "Haan bhai, atta 50 bags ready hai. Daal 20 bags bhi de dunga subah tak.",
+      "timestamp": 1743230300,
+      "media_type": "text"
+    },
+    {
+      "message_id": "link_005",
+      "group_id": "supplier_grp",
+      "sender_jid": "staff@s.whatsapp.net",
+      "body": "Maal aa gaya sir. Sab check kar liya, 50 bags atta aur 20 bags daal theek hai.",
+      "timestamp": 1743316700,
+      "media_type": "text"
+    },
+    {
+      "message_id": "link_006",
+      "group_id": "client_grp",
+      "sender_jid": "ashish@s.whatsapp.net",
+      "body": "Sir items ready hain, dispatch kar rahe hain aaj.",
+      "timestamp": 1743316800,
+      "media_type": "text"
+    }
+  ]
+}

@@ -89,7 +89,7 @@ def _resolve_task_for_entity(entity_id: str, entity_tasks: list[dict],
     For multi-task, returns None — caller must use agent-based assignment."""
     if not entity_tasks:
         # No tasks — create default
-        order_type = "client_order"
+        order_type = "supplier_order" if entity_id.startswith("supplier:") else "client_order"
         task_id = create_task_live(
             order_type=order_type, client_id=entity_id,
             source_group_id=message.get("group_id"),

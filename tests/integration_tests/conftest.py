@@ -32,6 +32,10 @@ def pytest_addoption(parser):
                      help="Simulate production batching (60s window, max 10 msgs)")
     parser.addoption("--agents", type=str, default="AO,AL",
                      help="Comma-separated agents to run: AO (orders), AL (linkage), AS (conversation). Default: AO,AL")
+    parser.addoption("--no-seed-tasks", action="store_true", default=False,
+                     help="Skip seeding task instances (only seed config: entities, aliases). Tests nil-task creation.")
+    parser.addoption("--no-conv-llm", action="store_true", default=False,
+                     help="Disable LLM backward context matching in conversation router (saves ~$0.003)")
 
 
 def save_run_record(test_type: str, case_id: str, results: dict):

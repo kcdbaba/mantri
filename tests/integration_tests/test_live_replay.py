@@ -95,12 +95,29 @@ def _load_json(case_dir: Path, filename: str):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def _seed_db(db_path: str, seed: dict):
-    """Create schema and seed tasks with full node trees from templates."""
+def _seed_config(db_path: str, seed: dict):
+    """Create schema and seed configuration only (entities, aliases). No task instances."""
     from src.store.db import SCHEMA
 
     conn = sqlite3.connect(db_path)
     conn.executescript(SCHEMA)
+
+    for entity in seed.get("entities", []):
+        for alias in entity.get("aliases", []):
+            conn.execute(
+                """INSERT OR IGNORE INTO entity_aliases
+                   (alias, entity_id, entity_type, confidence, source)
+                   VALUES (?, ?, ?, ?, ?)""",
+                (alias.lower(), entity["id"], "client", 1.0, "live_replay_seed"),
+            )
+
+    conn.commit()
+    conn.close()
+
+
+def _seed_tasks(db_path: str, seed: dict):
+    """Seed task instances with full node trees from templates."""
+    conn = sqlite3.connect(db_path)
     now = int(time.time())
 
     for task in seed["tasks"]:
@@ -133,17 +150,14 @@ def _seed_db(db_path: str, seed: dict):
                 ),
             )
 
-    for entity in seed.get("entities", []):
-        for alias in entity.get("aliases", []):
-            conn.execute(
-                """INSERT OR IGNORE INTO entity_aliases
-                   (alias, entity_id, entity_type, confidence, source)
-                   VALUES (?, ?, ?, ?, ?)""",
-                (alias.lower(), entity["id"], "client", 1.0, "live_replay_seed"),
-            )
-
     conn.commit()
     conn.close()
+
+
+def _seed_db(db_path: str, seed: dict):
+    """Create schema, seed config and tasks (backward compatible)."""
+    _seed_config(db_path, seed)
+    _seed_tasks(db_path, seed)
 
 
 # ---------------------------------------------------------------------------
@@ -597,7 +611,9 @@ def _run_traced_replay(case_dir: Path, trace_data: list[dict], seed: dict,
                        run_note: str = "",
                        phoenix_endpoints: list[str] | None = None,
                        auth_headers: dict | None = None,
-                       batch_mode: bool = False) -> dict:
+                       batch_mode: bool = False,
+                       no_seed_tasks: bool = False,
+                       no_conv_llm: bool = False) -> dict:
     """
     Run replay using the instrumented entity-first pipeline with Phoenix tracing.
     Returns result dict in the same format as run_live_replay().
@@ -610,7 +626,10 @@ def _run_traced_replay(case_dir: Path, trace_data: list[dict], seed: dict,
     tmp.close()
     db_path = tmp.name
 
-    _seed_db(db_path, seed)
+    if no_seed_tasks:
+        _seed_config(db_path, seed)
+    else:
+        _seed_db(db_path, seed)
     mock_redis = StreamCapture()
 
     metadata = _get_run_metadata()
@@ -635,6 +654,7 @@ def _run_traced_replay(case_dir: Path, trace_data: list[dict], seed: dict,
         phoenix_endpoints=phoenix_endpoints,
         auth_headers=auth_headers,
         batch_mode=batch_mode,
+        no_conv_llm=no_conv_llm,
     )
 
     snapshot = _snapshot_state(db_path)
@@ -704,8 +724,10 @@ class TestLiveReplay:
             token = base64.b64encode(f"{phoenix_user}:{phoenix_password}".encode()).decode()
             auth_headers = {"Authorization": f"Basic {token}"}
 
-        trace = _load_json(case_dir, "replay_trace.json")
+        trace_data = _load_json(case_dir, "replay_trace.json")
         seed = _load_json(case_dir, "seed_tasks.json")
+
+        trace = trace_data["messages"]
 
         logging.basicConfig(
             level=logging.INFO,
@@ -720,6 +742,10 @@ class TestLiveReplay:
                 print(f"\n  Staleness check: {bl_file.name}")
                 report.print_report()
 
+        # Dev-only flags
+        no_seed_tasks = request.config.getoption("--no-seed-tasks")
+        no_conv_llm = request.config.getoption("--no-conv-llm")
+
         if use_traced:
             result = _run_traced_replay(
                 case_dir, trace, seed,
@@ -729,6 +755,8 @@ class TestLiveReplay:
                 phoenix_endpoints=phoenix_endpoints,
                 auth_headers=auth_headers,
                 batch_mode=batch_mode,
+                no_seed_tasks=no_seed_tasks,
+                no_conv_llm=no_conv_llm,
             )
         else:
             result = run_live_replay(
@@ -800,6 +828,10 @@ class TestLiveReplay:
             "routing_mode": "entity_first" if use_traced else "legacy_batch",
             "batch_mode": batch_mode if use_traced else False,
             "agents": agents if use_traced else ["AO"],
+            "warmup_messages": stats.get("warmup_messages", 0),
+            "conversations_created": stats.get("conversations_created", 0),
+            "entities_discovered": stats.get("entities_discovered", 0),
+            "tasks_created_live": stats.get("tasks_created_live", 0),
         })
 
         # Basic sanity assertions
@@ -819,6 +851,13 @@ class TestLiveReplay:
         if not skip_linkage:
             print(f"Linkage agent: {stats['linkage_events_processed']} events, "
                   f"{stats['linkage_agent_failures']} failures")
+        if stats.get("warmup_messages"):
+            print(f"Warmup: {stats['warmup_messages']} messages")
+        if stats.get("conversations_created"):
+            print(f"Conversations: {stats['conversations_created']} created, "
+                  f"{stats.get('entities_discovered', 0)} entities discovered")
+        if stats.get("tasks_created_live"):
+            print(f"Tasks created live: {stats['tasks_created_live']}")
         print(f"Dead letters: {state['dead_letter_count']}")
         print(f"Ambiguity flags: {len(state['ambiguity_flags'])}")
         print(f"Fulfillment links: {len(state['fulfillment_links'])}")

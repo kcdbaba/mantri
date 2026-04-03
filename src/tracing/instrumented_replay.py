@@ -138,6 +138,7 @@ def run_instrumented_replay(
     phoenix_endpoints: list[str] | None = None,
     auth_headers: dict | None = None,
     batch_mode: bool = False,
+    no_conv_llm: bool = False,
 ) -> dict:
     """
     Run the full entity-first pipeline with Phoenix trace capture.
@@ -147,9 +148,15 @@ def run_instrumented_replay(
         auth_headers: HTTP headers for authenticated endpoints
         batch_mode: if True, simulate production batching (60s window, max 10 msgs).
                     If False, process one message at a time.
+        no_conv_llm: if True, disable LLM backward context in conversation router
 
     Returns stats dict compatible with test_live_replay.py expectations.
     """
+    test_window = seed.get("test_window", {})
+    warmup_end_ts = test_window.get("warmup_end_ts", 0)
+    config_overrides = seed.get("config_overrides", {})
+    enable_conv_routing = config_overrides.get("ENABLE_CONVERSATION_ROUTING", False)
+
     tracer = ReplayTracer(
         project_name="mantri",
         phoenix_endpoints=phoenix_endpoints,
@@ -163,17 +170,40 @@ def run_instrumented_replay(
     t_start = time.time()
 
     stats = {
-        "messages_total": len(messages_to_process),
+        "messages_total": 0,  # excludes warmup
         "messages_routed": 0,
         "messages_unrouted": 0,
         "messages_noise": 0,
+        "warmup_messages": 0,
         "update_agent_calls": 0,
         "update_agent_failures": 0,
         "linkage_events_processed": 0,
         "linkage_agent_failures": 0,
         "tasks_created_live": 0,
+        "conversations_created": 0,
+        "entities_discovered": 0,
         "errors": [],
     }
+
+    # Conversation routing setup
+    conv_router = None
+    if enable_conv_routing:
+        from src.conversation.conversation_router import (
+            ConversationRouter, load_ocr_cache, set_ocr_cache,
+        )
+        conv_router = ConversationRouter(
+            enable_llm_matching=not no_conv_llm,
+        )
+        # Load OCR caches if specified in seed
+        for group_id, ocr_file in seed.get("ocr_caches", {}).items():
+            ocr_path = case_dir / ocr_file
+            if not ocr_path.exists():
+                # Try parent directory (cross-case reference)
+                ocr_path = case_dir.parent / ocr_file
+            if ocr_path.exists():
+                ocr = load_ocr_cache(str(ocr_path))
+                set_ocr_cache(group_id, ocr)
+                log.info("Loaded OCR cache for %s: %s", group_id, ocr_path)
 
     def _write_progress(phase: str, detail: str = ""):
         elapsed = time.time() - t_start
@@ -189,9 +219,22 @@ def run_instrumented_replay(
         except Exception:
             pass
 
-    with patch("src.store.db.DB_PATH", db_path), \
-         patch("src.config.DB_PATH", db_path), \
-         patch("src.router.router.MONITORED_GROUPS", monitored):
+    # Build dynamic patches from config_overrides
+    patches = [
+        patch("src.store.db.DB_PATH", db_path),
+        patch("src.config.DB_PATH", db_path),
+        patch("src.router.router.MONITORED_GROUPS", monitored),
+    ]
+    if enable_conv_routing:
+        patches.extend([
+            patch("src.config.ENABLE_CONVERSATION_ROUTING", True),
+            patch("src.router.router.ENABLE_CONVERSATION_ROUTING", True),
+        ])
+
+    import contextlib
+    with contextlib.ExitStack() as stack:
+        for p in patches:
+            stack.enter_context(p)
 
         from src.router.router import route as _orig_route
         from src.router.worker import (
@@ -224,6 +267,10 @@ def run_instrumented_replay(
                 else:
                     stats["messages_unrouted"] += 1
                     mt.record_routing([], layer="unrouted")
+            elif routes == [("__conv_pending__", 0.0)]:
+                # Conversation routing sentinel — message goes to ConversationRouter
+                stats["messages_routed"] += 1
+                mt.record_routing(routes, layer="conv_pending")
             else:
                 stats["messages_routed"] += 1
                 group_id = message.get("group_id", "")
@@ -361,8 +408,9 @@ def run_instrumented_replay(
              patch("src.router.worker._resolve_task_for_entity", _traced_resolve), \
              patch("src.router.worker._apply_output", _traced_apply):
 
-            if batch_mode:
+            if batch_mode and not enable_conv_routing:
                 # ── Batch mode: simulate production 60s window ─────────
+                # Not compatible with conversation routing (needs per-message feeding)
                 log.info("Batch mode: simulating production batching (%ds window, max %d)",
                          BATCH_WINDOW_S, BATCH_MAX_SIZE)
                 _run_batched(messages_to_process, tracer, _mt, _apply_idx,
@@ -370,30 +418,72 @@ def run_instrumented_replay(
                              monitored, process_message)
             else:
                 # ── Per-message mode: one process_message() per message ─
+                # Required for conversation routing (ConversationRouter needs
+                # sequential message feeding with timestamp-based gap detection)
+                test_seq = 0
                 for i, msg in enumerate(messages_to_process):
+                    msg_ts = msg.get("timestamp", 0)
+                    is_warmup = warmup_end_ts and msg_ts < warmup_end_ts
+
+                    if is_warmup:
+                        stats["warmup_messages"] += 1
+                    else:
+                        stats["messages_total"] += 1
+
                     if (i + 1) % 25 == 0:
-                        log.info("Processing message %d/%d: %s",
-                                 i + 1, len(messages_to_process), msg.get("message_id"))
-                        _write_progress("processing",
+                        phase = "warmup" if is_warmup else "processing"
+                        log.info("[%s] Processing message %d/%d: %s",
+                                 phase, i + 1, len(messages_to_process),
+                                 msg.get("message_id"))
+                        _write_progress(phase,
                                         f"{i+1}/{len(messages_to_process)} messages")
 
                     _apply_idx[0] = 0
 
-                    with tracer.trace_message(msg, seq=i) as mt:
-                        _mt[0] = mt
+                    if is_warmup:
+                        # Warmup: process through pipeline (builds state) but no tracing
                         try:
-                            process_message(msg, mock_redis)
+                            process_message(msg, mock_redis, conv_router=conv_router)
                         except Exception as e:
-                            stats["errors"].append({
-                                "phase": "process_message",
-                                "message_id": msg.get("message_id"),
-                                "error": str(e),
-                            })
-                            log.error("process_message failed for %s: %s",
+                            log.debug("Warmup message failed: %s: %s",
                                       msg.get("message_id"), e)
-                            continue
-
                         _drain_linkage(msg, i)
+                    else:
+                        # Test phase: full tracing
+                        with tracer.trace_message(msg, seq=test_seq) as mt:
+                            _mt[0] = mt
+                            try:
+                                process_message(msg, mock_redis, conv_router=conv_router)
+                            except Exception as e:
+                                stats["errors"].append({
+                                    "phase": "process_message",
+                                    "message_id": msg.get("message_id"),
+                                    "error": str(e),
+                                })
+                                log.error("process_message failed for %s: %s",
+                                          msg.get("message_id"), e)
+                                continue
+
+                            _drain_linkage(msg, i)
+                        test_seq += 1
+
+                # Flush remaining conversations after all messages processed
+                if conv_router is not None:
+                    from src.router.worker import _process_conversation_result
+                    remaining = conv_router.flush_all()
+                    if remaining:
+                        for result in remaining:
+                            try:
+                                _process_conversation_result(result, mock_redis, conv_router)
+                            except Exception as e:
+                                stats["errors"].append({
+                                    "phase": "conv_flush",
+                                    "message_id": "flush",
+                                    "error": str(e),
+                                })
+                        _drain_linkage({"message_id": "conv_flush"}, i + 1)
+
+                    stats["conversations_created"] += len(remaining)
 
     _write_progress("complete", f"done in {time.time()-t_start:.0f}s")
     tracer.stop(stats=stats)

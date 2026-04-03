@@ -250,7 +250,8 @@ def tag_messages(messages: list[dict]) -> list[dict]:
 
 def main():
     trace_path = Path("tests/integration_tests/R1-D-L3-01_sata_multi_item_multi_supplier/replay_trace.json")
-    trace = json.loads(trace_path.read_text())
+    trace_data = json.loads(trace_path.read_text())
+    trace = trace_data["messages"]
     tasks_msgs = [m for m in trace if m["group_id"] == "Tasks"]
 
     print(f"Tagging {len(tasks_msgs)} Tasks group messages...")

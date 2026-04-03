@@ -800,47 +800,92 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
             "</tr></thead><tbody>" + "".join(rows) + "</tbody></table>"
         )
 
-    # --- Live replay history, grouped by case_id ---
+    # --- Live replay history, grouped by case_id, dynamic columns ---
     if live:
         live_by_case = defaultdict(list)
         for r in live:
             live_by_case[r.get("case_id", "?")].append(r)
 
+        # Dynamic stat columns: (key, header, formatter)
+        # Columns appear only if at least one run has a truthy value.
+        _STAT_COLUMNS = [
+            ("_mode",                 "Mode",         None),
+            ("_routed",               "Routed",       None),
+            ("_nodes",                "Nodes",        None),
+            ("warmup_messages",       "Warmup",       lambda v: str(v)),
+            ("conversations_created", "Convs",        lambda v: str(v)),
+            ("entities_discovered",   "Entities",     lambda v: str(v)),
+            ("tasks_created_live",    "Tasks (live)", lambda v: str(v)),
+            ("fulfillment_link_count","Links",        lambda v: str(v)),
+            ("ambiguity_flag_count",  "Ambiguity",    lambda v: str(v)),
+            ("dead_letter_count",     "Dead Ltrs",    lambda v: str(v)),
+            ("error_count",           "Errors",       lambda v: f"<span class='fail'>{v}</span>" if v else "0"),
+            ("tasks_created",         "Tasks",        lambda v: str(v)),
+            ("pipeline_score",        "Score",        lambda v: str(v) if v else "\u2014"),
+            ("_models",               "Models",       None),
+            ("_cost",                 "Cost",         None),
+            ("_config",               "Config",       None),
+        ]
+
+        def _col_has_data(key):
+            if key.startswith("_"):
+                return True  # always show composite columns
+            return any(r.get(key) for r in live)
+
+        def _cell(r, key, case_data=None):
+            if key == "_mode":
+                mode = "update only" if r.get("skip_linkage") else "full"
+                if r.get("max_messages"):
+                    mode += f" (first {r['max_messages']})"
+                return mode
+            if key == "_routed":
+                noise = r.get("messages_noise", 0)
+                noise_html = f" <span class='dim'>({noise} noise)</span>" if noise else ""
+                return f"{r.get('messages_routed',0)}/{r.get('messages_total',0)}{noise_html}"
+            if key == "_nodes":
+                ns = r.get("node_summary", {})
+                return str(sum(v.get("total", 0) for v in ns.values()))
+            if key == "_models":
+                mu = r.get("model_usage", [])
+                if mu:
+                    return _fmt_model_usage(mu)
+                if case_data:
+                    return _fmt_model_usage(case_data.get("_model_usage", []))
+                return "\u2014"
+            if key == "_cost":
+                tc = r.get("total_cost", 0)
+                if tc:
+                    return f"${tc:.2f}"
+                if case_data:
+                    c = case_data.get("_total_cost", 0)
+                    return f"${c:.2f}" if c else "\u2014"
+                return "\u2014"
+            if key == "_config":
+                meta = r.get("run_metadata", {})
+                commit = meta.get("git_commit", "")
+                note = r.get("run_notes", "")
+                if note:
+                    return f"<span title='{html_mod.escape(note, quote=True)}'>{commit} \u2139</span>"
+                return commit
+            val = r.get(key)
+            if key == "tasks_created" and not val:
+                val = len(r.get("node_summary", {}))
+            col_def = next((c for c in _STAT_COLUMNS if c[0] == key), None)
+            if col_def and col_def[2] and val:
+                return col_def[2](val)
+            return str(val) if val else ""
+
+        active_cols = [(k, h) for k, h, _ in _STAT_COLUMNS if _col_has_data(k)]
+
         rows = []
         for case_id in sorted(live_by_case.keys()):
             case_runs = live_by_case[case_id]
-            # Find the latest full run for group row data
-            full_runs = [
-                r for r in case_runs
-                if not r.get("skip_linkage") and not r.get("max_messages")
-            ]
+            full_runs = [r for r in case_runs if not r.get("skip_linkage") and not r.get("max_messages")]
             latest = full_runs[0] if full_runs else case_runs[0]
             group_key = f"live_{case_id}"
             n_runs = len(case_runs)
-
-            # Compute node/link totals from latest
-            node_summary = latest.get("node_summary", {})
-            total_nodes = sum(v.get("total", 0) for v in node_summary.values())
-            link_count = latest.get("fulfillment_link_count", 0)
-
-            # Mode for latest
-            latest_mode = "update only" if latest.get("skip_linkage") else "full"
-            if latest.get("max_messages"):
-                latest_mode += f" (first {latest['max_messages']})"
-
-            # Model/cost from case data
             cdata = case_data_map.get(case_id, {})
-            model_usage = cdata.get("_model_usage", [])
-            total_cost = cdata.get("_total_cost", 0)
-            models_html = _fmt_model_usage(model_usage)
-            cost_html = f"${total_cost:.2f}" if total_cost else "\u2014"
 
-            routed_val = f"{latest.get('messages_routed',0)}/{latest.get('messages_total',0)}"
-            noise_count = latest.get("messages_noise", 0)
-            noise_str = f" ({noise_count} noise)" if noise_count else ""
-            tasks_created = latest.get("tasks_created", len(latest.get("node_summary", {})))
-            p_score = latest.get("pipeline_score", "")
-            p_score_html = f"{p_score}" if p_score else "\u2014"
             r_mode = latest.get("routing_mode", "")
             mode_badge = f" <span class='badge badge-mode'>{r_mode}</span>" if r_mode else ""
             traced_icon = " <span class='badge badge-traced'>T</span>" if latest.get("traced") else ""
@@ -849,99 +894,41 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                 f" <a href='{phoenix_ep}' target='_blank' class='dim' "
                 f"style='font-size:0.72rem'>traces</a>"
             ) if phoenix_ep else ""
-            meta = latest.get("run_metadata", {})
-            config_html = ""
-            if meta:
-                parts = []
-                if meta.get("git_commit"):
-                    parts.append(meta["git_commit"])
-                if meta.get("live_task_creation"):
-                    parts.append("task_create=on")
-                if meta.get("note"):
-                    config_html = f"<span title='{html_mod.escape(meta['note'], quote=True)}'>" + " ".join(parts) + " ⓘ</span>"
-                else:
-                    config_html = " ".join(parts)
 
+            cells = "".join(f"<td class='td-stat'>{_cell(latest, k, cdata)}</td>" for k, _ in active_cols)
             rows.append(
                 f"<tr class='group-row' data-group='{group_key}' onclick='toggleGroup(this)'>"
                 f"<td><span class='toggle'>&#9654;</span> {case_id} ({n_runs} runs)"
                 f"{mode_badge}{traced_icon}{phoenix_link}</td>"
-                f"<td data-value='{latest_mode}' data-empty=''>{latest_mode}</td>"
-                f"<td data-value='{routed_val}{noise_str}' data-empty=''>"
-                f"{routed_val}{(' <span class=dim>' + noise_str + '</span>') if noise_str else ''}</td>"
-                f"<td data-value='{total_nodes}' data-empty=''>{total_nodes}</td>"
-                f"<td data-value='{link_count}' data-empty=''>{link_count}</td>"
-                f"<td data-value='{latest.get('ambiguity_flag_count',0)}' data-empty=''>"
-                f"{latest.get('ambiguity_flag_count',0)}</td>"
-                f"<td data-value='{latest.get('dead_letter_count',0)}' data-empty=''>"
-                f"{latest.get('dead_letter_count',0)}</td>"
-                f"<td data-value='{latest.get('error_count',0)}' data-empty=''>"
-                f"{latest.get('error_count',0)}</td>"
-                f"<td data-value='{tasks_created}' data-empty=''>{tasks_created}</td>"
-                f"<td data-value='{p_score_html}' data-empty=''>{p_score_html}</td>"
-                f"<td data-value='{models_html}' data-empty=''>{models_html}</td>"
-                f"<td data-value='{cost_html}' data-empty=''>{cost_html}</td>"
-                f"<td data-value='{config_html}' data-empty=''>{config_html}</td></tr>"
+                f"{cells}</tr>"
             )
             for r in case_runs:
-                mode = "update only" if r.get("skip_linkage") else "full"
-                if r.get("max_messages"):
-                    mode += f" (first {r['max_messages']})"
-                r_node_summary = r.get("node_summary", {})
-                r_total_nodes = sum(v.get("total", 0) for v in r_node_summary.values())
-                r_link_count = r.get("fulfillment_link_count", 0)
-                # Show model/cost from run record if available, else from case DB for latest
-                r_model_usage = r.get("model_usage", [])
-                r_total_cost = r.get("total_cost", 0)
-                if r_model_usage:
-                    r_models = _fmt_model_usage(r_model_usage)
-                    r_cost = f"${r_total_cost:.2f}" if r_total_cost else "\u2014"
-                elif r is case_runs[0]:
-                    r_models = models_html  # fallback to case DB for latest
-                    r_cost = cost_html
-                else:
-                    r_models = "\u2014"
-                    r_cost = "\u2014"
                 r_rm = r.get("routing_mode", "")
                 r_rm_badge = f" <span class='badge badge-mode'>{r_rm}</span>" if r_rm else ""
                 r_traced = " <span class='badge badge-traced'>T</span>" if r.get("traced") else ""
-                r_noise = r.get("messages_noise", 0)
-                r_noise_str = f" <span class='dim'>({r_noise} noise)</span>" if r_noise else ""
 
+                cells = "".join(f"<td class='td-stat'>{_cell(r, k, cdata)}</td>" for k, _ in active_cols)
                 rows.append(
                     f"<tr class='group-child' data-group='{group_key}'>"
                     f"<td class='dim'>{_fmt_dt(r.get('run_at',''))}{r_rm_badge}{r_traced}</td>"
-                    f"<td>{mode}</td>"
-                    f"<td>{r.get('messages_routed',0)}/{r.get('messages_total',0)}{r_noise_str}</td>"
-                    f"<td>{r_total_nodes}</td>"
-                    f"<td>{r_link_count}</td>"
-                    f"<td>{r.get('ambiguity_flag_count',0)}</td>"
-                    f"<td>{r.get('dead_letter_count',0)}</td>"
-                    f"<td>{r.get('error_count',0)}</td>"
-                    f"<td>{r.get('tasks_created', len(r.get('node_summary', {})))}</td>"
-                    f"<td>{r.get('pipeline_score') or chr(8212)}</td>"
-                    f"<td>{r_models}</td>"
-                    f"<td>{r_cost}</td>"
-                    f"<td class='dim'>{r.get('run_metadata', {}).get('git_commit', '')}</td></tr>"
+                    f"{cells}</tr>"
                 )
-                # Show run_notes as a sub-row if present
                 notes = r.get("run_notes", "")
                 if notes:
+                    n_cols = len(active_cols) + 1
                     escaped_notes = html_mod.escape(notes, quote=True)
                     rows.append(
                         f"<tr class='group-child' data-group='{group_key}'>"
-                        f"<td colspan='13' class='run-note'>"
+                        f"<td colspan='{n_cols}' class='run-note'>"
                         f"<em>Note:</em> {escaped_notes}</td></tr>"
                     )
+
+        header_cells = "".join(f"<th class='th-angled'><div>{h}</div></th>" for _, h in active_cols)
         sections.append(
             "<h3>Live Replay History</h3>"
-            "<table class='detail'><thead><tr>"
-            "<th>Case / Run</th><th>Mode</th><th>Routed</th>"
-            "<th>Nodes</th><th>Links</th><th>Ambiguity</th>"
-            "<th>Dead Letters</th><th>Errors</th>"
-            "<th>Tasks</th><th>Score</th>"
-            "<th>Models</th><th>Cost</th><th>Config</th>"
-            "</tr></thead><tbody>" + "".join(rows) + "</tbody></table>"
+            f"<table class='detail'><thead><tr>"
+            f"<th>Case / Run</th>{header_cells}"
+            f"</tr></thead><tbody>" + "".join(rows) + "</tbody></table>"
             + _live_replay_chart(live_by_case)
         )
 
@@ -1014,6 +1001,12 @@ nav { margin-bottom: 2rem; font-size: 0.82rem; }
 .group-row.open .toggle { transform: rotate(90deg); }
 .group-child { display: none; }
 .group-child.visible { display: table-row; }
+/* Angled stat column headers for compact width */
+th.th-angled { white-space: nowrap; vertical-align: bottom; height: 5rem; width: 2.2rem;
+               padding: 0 0.3rem 0.4rem; }
+th.th-angled > div { transform: rotate(-55deg); transform-origin: bottom left;
+                     width: 1.5em; display: block; margin-left: 0.7rem; }
+td.td-stat { text-align: center; padding: 0.35rem 0.3rem; font-variant-numeric: tabular-nums; }
 
 /* Collapsible case sections */
 details { margin-bottom: 0.5rem; }

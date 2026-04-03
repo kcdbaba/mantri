@@ -601,170 +601,6 @@ def _linkage_section(runs: list[dict]) -> str:
     )
 
 
-# ── Integration section ───────────────────────────────────────────────────────
-
-def _integration_section(runs: list[dict]) -> str:
-    import html as html_mod
-    from collections import OrderedDict
-
-    if not runs:
-        return "<p class='empty'>No integration test runs recorded yet.</p>"
-
-    dry_runs = [r for r in runs if r.get("test_type") == "dry"]
-    live_runs = [r for r in runs if r.get("test_type") == "live"]
-
-    sections = []
-
-    # --- Dry replay: grouped by case_id ---
-    if dry_runs:
-        groups: OrderedDict[str, list[dict]] = OrderedDict()
-        for r in dry_runs:
-            groups.setdefault(r.get("case_id", "?"), []).append(r)
-
-        rows = []
-        for case_id, members in groups.items():
-            tooltip = html_mod.escape(_case_tooltip(case_id), quote=True)
-            full_runs = [r for r in members if not r.get("max_messages")]
-            latest = full_runs[0] if full_runs else members[0]
-            rate = latest.get("routing_rate", 0)
-
-            rows.append(
-                f"<tr class='group-row' data-group='dry-{case_id}' onclick='toggleGroup(this)'>"
-                f"<td><span class='toggle'>&#9654;</span></td>"
-                f"<td class='case-id' title='{tooltip}'>{case_id}</td>"
-                f"<td>{len(members)} runs</td>"
-                f"<td>{rate:.1%}</td>"
-                f"<td></td>"
-                f"</tr>"
-            )
-            for r in members:
-                r_rate = r.get("routing_rate", 0)
-                per_group = r.get("per_group", {})
-                group_detail = " · ".join(
-                    f"{g}: {v.get('routed', 0)}/{v.get('routed', 0) + v.get('unrouted', 0)}"
-                    for g, v in sorted(per_group.items())
-                )
-                rows.append(
-                    f"<tr class='group-child' data-group='dry-{case_id}'>"
-                    f"<td></td>"
-                    f"<td>{_fmt_dt(r.get('run_at', ''))}</td>"
-                    f"<td>{r.get('total', 0)} msgs</td>"
-                    f"<td>{r_rate:.1%}</td>"
-                    f"<td class='case-id'>{group_detail}</td>"
-                    f"</tr>"
-                )
-
-        sections.append(
-            "<h3>Dry Replay (routing only)</h3>"
-            "<table>"
-            "<thead><tr><th></th><th>Case</th><th>Runs</th>"
-            "<th>Route rate</th><th>Per group</th></tr></thead>"
-            "<tbody>" + "".join(rows) + "</tbody>"
-            "</table>"
-        )
-
-    # --- Live replay: grouped by case_id ---
-    if live_runs:
-        groups: OrderedDict[str, list[dict]] = OrderedDict()
-        for r in live_runs:
-            groups.setdefault(r.get("case_id", "?"), []).append(r)
-
-        rows = []
-        for case_id, members in groups.items():
-            tooltip = html_mod.escape(_case_tooltip(case_id), quote=True)
-            # Prefer latest full run (no max_messages) for group row
-            full_runs = [r for r in members if not r.get("max_messages")]
-            latest = full_runs[0] if full_runs else members[0]
-            node_summary = latest.get("node_summary", {})
-            total_completed = sum(v.get("completed", 0) for v in node_summary.values())
-            total_nodes = sum(v.get("total", 0) for v in node_summary.values())
-
-            p_score = latest.get("pipeline_score")
-            p_score_str = str(p_score) if p_score else ""
-            tasks_n = latest.get("tasks_created", len(latest.get("node_summary", {})))
-            meta = latest.get("run_metadata", {})
-            config_str = meta.get("git_commit", "")
-            note = latest.get("run_notes", "")
-            note_icon = f" <span title='{html_mod.escape(note, quote=True)}'>&#9432;</span>" if note else ""
-
-            # Routing mode badge
-            r_mode = latest.get("routing_mode", "")
-            mode_badge = f"<span class='badge badge-mode'>{r_mode}</span>" if r_mode else ""
-            # Traced indicator
-            traced_icon = "<span class='badge badge-traced' title='Traced to Phoenix'>T</span>" if latest.get("traced") else ""
-            # Noise count
-            noise_count = latest.get("messages_noise", 0)
-
-            rows.append(
-                f"<tr class='group-row' data-group='live-{case_id}' onclick='toggleGroup(this)'>"
-                f"<td><span class='toggle'>&#9654;</span></td>"
-                f"<td class='case-id' title='{tooltip}'>{case_id} {mode_badge}{traced_icon}</td>"
-                f"<td>{len(members)} runs</td>"
-                f"<td>{latest.get('messages_routed', 0)}/{latest.get('messages_total', 0)}"
-                f"{(' <span class=dim>(' + str(noise_count) + ' noise)</span>') if noise_count else ''}</td>"
-                f"<td>{_pct_bar(total_completed, total_nodes)}</td>"
-                f"<td>{latest.get('fulfillment_link_count', 0)}</td>"
-                f"<td>{latest.get('ambiguity_flag_count', 0)}</td>"
-                f"<td></td>"
-                f"<td>{tasks_n}</td>"
-                f"<td>{p_score_str}</td>"
-                f"<td>{config_str}{note_icon}</td>"
-                f"</tr>"
-            )
-            for r in members:
-                ns = r.get("node_summary", {})
-                tc = sum(v.get("completed", 0) for v in ns.values())
-                tn = sum(v.get("total", 0) for v in ns.values())
-                flags = r.get("ambiguity_flag_count", 0)
-                links = r.get("fulfillment_link_count", 0)
-                errors = r.get("error_count", 0)
-                mode = "update only" if r.get("skip_linkage") else "full"
-                if r.get("max_messages"):
-                    mode += f" (first {r['max_messages']})"
-                r_score = r.get("pipeline_score")
-                r_score_str = str(r_score) if r_score else ""
-                r_tasks = r.get("tasks_created", len(r.get("node_summary", {})))
-                r_meta = r.get("run_metadata", {})
-                r_config = r_meta.get("git_commit", "")
-                r_note = r.get("run_notes", "")
-                r_note_icon = f" <span title='{html_mod.escape(r_note, quote=True)}'>&#9432;</span>" if r_note else ""
-
-                r_rm = r.get("routing_mode", "")
-                r_rm_badge = f" <span class='badge badge-mode'>{r_rm}</span>" if r_rm else ""
-                r_traced = " <span class='badge badge-traced'>T</span>" if r.get("traced") else ""
-                r_noise = r.get("messages_noise", 0)
-
-                rows.append(
-                    f"<tr class='group-child' data-group='live-{case_id}'>"
-                    f"<td></td>"
-                    f"<td>{_fmt_dt(r.get('run_at', ''))} ({mode}){r_rm_badge}{r_traced}</td>"
-                    f"<td></td>"
-                    f"<td>{r.get('messages_routed', 0)}/{r.get('messages_total', 0)}"
-                    f"{(' <span class=dim>(' + str(r_noise) + ' noise)</span>') if r_noise else ''}</td>"
-                    f"<td>{_pct_bar(tc, tn)}</td>"
-                    f"<td>{links}</td>"
-                    f"<td>{flags}</td>"
-                    f"<td class='{'fail' if errors else ''}'>{errors}</td>"
-                    f"<td>{r_tasks}</td>"
-                    f"<td>{r_score_str}</td>"
-                    f"<td>{r_config}{r_note_icon}</td>"
-                    f"</tr>"
-                )
-
-        sections.append(
-            "<h3>Live Replay (full pipeline)</h3>"
-            "<table>"
-            "<thead><tr><th></th><th>Case</th><th>Runs</th>"
-            "<th>Routed</th><th>Nodes</th><th>Links</th>"
-            "<th>Ambiguity</th><th>Errors</th>"
-            "<th>Tasks</th><th>Score</th><th>Config</th></tr></thead>"
-            "<tbody>" + "".join(rows) + "</tbody>"
-            "</table>"
-        )
-
-    return "".join(sections)
-
-
 # ── Load eval runs by suite ────────────────────────────────────────────────────
 
 def _load_eval_runs() -> tuple[list[dict], list[dict]]:
@@ -971,6 +807,12 @@ nav { margin-bottom: 2rem; font-size: 0.82rem; }
          font-weight: 600; letter-spacing: 0.03em; }
 .badge-mode { background: #2d3748; color: #63b3ed; }
 .badge-traced { background: #2f855a; color: #c6f6d5; }
+/* Angled stat column headers for compact width */
+th.th-angled { white-space: nowrap; vertical-align: bottom; height: 5rem; width: 2.2rem;
+               padding: 0 0.3rem 0.4rem; }
+th.th-angled > div { transform: rotate(-55deg); transform-origin: bottom left;
+                     width: 1.5em; display: block; margin-left: 0.7rem; }
+td.td-stat { text-align: center; padding: 0.4rem 0.3rem; font-variant-numeric: tabular-nums; }
 /* Legend section */
 .legend { margin-bottom: 1.5rem; }
 .legend details { margin-bottom: 0.75rem; }

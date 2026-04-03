@@ -61,7 +61,8 @@ def _seed_db(db_path: str, seed: dict):
 
 
 def build_expected_routing(trace_path: Path, seed_path: Path) -> list[dict]:
-    trace = json.loads(trace_path.read_text(encoding="utf-8"))
+    trace_data = json.loads(trace_path.read_text(encoding="utf-8"))
+    trace = trace_data["messages"]
     seed = json.loads(seed_path.read_text(encoding="utf-8"))
 
     # Create temp DB and seed it

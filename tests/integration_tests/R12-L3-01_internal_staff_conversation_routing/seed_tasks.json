@@ -14,6 +14,10 @@
     "ENABLE_CONVERSATION_ROUTING": true
   },
 
+  "ocr_caches": {
+    "Tasks": "../R1-D-L3-01_sata_multi_item_multi_supplier/image_ocr_auto.json"
+  },
+
   "test_window": {
     "warmup_end_ts": 1772815380,
     "warmup_end_readable": "2026-03-05 12:43",
