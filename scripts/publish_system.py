@@ -850,6 +850,9 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
         )
 
     # --- Live replay history, grouped by case_id, dynamic columns ---
+    # Wide columns exempt from angled headers and centered alignment
+    _WIDE = {"_tags", "_routed", "_models", "_config"}
+
     if live:
         live_by_case = defaultdict(list)
         for r in live:
@@ -871,8 +874,8 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
             ("error_count",           "Errors",       lambda v: f"<span class='fail'>{v}</span>" if v else "0"),
             ("tasks_created",         "Tasks",        lambda v: str(v)),
             ("pipeline_score",        "Score",        lambda v: str(v) if v else "\u2014"),
-            ("_models",               "Models",       None),
             ("_cost",                 "Cost",         None),
+            ("_models",               "Models",       None),
             ("_config",               "Config",       None),
         ]
 
@@ -932,7 +935,10 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
             group_key = f"live_{case_id}"
             cdata = case_data_map.get(case_id, {})
 
-            cells = "".join(f"<td class='td-stat'>{_cell(latest, k, cdata)}</td>" for k, _ in active_cols)
+            cells = "".join(
+                    (f"<td>{_cell(latest, k, cdata)}</td>" if k in _WIDE else f"<td class='td-stat'>{_cell(latest, k, cdata)}</td>")
+                    for k, _ in active_cols
+                )
             rows.append(
                 f"<tr class='group-row' data-group='{group_key}' onclick='toggleGroup(this)'>"
                 f"<td><span class='toggle'>&#9654;</span> {case_id}</td>"
@@ -941,7 +947,10 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
             GP_SIZE = 10
             for child_i, r in enumerate(case_runs):
                 gp = child_i // GP_SIZE
-                cells = "".join(f"<td class='td-stat'>{_cell(r, k, cdata)}</td>" for k, _ in active_cols)
+                cells = "".join(
+                        (f"<td>{_cell(r, k, cdata)}</td>" if k in _WIDE else f"<td class='td-stat'>{_cell(r, k, cdata)}</td>")
+                        for k, _ in active_cols
+                    )
                 rows.append(
                     f"<tr class='group-child' data-group='{group_key}' data-gpage='{gp}'>"
                     f"<td class='dim'>{_fmt_dt(r.get('run_at',''))}</td>"
@@ -975,7 +984,10 @@ def _run_history(runs: list[dict], cases: list[dict]) -> str:
                         )
                         break
 
-        header_cells = "".join(f"<th class='th-angled'><div>{h}</div></th>" for _, h in active_cols)
+        header_cells = "".join(
+            f"<th>{h}</th>" if k in _WIDE else f"<th class='th-angled'><div>{h}</div></th>"
+            for k, h in active_cols
+        )
         sections.append(
             "<h3>Live Replay History</h3>"
             f"<table class='detail'><thead><tr>"
