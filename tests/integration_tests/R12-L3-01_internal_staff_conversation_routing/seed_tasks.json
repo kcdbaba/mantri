@@ -21,9 +21,9 @@
   "test_window": {
     "warmup_end_ts": 1772694780,
     "warmup_end_readable": "2026-03-05 12:43",
-    "test_end_ts": 1772830800,
-    "test_end_readable": "2026-03-05 17:00",
-    "description": "Warmup: March 1-5 12:43 (236 msgs, all groups). Test: March 5 12:43-17:00 (70 msgs)."
+    "test_end_ts": 1774540740,
+    "test_end_readable": "2026-03-24 23:59",
+    "description": "Warmup: March 1-5 12:43 (~236 msgs). Test: March 5-24 (~1020 msgs, all groups, full March)."
   },
 
   "entities": [

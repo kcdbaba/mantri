@@ -153,8 +153,12 @@ def main():
     from scripts.build_replay_trace import build_trace
     trace = build_trace(meta_path)
 
+    trace_data = {
+        "_meta": {"case_id": case_id, "description": case_name.replace("_", " ").title()},
+        "messages": trace,
+    }
     trace_path = int_dir / "replay_trace.json"
-    trace_path.write_text(json.dumps(trace, indent=2, ensure_ascii=False), encoding="utf-8")
+    trace_path.write_text(json.dumps(trace_data, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"  Written: {trace_path}")
 
     # ── Step 4: expected_routing.json ────────────────────────────────────
