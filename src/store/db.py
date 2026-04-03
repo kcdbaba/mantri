@@ -340,11 +340,18 @@ def create_task_live(
 
     Returns the new task_id.
     """
+    import hashlib
     import time
     import uuid
     from src.agent.templates import get_template
 
-    task_id = f"task_{uuid.uuid4().hex[:8]}"
+    # Deterministic ID for replays: seed from (client_id, source_message_id)
+    # so the same message always creates the same task. Random for production.
+    if source_message_id:
+        seed = f"{client_id}:{source_message_id}"
+        task_id = f"task_{hashlib.sha256(seed.encode()).hexdigest()[:8]}"
+    else:
+        task_id = f"task_{uuid.uuid4().hex[:8]}"
     now = int(time.time())
     supplier_ids = supplier_ids or []
     template = get_template(order_type)
