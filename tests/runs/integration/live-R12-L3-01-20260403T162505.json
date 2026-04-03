@@ -1,0 +1,153 @@
+{
+  "run_at": "2026-04-03T16:25:05.113151",
+  "test_type": "live",
+  "case_id": "R12-L3-01",
+  "messages_total": 50,
+  "messages_routed": 39,
+  "messages_unrouted": 0,
+  "messages_noise": 11,
+  "update_agent_calls": 9,
+  "update_agent_failures": 0,
+  "linkage_events_processed": 66,
+  "linkage_agent_failures": 4,
+  "error_count": 4,
+  "dead_letter_count": 0,
+  "ambiguity_flag_count": 80,
+  "fulfillment_link_count": 7,
+  "node_summary": {
+    "task_0782c295": {
+      "completed": 1,
+      "active": 0,
+      "pending": 6,
+      "blocked": 0,
+      "provisional": 1,
+      "total": 9
+    },
+    "task_208099f6": {
+      "completed": 0,
+      "active": 0,
+      "pending": 7,
+      "blocked": 0,
+      "provisional": 1,
+      "total": 9
+    },
+    "task_3e2bacc3": {
+      "completed": 0,
+      "active": 1,
+      "pending": 8,
+      "blocked": 2,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_540bce1e": {
+      "completed": 0,
+      "active": 1,
+      "pending": 7,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 9
+    },
+    "task_84acbb7d": {
+      "completed": 0,
+      "active": 1,
+      "pending": 8,
+      "blocked": 2,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_9963d4fc": {
+      "completed": 4,
+      "active": 1,
+      "pending": 4,
+      "blocked": 2,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_c95409a5": {
+      "completed": 1,
+      "active": 3,
+      "pending": 5,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_d887260b": {
+      "completed": 0,
+      "active": 2,
+      "pending": 7,
+      "blocked": 1,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_f9a7e89c": {
+      "completed": 1,
+      "active": 1,
+      "pending": 6,
+      "blocked": 1,
+      "provisional": 1,
+      "total": 12
+    }
+  },
+  "items_per_task": {
+    "task_3e2bacc3": 2,
+    "task_84acbb7d": 2,
+    "task_9963d4fc": 3,
+    "task_c95409a5": 22,
+    "task_d887260b": 7,
+    "task_f9a7e89c": 7,
+    "task_0782c295": 1,
+    "task_540bce1e": 1
+  },
+  "messages_per_task": {
+    "task_0782c295": 2,
+    "task_208099f6": 3,
+    "task_3e2bacc3": 12,
+    "task_540bce1e": 5,
+    "task_84acbb7d": 8,
+    "task_9963d4fc": 12,
+    "task_c95409a5": 68,
+    "task_d887260b": 18,
+    "task_f9a7e89c": 32
+  },
+  "skip_linkage": false,
+  "max_messages": 50,
+  "model_usage": [
+    {
+      "model": "claude-sonnet-4-6",
+      "calls": 114,
+      "cost": 2.2645983
+    },
+    {
+      "model": "gemini-2.5-flash",
+      "calls": 26,
+      "cost": 0
+    }
+  ],
+  "total_cost": 2.2645983,
+  "tasks_created": 9,
+  "pipeline_score": 46,
+  "run_metadata": {
+    "git_commit": "6b0a40c59",
+    "live_task_creation": true,
+    "models": {
+      "complex": "claude-sonnet-4-6",
+      "simple": "gemini-2.5-flash"
+    },
+    "escalation_profile": "ashish_current"
+  },
+  "run_notes": "",
+  "traced": true,
+  "phoenix_endpoints": [
+    "http://localhost:6006/v1/traces",
+    "http://152.42.156.128/developer/phoenix/v1/traces"
+  ],
+  "routing_mode": "entity_first",
+  "agents": [
+    "AO",
+    "AL"
+  ],
+  "warmup_messages": 236,
+  "conversations_created": 0,
+  "entities_discovered": 0,
+  "tasks_created_live": 9
+}
