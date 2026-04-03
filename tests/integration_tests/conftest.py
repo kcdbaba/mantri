@@ -13,10 +13,8 @@ RUNS_DIR = Path(_OUTPUT_BASE) / "integration" if _OUTPUT_BASE else Path("tests/r
 def pytest_addoption(parser):
     parser.addoption("--run-live", action="store_true", default=False,
                      help="Run live replay tests (requires API key, costs money)")
-    parser.addoption("--skip-linkage", action="store_true", default=False,
-                     help="Skip linkage agent calls (update_agent only)")
     parser.addoption("--max-messages", type=int, default=None,
-                     help="Process only the first N messages (for quick iteration)")
+                     help="Process only the first N messages. Mutually exclusive with --dev-test.")
     parser.addoption("--run-note", type=str, default="",
                      help="Note to attach to the run record (e.g. 'testing new prompt rules')")
     parser.addoption("--traced", action="store_true", default=False,
@@ -28,14 +26,12 @@ def pytest_addoption(parser):
                      help="Basic auth user for remote Phoenix (default: guest)")
     parser.addoption("--phoenix-password", type=str, default="guestpasswd",
                      help="Basic auth password for remote Phoenix")
-    parser.addoption("--batch", action="store_true", default=False,
-                     help="Simulate production batching (60s window, max 10 msgs)")
     parser.addoption("--agents", type=str, default="AO,AL",
-                     help="Comma-separated agents to run: AO (orders), AL (linkage), AS (conversation). Default: AO,AL")
-    parser.addoption("--no-seed-tasks", action="store_true", default=False,
-                     help="Skip seeding task instances (only seed config: entities, aliases). Tests nil-task creation.")
-    parser.addoption("--no-conv-llm", action="store_true", default=False,
-                     help="Disable LLM backward context matching in conversation router (saves ~$0.003)")
+                     help="Comma-separated agents to run: AO (orders), AL (linkage). Default: AO,AL")
+    parser.addoption("--dev-test", action="store_true", default=False,
+                     help="Short replay (50 msgs) with LLM response caching and pre-seeded tasks. "
+                          "First run requires --run-live to build cache; subsequent runs use cache. "
+                          "Disables Phoenix tracing and conv router LLM matching.")
 
 
 def save_run_record(test_type: str, case_id: str, results: dict):

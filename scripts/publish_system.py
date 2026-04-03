@@ -96,12 +96,12 @@ def _load_runs() -> list[dict]:
 def _build_tags_html(run: dict) -> str:
     """Build concise tag badges with hover tooltips from a run record."""
     badges = []
-    # Routing mode
+    # Routing modes
     rm = run.get("routing_mode", "")
     if rm == "entity_first":
-        badges.append("<span class='tag tag-mode' title='Entity-first routing (v0.3.0+)'>E</span>")
-    elif rm == "legacy_batch":
-        badges.append("<span class='tag tag-legacy' title='Legacy batch routing (pre v0.3.0)'>L</span>")
+        badges.append("<span class='tag tag-mode' title='Entity-first routing'>E</span>")
+    if run.get("conversations_created") or run.get("warmup_messages"):
+        badges.append("<span class='tag tag-mode' title='Conversation routing for shared groups'>I</span>")
     # Tracing
     if run.get("traced"):
         badges.append("<span class='tag tag-traced' title='Phoenix OTEL tracing enabled'>T</span>")
@@ -110,15 +110,9 @@ def _build_tags_html(run: dict) -> str:
     if not run_agents:
         run_agents = ["AO"] if run.get("skip_linkage") else ["AO", "AL"]
     agent_tips = {"AO": "Update agent for order processing",
-                  "AL": "Linkage agent for fulfillment matching",
-                  "AS": "Conversation routing for shared groups"}
+                  "AL": "Linkage agent for fulfillment matching"}
     for agent in run_agents:
         badges.append(f"<span class='tag tag-agent' title='{agent_tips.get(agent, agent)}'>{agent}</span>")
-    # Batching mode
-    if run.get("batch_mode"):
-        badges.append("<span class='tag tag-batch' title='Production batching (60s window)'>B</span>")
-    # Async replay — planned
-    # badges.append("<span class='tag tag-dim' title='Asynchronous replay (planned)'>🔃</span>")
     # Partial replay
     max_msgs = run.get("max_messages")
     if max_msgs:
@@ -1321,14 +1315,11 @@ def generate() -> str:
   <details style="margin:1rem 0">
   <summary class="dim" style="cursor:pointer; font-size:0.78rem">Tag Legend</summary>
   <table class="detail" style="margin-top:0.3rem; font-size:0.78rem">
-  <tr><td><span class="tag tag-mode">E</span></td><td>Entity-first routing (v0.3.0+)</td></tr>
-  <tr><td><span class="tag tag-legacy">L</span></td><td>Legacy batch routing (pre v0.3.0)</td></tr>
+  <tr><td><span class="tag tag-mode">E</span></td><td>Entity-first routing (direct group → entity mapping)</td></tr>
+  <tr><td><span class="tag tag-mode">I</span></td><td>Conversation routing for shared/internal groups</td></tr>
   <tr><td><span class="tag tag-traced">T</span></td><td>Phoenix OTEL tracing enabled</td></tr>
   <tr><td><span class="tag tag-agent">AO</span></td><td>Update agent — order processing</td></tr>
   <tr><td><span class="tag tag-agent">AL</span></td><td>Linkage agent — fulfillment matching</td></tr>
-  <tr><td><span class="tag tag-dim">AS</span></td><td>Shared groups conversation routing (planned)</td></tr>
-  <tr><td><span class="tag tag-batch">B</span></td><td>Production batching (60s window, max 10 msgs)</td></tr>
-  <tr><td><span class="tag tag-dim">🔃</span></td><td>Asynchronous linkage processing (planned)</td></tr>
   <tr><td><span class="tag tag-dim">N</span></td><td>Partial replay — first N messages only</td></tr>
   </table>
   </details>

@@ -611,9 +611,7 @@ def _run_traced_replay(case_dir: Path, trace_data: list[dict], seed: dict,
                        run_note: str = "",
                        phoenix_endpoints: list[str] | None = None,
                        auth_headers: dict | None = None,
-                       batch_mode: bool = False,
-                       no_seed_tasks: bool = False,
-                       no_conv_llm: bool = False) -> dict:
+                       dev_test: bool = False) -> dict:
     """
     Run replay using the instrumented entity-first pipeline with Phoenix tracing.
     Returns result dict in the same format as run_live_replay().
@@ -626,10 +624,10 @@ def _run_traced_replay(case_dir: Path, trace_data: list[dict], seed: dict,
     tmp.close()
     db_path = tmp.name
 
-    if no_seed_tasks:
-        _seed_config(db_path, seed)
+    if dev_test:
+        _seed_db(db_path, seed)  # dev-test pre-seeds tasks for speed
     else:
-        _seed_db(db_path, seed)
+        _seed_config(db_path, seed)  # full runs: only config, tasks created via pipeline
     mock_redis = StreamCapture()
 
     metadata = _get_run_metadata()
@@ -653,8 +651,8 @@ def _run_traced_replay(case_dir: Path, trace_data: list[dict], seed: dict,
         max_messages=max_messages,
         phoenix_endpoints=phoenix_endpoints,
         auth_headers=auth_headers,
-        batch_mode=batch_mode,
-        no_conv_llm=no_conv_llm,
+        no_conv_llm=dev_test,  # dev-test skips conv router LLM matching
+        dev_test=dev_test,
     )
 
     snapshot = _snapshot_state(db_path)
@@ -681,42 +679,53 @@ LIVE_CASE_IDS = [d.name for d in LIVE_CASES]
 class TestLiveReplay:
 
     def test_full_replay(self, case_dir, request):
-        if not request.config.getoption("--run-live"):
+        dev_test = request.config.getoption("--dev-test")
+        run_live = request.config.getoption("--run-live")
+        max_messages = request.config.getoption("--max-messages")
+
+        # Validate flag combinations
+        if dev_test and max_messages:
+            pytest.fail("--dev-test and --max-messages are mutually exclusive")
+
+        if dev_test:
+            cache_exists = (case_dir / "dev_cache.json").exists()
+            if not cache_exists and not run_live:
+                pytest.fail("--dev-test with no cache requires --run-live to build it")
+        elif not run_live:
             pytest.skip("Live replay requires --run-live flag")
 
-        skip_linkage = request.config.getoption("--skip-linkage")
-        max_messages = request.config.getoption("--max-messages")
+        # Parse flags
         run_note = request.config.getoption("--run-note")
         use_traced = request.config.getoption("--traced")
         raw_endpoints = request.config.getoption("--phoenix-endpoint")
         phoenix_user = request.config.getoption("--phoenix-user")
         phoenix_password = request.config.getoption("--phoenix-password")
-        batch_mode = request.config.getoption("--batch")
         agents_str = request.config.getoption("--agents")
 
-        # Parse --agents flag: overrides --skip-linkage
         agents = [a.strip().upper() for a in agents_str.split(",")]
-        if "AL" not in agents:
-            skip_linkage = True
-        if "AL" in agents:
-            skip_linkage = False
+        run_linkage = "AL" in agents
         case_id = case_dir.name.split("_")[0]
 
-        # Resolve Phoenix endpoints
-        # Default: remote droplet. Use --phoenix-endpoint local for localhost.
-        # Use --phoenix-endpoint local --phoenix-endpoint remote for dual-write.
-        LOCAL_EP = "http://localhost:6006/v1/traces"
-        REMOTE_EP = "http://152.42.156.128/developer/phoenix/v1/traces"
-        phoenix_endpoints = None
-        if raw_endpoints:
-            phoenix_endpoints = []
-            for ep in raw_endpoints:
-                if ep == "local":
-                    phoenix_endpoints.append(LOCAL_EP)
-                elif ep == "remote":
-                    phoenix_endpoints.append(REMOTE_EP)
-                else:
-                    phoenix_endpoints.append(ep)
+        # Dev-test overrides
+        DEV_TEST_MESSAGES = 50
+        if dev_test:
+            max_messages = DEV_TEST_MESSAGES
+            use_traced = True
+            phoenix_endpoints = []  # no Phoenix for dev runs
+        else:
+            # Resolve Phoenix endpoints
+            LOCAL_EP = "http://localhost:6006/v1/traces"
+            REMOTE_EP = "http://152.42.156.128/developer/phoenix/v1/traces"
+            phoenix_endpoints = None
+            if raw_endpoints:
+                phoenix_endpoints = []
+                for ep in raw_endpoints:
+                    if ep == "local":
+                        phoenix_endpoints.append(LOCAL_EP)
+                    elif ep == "remote":
+                        phoenix_endpoints.append(REMOTE_EP)
+                    else:
+                        phoenix_endpoints.append(ep)
 
         import base64
         auth_headers = {}
@@ -726,7 +735,6 @@ class TestLiveReplay:
 
         trace_data = _load_json(case_dir, "replay_trace.json")
         seed = _load_json(case_dir, "seed_tasks.json")
-
         trace = trace_data["messages"]
 
         logging.basicConfig(
@@ -734,39 +742,38 @@ class TestLiveReplay:
             format="%(asctime)s %(levelname)s %(name)s: %(message)s",
         )
 
-        # Check baseline staleness before running
-        if use_traced:
+        # Check baseline staleness before running (only for traced full runs)
+        if use_traced and not dev_test:
             from src.tracing.staleness import check_staleness
             for bl_file in case_dir.glob("eval_baselines*.json"):
                 report = check_staleness(bl_file)
                 print(f"\n  Staleness check: {bl_file.name}")
                 report.print_report()
 
-        # Dev-only flags
-        no_seed_tasks = request.config.getoption("--no-seed-tasks")
-        no_conv_llm = request.config.getoption("--no-conv-llm")
-
         if use_traced:
             result = _run_traced_replay(
                 case_dir, trace, seed,
-                run_linkage=not skip_linkage,
+                run_linkage=run_linkage,
                 max_messages=max_messages,
                 run_note=run_note,
                 phoenix_endpoints=phoenix_endpoints,
                 auth_headers=auth_headers,
-                batch_mode=batch_mode,
-                no_seed_tasks=no_seed_tasks,
-                no_conv_llm=no_conv_llm,
+                dev_test=dev_test,
             )
         else:
             result = run_live_replay(
                 case_dir, trace, seed,
-                run_linkage=not skip_linkage,
+                run_linkage=run_linkage,
                 max_messages=max_messages,
             )
 
-        # Write full results to output dir (case_dir or /tmp override)
-        out_dir = _output_dir(case_dir)
+        # Write results — dev-test to /tmp, full runs to output dir
+        if dev_test:
+            import tempfile
+            out_dir = Path(tempfile.gettempdir()) / "mantri_dev_test" / case_dir.name
+            out_dir.mkdir(parents=True, exist_ok=True)
+        else:
+            out_dir = _output_dir(case_dir)
         suffix = _output_suffix(max_messages)
         output_path = out_dir / f"replay_result{suffix}.json"
         output_path.write_text(
@@ -778,6 +785,7 @@ class TestLiveReplay:
         # Compute pipeline score
         stats = result["stats"]
         state = result["state"]
+        skip_linkage = not run_linkage
         score = _compute_pipeline_score(stats, state, skip_linkage)
         score["case_id"] = case_id
         score["case_name"] = case_dir.name
@@ -788,51 +796,51 @@ class TestLiveReplay:
             encoding="utf-8",
         )
 
-        # Save publishable run record
-        save_run_record("live", case_id, {
-            "messages_total": stats["messages_total"],
-            "messages_routed": stats["messages_routed"],
-            "messages_unrouted": stats["messages_unrouted"],
-            "messages_noise": stats.get("messages_noise", 0),
-            "update_agent_calls": stats["update_agent_calls"],
-            "update_agent_failures": stats["update_agent_failures"],
-            "linkage_events_processed": stats["linkage_events_processed"],
-            "linkage_agent_failures": stats["linkage_agent_failures"],
-            "error_count": len(stats["errors"]),
-            "dead_letter_count": state["dead_letter_count"],
-            "ambiguity_flag_count": len(state["ambiguity_flags"]),
-            "fulfillment_link_count": len(state["fulfillment_links"]),
-            "node_summary": {
-                task_id: {
-                    "completed": sum(1 for n in nodes if n["status"] == "completed"),
-                    "active": sum(1 for n in nodes if n["status"] in ("active", "in_progress")),
-                    "pending": sum(1 for n in nodes if n["status"] == "pending"),
-                    "blocked": sum(1 for n in nodes if n["status"] == "blocked"),
-                    "provisional": sum(1 for n in nodes if n["status"] == "provisional"),
-                    "total": len(nodes),
-                }
-                for task_id, nodes in state["node_states"].items()
-            },
-            "items_per_task": {tid: len(items) for tid, items in state["items"].items()},
-            "messages_per_task": state["message_counts"],
-            "skip_linkage": skip_linkage,
-            "max_messages": max_messages,
-            "model_usage": state.get("model_usage", []),
-            "total_cost": state.get("total_cost", 0),
-            "tasks_created": len(state["node_states"]),
-            "pipeline_score": score.get("overall_score") if score else None,
-            "run_metadata": _get_run_metadata(),
-            "run_notes": run_note or "",
-            "traced": use_traced,
-            "phoenix_endpoints": phoenix_endpoints if use_traced else None,
-            "routing_mode": "entity_first" if use_traced else "legacy_batch",
-            "batch_mode": batch_mode if use_traced else False,
-            "agents": agents if use_traced else ["AO"],
-            "warmup_messages": stats.get("warmup_messages", 0),
-            "conversations_created": stats.get("conversations_created", 0),
-            "entities_discovered": stats.get("entities_discovered", 0),
-            "tasks_created_live": stats.get("tasks_created_live", 0),
-        })
+        # Save publishable run record (skip for dev-test)
+        if not dev_test:
+            save_run_record("live", case_id, {
+                "messages_total": stats["messages_total"],
+                "messages_routed": stats["messages_routed"],
+                "messages_unrouted": stats["messages_unrouted"],
+                "messages_noise": stats.get("messages_noise", 0),
+                "update_agent_calls": stats["update_agent_calls"],
+                "update_agent_failures": stats["update_agent_failures"],
+                "linkage_events_processed": stats["linkage_events_processed"],
+                "linkage_agent_failures": stats["linkage_agent_failures"],
+                "error_count": len(stats["errors"]),
+                "dead_letter_count": state["dead_letter_count"],
+                "ambiguity_flag_count": len(state["ambiguity_flags"]),
+                "fulfillment_link_count": len(state["fulfillment_links"]),
+                "node_summary": {
+                    task_id: {
+                        "completed": sum(1 for n in nodes if n["status"] == "completed"),
+                        "active": sum(1 for n in nodes if n["status"] in ("active", "in_progress")),
+                        "pending": sum(1 for n in nodes if n["status"] == "pending"),
+                        "blocked": sum(1 for n in nodes if n["status"] == "blocked"),
+                        "provisional": sum(1 for n in nodes if n["status"] == "provisional"),
+                        "total": len(nodes),
+                    }
+                    for task_id, nodes in state["node_states"].items()
+                },
+                "items_per_task": {tid: len(items) for tid, items in state["items"].items()},
+                "messages_per_task": state["message_counts"],
+                "skip_linkage": skip_linkage,
+                "max_messages": max_messages,
+                "model_usage": state.get("model_usage", []),
+                "total_cost": state.get("total_cost", 0),
+                "tasks_created": len(state["node_states"]),
+                "pipeline_score": score.get("overall_score") if score else None,
+                "run_metadata": _get_run_metadata(),
+                "run_notes": run_note or "",
+                "traced": use_traced,
+                "phoenix_endpoints": phoenix_endpoints if use_traced else None,
+                "routing_mode": "entity_first" if use_traced else "legacy_batch",
+                "agents": agents if use_traced else ["AO"],
+                "warmup_messages": stats.get("warmup_messages", 0),
+                "conversations_created": stats.get("conversations_created", 0),
+                "entities_discovered": stats.get("entities_discovered", 0),
+                "tasks_created_live": stats.get("tasks_created_live", 0),
+            })
 
         # Basic sanity assertions
         assert stats["messages_routed"] > 0, "No messages routed"

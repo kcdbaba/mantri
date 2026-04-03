@@ -630,14 +630,12 @@ def _tag_legend() -> str:
         "<details style='margin-top:0.75rem'>"
         "<summary class='dim' style='cursor:pointer; font-size:0.78rem'>Tag Legend</summary>"
         "<table class='detail' style='margin-top:0.3rem; font-size:0.78rem'>"
-        "<tr><td><span class='tag tag-mode'>E</span></td><td>Entity-first routing (v0.3.0+)</td></tr>"
-        "<tr><td><span class='tag tag-legacy'>L</span></td><td>Legacy batch routing (pre v0.3.0)</td></tr>"
+        "<tr><td><span class='tag tag-mode'>E</span></td><td>Entity-first routing (direct group → entity mapping)</td></tr>"
+        "<tr><td><span class='tag tag-mode'>I</span></td><td>Conversation routing for shared/internal groups</td></tr>"
+        "<tr><td><span class='tag tag-legacy'>L</span></td><td>Legacy routing (pre v0.3.0)</td></tr>"
         "<tr><td><span class='tag tag-traced'>T</span></td><td>Phoenix OTEL tracing enabled</td></tr>"
         "<tr><td><span class='tag tag-agent'>AO</span></td><td>Update agent — order processing</td></tr>"
         "<tr><td><span class='tag tag-agent'>AL</span></td><td>Linkage agent — fulfillment matching</td></tr>"
-        "<tr><td><span class='tag tag-dim'>AS</span></td><td>Shared groups conversation routing (planned)</td></tr>"
-        "<tr><td><span class='tag tag-batch'>B</span></td><td>Production batching (60s window, max 10 msgs)</td></tr>"
-        "<tr><td><span class='tag tag-dim'>🔃</span></td><td>Asynchronous linkage processing (planned)</td></tr>"
         "<tr><td><span class='tag tag-dim'>N</span></td><td>Partial replay — first N messages only</td></tr>"
         "</table></details>"
     )
@@ -671,9 +669,9 @@ def _system_summary(int_runs: list[dict], real_runs: list[dict],
             tag_badges = []
             rm = latest.get("routing_mode", "")
             if rm == "entity_first":
-                tag_badges.append("<span class='tag tag-mode' title='Entity-first routing (v0.3.0+)'>E</span>")
-            elif rm == "legacy_batch":
-                tag_badges.append("<span class='tag tag-legacy' title='Legacy batch routing (pre v0.3.0)'>L</span>")
+                tag_badges.append("<span class='tag tag-mode' title='Entity-first routing'>E</span>")
+            if latest.get("conversations_created") or latest.get("warmup_messages"):
+                tag_badges.append("<span class='tag tag-mode' title='Conversation routing for shared groups'>I</span>")
             if latest.get("traced"):
                 tag_badges.append("<span class='tag tag-traced' title='Phoenix OTEL tracing enabled'>T</span>")
             # Agents
@@ -681,13 +679,9 @@ def _system_summary(int_runs: list[dict], real_runs: list[dict],
             if not run_agents:
                 run_agents = ["AO"] if latest.get("skip_linkage") else ["AO", "AL"]
             tips = {"AO": "Update agent for order processing",
-                    "AL": "Linkage agent for fulfillment matching",
-                    "AS": "Conversation routing for shared groups"}
+                    "AL": "Linkage agent for fulfillment matching"}
             for agent in run_agents:
                 tag_badges.append(f"<span class='tag tag-agent' title='{tips.get(agent, agent)}'>{agent}</span>")
-            # Batching
-            if latest.get("batch_mode"):
-                tag_badges.append("<span class='tag tag-batch' title='Production batching (60s window)'>B</span>")
             # Partial replay
             if latest.get("max_messages"):
                 n = latest["max_messages"]

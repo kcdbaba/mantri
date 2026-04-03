@@ -2,13 +2,16 @@
 Instrumented replay runner — wraps the production pipeline with Phoenix tracing.
 
 Non-invasive: uses monkey-patching during replay only. Production code unchanged.
-Uses process_message() — the actual entity-first production code path.
+Uses replay_messages() from worker.py — the shared processing function for both
+production and test harness. Only infrastructure (Redis, DB path) is mocked.
 
-Patches:
+Patches (tracing only, no behavior change):
   - route() → capture routing decisions
-  - _call_with_retry() → capture full prompts, raw output, tokens
+  - _call_with_retry() → capture LLM prompts, raw output, tokens
   - _resolve_task_for_entity() → capture entity→task resolution
   - _apply_output() → capture post-processing (cascades, items, flags)
+
+Dev-test mode adds one behavior change: LLM response caching via _call_with_retry patch.
 """
 
 import json
@@ -22,110 +25,6 @@ from src.tracing.tracer import ReplayTracer, RunContext, MessageTrace
 log = logging.getLogger(__name__)
 
 
-BATCH_WINDOW_S = 60   # Production batching window
-BATCH_MAX_SIZE = 10   # Production max batch size
-
-
-def _run_batched(messages, tracer, _mt, _apply_idx, stats, mock_redis,
-                 drain_linkage_fn, write_progress_fn, monitored, process_message_fn):
-    """
-    Simulate production batching: group messages by entity within BATCH_WINDOW_S,
-    then process each batch via process_message_batch().
-
-    This matches the production worker.py:run() behavior where messages are
-    buffered per entity and flushed after a timeout or max batch size.
-    """
-    from src.router.router import route
-    from src.router.worker import process_message_batch
-
-    # Phase 1: Route all messages and group into batches
-    batch_buf = {}  # entity_id → {"messages": [], "last_ts": int}
-    batches_to_flush = []  # [(entity_id, [messages])]
-
-    def _flush_all():
-        for eid, buf in batch_buf.items():
-            if buf["messages"]:
-                batches_to_flush.append((eid, list(buf["messages"])))
-        batch_buf.clear()
-
-    write_progress_fn("routing", f"0/{len(messages)} messages")
-    for i, msg in enumerate(messages):
-        if (i + 1) % 50 == 0:
-            write_progress_fn("routing", f"{i+1}/{len(messages)} messages")
-
-        routes = route(msg)
-        if not routes:
-            body = msg.get("body") or ""
-            has_content = body.strip() or msg.get("image_path") or msg.get("image_bytes")
-            if not has_content:
-                stats["messages_noise"] += 1
-            else:
-                stats["messages_unrouted"] += 1
-            continue
-
-        stats["messages_routed"] += 1
-        msg_ts = msg.get("timestamp", 0)
-
-        for entity_id, confidence in routes:
-            if entity_id in batch_buf:
-                elapsed = msg_ts - batch_buf[entity_id]["last_ts"]
-                if elapsed > BATCH_WINDOW_S or len(batch_buf[entity_id]["messages"]) >= BATCH_MAX_SIZE:
-                    batches_to_flush.append(
-                        (entity_id, list(batch_buf[entity_id]["messages"]))
-                    )
-                    del batch_buf[entity_id]
-
-            if entity_id not in batch_buf:
-                batch_buf[entity_id] = {"messages": [], "last_ts": 0}
-
-            batch_buf[entity_id]["messages"].append(msg)
-            batch_buf[entity_id]["last_ts"] = msg_ts
-
-    _flush_all()
-
-    # Phase 2: Process batches
-    write_progress_fn("batches", f"0/{len(batches_to_flush)} batches")
-    for batch_idx, (entity_id, batch_msgs) in enumerate(batches_to_flush):
-        if (batch_idx + 1) % 10 == 0:
-            log.info("Processing batch %d/%d: entity=%s size=%d",
-                     batch_idx + 1, len(batches_to_flush), entity_id, len(batch_msgs))
-            write_progress_fn("batches",
-                              f"{batch_idx+1}/{len(batches_to_flush)} batches")
-
-        # Trace span for the batch (use last message as representative)
-        last_msg = batch_msgs[-1]
-        _apply_idx[0] = 0
-
-        with tracer.trace_message(last_msg, seq=batch_idx) as mt:
-            _mt[0] = mt
-            mt.record_routing([(entity_id, 0.9)], layer="batch")
-
-            try:
-                # Resolve entity → task for the batch
-                from src.store.task_store import get_tasks_for_entity
-                from src.router.worker import _resolve_task_for_entity
-                entity_tasks = get_tasks_for_entity(entity_id)
-                task_id = _resolve_task_for_entity(entity_id, entity_tasks, last_msg, mock_redis)
-
-                if task_id:
-                    process_message_batch(task_id, batch_msgs, mock_redis)
-                    stats["update_agent_calls"] += 1
-                else:
-                    # Multi-task — fall back to per-message processing
-                    for msg in batch_msgs:
-                        process_message_fn(msg, mock_redis)
-            except Exception as e:
-                stats["errors"].append({
-                    "phase": "batch_process",
-                    "message_id": last_msg.get("message_id"),
-                    "error": str(e),
-                })
-                log.error("Batch failed for entity=%s: %s", entity_id, e)
-                continue
-
-            drain_linkage_fn(last_msg, batch_idx)
-
-
 def run_instrumented_replay(
     case_dir: Path,
     trace_messages: list[dict],
@@ -137,20 +36,16 @@ def run_instrumented_replay(
     max_messages: int | None = None,
     phoenix_endpoints: list[str] | None = None,
     auth_headers: dict | None = None,
-    batch_mode: bool = False,
     no_conv_llm: bool = False,
+    dev_test: bool = False,
 ) -> dict:
     """
-    Run the full entity-first pipeline with Phoenix trace capture.
+    Run the full pipeline with Phoenix trace capture.
 
-    Args:
-        phoenix_endpoints: list of 1-2 Phoenix OTEL endpoints (default: remote droplet)
-        auth_headers: HTTP headers for authenticated endpoints
-        batch_mode: if True, simulate production batching (60s window, max 10 msgs).
-                    If False, process one message at a time.
-        no_conv_llm: if True, disable LLM backward context in conversation router
-
-    Returns stats dict compatible with test_live_replay.py expectations.
+    Uses replay_messages() from worker.py — the shared processing function.
+    Only mocks infrastructure (Redis, DB path). All business logic (routing,
+    sender-scrap batching, conversation routing, agent calls, output application)
+    runs through production code unchanged.
     """
     test_window = seed.get("test_window", {})
     warmup_end_ts = test_window.get("warmup_end_ts", 0)
@@ -170,7 +65,7 @@ def run_instrumented_replay(
     t_start = time.time()
 
     stats = {
-        "messages_total": 0,  # excludes warmup
+        "messages_total": 0,
         "messages_routed": 0,
         "messages_unrouted": 0,
         "messages_noise": 0,
@@ -185,6 +80,12 @@ def run_instrumented_replay(
         "errors": [],
     }
 
+    # Dev test cache setup
+    if dev_test:
+        from src.tracing import agent_cache
+        cache_path = str(case_dir / "dev_cache.json")
+        agent_cache.init(cache_path)
+
     # Conversation routing setup
     conv_router = None
     if enable_conv_routing:
@@ -194,11 +95,9 @@ def run_instrumented_replay(
         conv_router = ConversationRouter(
             enable_llm_matching=not no_conv_llm,
         )
-        # Load OCR caches if specified in seed
         for group_id, ocr_file in seed.get("ocr_caches", {}).items():
             ocr_path = case_dir / ocr_file
             if not ocr_path.exists():
-                # Try parent directory (cross-case reference)
                 ocr_path = case_dir.parent / ocr_file
             if ocr_path.exists():
                 ocr = load_ocr_cache(str(ocr_path))
@@ -219,112 +118,125 @@ def run_instrumented_replay(
         except Exception:
             pass
 
+    # Split messages into warmup and test phases
+    if warmup_end_ts:
+        warmup_msgs = [m for m in messages_to_process if m.get("timestamp", 0) < warmup_end_ts]
+        test_msgs = [m for m in messages_to_process if m.get("timestamp", 0) >= warmup_end_ts]
+    else:
+        warmup_msgs = []
+        test_msgs = messages_to_process
+
+    stats["warmup_messages"] = len(warmup_msgs)
+    stats["messages_total"] = len(test_msgs)
+
     # Build dynamic patches from config_overrides
-    patches = [
+    config_patches = [
         patch("src.store.db.DB_PATH", db_path),
         patch("src.config.DB_PATH", db_path),
         patch("src.router.router.MONITORED_GROUPS", monitored),
     ]
     if enable_conv_routing:
-        patches.extend([
+        config_patches.extend([
             patch("src.config.ENABLE_CONVERSATION_ROUTING", True),
             patch("src.router.router.ENABLE_CONVERSATION_ROUTING", True),
         ])
 
     import contextlib
     with contextlib.ExitStack() as stack:
-        for p in patches:
+        for p in config_patches:
             stack.enter_context(p)
 
         from src.router.router import route as _orig_route
         from src.router.worker import (
-            process_message,
+            replay_messages,
             _resolve_task_for_entity as _orig_resolve,
             _apply_output as _orig_apply,
         )
         from src.linkage.linkage_worker import process_event
         from src.agent.update_agent import (
             _call_with_retry as _orig_call,
-            _select_model, _is_complex_message,
-            _parse_raw,
         )
 
-        # Mutable container for the current message's trace context
-        _mt: list[MessageTrace] = [MessageTrace()]
+        # Mutable tracing context
+        _mt = [MessageTrace()]
+        _apply_idx = [0]
 
-        # ── Phase 1a: Wrap route() ──────────────────────────────────────
+        # ── Tracing wrappers (no behavior change except dev_test cache) ──
 
         def _traced_route(message):
             mt = _mt[0]
             routes = _orig_route(message)
-
             if not routes:
                 body = message.get("body") or ""
                 has_content = body.strip() or message.get("image_path") or message.get("image_bytes")
                 if not has_content:
-                    stats["messages_noise"] += 1
                     mt.record_routing([], is_noise=True)
                 else:
-                    stats["messages_unrouted"] += 1
                     mt.record_routing([], layer="unrouted")
             elif routes == [("__conv_pending__", 0.0)]:
-                # Conversation routing sentinel — message goes to ConversationRouter
-                stats["messages_routed"] += 1
                 mt.record_routing(routes, layer="conv_pending")
             else:
-                stats["messages_routed"] += 1
                 group_id = message.get("group_id", "")
                 layer = "2a" if group_id in monitored else "2b"
                 mt.record_routing(routes, layer=layer)
-
             return routes
-
-        # ── Phase 1a: Wrap _call_with_retry() for full prompt capture ───
 
         def _traced_call_with_retry(system_prompt, user_section,
                                      message_id, task_id, **kwargs):
             mt = _mt[0]
             model = kwargs.get("model", "unknown")
 
+            # Dev test cache: check before LLM call
+            if dev_test:
+                from src.agent.update_agent import LLMResponse
+                cache_key = agent_cache.make_key(system_prompt, user_section)
+                cached = agent_cache.get(cache_key)
+                if cached:
+                    resp = LLMResponse(
+                        raw=cached["raw"],
+                        tokens_in=cached["tokens_in"],
+                        tokens_out=cached["tokens_out"],
+                        cache_creation_tokens=cached.get("cache_creation_tokens", 0),
+                        cache_read_tokens=cached.get("cache_read_tokens", 0),
+                    )
+                    mt.record_llm_call(
+                        call_type="update_agent", task_id=task_id,
+                        system_prompt="(cached)", user_section="(cached)",
+                        raw_output=resp.raw, parsed_output=None,
+                        model=f"{model} (cached)", model_selection_reason="cache_hit",
+                        tokens_in=0, tokens_out=0, cache_creation=0, cache_read=0,
+                        latency_ms=0, parse_success=True, is_retry=False,
+                    )
+                    return resp
+
             t0 = time.time()
             resp = _orig_call(system_prompt, user_section,
                               message_id, task_id, **kwargs)
             latency_ms = int((time.time() - t0) * 1000)
 
-            # Determine model selection reason from messages context
-            # (we don't have messages here, but model is already selected)
-            is_retry = kwargs.get("max_retries", 3) < 3
+            if dev_test and resp:
+                agent_cache.put(
+                    cache_key, resp.raw, resp.tokens_in, resp.tokens_out,
+                    resp.cache_creation_tokens, resp.cache_read_tokens,
+                )
 
+            is_retry = kwargs.get("max_retries", 3) < 3
             mt.record_llm_call(
-                call_type="update_agent",
-                task_id=task_id,
-                system_prompt=system_prompt,
-                user_section=user_section,
+                call_type="update_agent", task_id=task_id,
+                system_prompt=system_prompt, user_section=user_section,
                 raw_output=resp.raw if resp else "(failed)",
-                parsed_output=None,  # parsed later by caller
-                model=model,
-                model_selection_reason="",  # set by run_update_agent wrapper
+                parsed_output=None, model=model, model_selection_reason="",
                 tokens_in=resp.tokens_in if resp else 0,
                 tokens_out=resp.tokens_out if resp else 0,
                 cache_creation=resp.cache_creation_tokens if resp else 0,
                 cache_read=resp.cache_read_tokens if resp else 0,
-                latency_ms=latency_ms,
-                parse_success=True,  # parse happens later
-                is_retry=is_retry,
+                latency_ms=latency_ms, parse_success=True, is_retry=is_retry,
             )
-
-            stats["update_agent_calls"] += 1
-            if resp is None:
-                stats["update_agent_failures"] += 1
-
             return resp
-
-        # ── Phase 1b: Wrap _resolve_task_for_entity() ───────────────────
 
         def _traced_resolve(entity_id, entity_tasks, message, r):
             mt = _mt[0]
             result = _orig_resolve(entity_id, entity_tasks, message, r)
-
             if not entity_tasks:
                 method = "nil_create"
                 stats["tasks_created_live"] += 1
@@ -332,25 +244,16 @@ def run_instrumented_replay(
                 method = "single_task"
             else:
                 method = "agent_assignment" if result is None else "resolved"
-
             mt.record_task_resolution(
-                entity_id=entity_id,
-                entity_tasks=entity_tasks,
-                resolved_task_id=result,
-                resolution_method=method,
+                entity_id=entity_id, entity_tasks=entity_tasks,
+                resolved_task_id=result, resolution_method=method,
             )
             return result
-
-        # ── Phase 1c: Wrap _apply_output() ──────────────────────────────
-
-        _apply_idx = [0]  # counter for task_output_index
 
         def _traced_apply(task_id, order_type, output, message, r):
             mt = _mt[0]
             idx = _apply_idx[0]
             _apply_idx[0] += 1
-
-            # Capture what's about to be applied
             node_updates = [
                 {"node_id": u.node_id, "new_status": u.new_status,
                  "confidence": u.confidence, "evidence": u.evidence}
@@ -366,124 +269,92 @@ def run_instrumented_replay(
                  "quantity": i.quantity}
                 for i in output.item_extractions
             ]
-
-            # Call the real function
             _orig_apply(task_id, order_type, output, message, r)
-
-            # Record post-processing (cascades are logged inside _apply_output
-            # but we can't easily intercept them — record what we know)
             mt.record_post_processing(
-                task_id=task_id,
-                task_output_index=idx,
-                cascades_fired=[],  # would need deeper patch to capture
-                tasks_created=[],
+                task_id=task_id, task_output_index=idx,
+                cascades_fired=[], tasks_created=[],
                 ambiguity_flags=ambiguity_flags,
-                items_applied=items,
-                node_updates=node_updates,
+                items_applied=items, node_updates=node_updates,
             )
 
-        # ── Main replay loop ────────────────────────────────────────────
+        # ── Linkage drain ────────────────────────────────────────────────
 
-        _write_progress("processing", f"0/{len(messages_to_process)} messages")
-
-        def _drain_linkage(msg_ref, batch_idx=0):
-            """Feed mock Redis events to linkage worker."""
+        def _drain_linkage(scrap=None):
             if not run_linkage:
                 return
             new_events = mock_redis.drain_events()
             for stream_key, fields in new_events:
                 try:
-                    process_event(f"replay-{batch_idx}", fields, mock_redis)
+                    process_event("replay", fields, mock_redis)
                     stats["linkage_events_processed"] += 1
                 except Exception as e:
                     stats["linkage_agent_failures"] += 1
                     stats["errors"].append({
                         "phase": "linkage_agent",
-                        "message_id": msg_ref.get("message_id"),
+                        "message_id": scrap.messages[-1].get("message_id") if scrap else "?",
                         "error": str(e),
                     })
+
+        # ── Apply tracing patches ────────────────────────────────────────
 
         with patch("src.router.worker.route", _traced_route), \
              patch("src.agent.update_agent._call_with_retry", _traced_call_with_retry), \
              patch("src.router.worker._resolve_task_for_entity", _traced_resolve), \
              patch("src.router.worker._apply_output", _traced_apply):
 
-            if batch_mode and not enable_conv_routing:
-                # ── Batch mode: simulate production 60s window ─────────
-                # Not compatible with conversation routing (needs per-message feeding)
-                log.info("Batch mode: simulating production batching (%ds window, max %d)",
-                         BATCH_WINDOW_S, BATCH_MAX_SIZE)
-                _run_batched(messages_to_process, tracer, _mt, _apply_idx,
-                             stats, mock_redis, _drain_linkage, _write_progress,
-                             monitored, process_message)
-            else:
-                # ── Per-message mode: one process_message() per message ─
-                # Required for conversation routing (ConversationRouter needs
-                # sequential message feeding with timestamp-based gap detection)
-                test_seq = 0
-                for i, msg in enumerate(messages_to_process):
-                    msg_ts = msg.get("timestamp", 0)
-                    is_warmup = warmup_end_ts and msg_ts < warmup_end_ts
+            # Phase 1: Warmup — process through pipeline, no tracing
+            if warmup_msgs:
+                log.info("Warmup: %d messages", len(warmup_msgs))
+                _write_progress("warmup", f"{len(warmup_msgs)} messages")
+                replay_messages(
+                    warmup_msgs, mock_redis, conv_router=conv_router,
+                    on_scrap_processed=lambda s: _drain_linkage(s),
+                )
+                # Drain any remaining linkage events from warmup
+                _drain_linkage()
 
-                    if is_warmup:
-                        stats["warmup_messages"] += 1
-                    else:
-                        stats["messages_total"] += 1
+            # Phase 2: Test — process with per-scrap tracing
+            log.info("Test: %d messages", len(test_msgs))
+            _write_progress("processing", f"0/{len(test_msgs)} messages")
 
-                    if (i + 1) % 25 == 0:
-                        phase = "warmup" if is_warmup else "processing"
-                        log.info("[%s] Processing message %d/%d: %s",
-                                 phase, i + 1, len(messages_to_process),
-                                 msg.get("message_id"))
-                        _write_progress(phase,
-                                        f"{i+1}/{len(messages_to_process)} messages")
+            _scrap_seq = [0]
 
-                    _apply_idx[0] = 0
+            def _on_scrap_processed(scrap):
+                """Trace each processed scrap as a message span."""
+                with tracer.trace_message(scrap.messages[-1], seq=_scrap_seq[0]) as mt:
+                    _mt[0] = mt
+                    mt.record_routing(
+                        [(scrap.entity_id, 0.9)],
+                        layer="scrap",
+                    )
+                _drain_linkage(scrap)
+                _scrap_seq[0] += 1
+                stats["update_agent_calls"] += 1
 
-                    if is_warmup:
-                        # Warmup: process through pipeline (builds state) but no tracing
-                        try:
-                            process_message(msg, mock_redis, conv_router=conv_router)
-                        except Exception as e:
-                            log.debug("Warmup message failed: %s: %s",
-                                      msg.get("message_id"), e)
-                        _drain_linkage(msg, i)
-                    else:
-                        # Test phase: full tracing
-                        with tracer.trace_message(msg, seq=test_seq) as mt:
-                            _mt[0] = mt
-                            try:
-                                process_message(msg, mock_redis, conv_router=conv_router)
-                            except Exception as e:
-                                stats["errors"].append({
-                                    "phase": "process_message",
-                                    "message_id": msg.get("message_id"),
-                                    "error": str(e),
-                                })
-                                log.error("process_message failed for %s: %s",
-                                          msg.get("message_id"), e)
-                                continue
+            def _on_message_routed(msg, routes):
+                n = stats["messages_routed"] + stats["messages_noise"] + stats["messages_unrouted"]
+                if n % 25 == 0:
+                    _write_progress("processing", f"{n}/{len(test_msgs)} messages")
 
-                            _drain_linkage(msg, i)
-                        test_seq += 1
+            replay_stats = replay_messages(
+                test_msgs, mock_redis, conv_router=conv_router,
+                on_scrap_processed=_on_scrap_processed,
+                on_message_routed=_on_message_routed,
+            )
 
-                # Flush remaining conversations after all messages processed
-                if conv_router is not None:
-                    from src.router.worker import _process_conversation_result
-                    remaining = conv_router.flush_all()
-                    if remaining:
-                        for result in remaining:
-                            try:
-                                _process_conversation_result(result, mock_redis, conv_router)
-                            except Exception as e:
-                                stats["errors"].append({
-                                    "phase": "conv_flush",
-                                    "message_id": "flush",
-                                    "error": str(e),
-                                })
-                        _drain_linkage({"message_id": "conv_flush"}, i + 1)
+            # Merge replay_messages stats into our stats
+            stats["messages_routed"] = replay_stats["messages_routed"]
+            stats["messages_unrouted"] = replay_stats["messages_unrouted"]
+            stats["messages_noise"] = replay_stats["messages_noise"]
+            stats["errors"].extend(replay_stats["errors"])
 
-                    stats["conversations_created"] += len(remaining)
+            # Drain final linkage events
+            _drain_linkage()
+
+    # Save dev cache
+    if dev_test:
+        agent_cache.save()
+        stats["dev_cache"] = agent_cache.stats()
 
     _write_progress("complete", f"done in {time.time()-t_start:.0f}s")
     tracer.stop(stats=stats)

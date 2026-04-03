@@ -233,8 +233,211 @@ def process_message_batch(task_id: str, messages: list[dict], r: redis.Redis):
 CONSUMER_GROUP = "router_worker_group"
 CONSUMER_NAME = "router_worker_1"
 MAX_RETRY_ATTEMPTS = 3
-BATCH_WINDOW_S = 60
-BATCH_MAX_SIZE = 10
+SCRAP_GAP_S = 60       # sender silence gap before flushing a scrap
+SCRAP_MAX_SIZE = 10     # max messages per sender scrap before forced flush
+
+
+# ---------------------------------------------------------------------------
+# MessageBuffer — sender-based scrap accumulation for entity groups
+# ---------------------------------------------------------------------------
+
+from dataclasses import dataclass, field
+
+
+@dataclass
+class SenderScrap:
+    """A batch of messages from the same sender in the same entity group."""
+    entity_id: str
+    sender: str
+    messages: list[dict] = field(default_factory=list)
+    event_ids: list[str] = field(default_factory=list)
+    last_ts: int = 0
+
+
+class MessageBuffer:
+    """Accumulates messages into sender-based scraps for batch processing.
+
+    Groups by (entity_id, sender). Flushes when:
+    - Gap between messages from the same sender exceeds SCRAP_GAP_S
+    - Scrap reaches SCRAP_MAX_SIZE messages
+
+    Tracks Redis event_ids for atomic ACKing after successful processing.
+    """
+
+    def __init__(self, gap_s: int = SCRAP_GAP_S, max_size: int = SCRAP_MAX_SIZE):
+        self._gap_s = gap_s
+        self._max_size = max_size
+        # {(entity_id, sender): SenderScrap}
+        self._scraps: dict[tuple[str, str], SenderScrap] = {}
+
+    def add(self, entity_id: str, message: dict,
+            event_id: str | None = None,
+            now: int | None = None) -> list[SenderScrap]:
+        """Add a message. Returns list of scraps flushed by this addition."""
+        sender = message.get("sender", "unknown")
+        ts = now or message.get("timestamp") or int(time.time())
+        key = (entity_id, sender)
+        flushed = []
+
+        if key in self._scraps:
+            scrap = self._scraps[key]
+            elapsed = ts - scrap.last_ts if scrap.last_ts else 0
+            if elapsed > self._gap_s or len(scrap.messages) >= self._max_size:
+                flushed.append(scrap)
+                del self._scraps[key]
+
+        if key not in self._scraps:
+            self._scraps[key] = SenderScrap(entity_id=entity_id, sender=sender)
+
+        scrap = self._scraps[key]
+        scrap.messages.append(message)
+        if event_id:
+            scrap.event_ids.append(event_id)
+        scrap.last_ts = ts
+
+        return flushed
+
+    def flush_stale(self, now: int | None = None) -> list[SenderScrap]:
+        """Flush scraps that have been idle for more than gap_s."""
+        now = now or int(time.time())
+        flushed = []
+        stale_keys = []
+        for key, scrap in self._scraps.items():
+            if now - scrap.last_ts >= self._gap_s:
+                flushed.append(scrap)
+                stale_keys.append(key)
+        for key in stale_keys:
+            del self._scraps[key]
+        return flushed
+
+    def flush_all(self) -> list[SenderScrap]:
+        """Flush all remaining scraps. Called at shutdown or end of replay."""
+        flushed = list(self._scraps.values())
+        self._scraps.clear()
+        return flushed
+
+
+def _process_scrap(scrap: SenderScrap, r):
+    """Process a flushed sender scrap — resolve entity → task, call agent."""
+    from src.store.task_store import get_tasks_for_entity
+    entity_tasks = get_tasks_for_entity(scrap.entity_id)
+    task_id = _resolve_task_for_entity(
+        scrap.entity_id, entity_tasks, scrap.messages[-1], r,
+    )
+    if task_id:
+        process_message_batch(task_id, scrap.messages, r)
+    else:
+        log.warning("Could not resolve task for scrap: entity=%s sender=%s (%d msgs)",
+                    scrap.entity_id, scrap.sender, len(scrap.messages))
+
+
+def replay_messages(
+    messages: list[dict],
+    r,
+    conv_router=None,
+    on_scrap_processed=None,
+    on_message_routed=None,
+) -> dict:
+    """Process a sequence of messages through the full pipeline.
+
+    Shared entry point for both production replay and test harness.
+    Uses sender-based scrap accumulation for entity groups and
+    ConversationRouter for shared groups.
+
+    Only infrastructure (Redis) is mocked — all business logic runs
+    through production code unchanged.
+
+    Args:
+        messages: ordered list of message dicts
+        r: Redis client (real or mock — only needs xadd/xack)
+        conv_router: ConversationRouter instance for shared groups (optional)
+        on_scrap_processed: callback(SenderScrap) after each scrap is processed
+        on_message_routed: callback(message, routes) after routing each message
+
+    Returns stats dict.
+    """
+    buf = MessageBuffer()
+    stats = {
+        "messages_total": len(messages),
+        "messages_routed": 0,
+        "messages_unrouted": 0,
+        "messages_noise": 0,
+        "update_agent_calls": 0,
+        "update_agent_failures": 0,
+        "errors": [],
+    }
+
+    def _handle_scraps(scraps: list[SenderScrap]):
+        for scrap in scraps:
+            try:
+                _process_scrap(scrap, r)
+                stats["update_agent_calls"] += 1
+            except Exception as e:
+                stats["errors"].append({
+                    "phase": "scrap_process",
+                    "message_id": scrap.messages[-1].get("message_id"),
+                    "error": str(e),
+                })
+                log.error("Scrap processing failed: entity=%s sender=%s: %s",
+                          scrap.entity_id, scrap.sender, e)
+            if on_scrap_processed:
+                on_scrap_processed(scrap)
+
+    for msg in messages:
+        routes = route(msg)
+
+        if not routes:
+            body = msg.get("body") or ""
+            has_content = body.strip() or msg.get("image_path") or msg.get("image_bytes")
+            if not has_content:
+                stats["messages_noise"] += 1
+            else:
+                stats["messages_unrouted"] += 1
+                _log_unrouted(msg)
+            continue
+
+        stats["messages_routed"] += 1
+        if on_message_routed:
+            on_message_routed(msg, routes)
+
+        # Conversation routing sentinel
+        if routes == [("__conv_pending__", 0.0)]:
+            if conv_router is not None:
+                result = conv_router.feed(msg)
+                if result:
+                    _process_conversation_result(result, r, conv_router)
+            else:
+                _log_unrouted(msg)
+            continue
+
+        # Entity groups — accumulate as sender scraps
+        for entity_id, confidence in routes:
+            flushed = buf.add(entity_id, msg)
+            _handle_scraps(flushed)
+
+        # Also check for stale scraps (gap-based flush)
+        msg_ts = msg.get("timestamp")
+        if msg_ts:
+            stale = buf.flush_stale(now=msg_ts)
+            _handle_scraps(stale)
+
+    # Flush remaining entity scraps
+    _handle_scraps(buf.flush_all())
+
+    # Flush remaining conversations
+    if conv_router is not None:
+        remaining = conv_router.flush_all()
+        for result in remaining:
+            try:
+                _process_conversation_result(result, r, conv_router)
+            except Exception as e:
+                stats["errors"].append({
+                    "phase": "conv_flush",
+                    "message_id": "flush",
+                    "error": str(e),
+                })
+
+    return stats
 
 
 def _ensure_consumer_group(r: redis.Redis):
@@ -304,45 +507,27 @@ def _write_ingest_dead_letter(event_id: str, fields: dict, failure_reason: str):
         )
 
 
-def _flush_batch(task_id: str, batch: list[dict], event_ids: list[str], r: redis.Redis):
-    """Flush a batch of messages for a single task_id — one LLM call."""
-    try:
-        process_message_batch(task_id, batch, r)
-    except Exception as e:
-        log.error("Batch processing failed for task=%s batch_size=%d: %s",
-                  task_id, len(batch), e)
-    # ACK all events in the batch regardless (messages are stored in DB already)
-    for eid in event_ids:
-        r.xack(INGEST_STREAM, CONSUMER_GROUP, eid)
-
-
-def _flush_entity_batch(entity_id: str, batch: list[dict], event_ids: list[str], r: redis.Redis):
-    """Flush a batch of messages for an entity — resolve task, then process."""
-    from src.store.task_store import get_tasks_for_entity
-    entity_tasks = get_tasks_for_entity(entity_id)
-    task_id = _resolve_task_for_entity(entity_id, entity_tasks, batch[-1], r)
-
-    try:
-        process_message_batch(task_id, batch, r)
-    except Exception as e:
-        log.error("Entity batch failed for entity=%s task=%s batch_size=%d: %s",
-                  entity_id, task_id, len(batch), e)
-    for eid in event_ids:
+def _ack_scrap(scrap: SenderScrap, r: redis.Redis):
+    """ACK all event_ids in a scrap atomically after successful processing."""
+    for eid in scrap.event_ids:
         r.xack(INGEST_STREAM, CONSUMER_GROUP, eid)
 
 
 def run():
-    log.info("Router worker started — consuming stream %s (batch_window=%ds)",
-             INGEST_STREAM, BATCH_WINDOW_S)
+    from src.config import ENABLE_CONVERSATION_ROUTING
+    log.info("Router worker started — consuming stream %s (scrap_gap=%ds)",
+             INGEST_STREAM, SCRAP_GAP_S)
     r = redis.from_url(REDIS_URL, decode_responses=True)
     _ensure_consumer_group(r)
 
-    # Batch buffer: {task_id: {"messages": [...], "event_ids": [...], "last_at": timestamp}}
-    batch_buffer: dict[str, dict] = {}
+    buf = MessageBuffer()
+    conv_router = None
+    if ENABLE_CONVERSATION_ROUTING:
+        from src.conversation.conversation_router import ConversationRouter
+        conv_router = ConversationRouter()
 
     while True:
         try:
-            # Short block time to check batch timeouts frequently
             results = r.xreadgroup(
                 CONSUMER_GROUP, CONSUMER_NAME,
                 {INGEST_STREAM: ">"},
@@ -350,7 +535,6 @@ def run():
                 block=2000,
             )
 
-            # Route incoming messages into batch buffer
             if results:
                 for stream_name, entries in results:
                     for event_id, fields in entries:
@@ -371,28 +555,33 @@ def run():
                             r.xack(INGEST_STREAM, CONSUMER_GROUP, event_id)
                             continue
 
-                        # Add to batch buffer per entity
+                        # Conversation routing sentinel
+                        if routes == [("__conv_pending__", 0.0)]:
+                            if conv_router is not None:
+                                result = conv_router.feed(message)
+                                if result:
+                                    _process_conversation_result(result, r, conv_router)
+                            else:
+                                _log_unrouted(message)
+                            r.xack(INGEST_STREAM, CONSUMER_GROUP, event_id)
+                            continue
+
+                        # Entity groups — accumulate as sender scraps
                         for entity_id, confidence in routes:
-                            if entity_id not in batch_buffer:
-                                batch_buffer[entity_id] = {
-                                    "messages": [], "event_ids": [], "last_at": 0,
-                                }
-                            buf = batch_buffer[entity_id]
-                            buf["messages"].append(message)
-                            buf["event_ids"].append(event_id)
-                            buf["last_at"] = time.time()
+                            flushed = buf.add(entity_id, message, event_id=event_id)
+                            for scrap in flushed:
+                                _process_scrap(scrap, r)
+                                _ack_scrap(scrap, r)
 
-            # Flush batches that have timed out or hit max size
-            now = time.time()
-            flushed = []
-            for entity_id, buf in batch_buffer.items():
-                elapsed = now - buf["last_at"]
-                if elapsed >= BATCH_WINDOW_S or len(buf["messages"]) >= BATCH_MAX_SIZE:
-                    _flush_entity_batch(entity_id, buf["messages"], buf["event_ids"], r)
-                    flushed.append(entity_id)
+            # Flush stale scraps (sender gap exceeded)
+            for scrap in buf.flush_stale():
+                _process_scrap(scrap, r)
+                _ack_scrap(scrap, r)
 
-            for entity_id in flushed:
-                del batch_buffer[entity_id]
+            # Flush stale conversations
+            if conv_router is not None:
+                for result in conv_router.flush_stale():
+                    _process_conversation_result(result, r, conv_router)
 
         except redis.RedisError as e:
             log.error("Router worker Redis error: %s — retrying in 5s", e)
