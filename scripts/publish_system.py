@@ -113,6 +113,9 @@ def _build_tags_html(run: dict) -> str:
                   "AL": "Linkage agent for fulfillment matching"}
     for agent in run_agents:
         badges.append(f"<span class='tag tag-agent' title='{agent_tips.get(agent, agent)}'>{agent}</span>")
+    # Dev test
+    if run.get("dev_test"):
+        badges.append("<span class='tag tag-dim' title='Dev test (cached LLM, pre-seeded tasks)'>\U0001f6a7</span>")
     # Partial replay
     max_msgs = run.get("max_messages")
     if max_msgs:
@@ -1321,6 +1324,7 @@ def generate() -> str:
   <tr><td><span class="tag tag-agent">AO</span></td><td>Update agent — order processing</td></tr>
   <tr><td><span class="tag tag-agent">AL</span></td><td>Linkage agent — fulfillment matching</td></tr>
   <tr><td><span class="tag tag-dim">N</span></td><td>Partial replay — first N messages only</td></tr>
+  <tr><td><span class="tag tag-dim">🚧</span></td><td>Dev test — cached LLM responses, pre-seeded tasks</td></tr>
   </table>
   </details>
 

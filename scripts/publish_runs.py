@@ -637,6 +637,7 @@ def _tag_legend() -> str:
         "<tr><td><span class='tag tag-agent'>AO</span></td><td>Update agent — order processing</td></tr>"
         "<tr><td><span class='tag tag-agent'>AL</span></td><td>Linkage agent — fulfillment matching</td></tr>"
         "<tr><td><span class='tag tag-dim'>N</span></td><td>Partial replay — first N messages only</td></tr>"
+        "<tr><td><span class='tag tag-dim'>🚧</span></td><td>Dev test — cached LLM responses, pre-seeded tasks</td></tr>"
         "</table></details>"
     )
 
@@ -682,6 +683,9 @@ def _system_summary(int_runs: list[dict], real_runs: list[dict],
                     "AL": "Linkage agent for fulfillment matching"}
             for agent in run_agents:
                 tag_badges.append(f"<span class='tag tag-agent' title='{tips.get(agent, agent)}'>{agent}</span>")
+            # Dev test
+            if latest.get("dev_test"):
+                tag_badges.append("<span class='tag tag-dim' title='Dev test (cached LLM, pre-seeded tasks)'>\U0001f6a7</span>")
             # Partial replay
             if latest.get("max_messages"):
                 n = latest["max_messages"]
