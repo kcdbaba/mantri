@@ -164,6 +164,9 @@ def run_instrumented_replay(
         from src.linkage.linkage_worker import process_event
         from src.agent.update_agent import (
             _call_with_retry as _orig_call,
+            _call_anthropic_with_retry as _orig_anthropic,
+            _call_gemini_with_retry as _orig_gemini,
+            LLMResponse,
         )
 
         # Mutable tracing context
@@ -249,6 +252,52 @@ def run_instrumented_replay(
             )
             return resp
 
+        # ── Cache wrappers for low-level SDK call functions ────────────
+        # These cover ALL callers: update agent (via _call_with_retry) AND
+        # linkage agent (calls _call_anthropic/_call_gemini directly).
+
+        def _cached_anthropic(system_prompt, user_section,
+                              message_id, task_id, **kwargs):
+            if dev_test:
+                cache_key = agent_cache.make_key(system_prompt, user_section)
+                cached = agent_cache.get(cache_key)
+                if cached:
+                    return LLMResponse(
+                        raw=cached["raw"], tokens_in=cached["tokens_in"],
+                        tokens_out=cached["tokens_out"],
+                        cache_creation_tokens=cached.get("cache_creation_tokens", 0),
+                        cache_read_tokens=cached.get("cache_read_tokens", 0),
+                    )
+            resp = _orig_anthropic(system_prompt, user_section,
+                                   message_id, task_id, **kwargs)
+            if dev_test and resp:
+                agent_cache.put(
+                    cache_key, resp.raw, resp.tokens_in, resp.tokens_out,
+                    resp.cache_creation_tokens, resp.cache_read_tokens,
+                )
+            return resp
+
+        def _cached_gemini(system_prompt, user_section,
+                           message_id, task_id, **kwargs):
+            if dev_test:
+                cache_key = agent_cache.make_key(system_prompt, user_section)
+                cached = agent_cache.get(cache_key)
+                if cached:
+                    return LLMResponse(
+                        raw=cached["raw"], tokens_in=cached["tokens_in"],
+                        tokens_out=cached["tokens_out"],
+                        cache_creation_tokens=cached.get("cache_creation_tokens", 0),
+                        cache_read_tokens=cached.get("cache_read_tokens", 0),
+                    )
+            resp = _orig_gemini(system_prompt, user_section,
+                                message_id, task_id, **kwargs)
+            if dev_test and resp:
+                agent_cache.put(
+                    cache_key, resp.raw, resp.tokens_in, resp.tokens_out,
+                    resp.cache_creation_tokens, resp.cache_read_tokens,
+                )
+            return resp
+
         def _traced_resolve(entity_id, entity_tasks, message, r):
             mt = _mt[0]
             result = _orig_resolve(entity_id, entity_tasks, message, r)
@@ -314,6 +363,10 @@ def run_instrumented_replay(
 
         with patch("src.router.worker.route", _traced_route), \
              patch("src.agent.update_agent._call_with_retry", _traced_call_with_retry), \
+             patch("src.agent.update_agent._call_anthropic_with_retry", _cached_anthropic), \
+             patch("src.agent.update_agent._call_gemini_with_retry", _cached_gemini), \
+             patch("src.linkage.agent._call_anthropic_with_retry", _cached_anthropic), \
+             patch("src.linkage.agent._call_gemini_with_retry", _cached_gemini), \
              patch("src.router.worker._resolve_task_for_entity", _traced_resolve), \
              patch("src.router.worker._apply_output", _traced_apply):
 
