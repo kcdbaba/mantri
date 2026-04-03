@@ -1,0 +1,149 @@
+{
+  "f52a9baf40d2d444": {
+    "raw": "```json\n{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_sata_client\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [\n        {\n          \"node_id\": \"client_enquiry\",\n          \"new_status\": \"completed\",\n          \"confidence\": 0.90,\n          \"evidence\": \"Image contains a structured item list with quantities — client (Sata Bty Bn, Sub Arvind Sir) has sent a price enquiry with full item list. Enquiry is complete and detailed.\"\n        }\n      ],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [\n        {\n          \"description\": \"No delivery location, required_by_date, or unit address mentioned. These are needed before quotation can be prepared.\",\n          \"severity\": \"low\",\n          \"category\": \"timing\",\n          \"blocking_node_id\": null\n        }\n      ],\n      \"item_extractions\": [\n        {\n          \"operation\": \"add\",\n          \"description\": \"LG Refrigerator 242 Ltrs with handle, 3/4 STAR\",\n          \"unit\": \"Nos\",\n          \"quantity\": 1,\n          \"specs\": \"242 Litres, with handle, 3/4 star rating\",\n          \"existing_description\": null\n        },\n        {\n          \"operation\": \"add\",\n          \"description\": \"Voltas Window AC 1.5 Ton\",\n          \"unit\": \"Nos\",\n          \"quantity\": 3,\n          \"specs\": \"1.5 Ton, Window type\",\n          \"existing_description\": null\n        },\n        {\n          \"operation\": \"add\",\n          \"description\": \"Canon camera with lence (EOS R10)\",\n          \"unit\": \"Nos\",\n          \"quantity\": 1,\n          \"specs\": \"Canon EOS R10, with lens\",\n          \"existing_description\": null\n        },\n        {\n          \"operation\": \"add\",\n          \"description\": \"Prestige Single gas burner\",\n          \"unit\": \"Nos\",\n          \"quantity\": 1,\n          \"specs\": null,\n          \"existing_description\": null\n        },\n        {\n          \"operation\": \"add\",\n          \"description\": \"Mini Refrigerator 75/100 Ltr\",\n          \"unit\": \"Nos\",\n          \"quantity\": 1,\n          \"specs\": \"75 to 100 litre range\",\n          \"existing_description\": null\n        },\n        {\n          \"operation\": \"add\",\n          \"description\": \"Casserole 0.5 Kg\",\n          \"unit\": \"Nos\",\n          \"quantity\": 4,\n          \"specs\": \"0.5 Kg\",\n          \"existing_description\": null\n        },\n        {\n          \"operation\": \"add\",\n          \"description\": \"White Bed Sheet (premium quality)\",\n          \"unit\": \"Nos\",\n          \"quantity\": 15,\n          \"specs\": \"Premium quality, white\",\n          \"existing_description\": null\n        },\n        {\n          \"operation\": \"add\",\n          \"description\": \"Three wheel golf push cart\",\n          \"unit\": \"Nos\",\n          \"quantity\": 1,\n          \"specs\": \"Three wheel\",\n          \"existing_description\": null\n        },\n        {\n          \"operation\": \"add\",\n          \"description\": \"JBL Party speaker box\",\n          \"unit\": \"Nos\",\n          \"quantity\": 2,\n          \"specs\": \"JBL brand\",\n          \"existing_description\": null\n        }\n      ],\n      \"node_data_extractions\": [\n        {\n          \"node_id\": \"client_enquiry\",\n          \"data\": {\n            \"officer_name\": \"Sub Arvind\",\n            \"unit_name\": \"Sata Bty Bn\"\n          }\n        }\n      ]\n    }\n  ]\n}\n```",
+    "tokens_in": 1583,
+    "tokens_out": 955,
+    "cache_creation_tokens": 5138,
+    "cache_read_tokens": 0
+  },
+  "cffa34d10d7352b4": {
+    "raw": "```json\n{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_lg_supplier\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [\n        {\n          \"node_id\": \"supplier_indent\",\n          \"new_status\": \"completed\",\n          \"confidence\": 0.9,\n          \"evidence\": \"Samita is enquiring with LG supplier for rate on LG Refrigerator 242 ltr with handle, 3/4 star — supplier discussion initiated\"\n        }\n      ],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [],\n      \"item_extractions\": [\n        {\n          \"operation\": \"add\",\n          \"description\": \"LG Refrigerator 242 ltr with handle, 3/4 star\",\n          \"unit\": \"Nos\",\n          \"quantity\": 1,\n          \"specs\": \"242 litres, with handle, 3/4 star rating\",\n          \"existing_description\": null\n        }\n      ],\n      \"node_data_extractions\": [\n        {\n          \"node_id\": \"supplier_indent\",\n          \"data\": {\n            \"supplier_name\": \"LG Supplier\",\n            \"supplier_contact\": \"Mrs Samita Roy (via LG_supplier group)\"\n          }\n        }\n      ]\n    }\n  ]\n}\n```",
+    "tokens_in": 941,
+    "tokens_out": 343,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 5138
+  },
+  "a1ed6224ff760916": {
+    "raw": "{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_lg_supplier\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [],\n      \"item_extractions\": [],\n      \"node_data_extractions\": []\n    }\n  ]\n}",
+    "tokens_in": 5803,
+    "tokens_out": 94,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0
+  },
+  "56a5b2b86c2bbbde": {
+    "raw": "{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_lg_supplier\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [],\n      \"item_extractions\": [],\n      \"node_data_extractions\": []\n    }\n  ]\n}",
+    "tokens_in": 5829,
+    "tokens_out": 94,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0
+  },
+  "5aeb048492c25639": {
+    "raw": "{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_voltas_supplier\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [],\n      \"item_extractions\": [],\n      \"node_data_extractions\": []\n    }\n  ]\n}",
+    "tokens_in": 5867,
+    "tokens_out": 95,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0
+  },
+  "cf4ec2f4b91a9db1": {
+    "raw": "{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_voltas_supplier\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [\n        {\n          \"node_id\": \"supplier_indent\",\n          \"new_status\": \"in_progress\",\n          \"confidence\": 0.9,\n          \"evidence\": \"Increased\"\n        }\n      ],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [],\n      \"item_extractions\": [],\n      \"node_data_extractions\": []\n    }\n  ]\n}",
+    "tokens_in": 5895,
+    "tokens_out": 146,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0
+  },
+  "7d6b15d66cd0f8ac": {
+    "raw": "{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_voltas_supplier\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [\n        {\n          \"node_id\": \"supplier_indent\",\n          \"new_status\": \"active\",\n          \"confidence\": 0.9,\n          \"evidence\": \"Sir kindly share\"\n        }\n      ],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [],\n      \"item_extractions\": [],\n      \"node_data_extractions\": []\n    }\n  ]\n}",
+    "tokens_in": 5925,
+    "tokens_out": 146,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0
+  },
+  "f1fca8e8db09f3d0": {
+    "raw": "```json\n{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_lg_supplier\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [\n        {\n          \"node_id\": \"supplier_indent\",\n          \"new_status\": \"in_progress\",\n          \"confidence\": 0.85,\n          \"evidence\": \"Samita enquiring with LG supplier for Mini Refrigerator 75/100 ltr rate and model details — extends existing supplier indent discussion\"\n        }\n      ],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [\n        {\n          \"description\": \"Mini Refrigerator 75/100 Ltr is a client-side item in task_sata_client, but is now being enquired under task_lg_supplier. It is unclear whether this item should be linked to the existing LG supplier task or if a separate supplier task should be created for it.\",\n          \"severity\": \"medium\",\n          \"category\": \"linkage\",\n          \"blocking_node_id\": null\n        }\n      ],\n      \"item_extractions\": [\n        {\n          \"operation\": \"add\",\n          \"description\": \"Mini Refrigerator 75/100 ltr\",\n          \"unit\": \"Nos\",\n          \"quantity\": null,\n          \"specs\": \"75 to 100 litre range, rate and model details requested\",\n          \"existing_description\": null\n        }\n      ],\n      \"node_data_extractions\": [\n        {\n          \"node_id\": \"supplier_indent\",\n          \"data\": {\n            \"supplier_name\": \"LG supplier (Ashish Chhabra)\",\n            \"supplier_contact\": \"Ashish Chhabra\"\n          }\n        }\n      ]\n    }\n  ]\n}\n```",
+    "tokens_in": 1125,
+    "tokens_out": 443,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 5138
+  },
+  "d24c6c1f61ef751c": {
+    "raw": "```json\n{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_voltas_supplier\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [\n        {\n          \"description\": \"Punit-Jrbk Voltas has shared a rate list including 1.5 ton Window AC (₹28,600), Split ACs, and Stabilizers. The message appears cut off at item 7. It is unclear whether this is a complete rate list or partial. Additionally, the client order (task_sata_client) requires 1.5 ton Window AC only — but Voltas is sharing rates for multiple models and stabilizers not in the current order. Confirmation needed on whether these rates are being accepted by Uttam Enterprise for the active order.\",\n          \"severity\": \"medium\",\n          \"category\": \"status\",\n          \"blocking_node_id\": null\n        },\n        {\n          \"description\": \"The Voltas rate message appears cut off — item 7 is incomplete. The full rate list may not have been captured.\",\n          \"severity\": \"low\",\n          \"category\": \"quantity\",\n          \"blocking_node_id\": null\n        }\n      ],\n      \"item_extractions\": [],\n      \"node_data_extractions\": []\n    }\n  ]\n}\n```",
+    "tokens_in": 1331,
+    "tokens_out": 337,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 5138
+  },
+  "9d3069a0a8cdd322": {
+    "raw": "{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_voltas_supplier\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [],\n      \"item_extractions\": [],\n      \"node_data_extractions\": []\n    }\n  ]\n}",
+    "tokens_in": 6143,
+    "tokens_out": 95,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0
+  },
+  "667c3f80597352df": {
+    "raw": "```json\n{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_sata_client\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [\n        {\n          \"description\": \"Ashish mentions '2 more parts have to be ordered extra' in the sata_jobs group but does not specify what the parts are. It is unclear which items are being referred to and whether they are additions to the existing task_sata_client order or a new order.\",\n          \"severity\": \"medium\",\n          \"category\": \"quantity\",\n          \"blocking_node_id\": null\n        }\n      ],\n      \"item_extractions\": [],\n      \"node_data_extractions\": []\n    }\n  ]\n}\n```",
+    "tokens_in": 1307,
+    "tokens_out": 205,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 5138
+  },
+  "7bc6a57543ad4011": {
+    "raw": "```json\n{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_sata_client\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [\n        {\n          \"description\": \"Client (Sub Arvind Sir) asks 'Two ya one battery' — unclear what item 'battery' refers to. Could relate to the Canon EOS R10 (camera battery), the JBL Party speaker box, the Window AC (stabilizer/battery backup), or an entirely new item not yet on the order. Context is insufficient to resolve.\",\n          \"severity\": \"medium\",\n          \"category\": \"linkage\",\n          \"blocking_node_id\": null\n        }\n      ],\n      \"item_extractions\": [],\n      \"node_data_extractions\": []\n    }\n  ]\n}\n```",
+    "tokens_in": 1345,
+    "tokens_out": 222,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 5138
+  },
+  "a5400cc9a99963b0": {
+    "raw": "{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_sata_client\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [\n        {\n          \"node_id\": \"order_confirmation\",\n          \"new_status\": \"completed\",\n          \"confidence\": 0.9,\n          \"evidence\": \"ordered sir\"\n        }\n      ],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [],\n      \"item_extractions\": [],\n      \"node_data_extractions\": []\n    }\n  ]\n}",
+    "tokens_in": 6239,
+    "tokens_out": 145,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0
+  },
+  "3119d26ac5a5e2d3": {
+    "raw": "```json\n{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_voltas_supplier\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [\n        {\n          \"node_id\": \"supplier_indent\",\n          \"new_status\": \"completed\",\n          \"confidence\": 0.82,\n          \"evidence\": \"Rates were shared and discussed; payment has now been made, implying indent was finalised.\"\n        },\n        {\n          \"node_id\": \"supplier_confirmation\",\n          \"new_status\": \"completed\",\n          \"confidence\": 0.85,\n          \"evidence\": \"Advance payment of Rs 35,500 made to Jiwan Ram on 02-03-2026 implies supplier has committed.\"\n        },\n        {\n          \"node_id\": \"supplier_payment\",\n          \"new_status\": \"provisional\",\n          \"confidence\": 0.8,\n          \"evidence\": \"Rs 35,500 paid to Jiwan Ram on 02-03-2026 — likely an advance payment to supplier.\"\n        }\n      ],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [\n        {\n          \"description\": \"Payment is made to 'Jiwan Ram' — it is unclear if this is the Voltas supplier contact/representative or a transporter/third party. The Voltas supplier contact seen in messages is 'Punit-Jrbk Voltas'. Needs confirmation that Jiwan Ram is the correct payee for this supplier order.\",\n          \"severity\": \"high\",\n          \"category\": \"entity\",\n          \"blocking_node_id\": \"supplier_payment\"\n        },\n        {\n          \"description\": \"The rate list shared by Punit (Voltas) includes multiple AC models and stabilizers. It is unclear which specific items have been ordered and which correspond to the linked client order (task_sata_client requires Voltas Window AC 1.5 Ton). The payment amount of Rs 35,500 matches the 2 Ton Window AC rate, not the 1.5 Ton Window AC (Rs 28,600). Clarification needed on what items this payment covers.\",\n          \"severity\": \"high\",\n          \"category\": \"linkage\",\n          \"blocking_node_id\": \"supplier_confirmation\"\n        },\n        {\n          \"description\": \"No invoice has been mentioned. Supplier payment is being recorded but supplier_invoice has not been received or referenced. Payment before invoice may require a receipt or advance memo.\",\n          \"severity\": \"medium\",\n          \"category\": \"status\",\n          \"blocking_node_id\": \"supplier_invoice\"\n        }\n      ],\n      \"item_extractions\": [\n        {\n          \"operation\": \"add\",\n          \"description\": \"Voltas 1.5 Ton Window AC\",\n          \"unit\": \"pcs\",\n          \"quantity\": null,\n          \"specs\": \"Rate quoted Rs 28,600\",\n          \"existing_description\": null\n        }\n      ],\n      \"node_data_extractions\": [\n        {\n          \"node_id\": \"supplier_payment\",\n          \"data\": {\n            \"payment_amount\": 35500,\n            \"payment_date\": \"2026-03-02\",\n            \"payment_mode\": null,\n            \"utr_number\": null\n          }\n        },\n        {\n          \"node_id\": \"supplier_indent\",\n          \"data\": {\n            \"supplier_name\": \"Voltas\",\n            \"supplier_contact\": \"Punit-Jrbk Voltas\"\n          }\n        }\n      ]\n    }\n  ]\n}\n```",
+    "tokens_in": 720,
+    "tokens_out": 874,
+    "cache_creation_tokens": 3991,
+    "cache_read_tokens": 0
+  },
+  "e90a8109550a2ba3": {
+    "raw": "```json\n{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_voltas_supplier\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [\n        {\n          \"node_id\": \"supplier_payment\",\n          \"new_status\": \"completed\",\n          \"confidence\": 0.82,\n          \"evidence\": \"bill no= 3078 cleared — payment cleared against bill number 3078\"\n        },\n        {\n          \"node_id\": \"supplier_invoice\",\n          \"new_status\": \"completed\",\n          \"confidence\": 0.82,\n          \"evidence\": \"bill no= 3078 implies invoice 3078 exists and is referenced as cleared\"\n        }\n      ],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [\n        {\n          \"description\": \"Message says 'bill no= 3078 cleared' but does not specify payment mode, amount, or UTR number. Confidence is moderate — 'cleared' strongly implies payment but exact confirmation (bank transfer, cash, cheque) is unknown.\",\n          \"severity\": \"low\",\n          \"category\": \"status\",\n          \"blocking_node_id\": null\n        }\n      ],\n      \"item_extractions\": [],\n      \"node_data_extractions\": [\n        {\n          \"node_id\": \"supplier_invoice\",\n          \"data\": {\n            \"invoice_number\": \"3078\"\n          }\n        },\n        {\n          \"node_id\": \"supplier_payment\",\n          \"data\": {\n            \"payment_date\": null\n          }\n        }\n      ]\n    }\n  ]\n}\n```",
+    "tokens_in": 730,
+    "tokens_out": 404,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 3991
+  },
+  "10d41f4c7b848da3": {
+    "raw": "{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_lg_supplier\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [],\n      \"item_extractions\": [],\n      \"node_data_extractions\": []\n    }\n  ]\n}",
+    "tokens_in": 4543,
+    "tokens_out": 94,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0
+  },
+  "e41d42cdfb5c1830": {
+    "raw": "```json\n{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_sata_client\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [\n        {\n          \"description\": \"Basketball Shoes (10 x 2645/- = 26450/-) mentioned via GeM link — this item is not in any existing task for this entity. It may be a new procurement requirement for Army Store, Assam under task_sata_client, or it could be a new client order entirely. Needs confirmation before creating a new task.\",\n          \"severity\": \"medium\",\n          \"category\": \"linkage\",\n          \"blocking_node_id\": null\n        }\n      ],\n      \"item_extractions\": [],\n      \"node_data_extractions\": []\n    }\n  ]\n}\n```",
+    "tokens_in": 935,
+    "tokens_out": 223,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 3991
+  },
+  "3ee8da9adea59fd6": {
+    "raw": "{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_sata_client\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [],\n      \"item_extractions\": [],\n      \"node_data_extractions\": []\n    }\n  ]\n}",
+    "tokens_in": 4705,
+    "tokens_out": 95,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0
+  },
+  "28c41f4f6603ba7b": {
+    "raw": "```json\n{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_lg_supplier\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [\n        {\n          \"node_id\": \"supplier_indent\",\n          \"new_status\": \"completed\",\n          \"confidence\": 0.88,\n          \"evidence\": \"Supplier (Ashish Chhabra / +91 84738 53600) has responded with model details and pricing: LG S292RPZX MRP 35999, DP 32000, NLC 27840 with handle; Bluestar mini fridge 45 Ltrs MRP 12990, NLC 9800\"\n        },\n        {\n          \"node_id\": \"supplier_confirmation\",\n          \"new_status\": \"active\",\n          \"confidence\": 0.90,\n          \"evidence\": \"supplier_indent now completed — supplier_confirmation auto-triggered per template rule\"\n        }\n      ],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [\n        {\n          \"description\": \"Supplier quoted Bluestar mini fridge 45 Ltrs, but the order item specifies 'Mini Refrigerator 75/100 ltr'. The quoted model is significantly smaller (45L vs 75–100L range) and is a different brand (Bluestar, not LG). It is unclear whether this quote is acceptable to the client or whether a different model/brand needs to be sourced.\",\n          \"severity\": \"high\",\n          \"category\": \"quantity\",\n          \"blocking_node_id\": \"supplier_confirmation\"\n        }\n      ],\n      \"item_extractions\": [\n        {\n          \"operation\": \"update\",\n          \"description\": \"LG S292RPZX 242 ltr with handle — MRP 35999, DP 32000, NLC 27840\",\n          \"unit\": \"Nos\",\n          \"quantity\": 1,\n          \"specs\": \"Model: S292RPZX, 242 litres, with handle, MRP 35999, Dealer Price 32000, NLC 27840\",\n          \"existing_description\": \"LG Refrigerator 242 ltr with handle, 3/4 star\"\n        },\n        {\n          \"operation\": \"update\",\n          \"description\": \"Bluestar mini fridge 45 Ltrs, Grey/Black colour — MRP 12990, NLC 9800\",\n          \"unit\": \"Nos\",\n          \"quantity\": null,\n          \"specs\": \"Brand: Bluestar (not LG), 45 Ltrs (smaller than requested 75–100L range), Grey/Black colour, MRP 12990, NLC 9800\",\n          \"existing_description\": \"Mini Refrigerator 75/100 ltr\"\n        }\n      ],\n      \"node_data_extractions\": [\n        {\n          \"node_id\": \"supplier_indent\",\n          \"data\": {\n            \"supplier_name\": \"Ashish Chhabra\",\n            \"supplier_contact\": \"+91 84738 53600\"\n          }\n        }\n      ]\n    }\n  ]\n}\n```",
+    "tokens_in": 1058,
+    "tokens_out": 778,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 3991
+  },
+  "2ce15a0238e57c01": {
+    "raw": "{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_lg_supplier\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [],\n      \"item_extractions\": [],\n      \"node_data_extractions\": []\n    }\n  ]\n}",
+    "tokens_in": 4990,
+    "tokens_out": 94,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0
+  },
+  "f18eb2348f867dfe": {
+    "raw": "{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_lg_supplier\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [],\n      \"item_extractions\": [],\n      \"node_data_extractions\": []\n    }\n  ]\n}",
+    "tokens_in": 5034,
+    "tokens_out": 94,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0
+  }
+}

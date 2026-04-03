@@ -19,6 +19,7 @@ import logging
 log = logging.getLogger(__name__)
 
 _patched = False
+_original_genai_generate = None  # exposed for authorized bypass (conv router)
 
 
 class APICallBlocked(PermissionError):
@@ -71,7 +72,8 @@ def _patch_genai():
     except ImportError:
         return
 
-    _original_generate = Models.generate_content
+    global _original_genai_generate
+    _original_genai_generate = Models.generate_content
 
     def _guarded_generate(self, *args, **kwargs):
         from src.config import PERMIT_API
@@ -81,7 +83,7 @@ def _patch_genai():
                 f"Gemini API call blocked (model={model}). "
                 f"Set MANTRI_PERMIT_API=true for live runs."
             )
-        return _original_generate(self, *args, **kwargs)
+        return _original_genai_generate(self, *args, **kwargs)
 
     Models.generate_content = _guarded_generate
     log.debug("Patched genai.Models.generate_content")

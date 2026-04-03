@@ -612,7 +612,8 @@ def _run_traced_replay(case_dir: Path, trace_data: list[dict], seed: dict,
                        phoenix_endpoints: list[str] | None = None,
                        auth_headers: dict | None = None,
                        dev_test: bool = False,
-                       allow_api_calls: bool = True) -> dict:
+                       allow_api_calls: bool = True,
+                       backfill_cache: bool = False) -> dict:
     """
     Run replay using the instrumented entity-first pipeline with Phoenix tracing.
     Returns result dict in the same format as run_live_replay().
@@ -628,7 +629,7 @@ def _run_traced_replay(case_dir: Path, trace_data: list[dict], seed: dict,
     if dev_test:
         _seed_db(db_path, seed)  # dev-test pre-seeds tasks for speed
     else:
-        _seed_config(db_path, seed)  # full runs: only config, tasks created via pipeline
+        _seed_config(db_path, seed)  # all other modes: config only, tasks created via pipeline
     mock_redis = StreamCapture()
 
     metadata = _get_run_metadata()
@@ -655,6 +656,8 @@ def _run_traced_replay(case_dir: Path, trace_data: list[dict], seed: dict,
         no_conv_llm=dev_test,  # dev-test skips conv router LLM matching
         dev_test=dev_test,
         allow_api_calls=allow_api_calls,
+        allow_conv_api=backfill_cache,
+        backfill_cache=backfill_cache,
     )
 
     snapshot = _snapshot_state(db_path)
@@ -683,13 +686,26 @@ class TestLiveReplay:
     def test_full_replay(self, case_dir, request):
         dev_test = request.config.getoption("--dev-test")
         run_live = request.config.getoption("--run-live")
+        backfill_cache = request.config.getoption("--backfill-cache")
+        run_cache = request.config.getoption("--run-cache")
         max_messages = request.config.getoption("--max-messages")
 
         # Validate flag combinations
+        cache_modes = sum([dev_test, backfill_cache, run_cache])
+        if cache_modes > 1:
+            pytest.fail("--dev-test, --backfill-cache, --run-cache are mutually exclusive")
+        if run_cache and run_live:
+            pytest.fail("--run-cache and --run-live are mutually exclusive")
+        if run_cache and request.config.getoption("--traced"):
+            pytest.fail("--run-cache and --traced are mutually exclusive")
         if dev_test and max_messages:
             pytest.fail("--dev-test and --max-messages are mutually exclusive")
 
-        if dev_test:
+        if backfill_cache or run_cache:
+            cache_exists = (case_dir / "dev_cache.db").exists()
+            if not cache_exists:
+                pytest.fail(f"No cache at {case_dir / 'dev_cache.db'}")
+        elif dev_test:
             cache_exists = (case_dir / "dev_cache.db").exists()
             if not cache_exists and not run_live:
                 pytest.fail("--dev-test with no cache requires --run-live to build it")
@@ -708,12 +724,15 @@ class TestLiveReplay:
         run_linkage = "AL" in agents
         case_id = case_dir.name.split("_")[0]
 
-        # Dev-test overrides
+        # Mode overrides
         DEV_TEST_MESSAGES = 50
-        if dev_test:
+        if backfill_cache or run_cache:
+            use_traced = True
+            phoenix_endpoints = []
+        elif dev_test:
             max_messages = DEV_TEST_MESSAGES
             use_traced = True
-            phoenix_endpoints = []  # no Phoenix for dev runs
+            phoenix_endpoints = []
         else:
             # Resolve Phoenix endpoints
             LOCAL_EP = "http://localhost:6006/v1/traces"
@@ -761,6 +780,8 @@ class TestLiveReplay:
                 phoenix_endpoints=phoenix_endpoints,
                 auth_headers=auth_headers,
                 dev_test=dev_test,
+                allow_api_calls=run_live and not backfill_cache and not run_cache,
+                backfill_cache=backfill_cache,
             )
         else:
             result = run_live_replay(

@@ -1,0 +1,4323 @@
+{
+  "stats": {
+    "messages_total": 1086,
+    "messages_routed": 755,
+    "messages_unrouted": 0,
+    "messages_noise": 331,
+    "warmup_messages": 169,
+    "update_agent_calls": 0,
+    "update_agent_failures": 0,
+    "linkage_events_processed": 0,
+    "linkage_agent_failures": 33,
+    "tasks_created_live": 26,
+    "conversations_created": 0,
+    "entities_discovered": 0,
+    "errors": [
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_sata_jobs_0001",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0005 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_sata_jobs_0001",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_sata_jobs_0001 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_LG_supplier_0001",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_LG_supplier_0001 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_Voltas_supplier_0001",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Voltas_supplier_0001 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_Voltas_supplier_0002",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Voltas_supplier_0002 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_Voltas_supplier_0003",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Voltas_supplier_0003 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_est_div_jobs_0005",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_est_div_jobs_0005 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_Voltas_supplier_0004",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Voltas_supplier_0004 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_est_div_jobs_0006",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_est_div_jobs_0006 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_LG_supplier_0008",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0008 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_est_div_jobs_0009",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_est_div_jobs_0009 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_est_div_jobs_0017",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_est_div_jobs_0017 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_est_div_jobs_0029",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0043 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_est_div_jobs_0029",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0044 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "?",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0059 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_Voltas_supplier_0018",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0106 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_Voltas_supplier_0024",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0191 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_Voltas_supplier_0024",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0191 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_Voltas_supplier_0024",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0191 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_est_div_jobs_0177",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0199 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_sata_jobs_0161",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0217 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_est_div_jobs_0182",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0228 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_sata_jobs_0178",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0259 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_sata_jobs_0214",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0302 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_sata_jobs_0214",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0319 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_sata_jobs_0231",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0326 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_sata_jobs_0255",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0345 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_Voltas_supplier_0027",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0349 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_est_div_jobs_0204",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0351 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_est_div_jobs_0211",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0363 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_est_div_jobs_0231",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0372 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0018",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0404 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "linkage_agent",
+        "message_id": "R12-L3-01_sata_jobs_0330",
+        "error": "Anthropic cache miss: task=linkage msg=R12-L3-01_Tasks_0418 model=claude-sonnet-4-6. Use --run-live to allow API calls."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0039",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0039 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0040",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0040 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0042",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0042 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0043",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0043 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0047",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0047 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0050",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0050 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0051",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0051 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_Voltas_supplier_0009",
+        "error": "LLM cache miss for task=task_143ff127 msg=R12-L3-01_Voltas_supplier_0009 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_Voltas_supplier_0010",
+        "error": "LLM cache miss for task=task_143ff127 msg=R12-L3-01_Voltas_supplier_0010 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0058",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0058 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0062",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0062 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0063",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0063 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0065",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0065 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0066",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0066 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0067",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0067 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_Voltas_supplier_0012",
+        "error": "LLM cache miss for task=task_143ff127 msg=R12-L3-01_Voltas_supplier_0012 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0070",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0070 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0055",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0055 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0061",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0061 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0068",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0068 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0071",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0071 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0072",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0072 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0074",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0074 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0081",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0081 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0082",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0082 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0085",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0085 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0086",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0086 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0086",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0086 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0087",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0087 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_LG_supplier_0009",
+        "error": "LLM cache miss for task=task_f8432d61 msg=R12-L3-01_LG_supplier_0009 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_Voltas_supplier_0013",
+        "error": "LLM cache miss for task=task_143ff127 msg=R12-L3-01_Voltas_supplier_0013 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_LG_supplier_0011",
+        "error": "LLM cache miss for task=task_f8432d61 msg=R12-L3-01_LG_supplier_0011 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_Voltas_supplier_0016",
+        "error": "LLM cache miss for task=task_143ff127 msg=R12-L3-01_Voltas_supplier_0016 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_Voltas_supplier_0017",
+        "error": "LLM cache miss for task=task_143ff127 msg=R12-L3-01_Voltas_supplier_0017 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0088",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0088 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0089",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0089 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0089",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0089 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0091",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0091 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0092",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0092 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0094",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0094 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_LG_supplier_0013",
+        "error": "LLM cache miss for task=task_f8432d61 msg=R12-L3-01_LG_supplier_0013 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_LG_supplier_0014",
+        "error": "LLM cache miss for task=task_f8432d61 msg=R12-L3-01_LG_supplier_0014 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0097",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0097 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0095",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0095 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0098",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0098 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0099",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0099 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0101",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0101 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0099",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0099 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0104",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0104 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_Voltas_supplier_0018",
+        "error": "LLM cache miss for task=task_143ff127 msg=R12-L3-01_Voltas_supplier_0018 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0107",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0107 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0100",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0100 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0101",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0101 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0102",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0102 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0104",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0104 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0112",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0112 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0113",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0113 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0114",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0114 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0116",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0116 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0108",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0108 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0109",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0109 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0112",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0112 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0113",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0113 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0136",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0136 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0116",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0116 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0117",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0117 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0121",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0121 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0122",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0122 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0124",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0124 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0125",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0125 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0126",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0126 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0129",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0129 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0130",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0130 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0140",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0140 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0141",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0141 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0143",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0143 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0133",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0133 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0145",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0145 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0134",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0134 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_Voltas_supplier_0021",
+        "error": "LLM cache miss for task=task_143ff127 msg=R12-L3-01_Voltas_supplier_0021 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0147",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0147 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0148",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0148 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0137",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0137 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0139",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0139 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_Voltas_supplier_0023",
+        "error": "LLM cache miss for task=task_143ff127 msg=R12-L3-01_Voltas_supplier_0023 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_Voltas_supplier_0024",
+        "error": "LLM cache miss for task=task_143ff127 msg=R12-L3-01_Voltas_supplier_0024 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0149",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0149 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0143",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0143 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0152",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0152 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0145",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0145 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0153",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0153 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0154",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0154 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0155",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0155 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0146",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0146 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0149",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0149 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0156",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0156 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0159",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0159 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0162",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0162 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0175",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0175 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0177",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0177 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0181",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0181 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0151",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0151 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0154",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0154 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0155",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0155 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0160",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0160 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0161",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0161 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0182",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0182 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0167",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0167 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0170",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0170 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0174",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0174 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0175",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0175 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0183",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0183 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0176",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0176 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0177",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0177 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0178",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0178 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0186",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0186 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0187",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0187 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0180",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0180 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0182",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0182 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0183",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0183 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0190",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0190 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0191",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0191 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0193",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0193 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0184",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0184 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0186",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0186 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0187",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0187 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0189",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0189 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0190",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0190 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0191",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0191 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0192",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0192 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0193",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0193 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0194",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0194 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0198",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0198 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0201",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0201 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0202",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0202 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0195",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0195 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0196",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0196 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0207",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0207 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0198",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0198 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0208",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0208 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0209",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0209 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0200",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0200 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0211",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0211 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0213",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0213 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0214",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0214 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0221",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0221 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0228",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0228 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0229",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0229 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0231",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0231 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0233",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0233 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0238",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0238 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0241",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0241 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0245",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0245 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0247",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0247 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0248",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0248 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0250",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0250 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0249",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0249 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0251",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0251 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0253",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0253 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0255",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0255 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0256",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0256 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0202",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0202 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_Voltas_supplier_0025",
+        "error": "LLM cache miss for task=task_143ff127 msg=R12-L3-01_Voltas_supplier_0025 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0265",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0265 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0264",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0264 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_Voltas_supplier_0026",
+        "error": "LLM cache miss for task=task_143ff127 msg=R12-L3-01_Voltas_supplier_0026 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_Voltas_supplier_0027",
+        "error": "LLM cache miss for task=task_143ff127 msg=R12-L3-01_Voltas_supplier_0027 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0204",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0204 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0267",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0267 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0268",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0268 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0205",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0205 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0207",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0207 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0208",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0208 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0210",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0210 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0211",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0211 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0217",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0217 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0218",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0218 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0219",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0219 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0224",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0224 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0225",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0225 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0226",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0226 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0230",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0230 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0231",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0231 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_LG_supplier_0016",
+        "error": "LLM cache miss for task=task_f8432d61 msg=R12-L3-01_LG_supplier_0016 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_LG_supplier_0018",
+        "error": "LLM cache miss for task=task_f8432d61 msg=R12-L3-01_LG_supplier_0018 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_LG_supplier_0019",
+        "error": "LLM cache miss for task=task_f8432d61 msg=R12-L3-01_LG_supplier_0019 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0270",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0270 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0271",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0271 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0272",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0272 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0273",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0273 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0232",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0232 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0234",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0234 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0236",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0236 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0237",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0237 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_0241",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_0241 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0003",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0003 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0007",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0007 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_LG_supplier_0021",
+        "error": "LLM cache miss for task=task_f8432d61 msg=R12-L3-01_LG_supplier_0021 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_LG_supplier_0027",
+        "error": "LLM cache miss for task=task_f8432d61 msg=R12-L3-01_LG_supplier_0027 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_LG_supplier_0029",
+        "error": "LLM cache miss for task=task_f8432d61 msg=R12-L3-01_LG_supplier_0029 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0009",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0009 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0010",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0010 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0013",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0013 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0014",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0014 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_LG_supplier_0031",
+        "error": "LLM cache miss for task=task_f8432d61 msg=R12-L3-01_LG_supplier_0031 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_LG_supplier_0032",
+        "error": "LLM cache miss for task=task_f8432d61 msg=R12-L3-01_LG_supplier_0032 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_LG_supplier_0033",
+        "error": "LLM cache miss for task=task_f8432d61 msg=R12-L3-01_LG_supplier_0033 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0016",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0016 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0018",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0018 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0275",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0275 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0277",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0277 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0279",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0279 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0281",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0281 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0284",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0284 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0285",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0285 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0286",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0286 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0020",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0020 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0025",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0025 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0031",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0031 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0029",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0029 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0034",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0034 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0035",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0035 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0037",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0037 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0038",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0038 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0041",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0041 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0042",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0042 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0043",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0043 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0044",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0044 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0288",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0288 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0291",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0291 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0294",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0294 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0297",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0297 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0298",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0298 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0301",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0301 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0300",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0300 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0303",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0303 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0047",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0047 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0048",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0048 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0052",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0052 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0053",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0053 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0055",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0055 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0056",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0056 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0304",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0304 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0058",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0058 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0307",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0307 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0308",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0308 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0309",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0309 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0059",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0059 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0064",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0064 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0067",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0067 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0071",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0071 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0070",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0070 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0072",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0072 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0075",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0075 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_Voltas_supplier_0033",
+        "error": "LLM cache miss for task=task_143ff127 msg=R12-L3-01_Voltas_supplier_0033 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_Voltas_supplier_0041",
+        "error": "LLM cache miss for task=task_143ff127 msg=R12-L3-01_Voltas_supplier_0041 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_Voltas_supplier_0048",
+        "error": "LLM cache miss for task=task_143ff127 msg=R12-L3-01_Voltas_supplier_0048 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_Voltas_supplier_0049",
+        "error": "LLM cache miss for task=task_143ff127 msg=R12-L3-01_Voltas_supplier_0049 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0310",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0310 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0316",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0316 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_Voltas_supplier_0052",
+        "error": "LLM cache miss for task=task_143ff127 msg=R12-L3-01_Voltas_supplier_0052 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0317",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0317 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0318",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0318 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0319",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0319 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0321",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0321 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0325",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0325 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0326",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0326 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0327",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0327 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0328",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0328 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0330",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0330 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_LG_supplier_0035",
+        "error": "LLM cache miss for task=task_f8432d61 msg=R12-L3-01_LG_supplier_0035 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_Voltas_supplier_0054",
+        "error": "LLM cache miss for task=task_143ff127 msg=R12-L3-01_Voltas_supplier_0054 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_Voltas_supplier_0055",
+        "error": "LLM cache miss for task=task_143ff127 msg=R12-L3-01_Voltas_supplier_0055 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_LG_supplier_0037",
+        "error": "LLM cache miss for task=task_f8432d61 msg=R12-L3-01_LG_supplier_0037 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_LG_supplier_0038",
+        "error": "LLM cache miss for task=task_f8432d61 msg=R12-L3-01_LG_supplier_0038 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0082",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0082 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0086",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0086 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0337",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0337 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0338",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0338 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0341",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0341 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0342",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0342 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0344",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0344 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0345",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0345 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0348",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0348 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0350",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0350 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_LG_supplier_0040",
+        "error": "LLM cache miss for task=task_f8432d61 msg=R12-L3-01_LG_supplier_0040 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_LG_supplier_0045",
+        "error": "LLM cache miss for task=task_f8432d61 msg=R12-L3-01_LG_supplier_0045 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_LG_supplier_0047",
+        "error": "LLM cache miss for task=task_f8432d61 msg=R12-L3-01_LG_supplier_0047 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_LG_supplier_0049",
+        "error": "LLM cache miss for task=task_f8432d61 msg=R12-L3-01_LG_supplier_0049 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0351",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0351 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0087",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0087 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0088",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0088 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0093",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0093 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0097",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0097 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0352",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0352 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0353",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0353 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_est_div_jobs_26-27_0101",
+        "error": "LLM cache miss for task=task_fb20c804 msg=R12-L3-01_est_div_jobs_26-27_0101 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0358",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0358 model=claude-sonnet-4-6. Use --run-live to allow API calls and build cache."
+      },
+      {
+        "phase": "scrap_process",
+        "message_id": "R12-L3-01_sata_jobs_0359",
+        "error": "LLM cache miss for task=task_d34325fc msg=R12-L3-01_sata_jobs_0359 model=gemini-2.5-flash. Use --run-live to allow API calls and build cache."
+      }
+    ],
+    "cache": {
+      "entries": 1210,
+      "hits": 33,
+      "misses": 390,
+      "hit_rate": 0.07801418439716312
+    }
+  },
+  "state": {
+    "node_states": {
+      "task_06bd806a": [
+        {
+          "node_id": "task_06bd806a_supplier_QC",
+          "name": "Supplier QC",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_06bd806a_supplier_collection",
+          "name": "Supplier collection",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_06bd806a_supplier_confirmation",
+          "name": "Supplier confirmation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_06bd806a_supplier_indent",
+          "name": "Supplier indent",
+          "status": "in_progress",
+          "confidence": 0.82,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_06bd806a_supplier_invoice",
+          "name": "Supplier invoice",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_06bd806a_supplier_payment",
+          "name": "Supplier payment",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_06bd806a_supplier_po",
+          "name": "Supplier PO",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_06bd806a_supplier_predelivery_enquiry",
+          "name": "Supplier pre-delivery enquiry",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_06bd806a_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_0e6a9ef8": [
+        {
+          "node_id": "task_0e6a9ef8_client_enquiry",
+          "name": "Client enquiry",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_0e6a9ef8_client_quotation",
+          "name": "Client quotation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_0e6a9ef8_delivery_confirmed",
+          "name": "Delivery confirmed",
+          "status": "failed",
+          "confidence": 0.8,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_0e6a9ef8_delivery_photo_check",
+          "name": "Delivery photo check",
+          "status": "active",
+          "confidence": 0.95,
+          "updated_by": "auto_trigger"
+        },
+        {
+          "node_id": "task_0e6a9ef8_dispatched",
+          "name": "Dispatched",
+          "status": "completed",
+          "confidence": 0.9,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_0e6a9ef8_filled_from_stock",
+          "name": "Filled from stock",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_0e6a9ef8_order_confirmation",
+          "name": "Order confirmation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_0e6a9ef8_order_ready",
+          "name": "Order ready",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_0e6a9ef8_payment_followup_30d",
+          "name": "Payment follow-up (30d)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_0e6a9ef8_predispatch_checklist",
+          "name": "Pre-dispatch checklist",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_0e6a9ef8_quote_followup_48h",
+          "name": "Quote follow-up (48h)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_0e6a9ef8_task_closed",
+          "name": "Task closed",
+          "status": "completed",
+          "confidence": 0.8,
+          "updated_by": "update_agent"
+        }
+      ],
+      "task_143ff127": [
+        {
+          "node_id": "task_143ff127_client_enquiry",
+          "name": "Client enquiry",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_143ff127_client_quotation",
+          "name": "Client quotation",
+          "status": "in_progress",
+          "confidence": 0.9,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_143ff127_delivery_confirmed",
+          "name": "Delivery confirmed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_143ff127_delivery_photo_check",
+          "name": "Delivery photo check",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_143ff127_dispatched",
+          "name": "Dispatched",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_143ff127_filled_from_stock",
+          "name": "Filled from stock",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_143ff127_order_confirmation",
+          "name": "Order confirmation",
+          "status": "blocked",
+          "confidence": 0.0,
+          "updated_by": "ambiguity_block"
+        },
+        {
+          "node_id": "task_143ff127_order_ready",
+          "name": "Order ready",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_143ff127_payment_followup_30d",
+          "name": "Payment follow-up (30d)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_143ff127_predispatch_checklist",
+          "name": "Pre-dispatch checklist",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_143ff127_quote_followup_48h",
+          "name": "Quote follow-up (48h)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_143ff127_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_2df6d637": [
+        {
+          "node_id": "task_2df6d637_supplier_QC",
+          "name": "Supplier QC",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_2df6d637_supplier_collection",
+          "name": "Supplier collection",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_2df6d637_supplier_confirmation",
+          "name": "Supplier confirmation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_2df6d637_supplier_indent",
+          "name": "Supplier indent",
+          "status": "active",
+          "confidence": 0.9,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_2df6d637_supplier_invoice",
+          "name": "Supplier invoice",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_2df6d637_supplier_payment",
+          "name": "Supplier payment",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_2df6d637_supplier_po",
+          "name": "Supplier PO",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_2df6d637_supplier_predelivery_enquiry",
+          "name": "Supplier pre-delivery enquiry",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_2df6d637_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_307f07c5": [
+        {
+          "node_id": "task_307f07c5_supplier_QC",
+          "name": "Supplier QC",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_307f07c5_supplier_collection",
+          "name": "Supplier collection",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_307f07c5_supplier_confirmation",
+          "name": "Supplier confirmation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_307f07c5_supplier_indent",
+          "name": "Supplier indent",
+          "status": "in_progress",
+          "confidence": 0.82,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_307f07c5_supplier_invoice",
+          "name": "Supplier invoice",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_307f07c5_supplier_payment",
+          "name": "Supplier payment",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_307f07c5_supplier_po",
+          "name": "Supplier PO",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_307f07c5_supplier_predelivery_enquiry",
+          "name": "Supplier pre-delivery enquiry",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_307f07c5_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_326d57c8": [
+        {
+          "node_id": "task_326d57c8_client_enquiry",
+          "name": "Client enquiry",
+          "status": "provisional",
+          "confidence": 0.72,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_326d57c8_client_quotation",
+          "name": "Client quotation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_326d57c8_delivery_confirmed",
+          "name": "Delivery confirmed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_326d57c8_delivery_photo_check",
+          "name": "Delivery photo check",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_326d57c8_dispatched",
+          "name": "Dispatched",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_326d57c8_filled_from_stock",
+          "name": "Filled from stock",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_326d57c8_order_confirmation",
+          "name": "Order confirmation",
+          "status": "blocked",
+          "confidence": 0.0,
+          "updated_by": "ambiguity_block"
+        },
+        {
+          "node_id": "task_326d57c8_order_ready",
+          "name": "Order ready",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_326d57c8_payment_followup_30d",
+          "name": "Payment follow-up (30d)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_326d57c8_predispatch_checklist",
+          "name": "Pre-dispatch checklist",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_326d57c8_quote_followup_48h",
+          "name": "Quote follow-up (48h)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_326d57c8_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_34c44d7e": [
+        {
+          "node_id": "task_34c44d7e_client_enquiry",
+          "name": "Client enquiry",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_34c44d7e_client_quotation",
+          "name": "Client quotation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_34c44d7e_delivery_confirmed",
+          "name": "Delivery confirmed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_34c44d7e_delivery_photo_check",
+          "name": "Delivery photo check",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_34c44d7e_dispatched",
+          "name": "Dispatched",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_34c44d7e_filled_from_stock",
+          "name": "Filled from stock",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_34c44d7e_order_confirmation",
+          "name": "Order confirmation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_34c44d7e_order_ready",
+          "name": "Order ready",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_34c44d7e_payment_followup_30d",
+          "name": "Payment follow-up (30d)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_34c44d7e_predispatch_checklist",
+          "name": "Pre-dispatch checklist",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_34c44d7e_quote_followup_48h",
+          "name": "Quote follow-up (48h)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_34c44d7e_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_4fd14fe1": [
+        {
+          "node_id": "task_4fd14fe1_client_enquiry",
+          "name": "Client enquiry",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_4fd14fe1_client_quotation",
+          "name": "Client quotation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_4fd14fe1_delivery_confirmed",
+          "name": "Delivery confirmed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_4fd14fe1_delivery_photo_check",
+          "name": "Delivery photo check",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_4fd14fe1_dispatched",
+          "name": "Dispatched",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_4fd14fe1_filled_from_stock",
+          "name": "Filled from stock",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_4fd14fe1_order_confirmation",
+          "name": "Order confirmation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_4fd14fe1_order_ready",
+          "name": "Order ready",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_4fd14fe1_payment_followup_30d",
+          "name": "Payment follow-up (30d)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_4fd14fe1_predispatch_checklist",
+          "name": "Pre-dispatch checklist",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_4fd14fe1_quote_followup_48h",
+          "name": "Quote follow-up (48h)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_4fd14fe1_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_516f17a3": [
+        {
+          "node_id": "task_516f17a3_client_enquiry",
+          "name": "Client enquiry",
+          "status": "active",
+          "confidence": 0.9,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_516f17a3_client_quotation",
+          "name": "Client quotation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_516f17a3_delivery_confirmed",
+          "name": "Delivery confirmed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_516f17a3_delivery_photo_check",
+          "name": "Delivery photo check",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_516f17a3_dispatched",
+          "name": "Dispatched",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_516f17a3_filled_from_stock",
+          "name": "Filled from stock",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_516f17a3_order_confirmation",
+          "name": "Order confirmation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_516f17a3_order_ready",
+          "name": "Order ready",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_516f17a3_payment_followup_30d",
+          "name": "Payment follow-up (30d)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_516f17a3_predispatch_checklist",
+          "name": "Pre-dispatch checklist",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_516f17a3_quote_followup_48h",
+          "name": "Quote follow-up (48h)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_516f17a3_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_73c6f1d6": [
+        {
+          "node_id": "task_73c6f1d6_client_enquiry",
+          "name": "Client enquiry",
+          "status": "active",
+          "confidence": 0.85,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_73c6f1d6_client_quotation",
+          "name": "Client quotation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_73c6f1d6_delivery_confirmed",
+          "name": "Delivery confirmed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_73c6f1d6_delivery_photo_check",
+          "name": "Delivery photo check",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_73c6f1d6_dispatched",
+          "name": "Dispatched",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_73c6f1d6_filled_from_stock",
+          "name": "Filled from stock",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_73c6f1d6_order_confirmation",
+          "name": "Order confirmation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_73c6f1d6_order_ready",
+          "name": "Order ready",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_73c6f1d6_payment_followup_30d",
+          "name": "Payment follow-up (30d)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_73c6f1d6_predispatch_checklist",
+          "name": "Pre-dispatch checklist",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_73c6f1d6_quote_followup_48h",
+          "name": "Quote follow-up (48h)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_73c6f1d6_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_75094bda": [
+        {
+          "node_id": "task_75094bda_client_enquiry",
+          "name": "Client enquiry",
+          "status": "active",
+          "confidence": 0.92,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_75094bda_client_quotation",
+          "name": "Client quotation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_75094bda_delivery_confirmed",
+          "name": "Delivery confirmed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_75094bda_delivery_photo_check",
+          "name": "Delivery photo check",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_75094bda_dispatched",
+          "name": "Dispatched",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_75094bda_filled_from_stock",
+          "name": "Filled from stock",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_75094bda_order_confirmation",
+          "name": "Order confirmation",
+          "status": "blocked",
+          "confidence": 0.0,
+          "updated_by": "ambiguity_block"
+        },
+        {
+          "node_id": "task_75094bda_order_ready",
+          "name": "Order ready",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_75094bda_payment_followup_30d",
+          "name": "Payment follow-up (30d)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_75094bda_predispatch_checklist",
+          "name": "Pre-dispatch checklist",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_75094bda_quote_followup_48h",
+          "name": "Quote follow-up (48h)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_75094bda_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_77d05386": [
+        {
+          "node_id": "task_77d05386_supplier_QC",
+          "name": "Supplier QC",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_77d05386_supplier_collection",
+          "name": "Supplier collection",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_77d05386_supplier_confirmation",
+          "name": "Supplier confirmation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_77d05386_supplier_indent",
+          "name": "Supplier indent",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_77d05386_supplier_invoice",
+          "name": "Supplier invoice",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_77d05386_supplier_payment",
+          "name": "Supplier payment",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_77d05386_supplier_po",
+          "name": "Supplier PO",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_77d05386_supplier_predelivery_enquiry",
+          "name": "Supplier pre-delivery enquiry",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_77d05386_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_8499484f": [
+        {
+          "node_id": "task_8499484f_supplier_QC",
+          "name": "Supplier QC",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_8499484f_supplier_collection",
+          "name": "Supplier collection",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_8499484f_supplier_confirmation",
+          "name": "Supplier confirmation",
+          "status": "provisional",
+          "confidence": 0.65,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_8499484f_supplier_indent",
+          "name": "Supplier indent",
+          "status": "completed",
+          "confidence": 0.9,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_8499484f_supplier_invoice",
+          "name": "Supplier invoice",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_8499484f_supplier_payment",
+          "name": "Supplier payment",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_8499484f_supplier_po",
+          "name": "Supplier PO",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_8499484f_supplier_predelivery_enquiry",
+          "name": "Supplier pre-delivery enquiry",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_8499484f_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_856a2019": [
+        {
+          "node_id": "task_856a2019_supplier_QC",
+          "name": "Supplier QC",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_856a2019_supplier_collection",
+          "name": "Supplier collection",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_856a2019_supplier_confirmation",
+          "name": "Supplier confirmation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_856a2019_supplier_indent",
+          "name": "Supplier indent",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_856a2019_supplier_invoice",
+          "name": "Supplier invoice",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_856a2019_supplier_payment",
+          "name": "Supplier payment",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_856a2019_supplier_po",
+          "name": "Supplier PO",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_856a2019_supplier_predelivery_enquiry",
+          "name": "Supplier pre-delivery enquiry",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_856a2019_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_8661cd9a": [
+        {
+          "node_id": "task_8661cd9a_client_enquiry",
+          "name": "Client enquiry",
+          "status": "provisional",
+          "confidence": 0.55,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_8661cd9a_client_quotation",
+          "name": "Client quotation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_8661cd9a_delivery_confirmed",
+          "name": "Delivery confirmed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_8661cd9a_delivery_photo_check",
+          "name": "Delivery photo check",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_8661cd9a_dispatched",
+          "name": "Dispatched",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_8661cd9a_filled_from_stock",
+          "name": "Filled from stock",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_8661cd9a_order_confirmation",
+          "name": "Order confirmation",
+          "status": "blocked",
+          "confidence": 0.0,
+          "updated_by": "ambiguity_block"
+        },
+        {
+          "node_id": "task_8661cd9a_order_ready",
+          "name": "Order ready",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_8661cd9a_payment_followup_30d",
+          "name": "Payment follow-up (30d)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_8661cd9a_predispatch_checklist",
+          "name": "Pre-dispatch checklist",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_8661cd9a_quote_followup_48h",
+          "name": "Quote follow-up (48h)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_8661cd9a_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_95aa6804": [
+        {
+          "node_id": "task_95aa6804_client_enquiry",
+          "name": "Client enquiry",
+          "status": "in_progress",
+          "confidence": 0.85,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_95aa6804_client_quotation",
+          "name": "Client quotation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_95aa6804_delivery_confirmed",
+          "name": "Delivery confirmed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_95aa6804_delivery_photo_check",
+          "name": "Delivery photo check",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_95aa6804_dispatched",
+          "name": "Dispatched",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_95aa6804_filled_from_stock",
+          "name": "Filled from stock",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_95aa6804_order_confirmation",
+          "name": "Order confirmation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_95aa6804_order_ready",
+          "name": "Order ready",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_95aa6804_payment_followup_30d",
+          "name": "Payment follow-up (30d)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_95aa6804_predispatch_checklist",
+          "name": "Pre-dispatch checklist",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_95aa6804_quote_followup_48h",
+          "name": "Quote follow-up (48h)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_95aa6804_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_9ce4aa8a": [
+        {
+          "node_id": "task_9ce4aa8a_supplier_QC",
+          "name": "Supplier QC",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_9ce4aa8a_supplier_collection",
+          "name": "Supplier collection",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_9ce4aa8a_supplier_confirmation",
+          "name": "Supplier confirmation",
+          "status": "pending",
+          "confidence": 0.82,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_9ce4aa8a_supplier_indent",
+          "name": "Supplier indent",
+          "status": "completed",
+          "confidence": 0.82,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_9ce4aa8a_supplier_invoice",
+          "name": "Supplier invoice",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_9ce4aa8a_supplier_payment",
+          "name": "Supplier payment",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_9ce4aa8a_supplier_po",
+          "name": "Supplier PO",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_9ce4aa8a_supplier_predelivery_enquiry",
+          "name": "Supplier pre-delivery enquiry",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_9ce4aa8a_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_aa476b98": [
+        {
+          "node_id": "task_aa476b98_client_enquiry",
+          "name": "Client enquiry",
+          "status": "completed",
+          "confidence": 0.82,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_aa476b98_client_quotation",
+          "name": "Client quotation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_aa476b98_delivery_confirmed",
+          "name": "Delivery confirmed",
+          "status": "provisional",
+          "confidence": 0.72,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_aa476b98_delivery_photo_check",
+          "name": "Delivery photo check",
+          "status": "active",
+          "confidence": 0.85,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_aa476b98_dispatched",
+          "name": "Dispatched",
+          "status": "completed",
+          "confidence": 0.85,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_aa476b98_filled_from_stock",
+          "name": "Filled from stock",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_aa476b98_order_confirmation",
+          "name": "Order confirmation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_aa476b98_order_ready",
+          "name": "Order ready",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_aa476b98_payment_followup_30d",
+          "name": "Payment follow-up (30d)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_aa476b98_predispatch_checklist",
+          "name": "Pre-dispatch checklist",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_aa476b98_quote_followup_48h",
+          "name": "Quote follow-up (48h)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_aa476b98_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_af88d253": [
+        {
+          "node_id": "task_af88d253_client_enquiry",
+          "name": "Client enquiry",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_af88d253_client_quotation",
+          "name": "Client quotation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_af88d253_delivery_confirmed",
+          "name": "Delivery confirmed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_af88d253_delivery_photo_check",
+          "name": "Delivery photo check",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_af88d253_dispatched",
+          "name": "Dispatched",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_af88d253_filled_from_stock",
+          "name": "Filled from stock",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_af88d253_order_confirmation",
+          "name": "Order confirmation",
+          "status": "blocked",
+          "confidence": 0.0,
+          "updated_by": "ambiguity_block"
+        },
+        {
+          "node_id": "task_af88d253_order_ready",
+          "name": "Order ready",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_af88d253_payment_followup_30d",
+          "name": "Payment follow-up (30d)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_af88d253_predispatch_checklist",
+          "name": "Pre-dispatch checklist",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_af88d253_quote_followup_48h",
+          "name": "Quote follow-up (48h)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_af88d253_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_c44c646b": [
+        {
+          "node_id": "task_c44c646b_supplier_QC",
+          "name": "Supplier QC",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_c44c646b_supplier_collection",
+          "name": "Supplier collection",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_c44c646b_supplier_confirmation",
+          "name": "Supplier confirmation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_c44c646b_supplier_indent",
+          "name": "Supplier indent",
+          "status": "in_progress",
+          "confidence": 0.78,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_c44c646b_supplier_invoice",
+          "name": "Supplier invoice",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_c44c646b_supplier_payment",
+          "name": "Supplier payment",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_c44c646b_supplier_po",
+          "name": "Supplier PO",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_c44c646b_supplier_predelivery_enquiry",
+          "name": "Supplier pre-delivery enquiry",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_c44c646b_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_d34325fc": [
+        {
+          "node_id": "task_d34325fc_client_enquiry",
+          "name": "Client enquiry",
+          "status": "in_progress",
+          "confidence": 0.9,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_d34325fc_client_quotation",
+          "name": "Client quotation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_d34325fc_delivery_confirmed",
+          "name": "Delivery confirmed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_d34325fc_delivery_photo_check",
+          "name": "Delivery photo check",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_d34325fc_dispatched",
+          "name": "Dispatched",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_d34325fc_filled_from_stock",
+          "name": "Filled from stock",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_d34325fc_order_confirmation",
+          "name": "Order confirmation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_d34325fc_order_ready",
+          "name": "Order ready",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_d34325fc_payment_followup_30d",
+          "name": "Payment follow-up (30d)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_d34325fc_predispatch_checklist",
+          "name": "Pre-dispatch checklist",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_d34325fc_quote_followup_48h",
+          "name": "Quote follow-up (48h)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_d34325fc_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_e0ce2439": [
+        {
+          "node_id": "task_e0ce2439_supplier_QC",
+          "name": "Supplier QC",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e0ce2439_supplier_collection",
+          "name": "Supplier collection",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e0ce2439_supplier_confirmation",
+          "name": "Supplier confirmation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e0ce2439_supplier_indent",
+          "name": "Supplier indent",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e0ce2439_supplier_invoice",
+          "name": "Supplier invoice",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e0ce2439_supplier_payment",
+          "name": "Supplier payment",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e0ce2439_supplier_po",
+          "name": "Supplier PO",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e0ce2439_supplier_predelivery_enquiry",
+          "name": "Supplier pre-delivery enquiry",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e0ce2439_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_e21a9f76": [
+        {
+          "node_id": "task_e21a9f76_supplier_QC",
+          "name": "Supplier QC",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e21a9f76_supplier_collection",
+          "name": "Supplier collection",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e21a9f76_supplier_confirmation",
+          "name": "Supplier confirmation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e21a9f76_supplier_indent",
+          "name": "Supplier indent",
+          "status": "active",
+          "confidence": 0.9,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_e21a9f76_supplier_invoice",
+          "name": "Supplier invoice",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e21a9f76_supplier_payment",
+          "name": "Supplier payment",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e21a9f76_supplier_po",
+          "name": "Supplier PO",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e21a9f76_supplier_predelivery_enquiry",
+          "name": "Supplier pre-delivery enquiry",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e21a9f76_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_e7c8df5f": [
+        {
+          "node_id": "task_e7c8df5f_client_enquiry",
+          "name": "Client enquiry",
+          "status": "in_progress",
+          "confidence": 0.9,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_e7c8df5f_client_quotation",
+          "name": "Client quotation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e7c8df5f_delivery_confirmed",
+          "name": "Delivery confirmed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e7c8df5f_delivery_photo_check",
+          "name": "Delivery photo check",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e7c8df5f_dispatched",
+          "name": "Dispatched",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e7c8df5f_filled_from_stock",
+          "name": "Filled from stock",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e7c8df5f_order_confirmation",
+          "name": "Order confirmation",
+          "status": "blocked",
+          "confidence": 0.0,
+          "updated_by": "ambiguity_block"
+        },
+        {
+          "node_id": "task_e7c8df5f_order_ready",
+          "name": "Order ready",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e7c8df5f_payment_followup_30d",
+          "name": "Payment follow-up (30d)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e7c8df5f_predispatch_checklist",
+          "name": "Pre-dispatch checklist",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e7c8df5f_quote_followup_48h",
+          "name": "Quote follow-up (48h)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_e7c8df5f_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_f8432d61": [
+        {
+          "node_id": "task_f8432d61_client_enquiry",
+          "name": "Client enquiry",
+          "status": "in_progress",
+          "confidence": 0.9,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_f8432d61_client_quotation",
+          "name": "Client quotation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_f8432d61_delivery_confirmed",
+          "name": "Delivery confirmed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_f8432d61_delivery_photo_check",
+          "name": "Delivery photo check",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_f8432d61_dispatched",
+          "name": "Dispatched",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_f8432d61_filled_from_stock",
+          "name": "Filled from stock",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_f8432d61_order_confirmation",
+          "name": "Order confirmation",
+          "status": "blocked",
+          "confidence": 0.0,
+          "updated_by": "ambiguity_block"
+        },
+        {
+          "node_id": "task_f8432d61_order_ready",
+          "name": "Order ready",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_f8432d61_payment_followup_30d",
+          "name": "Payment follow-up (30d)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_f8432d61_predispatch_checklist",
+          "name": "Pre-dispatch checklist",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_f8432d61_quote_followup_48h",
+          "name": "Quote follow-up (48h)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_f8432d61_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ],
+      "task_fb20c804": [
+        {
+          "node_id": "task_fb20c804_client_enquiry",
+          "name": "Client enquiry",
+          "status": "completed",
+          "confidence": 0.82,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_fb20c804_client_quotation",
+          "name": "Client quotation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_fb20c804_delivery_confirmed",
+          "name": "Delivery confirmed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_fb20c804_delivery_photo_check",
+          "name": "Delivery photo check",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_fb20c804_dispatched",
+          "name": "Dispatched",
+          "status": "blocked",
+          "confidence": 0.0,
+          "updated_by": "ambiguity_block"
+        },
+        {
+          "node_id": "task_fb20c804_filled_from_stock",
+          "name": "Filled from stock",
+          "status": "skipped",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_fb20c804_order_confirmation",
+          "name": "Order confirmation",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_fb20c804_order_ready",
+          "name": "Order ready",
+          "status": "provisional",
+          "confidence": 0.78,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_fb20c804_payment_followup_30d",
+          "name": "Payment follow-up (30d)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_fb20c804_predispatch_checklist",
+          "name": "Pre-dispatch checklist",
+          "status": "active",
+          "confidence": 0.78,
+          "updated_by": "update_agent"
+        },
+        {
+          "node_id": "task_fb20c804_quote_followup_48h",
+          "name": "Quote follow-up (48h)",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        },
+        {
+          "node_id": "task_fb20c804_task_closed",
+          "name": "Task closed",
+          "status": "pending",
+          "confidence": null,
+          "updated_by": "live_create"
+        }
+      ]
+    },
+    "items": {
+      "task_143ff127": [
+        {
+          "description": "1.5 ton Split AC",
+          "unit": "pcs",
+          "quantity": null,
+          "specs": "Rate: 28500",
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "1.5 ton Window AC",
+          "unit": "pcs",
+          "quantity": null,
+          "specs": "Rate: 28600",
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "2 ton Split AC",
+          "unit": "pcs",
+          "quantity": null,
+          "specs": "Rate: 41500",
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "2 ton Window AC",
+          "unit": "pcs",
+          "quantity": null,
+          "specs": "Rate: 35000",
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "Stabilizer 4 KVA",
+          "unit": "pcs",
+          "quantity": null,
+          "specs": "Rate: 3700",
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "Stabilizer 5 KVA",
+          "unit": "pcs",
+          "quantity": null,
+          "specs": "Rate: 4200",
+          "source_table": "client_order_items"
+        }
+      ],
+      "task_326d57c8": [
+        {
+          "description": "pak",
+          "unit": "pak",
+          "quantity": 3.0,
+          "specs": null,
+          "source_table": "client_order_items"
+        }
+      ],
+      "task_73c6f1d6": [
+        {
+          "description": "table napkin",
+          "unit": null,
+          "quantity": null,
+          "specs": null,
+          "source_table": "client_order_items"
+        }
+      ],
+      "task_75094bda": [
+        {
+          "description": "Sanitary Diary",
+          "unit": "nos",
+          "quantity": 1.0,
+          "specs": "Format to be shared by officer tomorrow",
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "Display File",
+          "unit": "nos",
+          "quantity": 2.0,
+          "specs": "A4 / 50 leaves",
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "Pressure roller",
+          "unit": "nos",
+          "quantity": 1.0,
+          "specs": "Model HP1020",
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "Teflon sleeve",
+          "unit": "nos",
+          "quantity": 1.0,
+          "specs": "Model HP1020",
+          "source_table": "client_order_items"
+        }
+      ],
+      "task_95aa6804": [
+        {
+          "description": "chir",
+          "unit": "pcs",
+          "quantity": 42.0,
+          "specs": "For 107 Bde",
+          "source_table": "client_order_items"
+        }
+      ],
+      "task_d34325fc": [
+        {
+          "description": "LG Refrigerator 242 Ltrs with handle, 3/4 STAR",
+          "unit": "Nos",
+          "quantity": 1.0,
+          "specs": null,
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "Voltas Window AC 1.5 Ton",
+          "unit": "Nos",
+          "quantity": 3.0,
+          "specs": null,
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "Canon camera with lence (EOS R10)",
+          "unit": "Nos",
+          "quantity": 1.0,
+          "specs": null,
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "Prestige Single gas burner",
+          "unit": "Nos",
+          "quantity": 1.0,
+          "specs": null,
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "Mini Refrigerator 75/100 Ltr",
+          "unit": "Nos",
+          "quantity": 1.0,
+          "specs": null,
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "Casserole 0.5 Kg",
+          "unit": "Nos",
+          "quantity": 4.0,
+          "specs": null,
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "White Bed Sheet (premium quality)",
+          "unit": "Nos",
+          "quantity": 15.0,
+          "specs": null,
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "Three wheel golf push cart",
+          "unit": "Nos",
+          "quantity": 1.0,
+          "specs": null,
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "JBL Party speaker box",
+          "unit": "Nos",
+          "quantity": 2.0,
+          "specs": null,
+          "source_table": "client_order_items"
+        }
+      ],
+      "task_e7c8df5f": [
+        {
+          "description": "Legal size paper, Red Colour",
+          "unit": null,
+          "quantity": null,
+          "specs": "Legal size, Red Colour required",
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "A3 photo Paper",
+          "unit": "pkt",
+          "quantity": 3.0,
+          "specs": null,
+          "source_table": "client_order_items"
+        }
+      ],
+      "task_f8432d61": [
+        {
+          "description": "LG Refrigerator 242 ltr with handle, 3/4*",
+          "unit": "pcs",
+          "quantity": null,
+          "specs": "242 litre, with handle, 3/4 star (star rating ambiguous)",
+          "source_table": "client_order_items"
+        }
+      ],
+      "task_fb20c804": [
+        {
+          "description": "Red pennant flag with bull/buffalo shield emblem and 2 gold stars (swallowtail/forked style)",
+          "unit": "pcs",
+          "quantity": 5.0,
+          "specs": "Red fabric, black shield with red crescent/horns motif, gold star embroidery x2, forked pennant shape",
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "Red triangular pennant flag with bull/buffalo shield emblem and 1 gold star",
+          "unit": "pcs",
+          "quantity": 1.0,
+          "specs": "Red fabric, black shield with red crescent/horns motif, gold star embroidery x1, triangular pennant shape",
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "Red rectangular flag with elephant shield emblem and 3 gold stars",
+          "unit": "pcs",
+          "quantity": 1.0,
+          "specs": "Red and white striped fabric, black elephant on gold shield, gold star embroidery x3, rectangular shape",
+          "source_table": "client_order_items"
+        },
+        {
+          "description": "sanitary dairy register",
+          "unit": null,
+          "quantity": null,
+          "specs": null,
+          "source_table": "client_order_items"
+        }
+      ],
+      "task_06bd806a": [
+        {
+          "description": "EOS R10 WITH 18-150 Lens",
+          "unit": "pcs",
+          "quantity": 1.0,
+          "specs": "MRP ₹1,19,995; DP ₹1,01,000 net lending; Including GST; Discount 18%; billing item only",
+          "source_table": "supplier_order_items"
+        }
+      ],
+      "task_307f07c5": [
+        {
+          "description": "Grease - Classic make",
+          "unit": "ton",
+          "quantity": 4.0,
+          "specs": "Price: 4800 + GST per unit/lot. Source: Assam Motor.",
+          "source_table": "supplier_order_items"
+        },
+        {
+          "description": "Grease - Unique make",
+          "unit": null,
+          "quantity": null,
+          "specs": "Price: 8500 + GST. Source: Assam Motor. Alternative option being considered.",
+          "source_table": "supplier_order_items"
+        }
+      ],
+      "task_8499484f": [
+        {
+          "description": "Ink Tank Printer mfc t4500dw",
+          "unit": "pcs",
+          "quantity": null,
+          "specs": "@ 45590.00 + 18% GST",
+          "source_table": "supplier_order_items"
+        }
+      ],
+      "task_9ce4aa8a": [
+        {
+          "description": "Surge Protector",
+          "unit": "pcs",
+          "quantity": null,
+          "specs": "From Biswanath; prices mentioned: 2400/- and 4600/- (variant or tier unclear)",
+          "source_table": "supplier_order_items"
+        }
+      ],
+      "task_c44c646b": [
+        {
+          "description": "Expanding case 31 pocket EX904",
+          "unit": "pcs",
+          "quantity": null,
+          "specs": "Solo brand, product URL: https://solo.in/products/expanding-case-31-pocket-ex904",
+          "source_table": "supplier_order_items"
+        }
+      ]
+    },
+    "fulfillment_links": [],
+    "ambiguity_flags": [
+      {
+        "task_id": "task_e7c8df5f",
+        "node_id": "order_confirmation",
+        "severity": "medium",
+        "category": "entity",
+        "description": "Client entity is partially identified as '20 JAK' with contact 'Rajesh sir', but the full unit name and designation of Rajesh sir are not confirmed. '20 JAK' likely refers to 20 Jak Rifles or a JAK unit — needs verification to ensure correct entity assignment.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_e7c8df5f",
+        "node_id": null,
+        "severity": "low",
+        "category": "quantity",
+        "description": "'Legal, but Red Colour is required' — it is unclear whether this refers to Legal size paper (a stationery item) or a different product. Assumed to be Legal size paper based on context, but could be a separate item.",
+        "status": "expired"
+      },
+      {
+        "task_id": "task_f8432d61",
+        "node_id": "order_confirmation",
+        "severity": "medium",
+        "category": "entity",
+        "description": "Client identity is unclear — message is sent to an LG supplier group asking for a rate, but no client name or unit is mentioned. It is unclear who the end client for this order is.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_f8432d61",
+        "node_id": null,
+        "severity": "medium",
+        "category": "quantity",
+        "description": "'3/4*' is ambiguous — could refer to a star rating (3 or 4 star), a model variant, or another specification. Clarification needed.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_fb20c804",
+        "node_id": "dispatched",
+        "severity": "high",
+        "category": "entity",
+        "description": "It is unclear which client/unit these three flags (two with bull/buffalo emblem, one with elephant emblem) are being sent to. No client name or unit mentioned in messages.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_fb20c804",
+        "node_id": "dispatched",
+        "severity": "medium",
+        "category": "status",
+        "description": "'Which all do I send' — Ashish is asking which of the three flags to dispatch, implying possible partial dispatch. It is unclear whether all three or a subset should go out.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_143ff127",
+        "node_id": null,
+        "severity": "medium",
+        "category": "quantity",
+        "description": "Message appears to be a supplier (Punit-Jrbk Voltas) sharing revised rates, but the message is truncated — item 7 is incomplete. It is unclear whether this is a full rate list or if additional items follow.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_143ff127",
+        "node_id": "order_confirmation",
+        "severity": "medium",
+        "category": "status",
+        "description": "This is a supplier-side rate-sharing message in a supplier group chat. It is unclear whether these rates are being quoted TO Uttam Enterprise (i.e. supplier offering prices for procurement) or whether Samita is requesting rates to pass on to a client. The direction of the quotation is ambiguous.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_fb20c804",
+        "node_id": "dispatched",
+        "severity": "high",
+        "category": "quantity",
+        "description": "'Sirf upar vala' (only the top one) is ambiguous — unclear which of the three flag items is being referred to as 'upar vala'. It likely means the first item in the list (Red pennant flag with bull/buffalo shield emblem and 2 gold stars), but 'upar' could refer to the ordering in the conversation or the order items list. Quantity is also changing from 1 to 5 pcs for that item, which is a significant revision. Needs confirmation from client or Ashish before dispatch.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_95aa6804",
+        "node_id": null,
+        "severity": "low",
+        "category": "status",
+        "description": "The same message '107 bde chir - 42 pcs' appears twice in both recent and new messages. This appears to be a duplicate send. No new information is added by the second message.",
+        "status": "expired"
+      },
+      {
+        "task_id": "task_95aa6804",
+        "node_id": null,
+        "severity": "medium",
+        "category": "quantity",
+        "description": "'Chir' is an informal/Hindi term — likely refers to a fabric or material (e.g. 'chira' = flattened rice, or a textile). The exact item type and unit should be confirmed to avoid fulfillment errors.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_fb20c804",
+        "node_id": null,
+        "severity": "medium",
+        "category": "linkage",
+        "description": "The client is asking for a 'sanitary dairy register' which is a new item not currently in the order. It's unclear if this is an addition to the existing order or a new, separate order.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_06bd806a",
+        "node_id": "supplier_confirmation",
+        "severity": "medium",
+        "category": "entity",
+        "description": "Supplier name not specified — referred to only as 'canon camera dealer'. No specific dealer name, contact, or location mentioned.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_06bd806a",
+        "node_id": null,
+        "severity": "low",
+        "category": "status",
+        "description": "Unclear if DP of ₹1,01,000 is a confirmed quote or an initial inquiry. Message says 'net lending' which may imply this is a dealer price being explored, not yet committed.",
+        "status": "expired"
+      },
+      {
+        "task_id": "task_8499484f",
+        "node_id": "supplier_confirmation",
+        "severity": "medium",
+        "category": "status",
+        "description": "Price quoted as 45590.00 + 18% GST — unclear if this is the final agreed price or a quote still under negotiation. Supplier confirmation cannot be fully committed until delivery date or advance payment is confirmed.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_4fd14fe1",
+        "node_id": null,
+        "severity": "medium",
+        "category": "status",
+        "description": "Messages contain only a contact VCF file (Ansar Ali Tempo Adabari) and an acknowledgement ('Ha'). It is unclear what action this relates to — whether Ansar Ali is a transporter being assigned to this order, a new supplier contact, or something else entirely. No node state change can be determined.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_34c44d7e",
+        "node_id": null,
+        "severity": "medium",
+        "category": "status",
+        "description": "Samsul Haque shared a contact card (Ansar Ali Tempo, Adabari) followed by 'Ha' (yes). It is unclear what this refers to — possibly a transporter/driver contact for dispatch, but no node or order action is clearly being confirmed. No items, status changes, or order context are evident from these messages alone.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_af88d253",
+        "node_id": null,
+        "severity": "medium",
+        "category": "status",
+        "description": "Messages consist of a contact card (Ansar Ali Tempo, Adabari) and a brief acknowledgement ('Ha'). It is unclear what this contact is being shared for — whether it relates to a transporter for dispatch, a supplier, or some other purpose. No actionable node update can be made without clarification.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_af88d253",
+        "node_id": null,
+        "severity": "medium",
+        "category": "quantity",
+        "description": "Messages '4+2', 'Ok sir.', and 'Han' are ambiguous fragments. '4+2' could refer to a quantity breakdown (e.g. 4 + 2 = 6 units of some item), but no item, unit, or context is provided. Cannot determine what node or item this refers to.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_af88d253",
+        "node_id": "order_confirmation",
+        "severity": "high",
+        "category": "entity",
+        "description": "No client entity, items, or order details have been established in this task. All nodes remain at pending. The task context is unclear — only a transporter contact (Ansar Ali Tempo Adabari) and acknowledgement messages are present. It is unknown which client or order this task is for.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_307f07c5",
+        "node_id": "supplier_confirmation",
+        "severity": "medium",
+        "category": "quantity",
+        "description": "Two different makes (Classic @4800+GST and Unique @8500+GST) are being quoted for what appears to be grease, but it is unclear which make/price has been selected or if both are being considered. The item type ('grease wala') is only inferred from Ashish's message asking for a pic.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_307f07c5",
+        "node_id": null,
+        "severity": "medium",
+        "category": "entity",
+        "description": "The item being procured is not explicitly named — it is referred to as 'grease wala' by Ashish. The 4 ton quantity and pricing context suggest industrial grease, but this should be confirmed.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_75094bda",
+        "node_id": null,
+        "severity": "medium",
+        "category": "quantity",
+        "description": "Sanitary Diary format is pending — 'Format sir will share tomorrow'. Specs are incomplete; quantity is known but item cannot be fully specified until format is received.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_75094bda",
+        "node_id": "order_confirmation",
+        "severity": "high",
+        "category": "linkage",
+        "description": "'Briefcase bill to be changed, have to mention GST separately' — it is unclear which existing order or bill this refers to. This may belong to a separate prior order/task for 857 Fd Wk Sp, not the current enquiry items.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_8661cd9a",
+        "node_id": "order_confirmation",
+        "severity": "high",
+        "category": "entity",
+        "description": "Message contains only '621 eme' with no order details, items, quantities, or context. It is unclear whether this is a client name/unit being assigned to this task, a reference to an existing order, or something else entirely.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_8661cd9a",
+        "node_id": null,
+        "severity": "low",
+        "category": "status",
+        "description": "The message is duplicated twice in both recent and new messages — unclear if this is a resend or a data ingestion issue. No additional information is conveyed.",
+        "status": "expired"
+      },
+      {
+        "task_id": "task_9ce4aa8a",
+        "node_id": "supplier_confirmation",
+        "severity": "high",
+        "category": "quantity",
+        "description": "Two price figures mentioned — 2400/- and 4600/- — but it is unclear whether these represent two different variants/models of the Surge Protector, a unit price vs. total price, or prices from two different suppliers. Clarification needed on what each figure refers to.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_9ce4aa8a",
+        "node_id": "supplier_confirmation",
+        "severity": "medium",
+        "category": "entity",
+        "description": "'Biswanath' is mentioned as the supplier source but it is unclear if this is a full business name, a proprietor name, or a location. Full supplier entity name and contact needed.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_aa476b98",
+        "node_id": "delivery_confirmed",
+        "severity": "medium",
+        "category": "entity",
+        "description": "Message is very brief ('264 FD wk sp item delivered'). It is unclear what specific items were delivered, quantities, or whether this is a partial or full delivery. '264 FD wk sp' is likely a unit/formation reference (264 Field Workshop?) but the exact client entity and items are not confirmed.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_aa476b98",
+        "node_id": null,
+        "severity": "medium",
+        "category": "status",
+        "description": "No order confirmation or quotation node was previously completed. Delivery is reported but there is no record of quotation sent or client confirmation — it is unclear if this order followed the full workflow or was completed outside the system.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_c44c646b",
+        "node_id": "supplier_confirmation",
+        "severity": "medium",
+        "category": "entity",
+        "description": "Supplier identity is a website (solo.in) — unclear if Solo is a confirmed supplier, just a product reference, or if purchase will be made directly from their site or via a local distributor. No pricing, quantity, or delivery commitment mentioned yet.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_c44c646b",
+        "node_id": null,
+        "severity": "medium",
+        "category": "quantity",
+        "description": "Quantity not mentioned — how many 31-pocket expanding cases (EX904) are required for this order?",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_75094bda",
+        "node_id": null,
+        "severity": "medium",
+        "category": "linkage",
+        "description": "Items 'Pressure roller' and 'Teflon sleeve' are printer parts for HP1020, but it is unclear whether these are additional items for the existing 857 Fd wk sp order or a separate requisition from the same unit (TSS context may indicate a different sub-order).",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_73c6f1d6",
+        "node_id": null,
+        "severity": "medium",
+        "category": "quantity",
+        "description": "Item 'table napkin' is mentioned without any quantity or unit specification. Cannot determine how many are required.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_326d57c8",
+        "node_id": "order_confirmation",
+        "severity": "high",
+        "category": "quantity",
+        "description": "'03 pak' is ambiguous — 'pak' could mean packets, packs, or parcels, and the item type is not specified. It is unclear what product is being ordered.",
+        "status": "pending"
+      },
+      {
+        "task_id": "task_326d57c8",
+        "node_id": null,
+        "severity": "medium",
+        "category": "entity",
+        "description": "'11 bde' is interpreted as 11 Brigade (Army client), but no officer name or contact person has been provided. Cannot confirm client entity fully.",
+        "status": "pending"
+      }
+    ],
+    "message_counts": {
+      "task_06bd806a": 3,
+      "task_0e6a9ef8": 3,
+      "task_143ff127": 45,
+      "task_2df6d637": 1,
+      "task_307f07c5": 6,
+      "task_326d57c8": 1,
+      "task_34c44d7e": 2,
+      "task_4fd14fe1": 2,
+      "task_516f17a3": 1,
+      "task_73c6f1d6": 2,
+      "task_75094bda": 7,
+      "task_77d05386": 4,
+      "task_8499484f": 4,
+      "task_856a2019": 4,
+      "task_8661cd9a": 2,
+      "task_95aa6804": 8,
+      "task_9ce4aa8a": 5,
+      "task_aa476b98": 2,
+      "task_af88d253": 7,
+      "task_c44c646b": 4,
+      "task_d34325fc": 290,
+      "task_e0ce2439": 6,
+      "task_e21a9f76": 1,
+      "task_e7c8df5f": 6,
+      "task_f8432d61": 43,
+      "task_fb20c804": 256
+    },
+    "dead_letter_count": 0,
+    "model_usage": [
+      {
+        "model": "claude-sonnet-4-6",
+        "calls": 22,
+        "cost": 0.2750301
+      },
+      {
+        "model": "gemini-2.5-flash",
+        "calls": 11,
+        "cost": 0
+      }
+    ],
+    "total_cost": 0.2750301
+  },
+  "db_path": "/Users/kunalc/src/mantri/tests/integration_tests/R12-L3-01_internal_staff_conversation_routing/replay_result.db"
+}

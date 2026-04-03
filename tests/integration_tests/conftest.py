@@ -32,6 +32,13 @@ def pytest_addoption(parser):
                      help="Short replay (50 msgs) with LLM response caching and pre-seeded tasks. "
                           "First run requires --run-live to build cache; subsequent runs use cache. "
                           "Disables Phoenix tracing and conv router LLM matching.")
+    parser.addoption("--backfill-cache", action="store_true", default=False,
+                     help="One-time migration: replay from cache to populate model column. "
+                          "Uses hash-only lookup. PERMIT_API=False. Remove after --run-cache verifies.")
+    parser.addoption("--run-cache", action="store_true", default=False,
+                     help="Cache-only replay. No API calls (PERMIT_API=False). "
+                          "Strict (hash, model) lookup. Upserts prompts on hit. "
+                          "Mutually exclusive with --run-live, --traced, --dev-test.")
 
 
 def save_run_record(test_type: str, case_id: str, results: dict):

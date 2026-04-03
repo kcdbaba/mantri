@@ -1,0 +1,47 @@
+{
+  "verdict": "PARTIAL",
+  "overall_score": 40,
+  "dimensions": {
+    "reliability": {
+      "score": 50,
+      "notes": "0 dead letters, 33 failures, 332 errors out of 0 agent calls"
+    },
+    "routing": {
+      "score": 69,
+      "notes": "755/1086 messages routed"
+    },
+    "extraction": {
+      "score": 23,
+      "notes": "35 items extracted across 14 tasks"
+    },
+    "node_progression": {
+      "score": 8,
+      "notes": "7 completed, 16 active out of 282 total nodes"
+    },
+    "ambiguity_quality": {
+      "score": 50,
+      "notes": "36 flags from 0 calls (36.00/call)"
+    },
+    "linkage": {
+      "score": 40,
+      "notes": "0 fulfillment links created"
+    }
+  },
+  "metrics": {
+    "total_messages": 1086,
+    "routed": 755,
+    "agent_calls": 0,
+    "dead_letters": 0,
+    "failures": 33,
+    "errors": 332,
+    "ambiguity_flags": 36,
+    "fulfillment_links": 0,
+    "total_items": 35,
+    "total_nodes": 282,
+    "completed_nodes": 7,
+    "active_nodes": 16
+  },
+  "case_id": "R12-L3-01",
+  "case_name": "R12-L3-01_internal_staff_conversation_routing",
+  "evaluated_at": "2026-04-04T03:36:30"
+}

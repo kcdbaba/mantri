@@ -1,0 +1,85 @@
+{
+  "run_at": "2026-04-04T03:04:50.808961",
+  "test_type": "live",
+  "case_id": "R3-C-L3-02",
+  "messages_total": 690,
+  "messages_routed": 325,
+  "messages_unrouted": 102,
+  "messages_noise": 263,
+  "update_agent_calls": 0,
+  "update_agent_failures": 0,
+  "linkage_events_processed": 0,
+  "linkage_agent_failures": 0,
+  "error_count": 265,
+  "dead_letter_count": 0,
+  "ambiguity_flag_count": 0,
+  "fulfillment_link_count": 0,
+  "node_summary": {
+    "task_40626370": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_9990cd3c": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_a340e7c0": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    },
+    "task_c81d4955": {
+      "completed": 0,
+      "active": 0,
+      "pending": 11,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 12
+    }
+  },
+  "items_per_task": {},
+  "messages_per_task": {
+    "task_40626370": 128,
+    "task_9990cd3c": 176,
+    "task_a340e7c0": 127,
+    "task_c81d4955": 21
+  },
+  "skip_linkage": false,
+  "max_messages": null,
+  "model_usage": [],
+  "total_cost": 0,
+  "tasks_created": 4,
+  "pipeline_score": 31,
+  "run_metadata": {
+    "git_commit": "3893a1c91",
+    "live_task_creation": true,
+    "models": {
+      "complex": "claude-sonnet-4-6",
+      "simple": "gemini-2.5-flash"
+    },
+    "escalation_profile": "ashish_current"
+  },
+  "run_notes": "",
+  "traced": true,
+  "phoenix_endpoints": [],
+  "routing_mode": "entity_first",
+  "agents": [
+    "AO",
+    "AL"
+  ],
+  "warmup_messages": 0,
+  "conversations_created": 0,
+  "entities_discovered": 0,
+  "tasks_created_live": 4
+}

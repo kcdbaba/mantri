@@ -42,6 +42,8 @@ def run_instrumented_replay(
     no_conv_llm: bool = False,
     dev_test: bool = False,
     allow_api_calls: bool = True,
+    allow_conv_api: bool = False,
+    backfill_cache: bool = False,
 ) -> dict:
     """
     Run the full pipeline with Phoenix trace capture.
@@ -167,6 +169,7 @@ def run_instrumented_replay(
             _call_gemini_with_retry as _orig_gemini,
             LLMResponse,
         )
+        from src.config import CLAUDE_MODEL, GEMINI_MODEL
 
         # Mutable tracing context
         _mt = [MessageTrace()]
@@ -199,7 +202,14 @@ def run_instrumented_replay(
 
             # Cache check before LLM call
             cache_key = agent_cache.make_key(system_prompt, user_section)
-            cached = agent_cache.get(cache_key)
+            if backfill_cache:
+                cached = agent_cache.get_backfill(cache_key)
+                if cached:
+                    old_model = cached.pop("_current_model", "__v1__")
+                    if old_model != model:
+                        agent_cache.update_model(cache_key, old_model, model)
+            else:
+                cached = agent_cache.get(cache_key, model)
             if cached:
                 resp = LLMResponse(
                     raw=cached["raw"],
@@ -208,6 +218,13 @@ def run_instrumented_replay(
                     cache_creation_tokens=cached.get("cache_creation_tokens", 0),
                     cache_read_tokens=cached.get("cache_read_tokens", 0),
                 )
+                # Upsert prompts on hit
+                agent_cache.update_meta(cache_key, model, {
+                    "system_prompt": system_prompt,
+                    "user_section": user_section,
+                    "message_id": message_id,
+                    "task_id": task_id,
+                })
                 mt.record_llm_call(
                     call_type="update_agent", task_id=task_id,
                     system_prompt="(cached)", user_section="(cached)",
@@ -220,7 +237,7 @@ def run_instrumented_replay(
 
             if not allow_api_calls:
                 raise RuntimeError(
-                    f"LLM cache miss for task={task_id} msg={message_id}. "
+                    f"LLM cache miss for task={task_id} msg={message_id} model={model}. "
                     f"Use --run-live to allow API calls and build cache."
                 )
 
@@ -230,10 +247,16 @@ def run_instrumented_replay(
             latency_ms = int((time.time() - t0) * 1000)
 
             if resp:
-                agent_cache.put(
-                    cache_key, resp.raw, resp.tokens_in, resp.tokens_out,
-                    resp.cache_creation_tokens, resp.cache_read_tokens,
-                )
+                agent_cache.put(cache_key, model, resp.raw, {
+                    "system_prompt": system_prompt,
+                    "user_section": user_section,
+                    "message_id": message_id,
+                    "task_id": task_id,
+                    "tokens_in": resp.tokens_in,
+                    "tokens_out": resp.tokens_out,
+                    "cache_creation_tokens": resp.cache_creation_tokens,
+                    "cache_read_tokens": resp.cache_read_tokens,
+                })
 
             is_retry = kwargs.get("max_retries", 3) < 3
             mt.record_llm_call(
@@ -255,42 +278,92 @@ def run_instrumented_replay(
 
         def _cached_anthropic(system_prompt, user_section,
                               message_id, task_id, **kwargs):
+            model = kwargs.get("model", CLAUDE_MODEL)
             cache_key = agent_cache.make_key(system_prompt, user_section)
-            cached = agent_cache.get(cache_key)
+            if backfill_cache:
+                cached = agent_cache.get_backfill(cache_key)
+                if cached:
+                    old_model = cached.pop("_current_model", "__v1__")
+                    if old_model != model:
+                        agent_cache.update_model(cache_key, old_model, model)
+            else:
+                cached = agent_cache.get(cache_key, model)
             if cached:
+                agent_cache.update_meta(cache_key, model, {
+                    "system_prompt": system_prompt,
+                    "user_section": user_section,
+                    "message_id": message_id,
+                    "task_id": task_id,
+                })
                 return LLMResponse(
                     raw=cached["raw"], tokens_in=cached["tokens_in"],
                     tokens_out=cached["tokens_out"],
                     cache_creation_tokens=cached.get("cache_creation_tokens", 0),
                     cache_read_tokens=cached.get("cache_read_tokens", 0),
+                )
+            if not allow_api_calls:
+                raise RuntimeError(
+                    f"Anthropic cache miss: task={task_id} msg={message_id} model={model}. "
+                    f"Use --run-live to allow API calls."
                 )
             resp = _orig_anthropic(system_prompt, user_section,
                                    message_id, task_id, **kwargs)
             if resp:
-                agent_cache.put(
-                    cache_key, resp.raw, resp.tokens_in, resp.tokens_out,
-                    resp.cache_creation_tokens, resp.cache_read_tokens,
-                )
+                agent_cache.put(cache_key, model, resp.raw, {
+                    "system_prompt": system_prompt,
+                    "user_section": user_section,
+                    "message_id": message_id,
+                    "task_id": task_id,
+                    "tokens_in": resp.tokens_in,
+                    "tokens_out": resp.tokens_out,
+                    "cache_creation_tokens": resp.cache_creation_tokens,
+                    "cache_read_tokens": resp.cache_read_tokens,
+                })
             return resp
 
         def _cached_gemini(system_prompt, user_section,
                            message_id, task_id, **kwargs):
+            model = kwargs.get("model", GEMINI_MODEL)
             cache_key = agent_cache.make_key(system_prompt, user_section)
-            cached = agent_cache.get(cache_key)
+            if backfill_cache:
+                cached = agent_cache.get_backfill(cache_key)
+                if cached:
+                    old_model = cached.pop("_current_model", "__v1__")
+                    if old_model != model:
+                        agent_cache.update_model(cache_key, old_model, model)
+            else:
+                cached = agent_cache.get(cache_key, model)
             if cached:
+                agent_cache.update_meta(cache_key, model, {
+                    "system_prompt": system_prompt,
+                    "user_section": user_section,
+                    "message_id": message_id,
+                    "task_id": task_id,
+                })
                 return LLMResponse(
                     raw=cached["raw"], tokens_in=cached["tokens_in"],
                     tokens_out=cached["tokens_out"],
                     cache_creation_tokens=cached.get("cache_creation_tokens", 0),
                     cache_read_tokens=cached.get("cache_read_tokens", 0),
                 )
+            if not allow_api_calls:
+                raise RuntimeError(
+                    f"Gemini cache miss: task={task_id} msg={message_id} model={model}. "
+                    f"Use --run-live to allow API calls."
+                )
             resp = _orig_gemini(system_prompt, user_section,
                                 message_id, task_id, **kwargs)
             if resp:
-                agent_cache.put(
-                    cache_key, resp.raw, resp.tokens_in, resp.tokens_out,
-                    resp.cache_creation_tokens, resp.cache_read_tokens,
-                )
+                agent_cache.put(cache_key, model, resp.raw, {
+                    "system_prompt": system_prompt,
+                    "user_section": user_section,
+                    "message_id": message_id,
+                    "task_id": task_id,
+                    "tokens_in": resp.tokens_in,
+                    "tokens_out": resp.tokens_out,
+                    "cache_creation_tokens": resp.cache_creation_tokens,
+                    "cache_read_tokens": resp.cache_read_tokens,
+                })
             return resp
 
         def _traced_resolve(entity_id, entity_tasks, message, r):
@@ -336,6 +409,63 @@ def run_instrumented_replay(
                 items_applied=items, node_updates=node_updates,
             )
 
+        # ── Cache wrapper for conversation router LLM matching ─────────
+
+        from src.conversation.llm_context_matcher import (
+            _try_gemini as _orig_conv_gemini,
+        )
+
+        def _cached_conv_gemini(prompt, max_retries=2):
+            conv_model = "gemini-2.5-flash"
+            cache_key = agent_cache.make_key(prompt, "")
+            if backfill_cache:
+                cached = agent_cache.get_backfill(cache_key)
+                if cached:
+                    old_model = cached.pop("_current_model", "__v1__")
+                    if old_model != conv_model:
+                        agent_cache.update_model(cache_key, old_model, conv_model)
+            else:
+                cached = agent_cache.get(cache_key, conv_model)
+            if cached:
+                import json as _json
+                agent_cache.update_meta(cache_key, conv_model, {
+                    "system_prompt": "(conv_llm_matcher)",
+                    "user_section": prompt,
+                })
+                try:
+                    return _json.loads(cached["raw"])
+                except Exception:
+                    return None
+
+            if not allow_api_calls and not allow_conv_api:
+                raise RuntimeError(
+                    f"Conv LLM cache miss. Use --run-live to build cache."
+                )
+
+            # Bypass api_guard using original unpatched function
+            # PERMIT_API stays False — only this specific call goes through
+            import src.api_guard
+            orig_fn = src.api_guard._original_genai_generate
+            if orig_fn is None:
+                result = _orig_conv_gemini(prompt, max_retries)
+            else:
+                from google.genai.models import Models
+                guarded_fn = Models.generate_content
+                Models.generate_content = orig_fn
+                try:
+                    result = _orig_conv_gemini(prompt, max_retries)
+                finally:
+                    Models.generate_content = guarded_fn
+            if result is not None:
+                import json as _json
+                agent_cache.put(cache_key, conv_model, _json.dumps(result), {
+                    "system_prompt": "(conv_llm_matcher)",
+                    "user_section": prompt,
+                    "tokens_in": 0,
+                    "tokens_out": 0,
+                })
+            return result
+
         # ── Linkage drain ────────────────────────────────────────────────
 
         def _drain_linkage(scrap=None):
@@ -362,6 +492,7 @@ def run_instrumented_replay(
              patch("src.agent.update_agent._call_gemini_with_retry", _cached_gemini), \
              patch("src.linkage.agent._call_anthropic_with_retry", _cached_anthropic), \
              patch("src.linkage.agent._call_gemini_with_retry", _cached_gemini), \
+             patch("src.conversation.llm_context_matcher._try_gemini", _cached_conv_gemini), \
              patch("src.router.worker._resolve_task_for_entity", _traced_resolve), \
              patch("src.router.worker._apply_output", _traced_apply):
 

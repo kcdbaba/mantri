@@ -1,0 +1,6 @@
+WARNING  src.router.worker:worker.py:330 Could not resolve task for scrap: entity=entity_army_unit sender=unknown (1 msgs)
+WARNING  src.router.worker:worker.py:330 Could not resolve task for scrap: entity=entity_army_unit sender=unknown (1 msgs)
+WARNING  src.router.worker:worker.py:330 Could not resolve task for scrap: entity=entity_army_unit sender=unknown (1 msgs)
+WARNING  src.router.worker:worker.py:330 Could not resolve task for scrap: entity=entity_army_unit sender=unknown (1 msgs)
+WARNING  src.router.worker:worker.py:330 Could not resolve task for scrap: entity=entity_army_unit sender=unknown (1 msgs)
+WARNING  src.router.worker:worker.py:330 Could not resolve task for scrap: entity=entity_army_unit sender=unknown (1 msgs)

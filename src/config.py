@@ -164,6 +164,9 @@ PERMIT_API = os.environ.get("MANTRI_PERMIT_API", "false").lower() == "true"
 CLAUDE_MODEL = "claude-sonnet-4-6"
 CLAUDE_MODEL_FAST = "claude-haiku-4-5-20251001"
 GEMINI_MODEL = "gemini-2.5-flash"
+
+# Canonical model names for cache and reporting
+CANONICAL_MODELS = {CLAUDE_MODEL, CLAUDE_MODEL_FAST, GEMINI_MODEL}
 MAX_CONTEXT_MESSAGES = 20          # last N messages per task passed to update agent
 AGENT_MAX_TOKENS = 2048
 

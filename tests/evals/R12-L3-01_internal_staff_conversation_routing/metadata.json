@@ -1,0 +1,46 @@
+{
+  "id": "R12-L3-01",
+  "name": "internal_staff_conversation_routing",
+  "framework": "R1",
+  "level": "L3",
+  "sprint": "S3",
+  "data_source": "real",
+  "description": "",
+  "chat_inputs": {
+    "start": "3/1/26, 00:00",
+    "end": "3/24/26, 23:59",
+    "chats": [
+      {
+        "path": "data/raw_chats/full_chat_logs/sata_jobs",
+        "label": "Sata Jobs"
+      },
+      {
+        "path": "data/raw_chats/full_chat_logs/Tasks",
+        "label": "Tasks"
+      },
+      {
+        "path": "data/raw_chats/full_chat_logs/Voltas_supplier",
+        "label": "Voltas Supplier"
+      },
+      {
+        "path": "data/raw_chats/full_chat_logs/LG_supplier",
+        "label": "Lg Supplier"
+      },
+      {
+        "path": "data/raw_chats/full_chat_logs/est_div_jobs",
+        "label": "Est Div Jobs"
+      },
+      {
+        "path": "data/raw_chats/full_chat_logs/est_div_jobs_26-27",
+        "label": "Est Div Jobs 26-27"
+      }
+    ]
+  },
+  "completeness": {
+    "complete": false,
+    "missing": []
+  },
+  "expected_output": "",
+  "pass_criteria": "",
+  "notes": ""
+}

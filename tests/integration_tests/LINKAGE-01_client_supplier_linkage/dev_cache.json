@@ -1,0 +1,65 @@
+{
+  "e73460e20864b5ef": {
+    "raw": "```json\n{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_client_01\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [\n        {\n          \"node_id\": \"client_enquiry\",\n          \"new_status\": \"active\",\n          \"confidence\": 0.90,\n          \"evidence\": \"Client requesting 50 bags atta and 20 bags daal with delivery by tomorrow — initial enquiry captured.\"\n        }\n      ],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [\n        {\n          \"description\": \"Delivery requested 'kal tak' (by tomorrow) but no specific date is determinable without knowing the message timestamp's calendar date. Approximate date can be inferred but not confirmed.\",\n          \"severity\": \"low\",\n          \"category\": \"timing\",\n          \"blocking_node_id\": null\n        }\n      ],\n      \"item_extractions\": [\n        {\n          \"operation\": \"add\",\n          \"description\": \"atta\",\n          \"unit\": \"bags\",\n          \"quantity\": 50,\n          \"specs\": null,\n          \"existing_description\": null\n        },\n        {\n          \"operation\": \"add\",\n          \"description\": \"daal\",\n          \"unit\": \"bags\",\n          \"quantity\": 20,\n          \"specs\": null,\n          \"existing_description\": null\n        }\n      ],\n      \"node_data_extractions\": [\n        {\n          \"node_id\": \"client_enquiry\",\n          \"data\": {\n            \"required_by_date\": \"2025-03-29\"\n          }\n        }\n      ]\n    }\n  ]\n}\n```",
+    "tokens_in": 406,
+    "tokens_out": 416,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 4314
+  },
+  "74f159ae1842ea33": {
+    "raw": "```json\n{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_client_01\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [],\n      \"item_extractions\": [],\n      \"node_data_extractions\": [\n        {\n          \"node_id\": \"client_enquiry\",\n          \"data\": {\n            \"required_by_date\": \"2025-03-29\"\n          }\n        }\n      ]\n    }\n  ]\n}\n```",
+    "tokens_in": 521,
+    "tokens_out": 151,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 4314
+  },
+  "63d77bad62249b8e": {
+    "raw": "```json\n{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_supplier_01\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [\n        {\n          \"node_id\": \"supplier_indent\",\n          \"new_status\": \"active\",\n          \"confidence\": 0.9,\n          \"evidence\": \"Staff messaged Kapoor ji requesting 50 bags atta and 20 bags daal — supplier being contacted for this order\"\n        }\n      ],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [],\n      \"item_extractions\": [\n        {\n          \"operation\": \"add\",\n          \"description\": \"atta\",\n          \"unit\": \"bags\",\n          \"quantity\": 50.0,\n          \"specs\": null,\n          \"existing_description\": null\n        },\n        {\n          \"operation\": \"add\",\n          \"description\": \"daal\",\n          \"unit\": \"bags\",\n          \"quantity\": 20.0,\n          \"specs\": null,\n          \"existing_description\": null\n        }\n      ],\n      \"node_data_extractions\": [\n        {\n          \"node_id\": \"supplier_indent\",\n          \"data\": {\n            \"supplier_name\": \"Kapoor ji\",\n            \"expected_delivery_date\": \"2025-03-29\"\n          }\n        }\n      ]\n    }\n  ]\n}\n```",
+    "tokens_in": 586,
+    "tokens_out": 354,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 4314
+  },
+  "3db0be26f0e63a96": {
+    "raw": "```json\n{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_supplier_01\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [\n        {\n          \"node_id\": \"supplier_indent\",\n          \"new_status\": \"completed\",\n          \"confidence\": 0.88,\n          \"evidence\": \"Kapoor ji confirmed: 'atta 50 bags ready hai. Daal 20 bags bhi de dunga subah tak' — supplier has acknowledged and confirmed availability of both items.\"\n        }\n      ],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [\n        {\n          \"description\": \"Supplier (Kapoor ji) confirmed delivery 'subah tak' (by morning) but no specific date or time was stated. It is unclear which morning — the date context is inferred from prior message but not explicitly confirmed by the supplier.\",\n          \"severity\": \"low\",\n          \"category\": \"timing\",\n          \"blocking_node_id\": null\n        }\n      ],\n      \"item_extractions\": [],\n      \"node_data_extractions\": [\n        {\n          \"node_id\": \"supplier_indent\",\n          \"data\": {\n            \"supplier_name\": \"Kapoor ji\",\n            \"expected_delivery_date\": \"subah tak (morning — exact date unconfirmed)\"\n          }\n        }\n      ]\n    }\n  ]\n}\n```",
+    "tokens_in": 642,
+    "tokens_out": 353,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 4314
+  },
+  "d4a2f21928bc001f": {
+    "raw": "```json\n{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_client_01\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [\n        {\n          \"node_id\": \"predispatch_checklist\",\n          \"new_status\": \"completed\",\n          \"confidence\": 0.88,\n          \"evidence\": \"Sab check kar liya, 50 bags atta aur 20 bags daal theek hai — all items verified on arrival\"\n        }\n      ],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [],\n      \"item_extractions\": [],\n      \"node_data_extractions\": [\n        {\n          \"node_id\": \"predispatch_checklist\",\n          \"data\": {\n            \"checklist_notes\": \"50 bags atta aur 20 bags daal checked and confirmed OK on arrival\",\n            \"checked_by\": \"staff\"\n          }\n        }\n      ]\n    }\n  ]\n}\n```",
+    "tokens_in": 702,
+    "tokens_out": 257,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 4314
+  },
+  "f52ade5a4d714a25": {
+    "raw": "```json\n{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_client_01\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [\n        {\n          \"node_id\": \"dispatched\",\n          \"new_status\": \"provisional\",\n          \"confidence\": 0.72,\n          \"evidence\": \"ashish@s.whatsapp.net: 'dispatch kar rahe hain aaj' — dispatch stated as imminent but not yet confirmed as completed\"\n        }\n      ],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [\n        {\n          \"description\": \"order_confirmation node is still pending — no client confirmation of the quotation has been recorded, yet dispatch is being initiated. It is unclear whether the client has formally confirmed the order or if this is proceeding without a confirmed quotation.\",\n          \"severity\": \"high\",\n          \"category\": \"status\",\n          \"blocking_node_id\": \"dispatched\"\n        }\n      ],\n      \"item_extractions\": [],\n      \"node_data_extractions\": [\n        {\n          \"node_id\": \"dispatched\",\n          \"data\": {\n            \"dispatch_date\": \"2025-03-30\"\n          }\n        }\n      ]\n    }\n  ]\n}\n```",
+    "tokens_in": 731,
+    "tokens_out": 320,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 4314
+  },
+  "4f97ac0664602793": {
+    "raw": "```json\n{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_supplier_01\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [\n        {\n          \"node_id\": \"supplier_indent\",\n          \"new_status\": \"completed\",\n          \"confidence\": 0.88,\n          \"evidence\": \"Kapoor ji confirmed: atta 50 bags ready hai, daal 20 bags bhi de dunga subah tak — supplier has acknowledged and confirmed availability of both items.\"\n        }\n      ],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [],\n      \"item_extractions\": [],\n      \"node_data_extractions\": [\n        {\n          \"node_id\": \"supplier_indent\",\n          \"data\": {\n            \"supplier_name\": \"Kapoor ji\",\n            \"expected_delivery_date\": \"2025-03-29\"\n          }\n        }\n      ]\n    }\n  ]\n}\n```",
+    "tokens_in": 642,
+    "tokens_out": 250,
+    "cache_creation_tokens": 4314,
+    "cache_read_tokens": 0
+  },
+  "d4cc4e4bccb55856": {
+    "raw": "```json\n{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_supplier_01\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [\n        {\n          \"node_id\": \"supplier_collection\",\n          \"new_status\": \"completed\",\n          \"confidence\": 0.92,\n          \"evidence\": \"Maal aa gaya sir — goods received at our end\"\n        },\n        {\n          \"node_id\": \"supplier_QC\",\n          \"new_status\": \"completed\",\n          \"confidence\": 0.90,\n          \"evidence\": \"Sab check kar liya, 50 bags atta aur 20 bags daal theek hai — all items checked and confirmed good\"\n        }\n      ],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [],\n      \"item_extractions\": [],\n      \"node_data_extractions\": [\n        {\n          \"node_id\": \"supplier_collection\",\n          \"data\": {\n            \"received_by\": \"staff\"\n          }\n        },\n        {\n          \"node_id\": \"supplier_QC\",\n          \"data\": {\n            \"passed_items\": [\"50 bags atta\", \"20 bags daal\"],\n            \"failed_items\": [],\n            \"qc_date\": \"2025-03-30\"\n          }\n        }\n      ]\n    }\n  ]\n}\n```",
+    "tokens_in": 702,
+    "tokens_out": 355,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 4314
+  },
+  "913ed53f26fc182e": {
+    "raw": "```json\n{\n  \"task_outputs\": [\n    {\n      \"task_assignment\": \"task_client_01\",\n      \"new_task_order_type\": null,\n      \"node_updates\": [\n        {\n          \"node_id\": \"dispatched\",\n          \"new_status\": \"provisional\",\n          \"confidence\": 0.72,\n          \"evidence\": \"Ashish says 'dispatch kar rahe hain aaj' — dispatch is being initiated today but not yet confirmed as completed\"\n        },\n        {\n          \"node_id\": \"predispatch_checklist\",\n          \"new_status\": \"completed\",\n          \"confidence\": 0.85,\n          \"evidence\": \"Prior message from staff@s.whatsapp.net confirms 'Sab check kar liya, 50 bags atta aur 20 bags daal theek hai' — items verified before dispatch\"\n        }\n      ],\n      \"new_task_candidates\": [],\n      \"ambiguity_flags\": [\n        {\n          \"description\": \"Dispatch is stated as in-progress ('dispatch kar rahe hain') but not confirmed as completed. Awaiting confirmation that goods have actually left for delivery.\",\n          \"severity\": \"medium\",\n          \"category\": \"status\",\n          \"blocking_node_id\": \"dispatched\"\n        },\n        {\n          \"description\": \"order_confirmation node is still pending — no explicit client confirmation of the order/quotation was received before dispatch is being initiated. Dispatching without a confirmed order is a risk.\",\n          \"severity\": \"high\",\n          \"category\": \"status\",\n          \"blocking_node_id\": \"dispatched\"\n        }\n      ],\n      \"item_extractions\": [],\n      \"node_data_extractions\": [\n        {\n          \"node_id\": \"dispatched\",\n          \"data\": {\n            \"dispatch_date\": \"2025-03-30\"\n          }\n        }\n      ]\n    }\n  ]\n}\n```",
+    "tokens_in": 724,
+    "tokens_out": 471,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 4314
+  }
+}
