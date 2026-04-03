@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
-# Hook: block bash commands that would make LLM API calls.
+# Hook: LLM-costing commands require explicit user approval.
 set -euo pipefail
 
 CMD=$(jq -r '.tool_input.command // ""')
-
-# Extract just the command part (first line, before any heredoc/comment)
 FIRST_LINE=$(echo "$CMD" | head -1)
 
-# Match actual test runner invocations, not strings inside commit messages
+# Match actual test runner invocations
 BLOCK=false
 echo "$FIRST_LINE" | grep -qE '\-\-run-live' && BLOCK=true
 echo "$FIRST_LINE" | grep -qE 'run_incremental_test' && BLOCK=true
@@ -19,6 +17,6 @@ if [ "$BLOCK" = true ]; then
         exit 0
     fi
 
-    echo '{"decision":"block","reason":"BLOCKED: LLM-costing command. This will spend real money. Describe what you verified by reading code before requesting approval."}'
+    echo '{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"ask","permissionDecisionReason":"LLM-costing command: this will spend real money on API calls."}}'
     exit 0
 fi
