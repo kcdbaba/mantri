@@ -10,6 +10,7 @@ FILE=$(jq -r '.tool_input.file_path // .tool_response.filePath // ""')
 [[ "$FILE" == /tmp/* ]] && exit 0
 [[ "$FILE" == /var/* ]] && exit 0
 [[ "$FILE" == /private/tmp/* ]] && exit 0
+[[ "$FILE" == */temp/* ]] && exit 0
 [[ "$FILE" == *.json ]] && exit 0
 [[ "$FILE" == *.md ]] && exit 0
 [[ "$FILE" == *.html ]] && exit 0
