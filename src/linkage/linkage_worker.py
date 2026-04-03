@@ -29,6 +29,9 @@ import logging
 import time
 import uuid
 
+import src.api_guard
+src.api_guard.activate()
+
 import redis
 
 from src.config import REDIS_URL, CRON_INTERVAL_SECONDS, TASK_EVENTS_STREAM

@@ -20,6 +20,9 @@ import time
 from pathlib import Path
 from unittest.mock import patch
 
+import src.api_guard
+src.api_guard.activate()
+
 from src.tracing.tracer import ReplayTracer, RunContext, MessageTrace
 
 log = logging.getLogger(__name__)
@@ -139,6 +142,7 @@ def run_instrumented_replay(
         patch("src.store.db.DB_PATH", db_path),
         patch("src.config.DB_PATH", db_path),
         patch("src.router.router.MONITORED_GROUPS", monitored),
+        patch("src.config.PERMIT_API", allow_api_calls),
     ]
     if enable_conv_routing:
         config_patches.extend([

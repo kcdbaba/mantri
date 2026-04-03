@@ -3,6 +3,9 @@ Router worker — pops messages from Redis queue, routes them,
 calls update agent for each routed task, writes results to store.
 """
 
+import src.api_guard
+src.api_guard.activate()
+
 import json
 import logging
 import time
