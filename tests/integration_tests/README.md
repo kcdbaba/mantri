@@ -135,12 +135,36 @@ PYTHONPATH=. pytest tests/integration_tests/test_dry_replay.py -v
 # Live replay (requires ANTHROPIC_API_KEY, costs money)
 PYTHONPATH=. pytest tests/integration_tests/test_live_replay.py -v -s --run-live
 
-# Live replay — update_agent only, skip linkage
-PYTHONPATH=. pytest tests/integration_tests/test_live_replay.py -v -s --run-live --skip-linkage
+# Live replay with Phoenix tracing
+PYTHONPATH=. pytest tests/integration_tests/test_live_replay.py -v -s --run-live --traced
+
+# Live replay — update_agent only, skip linkage (via --agents flag)
+PYTHONPATH=. pytest tests/integration_tests/test_live_replay.py -v -s --run-live --agents AO
 
 # Live replay — first 20 messages only (quick iteration)
 PYTHONPATH=. pytest tests/integration_tests/test_live_replay.py -v -s --run-live --max-messages 20
+
+# Dev-test mode (50 msgs, LLM response caching, pre-seeded tasks, fast iteration)
+# First run builds cache (requires --run-live):
+PYTHONPATH=. pytest tests/integration_tests/test_live_replay.py -v -s --run-live --dev-test
+# Subsequent runs use cache (no --run-live needed):
+PYTHONPATH=. pytest tests/integration_tests/test_live_replay.py -v -s --dev-test
+
+# Run a specific case
+PYTHONPATH=. pytest tests/integration_tests/test_live_replay.py -v -s --run-live -k "R1-D-L3-01"
 ```
+
+### CLI flags
+
+| Flag | Description |
+|---|---|
+| `--run-live` | Enable live replay (LLM calls, costs money). Required for first run. |
+| `--traced` | Enable Phoenix tracing for observability |
+| `--dev-test` | Short replay (50 msgs) with LLM response caching and pre-seeded tasks. First run requires `--run-live` to build cache; subsequent runs use cache. Disables Phoenix tracing and conv router LLM matching. Mutually exclusive with `--max-messages`. |
+| `--agents AO,AL` | Comma-separated agents to run: AO (orders), AL (linkage). Default: AO,AL. Use `--agents AO` to skip linkage. |
+| `--max-messages N` | Process only the first N messages. Mutually exclusive with `--dev-test`. |
+| `--run-note "..."` | Note to attach to the run record |
+| `--phoenix-endpoint URL` | Phoenix OTEL endpoint(s). Repeat for dual-write. Default: remote droplet. |
 
 Live replay outputs:
 - `replay_result.json` — full state snapshot + run statistics
@@ -182,3 +206,14 @@ PYTHONPATH=. pytest tests/integration_tests/test_dry_replay.py -v
 - **Messages:** 904 (13 with images on disk, 289 media-omitted)
 - **Complexity:** Multiple items across multiple suppliers, GEM portal links,
   staff coordination, payment tracking
+
+### R12-L3-01: Internal staff conversation routing
+
+- **Window:** Multi-group conversation routing test
+- **Threads:** Multiple (EST division + SATA + supplier groups)
+- **Messages:** 306
+- **Complexity:** Conversation-level routing in shared internal groups,
+  sender-scrap batching via MessageBuffer, ConversationRouter for shared groups
+- **Note:** Originally had a standalone `run_r12_test.py` runner (now archived
+  to `scripts/archive/`). Fully integrated into `test_live_replay.py`
+  auto-discovery.
