@@ -19,7 +19,7 @@
   },
 
   "test_window": {
-    "warmup_end_ts": 1772815380,
+    "warmup_end_ts": 1772694780,
     "warmup_end_readable": "2026-03-05 12:43",
     "test_end_ts": 1772830800,
     "test_end_readable": "2026-03-05 17:00",

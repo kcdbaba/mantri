@@ -274,7 +274,7 @@ class MessageBuffer:
             event_id: str | None = None,
             now: int | None = None) -> list[SenderScrap]:
         """Add a message. Returns list of scraps flushed by this addition."""
-        sender = message.get("sender", "unknown")
+        sender = message.get("sender_jid") or message.get("sender") or "unknown"
         ts = now or message.get("timestamp") or int(time.time())
         key = (entity_id, sender)
         flushed = []
@@ -325,7 +325,12 @@ def _process_scrap(scrap: SenderScrap, r):
         scrap.entity_id, entity_tasks, scrap.messages[-1], r,
     )
     if task_id:
+        # Single-task or nil-task — batch process
         process_message_batch(task_id, scrap.messages, r)
+    elif entity_tasks:
+        # Multi-task — fall back to per-message processing with agent assignment
+        for msg in scrap.messages:
+            process_message(msg, r)
     else:
         log.warning("Could not resolve task for scrap: entity=%s sender=%s (%d msgs)",
                     scrap.entity_id, scrap.sender, len(scrap.messages))

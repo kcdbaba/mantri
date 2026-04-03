@@ -119,9 +119,13 @@ def run_instrumented_replay(
             pass
 
     # Split messages into warmup and test phases
+    # Warmup always runs (builds conv router state). For dev-test, the
+    # 50-message limit applies to test messages only — warmup is free
+    # after first run (LLM calls cached).
     if warmup_end_ts:
-        warmup_msgs = [m for m in messages_to_process if m.get("timestamp", 0) < warmup_end_ts]
-        test_msgs = [m for m in messages_to_process if m.get("timestamp", 0) >= warmup_end_ts]
+        warmup_msgs = [m for m in trace_messages if m.get("timestamp", 0) < warmup_end_ts]
+        test_pool = [m for m in trace_messages if m.get("timestamp", 0) >= warmup_end_ts]
+        test_msgs = test_pool[:max_messages] if max_messages else test_pool
     else:
         warmup_msgs = []
         test_msgs = messages_to_process
@@ -313,28 +317,20 @@ def run_instrumented_replay(
                 # Drain any remaining linkage events from warmup
                 _drain_linkage()
 
-            # Phase 2: Test — process with per-scrap tracing
+            # Phase 2: Test — process with linkage drain after each scrap
             log.info("Test: %d messages", len(test_msgs))
             _write_progress("processing", f"0/{len(test_msgs)} messages")
 
-            _scrap_seq = [0]
+            _msg_count = [0]
 
             def _on_scrap_processed(scrap):
-                """Trace each processed scrap as a message span."""
-                with tracer.trace_message(scrap.messages[-1], seq=_scrap_seq[0]) as mt:
-                    _mt[0] = mt
-                    mt.record_routing(
-                        [(scrap.entity_id, 0.9)],
-                        layer="scrap",
-                    )
                 _drain_linkage(scrap)
-                _scrap_seq[0] += 1
-                stats["update_agent_calls"] += 1
 
             def _on_message_routed(msg, routes):
-                n = stats["messages_routed"] + stats["messages_noise"] + stats["messages_unrouted"]
-                if n % 25 == 0:
-                    _write_progress("processing", f"{n}/{len(test_msgs)} messages")
+                _msg_count[0] += 1
+                if _msg_count[0] % 25 == 0:
+                    _write_progress("processing",
+                                    f"{_msg_count[0]}/{len(test_msgs)} messages")
 
             replay_stats = replay_messages(
                 test_msgs, mock_redis, conv_router=conv_router,
@@ -342,10 +338,11 @@ def run_instrumented_replay(
                 on_message_routed=_on_message_routed,
             )
 
-            # Merge replay_messages stats into our stats
+            # Merge replay_messages stats
             stats["messages_routed"] = replay_stats["messages_routed"]
             stats["messages_unrouted"] = replay_stats["messages_unrouted"]
             stats["messages_noise"] = replay_stats["messages_noise"]
+            stats["update_agent_calls"] = replay_stats["update_agent_calls"]
             stats["errors"].extend(replay_stats["errors"])
 
             # Drain final linkage events
