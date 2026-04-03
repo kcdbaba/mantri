@@ -38,6 +38,7 @@ def run_instrumented_replay(
     auth_headers: dict | None = None,
     no_conv_llm: bool = False,
     dev_test: bool = False,
+    allow_api_calls: bool = True,
 ) -> dict:
     """
     Run the full pipeline with Phoenix trace capture.
@@ -212,6 +213,12 @@ def run_instrumented_replay(
                         latency_ms=0, parse_success=True, is_retry=False,
                     )
                     return resp
+
+            if not allow_api_calls:
+                raise RuntimeError(
+                    f"LLM cache miss for task={task_id} msg={message_id}. "
+                    f"Use --run-live to allow API calls and build cache."
+                )
 
             t0 = time.time()
             resp = _orig_call(system_prompt, user_section,

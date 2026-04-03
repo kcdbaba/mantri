@@ -611,7 +611,8 @@ def _run_traced_replay(case_dir: Path, trace_data: list[dict], seed: dict,
                        run_note: str = "",
                        phoenix_endpoints: list[str] | None = None,
                        auth_headers: dict | None = None,
-                       dev_test: bool = False) -> dict:
+                       dev_test: bool = False,
+                       allow_api_calls: bool = True) -> dict:
     """
     Run replay using the instrumented entity-first pipeline with Phoenix tracing.
     Returns result dict in the same format as run_live_replay().
@@ -653,6 +654,7 @@ def _run_traced_replay(case_dir: Path, trace_data: list[dict], seed: dict,
         auth_headers=auth_headers,
         no_conv_llm=dev_test,  # dev-test skips conv router LLM matching
         dev_test=dev_test,
+        allow_api_calls=allow_api_calls,
     )
 
     snapshot = _snapshot_state(db_path)

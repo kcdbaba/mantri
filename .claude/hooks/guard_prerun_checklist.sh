@@ -7,9 +7,15 @@
 set -euo pipefail
 
 CMD=$(jq -r '.tool_input.command // ""')
+FIRST_LINE=$(echo "$CMD" | head -1)
 
-# Only gate test commands
-if ! echo "$CMD" | grep -qE '(pytest|run_incremental|run_unit_test|test_live_replay|test_dry_replay)'; then
+# Only gate actual test runner invocations (not git add/commit mentioning test files)
+GATE=false
+echo "$FIRST_LINE" | grep -qw 'pytest' && GATE=true
+echo "$FIRST_LINE" | grep -q 'run_incremental' && GATE=true
+echo "$FIRST_LINE" | grep -q 'run_unit_test' && GATE=true
+
+if [ "$GATE" = false ]; then
     exit 0
 fi
 
