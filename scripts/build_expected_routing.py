@@ -73,9 +73,14 @@ def build_expected_routing(trace_path: Path, seed_path: Path) -> list[dict]:
     # Patch config and DB to use temp DB + seed group mapping
     monitored = seed.get("monitored_groups", {})
 
+    config_overrides = seed.get("config_overrides", {})
+    enable_conv = config_overrides.get("ENABLE_CONVERSATION_ROUTING", False)
+
     with patch("src.store.db.DB_PATH", tmp.name), \
          patch("src.config.DB_PATH", tmp.name), \
-         patch("src.router.router.MONITORED_GROUPS", monitored):
+         patch("src.router.router.MONITORED_GROUPS", monitored), \
+         patch("src.config.ENABLE_CONVERSATION_ROUTING", enable_conv), \
+         patch("src.router.router.ENABLE_CONVERSATION_ROUTING", enable_conv):
 
         from src.router.router import route
 
