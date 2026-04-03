@@ -84,11 +84,10 @@ def run_instrumented_replay(
         "errors": [],
     }
 
-    # Dev test cache setup
-    if dev_test:
-        from src.tracing import agent_cache
-        cache_path = str(case_dir / "dev_cache.db")
-        agent_cache.init(cache_path)
+    # LLM response cache — always active, saves money on re-runs
+    from src.tracing import agent_cache
+    cache_path = str(case_dir / "dev_cache.db")
+    agent_cache.init(cache_path)
 
     # Conversation routing setup
     conv_router = None
@@ -198,28 +197,26 @@ def run_instrumented_replay(
             mt = _mt[0]
             model = kwargs.get("model", "unknown")
 
-            # Dev test cache: check before LLM call
-            if dev_test:
-                from src.agent.update_agent import LLMResponse
-                cache_key = agent_cache.make_key(system_prompt, user_section)
-                cached = agent_cache.get(cache_key)
-                if cached:
-                    resp = LLMResponse(
-                        raw=cached["raw"],
-                        tokens_in=cached["tokens_in"],
-                        tokens_out=cached["tokens_out"],
-                        cache_creation_tokens=cached.get("cache_creation_tokens", 0),
-                        cache_read_tokens=cached.get("cache_read_tokens", 0),
-                    )
-                    mt.record_llm_call(
-                        call_type="update_agent", task_id=task_id,
-                        system_prompt="(cached)", user_section="(cached)",
-                        raw_output=resp.raw, parsed_output=None,
-                        model=f"{model} (cached)", model_selection_reason="cache_hit",
-                        tokens_in=0, tokens_out=0, cache_creation=0, cache_read=0,
-                        latency_ms=0, parse_success=True, is_retry=False,
-                    )
-                    return resp
+            # Cache check before LLM call
+            cache_key = agent_cache.make_key(system_prompt, user_section)
+            cached = agent_cache.get(cache_key)
+            if cached:
+                resp = LLMResponse(
+                    raw=cached["raw"],
+                    tokens_in=cached["tokens_in"],
+                    tokens_out=cached["tokens_out"],
+                    cache_creation_tokens=cached.get("cache_creation_tokens", 0),
+                    cache_read_tokens=cached.get("cache_read_tokens", 0),
+                )
+                mt.record_llm_call(
+                    call_type="update_agent", task_id=task_id,
+                    system_prompt="(cached)", user_section="(cached)",
+                    raw_output=resp.raw, parsed_output=None,
+                    model=f"{model} (cached)", model_selection_reason="cache_hit",
+                    tokens_in=0, tokens_out=0, cache_creation=0, cache_read=0,
+                    latency_ms=0, parse_success=True, is_retry=False,
+                )
+                return resp
 
             if not allow_api_calls:
                 raise RuntimeError(
@@ -232,7 +229,7 @@ def run_instrumented_replay(
                               message_id, task_id, **kwargs)
             latency_ms = int((time.time() - t0) * 1000)
 
-            if dev_test and resp:
+            if resp:
                 agent_cache.put(
                     cache_key, resp.raw, resp.tokens_in, resp.tokens_out,
                     resp.cache_creation_tokens, resp.cache_read_tokens,
@@ -258,19 +255,18 @@ def run_instrumented_replay(
 
         def _cached_anthropic(system_prompt, user_section,
                               message_id, task_id, **kwargs):
-            if dev_test:
-                cache_key = agent_cache.make_key(system_prompt, user_section)
-                cached = agent_cache.get(cache_key)
-                if cached:
-                    return LLMResponse(
-                        raw=cached["raw"], tokens_in=cached["tokens_in"],
-                        tokens_out=cached["tokens_out"],
-                        cache_creation_tokens=cached.get("cache_creation_tokens", 0),
-                        cache_read_tokens=cached.get("cache_read_tokens", 0),
-                    )
+            cache_key = agent_cache.make_key(system_prompt, user_section)
+            cached = agent_cache.get(cache_key)
+            if cached:
+                return LLMResponse(
+                    raw=cached["raw"], tokens_in=cached["tokens_in"],
+                    tokens_out=cached["tokens_out"],
+                    cache_creation_tokens=cached.get("cache_creation_tokens", 0),
+                    cache_read_tokens=cached.get("cache_read_tokens", 0),
+                )
             resp = _orig_anthropic(system_prompt, user_section,
                                    message_id, task_id, **kwargs)
-            if dev_test and resp:
+            if resp:
                 agent_cache.put(
                     cache_key, resp.raw, resp.tokens_in, resp.tokens_out,
                     resp.cache_creation_tokens, resp.cache_read_tokens,
@@ -279,19 +275,18 @@ def run_instrumented_replay(
 
         def _cached_gemini(system_prompt, user_section,
                            message_id, task_id, **kwargs):
-            if dev_test:
-                cache_key = agent_cache.make_key(system_prompt, user_section)
-                cached = agent_cache.get(cache_key)
-                if cached:
-                    return LLMResponse(
-                        raw=cached["raw"], tokens_in=cached["tokens_in"],
-                        tokens_out=cached["tokens_out"],
-                        cache_creation_tokens=cached.get("cache_creation_tokens", 0),
-                        cache_read_tokens=cached.get("cache_read_tokens", 0),
-                    )
+            cache_key = agent_cache.make_key(system_prompt, user_section)
+            cached = agent_cache.get(cache_key)
+            if cached:
+                return LLMResponse(
+                    raw=cached["raw"], tokens_in=cached["tokens_in"],
+                    tokens_out=cached["tokens_out"],
+                    cache_creation_tokens=cached.get("cache_creation_tokens", 0),
+                    cache_read_tokens=cached.get("cache_read_tokens", 0),
+                )
             resp = _orig_gemini(system_prompt, user_section,
                                 message_id, task_id, **kwargs)
-            if dev_test and resp:
+            if resp:
                 agent_cache.put(
                     cache_key, resp.raw, resp.tokens_in, resp.tokens_out,
                     resp.cache_creation_tokens, resp.cache_read_tokens,
@@ -412,10 +407,9 @@ def run_instrumented_replay(
             # Drain final linkage events
             _drain_linkage()
 
-    # Save dev cache
-    if dev_test:
-        agent_cache.close()
-        stats["dev_cache"] = agent_cache.stats()
+    # Close cache and record stats
+    stats["cache"] = agent_cache.stats()
+    agent_cache.close()
 
     _write_progress("complete", f"done in {time.time()-t_start:.0f}s")
     tracer.stop(stats=stats)
