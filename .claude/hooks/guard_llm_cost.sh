@@ -17,6 +17,8 @@ if [ "$BLOCK" = true ]; then
         exit 0
     fi
 
-    echo '{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"ask","permissionDecisionReason":"LLM-costing command: this will spend real money on API calls."}}'
+    cat <<'EOF'
+{"systemMessage":"\n╔══════════════════════════════════════════════════════╗\n║  💰💰💰  REAL MONEY — LLM API CALLS  💰💰💰        ║\n╠══════════════════════════════════════════════════════╣\n║  This command will make paid API calls.              ║\n║  Approve ONLY if you explicitly requested this run.  ║\n╚══════════════════════════════════════════════════════╝","hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"ask","permissionDecisionReason":"💰 PAID API CALLS — approve only if explicitly requested"}}
+EOF
     exit 0
 fi
