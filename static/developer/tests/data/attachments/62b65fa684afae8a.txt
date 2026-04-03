@@ -1,2 +1,0 @@
-Schema initialised at /private/var/folders/v3/v0hgbtcx7p18k_9f151zg0dm0000gn/T/pytest-of-kunalc/pytest-19/test_seed_optional_node_skippe0/test.db
-Seeded task t1 with 1 nodes and 0 aliases

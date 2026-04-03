@@ -1,4 +1,0 @@
-ERROR    src.agent.update_agent:update_agent.py:250 Agent output validation failed for task=t1 message=m1: 1 validation error for AgentOutput
-task_outputs
-  Field required [type=missing, input_value={'foo': 'bar'}, input_type=dict]
-    For further information visit https://errors.pydantic.dev/2.12/v/missing

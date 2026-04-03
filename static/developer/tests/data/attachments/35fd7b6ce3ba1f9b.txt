@@ -1,2 +1,0 @@
-ERROR    src.router.worker:worker.py:158 Update agent failed for task=task_8e2d1553 message=m4
-CRITICAL src.router.worker:worker.py:605 DEAD LETTER: update_agent failed for task=task_8e2d1553 message=m4 reason=update_agent returned None (API failure or parse error after retry)

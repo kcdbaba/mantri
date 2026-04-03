@@ -1,1 +1,0 @@
-WARNING  src.router.worker:worker.py:552 Failed to publish task_event for task=t1: connection refused

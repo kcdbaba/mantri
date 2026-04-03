@@ -1,1 +1,0 @@
-WARNING  src.router.worker:worker.py:535 BLOCKED node=dispatched task=task_client_01 — ambiguity: Dispatch is stated as happening today ('dispatch kar rahe hain aaj') but order_confirmation node has not been completed — no explicit client confirmation of the quotation/order has been recorded in the message history.

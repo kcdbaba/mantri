@@ -1,1 +1,0 @@
-WARNING  src.router.worker:worker.py:535 BLOCKED node=dispatched task=task_client_01 — ambiguity: Dispatch announced ('dispatch kar rahe hain aaj') but order_confirmation node is still pending — no explicit client confirmation of the quotation has been recorded before dispatch is being initiated.
