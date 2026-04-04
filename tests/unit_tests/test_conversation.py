@@ -405,3 +405,55 @@ class TestPaymentDetection:
 
         assert not is_payment_message("20 jak order confirmed")
         assert not is_payment_message("delivery tomorrow")
+
+
+# ── Test: ConversationRouter buffer lifecycle ─────────────────────────
+
+class TestConversationRouterBuffers:
+    """Verify feed/flush behavior around group buffering and flush boundaries."""
+
+    def test_feed_flushes_previous_buffer_on_gap(self):
+        from src.conversation.conversation_router import ConversationRouter
+
+        router = ConversationRouter(flush_gap_s=10)
+        msg1 = {"group_id": "grp1", "timestamp": 1000, "body": "first"}
+        msg2 = {"group_id": "grp1", "timestamp": 1015, "body": "second"}
+
+        sentinel_result = object()
+        with patch.object(router, "_flush_buffer", return_value=sentinel_result) as mock_flush:
+            assert router.feed(msg1) is None
+            result = router.feed(msg2)
+
+        assert result is sentinel_result
+        mock_flush.assert_called_once()
+        assert len(router._buffers["grp1"].messages) == 1
+        assert router._buffers["grp1"].messages[0]["body"] == "second"
+
+    def test_flush_stale_flushes_only_idle_groups(self):
+        from src.conversation.conversation_router import ConversationRouter
+
+        router = ConversationRouter(flush_gap_s=10)
+        router.feed({"group_id": "stale", "timestamp": 1000, "body": "a"})
+        router.feed({"group_id": "active", "timestamp": 1015, "body": "b"})
+
+        with patch.object(router, "_flush_buffer", side_effect=["stale_result"]) as mock_flush:
+            results = router.flush_stale(now=1012)
+
+        assert results == ["stale_result"]
+        mock_flush.assert_called_once()
+        assert "stale" not in router._buffers
+        assert "active" in router._buffers
+
+    def test_flush_all_flushes_all_non_empty_buffers(self):
+        from src.conversation.conversation_router import ConversationRouter
+
+        router = ConversationRouter(flush_gap_s=10)
+        router.feed({"group_id": "g1", "timestamp": 1000, "body": "a"})
+        router.feed({"group_id": "g2", "timestamp": 1001, "body": "b"})
+
+        with patch.object(router, "_flush_buffer", side_effect=["r1", "r2"]) as mock_flush:
+            results = router.flush_all()
+
+        assert results == ["r1", "r2"]
+        assert mock_flush.call_count == 2
+        assert router._buffers == {}

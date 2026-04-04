@@ -258,6 +258,35 @@ class TestProcessMessage:
         mock_stock.assert_called_once_with("t1")
         mock_cascade.assert_called_once_with("t1")
 
+    def test_conv_pending_routes_to_conversation_router(self):
+        from src.router.worker import process_message
+
+        msg = {"body": "group chatter", "message_id": "m9", "group_id": "g1"}
+        mock_r = MagicMock()
+        conv_router = MagicMock()
+        conv_router.feed.return_value = None
+
+        with patch("src.router.worker.route", return_value=[("__conv_pending__", 0.0)]), \
+             patch("src.router.worker.run_update_agent") as mock_agent:
+            process_message(msg, mock_r, conv_router=conv_router)
+
+        conv_router.feed.assert_called_once_with(msg)
+        mock_agent.assert_not_called()
+
+    def test_conv_pending_with_result_processes_conversation(self):
+        from src.router.worker import process_message
+
+        msg = {"body": "follow-up", "message_id": "m10", "group_id": "g1"}
+        mock_r = MagicMock()
+        conv_router = MagicMock()
+        conv_router.feed.return_value = object()
+
+        with patch("src.router.worker.route", return_value=[("__conv_pending__", 0.0)]), \
+             patch("src.router.worker._process_conversation_result") as mock_proc:
+            process_message(msg, mock_r, conv_router=conv_router)
+
+        mock_proc.assert_called_once_with(conv_router.feed.return_value, mock_r, conv_router)
+
     def test_node_data_extractions_applied(self):
         from src.agent.update_agent import NodeDataExtraction
         from src.router.worker import process_message
@@ -819,9 +848,11 @@ class TestProcessMessageBatch:
              patch("src.router.worker.get_task", return_value={"id": "t1", "order_type": "standard_procurement"}), \
              patch("src.router.worker.append_message"), \
              patch("src.router.worker.run_update_agent", return_value=None), \
-             patch("src.router.worker._log_dead_letter") as mock_dl:
+             patch("src.router.worker._log_dead_letter") as mock_dl, \
+             patch("src.router.worker._publish_task_event") as mock_publish:
             process_message_batch("t1", msgs, mock_r)
         mock_dl.assert_called_once()
+        mock_publish.assert_called_once_with("t1", msgs[-1], mock_r)
 
     def test_batch_handles_ambiguity_flags(self):
         msgs = [{"body": "test", "message_id": "m1"}]

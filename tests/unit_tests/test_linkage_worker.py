@@ -184,6 +184,36 @@ class TestProcessEventSkips:
                 process_event("evt-1", fields, mock_r)
 
 
+@allure.feature("Linkage Worker")
+@allure.story("Retry Wrapper")
+class TestProcessWithRetry:
+
+    def test_exhaustion_writes_dead_letter_and_acks(self):
+        from src.linkage.linkage_worker import (
+            CONSUMER_GROUP,
+            TASK_EVENTS_STREAM,
+            _process_with_retry,
+        )
+
+        mock_r = MagicMock()
+        fields = {"event_type": "message_processed", "message_json": json.dumps(_make_message())}
+
+        with patch("src.linkage.linkage_worker.process_event", side_effect=RuntimeError("boom")), \
+             patch("src.linkage.linkage_worker._write_dead_letter") as mock_dead, \
+             patch("src.linkage.linkage_worker.time.sleep") as mock_sleep:
+            _process_with_retry("evt-1", fields, mock_r)
+
+        # linear backoff between attempts: 1s then 2s
+        assert mock_sleep.call_count == 2
+        mock_dead.assert_called_once()
+        dead_args = mock_dead.call_args[0]
+        assert dead_args[0] == "evt-1"
+        assert dead_args[1] == fields
+        assert dead_args[3] == 3
+
+        mock_r.xack.assert_called_once_with(TASK_EVENTS_STREAM, CONSUMER_GROUP, "evt-1")
+
+
 # ---------------------------------------------------------------------------
 # process_event — linkage updates, pruning, reconciliation
 # ---------------------------------------------------------------------------
