@@ -42,3 +42,6 @@ tests/integration_tests/*/replay_result_short.json
 tests/integration_tests/*/replay_result_short.db
 tests/integration_tests/*/pipeline_score_short.json
 .coverage
+
+slop.*
+tests/runs/unit/*.json
