@@ -37,7 +37,7 @@ class LinkageUpdate(BaseModel):
     client_order_id: str
     client_item_description: str
     supplier_order_id: str | None = None   # None when no supplier task exists yet (e.g. new quote)
-    supplier_item_description: str
+    supplier_item_description: str | None = None  # None when no supplier order exists yet
     quantity_allocated: float | None = None
     match_confidence: float
     match_reasoning: str

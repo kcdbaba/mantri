@@ -502,8 +502,10 @@ def _compute_pipeline_score(stats: dict, state: dict, skip_linkage: bool) -> dic
             - n_ua_errors * 5       # other update_agent errors: light penalty
         ))
 
-    # Routing (0-100): % of messages routed
-    routing = int(100 * routed / total_msgs) if total_msgs else 0
+    # Routing (0-100): % of non-noise messages routed (noise is correctly unrouted)
+    noise = stats.get("messages_noise", 0)
+    actionable = total_msgs - noise
+    routing = int(100 * routed / actionable) if actionable else 0
 
     # Extraction (0-100): items per 100 routed messages (expect ~5-20 items per 100 msgs)
     if routed == 0:
