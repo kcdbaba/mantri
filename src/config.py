@@ -168,6 +168,7 @@ GEMINI_MODEL = "gemini-2.5-flash"
 CANONICAL_MODELS = {CLAUDE_MODEL, CLAUDE_MODEL_FAST, GEMINI_MODEL}
 MAX_CONTEXT_MESSAGES = 20          # last N messages per task passed to update agent
 AGENT_MAX_TOKENS = 2048
+LINKAGE_MAX_TOKENS = 8192        # linkage responses are verbose; 2048 truncates
 
 # ---------------------------------------------------------------------------
 # Alert engine

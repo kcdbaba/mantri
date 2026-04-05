@@ -310,6 +310,7 @@ def _call_anthropic_with_retry(system_prompt: str, user_section: str,
                                image_bytes: bytes | None = None,
                                image_media_type: str = "",
                                model: str = CLAUDE_MODEL,
+                               max_tokens: int = AGENT_MAX_TOKENS,
                                max_retries: int = 3) -> LLMResponse | None:
     content = _build_user_content(user_section, image_bytes, image_media_type)
     system_with_cache = [
@@ -320,7 +321,7 @@ def _call_anthropic_with_retry(system_prompt: str, user_section: str,
         try:
             response = _anthropic_client.messages.create(
                 model=model,
-                max_tokens=AGENT_MAX_TOKENS,
+                max_tokens=max_tokens,
                 system=system_with_cache,
                 messages=[{"role": "user", "content": content}],
             )
@@ -347,12 +348,13 @@ def _call_gemini_with_retry(system_prompt: str, user_section: str,
                             image_bytes: bytes | None = None,
                             image_media_type: str = "",
                             model: str = GEMINI_MODEL,
+                            max_tokens: int = AGENT_MAX_TOKENS,
                             max_retries: int = 3) -> LLMResponse | None:
     from google.genai import types, errors as _genai_errors
     client = _get_gemini_client()
     config = types.GenerateContentConfig(
         system_instruction=system_prompt,
-        max_output_tokens=AGENT_MAX_TOKENS * 4,
+        max_output_tokens=max_tokens * 4,
         temperature=0.0,
         response_mime_type="application/json",
     )

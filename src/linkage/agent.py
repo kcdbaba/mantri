@@ -19,7 +19,7 @@ from typing import Literal
 import anthropic
 from pydantic import BaseModel, ValidationError
 
-from src.config import CLAUDE_MODEL, AGENT_MAX_TOKENS, AGENT_ERROR_LOG_PATH
+from src.config import CLAUDE_MODEL, LINKAGE_MAX_TOKENS, AGENT_ERROR_LOG_PATH
 from src.agent.update_agent import (
     LLMResponse, _is_gemini_model,
     _call_anthropic_with_retry, _call_gemini_with_retry,
@@ -85,12 +85,12 @@ def run_linkage_agent(
     if _is_gemini_model(model):
         resp = _call_gemini_with_retry(
             system_prompt, user_section, message_id, "linkage",
-            model=model,
+            model=model, max_tokens=LINKAGE_MAX_TOKENS,
         )
     else:
         resp = _call_anthropic_with_retry(
             system_prompt, user_section, message_id, "linkage",
-            model=model,
+            model=model, max_tokens=LINKAGE_MAX_TOKENS,
         )
     duration_ms = int((time.time() - t0) * 1000)
 
