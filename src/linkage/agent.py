@@ -40,7 +40,7 @@ class LinkageUpdate(BaseModel):
     supplier_item_description: str | None = None  # None when no supplier order exists yet
     quantity_allocated: float | None = None
     match_confidence: float
-    match_reasoning: str
+    match_reasoning: str | None = None  # None when status="failed" and no reasoning applies
     status: Literal["confirmed", "candidate", "failed", "fulfilled", "completed", "invalidated"]
 
 
@@ -49,7 +49,7 @@ class ClientOrderUpdate(BaseModel):
     node_id: str
     new_status: Literal["pending", "active", "completed", "partial", "blocked"]
     confidence: float
-    evidence: str
+    evidence: str | None = None  # None when update is deterministic / evidence is implicit
 
 
 class LinkageAmbiguityFlag(BaseModel):
