@@ -45,11 +45,18 @@ def _alert_already_fired(task_id: str, node_id: str, alert_key: str) -> bool:
     return row is not None
 
 
-def _record_alert_fired(task_id: str, node_id: str, alert_key: str):
+def _record_alert_fired(task_id: str, node_id: str, alert_key: str,
+                        alert_type: str, category: str | None = None,
+                        description: str | None = None,
+                        escalation_target: str | None = None):
     with transaction() as conn:
         conn.execute(
-            "INSERT OR IGNORE INTO task_alerts_fired (id, task_id, node_id, alert_key, fired_at) VALUES (?,?,?,?,?)",
-            (str(uuid.uuid4()), task_id, node_id, alert_key, int(time.time()))
+            """INSERT OR IGNORE INTO task_alerts_fired
+               (id, task_id, node_id, alert_key, alert_type, category,
+                description, escalation_target, fired_at)
+               VALUES (?,?,?,?,?,?,?,?,?)""",
+            (str(uuid.uuid4()), task_id, node_id, alert_key, alert_type,
+             category, description, escalation_target, int(time.time()))
         )
 
 
@@ -120,7 +127,12 @@ def check_time_trigger_alerts():
                 if _alert_already_fired(task["id"], node["id"], alert_key):
                     continue
                 _fire_alert(task, node, alert_key)
-                _record_alert_fired(task["id"], node["id"], alert_key)
+                _record_alert_fired(
+                    task["id"], node["id"], alert_key,
+                    alert_type="time_trigger",
+                    category="timing",
+                    description=f"{node['name']} — {alert_key}",
+                )
                 fired += 1
 
     if fired:

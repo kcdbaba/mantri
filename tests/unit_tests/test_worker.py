@@ -145,6 +145,7 @@ def _make_node_update(node_id="order_confirmation", status="completed", confiden
 def _run_process_message(message, task, agent_output):
     from src.router.worker import process_message
     mock_r = MagicMock()
+    conv_router = MagicMock()
     entity_tasks = [{"task_id": "t1", "order_type": task.get("order_type", "standard_procurement"),
                      "items": [], "is_mature": False}]
     with patch("src.router.worker.route", return_value=[("entity_test", 0.9)]), \
@@ -159,7 +160,7 @@ def _run_process_message(message, task, agent_output):
          patch("src.router.worker._handle_ambiguity") as mock_ambiguity, \
          patch("src.router.worker.check_stock_path_order_ready", return_value=None), \
          patch("src.router.worker.cascade_auto_triggers", return_value=[]):
-        process_message(message, mock_r)
+        process_message(message, mock_r, conv_router)
     return mock_update_node, mock_ambiguity, mock_r
 
 
@@ -201,7 +202,7 @@ class TestProcessMessage:
              patch("src.router.worker.get_task", return_value=task), \
              patch("src.router.worker.append_message"), \
              patch("src.router.worker.run_update_agent", return_value=None):
-            process_message(msg, mock_r)  # should not raise
+            process_message(msg, mock_r, MagicMock())  # should not raise
 
     def test_no_routes_does_not_call_agent(self):
         msg = {"body": "hi", "message_id": "m5"}
@@ -209,7 +210,7 @@ class TestProcessMessage:
         mock_r = MagicMock()
         with patch("src.router.worker.route", return_value=[]), \
              patch("src.router.worker.run_update_agent") as mock_agent:
-            process_message(msg, mock_r)
+            process_message(msg, mock_r, MagicMock())
         mock_agent.assert_not_called()
 
     def test_task_event_published_to_redis(self):
@@ -254,7 +255,7 @@ class TestProcessMessage:
              patch("src.router.worker.check_stock_path_order_ready", return_value="completed") as mock_stock, \
              patch("src.router.worker.cascade_auto_triggers", return_value=["predispatch_checklist"]) as mock_cascade, \
              patch("src.router.worker._handle_ambiguity"):
-            process_message(msg, mock_r)
+            process_message(msg, mock_r, MagicMock())
         mock_stock.assert_called_once_with("t1")
         mock_cascade.assert_called_once_with("t1")
 
@@ -305,7 +306,7 @@ class TestProcessMessage:
              patch("src.router.worker.cascade_auto_triggers", return_value=[]), \
              patch("src.router.worker.apply_node_data_extractions") as mock_nd, \
              patch("src.router.worker._handle_ambiguity"):
-            process_message(msg, mock_r)
+            process_message(msg, mock_r, MagicMock())
         mock_nd.assert_called_once()
 
     def test_item_extractions_applied_and_checked(self):
@@ -327,7 +328,7 @@ class TestProcessMessage:
              patch("src.router.worker.apply_item_extractions") as mock_items, \
              patch("src.router.worker._check_post_confirmation_item_changes") as mock_check, \
              patch("src.router.worker._handle_ambiguity"):
-            process_message(msg, mock_r)
+            process_message(msg, mock_r, MagicMock())
         mock_items.assert_called_once()
         mock_check.assert_called_once()
 
@@ -350,7 +351,7 @@ class TestProcessMessage:
              patch("src.router.worker.cascade_auto_triggers", return_value=[]), \
              patch("src.router.worker._log_new_task_candidate") as mock_log, \
              patch("src.router.worker._handle_ambiguity"):
-            process_message(msg, mock_r)
+            process_message(msg, mock_r, MagicMock())
         mock_log.assert_called_once()
 
 
@@ -566,7 +567,7 @@ class TestDeadLetterLogging:
              patch("src.router.worker.append_message"), \
              patch("src.router.worker.run_update_agent", return_value=None), \
              patch("src.router.worker._log_dead_letter") as mock_dl:
-            process_message(msg, mock_r)
+            process_message(msg, mock_r, MagicMock())
         mock_dl.assert_called_once_with("t1", msg)
 
 
@@ -783,14 +784,14 @@ class TestRouterStreamProcessing:
         from src.router.worker import _process_with_retry
         mock_r = MagicMock()
         with patch("src.router.worker._write_ingest_dead_letter") as mock_dl:
-            _process_with_retry("evt-1", {"message_json": "not{json"}, mock_r)
+            _process_with_retry("evt-1", {"message_json": "not{json"}, mock_r, MagicMock())
         mock_dl.assert_called_once()
         mock_r.xack.assert_called_once()
 
     def test_missing_message_json_acks_silently(self):
         from src.router.worker import _process_with_retry
         mock_r = MagicMock()
-        _process_with_retry("evt-1", {}, mock_r)
+        _process_with_retry("evt-1", {}, mock_r, MagicMock())
         mock_r.xack.assert_called_once()
 
     def test_successful_processing_acks(self):
@@ -799,7 +800,7 @@ class TestRouterStreamProcessing:
         msg = {"body": "test", "message_id": "m1"}
         fields = {"message_json": json.dumps(msg)}
         with patch("src.router.worker.process_message"):
-            _process_with_retry("evt-1", fields, mock_r)
+            _process_with_retry("evt-1", fields, mock_r, MagicMock())
         mock_r.xack.assert_called_once()
 
 

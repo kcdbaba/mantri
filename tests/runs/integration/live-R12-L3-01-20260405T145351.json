@@ -1,0 +1,2071 @@
+{
+  "run_at": "2026-04-05T14:53:51.018562",
+  "test_type": "live",
+  "case_id": "R12-L3-01",
+  "messages_total": 1255,
+  "messages_routed": 866,
+  "messages_unrouted": 389,
+  "messages_noise": 0,
+  "update_agent_calls": 398,
+  "update_agent_failures": 0,
+  "linkage_events_processed": 0,
+  "linkage_agent_failures": 0,
+  "error_count": 398,
+  "errors": [
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0005",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0001",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_LG_supplier_0004",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Voltas_supplier_0004",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Voltas_supplier_0005",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0005",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0005",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0006",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0006",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_LG_supplier_0005",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0010",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_LG_supplier_0006",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_LG_supplier_0007",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0008",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0014",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0016",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0006",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0028",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_LG_supplier_0008",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0009",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0017",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0025",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0034",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0013",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0027",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0038",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0039",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0044",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0049",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0014",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0020",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0024",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0053",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0029",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0030",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0057",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0032",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0058",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0034",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0040",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0046",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0048",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0050",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0052",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0054",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0029",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0030",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0034",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0059",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0061",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0037",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0063",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0066",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0039",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0067",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0040",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0043",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0070",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0073",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0056",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0075",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Voltas_supplier_0010",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0058",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0076",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0063",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Voltas_supplier_0012",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0082",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0051",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0083",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0055",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0061",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0068",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0071",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0072",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0086",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0090",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0074",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0070",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0081",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0085",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0082",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0094",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0086",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0086",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Voltas_supplier_0016",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Voltas_supplier_0017",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0087",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0089",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0092",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0094",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_LG_supplier_0013",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0089",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_LG_supplier_0014",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0097",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0095",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0099",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0098",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0101",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0095",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0104",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0106",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Voltas_supplier_0018",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0109",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0099",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0100",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0101",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0102",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0104",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0112",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0114",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0114",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0120",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0130",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0131",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0132",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0107",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0108",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0142",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0109",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0148",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0155",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0161",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0116",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0113",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0162",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0164",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0117",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0121",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0122",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0125",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0126",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0129",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0166",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0167",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0136",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0168",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0175",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0141",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0130",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0178",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0143",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0133",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0134",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0145",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Voltas_supplier_0021",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0137",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0182",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0139",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Voltas_supplier_0023",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0188",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0192",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0148",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Voltas_supplier_0024",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0149",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0143",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0152",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0153",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0154",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0145",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0146",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0155",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0156",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0170",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0175",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0200",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0177",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0203",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0205",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0207",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0209",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0149",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0151",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0154",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0217",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0218",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0220",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0181",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0221",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0228",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0231",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0232",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0237",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0238",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0161",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0167",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0170",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0174",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0239",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0242",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0249",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0255",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0182",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0256",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0257",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0175",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0176",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0177",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0259",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0183",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0260",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0186",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0178",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0180",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0265",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0269",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0276",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0187",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0190",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0183",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0189",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0279",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0191",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0192",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0193",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0194",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0198",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0201",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0193",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0195",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0202",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0196",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0281",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0284",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0285",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0286",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0288",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0207",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0292",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0293",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0198",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0297",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0298",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0209",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0211",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0302",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0303",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0305",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0314",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0319",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0321",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0214",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0221",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0228",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0323",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0324",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0326",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0327",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0331",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0231",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0233",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0238",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0337",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0241",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0245",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0341",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0247",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0248",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0250",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0251",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0253",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0345",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0255",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0200",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0256",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0348",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Voltas_supplier_0025",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0265",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Voltas_supplier_0026",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0349",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0202",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0351",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Voltas_supplier_0027",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0267",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0204",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0205",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0207",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0208",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0210",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0353",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0358",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0361",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0363",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0364",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0211",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0219",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0225",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0368",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0226",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0230",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0372",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0375",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0377",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0380",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0382",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0268",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_LG_supplier_0016",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_LG_supplier_0018",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_LG_supplier_0019",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0384",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0392",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0270",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0271",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0231",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0232",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0234",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0236",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0237",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_0241",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0003",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0393",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0397",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0399",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0273",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0007",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0009",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0013",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0402",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_LG_supplier_0029",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0014",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0016",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0404",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0414",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_LG_supplier_0033",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0275",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0277",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0279",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0285",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0018",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0020",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0025",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0031",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0038",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0041",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0042",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0043",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0286",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0288",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0291",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0298",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0301",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0044",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0047",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0048",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0052",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0053",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0303",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0056",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0416",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0304",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0307",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0308",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0058",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0059",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0070",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0071",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0309",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Voltas_supplier_0038",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Voltas_supplier_0049",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0310",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Voltas_supplier_0052",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0317",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0327",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0328",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0418",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0330",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_LG_supplier_0035",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Voltas_supplier_0054",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Voltas_supplier_0055",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_LG_supplier_0037",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0075",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0082",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_LG_supplier_0038",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0342",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0420",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0345",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0348",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0425",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_LG_supplier_0046",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_LG_supplier_0047",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_LG_supplier_0049",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0086",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0087",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0088",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0093",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0351",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0427",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0430",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0097",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0432",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0435",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0437",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0353",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0358",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0438",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0444",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_est_div_jobs_26-27_0101",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_sata_jobs_0359",
+      "error": "FOREIGN KEY constraint failed"
+    },
+    {
+      "phase": "update_agent",
+      "message_id": "R12-L3-01_Tasks_0449",
+      "error": "FOREIGN KEY constraint failed"
+    }
+  ],
+  "dead_letter_count": 0,
+  "ambiguity_flag_count": 0,
+  "fulfillment_link_count": 0,
+  "node_summary": {
+    "task_est_div_client": {
+      "completed": 0,
+      "active": 0,
+      "pending": 10,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 18
+    },
+    "task_lg_supplier": {
+      "completed": 0,
+      "active": 0,
+      "pending": 8,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 9
+    },
+    "task_sata_client": {
+      "completed": 0,
+      "active": 0,
+      "pending": 10,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 18
+    },
+    "task_voltas_supplier": {
+      "completed": 0,
+      "active": 0,
+      "pending": 8,
+      "blocked": 0,
+      "provisional": 0,
+      "total": 9
+    }
+  },
+  "items_per_task": {},
+  "messages_per_task": {},
+  "skip_linkage": false,
+  "max_messages": null,
+  "model_usage": [],
+  "total_cost": 0,
+  "tasks_created": 4,
+  "pipeline_score": 20,
+  "run_metadata": {
+    "git_commit": "ad1146a43",
+    "live_task_creation": true,
+    "models": {
+      "complex": "claude-sonnet-4-6",
+      "simple": "gemini-2.5-flash"
+    },
+    "escalation_profile": "ashish_current"
+  },
+  "run_notes": "",
+  "traced": false,
+  "phoenix_endpoints": null,
+  "routing_mode": "legacy_batch",
+  "agents": [
+    "AO"
+  ],
+  "warmup_messages": 0,
+  "conversations_created": 0,
+  "entities_discovered": 0,
+  "tasks_created_live": 0
+}

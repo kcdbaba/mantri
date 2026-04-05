@@ -348,7 +348,7 @@ def _call_gemini_with_retry(system_prompt: str, user_section: str,
                             image_media_type: str = "",
                             model: str = GEMINI_MODEL,
                             max_retries: int = 3) -> LLMResponse | None:
-    from google.genai import types
+    from google.genai import types, errors as _genai_errors
     client = _get_gemini_client()
     config = types.GenerateContentConfig(
         system_instruction=system_prompt,
@@ -380,7 +380,7 @@ def _call_gemini_with_retry(system_prompt: str, user_section: str,
                 tokens_in=getattr(um, "prompt_token_count", 0) or 0,
                 tokens_out=getattr(um, "candidates_token_count", 0) or 0,
             )
-        except Exception as e:
+        except _genai_errors.APIError as e:
             log.warning("Gemini API error (attempt %d/%d): %s", attempt + 1, max_retries, e)
             if attempt < max_retries - 1:
                 time.sleep(delay)

@@ -12,6 +12,7 @@ benchmarking, but not recommended for production.
 
 import json
 import logging
+import re
 import time
 from typing import Literal
 
@@ -35,9 +36,9 @@ LINKAGE_MODEL = CLAUDE_MODEL
 class LinkageUpdate(BaseModel):
     client_order_id: str
     client_item_description: str
-    supplier_order_id: str
+    supplier_order_id: str | None = None   # None when no supplier task exists yet (e.g. new quote)
     supplier_item_description: str
-    quantity_allocated: float
+    quantity_allocated: float | None = None
     match_confidence: float
     match_reasoning: str
     status: Literal["confirmed", "candidate", "failed", "fulfilled", "completed", "invalidated"]
@@ -109,21 +110,59 @@ def run_linkage_agent(
     )
 
     raw = resp.raw
+    result = _parse_linkage_output(raw, message_id)
+    if result is None:
+        _log_error(raw, message_id)
+    return result
+
+
+def _try_validate(text: str) -> LinkageAgentOutput | None:
+    """Attempt to parse and validate a JSON string into LinkageAgentOutput."""
+    try:
+        data = json.loads(text.strip())
+        if isinstance(data, list) and len(data) == 1 and isinstance(data[0], dict):
+            data = data[0]
+        return LinkageAgentOutput.model_validate(data)
+    except (json.JSONDecodeError, ValidationError):
+        return None
+
+
+def _parse_linkage_output(raw: str, message_id: str | None) -> LinkageAgentOutput | None:
+    """
+    Extract and validate a LinkageAgentOutput from an LLM response.
+
+    Tries multiple extraction strategies to handle preamble text before JSON:
+    1. Direct parse (pure JSON or leading markdown fence already stripped)
+    2. Strip leading ``` fence (existing behaviour)
+    3. Any embedded ```json ... ``` or ``` ... ``` block in the text
+    4. Last line starting with '{' (raw JSON after reasoning text)
+    """
+    # 1. Leading markdown fence strip (preserves existing behaviour)
     cleaned = raw.strip()
     if cleaned.startswith("```"):
         lines = cleaned.splitlines()
         cleaned = "\n".join(lines[1:-1] if lines[-1].strip() == "```" else lines[1:])
 
-    try:
-        data = json.loads(cleaned)
-        if isinstance(data, list) and len(data) == 1 and isinstance(data[0], dict):
-            data = data[0]
-        return LinkageAgentOutput.model_validate(data)
-    except (json.JSONDecodeError, ValidationError) as e:
-        log.error("Linkage agent output validation failed for message=%s: %s",
-                  message_id, e)
-        _log_error(raw, message_id)
-        return None
+    result = _try_validate(cleaned)
+    if result is not None:
+        return result
+
+    # 2. Any embedded ```json / ``` block anywhere in the response
+    for m in re.finditer(r'```(?:json)?\s*([\s\S]*?)```', raw):
+        result = _try_validate(m.group(1))
+        if result is not None:
+            return result
+
+    # 3. Find the last line that starts a JSON object and parse from there
+    lines = raw.splitlines()
+    for i in range(len(lines) - 1, -1, -1):
+        if lines[i].strip().startswith("{"):
+            result = _try_validate("\n".join(lines[i:]))
+            if result is not None:
+                return result
+
+    log.error("Linkage agent output parse failed for message=%s", message_id)
+    return None
 
 
 def _log_error(raw: str, message_id: str | None):

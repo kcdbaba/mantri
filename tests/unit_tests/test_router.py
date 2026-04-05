@@ -112,19 +112,18 @@ def test_layer2a_direct_group():
 # route() — Layer 2b (entity matching on shared group)
 # ---------------------------------------------------------------------------
 
-def test_layer2b_entity_match_on_shared_group():
-    # All-staff group has no direct task mapping (None) → falls to 2b
-    # Layer 2b now returns entity_ids directly (no task lookup)
+def test_layer2b_shared_group_routes_to_conv_router():
+    # Null-mapped groups always route to conversation router — no entity fallthrough
     msg = {
         "media_type": "text",
         "body": "kapoor steel wale aa gaye",
         "group_id": "REPLACE_ALL_STAFF_JID@g.us",
     }
     results = route(msg)
-    assert any(eid == "entity_kapoor_steel" for eid, _ in results)
+    assert results == [("__conv_pending__", 0.0)]
 
 
-def test_layer2b_no_entity_match_unrouted():
+def test_layer2b_shared_group_no_entity_still_conv_pending():
     with patch("src.router.router.get_active_tasks", return_value=[]):
         msg = {
             "media_type": "text",
@@ -132,7 +131,7 @@ def test_layer2b_no_entity_match_unrouted():
             "group_id": "REPLACE_ALL_STAFF_JID@g.us",
         }
         results = route(msg)
-    assert results == []
+    assert results == [("__conv_pending__", 0.0)]
 
 
 # ---------------------------------------------------------------------------
@@ -201,8 +200,9 @@ class TestDBAlias:
 class TestRuntimeRouting:
 
     def test_runtime_entity_returned_for_group(self):
+        # Null-mapped groups route to conv router; runtime entities apply to directly-mapped groups
         from src.router.router import route
-        with patch("src.router.router.MONITORED_GROUPS", {"grp": None}), \
+        with patch("src.router.router.MONITORED_GROUPS", {"grp": "entity_seed"}), \
              patch("src.router.router._get_runtime_entities", return_value=["entity_live"]):
             results = route({"body": "test", "message_id": "m1", "group_id": "grp"})
         assert any(eid == "entity_live" for eid, _ in results)

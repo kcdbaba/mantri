@@ -1,47 +1,47 @@
 {
   "verdict": "PARTIAL",
-  "overall_score": 40,
+  "overall_score": 48,
   "dimensions": {
     "reliability": {
-      "score": 50,
-      "notes": "0 dead letters, 33 failures, 332 errors out of 0 agent calls"
+      "score": 0,
+      "notes": "0 dead letters, 35 failures, 35 errors out of 299 agent calls"
     },
     "routing": {
       "score": 69,
       "notes": "755/1086 messages routed"
     },
     "extraction": {
-      "score": 23,
-      "notes": "35 items extracted across 14 tasks"
+      "score": 88,
+      "notes": "134 items extracted across 16 tasks"
     },
     "node_progression": {
-      "score": 8,
-      "notes": "7 completed, 16 active out of 282 total nodes"
+      "score": 13,
+      "notes": "14 completed, 25 active out of 282 total nodes"
     },
     "ambiguity_quality": {
-      "score": 50,
-      "notes": "36 flags from 0 calls (36.00/call)"
+      "score": 80,
+      "notes": "185 flags from 299 calls (0.62/call)"
     },
     "linkage": {
-      "score": 40,
-      "notes": "0 fulfillment links created"
+      "score": 100,
+      "notes": "12 fulfillment links created"
     }
   },
   "metrics": {
     "total_messages": 1086,
     "routed": 755,
-    "agent_calls": 0,
+    "agent_calls": 299,
     "dead_letters": 0,
-    "failures": 33,
-    "errors": 332,
-    "ambiguity_flags": 36,
-    "fulfillment_links": 0,
-    "total_items": 35,
+    "failures": 35,
+    "errors": 35,
+    "ambiguity_flags": 185,
+    "fulfillment_links": 12,
+    "total_items": 134,
     "total_nodes": 282,
-    "completed_nodes": 7,
-    "active_nodes": 16
+    "completed_nodes": 14,
+    "active_nodes": 25
   },
   "case_id": "R12-L3-01",
   "case_name": "R12-L3-01_internal_staff_conversation_routing",
-  "evaluated_at": "2026-04-04T03:36:30"
+  "evaluated_at": "2026-04-05T16:37:41"
 }

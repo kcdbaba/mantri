@@ -149,7 +149,6 @@ GATE_NODES = {
 # ---------------------------------------------------------------------------
 
 ENABLE_LIVE_TASK_CREATION = True     # Per-order task creation active
-ENABLE_CONVERSATION_ROUTING = False  # Conversation routing for shared groups (AS agent)
 
 # API gate: controls whether LLM API calls are permitted.
 # True in production. False in dev/staging/testing (default).

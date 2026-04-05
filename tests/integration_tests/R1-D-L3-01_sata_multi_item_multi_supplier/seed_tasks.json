@@ -26,6 +26,21 @@
     }
   ],
 
+  "run_modes": {
+    "dev_test": {
+      "preseed_tasks": true,
+      "note": "50-msg window; tasks pre-seeded; LLM cache used"
+    },
+    "short": {
+      "preseed_tasks": true,
+      "note": "Partial replay; tasks pre-seeded for deterministic starting state"
+    },
+    "full": {
+      "preseed_tasks": true,
+      "note": "Full replay; tasks pre-seeded; pipeline enriches nodes and items across all messages"
+    }
+  },
+
   "tasks": [
     {
       "id": "task_sata_client",

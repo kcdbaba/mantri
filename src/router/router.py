@@ -26,7 +26,6 @@ import logging
 from src.config import (
     MONITORED_GROUPS, DIRECT_GROUP_CONFIDENCE,
     ENTITY_MATCH_CONFIDENCE, AMBIGUITY_THRESHOLD,
-    ENABLE_CONVERSATION_ROUTING,
 )
 from src.router.alias_dict import match_entities
 from src.store.task_store import get_active_tasks
@@ -103,7 +102,7 @@ def route(message: dict) -> list[tuple[str, float]]:
             results.append((entity_id, DIRECT_GROUP_CONFIDENCE))
             seen.add(entity_id)
             log.debug("Layer 2a: %s → %s (conf=%.2f)", group_id, entity_id, DIRECT_GROUP_CONFIDENCE)
-        elif ENABLE_CONVERSATION_ROUTING:
+        else:
             # Shared group with null mapping — route to conversation system
             log.debug("Layer 2a-conv: %s → conversation routing", group_id)
             return [("__conv_pending__", 0.0)]

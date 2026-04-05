@@ -184,7 +184,7 @@ def _try_gemini(prompt: str, max_retries: int = 2) -> list | None:
     """Call Gemini Flash with JSON response."""
     try:
         from google import genai
-        from google.genai import types
+        from google.genai import types, errors as _genai_errors
 
         api_key = os.environ.get("GOOGLE_API_KEY")
         if not api_key:
@@ -209,7 +209,7 @@ def _try_gemini(prompt: str, max_retries: int = 2) -> list | None:
                 )
                 text = response.text or ""
                 return json.loads(text)
-            except Exception as e:
+            except (_genai_errors.APIError, json.JSONDecodeError) as e:
                 log.warning("Gemini context match failed (attempt %d/%d): %s",
                             attempt + 1, max_retries, e)
                 if attempt < max_retries - 1:

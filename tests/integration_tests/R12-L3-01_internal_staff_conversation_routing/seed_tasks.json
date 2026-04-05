@@ -10,8 +10,20 @@
     "est_div_jobs_26-27": "task_est_div_client"
   },
 
-  "config_overrides": {
-    "ENABLE_CONVERSATION_ROUTING": true
+  "run_modes": {
+    "dev_test": {
+      "preseed_tasks": false,
+      "note": "50-msg window; tasks created by pipeline from conversations; LLM cache used"
+    },
+    "short": {
+      "preseed_tasks": false,
+      "note": "Partial replay; tasks created by pipeline; tests conv routing on partial trace"
+    },
+    "full": {
+      "preseed_tasks": false,
+      "warmup": "March 1-5 12:43 (~236 msgs); test window March 5-24 (~1020 msgs)",
+      "note": "Full replay; all tasks created by pipeline from conv routing and direct groups"
+    }
   },
 
   "ocr_caches": {

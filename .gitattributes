@@ -3,3 +3,15 @@
 *.wav filter=lfs diff=lfs merge=lfs -text
 *.jpeg filter=lfs diff=lfs merge=lfs -text
 *.db filter=lfs diff=lfs merge=lfs -text
+
+# Integration test large artifacts — LFS to keep repo size manageable
+tests/integration_tests/**/replay_trace.json filter=lfs diff=lfs merge=lfs -text
+tests/integration_tests/**/replay_result.json filter=lfs diff=lfs merge=lfs -text
+tests/integration_tests/**/expected_routing.json filter=lfs diff=lfs merge=lfs -text
+tests/integration_tests/**/dev_cache.json filter=lfs diff=lfs merge=lfs -text
+tests/integration_tests/**/image_ocr_auto.json filter=lfs diff=lfs merge=lfs -text
+tests/integration_tests/**/tasks_baseline_tags.json filter=lfs diff=lfs merge=lfs -text
+
+# Run logs — LFS for large accumulated output
+logs/agent_errors.log filter=lfs diff=lfs merge=lfs -text
+logs/unrouted.log filter=lfs diff=lfs merge=lfs -text

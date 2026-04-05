@@ -36,6 +36,7 @@ SCHEMA = """
 
 CREATE TABLE IF NOT EXISTS task_instances (
     id              TEXT PRIMARY KEY,
+    task_name       TEXT,           -- human-readable label, e.g. "sata_1_steel_gate" (set by UX layer)
     template_id     TEXT,
     order_type      TEXT,
     client_id       TEXT,
@@ -144,13 +145,18 @@ CREATE TABLE IF NOT EXISTS ambiguity_queue (
     resolved_at     INTEGER
 );
 
--- Tracks which time_trigger alert instances have already fired (prevents duplicates)
+-- Tracks all fired alerts (dedup for time_trigger; history for ambiguity_escalation)
 CREATE TABLE IF NOT EXISTS task_alerts_fired (
-    id              TEXT PRIMARY KEY,   -- uuid
-    task_id         TEXT REFERENCES task_instances(id),
-    node_id         TEXT,               -- e.g. 'supplier_predelivery_enquiry'
-    alert_key       TEXT,               -- e.g. 'days_before_7' | 'elapsed_48h'
-    fired_at        INTEGER
+    id                  TEXT PRIMARY KEY,   -- uuid
+    task_id             TEXT REFERENCES task_instances(id),
+    node_id             TEXT,               -- e.g. 'supplier_predelivery_enquiry'
+    alert_key           TEXT,               -- e.g. 'days_before_7' | 'elapsed_48h' | 'ambiguity_escalation'
+    alert_type          TEXT,               -- 'time_trigger' | 'ambiguity_escalation'
+    severity            TEXT,               -- 'high' | 'medium' | 'low'
+    category            TEXT,               -- 'entity' | 'quantity' | 'status' | 'timing' | 'linkage'
+    description         TEXT,               -- human-readable reason
+    escalation_target   TEXT,               -- JSON array of target handles
+    fired_at            INTEGER
 );
 
 -- M:N item linkage tables
@@ -301,6 +307,12 @@ def init_schema():
     conn = get_connection()
     conn.executescript(SCHEMA)
     conn.commit()
+
+    # Migrate: add task_name column if missing
+    cols = [row[1] for row in conn.execute("PRAGMA table_info(task_instances)").fetchall()]
+    if "task_name" not in cols:
+        conn.execute("ALTER TABLE task_instances ADD COLUMN task_name TEXT")
+        conn.commit()
 
     # Migrate: add co_owner column if missing (existing DBs predate this column)
     cols = [row[1] for row in conn.execute("PRAGMA table_info(node_owner_registry)").fetchall()]

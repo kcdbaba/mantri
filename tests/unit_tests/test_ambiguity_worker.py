@@ -242,7 +242,8 @@ class TestSendEscalation:
         import json
         log_path = tmp_path / "alerts.log"
         entry = _make_entry(status="pending")
-        with patch("src.alerts.ambiguity_worker.ALERT_LOG_PATH", str(log_path)):
+        with patch("src.alerts.ambiguity_worker.ALERT_LOG_PATH", str(log_path)), \
+             patch("src.alerts.ambiguity_worker.transaction"):
             _send_escalation(entry, is_re_escalation=False)
         content = log_path.read_text()
         alert = json.loads(content.strip())
@@ -253,7 +254,8 @@ class TestSendEscalation:
         import json
         log_path = tmp_path / "alerts.log"
         entry = _make_entry(status="escalated", re_escalations=2)
-        with patch("src.alerts.ambiguity_worker.ALERT_LOG_PATH", str(log_path)):
+        with patch("src.alerts.ambiguity_worker.ALERT_LOG_PATH", str(log_path)), \
+             patch("src.alerts.ambiguity_worker.transaction"):
             _send_escalation(entry, is_re_escalation=True)
         content = log_path.read_text()
         alert = json.loads(content.strip())

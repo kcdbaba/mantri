@@ -3,8 +3,11 @@ Read/write operations for task instances, nodes, and messages.
 """
 
 import json
+import logging
 import time
 import uuid
+
+log = logging.getLogger(__name__)
 
 from src.store.db import get_connection, transaction
 
@@ -137,8 +140,8 @@ def get_tasks_for_entity(entity_id: str) -> list[dict]:
                 ).fetchall()
                 items.extend({"description": r["description"], "unit": r["unit"],
                               "quantity": r["quantity"]} for r in rows)
-            except Exception:
-                pass
+            except Exception as e:
+                log.warning("Could not load items for task %s/%s: %s", tid, table, e)
         result.append({
             "task_id": tid,
             "order_type": otype,

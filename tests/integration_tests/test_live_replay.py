@@ -269,10 +269,8 @@ def _output_suffix(max_messages: int | None) -> str:
 
 def run_live_replay(case_dir: Path, trace: list[dict], seed: dict,
                     run_linkage: bool = True, max_messages: int | None = None) -> dict:
-    """
-    Run the full pipeline on a trace. Returns final state snapshot + run stats.
-    """
-    tmp = tempfile.NamedTemporaryFile(suffix=".db", delete=False)
+    raise NotImplementedError("run_live_replay removed; all runs use _run_traced_replay")
+    tmp = tempfile.NamedTemporaryFile(suffix=".db", delete=False)  # noqa: unreachable
     tmp.close()
     db_path = tmp.name
 
@@ -465,12 +463,17 @@ def _compute_pipeline_score(stats: dict, state: dict, skip_linkage: bool) -> dic
     """
     total_msgs = stats["messages_total"]
     routed = stats["messages_routed"]
-    failures = stats["update_agent_failures"] + stats.get("linkage_agent_failures", 0)
+    ua_failures = stats["update_agent_failures"]
+    la_failures = stats.get("linkage_agent_failures", 0)
+    la_events = stats.get("linkage_events_processed", 0)
     dead_letters = state["dead_letter_count"]
     n_flags = len(state["ambiguity_flags"])
     n_links = len(state["fulfillment_links"])
-    n_errors = len(stats.get("errors", []))
+    n_ua_errors = sum(1 for e in stats.get("errors", []) if e.get("phase") != "linkage_agent")
     agent_calls = stats["update_agent_calls"]
+    # keep legacy name for downstream use
+    failures = ua_failures + la_failures
+    n_errors = len(stats.get("errors", []))
 
     # Total nodes across all tasks
     all_nodes = [n for nodes in state["node_states"].values() for n in nodes]
@@ -484,13 +487,20 @@ def _compute_pipeline_score(stats: dict, state: dict, skip_linkage: bool) -> dic
 
     # --- Scoring ---
 
-    # Reliability (0-100): penalise dead letters and failures
+    # Reliability (0-100): penalise dead letters, update_agent failures, and linkage failures separately
     if agent_calls == 0:
         reliability = 50
     else:
         dead_rate = dead_letters / agent_calls
-        fail_rate = failures / agent_calls
-        reliability = max(0, int(100 - dead_rate * 500 - fail_rate * 300 - n_errors * 10))
+        ua_fail_rate = ua_failures / agent_calls
+        la_fail_rate = la_failures / max(la_events, 1)
+        reliability = max(0, int(
+            100
+            - dead_rate * 500       # dead letters: very severe
+            - ua_fail_rate * 300    # update_agent failures: severe
+            - la_fail_rate * 100    # linkage failures: moderate (separate system)
+            - n_ua_errors * 5       # other update_agent errors: light penalty
+        ))
 
     # Routing (0-100): % of messages routed
     routing = int(100 * routed / total_msgs) if total_msgs else 0
@@ -612,8 +622,7 @@ def _run_traced_replay(case_dir: Path, trace_data: list[dict], seed: dict,
                        phoenix_endpoints: list[str] | None = None,
                        auth_headers: dict | None = None,
                        dev_test: bool = False,
-                       allow_api_calls: bool = True,
-                       backfill_cache: bool = False) -> dict:
+                       allow_api_calls: bool = True) -> dict:
     """
     Run replay using the instrumented entity-first pipeline with Phoenix tracing.
     Returns result dict in the same format as run_live_replay().
@@ -626,10 +635,19 @@ def _run_traced_replay(case_dir: Path, trace_data: list[dict], seed: dict,
     tmp.close()
     db_path = tmp.name
 
+    # Determine run mode and read preseed config
     if dev_test:
-        _seed_db(db_path, seed)  # dev-test pre-seeds tasks for speed
+        mode = "dev_test"
+    elif max_messages:
+        mode = "short"
     else:
-        _seed_config(db_path, seed)  # all other modes: config only, tasks created via pipeline
+        mode = "full"
+    run_modes = seed.get("run_modes", {})
+    preseed = run_modes.get(mode, {}).get("preseed_tasks", False)
+    if preseed:
+        _seed_db(db_path, seed)
+    else:
+        _seed_config(db_path, seed)
     mock_redis = StreamCapture()
 
     metadata = _get_run_metadata()
@@ -656,8 +674,6 @@ def _run_traced_replay(case_dir: Path, trace_data: list[dict], seed: dict,
         no_conv_llm=dev_test,  # dev-test skips conv router LLM matching
         dev_test=dev_test,
         allow_api_calls=allow_api_calls,
-        allow_conv_api=backfill_cache,
-        backfill_cache=backfill_cache,
     )
 
     snapshot = _snapshot_state(db_path)
@@ -686,14 +702,13 @@ class TestLiveReplay:
     def test_full_replay(self, case_dir, request):
         dev_test = request.config.getoption("--dev-test")
         run_live = request.config.getoption("--run-live")
-        backfill_cache = request.config.getoption("--backfill-cache")
         run_cache = request.config.getoption("--run-cache")
         max_messages = request.config.getoption("--max-messages")
 
         # Validate flag combinations
-        cache_modes = sum([dev_test, backfill_cache, run_cache])
+        cache_modes = sum([dev_test, run_cache])
         if cache_modes > 1:
-            pytest.fail("--dev-test, --backfill-cache, --run-cache are mutually exclusive")
+            pytest.fail("--dev-test and --run-cache are mutually exclusive")
         if run_cache and run_live:
             pytest.fail("--run-cache and --run-live are mutually exclusive")
         if run_cache and request.config.getoption("--traced"):
@@ -701,7 +716,7 @@ class TestLiveReplay:
         if dev_test and max_messages:
             pytest.fail("--dev-test and --max-messages are mutually exclusive")
 
-        if backfill_cache or run_cache:
+        if run_cache:
             cache_exists = (case_dir / "dev_cache.db").exists()
             if not cache_exists:
                 pytest.fail(f"No cache at {case_dir / 'dev_cache.db'}")
@@ -726,7 +741,7 @@ class TestLiveReplay:
 
         # Mode overrides
         DEV_TEST_MESSAGES = 50
-        if backfill_cache or run_cache:
+        if run_cache:
             use_traced = True
             phoenix_endpoints = []
         elif dev_test:
@@ -771,24 +786,16 @@ class TestLiveReplay:
                 print(f"\n  Staleness check: {bl_file.name}")
                 report.print_report()
 
-        if use_traced:
-            result = _run_traced_replay(
-                case_dir, trace, seed,
-                run_linkage=run_linkage,
-                max_messages=max_messages,
-                run_note=run_note,
-                phoenix_endpoints=phoenix_endpoints,
-                auth_headers=auth_headers,
-                dev_test=dev_test,
-                allow_api_calls=run_live and not backfill_cache and not run_cache,
-                backfill_cache=backfill_cache,
-            )
-        else:
-            result = run_live_replay(
-                case_dir, trace, seed,
-                run_linkage=run_linkage,
-                max_messages=max_messages,
-            )
+        result = _run_traced_replay(
+            case_dir, trace, seed,
+            run_linkage=run_linkage,
+            max_messages=max_messages,
+            run_note=run_note,
+            phoenix_endpoints=phoenix_endpoints,
+            auth_headers=auth_headers,
+            dev_test=dev_test,
+            allow_api_calls=run_live and not run_cache,
+        )
 
         # Write results — dev-test to /tmp, full runs to output dir
         if dev_test:
@@ -831,6 +838,7 @@ class TestLiveReplay:
                 "linkage_events_processed": stats["linkage_events_processed"],
                 "linkage_agent_failures": stats["linkage_agent_failures"],
                 "error_count": len(stats["errors"]),
+                "errors": stats["errors"],
                 "dead_letter_count": state["dead_letter_count"],
                 "ambiguity_flag_count": len(state["ambiguity_flags"]),
                 "fulfillment_link_count": len(state["fulfillment_links"]),

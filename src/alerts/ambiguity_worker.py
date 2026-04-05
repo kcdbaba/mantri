@@ -10,6 +10,7 @@ Production: replace _send_escalation() with Meta Cloud API call.
 import json
 import logging
 import time
+import uuid
 from pathlib import Path
 
 from src.config import (
@@ -142,6 +143,26 @@ def _send_escalation(entry: dict, is_re_escalation: bool):
     Path(ALERT_LOG_PATH).parent.mkdir(parents=True, exist_ok=True)
     with open(ALERT_LOG_PATH, "a") as f:
         f.write(json.dumps(alert) + "\n")
+
+    with transaction() as conn:
+        conn.execute(
+            """INSERT INTO task_alerts_fired
+               (id, task_id, node_id, alert_key, alert_type, severity, category,
+                description, escalation_target, fired_at)
+               VALUES (?,?,?,?,?,?,?,?,?,?)""",
+            (
+                str(uuid.uuid4()),
+                entry["task_id"],
+                entry["node_id"],
+                "re_escalation" if is_re_escalation else "escalation",
+                "ambiguity_escalation",
+                entry["severity"],
+                entry["category"],
+                entry["description"],
+                entry["escalation_target"],
+                int(time.time()),
+            ),
+        )
 
     prefix = "RE-ESCALATION" if is_re_escalation else "ESCALATION"
     log.warning(

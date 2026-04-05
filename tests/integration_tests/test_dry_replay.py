@@ -104,15 +104,10 @@ class TestDryReplay:
         db_path, seed, trace, expected = _setup_case(case_dir)
         monitored = seed.get("monitored_groups", {})
 
-        config_overrides = seed.get("config_overrides", {})
-        enable_conv = config_overrides.get("ENABLE_CONVERSATION_ROUTING", False)
-
         from src.router.alias_dict import invalidate_alias_cache
         with patch("src.store.db.DB_PATH", db_path), \
              patch("src.config.DB_PATH", db_path), \
-             patch("src.router.router.MONITORED_GROUPS", monitored), \
-             patch("src.config.ENABLE_CONVERSATION_ROUTING", enable_conv), \
-             patch("src.router.router.ENABLE_CONVERSATION_ROUTING", enable_conv):
+             patch("src.router.router.MONITORED_GROUPS", monitored):
             invalidate_alias_cache()
             from src.router.router import route
 
@@ -159,15 +154,10 @@ class TestDryReplay:
         if not dedicated:
             pytest.skip("No dedicated groups in this case")
 
-        config_overrides = seed.get("config_overrides", {})
-        enable_conv = config_overrides.get("ENABLE_CONVERSATION_ROUTING", False)
-
         from src.router.alias_dict import invalidate_alias_cache
         with patch("src.store.db.DB_PATH", db_path), \
              patch("src.config.DB_PATH", db_path), \
-             patch("src.router.router.MONITORED_GROUPS", monitored), \
-             patch("src.config.ENABLE_CONVERSATION_ROUTING", enable_conv), \
-             patch("src.router.router.ENABLE_CONVERSATION_ROUTING", enable_conv):
+             patch("src.router.router.MONITORED_GROUPS", monitored):
             invalidate_alias_cache()  # ensure DB aliases read from test DB
             from src.router.router import route
             unrouted = []
@@ -189,15 +179,10 @@ class TestDryReplay:
         monitored = seed.get("monitored_groups", {})
         case_id = case_dir.name.split("_")[0]  # e.g. "R1-D-L3-01"
 
-        config_overrides = seed.get("config_overrides", {})
-        enable_conv = config_overrides.get("ENABLE_CONVERSATION_ROUTING", False)
-
         from src.router.alias_dict import invalidate_alias_cache
         with patch("src.store.db.DB_PATH", db_path), \
              patch("src.config.DB_PATH", db_path), \
-             patch("src.router.router.MONITORED_GROUPS", monitored), \
-             patch("src.config.ENABLE_CONVERSATION_ROUTING", enable_conv), \
-             patch("src.router.router.ENABLE_CONVERSATION_ROUTING", enable_conv):
+             patch("src.router.router.MONITORED_GROUPS", monitored):
             invalidate_alias_cache()
             from src.router.router import route
 
@@ -238,5 +223,3 @@ class TestDryReplay:
 
         # Routing rate sanity — at least some messages should route
         assert routed_count > 0, "No messages routed"
-        if not enable_conv:
-            assert rate < 0.95, f"Routing rate {rate:.2%} suspiciously high"

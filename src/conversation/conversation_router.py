@@ -432,8 +432,8 @@ class ConversationRouter:
                                        "order_ready") and n["status"] not in ("pending", "skipped"):
                                 parts.append(f"Stage: {nid}={n['status']}")
                         break
-            except Exception:
-                pass
+            except Exception as e:
+                log.debug("Could not build order context for %s: %s", conv.entity_ref, e)
 
             ctx[conv.entity_ref] = "\n".join(parts)
 

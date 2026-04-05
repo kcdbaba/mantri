@@ -31,6 +31,7 @@ from src.store.task_store import (
     check_stock_path_order_ready, cascade_auto_triggers,
 )
 from src.store.db import get_connection, transaction, create_task_live
+from src.tracing.agent_cache import CacheMissError
 
 log = logging.getLogger(__name__)
 
@@ -112,13 +113,11 @@ def _resolve_task_for_entity(entity_id: str, entity_tasks: list[dict],
 
 
 
-def process_message(message: dict, r: redis.Redis,
-                    conv_router=None):
+def process_message(message: dict, r: redis.Redis, conv_router):
     """Process a single message — route to entity, resolve task, run agent, apply output.
 
-    If conv_router is provided and the message routes to a shared group
-    (__conv_pending__ sentinel), feeds it to the ConversationRouter instead
-    of processing immediately.
+    Shared group messages (null-mapped monitored groups) route to the ConversationRouter
+    via the __conv_pending__ sentinel.
     """
     routes = route(message)
 
@@ -126,14 +125,11 @@ def process_message(message: dict, r: redis.Redis,
         _log_unrouted(message)
         return
 
-    # Check for conversation routing sentinel
+    # Shared group — feed to conversation router
     if routes == [("__conv_pending__", 0.0)]:
-        if conv_router is not None:
-            result = conv_router.feed(message)
-            if result:
-                _process_conversation_result(result, r, conv_router)
-        else:
-            _log_unrouted(message)
+        result = conv_router.feed(message)
+        if result:
+            _process_conversation_result(result, r, conv_router)
         return
 
     for entity_id, confidence in routes:
@@ -320,7 +316,7 @@ class MessageBuffer:
         return flushed
 
 
-def _process_scrap(scrap: SenderScrap, r):
+def _process_scrap(scrap: SenderScrap, r, conv_router):
     """Process a flushed sender scrap — resolve entity → task, call agent."""
     from src.store.task_store import get_tasks_for_entity
     entity_tasks = get_tasks_for_entity(scrap.entity_id)
@@ -333,7 +329,7 @@ def _process_scrap(scrap: SenderScrap, r):
     elif entity_tasks:
         # Multi-task — fall back to per-message processing with agent assignment
         for msg in scrap.messages:
-            process_message(msg, r)
+            process_message(msg, r, conv_router)
     else:
         log.warning("Could not resolve task for scrap: entity=%s sender=%s (%d msgs)",
                     scrap.entity_id, scrap.sender, len(scrap.messages))
@@ -342,7 +338,7 @@ def _process_scrap(scrap: SenderScrap, r):
 def replay_messages(
     messages: list[dict],
     r,
-    conv_router=None,
+    conv_router,
     on_scrap_processed=None,
     on_message_routed=None,
 ) -> dict:
@@ -358,7 +354,7 @@ def replay_messages(
     Args:
         messages: ordered list of message dicts
         r: Redis client (real or mock — only needs xadd/xack)
-        conv_router: ConversationRouter instance for shared groups (optional)
+        conv_router: ConversationRouter instance (required)
         on_scrap_processed: callback(SenderScrap) after each scrap is processed
         on_message_routed: callback(message, routes) after routing each message
 
@@ -378,16 +374,19 @@ def replay_messages(
     def _handle_scraps(scraps: list[SenderScrap]):
         for scrap in scraps:
             try:
-                _process_scrap(scrap, r)
+                _process_scrap(scrap, r, conv_router)
                 stats["update_agent_calls"] += 1
+            except CacheMissError:
+                raise
             except Exception as e:
                 stats["errors"].append({
                     "phase": "scrap_process",
                     "message_id": scrap.messages[-1].get("message_id"),
                     "error": str(e),
                 })
-                log.error("Scrap processing failed: entity=%s sender=%s: %s",
-                          scrap.entity_id, scrap.sender, e)
+                log.error("Scrap processing failed: entity=%s sender=%s msg_id=%s n_msgs=%d: %s",
+                          scrap.entity_id, scrap.sender,
+                          scrap.messages[-1].get("message_id", "?"), len(scrap.messages), e)
             if on_scrap_processed:
                 on_scrap_processed(scrap)
 
@@ -408,14 +407,11 @@ def replay_messages(
         if on_message_routed:
             on_message_routed(msg, routes)
 
-        # Conversation routing sentinel
+        # Shared group — feed to conversation router
         if routes == [("__conv_pending__", 0.0)]:
-            if conv_router is not None:
-                result = conv_router.feed(msg)
-                if result:
-                    _process_conversation_result(result, r, conv_router)
-            else:
-                _log_unrouted(msg)
+            result = conv_router.feed(msg)
+            if result:
+                _process_conversation_result(result, r, conv_router)
             continue
 
         # Entity groups — accumulate as sender scraps
@@ -433,17 +429,21 @@ def replay_messages(
     _handle_scraps(buf.flush_all())
 
     # Flush remaining conversations
-    if conv_router is not None:
-        remaining = conv_router.flush_all()
-        for result in remaining:
-            try:
-                _process_conversation_result(result, r, conv_router)
-            except Exception as e:
-                stats["errors"].append({
-                    "phase": "conv_flush",
-                    "message_id": "flush",
-                    "error": str(e),
-                })
+    for result in conv_router.flush_all():
+        try:
+            _process_conversation_result(result, r, conv_router)
+        except CacheMissError:
+            raise
+        except Exception as e:
+            stats["errors"].append({
+                "phase": "conv_flush",
+                "message_id": "flush",
+                "error": str(e),
+            })
+            log.error("Conv flush failed: group=%s entities=%s n_msgs=%s: %s",
+                      getattr(result, "group_id", "?"),
+                      [c.entity_ref for c in getattr(result, "conversations", [])],
+                      getattr(result, "total_messages", "?"), e)
 
     return stats
 
@@ -456,7 +456,7 @@ def _ensure_consumer_group(r: redis.Redis):
             raise
 
 
-def _process_with_retry(event_id: str, fields: dict, r: redis.Redis):
+def _process_with_retry(event_id: str, fields: dict, r: redis.Redis, conv_router):
     raw = fields.get("message_json")
     if not raw:
         r.xack(INGEST_STREAM, CONSUMER_GROUP, event_id)
@@ -473,7 +473,7 @@ def _process_with_retry(event_id: str, fields: dict, r: redis.Redis):
     last_exc = None
     for attempt in range(1, MAX_RETRY_ATTEMPTS + 1):
         try:
-            process_message(message, r)
+            process_message(message, r, conv_router)
             r.xack(INGEST_STREAM, CONSUMER_GROUP, event_id)
             return
         except Exception as e:
@@ -522,17 +522,14 @@ def _ack_scrap(scrap: SenderScrap, r: redis.Redis):
 
 
 def run():
-    from src.config import ENABLE_CONVERSATION_ROUTING
     log.info("Router worker started — consuming stream %s (scrap_gap=%ds)",
              INGEST_STREAM, SCRAP_GAP_S)
     r = redis.from_url(REDIS_URL, decode_responses=True)
     _ensure_consumer_group(r)
 
     buf = MessageBuffer()
-    conv_router = None
-    if ENABLE_CONVERSATION_ROUTING:
-        from src.conversation.conversation_router import ConversationRouter
-        conv_router = ConversationRouter()
+    from src.conversation.conversation_router import ConversationRouter
+    conv_router = ConversationRouter()
 
     while True:
         try:
@@ -563,14 +560,11 @@ def run():
                             r.xack(INGEST_STREAM, CONSUMER_GROUP, event_id)
                             continue
 
-                        # Conversation routing sentinel
+                        # Shared group — feed to conversation router
                         if routes == [("__conv_pending__", 0.0)]:
-                            if conv_router is not None:
-                                result = conv_router.feed(message)
-                                if result:
-                                    _process_conversation_result(result, r, conv_router)
-                            else:
-                                _log_unrouted(message)
+                            result = conv_router.feed(message)
+                            if result:
+                                _process_conversation_result(result, r, conv_router)
                             r.xack(INGEST_STREAM, CONSUMER_GROUP, event_id)
                             continue
 
@@ -578,18 +572,17 @@ def run():
                         for entity_id, confidence in routes:
                             flushed = buf.add(entity_id, message, event_id=event_id)
                             for scrap in flushed:
-                                _process_scrap(scrap, r)
+                                _process_scrap(scrap, r, conv_router)
                                 _ack_scrap(scrap, r)
 
             # Flush stale scraps (sender gap exceeded)
             for scrap in buf.flush_stale():
-                _process_scrap(scrap, r)
+                _process_scrap(scrap, r, conv_router)
                 _ack_scrap(scrap, r)
 
             # Flush stale conversations
-            if conv_router is not None:
-                for result in conv_router.flush_stale():
-                    _process_conversation_result(result, r, conv_router)
+            for result in conv_router.flush_stale():
+                _process_conversation_result(result, r, conv_router)
 
         except redis.RedisError as e:
             log.error("Router worker Redis error: %s — retrying in 5s", e)
@@ -646,8 +639,12 @@ def _process_conversation_result(result, r, conv_router):
         if task_id:
             try:
                 process_message_batch(task_id, conv_messages, r)
+            except CacheMissError:
+                raise
             except Exception as e:
-                log.error("Conversation batch failed: entity=%s, %s", entity_id, e)
+                last_msg_id = conv_messages[-1].get("message_id", "?") if conv_messages else "?"
+                log.error("Conversation batch failed: entity=%s task=%s n_msgs=%d last_msg=%s: %s",
+                          entity_id, task_id, len(conv_messages), last_msg_id, e)
 
 
 def _log_unrouted(message: dict):
@@ -924,7 +921,8 @@ def _create_task_from_candidate(candidate: dict, message: dict,
             aliases=aliases,
         )
     except Exception as e:
-        log.error("Failed to create task from candidate: %s", e)
+        log.error("Failed to create task from candidate: entity=%s order_type=%s msg_id=%s: %s",
+                  entity_id, order_type, message.get("message_id", "?"), e)
         _log_new_task_candidate(candidate, message, source_task_id)
         return None
 

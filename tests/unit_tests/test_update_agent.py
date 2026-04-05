@@ -427,8 +427,10 @@ class TestCallWithRetry:
 
     def test_gemini_api_error_retries_and_fails(self):
         from src.agent.update_agent import _call_gemini_with_retry
+        from google.genai import errors as _genai_errors
         with patch("src.agent.update_agent._get_gemini_client") as mock_get, \
              patch("time.sleep"):
-            mock_get.return_value.models.generate_content.side_effect = Exception("quota exceeded")
+            mock_get.return_value.models.generate_content.side_effect = _genai_errors.APIError(
+                429, {"message": "quota exceeded"})
             result = _call_gemini_with_retry("sys", "user", "m1", "t1", max_retries=2)
         assert result is None

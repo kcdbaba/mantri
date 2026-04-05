@@ -10,7 +10,10 @@
 __pycache__/
 .DS_Store
 temp/
-logs/
+logs/*
+!logs/.gitkeep
+!logs/agent_errors.log
+!logs/unrouted.log
 data/enriched/
 data/raw_chats/
 data/mantri.db

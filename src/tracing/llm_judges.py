@@ -356,7 +356,7 @@ def _call_judge(prompt: str, max_retries: int = 2) -> dict | None:
 def _try_gemini(prompt: str, max_retries: int = 2) -> dict | None:
     """Try Gemini Flash judge."""
     try:
-        from google.genai import types
+        from google.genai import types, errors as _genai_errors
         client = _get_client()
 
         config = types.GenerateContentConfig(
@@ -376,7 +376,7 @@ def _try_gemini(prompt: str, max_retries: int = 2) -> dict | None:
                 )
                 text = response.text or ""
                 return json.loads(text)
-            except Exception as e:
+            except (_genai_errors.APIError, json.JSONDecodeError) as e:
                 log.warning("Gemini judge failed (attempt %d/%d): %s",
                             attempt + 1, max_retries, e)
                 if attempt < max_retries - 1:

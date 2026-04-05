@@ -15,6 +15,21 @@
       "aliases": ["kapoor", "kapoor ji", "kapoor steel"]
     }
   ],
+  "run_modes": {
+    "dev_test": {
+      "preseed_tasks": true,
+      "note": "50-msg window; tasks pre-seeded; LLM cache used"
+    },
+    "short": {
+      "preseed_tasks": true,
+      "note": "Partial replay; tasks pre-seeded; linkage agent tested on partial trace"
+    },
+    "full": {
+      "preseed_tasks": true,
+      "note": "Full replay; tasks pre-seeded; tests M:N fulfillment link creation"
+    }
+  },
+
   "tasks": [
     {
       "id": "task_client_01",

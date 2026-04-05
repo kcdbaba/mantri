@@ -200,7 +200,8 @@ def process_event(event_id: str, fields: dict, r: redis.Redis):
 
     # Two-level pruning: check terminal states after all upserts
     affected_suppliers = {upd.supplier_order_id for upd in output.linkage_updates
-                          if upd.status in ("fulfilled", "failed", "invalidated")}
+                          if upd.status in ("fulfilled", "failed", "invalidated")
+                          and upd.supplier_order_id is not None}
     for supplier_id in affected_suppliers:
         if prune_links_for_supplier_order(supplier_id):
             log.info("Pruned supplier order: task=%s — all links terminal", supplier_id)
