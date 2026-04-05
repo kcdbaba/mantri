@@ -144,9 +144,9 @@ def run_instrumented_replay(
     ]
 
     with contextlib.ExitStack() as stack:
+        stack.callback(lambda: tracer.stop(stats=stats))
         for p in config_patches:
             stack.enter_context(p)
-        stack.callback(lambda: tracer.stop(stats=stats))
 
         from src.router.router import route as _orig_route
         from src.router.worker import (
