@@ -1,0 +1,1 @@
+ERROR    src.ingestion.ingest:ingest.py:60 Redis unavailable: down

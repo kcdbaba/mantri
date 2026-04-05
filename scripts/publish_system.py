@@ -424,36 +424,39 @@ def _build_dual_axis_svg(case_id: str, full_runs: list[dict]) -> str:
 
     baseline = pad_t + plot_h
 
-    # Build ambiguity bars (blue/cyan) and error bars (red, narrower, overlaid)
+    # Build ambiguity bars (blue/cyan) and error bars (red) — side by side, no overlap
+    gap = 2
     bars = []
     for i in range(n):
         cx = x_center(i)
-        # Ambiguity bar
+        # Ambiguity bar — left of centre
         av = amb_vals[i]
         if av > 0:
             aby = y_amb(av)
             abh = baseline - aby
+            ax = cx - gap / 2 - bar_w_amb
             bars.append(
-                f"<rect x='{cx - bar_w_amb / 2:.1f}' y='{aby:.1f}' "
+                f"<rect x='{ax:.1f}' y='{aby:.1f}' "
                 f"width='{bar_w_amb:.1f}' height='{abh:.1f}' "
                 f"fill='#63b3ed' opacity='0.8'/>"
             )
             bars.append(
-                f"<text x='{cx:.1f}' y='{aby - 3:.1f}' text-anchor='middle' "
+                f"<text x='{ax + bar_w_amb / 2:.1f}' y='{aby - 3:.1f}' text-anchor='middle' "
                 f"font-size='8' fill='#63b3ed'>{av}</text>"
             )
-        # Error bar (narrower, overlaid)
+        # Error bar — right of centre
         ev = err_vals[i]
         if ev > 0:
             eby = y_err(ev)
             ebh = baseline - eby
+            ex = cx + gap / 2
             bars.append(
-                f"<rect x='{cx - bar_w_err / 2:.1f}' y='{eby:.1f}' "
+                f"<rect x='{ex:.1f}' y='{eby:.1f}' "
                 f"width='{bar_w_err:.1f}' height='{ebh:.1f}' "
                 f"fill='#fc8181' opacity='0.7'/>"
             )
             bars.append(
-                f"<text x='{cx:.1f}' y='{eby - 3:.1f}' text-anchor='middle' "
+                f"<text x='{ex + bar_w_err / 2:.1f}' y='{eby - 3:.1f}' text-anchor='middle' "
                 f"font-size='8' fill='#fc8181'>{ev}</text>"
             )
 
@@ -552,6 +555,8 @@ def _case_section(case: dict) -> str:
          "fail" if stats["update_agent_failures"] else ""),
         ("Dead letters", state["dead_letter_count"],
          "fail" if state["dead_letter_count"] else ""),
+        ("Errors", len(stats.get("errors", [])),
+         "fail" if stats.get("errors") else ""),
         ("Ambiguity flags", n_flags, ""),
         ("Fulfillment links", n_links, ""),
         ("Tasks", len(state["node_states"]), ""),
@@ -702,6 +707,30 @@ def _case_section(case: dict) -> str:
                 f"<a href='{phoenix_ep}' target='_blank'>View Phoenix traces</a></p>"
             )
 
+    # Errors subsection (3c)
+    run_errors = stats.get("errors", [])
+    errors_html = ""
+    if run_errors:
+        error_rows = []
+        for e in run_errors:
+            phase = e.get("phase", "")
+            msg_id = e.get("message_id", "")
+            err_str = e.get("error", "")
+            error_rows.append(
+                f"<tr><td>{phase}</td><td class='dim'>{msg_id}</td>"
+                f"<td class='dim' style='word-break:break-word'>{err_str}</td></tr>"
+            )
+        errors_html = (
+            f"<details>"
+            f"<summary class='sub-summary fail'>Errors ({len(run_errors)})"
+            f" <span class='dim' style='font-weight:normal;font-size:0.85em'>"
+            f"— LLM parse failures, Pydantic validation errors, agent exceptions</span></summary>"
+            f"<table class='detail'>"
+            f"<thead><tr><th>Phase</th><th>Message ID</th><th>Error</th></tr></thead>"
+            f"<tbody>{''.join(error_rows)}</tbody></table>"
+            f"</details>"
+        )
+
     return (
         f"<div class='case'>"
         f"<details open>"
@@ -722,6 +751,7 @@ def _case_section(case: dict) -> str:
         f"<summary class='sub-summary'>Fulfillment Links ({n_links})</summary>"
         f"{_links_table(state['fulfillment_links'])}"
         f"</details>"
+        f"{errors_html}"
         f"</details>"
         f"</div>"
     )
