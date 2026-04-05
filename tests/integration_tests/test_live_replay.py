@@ -705,14 +705,17 @@ class TestLiveReplay:
         run_cache = request.config.getoption("--run-cache")
         max_messages = request.config.getoption("--max-messages")
 
+        # Parse --traced early — it now means "push spans to Phoenix"
+        use_traced = request.config.getoption("--traced")
+
         # Validate flag combinations
         cache_modes = sum([dev_test, run_cache])
         if cache_modes > 1:
             pytest.fail("--dev-test and --run-cache are mutually exclusive")
         if run_cache and run_live:
             pytest.fail("--run-cache and --run-live are mutually exclusive")
-        if run_cache and request.config.getoption("--traced"):
-            pytest.fail("--run-cache and --traced are mutually exclusive")
+        if dev_test and use_traced:
+            pytest.fail("--dev-test and --traced are mutually exclusive: dev-test never sends traces")
         if dev_test and max_messages:
             pytest.fail("--dev-test and --max-messages are mutually exclusive")
 
@@ -727,9 +730,8 @@ class TestLiveReplay:
         elif not run_live:
             pytest.skip("Live replay requires --run-live flag")
 
-        # Parse flags
+        # Parse remaining flags
         run_note = request.config.getoption("--run-note")
-        use_traced = request.config.getoption("--traced")
         raw_endpoints = request.config.getoption("--phoenix-endpoint")
         phoenix_user = request.config.getoption("--phoenix-user")
         phoenix_password = request.config.getoption("--phoenix-password")
@@ -739,20 +741,21 @@ class TestLiveReplay:
         run_linkage = "AL" in agents
         case_id = case_dir.name.split("_")[0]
 
-        # Mode overrides
+        # Resolve Phoenix endpoints
+        # --traced means: push spans to Phoenix. dev-test never traces.
+        LOCAL_EP = "http://localhost:6006/v1/traces"
+        REMOTE_EP = "http://152.42.156.128/developer/phoenix/v1/traces"
+
         DEV_TEST_MESSAGES = 50
         if run_cache:
-            use_traced = True
-            phoenix_endpoints = []
+            # --traced opts in to Phoenix; default is no tracing for cache runs
+            phoenix_endpoints = [REMOTE_EP] if use_traced else []
         elif dev_test:
             max_messages = DEV_TEST_MESSAGES
-            use_traced = True
+            use_traced = False
             phoenix_endpoints = []
         else:
-            # Resolve Phoenix endpoints
-            LOCAL_EP = "http://localhost:6006/v1/traces"
-            REMOTE_EP = "http://152.42.156.128/developer/phoenix/v1/traces"
-            phoenix_endpoints = None
+            # --run-live: explicit --phoenix-endpoint overrides; default sends to remote
             if raw_endpoints:
                 phoenix_endpoints = []
                 for ep in raw_endpoints:
@@ -762,6 +765,8 @@ class TestLiveReplay:
                         phoenix_endpoints.append(REMOTE_EP)
                     else:
                         phoenix_endpoints.append(ep)
+            else:
+                phoenix_endpoints = None  # ReplayTracer defaults to REMOTE_EP
 
         import base64
         auth_headers = {}

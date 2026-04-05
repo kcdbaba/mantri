@@ -14,6 +14,7 @@ Patches (tracing only, no behavior change):
 Dev-test mode adds one behavior change: LLM response caching via _call_with_retry patch.
 """
 
+import contextlib
 import json
 import logging
 import time
@@ -142,10 +143,10 @@ def run_instrumented_replay(
         patch("src.config.PERMIT_API", allow_api_calls),
     ]
 
-    import contextlib
     with contextlib.ExitStack() as stack:
         for p in config_patches:
             stack.enter_context(p)
+        stack.callback(lambda: tracer.stop(stats=stats))
 
         from src.router.router import route as _orig_route
         from src.router.worker import (
@@ -483,11 +484,11 @@ def run_instrumented_replay(
             # Drain final linkage events
             _drain_linkage()
 
-    # Close cache and record stats
-    stats["cache"] = agent_cache.stats()
-    agent_cache.close()
+        # Close cache and record stats
+        stats["cache"] = agent_cache.stats()
+        agent_cache.close()
 
-    _write_progress("complete", f"done in {time.time()-t_start:.0f}s")
-    tracer.stop(stats=stats)
+        _write_progress("complete", f"done in {time.time()-t_start:.0f}s")
+        # tracer.stop() is called by tracer_stack.callback on exit (normal or exception)
 
     return stats

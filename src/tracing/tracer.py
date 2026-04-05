@@ -102,7 +102,10 @@ class ReplayTracer:
             auth_headers: HTTP headers for authenticated endpoints (e.g., basic auth)
         """
         self.project_name = project_name
-        self.phoenix_endpoints = phoenix_endpoints or [DEFAULT_PHOENIX_ENDPOINT]
+        # None  → use default remote endpoint
+        # []    → no tracing (no-op tracer)
+        # [eps] → use exactly these endpoints
+        self.phoenix_endpoints = phoenix_endpoints if phoenix_endpoints is not None else [DEFAULT_PHOENIX_ENDPOINT]
         self.auth_headers = auth_headers or {}
         self._provider: TracerProvider | None = None
         self._tracer: trace.Tracer | None = None
@@ -118,9 +121,19 @@ class ReplayTracer:
         Checks connectivity first — skips unreachable endpoints with a warning.
         Fails if no endpoints are reachable.
 
+        Pass phoenix_endpoints=[] to run as a no-op tracer (no spans sent).
+        Pass phoenix_endpoints=None to use the default remote endpoint.
+
         Uses phoenix.otel.register() for the first endpoint (correct project targeting),
         then adds additional exporters for dual-write.
         """
+        self._run_ctx = run_ctx
+
+        # Empty list = no-op tracer (e.g. --run-cache without --traced)
+        if not self.phoenix_endpoints:
+            log.info("Tracing disabled (no endpoints configured)")
+            return
+
         from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
         from phoenix.otel import register
 
