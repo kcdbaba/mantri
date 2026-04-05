@@ -330,7 +330,7 @@ class MessageTrace:
                         tokens_in: int, tokens_out: int,
                         cache_creation: int, cache_read: int,
                         latency_ms: int, parse_success: bool,
-                        is_retry: bool = False):
+                        is_retry: bool = False, cache_hit: bool = False):
         if not self.tracer:
             return
 
@@ -363,6 +363,7 @@ class MessageTrace:
                 "llm.latency_ms": latency_ms,
                 "llm.parse_success": parse_success,
                 "llm.is_retry": is_retry,
+                "cache.hit": cache_hit,
                 "llm.call_type": call_type,
                 "llm.task_id": task_id,
                 "llm.model_selection_reason": model_selection_reason,

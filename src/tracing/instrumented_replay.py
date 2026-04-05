@@ -163,9 +163,11 @@ def run_instrumented_replay(
         )
         from src.config import CLAUDE_MODEL, GEMINI_MODEL
 
-        # Mutable tracing context
+        # Mutable tracing context — replaced per scrap via on_scrap_start
         _mt = [MessageTrace()]
         _apply_idx = [0]
+        _scrap_stack = [None]   # ExitStack holding the active trace_message context
+        _seq = [0]              # monotonic scrap counter for span naming
 
         # ── Tracing wrappers (no behavior change except dev_test cache) ──
 
@@ -209,7 +211,7 @@ def run_instrumented_replay(
                     raw_output=resp.raw, parsed_output=None,
                     model=f"{model} (cached)", model_selection_reason="cache_hit",
                     tokens_in=0, tokens_out=0, cache_creation=0, cache_read=0,
-                    latency_ms=0, parse_success=True, is_retry=False,
+                    latency_ms=0, parse_success=True, is_retry=False, cache_hit=True,
                 )
                 return resp
 
@@ -247,6 +249,7 @@ def run_instrumented_replay(
                 cache_creation=resp.cache_creation_tokens if resp else 0,
                 cache_read=resp.cache_read_tokens if resp else 0,
                 latency_ms=latency_ms, parse_success=True, is_retry=is_retry,
+                cache_hit=False,
             )
             return resp
 
@@ -316,6 +319,123 @@ def run_instrumented_replay(
                     "cache_creation_tokens": resp.cache_creation_tokens,
                     "cache_read_tokens": resp.cache_read_tokens,
                 })
+            return resp
+
+        # ── Linkage-specific wrappers — emit record_llm_call spans ────────
+        # _cached_anthropic/_gemini are used for update_agent (which already
+        # records via _traced_call_with_retry), so these separate wrappers
+        # handle linkage agent calls only and avoid double-recording.
+
+        def _traced_linkage_anthropic(system_prompt, user_section,
+                                      message_id, task_id, **kwargs):
+            mt = _mt[0]
+            model = kwargs.get("model", CLAUDE_MODEL)
+            cache_key = agent_cache.make_key(system_prompt, user_section)
+            cached = agent_cache.get(cache_key)
+            if cached:
+                resp = LLMResponse(
+                    raw=cached["raw"], tokens_in=cached["tokens_in"],
+                    tokens_out=cached["tokens_out"],
+                    cache_creation_tokens=cached.get("cache_creation_tokens", 0),
+                    cache_read_tokens=cached.get("cache_read_tokens", 0),
+                )
+                mt.record_llm_call(
+                    call_type="linkage_agent", task_id=task_id or "",
+                    system_prompt="(cached)", user_section="(cached)",
+                    raw_output=resp.raw, parsed_output=None,
+                    model=f"{model} (cached)", model_selection_reason="cache_hit",
+                    tokens_in=0, tokens_out=0, cache_creation=0, cache_read=0,
+                    latency_ms=0, parse_success=True, is_retry=False, cache_hit=True,
+                )
+                return resp
+            if not allow_api_calls:
+                raise CacheMissError(
+                    phase="anthropic",
+                    key=cache_key,
+                    model=model,
+                    task_id=task_id,
+                    message_id=message_id,
+                    allow_api_calls=allow_api_calls,
+                )
+            t0 = time.time()
+            resp = _orig_anthropic(system_prompt, user_section,
+                                   message_id, task_id, **kwargs)
+            latency_ms = int((time.time() - t0) * 1000)
+            if resp:
+                agent_cache.put(cache_key, resp.raw, {
+                    "tokens_in": resp.tokens_in,
+                    "tokens_out": resp.tokens_out,
+                    "cache_creation_tokens": resp.cache_creation_tokens,
+                    "cache_read_tokens": resp.cache_read_tokens,
+                })
+            mt.record_llm_call(
+                call_type="linkage_agent", task_id=task_id or "",
+                system_prompt=system_prompt, user_section=user_section,
+                raw_output=resp.raw if resp else "(failed)", parsed_output=None,
+                model=model, model_selection_reason="",
+                tokens_in=resp.tokens_in if resp else 0,
+                tokens_out=resp.tokens_out if resp else 0,
+                cache_creation=resp.cache_creation_tokens if resp else 0,
+                cache_read=resp.cache_read_tokens if resp else 0,
+                latency_ms=latency_ms, parse_success=resp is not None,
+                is_retry=False, cache_hit=False,
+            )
+            return resp
+
+        def _traced_linkage_gemini(system_prompt, user_section,
+                                   message_id, task_id, **kwargs):
+            mt = _mt[0]
+            model = kwargs.get("model", GEMINI_MODEL)
+            cache_key = agent_cache.make_key(system_prompt, user_section)
+            cached = agent_cache.get(cache_key)
+            if cached:
+                resp = LLMResponse(
+                    raw=cached["raw"], tokens_in=cached["tokens_in"],
+                    tokens_out=cached["tokens_out"],
+                    cache_creation_tokens=cached.get("cache_creation_tokens", 0),
+                    cache_read_tokens=cached.get("cache_read_tokens", 0),
+                )
+                mt.record_llm_call(
+                    call_type="linkage_agent", task_id=task_id or "",
+                    system_prompt="(cached)", user_section="(cached)",
+                    raw_output=resp.raw, parsed_output=None,
+                    model=f"{model} (cached)", model_selection_reason="cache_hit",
+                    tokens_in=0, tokens_out=0, cache_creation=0, cache_read=0,
+                    latency_ms=0, parse_success=True, is_retry=False, cache_hit=True,
+                )
+                return resp
+            if not allow_api_calls:
+                raise CacheMissError(
+                    phase="gemini",
+                    key=cache_key,
+                    model=model,
+                    task_id=task_id,
+                    message_id=message_id,
+                    allow_api_calls=allow_api_calls,
+                )
+            t0 = time.time()
+            resp = _orig_gemini(system_prompt, user_section,
+                                message_id, task_id, **kwargs)
+            latency_ms = int((time.time() - t0) * 1000)
+            if resp:
+                agent_cache.put(cache_key, resp.raw, {
+                    "tokens_in": resp.tokens_in,
+                    "tokens_out": resp.tokens_out,
+                    "cache_creation_tokens": resp.cache_creation_tokens,
+                    "cache_read_tokens": resp.cache_read_tokens,
+                })
+            mt.record_llm_call(
+                call_type="linkage_agent", task_id=task_id or "",
+                system_prompt=system_prompt, user_section=user_section,
+                raw_output=resp.raw if resp else "(failed)", parsed_output=None,
+                model=model, model_selection_reason="",
+                tokens_in=resp.tokens_in if resp else 0,
+                tokens_out=resp.tokens_out if resp else 0,
+                cache_creation=resp.cache_creation_tokens if resp else 0,
+                cache_read=resp.cache_read_tokens if resp else 0,
+                latency_ms=latency_ms, parse_success=resp is not None,
+                is_retry=False, cache_hit=False,
+            )
             return resp
 
         def _traced_resolve(entity_id, entity_tasks, message, r):
@@ -430,19 +550,44 @@ def run_instrumented_replay(
                               stream_key, fields.get("task_id", "?"),
                               fields.get("event_type", "?"), e)
 
+        # ── Scrap trace context management ───────────────────────────────
+        # on_scrap_start enters a trace_message context per scrap and sets
+        # _mt[0] to the tracer-connected MessageTrace so all record_* calls
+        # inside _process_scrap emit real child spans.
+        # on_scrap_done drains linkage (still inside the OTel context via
+        # otel_context.attach, so linkage spans are children of the root span)
+        # then closes the ExitStack to end the root span.
+
+        def _on_scrap_start(scrap):
+            s = contextlib.ExitStack()
+            mt = s.enter_context(tracer.trace_message(scrap.messages[-1], _seq[0]))
+            _seq[0] += 1
+            _mt[0] = mt
+            _scrap_stack[0] = s
+
+        def _on_scrap_done(scrap):
+            try:
+                _drain_linkage(scrap)
+            finally:
+                s = _scrap_stack[0]
+                _scrap_stack[0] = None
+                if s:
+                    s.close()
+                _mt[0] = MessageTrace()  # reset to dummy for next scrap
+
         # ── Apply tracing patches ────────────────────────────────────────
 
         with patch("src.router.worker.route", _traced_route), \
              patch("src.agent.update_agent._call_with_retry", _traced_call_with_retry), \
              patch("src.agent.update_agent._call_anthropic_with_retry", _cached_anthropic), \
              patch("src.agent.update_agent._call_gemini_with_retry", _cached_gemini), \
-             patch("src.linkage.agent._call_anthropic_with_retry", _cached_anthropic), \
-             patch("src.linkage.agent._call_gemini_with_retry", _cached_gemini), \
+             patch("src.linkage.agent._call_anthropic_with_retry", _traced_linkage_anthropic), \
+             patch("src.linkage.agent._call_gemini_with_retry", _traced_linkage_gemini), \
              patch("src.conversation.llm_context_matcher._try_gemini", _cached_conv_gemini), \
              patch("src.router.worker._resolve_task_for_entity", _traced_resolve), \
              patch("src.router.worker._apply_output", _traced_apply):
 
-            # Phase 1: Warmup — process through pipeline, no tracing
+            # Phase 1: Warmup — cache-only, no span emission
             if warmup_msgs:
                 log.info("Warmup: %d messages", len(warmup_msgs))
                 _write_progress("warmup", f"{len(warmup_msgs)} messages")
@@ -453,14 +598,11 @@ def run_instrumented_replay(
                 # Drain any remaining linkage events from warmup
                 _drain_linkage()
 
-            # Phase 2: Test — process with linkage drain after each scrap
+            # Phase 2: Test — full tracing with per-scrap root spans
             log.info("Test: %d messages", len(test_msgs))
             _write_progress("processing", f"0/{len(test_msgs)} messages")
 
             _msg_count = [0]
-
-            def _on_scrap_processed(scrap):
-                _drain_linkage(scrap)
 
             def _on_message_routed(msg, routes):
                 _msg_count[0] += 1
@@ -470,7 +612,8 @@ def run_instrumented_replay(
 
             replay_stats = replay_messages(
                 test_msgs, mock_redis, conv_router=conv_router,
-                on_scrap_processed=_on_scrap_processed,
+                on_scrap_start=_on_scrap_start,
+                on_scrap_processed=_on_scrap_done,
                 on_message_routed=_on_message_routed,
             )
 

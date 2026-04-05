@@ -341,6 +341,7 @@ def replay_messages(
     conv_router,
     on_scrap_processed=None,
     on_message_routed=None,
+    on_scrap_start=None,
 ) -> dict:
     """Process a sequence of messages through the full pipeline.
 
@@ -355,6 +356,7 @@ def replay_messages(
         messages: ordered list of message dicts
         r: Redis client (real or mock — only needs xadd/xack)
         conv_router: ConversationRouter instance (required)
+        on_scrap_start: callback(SenderScrap) before each scrap is processed
         on_scrap_processed: callback(SenderScrap) after each scrap is processed
         on_message_routed: callback(message, routes) after routing each message
 
@@ -373,6 +375,8 @@ def replay_messages(
 
     def _handle_scraps(scraps: list[SenderScrap]):
         for scrap in scraps:
+            if on_scrap_start:
+                on_scrap_start(scrap)
             try:
                 _process_scrap(scrap, r, conv_router)
                 stats["update_agent_calls"] += 1
