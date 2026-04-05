@@ -1,0 +1,1 @@
+WARNING  src.router.worker:worker.py:796 BLOCKED node=order_confirmation task=task_e7c8df5f — ambiguity: Client entity is partially identified as '20 JAK' with contact 'Rajesh sir', but the full unit name and designation of Rajesh sir are not confirmed. '20 JAK' likely refers to 20 Jak Rifles or a JAK unit — needs verification to ensure correct entity assignment.
